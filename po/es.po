@@ -1,17 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Alexandria en Espa√±ol.
+# This file is distributed under the same license as Alexandria.
+# Miguel √Ångel Garc√≠a <magmax@ieee.org>, 2004."
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-07-15 21:00+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Miguel ¡ngel GarcÌa <magmax@ieee.org>\n"
-"Language-Team: Miguel ¡ngel GarcÌa <magmax@ieee.org>\n"
+"PO-Revision-Date: 2004-11-05 17:50-0500\n"
+"Last-Translator: Miguel √Ångel Garc√≠a <magmax@ieee.org>\n"
+"Language-Team: Miguel √Ångel Garc√≠a <magmax@ieee.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,19 +24,19 @@ msgstr "%d libros seleccionados"
 
 #: ../lib/alexandria/ui/main_app.rb:120
 msgid "Untitled %d"
-msgstr "%d Sin TÌtulo"
+msgstr "%d Sin T√≠tulo"
 
 #: ../lib/alexandria/ui/main_app.rb:152
 msgid "Are you sure you want to permanently delete '%s'?"
-msgstr "øEst· seguro de que desea eliminar permanentemente '%s'?"
+msgstr "¬øEst√° seguro de que desea eliminar permanentemente '%s'?"
 
 #: ../lib/alexandria/ui/main_app.rb:154
 msgid "Are you sure you want to permanently delete '%s' which has one book?"
-msgstr "øEst· seguro de que desea eliminar permanentemente '%s', que contiene un libro?"
+msgstr "¬øEst√° seguro de que desea eliminar permanentemente '%s', que contiene un libro?"
 
 #: ../lib/alexandria/ui/main_app.rb:156
 msgid "Are you sure you want to permanently delete '%s' which has %d books?"
-msgstr "øEst· seguro de que desea eliminar permanentemente '%s', que contiene %d libros?"
+msgstr "¬øEst√° seguro de que desea eliminar permanentemente '%s', que contiene %d libros?"
 
 #: ../lib/alexandria/ui/main_app.rb:169
 msgid "Are you sure you want to permanently delete '%s' from '%s'?"
@@ -58,7 +56,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:424
 msgid "Title"
-msgstr "TÌtulo"
+msgstr "T√≠tulo"
 
 #: ../lib/alexandria/ui/main_app.rb:439
 msgid "Authors"
@@ -74,11 +72,11 @@ msgstr "Editor"
 
 #: ../lib/alexandria/ui/main_app.rb:439
 msgid "Edition"
-msgstr "EdiciÛn"
+msgstr "Edici√≥n"
 
 #: ../lib/alexandria/ui/main_app.rb:448
 msgid "Rating"
-msgstr "PuntuaciÛn"
+msgstr "Puntuaci√≥n"
 
 #: ../lib/alexandria/ui/main_app.rb:513
 msgid "Library"
@@ -86,7 +84,7 @@ msgstr "Biblioteca"
 
 #: ../lib/alexandria/ui/main_app.rb:527
 msgid "Invalid library name '%s'"
-msgstr "Nombre de biblioteca no v·lido: '%s'"
+msgstr "Nombre de biblioteca no v√°lido: '%s'"
 
 #: ../lib/alexandria/ui/main_app.rb:528
 msgid "The name provided contains the illegal character '<i>%s</i>'."
@@ -98,7 +96,7 @@ msgstr "'%s' ya existe en '%s' (titulado '%s')."
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:62
 msgid "Couldn't add book"
-msgstr "No se pudo aÒadir el libro"
+msgstr "No se pudo a√±adir el libro"
 
 #: ../lib/alexandria/ui/preferences_dialog.rb:25
 msgid "Preferences for %s"
@@ -126,11 +124,11 @@ msgstr "ID asociado"
 
 #: ../lib/alexandria.rb:25
 msgid "A program to help you manage your book collection."
-msgstr "Un programa para ayudarte a organizar tu colecciÛn de libros"
+msgstr "Un programa para ayudarte a organizar tu colecci√≥n de libros"
 
 #: ../data/alexandria/glade/info_book_dialog.glade:126
 msgid "<span weight=\"bold\">Title:</span>"
-msgstr "<span weight=\"bold\">TÌtulo:</span>"
+msgstr "<span weight=\"bold\">T√≠tulo:</span>"
 
 #: ../data/alexandria/glade/info_book_dialog.glade:175
 msgid "<span weight=\"bold\">Authors:</span>"
@@ -146,10 +144,10 @@ msgstr "<span weight=\"bold\">Editor:</span>"
 
 #: ../data/alexandria/glade/info_book_dialog.glade:322
 msgid "<span weight=\"bold\">Edition:</span>"
-msgstr "<span weight=\"bold\">EdiciÛn:</span>"
+msgstr "<span weight=\"bold\">Edici√≥n:</span>"
 
 #: ../data/alexandria/glade/info_book_dialog.glade:371
-msgid "<span weight=\"bold\">PuntiaciÛn:</span>"
+msgid "<span weight=\"bold\">Puntiaci√≥n:</span>"
 msgstr ""
 
 #: ../data/alexandria/glade/info_book_dialog.glade:544
@@ -174,7 +172,7 @@ msgstr "_Nuevo..."
 
 #: ../data/alexandria/glade/main_app.glade:88
 msgid "_Add Book..."
-msgstr "_AÒadir Libro..."
+msgstr "_A√±adir Libro..."
 
 #: ../data/alexandria/glade/main_app.glade:116
 msgid "_Properties"
@@ -231,7 +229,7 @@ msgstr "Or_ganizar Iconos"
 #: ../data/alexandria/glade/main_app.glade:1095
 #: ../data/alexandria/glade/main_app.glade:1297
 msgid "By _Title"
-msgstr "Por _TÌtulo"
+msgstr "Por _T√≠tulo"
 
 #: ../data/alexandria/glade/main_app.glade:361
 #: ../data/alexandria/glade/main_app.glade:1105
@@ -255,13 +253,13 @@ msgstr "_Por Editor"
 #: ../data/alexandria/glade/main_app.glade:1138
 #: ../data/alexandria/glade/main_app.glade:1340
 msgid "By _Edition"
-msgstr "Por _EdiciÛn"
+msgstr "Por _Edici√≥n"
 
 #: ../data/alexandria/glade/main_app.glade:405
 #: ../data/alexandria/glade/main_app.glade:1149
 #: ../data/alexandria/glade/main_app.glade:1351
 msgid "By _Rating"
-msgstr "Po_r PuntuaciÛn"
+msgstr "Po_r Puntuaci√≥n"
 
 #: ../data/alexandria/glade/main_app.glade:422
 #: ../data/alexandria/glade/main_app.glade:1166
@@ -287,7 +285,7 @@ msgstr "Enviar Informe de Fallos(_b)"
 
 #: ../data/alexandria/glade/main_app.glade:637
 msgid "Title contains"
-msgstr "El tÌtulo contiene"
+msgstr "El t√≠tulo contiene"
 
 #: ../data/alexandria/glade/main_app.glade:646
 msgid "Authors contain"
@@ -325,19 +323,19 @@ msgstr "Bib_liotecas:"
 
 #: ../data/alexandria/glade/main_app.glade:1237
 msgid "_Add a Book"
-msgstr "_AÒadir un Libro"
+msgstr "_A√±adir un Libro"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:10
 msgid "Adding a Book"
-msgstr "AÒadiendo un Libro"
+msgstr "A√±adiendo un Libro"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:110
 msgid ""
 "Please provide an ISBN (International Standard Book Number) to search for, "
 "and select the library which the book will be added to."
 msgstr ""
-"Por favor, introduzca un ISBN (N˙mero de Libro Est·ndar Internacional) por el que buscar, "
-"y seleccione la biblioteca a la que aÒadir el libro."
+"Por favor, introduzca un ISBN (N√∫mero de Libro Est√°ndar Internacional) por el que buscar, "
+"y seleccione la biblioteca a la que a√±adir el libro."
 
 #: ../data/alexandria/glade/new_book_dialog.glade:140
 msgid "_ISBN:"
@@ -361,11 +359,11 @@ msgstr "_Autores"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:131
 msgid "_Edition"
-msgstr "_EdiciÛn"
+msgstr "_Edici√≥n"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:154
 msgid "_Rating"
-msgstr "_PuntuaciÛn"
+msgstr "_Puntuaci√≥n"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:177
 msgid "_ISBN"
@@ -385,7 +383,7 @@ msgstr "<b>_Proveedores</b>"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:368
 msgid "_Setup"
-msgstr "ConfiguraciÛn(_s)"
+msgstr "Configuraci√≥n(_s)"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:433
 msgid ""
@@ -393,9 +391,9 @@ msgid ""
 "can be configured to get better results.  You can also customize the order "
 "in which they are queried."
 msgstr ""
-"Los proveedores son bibliotecas que proporcionan informaciÛn acerca de libros.  "
+"Los proveedores son bibliotecas que proporcionan informaci√≥n acerca de libros.  "
 "Algunos de ellos pueden configurarse para obtener mejores resultados.  "
-"TambiÈn se puede personalizar el orden en que son consultados."
+"Tambi√©n se puede personalizar el orden en que son consultados."
 
 
 #: ../data/alexandria/glade/preferences_dialog.glade:460
