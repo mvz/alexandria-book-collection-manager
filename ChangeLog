@@ -1,3 +1,15 @@
+2005-03-20  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb (Library.move):
+
+	Removes books with the same ident before adding them in the array.
+	
+	* lib/alexandria/ui/main_app.rb:
+
+	- Display an confirmation message when trying to move a book into a
+	  library that already has a book with the same ident ;
+	- Properly setup the moves action after an import process.
+
 2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/book_properties_dialog.rb:

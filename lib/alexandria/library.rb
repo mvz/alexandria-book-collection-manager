@@ -97,6 +97,7 @@ module Alexandria
                     FileUtils.mv(source_library.cover(book), dest)
                 end
                 source_library.old_delete(book)
+                dest_library.delete_if { |book2| book2.ident == book.ident }
                 dest_library << book
             end
         end

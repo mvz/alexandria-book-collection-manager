@@ -40,6 +40,29 @@ end
 
 module Alexandria
 module UI
+    class ConflictWhileCopyingDialog < AlertDialog
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize(parent, library, book)
+            super(parent, 
+                  _("The book '%s' already exists in '%s'. Would you like " +
+                    "to replace it?") % [ book.title, library.name ],
+                  Gtk::Stock::DIALOG_QUESTION,
+                  [[_("_Skip"), Gtk::Dialog::RESPONSE_CANCEL],
+                   [_("_Replace"), Gtk::Dialog::RESPONSE_OK]],
+                  _("If you replace the existing book, its contents will " +
+                    "be overwritten."))
+            self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+            show_all and @response = run
+            destroy
+        end
+
+        def replace?
+            @response == Gtk::Dialog::RESPONSE_OK
+        end
+    end
+    
     class MainApp < GladeBase 
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -554,9 +577,15 @@ module UI
             actions = []
             @libraries.each do |library|
                 on_move = proc do
-                    books = selected_books
+                    books = selected_books.select do |book|
+                        library.find { |book2| book2.ident == 
+                                               book.ident } == nil or
+                        ConflictWhileCopyingDialog.new(@main_app, 
+                                                       library,
+                                                       book).replace?
+                    end
                     @iconview.freeze
-                    books.each do |book| 
+                    books.each do |book|
                         iter = iter_from_book(book)
                         @model.remove(iter)
                     end
@@ -625,6 +654,8 @@ module UI
                 ImportDialog.new(@main_app, @libraries) do |library|
                     @libraries << library
                     append_library(library, true)
+                    setup_move_actions
+                    refresh_libraries
                 end
             end
 
