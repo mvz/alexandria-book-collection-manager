@@ -1,5 +1,23 @@
 2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
 
+	* alexandria.desktop.in:
+
+	Add an Icon field.
+
+2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
+
+	* genpot.sh:
+
+	 - Remove reference to removed bin/alexandria.
+
+	 - Change reference to alexandria.desktop.in to point to .., so that
+	   the script works when run in the po/ directory.
+
+	 - Add a comment explaining that the script should be run from the po/
+	   directory.
+
+2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
+
 	* post-clean.rb:
 
 	Add this script in order to remove various automatically generated
