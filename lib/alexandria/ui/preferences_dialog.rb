@@ -109,7 +109,7 @@ module UI
         def on_column_toggled(checkbutton)
             raise if @cols[checkbutton].nil?
             Preferences.instance.send("#{@cols[checkbutton]}=", checkbutton.active?)
-            @changed = true 
+            @changed_block.call
         end
 
         def on_providers_button_press_event(widget, event)
@@ -123,7 +123,6 @@ module UI
         
         def on_close
             @preferences_dialog.destroy
-            @changed_block.call if @changed
         end
     end
 end
