@@ -173,13 +173,13 @@ module Alexandria
                         io.close
                         io.path
                     end
-                    book = Book.new(product.productname,
+                    book = Book.new(product.product_name,
                                     product.authors,
                                     product.isbn,
                                     product.manufacturer,
                                     product.media,
-                                    fetch.call(product.imageurlsmall),
-                                    fetch.call(product.imageurlmedium))
+                                    fetch.call(product.image_url_small),
+                                    fetch.call(product.image_url_medium))
                     results << book
                 end
                 raise "Too many results" unless results.length == 1
