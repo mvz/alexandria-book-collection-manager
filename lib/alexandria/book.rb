@@ -143,21 +143,27 @@ module Alexandria
             end
 
             class Variable
-                attr_reader :name, :description, :possible_values
+                attr_reader :provider_name, :name, :description, :possible_values
                 attr_accessor :value
 
-                def initialize(name, description, default_value,
+                def initialize(provider_name, name, description, default_value,
                                possible_values=nil)
 
+                    @provider_name = provider_name
                     @name = name
                     @description = description
                     @value = default_value
                     @possible_values = possible_values
                 end
+
+                def new_value=(new_value)
+                    Alexandria::Preferences.instance.send("#{provider_name}_#{name}=", new_value)
+                    self.value = new_value
+                end
             end
             
             def add(*args)
-                self << Variable.new(*args) 
+                self << Variable.new(@provider_name, *args) 
             end
             
             def [](obj)
@@ -172,11 +178,10 @@ module Alexandria
             alias_method :old_idx, :[]
             
             def read
-                # TODO
-            end
-
-            def write
-                # TODO
+                self.each do |var|
+                    val = Alexandria::Preferences.instance.send("#{@provider_name}_#{var.name}")
+                    var.value = val unless val.nil?
+                end
             end
         end
         
@@ -185,7 +190,7 @@ module Alexandria
 
             def initialize
                 @name = "Amazon"
-                @prefs = Preferences.new(@name)
+                @prefs = Preferences.new(@name.downcase)
                 @prefs.add("locale", "Locale site to contact", "us",
                            Amazon::Search::LOCALES.keys)
                 @prefs.add("dev_token", "Development token", "D23XFCO2UKJY82")
@@ -195,8 +200,8 @@ module Alexandria
             def search(criteria)
                 results = []
                 prefs.read
-                req = Amazon::Search::Request.new(prefs["dev_token"])
-                req.locale = prefs["locale"]
+                p req = Amazon::Search::Request.new(prefs["dev_token"])
+                p req.locale = prefs["locale"]
                 req.asin_search(criteria) do |product|
                     next unless product.catalog == 'Book'
                     fetch = lambda do |url|

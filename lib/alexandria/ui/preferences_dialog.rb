@@ -27,20 +27,12 @@ module UI
             self.resizable = false
             self.vbox.border_width = 12
             
-            hbox = Gtk::HBox.new(false, 12)
-            hbox.border_width = 6
-            self.vbox.pack_start(hbox)
-
-            image = Gtk::Image.new(Gtk::Stock::PROPERTIES,
-                                   Gtk::IconSize::DIALOG)
-            image.set_alignment(0.5, 0)
-            hbox.pack_start(image)
-
             table = Gtk::Table.new(provider.prefs.length, 2)
+            table.border_width = 12
             table.row_spacings = 6 
             table.column_spacings = 12 
             i = 0
-            provider.prefs.each do |variable|
+            provider.prefs.read.each do |variable|
                 label = Gtk::Label.new("_" + variable.description + ":")
                 label.use_underline = true
                 label.xalign = 0
@@ -49,7 +41,11 @@ module UI
                 unless variable.possible_values.nil?
                     menu = Gtk::Menu.new
                     variable.possible_values.each do |value|
-                        menu.append(Gtk::MenuItem.new(value.to_s))
+                        item = Gtk::MenuItem.new(value.to_s)
+                        item.signal_connect('activate') do |item|
+                            variable.new_value = value.to_s
+                        end
+                        menu.append(item)
                     end
                     entry = Gtk::OptionMenu.new
                     entry.menu = menu
@@ -57,6 +53,9 @@ module UI
                 else
                     entry = Gtk::Entry.new
                     entry.text = variable.value.to_s
+                    entry.signal_connect('changed') do |entry|
+                        variable.new_value = entry.text 
+                    end
                 end
                 label.mnemonic_widget = entry
 
@@ -64,15 +63,27 @@ module UI
                 i += 1
             end
 
-            hbox.pack_start(table)
+            self.vbox.pack_start(table)
         end
     end
 
     class PreferencesDialog < GladeBase
-        def initialize(parent)
+        def initialize(parent, &changed_block)
             super('preferences_dialog.glade')
             @preferences_dialog.transient_for = parent
+            @changed_block = changed_block
 
+            @cols = {
+                @checkbutton_col_authors   => "col_authors_visible",
+                @checkbutton_col_isbn      => "col_isbn_visible",
+                @checkbutton_col_publisher => "col_publisher_visible",
+                @checkbutton_col_edition   => "col_edition_visible",
+                @checkbutton_col_rating    => "col_rating_visible"
+            }
+            @cols.each_pair do |checkbutton, pref_name|
+                checkbutton.active = Preferences.instance.send(pref_name)
+            end           
+ 
             model = Gtk::ListStore.new(String)
             BookProviders.each { |x| model.append.set_value(0, x.name) }
             @treeview_providers.model = model
@@ -95,6 +106,12 @@ module UI
             dialog.destroy
         end
 
+        def on_column_toggled(checkbutton)
+            raise if @cols[checkbutton].nil?
+            Preferences.instance.send("#{@cols[checkbutton]}=", checkbutton.active?)
+            @changed = true 
+        end
+
         def on_providers_button_press_event(widget, event)
             # double left click
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
@@ -106,6 +123,7 @@ module UI
         
         def on_close
             @preferences_dialog.destroy
+            @changed_block.call if @changed
         end
     end
 end

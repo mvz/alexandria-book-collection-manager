@@ -178,7 +178,7 @@ module UI
         end
  
         def on_preferences
-            PreferencesDialog.new(@main_app)
+            PreferencesDialog.new(@main_app) { on_refresh } 
         end
 
         def on_refresh  
@@ -187,6 +187,19 @@ module UI
             library = selected_library
             library.each { |book| append_book(book) }
             @main_app.title = library.name + " - " + TITLE
+            
+            cols_visibility = [
+                Preferences.instance.col_authors_visible,
+                Preferences.instance.col_isbn_visible,
+                Preferences.instance.col_publisher_visible,
+                Preferences.instance.col_edition_visible,
+                Preferences.instance.col_rating_visible,
+
+            ]
+            cols = @listview.columns[1..-1] # skip "Title"
+            cols.each_index do |i|
+                cols[i].visible = cols_visibility[i]
+            end
         end
 
         def on_close_sidepane
@@ -318,7 +331,7 @@ module UI
             # we need to overwrite the default sort function for columns that may
             # handle UTF-8 foreign strings
             [1, 2, 4, 5].each do |i|
-                @listview.model.set_sort_func(i) { |x, y| x[i] <=> y[i] }
+                @listview.model.set_sort_func(i) { |x, y| x[i] <=> y[i] rescue 0 }
             end
 
             @listview.selection.mode = Gtk::SELECTION_MULTIPLE
