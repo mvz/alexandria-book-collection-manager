@@ -1,3 +1,10 @@
+2004-06-13  Dafydd Harries  <daf@muse.19inch.net>
+
+	* pre-setup.rb:
+
+	Removed requirement of ruby-gettext since all this  does is run
+	msgfmt.
+
 === Alexandria 0.2.0 ===
 
 2004-06-13  Laurent Sansonetti  <lrz@gnome.org>
