@@ -24,6 +24,7 @@ module Alexandria
     COPYRIGHT = 'Copyright (C) 2004-2005 Laurent Sansonetti'
     AUTHORS = [
         'Dafydd Harries <daf@muse.19inch.net>',
+        'Javier Fernandez-Sanguino Pena <jfs@debian.org>',
         'Kevin Schultz <schultkl@ieee.org>',
         'Laurent Sansonetti <lrz@gnome.org>',
         'Pascal Terjan <pterjan@linuxfr.org>',
