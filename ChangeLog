@@ -1,3 +1,10 @@
+2004-10-28  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Update the entries of the Move menu accordingly, when a library is
+	created, renamed, or removed.
+
 2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
 
 	Features the manual addition of books and the

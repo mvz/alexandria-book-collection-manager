@@ -21,6 +21,12 @@ class Gtk::ActionGroup
     end
 end
 
+class Alexandria::Library
+    def action_name
+        "MoveIn" + name.gsub(/\s/, '')
+    end
+end
+
 module Alexandria
 module UI
     class MainApp < GladeBase 
@@ -66,7 +72,8 @@ module UI
                         else
                             n_("Library '%s' selected, %d book, %d unrated", 
                                "Library '%s' selected, %d books, %d unrated", 
-                               library.length) % [ library.name, library.length, 
+                               library.length) % [ library.name, 
+                                                   library.length, 
                                                    library.n_unrated ] 
                        end
                 when 1
@@ -75,9 +82,16 @@ module UI
                     n_("%d book selected", "%d books selected", books.length) \
                         % books.length
             end
-            @actiongroup["Properties"].sensitive = @actiongroup["OnlineInformation"].sensitive = books.length == 1
-            @actiongroup["SelectAll"].sensitive = books.length < library.length
-            @actiongroup["Delete"].sensitive = @actiongroup["DeselectAll"].sensitive = @actiongroup["Move"].sensitive = !books.empty?
+            unless @treeview_sidepane.has_focus?
+                @actiongroup["Properties"].sensitive = \
+                    @actiongroup["OnlineInformation"].sensitive = \
+                    books.length == 1
+                @actiongroup["SelectAll"].sensitive = \
+                    books.length < library.length
+                @actiongroup["Delete"].sensitive = \
+                    @actiongroup["DeselectAll"].sensitive = \
+                    @actiongroup["Move"].sensitive = !books.empty?
+            end
         end
 
         def on_switch_page
@@ -88,7 +102,9 @@ module UI
         def on_focus(widget, event_focus)
             if widget == @treeview_sidepane
                 %w{Properties OnlineInformation 
-                   SelectAll DeselectAll}.each { |action| @actiongroup[action].sensitive = false }
+                   SelectAll DeselectAll}.each do |action| 
+                    @actiongroup[action].sensitive = false
+                end
                 @actiongroup["Delete"].sensitive = true
             else
                 on_books_selection_changed
@@ -157,6 +173,12 @@ module UI
                 cols[i].visible = cols_visibility[i]
             end
 
+            # Disable the selected library in the move libraries actions.
+            @libraries.each do |i_library|
+                action = @actiongroup[i_library.action_name]
+                action.sensitive = i_library != library if action
+            end
+            
             # Refresh the status bar.
             on_books_selection_changed
         end
@@ -309,7 +331,8 @@ module UI
         end   
 
         def build_sidepane
-            @treeview_sidepane.model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
+            @treeview_sidepane.model = Gtk::ListStore.new(Gdk::Pixbuf, 
+                                                          String, TrueClass)
             @libraries.each { |library| append_library(library) } 
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Library"))
@@ -341,6 +364,7 @@ module UI
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
                         iter[1] = selected_library.name = new_text.strip
+                        setup_move_actions
                         on_refresh 
                     end
                 end
@@ -390,6 +414,33 @@ module UI
             @prefs.view_as = @notebook.page
             @prefs.selected_library = selected_library.name
         end 
+       
+        def setup_move_actions
+            @actiongroup.actions.each do |action|
+                next unless /^MoveIn/.match(action.name)
+                @actiongroup.remove_action(action)
+            end
+            actions = @libraries.map do |library|
+                [library.action_name, nil,
+                 _("In '_%s'") % library.name, nil, nil,
+                 proc { Library.move(selected_library, 
+                                     library, *selected_books)
+                        on_refresh }]
+            end
+            @actiongroup.add_actions(actions)
+            if @move_mid
+                @uimanager.remove_ui(@move_mid)
+            end
+            @move_mid = @uimanager.new_merge_id 
+            @libraries.each do |library|
+                name = library.action_name
+                [ "ui/MainMenubar/EditMenu/Move/",
+                  "ui/BookPopup/Move/" ].each do |path|
+                    @uimanager.add_ui(@move_mid, path, name, name,
+                                      Gtk::UIManager::MENUITEM, false)
+                end
+            end
+        end
         
         def initialize_ui
             @main_app.icon = Icons::ALEXANDRIA_SMALL
@@ -408,6 +459,7 @@ module UI
                 @treeview_sidepane.set_cursor(iter.path, 
                                               @treeview_sidepane.get_column(0), 
                                               true)
+                setup_move_actions
             end
     
             on_add_book = proc do
@@ -498,6 +550,7 @@ module UI
                         next_iter.next!
                         @treeview_sidepane.model.remove(iter)
                         @treeview_sidepane.selection.select_iter(next_iter)
+                        setup_move_actions
                     end
                 else
                     selected_books.each do |book|
@@ -584,22 +637,13 @@ module UI
 
             providers_actions = BookProviders.map do |provider|
                 ["At" + provider.name, Gtk::Stock::JUMP_TO, 
-                 _("At %s") % provider.fullname, nil, nil, 
+                 _("At _%s") % provider.fullname, nil, nil, 
                  proc { open_web_browser(provider.url(selected_books.first)) }]
-            end
-
-            move_libraries_actions = @libraries.map do |library|
-                ["In" + library.name.gsub(/\s/, ''), nil,
-                 _("In '%s'") % library.name, nil, nil,
-                 proc { Library.move(selected_library, 
-                                     library, *selected_books)
-                        on_refresh }]
             end
             
             @actiongroup = Gtk::ActionGroup.new("actions")
             @actiongroup.add_actions(standard_actions)
             @actiongroup.add_actions(providers_actions)
-            @actiongroup.add_actions(move_libraries_actions)
             @actiongroup.add_toggle_actions(toggle_actions)
             @actiongroup.add_radio_actions(view_as_actions) do |action, current|
                 @notebook.page = current.current_value
@@ -612,49 +656,39 @@ module UI
                 on_refresh
             end
             
-            uimanager = Gtk::UIManager.new
-            uimanager.insert_action_group(@actiongroup, 0)
-            @main_app.add_accel_group(uimanager.accel_group)
+            @uimanager = Gtk::UIManager.new
+            @uimanager.insert_action_group(@actiongroup, 0)
+            @main_app.add_accel_group(@uimanager.accel_group)
             
             [ "menus.xml", "popups.xml" ].each do |ui_file|
-                uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR, 
+                @uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR, 
                                            "ui", ui_file))
             end
 
-            mid = uimanager.new_merge_id 
+            mid = @uimanager.new_merge_id 
             BookProviders.each do |provider|
                 name = "At" + provider.name    
                 [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
                   "ui/BookPopup/OnlineInformation/",
                   "ui/NoBookPopup/OnlineInformation/" ].each do |path|
-                    uimanager.add_ui(mid, path, name, name, 
+                    @uimanager.add_ui(mid, path, name, name, 
                                      Gtk::UIManager::MENUITEM, false)
                 end
             end
 
-            mid = uimanager.new_merge_id 
-            @libraries.each do |library|
-                name = "In" + library.name.gsub(/\s/, '')
-                [ "ui/MainMenubar/EditMenu/Move/",
-                  "ui/BookPopup/Move/" ].each do |path|
-                    uimanager.add_ui(mid, path, name, name,
-                                     Gtk::UIManager::MENUITEM, false)
-                end
-            end
+            mid = @uimanager.new_merge_id 
+            @uimanager.add_ui(mid, "ui/", "MainToolbar", "MainToolbar", 
+                              Gtk::UIManager::TOOLBAR, false)        
+            @uimanager.add_ui(mid, "ui/MainToolbar/", "New", "New", 
+                              Gtk::UIManager::TOOLITEM, false)        
+            @uimanager.add_ui(mid, "ui/MainToolbar/", "AddBook", "AddBook", 
+                              Gtk::UIManager::TOOLITEM, false)        
+            @uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
+                              Gtk::UIManager::SEPARATOR, false)
+            @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh", 
+                              Gtk::UIManager::TOOLITEM, false)        
             
-            mid = uimanager.new_merge_id 
-            uimanager.add_ui(mid, "ui/", "MainToolbar", "MainToolbar", 
-                             Gtk::UIManager::TOOLBAR, false)        
-            uimanager.add_ui(mid, "ui/MainToolbar/", "New", "New", 
-                             Gtk::UIManager::TOOLITEM, false)        
-            uimanager.add_ui(mid, "ui/MainToolbar/", "AddBook", "AddBook", 
-                             Gtk::UIManager::TOOLITEM, false)        
-            uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
-                             Gtk::UIManager::SEPARATOR, false)
-            uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh", 
-                             Gtk::UIManager::TOOLITEM, false)        
-            
-            @toolbar = uimanager.get_widget("/MainToolbar")
+            @toolbar = @uimanager.get_widget("/MainToolbar")
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
             
             cb = Gtk::ComboBox.new
@@ -705,9 +739,9 @@ module UI
             @toolbar.show_all
             
             @main_app.toolbar = @toolbar
-            @main_app.menus = uimanager.get_widget("/MainMenubar")
-            @book_popup = uimanager.get_widget("/BookPopup") 
-            @nobook_popup = uimanager.get_widget("/NoBookPopup") 
+            @main_app.menus = @uimanager.get_widget("/MainMenubar")
+            @book_popup = @uimanager.get_widget("/BookPopup") 
+            @nobook_popup = @uimanager.get_widget("/NoBookPopup") 
             
             @main_app.signal_connect('window-state-event') do |w, e|
                 if e.is_a?(Gdk::EventWindowState)
@@ -715,9 +749,12 @@ module UI
                         e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
                 end
             end
+        
             @main_app.signal_connect('destroy') do 
                 @actiongroup["Quit"].activate
             end
+            
+            setup_move_actions
         end
     end
 end
