@@ -174,7 +174,7 @@ module Alexandria
                         io.path
                     end
                     book = Book.new(product.product_name,
-                                    product.authors,
+                                    (product.authors rescue [ "n/a" ]),
                                     product.isbn,
                                     product.manufacturer,
                                     product.media,
