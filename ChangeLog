@@ -1,3 +1,14 @@
+2004-07-21  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/amazon.rb:
+
+	Squeezes extra spaces.
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Appends the edition and the publisher in the search results list
+	for books that have the same title and authors.
+
 2004-07-11  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/new_book_dialog.glade:

@@ -81,7 +81,11 @@ class BookProviders
 			results = []
 			products.each do |product|
                 next unless product.catalog == 'Book'
-                conv = proc { |str| GLib.convert(str, "ISO-8859-1", "UTF-8") }
+                conv = proc do |str|
+                    # FIXME looks like we don't need to decode the charset anymore
+                    # should fix that ASAP
+                    GLib.convert(str.squeeze(' '), "ISO-8859-1", "UTF-8")
+                end 
                 book = Book.new(conv.call(product.product_name),
                                 (product.authors.map { |x| conv.call(x) } rescue [ _("n/a") ]),
                                 conv.call(product.isbn),

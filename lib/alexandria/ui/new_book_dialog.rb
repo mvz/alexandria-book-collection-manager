@@ -78,9 +78,15 @@ module UI
                 end
                 @results = Alexandria::BookProviders.search(@entry_search.text.strip, mode)
                 @treeview_results.model.clear
-                @results.each do |book, small_cover, medium_cover|
+                treedata = @results.each do |book, *cs|
+                    s = _("%s, by %s") % [ book.title, book.authors.join(', ') ]
+                    if @results.find { |book2, *cs| book.title == book2.title and
+                                                    book.authors == book2.authors }.length > 1
+
+                        s += " (#{book.edition}, #{book.publisher})"
+                    end
                     iter = @treeview_results.model.append
-                    iter[0] = _("%s, by %s") % [ book.title, book.authors.join(', ') ]
+                    iter[0] = s 
                     iter[1] = book.isbn
                 end
             rescue => e
