@@ -38,6 +38,14 @@ class BookProviders
         
         def search(criterion, type)
             prefs.read
+
+            if config = Alexandria::Preferences.instance.http_proxy_config
+                @transport = Net::HTTP.Proxy(*config)
+            else
+                @transport = Net::HTTP
+            end
+            p @transport
+
             criterion = GLib.convert(criterion, "WINDOWS-1252", "UTF-8")
             req = case type
                 when Alexandria::BookProviders::SEARCH_BY_ISBN
@@ -60,7 +68,7 @@ class BookProviders
  
             results_page = "http://oas2000.proxis.be/gate/jabba.search.submit_search?#{req}&p_item=#{LANGUAGES[prefs['lang']]}&p_order=1&p_operator=K&p_filter=1"
 
-            Net::HTTP.get(URI.parse(results_page)).each do |line|
+            @transport.get(URI.parse(results_page)).each do |line|
                 if (line =~ /BR>.*DETAILS&mi=([^&]*)&si=/) and (!products[$1]) and (book = parseBook($1)) then
                     products[$1] = book
                 end
@@ -75,7 +83,7 @@ class BookProviders
             product = {}
             product['authors'] = []
             nextline = nil
-            Net::HTTP.get(URI.parse(detailspage)).each do |line|
+            @transport.get(URI.parse(detailspage)).each do |line|
                 if line =~ /SPAN CLASS=AUTHOR>([^<]*)</ 
                     author = $1.gsub('&nbsp;',' ').sub(/ +$/,'')
                     product['authors'] << author

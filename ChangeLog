@@ -1,3 +1,19 @@
+2004-06-25  Laurent Sansonetti  <lrz@gnome.org>
+	
+	* README:
+
+	Incremented Ruby/Amazon's version (0.8.2 -> 0.8.3).
+
+	* lib/alexandria/preferences.rb:
+
+	Added code to retrieve GNOME HTTP proxy configuration.
+
+	* lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/proxis.rb:
+
+	Pass HTTP connections to the proxy defined in the GNOME configuration
+	if exists.
+
 2004-06-23  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/preferences_dialog.glade,

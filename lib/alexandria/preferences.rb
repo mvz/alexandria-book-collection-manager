@@ -49,5 +49,24 @@ module Alexandria
         def www_browser
             @client[WWW_DIR + "command"] if @client[WWW_DIR + "enabled"]
         end
+
+        def http_proxy_config
+            if @client["/system/http_proxy/use_http_proxy"] and
+               @client["/system/proxy/mode"] == "manual"
+
+                host, port, user, pass = %w{host port authentication_user
+                                            authentication_password}.map do |x|
+                    
+                    case y = @client["/system/http_proxy/" + x]
+                        when Integer
+                            y == 0 ? nil : y
+                        when String
+                            (y.strip.empty?) ? nil : y
+                    end
+                end 
+
+                [ host, port, user, pass ] if host and port
+            end
+        end
     end
 end

@@ -34,6 +34,14 @@ class BookProviders
         def search(criterion, type)
             prefs.read
 
+            if config = Alexandria::Preferences.instance.http_proxy_config
+                host, port, user, pass = config
+                url = "http://"
+                url += user + ":" + pass + "@" if user and pass
+                url += host + ":" + port.to_s
+                ENV['http_proxy'] = url
+            end
+
 			req = Amazon::Search::Request.new(prefs["dev_token"])
             req.locale = prefs["locale"]
 			

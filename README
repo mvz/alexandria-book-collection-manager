@@ -18,7 +18,7 @@ Requirements
 
     Ruby >= 1.8.0:              http://www.ruby-lang.org
     GNOME >= 2.6:               http://www.gnome.org
-    Ruby/Amazon >= 0.8.2:       http://www.caliban.org/ruby/ruby-amazon.shtml
+    Ruby/Amazon >= 0.8.3:       http://www.caliban.org/ruby/ruby-amazon.shtml
     Ruby-GetText >= 0.5.4:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
     Ruby-GNOME2 >= 0.9.x [*]:   http://ruby-gnome2.sourceforge.jp
 
