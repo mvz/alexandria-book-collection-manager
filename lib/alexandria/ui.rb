@@ -36,7 +36,7 @@ require 'alexandria/ui/main_app'
 module Alexandria
 module UI
     def self.main
-        Gnome::Program.new(TITLE, VERSION)
+        Gnome::Program.new('alexandria', VERSION).app_datadir = Config::MAIN_DATA_DIR 
         Icons.init
         MainApp.new
         Gtk.main

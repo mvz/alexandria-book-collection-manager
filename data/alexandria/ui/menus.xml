@@ -69,6 +69,8 @@
       <menuitem action="AsList"/> 
     </menu>
     <menu action="HelpMenu">
+      <menuitem action="Help"/>
+      <separator/>
       <menuitem action="SubmitBugReport"/>
       <separator/>
       <menuitem action="About"/>

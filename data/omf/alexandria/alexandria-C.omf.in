@@ -12,8 +12,14 @@
       2005-03-12
     </date>
     <subject category="GNOME|Applications"/>
+    <description>
+      User manual for the Alexandria application.    
+    </description>
+    <type>
+      user's guide
+    </type>
     <format mime="text/xml"/>
-    <identifier url="file:///usr/share/doc/alexandria/gnome-app-template-alexandria.xml"/>
+    <identifier url="PATH_TO_DOC_FILE"/>
     <language code="C"/>
     <relation seriesid="7591aee4-92d9-11d9-88aa-939bacdd01aa"/>
   </resource>

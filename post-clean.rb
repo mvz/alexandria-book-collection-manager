@@ -7,7 +7,8 @@ clean_files = [
     'alexandria.desktop.in.h',
     'bin/alexandria',
     'lib/alexandria/config.rb',
-    'lib/alexandria/version.rb'
+    'lib/alexandria/version.rb',
+    'data/omf/alexandria-C.omf'
     ]
 
 for file in clean_files

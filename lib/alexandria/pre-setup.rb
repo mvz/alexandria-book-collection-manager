@@ -10,6 +10,7 @@ File.open('config.rb', 'w') do |file|
 
 module Alexandria
     module Config
+        MAIN_DATA_DIR = '#{config('data-dir')}'
         DATA_DIR = '#{config('data-dir')}/alexandria'
         LIB_DIR = '#{config('rb-dir')}'
     end

@@ -191,6 +191,16 @@ module UI
         private
         #######
 
+        def display_help(linkid=nil)
+            begin
+                Gnome::Help.display('alexandria', linkid)
+            rescue => e
+                ErrorDialog.new(@main_app, e.message,
+                                _("Check out that the help manual is properly " +
+                                  "installed and try again."))
+            end
+        end
+
         def open_web_browser(url)
             unless (cmd = Preferences.instance.www_browser).nil?
                 Thread.new { system(cmd % "\"" + url + "\"") }
@@ -810,6 +820,7 @@ module UI
                 end
             end
             on_submit_bug_report = proc { open_web_browser(BUGREPORT_URL) }
+            on_help = proc { display_help }
             on_about = proc { AboutDialog.new(@main_app).show }
 
             standard_actions = [
@@ -838,7 +849,8 @@ module UI
                 ["HelpMenu", nil, _("_Help")],
                 ["SubmitBugReport", Gnome::Stock::MAIL_NEW, _("Submit _Bug Report"), nil, nil,
                  on_submit_bug_report],
-                ["About", Gnome::Stock::ABOUT, _("_About"), nil, nil, on_about],
+                ["Help", Gtk::Stock::HELP, _("Contents"), "F1", nil, on_help],
+                ["About", Gtk::Stock::ABOUT, _("_About"), nil, nil, on_about],
             ]
 
             on_view_sidepane = proc { |ag, a| @paned.child1.visible = a.active? }
