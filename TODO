@@ -3,7 +3,7 @@ Alexandria's TODO list
 
 Before next release:
 
-[ ] Saving and restoring preferences (Laurent)
+[X] Saving and restoring preferences (Laurent)
 [ ] Search bar to filter books (Zachary, Laurent)
 [ ] i18n (Dafydd)
 [X] Rating support (Laurent)
