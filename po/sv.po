@@ -8,18 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-07 21:55+0100\n"
+"POT-Creation-Date: 2005-03-19 21:11+0200\n"
 "PO-Revision-Date: 2005-03-10 16:11+0200\n"
 "Last-Translator: David Weinehall <tao@acc.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);"
-
-#: ../lib/alexandria/book_providers/mcu.rb:32
-msgid "Spanish Culture Ministry"
-msgstr "Spanska kulturministeriet"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../lib/alexandria/book_providers/amazon.rb:28
 msgid "Locale site to contact"
@@ -37,6 +33,10 @@ msgstr "Associerat id"
 #: ../lib/alexandria/book_providers/amazon.rb:95
 msgid "n/a"
 msgstr "ej applicerbart"
+
+#: ../lib/alexandria/book_providers/mcu.rb:32
+msgid "Spanish Culture Ministry"
+msgstr "Spanska kulturministeriet"
 
 #: ../lib/alexandria/book_providers/proxis.rb:35
 msgid "Language of the books to search"
@@ -103,6 +103,34 @@ msgstr "ISBN-lista (*.txt)"
 msgid "My Library"
 msgstr "Mitt bibliotek"
 
+#: ../lib/alexandria/ui/book_properties_dialog.rb:73
+msgid "Couldn't modify the book"
+msgstr "Kunde inte ändra boken"
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:74
+#: ../lib/alexandria/ui/new_book_dialog.rb:176
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:64
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"Kunde inte bekräfta det EAN/ISBN du angivit. Kontrollera att det är korrekt "
+"inmatat och försök igen."
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:52
+msgid "Author"
+msgstr "Författare"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:91
+msgid "Select a cover image"
+msgstr "Välj en omslagsbild"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:125
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d dag"
+msgstr[1] "%d dagar"
+
 #: ../lib/alexandria/ui/export_dialog.rb:25
 msgid "File already exists"
 msgstr "Filen finns redan"
@@ -153,34 +181,6 @@ msgstr ""
 #: ../lib/alexandria/ui/export_dialog.rb:152
 msgid "Not a directory"
 msgstr "Ej en katalog"
-
-#: ../lib/alexandria/ui/book_properties_dialog.rb:73
-msgid "Couldn't modify the book"
-msgstr "Kunde inte ändra boken"
-
-#: ../lib/alexandria/ui/book_properties_dialog.rb:74
-#: ../lib/alexandria/ui/new_book_dialog.rb:176
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:64
-msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correcty, and try again."
-msgstr ""
-"Kunde inte bekräfta det EAN/ISBN du angivit. Kontrollera att det är korrekt "
-"inmatat och försök igen."
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:52
-msgid "Author"
-msgstr "Författare"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:91
-msgid "Select a cover image"
-msgstr "Välj en omslagsbild"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:125
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] "%d dag"
-msgstr[1] "%d dagar"
 
 #: ../lib/alexandria/ui/import_dialog.rb:36
 msgid "Error while importing"
@@ -329,10 +329,10 @@ msgstr "Är du säker på att du permanent vill radera \"%s\"?"
 
 #: ../lib/alexandria/ui/main_app.rb:703
 msgid "Are you sure you want to permanently delete '%s' which has %d book?"
+msgid_plural ""
 "Are you sure you want to permanently delete '%s' which has %d books?"
-msgstr ""
-"Är du säker på att du permanent vill radera \"%s\" som innehåller %d bok?"
-"Är du säker på att du permanent vill radera \"%s\" som innehåller %d böcker?"
+msgstr[0] "Är du säker på att du permanent vill radera \"%s\" som innehåller %d bok?"
+msgstr[1] "Är du säker på att du permanent vill radera \"%s\" som innehåller %d böcker?"
 
 #: ../lib/alexandria/ui/main_app.rb:718
 msgid "Are you sure you want to permanently delete '%s' from '%s'?"
@@ -546,7 +546,7 @@ msgid "Unable to find matches for your search"
 msgstr "Din sökning gav inga träffar"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:217
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:101
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:102
 msgid "Couldn't add the book"
 msgstr "Kunde inte lägga till boken"
 
@@ -703,4 +703,15 @@ msgstr ""
 msgid "Providers"
 msgstr "Förmedlare"
 
+#: ../alexandria.desktop.in.h:1
+msgid "Alexandria Book Collection Manager"
+msgstr "Boksamlingshanteraren Alexandria"
+
+#: ../alexandria.desktop.in.h:2
+msgid "Book Collection Manager"
+msgstr "Boksamlingshanterare"
+
+#: ../alexandria.desktop.in.h:3
+msgid "Manage your book collection"
+msgstr "Hantera din boksamling"
 
