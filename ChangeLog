@@ -1,3 +1,22 @@
+2004-05-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/preferences_dialog.glade:
+
+	Added a "General" tab in which you can configure
+	visible columns for the "View as List" mode.
+
+	* lib/alexandria/book.rb:
+
+	Removed bad tabulations.
+
+	* lib/alexandria/ui/main_app.rb,
+	  data/alexandria/glade/main_app.glade:
+
+	- Fixed bad signals and added "Help/Submit Bug Report",
+	  which is still not implemented yet ;
+	- Don't clear the iconlist if it's empty (to avoid a
+	  GLib warning).
+
 2004-04-30  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/info_book_dialog.glade,

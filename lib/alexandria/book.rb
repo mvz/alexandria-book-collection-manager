@@ -190,7 +190,7 @@ module Alexandria
                 @prefs.add("associate", "Associate ID", "calibanorg-20")
             end
                
-        	def search(criteria)
+            def search(criteria)
                 results = []
                 prefs.read
                 req = Amazon::Search::Request.new(prefs["dev_token"])
@@ -215,7 +215,7 @@ module Alexandria
                 end
                 raise "Too many results" unless results.length == 1
                 results.first
-        	end
+            end
         end
        
         def initialize

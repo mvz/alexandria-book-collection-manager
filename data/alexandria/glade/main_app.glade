@@ -17,6 +17,11 @@
   <property name="default_height">480</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="enable_layout_config">True</property>
   <signal name="destroy" handler="on_quit" last_modification_time="Fri, 12 Mar 2004 00:39:22 GMT"/>
 
@@ -37,6 +42,10 @@
 	      <property name="yalign">0.5</property>
 	      <property name="xscale">1</property>
 	      <property name="yscale">1</property>
+	      <property name="top_padding">0</property>
+	      <property name="bottom_padding">0</property>
+	      <property name="left_padding">0</property>
+	      <property name="right_padding">0</property>
 
 	      <child>
 		<widget class="GtkMenuBar" id="menubar1">
@@ -61,7 +70,7 @@
 			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image367">
+				<widget class="GtkImage" id="image407">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -84,7 +93,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image368">
+				<widget class="GtkImage" id="image408">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-add</property>
 				  <property name="icon_size">1</property>
@@ -98,7 +107,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="separator5">
+			    <widget class="GtkSeparatorMenuItem" id="separator5">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -112,7 +121,7 @@
 			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image369">
+				<widget class="GtkImage" id="image409">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -126,7 +135,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="separator14">
+			    <widget class="GtkSeparatorMenuItem" id="separator14">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -172,7 +181,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="separator8">
+			    <widget class="GtkSeparatorMenuItem" id="separator8">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -186,7 +195,7 @@
 			      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image370">
+				<widget class="GtkImage" id="image410">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -200,7 +209,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="separator15">
+			    <widget class="GtkSeparatorMenuItem" id="separator15">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -234,7 +243,7 @@
 			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image371">
+				<widget class="GtkImage" id="image411">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-refresh</property>
 				  <property name="icon_size">1</property>
@@ -248,7 +257,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="separator12">
+			    <widget class="GtkSeparatorMenuItem" id="separator12">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -287,7 +296,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="separator9">
+			    <widget class="GtkSeparatorMenuItem" id="separator9">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -326,6 +335,33 @@
 			<widget class="GtkMenu" id="help1_menu">
 
 			  <child>
+			    <widget class="GtkImageMenuItem" id="submit_bug_report1">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Submit _Bug Report</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_submit_bug_report" last_modification_time="Sat, 15 May 2004 11:46:48 GMT"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image412">
+				  <property name="visible">True</property>
+				  <property name="stock">gnome-stock-mail-new</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkSeparatorMenuItem" id="separator20">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
 			    <widget class="GtkImageMenuItem" id="menu_about">
 			      <property name="visible">True</property>
 			      <property name="stock_item">GNOMEUIINFO_MENU_ABOUT_ITEM</property>
@@ -361,82 +397,123 @@
 	      <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
 	      <property name="toolbar_style">GTK_TOOLBAR_ICONS</property>
 	      <property name="tooltips">True</property>
+	      <property name="show_arrow">True</property>
 
 	      <child>
-		<widget class="button" id="button16">
+		<widget class="GtkToolButton" id="button16">
 		  <property name="visible">True</property>
-		  <property name="label">gtk-new</property>
-		  <property name="use_stock">True</property>
-		  <signal name="pressed" handler="on_new_library" last_modification_time="Mon, 29 Mar 2004 00:10:07 GMT"/>
-		</widget>
-	      </child>
-
-	      <child>
-		<widget class="button" id="button12">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">New File</property>
-		  <property name="label">gtk-add</property>
-		  <property name="use_stock">True</property>
-		  <signal name="pressed" handler="on_new_book" last_modification_time="Wed, 17 Mar 2004 22:58:35 GMT"/>
-		</widget>
-	      </child>
-
-	      <child>
-		<widget class="button" id="button17">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">New File</property>
-		  <property name="label">gtk-refresh</property>
-		  <property name="use_stock">True</property>
-		  <property name="new_group">True</property>
-		  <signal name="pressed" handler="on_refresh" last_modification_time="Mon, 29 Mar 2004 00:09:09 GMT"/>
+		  <property name="stock_id">gtk-new</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_new_library" last_modification_time="Mon, 29 Mar 2004 00:10:07 GMT"/>
 		</widget>
 		<packing>
-		  <property name="new_group">True</property>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
 		</packing>
 	      </child>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox1">
+		<widget class="GtkToolButton" id="button12">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">New File</property>
+		  <property name="stock_id">gtk-add</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_new_book" last_modification_time="Wed, 17 Mar 2004 22:58:35 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkSeparatorToolItem" id="separatortoolitem1">
+		  <property name="visible">True</property>
+		  <property name="draw">True</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
 		  <property name="homogeneous">False</property>
-		  <property name="spacing">0</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkToolButton" id="button17">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">New File</property>
+		  <property name="stock_id">gtk-refresh</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_refresh" last_modification_time="Mon, 29 Mar 2004 00:09:09 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkToolItem" id="toolitem1">
+		  <property name="visible">True</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
 
 		  <child>
-		    <widget class="GtkOptionMenu" id="toolbar_view_as">
+		    <widget class="GtkHBox" id="hbox1">
 		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="history">0</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">0</property>
 
 		      <child>
-			<widget class="GtkMenu" id="menu1">
+			<widget class="GtkOptionMenu" id="toolbar_view_as">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="history">0</property>
 
 			  <child>
-			    <widget class="GtkMenuItem" id="toolbar_view_as_icons">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">View as Icons</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 03 Apr 2004 15:37:06 GMT"/>
-			    </widget>
-			  </child>
+			    <widget class="GtkMenu" id="menu1">
 
-			  <child>
-			    <widget class="GtkMenuItem" id="toolbar_view_as_list">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">View as List</property>
-			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 03 Apr 2004 15:37:06 GMT"/>
+			      <child>
+				<widget class="GtkMenuItem" id="toolbar_view_as_icons">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">View as Icons</property>
+				  <property name="use_underline">True</property>
+				  <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 03 Apr 2004 15:37:06 GMT"/>
+				</widget>
+			      </child>
+
+			      <child>
+				<widget class="GtkMenuItem" id="toolbar_view_as_list">
+				  <property name="visible">True</property>
+				  <property name="label" translatable="yes">View as List</property>
+				  <property name="use_underline">True</property>
+				  <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 03 Apr 2004 15:37:06 GMT"/>
+				</widget>
+			      </child>
 			    </widget>
 			  </child>
 			</widget>
+			<packing>
+			  <property name="padding">5</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
 		      </child>
 		    </widget>
-		    <packing>
-		      <property name="padding">5</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
 		  </child>
 		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">False</property>
+		</packing>
 	      </child>
 	    </widget>
 	  </child>

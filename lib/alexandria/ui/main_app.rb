@@ -179,7 +179,7 @@ module UI
 
         def on_refresh  
             @listview.model.clear
-            @iconlist.clear
+            @iconlist.clear unless @iconlist.num_icons == 0
             library = selected_library
             library.each { |book| append_book(book) }
             @main_app.title = library.name + " - " + TITLE
@@ -215,6 +215,11 @@ module UI
             if widget.name.include?('popup_view_as_list') or widget == @toolbar_view_as_list
                 @menu_view_as_list.active = true
             end
+        end
+
+        def on_submit_bug_report
+            # TODO: open default browser on 
+            # 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'.
         end
 
         def on_about
