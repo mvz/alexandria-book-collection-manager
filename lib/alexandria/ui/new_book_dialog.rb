@@ -77,6 +77,15 @@ module UI
             @button_add.sensitive = false
         end
 
+        def on_results_button_press_event(widget, event)
+            # double left click
+            if event.event_type == Gdk::Event::BUTTON2_PRESS and
+               event.button == 1 
+
+                on_add
+            end
+        end
+
         def on_add
             begin
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }

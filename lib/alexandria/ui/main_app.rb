@@ -108,7 +108,7 @@ module UI
         def on_new_book
             NewBookDialog.new(@main_app, @libraries, selected_library) do |book, library|
                 if selected_library == library
-                    append_book(book)
+                    on_refresh
                 else
                     select_library(library)
                 end
@@ -378,11 +378,6 @@ module UI
 
         def load_libraries
             @libraries = Library.loadall
-        end
-
-        def append_book(book)
-            append_book_as_icon(book)
-            append_book_in_list(book)
         end
 
         ICON_MAXLEN = 20

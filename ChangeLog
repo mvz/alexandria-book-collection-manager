@@ -1,3 +1,17 @@
+2004-06-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	- The dialog is now automatically resized according to the selected criterion ;
+	- Performs the search when 'enter' is pressed in the title entry ;
+	- Performs the add when a double left click is detected on a result row ;
+	- Fixed some small UI issues.
+
+	* lib/alexandria/ui/main_app.rb:
+		
+	Sorts the current library after a book has been added.
+
 2004-06-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb,
