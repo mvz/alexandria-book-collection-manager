@@ -4,7 +4,9 @@
 
 	- Do not save the book properties on destroy ;
 	- Display an error message when trying to set an EAN/ISBN that is already
-	  used by another book in the same library.
+	  used by another book in the same library ;
+	- Do not set the saved ident of the book here, let Library#save do it
+	  in order to not duplicate entries.
 
 	* lib/alexandria/ui/new_book_dialog_manual.rb:
 

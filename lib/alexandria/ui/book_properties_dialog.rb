@@ -83,7 +83,6 @@ module UI
                     return
                 end
             end
-            @book.saved_ident = @book.ident
             @book.title = @entry_title.text
             @book.publisher = @entry_publisher.text
             @book.edition = @entry_edition.text
