@@ -278,13 +278,18 @@ module Alexandria
             Dir.chdir(tmpdir) do
                 begin
                     system("unzip -qq \"#{filename}\"")
-                    xml = REXML::Document.new(File.open('bookcase.xml'))
-                    raise unless xml.root.name == 'bookcase'
+                    file = File.exists?('bookcase.xml') \
+                        ? 'bookcase.xml' : 'tellico.xml'
+                    xml = REXML::Document.new(File.open(file))
+                    raise unless (xml.root.name == 'bookcase' or 
+                                  xml.root.name == 'tellico')
                     # FIXME: handle multiple collections
                     raise unless xml.root.elements.size == 1
                     collection = xml.root.elements[1]
                     raise unless collection.name == 'collection'
-
+                    type = collection.attribute('type').value.to_i
+		            raise unless (type == 2 or type == 5)
+                    
                     content = []
                     collection.elements.each('entry') do |entry|
                         elements = entry.elements
@@ -303,7 +308,8 @@ module Alexandria
                     content.each do |book, cover|
                         unless cover.nil?
                             library.save_cover(book, 
-                                               File.join(Dir.pwd, "images", cover))
+                                               File.join(Dir.pwd, "images", 
+                                                         cover))
                         end
                         library << book
                         library.save(book)
@@ -392,12 +398,12 @@ module Alexandria
                     elem = prod.add_element('MediaFile')
                     # front cover image
                     elem.add_element('MediaFileTypeCode').text = '04'
-                    # JPEG (FIXME may be GIF is bn.com is used)
-                    elem.add_element('MediaFileFormatCode').text = '03'
+                    elem.add_element('MediaFileFormatCode').text = 
+                        (jpeg?(cover(book)) ? '03' : '02' )
                     # filename
                     elem.add_element('MediaFileLinkTypeCode').text = '06'
                     elem.add_element('MediaFileLink').text = 
-                        File.join('images', book.isbn + EXT[:cover])
+                        File.join('images', final_cover(book))
                 end
                 BookProviders.each do |provider|
                     elem = prod.add_element('ProductWebSite')
@@ -415,7 +421,7 @@ module Alexandria
             doc << REXML::XMLDecl.new
             doc << REXML::DocType.new('bookcase', "SYSTEM \"bookcase.dtd\"")
             bookcase = doc.add_element('bookcase')
-            bookcase.add_namespace('http://www.periapsis.org/bookcase/')
+            bookcase.add_namespace('http://periapsis.org/bookcase/')
             bookcase.add_attribute('syntaxVersion', "5")
             collection = bookcase.add_element('collection')
             collection.add_attribute('title', self.name)
@@ -456,10 +462,11 @@ module Alexandria
                     entry.add_element('comments').text = book.notes
                 end
                 if File.exists?(cover(book))
-                    entry.add_element('cover').text = book.isbn + EXT[:cover]
+                    entry.add_element('cover').text = final_cover(book)
                     image = images.add_element('image')
-                    image.add_attribute('id', book.isbn + EXT[:cover])
-                    image.add_attribute('format', "JPEG")
+                    image.add_attribute('id', final_cover(book))
+                    image.add_attribute('format', jpeg?(cover(book)) \
+                                                  ? "JPEG" : "GIF")
                 end
             end
             return doc
@@ -469,9 +476,19 @@ module Alexandria
             # remove tmp dir first
             FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
             FileUtils.mkdir(somewhere)
-            Dir.chdir(self.path) do
-                FileUtils.cp(Dir.glob('*' + EXT[:cover]), somewhere)
+            each do |book|
+                next unless File.exists?(cover(book))
+                FileUtils.cp(File.join(self.path, book.isbn + EXT[:cover]),
+                             File.join(somewhere, final_cover(book))) 
             end
+        end
+
+        def jpeg?(file)
+            'JFIF' == IO.read(file, 10)[6..9]
+        end
+
+        def final_cover(book)
+            book.isbn + (jpeg?(cover(book)) ? '.jpg' : '.gif')
         end
     end
 end

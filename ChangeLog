@@ -1,3 +1,16 @@
+2004-11-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb:
+
+	- Tellico Import: check for either 'bookcase.xml' or 'tellico.xml' 
+	  as the XML file ;
+	- Tellico Import: check for either 'bookcase' or 'tellico' as the
+	  root element inside the XML ;
+	- Tellico Import: check for either 2 or 5 as the collection type ;
+	- ONIX and Tellico Export: rename the .cover extention either to
+	  'jpg' or 'gif' according to the file type.
+	- Tellico Export: remove the 'www' part of the namespace address. 
+
 2004-11-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb:
