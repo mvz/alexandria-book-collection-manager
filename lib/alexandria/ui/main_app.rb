@@ -87,12 +87,12 @@ module UI
                                library.length) % [ library.name, 
                                                    library.length, 
                                                    library.n_unrated ] 
-                       end
+                    end
                 when 1
                     _("'%s' selected") % books.first.title
                 else
-                    n_("%d book selected", "%d books selected", books.length) \
-                        % books.length
+                    n_("%d book selected", "%d books selected", 
+                       books.length) % books.length
             end
             unless @library_listview.has_focus?
                 @actiongroup["Properties"].sensitive = \
@@ -109,6 +109,9 @@ module UI
         def on_switch_page
             @actiongroup["ArrangeIcons"].sensitive = @notebook.page == 0
             on_books_selection_changed
+            if @notebook.page == 0
+                @list_sort_column_id = @model.sort_column_id
+            end
             arrange_books
         end
         
@@ -168,14 +171,6 @@ module UI
             @libraries = Library.loadall
         end
 
-        def create_models
-            @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
-                                        String, String, String, String, 
-                                        String, Integer, String)
-            @icon_model = Gtk::TreeModelSort.new(@model)
-            @list_model = Gtk::TreeModelSort.new(@model)
-        end
-
         ICON_TITLE_MAXLEN = 20   # characters
         ICON_WIDTH = 48          # pixels
         def fill_iter_with_book(iter, book)
@@ -215,14 +210,13 @@ module UI
         end
 
         def setup_books_iconview
-            @iconview.model = @icon_model
+            @iconview.model = @model
             @iconview.selection_mode = Gtk::SELECTION_MULTIPLE
             @iconview.text_column = Columns::TITLE_REDUCED 
             @iconview.pixbuf_column = Columns::COVER_ICON
             @iconview.orientation = Gtk::ORIENTATION_VERTICAL
             @iconview.row_spacing = 4
             @iconview.column_spacing = 2
-            #@iconview.item_width = 100
           
             @iconview.signal_connect('selection-changed') do 
                 on_books_selection_changed
@@ -230,9 +224,8 @@ module UI
         end
 
         def setup_books_listview
-            @listview.model = @list_model
-
             # first column
+            @listview.model = @model
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Title"))
             column.pack_start(renderer, true)
@@ -292,14 +285,19 @@ module UI
                     Columns::TITLE, Columns::AUTHORS, Columns::ISBN, 
                     Columns::PUBLISHER, Columns::EDITION, Columns::RATING
                 ]
-                @icon_model.set_sort_column_id(sorts[@prefs.arrange_icons_mode],
-                                               @prefs.reverse_icons \
-                                                   ? Gtk::SORT_DESCENDING \
-                                                   : Gtk::SORT_ASCENDING)
+                @model.set_sort_column_id(sorts[@prefs.arrange_icons_mode],
+                                          @prefs.reverse_icons \
+                                               ? Gtk::SORT_DESCENDING \
+                                               : Gtk::SORT_ASCENDING)
                 
                 # Force redraw.
-                @icon_model.row_changed(@icon_model.iter_first.path,
-                                        @icon_model.iter_first)
+                if iter = @model.iter_first
+                    @model.row_changed(iter.path, iter)
+                end
+            else
+                if @list_sort_column_id
+                    @model.set_sort_column_id(*@list_sort_column_id)
+                end
             end
         end
        
@@ -321,7 +319,7 @@ module UI
         def refresh_books
             # Clear the views.
             @model.clear
-            
+
             # Filter books according to the search toolbar widgets. 
             @filter_entry.text = filter_crit = @filter_entry.text.strip
             @filter_books_mode ||= 0
@@ -341,7 +339,6 @@ module UI
             # Refresh the status bar.
             on_books_selection_changed
 
-            setup_listview_columns_visibility
             arrange_books
         end
         
@@ -391,16 +388,17 @@ module UI
             view = case @notebook.page
                 when 0
                     @iconview.selected_each do |iconview, path|
-                        iter = @icon_model.get_iter(path)
+                        iter = @model.get_iter(path)
                         a << book_from_iter(library, iter)
                     end
 
                 when 1
-                    @listview.selection.selected_each do |model, path, iter| 
+                    @listview.selection.selected_each do |model, path, 
+                                                          iter|
                         a << book_from_iter(library, iter)
                     end
             end
-            return a
+            a.select { |x| x != nil }
         end   
 
         def setup_sidepane
@@ -516,11 +514,17 @@ module UI
                 @actiongroup.remove_action(action)
             end
             actions = @libraries.map do |library|
+                on_move = proc do
+                    books = selected_books
+                    books.each do |book| 
+                        iter = iter_from_book(book)
+                        @model.remove(iter)
+                    end
+                    Library.move(selected_library,
+                                 library, *books)
+                end
                 [ library.action_name, nil,
-                  _("In '_%s'") % library.name, nil, nil,
-                  proc { Library.move(selected_library, 
-                                      library, *selected_books)
-                         refresh_books } ]
+                  _("In '_%s'") % library.name, nil, nil, on_move ]
             end
             @actiongroup.add_actions(actions)
             @uimanager.remove_ui(@move_mid) if @move_mid
@@ -782,7 +786,7 @@ module UI
             
             [ "menus.xml", "popups.xml" ].each do |ui_file|
                 @uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR, 
-                                           "ui", ui_file))
+                                            "ui", ui_file))
             end
 
             mid = @uimanager.new_merge_id 
@@ -792,7 +796,7 @@ module UI
                   "ui/BookPopup/OnlineInformation/",
                   "ui/NoBookPopup/OnlineInformation/" ].each do |path|
                     @uimanager.add_ui(mid, path, name, name, 
-                                     Gtk::UIManager::MENUITEM, false)
+                                      Gtk::UIManager::MENUITEM, false)
                 end
             end
 
@@ -882,11 +886,15 @@ module UI
                 open_email_client("mailto:" + link)
             end
             
-            create_models
+            @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
+                                        String, String, String, String, 
+                                        String, Integer, String)
+
             setup_books_listview
             setup_books_iconview
             setup_sidepane
             setup_move_actions
+            setup_listview_columns_visibility
         end
     end
 end

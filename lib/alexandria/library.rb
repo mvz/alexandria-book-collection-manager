@@ -96,6 +96,8 @@ module Alexandria
                 if File.exists?(source_library.cover(book))
                     FileUtils.mv(source_library.cover(book), dest)
                 end
+                source_library.old_delete(book)
+                dest_library << book
             end
         end
 

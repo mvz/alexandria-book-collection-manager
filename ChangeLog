@@ -1,3 +1,10 @@
+2005-02-23  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Fixes some defects introduced by the view model change.
+
 2005-02-22  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
