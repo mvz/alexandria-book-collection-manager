@@ -55,10 +55,20 @@ module UI
         end
 
         def on_books_selection_changed
+            library = selected_library
             books = selected_books
             @appbar.status = case books.length
                 when 0
-                    ""
+                    case library.length
+                        when 0
+                            _("Library '%s' selected") % library.name        
+                                
+                        else
+                            n_("Library '%s' selected, %d book, %d unrated", 
+                               "Library '%s' selected, %d books, %d unrated", 
+                               library.length) % [ library.name, library.length, 
+                                                   library.n_unrated ] 
+                       end
                 when 1
                     _("'%s' selected") % books.first.title
                 else
@@ -66,7 +76,7 @@ module UI
                         % books.length
             end
             @actiongroup["Properties"].sensitive = @actiongroup["OnlineInformation"].sensitive = books.length == 1
-            @actiongroup["SelectAll"].sensitive = books.length < selected_library.length
+            @actiongroup["SelectAll"].sensitive = books.length < library.length
             @actiongroup["Delete"].sensitive = @actiongroup["DeselectAll"].sensitive = !books.empty?
         end
 
@@ -146,6 +156,9 @@ module UI
             cols.each_index do |i|
                 cols[i].visible = cols_visibility[i]
             end
+
+            # Refresh the status bar.
+            on_books_selection_changed
         end
 
         def on_close_sidepane
@@ -485,8 +498,8 @@ module UI
                 ["LibraryMenu", nil, _("_Library")],
                 ["New", Gtk::Stock::NEW, _("_New"), "<control>L", nil, on_new],
                 ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", nil, on_add_book],
-                ["Import", nil, _("Import..."), nil, nil, on_import],
-                ["Export", nil, _("Export..."), nil, nil, on_export],
+                ["Import", nil, _("Import..."), "<control>I", nil, on_import],
+                ["Export", nil, _("Export..."), "<control><shift>E", nil, on_export],
                 ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, nil, on_properties],
                 ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", nil, on_quit],
                 ["EditMenu", nil, _("_Edit")],

@@ -139,7 +139,8 @@ module UI
                     isbn = begin
                         Library.canonicalise_isbn(@entry_isbn.text)
                     rescue
-                        raise _("Couldn't validate the EAN/ISBN you provided.  Make sure it is written correcty, and try again.")
+                        raise _("Couldn't validate the EAN/ISBN you provided.  " +
+                                "Make sure it is written correcty, and try again.")
                     end
                     assert_not_exist(library, @entry_isbn.text)
                     books_to_add << Alexandria::BookProviders.isbn_search(isbn)
@@ -183,11 +184,16 @@ module UI
             
                 radio, target_widget, box2, box3 = case widget
                     when @eventbox_entry_search
-                        [@title_radiobutton, @entry_search, @eventbox_combo_search, @eventbox_entry_isbn]
+                        [@title_radiobutton, @entry_search, 
+                         @eventbox_combo_search, @eventbox_entry_isbn]
+
                     when @eventbox_combo_search 
-                        [@title_radiobutton, @combo_search, @eventbox_entry_search, @eventbox_entry_isbn]
+                        [@title_radiobutton, @combo_search, 
+                         @eventbox_entry_search, @eventbox_entry_isbn]
+
                     when @eventbox_entry_isbn 
-                        [@isbn_radiobutton, @entry_isbn, @eventbox_entry_search, @eventbox_combo_search]
+                        [@isbn_radiobutton, @entry_isbn, 
+                         @eventbox_entry_search, @eventbox_combo_search]
                 end
                 radio.active = true
                 target_widget.grab_focus 
@@ -204,7 +210,8 @@ module UI
             # Check that the book doesn't already exist in the library.
             canonical = Library.canonicalise_isbn(isbn)
             if book = library.find { |book| book.isbn == canonical }
-                raise _("'%s' already exists in '%s' (titled '%s').") % [ isbn, library.name, book.title ] 
+                raise _("'%s' already exists in '%s' (titled '%s').") % \
+                        [ isbn, library.name, book.title ] 
             end
             true
         end

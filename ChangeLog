@@ -1,3 +1,18 @@
+2004-09-19  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Show more feedback on the status bar ;
+	- Added keyboard shortcuts for the Import/Export actions.
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Splitted some translatable strings. 
+
+	* lib/alexandria/library.rb (#n_rated, #n_unrated):
+
+	Added.
+
 2004-09-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb,
