@@ -1,3 +1,15 @@
+2004-05-17  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria.rb:
+
+	Sets $DEBUG if ENV['DEBUG'] is defined.
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Removed code to handle EINVAL exception, this was
+	a workaround for a FreeBSD bug which seems to have
+	disappeared.
+
 2004-05-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/preferences_dialog.glade:

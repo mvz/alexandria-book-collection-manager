@@ -34,6 +34,7 @@ module Alexandria
     LIST = 'alexandria-list@rubyforge.org'
 
     def self.main
+        $DEBUG = !ENV['DEBUG'].nil?
         Alexandria::UI.main
     end
 end

@@ -54,10 +54,6 @@ module UI
                 # Now we can destroy the dialog and go back to the main application.
                 @new_book_dialog.destroy
                 @block.call(book, library)
-            rescue Errno::EINVAL
-                # For a strange reason it seems that the first request always fails
-                # on FreeBSD.
-                retry
             rescue => e
                 ErrorDialog.new(@parent, "Couldn't add book", e.message)
             end
