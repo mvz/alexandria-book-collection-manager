@@ -1,5 +1,9 @@
 2004-09-25  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui.rb:
+
+	Removed '.rb' suffixes in require statements.
+	
 	* data/alexandria/glade/main_app.glade:
 
 	Added a "Online Information at" menu item in the popup
