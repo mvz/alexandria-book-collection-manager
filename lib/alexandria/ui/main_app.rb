@@ -21,7 +21,7 @@ module UI
         def initialize
             super("main_app.glade")
             @main_app.icon = Icons::ALEXANDRIA_SMALL
-            @libraries = Library.loadall
+            load_libraries
             build_books_listview
             build_sidepane
             on_books_selection_changed
@@ -191,38 +191,71 @@ module UI
                     @listview.selection.unselect_all
             end
         end
+
+        def on_search
+            @filter_entry.grab_focus
+        end
  
+        def on_clear_search_results
+            @filter_entry.text = ""
+            on_refresh
+        end
+
         def on_preferences
             PreferencesDialog.new(@main_app) { on_refresh } 
         end
 
         def on_refresh  
+            # Clear the views.
             @listview.model.clear
             @iconlist.clear
+
+            load_libraries            
             library = selected_library
-            library.each { |book| append_book_in_list(book) }
+            prefs = Preferences.instance            
             
+            # Filter books according to the search toolbar widgets. 
+            @filter_entry.text = filter_crit = @filter_entry.text.strip
+            @filter_books_mode ||= 0
+            library.delete_if do |book|
+                !/#{filter_crit}/i.match case @filter_books_mode
+                    when 0 then book.title
+                    when 1 then book.authors.join
+                    when 2 then book.isbn
+                    when 3 then book.publisher
+                    when 4 then (book.notes or "")
+                end     
+            end 
+
+            # Append books in the list view.
+            library.each { |book| append_book_in_list(book) }
+
+            # Sort and reverse books according to the "Arrange Icons" menus.
             sort_funcs = [
-                lambda { |x, y| x.title <=> y.title },
-                lambda { |x, y| x.authors <=> y.authors },
-                lambda { |x, y| x.isbn <=> y.isbn },
-                lambda { |x, y| x.publisher <=> y.publisher },
-                lambda { |x, y| x.edition <=> y.edition },
-                lambda { |x, y| x.rating <=> y.rating }
-            ]           
-            mode = (Preferences.instance.arrange_icons_mode or 0)
-            library.sort! { |x, y| sort_funcs[mode].call(x, y) } 
-            library.reverse! if Preferences.instance.reverse_icons
+                proc { |x, y| x.title <=> y.title },
+                proc { |x, y| x.authors <=> y.authors },
+                proc { |x, y| x.isbn <=> y.isbn },
+                proc { |x, y| x.publisher <=> y.publisher },
+                proc { |x, y| x.edition <=> y.edition },
+                proc { |x, y| x.rating <=> y.rating }
+            ]
+            sort = sort_funcs[(prefs.arrange_icons_mode or 0)]
+            library.sort! { |x, y| sort.call(x, y) } 
+            library.reverse! if prefs.reverse_icons
+            
+            # Append books in the icon view.
             library.each { |book| append_book_as_icon(book) }
 
+            # Change the application's title.
             @main_app.title = library.name + " - " + TITLE
-            
+           
+            # Show or hide list view columns according to the preferences. 
             cols_visibility = [
-                Preferences.instance.col_authors_visible,
-                Preferences.instance.col_isbn_visible,
-                Preferences.instance.col_publisher_visible,
-                Preferences.instance.col_edition_visible,
-                Preferences.instance.col_rating_visible
+                prefs.col_authors_visible,
+                prefs.col_isbn_visible,
+                prefs.col_publisher_visible,
+                prefs.col_edition_visible,
+                prefs.col_rating_visible
             ]
             cols = @listview.columns[1..-1] # skip "Title"
             cols.each_index do |i|
@@ -269,6 +302,26 @@ module UI
             end
         end
 
+        def on_filter_by_title
+            update_filter_books_mode(0)
+        end
+
+        def on_filter_by_authors
+            update_filter_books_mode(1)
+        end
+
+        def on_filter_by_isbn
+            update_filter_books_mode(2)
+        end
+        
+        def on_filter_by_publisher
+            update_filter_books_mode(3)
+        end
+        
+        def on_filter_by_notes
+            update_filter_books_mode(4)
+        end
+        
         def on_menu_arrange_icons_selected
             items = [ @menu_icons_by_title, @menu_icons_by_authors, @menu_icons_by_isbn,
                       @menu_icons_by_publisher, @menu_icons_by_edition, @menu_icons_by_rating ]
@@ -277,33 +330,27 @@ module UI
         end
 
         def on_arrange_icons_by_title
-            Preferences.instance.arrange_icons_mode = 0
-            on_refresh
+            update_arrange_icons_mode(0)
         end
 
         def on_arrange_icons_by_authors
-            Preferences.instance.arrange_icons_mode = 1 
-            on_refresh
+            update_arrange_icons_mode(1)
         end
 
         def on_arrange_icons_by_isbn
-            Preferences.instance.arrange_icons_mode = 2 
-            on_refresh
+            update_arrange_icons_mode(2)
         end
 
         def on_arrange_icons_by_edition
-            Preferences.instance.arrange_icons_mode = 3 
-            on_refresh
+            update_arrange_icons_mode(3)
         end
 
         def on_arrange_icons_by_publisher
-            Preferences.instance.arrange_icons_mode = 4 
-            on_refresh
+            update_arrange_icons_mode(4)
         end
 
         def on_arrange_icons_by_rating
-            Preferences.instance.arrange_icons_mode = 5 
-            on_refresh
+            update_arrange_icons_mode(5)
         end
 
         def on_arrange_icons_reversed(item)
@@ -330,6 +377,10 @@ module UI
         #######
         private
         #######
+
+        def load_libraries
+            @libraries = Library.loadall
+        end
 
         def append_book(book)
             append_book_as_icon(book)
@@ -487,6 +538,21 @@ module UI
             @treeview_sidepane.append_column(column)
             @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
             @treeview_sidepane.selection.select_iter(@treeview_sidepane.model.iter_first) 
+        end
+
+        def update_arrange_icons_mode(mode)
+            prefs = Preferences.instance
+            if prefs.arrange_icons_mode != mode
+                prefs.arrange_icons_mode = mode
+                on_refresh
+            end
+        end 
+
+        def update_filter_books_mode(mode)
+            if @filter_books_mode != mode
+                @filter_books_mode = mode
+                on_refresh unless @filter_entry.text.strip.empty?
+            end
         end
        
         def restore_preferences

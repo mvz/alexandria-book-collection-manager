@@ -1,3 +1,15 @@
+2004-06-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* bin/alexandria:
+
+	Prints the release version upon exceptions.
+
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	Added a search field in the toolbar to filter books.  Refactored a bit
+	the existing code. 
+
 2004-06-04  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/ui/main_app.rb:
