@@ -1,12 +1,17 @@
 module Alexandria
 module UI
     class NewBookDialog < GladeBase
-        def initialize(parent, libraries, &block)
+        def initialize(parent, libraries, selected_library=nil, &block)
             super('new_book_dialog.glade')
             @new_book_dialog.transient_for = @parent = parent
             @block = block
             @libraries = libraries
-            @combo_libraries.popdown_strings = libraries.map { |x| x.name }
+            popdown = libraries.map { |x| x.name }
+            if selected_library
+              popdown.delete selected_library.name
+              popdown.unshift selected_library.name
+            end
+            @combo_libraries.popdown_strings = popdown
             @combo_libraries.sensitive = libraries.length > 1
         end
     

@@ -67,7 +67,7 @@ module UI
         end
 
         def on_new_book
-            NewBookDialog.new(@main_app, @libraries) do |book, library|
+            NewBookDialog.new(@main_app, @libraries, selected_library) do |book, library|
                 library << book
                 library.save
                 if selected_library == library

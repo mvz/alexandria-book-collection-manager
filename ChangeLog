@@ -1,3 +1,10 @@
+2004-04-15  Zachary P. Landau  <kapheine@hypa.net> 
+
+	* lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	Default to the currently selected library in the Add Book Dialog.
+
 2004-04-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb:
