@@ -84,11 +84,18 @@ module UI
             @combo_search.active = 0
             
             if File.exist?(Preferences.instance.cuecat_device)
-              @cuecat_image.pixbuf = Icons::CUECAT
-              create_scanner_input
+                @cuecat_image.pixbuf = Icons::CUECAT
+                create_scanner_input
             else
-              @cuecat_image.pixbuf = Icons::CUECAT_INACTIVE
+                @cuecat_image.pixbuf = Icons::CUECAT_INACTIVE
             end
+
+            # Re-select the last selected criterion.
+            begin
+                @title_radiobutton.active = @@last_criterion_was_not_isbn
+            rescue NameError
+                @@last_criterion_was_not_isbn = false
+            end 
         end
    
         def on_criterion_toggled(item)
@@ -110,6 +117,10 @@ module UI
                 @button_add.sensitive = 
                     @treeview_results.selection.count_selected_rows > 0 
             end
+
+            # Remember the last criterion selected (so that we can re-select
+            # it when the dialog opens again).
+            @@last_criterion_was_not_isbn = !is_isbn
         end
 
         def on_changed(entry)

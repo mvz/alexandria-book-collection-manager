@@ -1,3 +1,11 @@
+2005-03-24  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Remembers (within the live scope of the application though) the latest 
+	selected criterion in the Add Book dialog and automatically switches to
+	it when the dialog is shown.
+
 2005-03-23  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/amazon.rb:
