@@ -1,3 +1,10 @@
+2004-06-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Fixed a bug when Alexandria crashed in the add new book dialog when the 
+	clipboard was empty.
+
 2004-06-16  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/new_book_dialog.glade,
