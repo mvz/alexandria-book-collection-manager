@@ -3,19 +3,18 @@ Alexandria's TODO list
 
 Before next release:
 
-[X] Improving the "Add New Book" dialog to allow books to search books by
-    title alternatively to ISBN (Laurent)
-[X] Writing a proxis.be provider (Pascal)
+[ ] Zipped-XML import/export
+[ ] Export to XHTML via an XSL transformation, and to preview the result within
+    Alexandria itself
+[ ] Export to Bookcase XML format via an XSL transformation.
+[ ] Import/export via GNOME-DB
+[ ] Add a book filling all fields manually. 
+[ ] Change the cover picture
 
 Future releases:
 
-[ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::Combo (new in 2.4).
-[ ] Removing the glade support for main_app, and using the new UI manager
-    instead.
 [ ] Allowing multiple books to be added at once, giving a list of ISBN
     numbers (Xavier)
-[ ] Drag-and-drop books within libraries
-[ ] Import/export via GNOME-DB
 [ ] Loaning support
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
@@ -23,3 +22,11 @@ Future releases:
 [ ] Cuecat barcode support (Zachary)
 [ ] Writing help documentation
 [ ] Win32 MinGW port (Laurent)
+
+Future releases (that depend of Ruby-GNOME2 1.0.0, so not for the moment):
+
+[ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::Combo (new in 2.4).
+[ ] Removing the glade support for main_app, and using the new UI manager
+    instead.
+[ ] Drag-and-drop books within libraries
+[ ] Using the "new" file chooser
