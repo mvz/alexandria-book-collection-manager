@@ -237,7 +237,7 @@ module UI
                 proc { |x, y| x.isbn <=> y.isbn },
                 proc { |x, y| x.publisher <=> y.publisher },
                 proc { |x, y| x.edition <=> y.edition },
-                proc { |x, y| x.rating <=> y.rating }
+                proc { |x, y| x.rating <=> y.rating rescue 0 }
             ]
             sort = sort_funcs[@prefs.arrange_icons_mode]
             library.sort! { |x, y| sort.call(x, y) } 
@@ -341,11 +341,11 @@ module UI
             update_arrange_icons_mode(2)
         end
 
-        def on_arrange_icons_by_edition
+        def on_arrange_icons_by_publisher
             update_arrange_icons_mode(3)
         end
 
-        def on_arrange_icons_by_publisher
+        def on_arrange_icons_by_edition
             update_arrange_icons_mode(4)
         end
 
