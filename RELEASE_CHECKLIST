@@ -1,0 +1,17 @@
+String-freeze (1 week before the release)
+ - Mail translators (see AUTHORS for e-mail addresses) with the latest .pot
+   file merged with their latest translation work.
+
+Release
+ - Update NEWS with the announcement and commit ;
+ - Tag the ChangeLog (=== Alexandria X.Y.Z ===) and commit ;
+ - Create the tarball release (make_release.sh "X.Y.Z") ;
+ - Check if the tarball is OK ;
+ - Upload the tarball in rubyforge.org ;
+ - Update the web site (features list, download link, eventually
+   screenshots..) ;
+ - Wait for Debian and Mandrake packages ;
+ - Mail the announcement to alexandria-list@rubyforge.org,
+   ruby-talk@ruby-lang.org and gnome-announce-list@gnome.org ;
+ - Update related pages at RAA, Freshmeat and GnomeFiles ;
+ - Open a beer.

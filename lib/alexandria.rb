@@ -18,7 +18,6 @@
 module Alexandria 
     TITLE = 'Alexandria'
     TEXTDOMAIN = 'alexandria'
-    VERSION = '0.1.2'
     extend GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
     DESCRIPTION = _('A program to help you manage your book collection.')
@@ -45,6 +44,7 @@ module Alexandria
 end
 
 require 'alexandria/config'
+require 'alexandria/version'
 require 'alexandria/book'
 require 'alexandria/library'
 require 'alexandria/book_providers'

@@ -1,3 +1,22 @@
+2004-06-27  Laurent Sansonetti  <lrz@gnome.org>
+
+	* RELEASE_CHECKLIST,
+	  make_release.sh:
+
+	Added.
+
+	* lib/alexandria.rb:
+
+	Includes version.rb (automatically generated).
+
+	* lib/alexandria/.cvsignore:
+
+	Ignores version.rb.
+
+	* lib/alexandria/pre-setup.rb:
+
+	Generates version.rb.
+
 2004-06-25  Laurent Sansonetti  <lrz@gnome.org>
 	
 	* README:
