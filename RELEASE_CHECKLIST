@@ -4,6 +4,7 @@ String-freeze (1 week before the release)
 
 Release
  - Update NEWS with the announcement and commit ;
+ - Update README with the list of features) ;
  - Tag the ChangeLog (=== Alexandria X.Y.Z ===) and commit ;
  - Create the tarball release (make_release.sh "X.Y.Z") ;
  - Check if the tarball is OK ;

@@ -5,11 +5,14 @@ Alexandria
 
     Alexandria:
 
-      * retrieves book information from Amazon (including cover pictures) ;
+      * retrieves book information (including cover pictures) from several
+        online libraries, such as Amazon and Proxis ;
+      * allows you to search for a book either by EAN/ISBN, title, authors or
+        keyword ; 
       * saves data using the YAML format ;
       * features an HIG-compliant user interface ;
-      * shows books in different views (standard list or icons list), that can be
-        filtered and/or sorted;
+      * shows books in different views (standard list or icons list), that can
+        be either filtered or sorted ;
       * handles book rating and notes ;
       * includes translations for several languages.
 
@@ -34,9 +37,9 @@ Install
     $ ruby install.rb install
     $ gconftool-2 --shutdown [*]
 
-    [*]: This is needed because the current GConf implementation won't dynamically reload
-         the schemas.  Note that you don't have to start it after that, it should be 
-         automatically spawned when needed. 
+    [*]: This is needed because the current GConf implementation won't
+    dynamically reload the schemas.  Note that you don't have to start it after
+    that, it should be automatically spawned when needed. 
 
 Usage
 -----

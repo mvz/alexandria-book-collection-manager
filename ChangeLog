@@ -1,5 +1,15 @@
 === Alexandria 0.3.0 ===
 
+2004-07-03  Laurent Sansonetti  <lrz@gnome.org>
+
+	* README:
+
+	Updated for 0.3.0.
+
+	* RELEASE_CHECKLIST:
+
+	Added the README step.
+
 2004-06-30  Laurent Sansonetti  <lrz@gnome.org>
 	
 	* NEWS:
