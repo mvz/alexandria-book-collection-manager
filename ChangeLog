@@ -1,5 +1,11 @@
 2004-04-11  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	Sets the history of the option menu in the toolbar (View as...)
+	each time the view is changed.
+
 	* lib/alexandria/book.rb:
 
 	Fixed a bug introduced in the latest commit entry. 

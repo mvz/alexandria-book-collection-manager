@@ -182,8 +182,7 @@ module UI
         def on_view_as_icons(widget)
             @notebook.page = 0
             if widget.name.include?('popup_view_as_icons') or widget == @menu_view_as_icons
-                @toolbar_view_as.menu.active = 0
-                # FIXME the OptionMenu doesn't refresh itself 
+                @toolbar_view_as.menu.active = @toolbar_view_as.history = 0
             end
             if widget.name.include?('popup_view_as_icons') or widget == @toolbar_view_as_icons
                 @menu_view_as_icons.active = true
@@ -193,8 +192,7 @@ module UI
         def on_view_as_list(widget)
             @notebook.page = 1
             if widget.name.include?('popup_view_as_list') or widget == @menu_view_as_list
-                @toolbar_view_as.menu.active = 1
-                # FIXME the OptionMenu doesn't refresh itself 
+                @toolbar_view_as.menu.active = @toolbar_view_as.history = 1
             end
             if widget.name.include?('popup_view_as_list') or widget == @toolbar_view_as_list
                 @menu_view_as_list.active = true
