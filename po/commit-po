@@ -27,10 +27,17 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 po=$1
+shift
+message=$@
 
-if [ ! -e "$1" ]
+if [ -z "$message" ]
 then
-  echo PO-File $1 not found. Usage: $0 ??.po
+  message="Update"
+fi
+
+if [ ! -e "$po" ]
+then
+  echo "PO-File $po not found. Usage: $0 ??.po [ message ]"
   exit 1
 fi
 
@@ -41,7 +48,7 @@ then
 fi
 
 
-name=$(perl -n -e 'print $1 if /Last-Translator: (.*)\\n/' "$1")
+name=$(perl -n -e 'print $1 if /Last-Translator: (.*)\\n/' "$po")
 
 if [ -z "$name" ]
 then
@@ -54,12 +61,12 @@ set -e
 cvs update ChangeLog
 ( echo "$(date +%Y-%m-%d)  $name"
   echo 
-  echo "	* $po: Updated"
+  echo "	* $po: $message"
   echo
   cat ChangeLog
 ) > ChangeLogX
 mv ChangeLogX ChangeLog
 
-cvs ci -m "$po updated" "$po" ChangeLog
+cvs ci -m "$po: $message" "$po" ChangeLog
 
 echo Successfully commite new Versions of $po and ChangeLog
