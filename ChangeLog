@@ -5,6 +5,24 @@
 	Fix a bug where Alexandria would crash when GConf keys hadn't been
 	set. Laurent did all the hard work, I just helped with the debugging.
 
+	* data/alexandria/icons/star_set.png
+	  data/alexandria/icons/star_unset.png:
+
+	New icons. The old ones looked nasty against darker backgrounds due
+	rough edges. The new ones look more or less the same as the old ones.
+	They could probably use a little tweaking. They were drawn as SVGs but
+	committed as PNGs.
+
+	* data/alexandria/icons/star_ok.png
+	  data/alexandria/icons/star_nok.png:
+
+	Deleted.
+
+	* lib/alexandria/ui/main_app.rb
+	  lib/alexandria/ui/info_book_dialog.rb:
+
+	Modified to use the new constants for the new icons.
+
 2004-05-29  Laurent Sansonetti  <lrz@gnome.org>
 
 	* README:

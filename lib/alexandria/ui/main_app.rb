@@ -354,7 +354,7 @@ module UI
             iter[5] = book.edition
             rating = (book.rating or Book::DEFAULT_RATING)
             5.times do |i|
-                iter[i + 6] = rating >= i.succ ? Icons::STAR_OK : Icons::STAR_NOK
+                iter[i + 6] = rating >= i.succ ? Icons::STAR_SET : Icons::STAR_UNSET
             end
             iter[11] = rating
             return iter
