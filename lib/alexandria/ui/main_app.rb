@@ -7,6 +7,7 @@ module UI
             @libraries = Library.loadall
             build_books_listview
             build_sidepane
+            on_refresh
         end
  
         def on_books_button_press_event(widget, event)
@@ -85,21 +86,46 @@ module UI
    
         def on_delete
             library = selected_library
-            selected_books.each do |book|
-                dialog = AlertDialog.new(@main_app,
-                                         "Are you sure you want to permanently " \
-                                         "delete '#{book.title}' from '#{library.name}'?",
+            confirm = lambda do |message|
+                dialog = AlertDialog.new(@main_app, message,
                                          Gtk::Stock::DIALOG_QUESTION,
                                          [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                                           [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]])
                 dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
                 dialog.show_all
-                if dialog.run == Gtk::Dialog::RESPONSE_OK
-                    library.delete(book)
-                end
+                res = dialog.run == Gtk::Dialog::RESPONSE_OK
                 dialog.destroy
+                res
             end
-            on_refresh
+            if @treeview_sidepane.focus?
+                message = case library.length
+                    when 0
+                        "Are you sure you want to permanently delete '#{library.name}'?"
+                    when 1
+                        "Are you sure you want to permanently delete '#{library.name}' with " \
+                        "the included book?"
+                    else
+                        "Are you sure you want to permanently delete '#{library.name}' with " \
+                        "all the #{library.length} included books?"
+                end
+                if confirm.call(message)
+                    library.delete
+                    @libraries.delete_if { |lib| lib.name == library.name }
+                    iter = @treeview_sidepane.selection.selected
+                    next_iter = @treeview_sidepane.selection.selected
+                    next_iter.next!
+                    @treeview_sidepane.model.remove(iter)
+                    @treeview_sidepane.selection.select_iter(next_iter)
+                end
+            else
+                selected_books.each do |book|
+                    if confirm.call("Are you sure you want to permanently delete '#{book.title}' " \
+                                    "from '#{library.name}'?")
+                        library.delete(book)
+                        on_refresh
+                    end
+                end
+            end
         end
 
         def on_select_all
@@ -123,7 +149,7 @@ module UI
         def on_preferences
         end
 
-        def on_refresh
+        def on_refresh  
             @listview.model.clear
             @iconlist.clear
             selected_library.each { |book| append_book(book) }
@@ -226,8 +252,11 @@ module UI
         end
 
         def selected_library
-            iter = @treeview_sidepane.selection.selected
-            @libraries.find { |x| x.name == iter[1] }
+            if iter = @treeview_sidepane.selection.selected
+                @libraries.find { |x| x.name == iter[1] }
+            else
+                @libraries.first
+            end
         end
    
         def select_library(library)

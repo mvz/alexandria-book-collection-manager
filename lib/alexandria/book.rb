@@ -101,11 +101,16 @@ module Alexandria
         end
 
         alias_method :old_delete, :delete
-        def delete(book)
-            File.delete(File.join(self.path, book.isbn + EXT),
-                        File.join(self.path, book.isbn + SMALL_COVER_EXT),
-                        File.join(self.path, book.isbn + MEDIUM_COVER_EXT))
-            old_delete(book)
+        def delete(book=nil)
+            if book.nil?
+                # delete the whole library
+                FileUtils.rm_rf(self.path)
+            else
+                File.delete(File.join(self.path, book.isbn + EXT),
+                            File.join(self.path, book.isbn + SMALL_COVER_EXT),
+                            File.join(self.path, book.isbn + MEDIUM_COVER_EXT))
+                old_delete(book)
+            end
         end
 
         def name=(name)

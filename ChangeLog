@@ -1,3 +1,10 @@
+2004-04-07  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Implemented the possibility to delete a library.
+
 2004-04-06  Laurent Sansonetti  <lrz@gnome.org>
 	
 	* data/alexandria/glade/main_app.glade,
