@@ -42,7 +42,8 @@ module Alexandria
 
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?
-        ENV['http_proxy'] = nil if URI.parse(ENV['http_proxy']).userinfo.nil?
+        ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
+                                and URI.parse(ENV['http_proxy']).userinfo.nil?
         Alexandria::UI.main
     end
 end
