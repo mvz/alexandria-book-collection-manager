@@ -25,7 +25,7 @@ module UI
             build_books_listview
             build_sidepane
             on_books_selection_changed
-            restore_preferences           
+            restore_preferences
         end
 
         def on_books_button_press_event(widget, event)
@@ -54,7 +54,7 @@ module UI
                     when 0
                         va_icons.active = true
                         arr_icons.sensitive = true
-                        mode = Preferences.instance.arrange_icons_mode
+                        mode = (Preferences.instance.arrange_icons_mode or 0)
                         arr_icons.submenu.children[mode].active = true
                         arr_icons.submenu.children.last.active = Preferences.instance.reverse_icons
 
@@ -210,7 +210,7 @@ module UI
                 lambda { |x, y| x.edition <=> y.edition },
                 lambda { |x, y| x.rating <=> y.rating }
             ]           
-            mode = Preferences.instance.arrange_icons_mode
+            mode = (Preferences.instance.arrange_icons_mode or 0)
             library.sort! { |x, y| sort_funcs[mode].call(x, y) } 
             library.reverse! if Preferences.instance.reverse_icons
             library.each { |book| append_book_as_icon(book) }
@@ -272,7 +272,7 @@ module UI
         def on_menu_arrange_icons_selected
             items = [ @menu_icons_by_title, @menu_icons_by_authors, @menu_icons_by_isbn,
                       @menu_icons_by_publisher, @menu_icons_by_edition, @menu_icons_by_rating ]
-            items[Preferences.instance.arrange_icons_mode].active = true
+            items[(Preferences.instance.arrange_icons_mode or 0)].active = true
             @menu_icons_reversed_order.active = Preferences.instance.reverse_icons
         end
 
@@ -511,10 +511,6 @@ module UI
                 library = @libraries.find { |x| x.name == prefs.selected_library }
                 select_library(library) unless library.nil?
             end
-            if prefs.arrange_icons_mode.nil?
-                prefs.arrange_icons_mode = 0
-            end
-            on_menu_arrange_icons_selected
         end
 
         def save_preferences
