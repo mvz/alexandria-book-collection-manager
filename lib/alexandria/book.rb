@@ -9,7 +9,7 @@ require 'singleton'
 module Alexandria
     class Book
         attr_reader :title, :authors, :isbn, :publisher, :edition
-        attr_accessor :notes
+        attr_accessor :rating, :notes
 
         def initialize(title, authors, isbn, publisher, edition)
             @title = title

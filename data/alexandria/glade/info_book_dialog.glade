@@ -12,6 +12,11 @@
   <property name="modal">True</property>
   <property name="resizable">False</property>
   <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">False</property>
+  <property name="skip_pager_hint">False</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
@@ -33,6 +38,7 @@
 	      <property name="label">gtk-close</property>
 	      <property name="use_stock">True</property>
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
 	      <signal name="clicked" handler="on_close" last_modification_time="Thu, 15 Apr 2004 14:32:18 GMT"/>
 	    </widget>
@@ -108,7 +114,7 @@
 	      <child>
 		<widget class="GtkTable" id="table1">
 		  <property name="visible">True</property>
-		  <property name="n_rows">5</property>
+		  <property name="n_rows">6</property>
 		  <property name="n_columns">2</property>
 		  <property name="homogeneous">False</property>
 		  <property name="row_spacing">12</property>
@@ -359,6 +365,166 @@ Author 2.</property>
 		      <property name="y_options"></property>
 		    </packing>
 		  </child>
+
+		  <child>
+		    <widget class="GtkLabel" id="label11">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">&lt;span weight=&quot;bold&quot;&gt;Rating:&lt;/span&gt;</property>
+		      <property name="use_underline">False</property>
+		      <property name="use_markup">True</property>
+		      <property name="justify">GTK_JUSTIFY_LEFT</property>
+		      <property name="wrap">False</property>
+		      <property name="selectable">False</property>
+		      <property name="xalign">1</property>
+		      <property name="yalign">0</property>
+		      <property name="xpad">0</property>
+		      <property name="ypad">0</property>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">0</property>
+		      <property name="right_attach">1</property>
+		      <property name="top_attach">5</property>
+		      <property name="bottom_attach">6</property>
+		      <property name="x_options">fill</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
+
+		  <child>
+		    <widget class="GtkHBox" id="hbox2">
+		      <property name="visible">True</property>
+		      <property name="homogeneous">False</property>
+		      <property name="spacing">3</property>
+
+		      <child>
+			<widget class="GtkEventBox" id="eventbox1">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_rating1_press" last_modification_time="Tue, 25 May 2004 18:50:04 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image_rating1">
+			      <property name="visible">True</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEventBox" id="eventbox5">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_rating2_press" last_modification_time="Tue, 25 May 2004 18:51:45 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image_rating2">
+			      <property name="visible">True</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEventBox" id="eventbox4">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_rating3_press" last_modification_time="Tue, 25 May 2004 18:51:26 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image_rating3">
+			      <property name="visible">True</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEventBox" id="eventbox3">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_rating4_press" last_modification_time="Tue, 25 May 2004 18:55:26 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image_rating4">
+			      <property name="visible">True</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEventBox" id="eventbox2">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_rating5_press" last_modification_time="Tue, 25 May 2004 18:50:53 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image_rating5">
+			      <property name="visible">True</property>
+			      <property name="xalign">0</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="left_attach">1</property>
+		      <property name="right_attach">2</property>
+		      <property name="top_attach">5</property>
+		      <property name="bottom_attach">6</property>
+		      <property name="x_options">expand|shrink|fill</property>
+		      <property name="y_options"></property>
+		    </packing>
+		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -407,6 +573,8 @@ Author 2.</property>
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
 		  <property name="editable">True</property>
+		  <property name="overwrite">False</property>
+		  <property name="accepts_tab">True</property>
 		  <property name="justification">GTK_JUSTIFY_LEFT</property>
 		  <property name="wrap_mode">GTK_WRAP_NONE</property>
 		  <property name="cursor_visible">True</property>

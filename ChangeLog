@@ -1,5 +1,13 @@
 2004-05-25  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/info_book_dialog.glade,
+	  data/alexandria/icons/star_nok.png,
+	  data/alexandria/icons/star_ok.png,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui/info_book_dialog.rb:
+
+	Added rating support.
+
 	* data/alexandria/glade/new_book_dialog.glade,
 	  lib/alexandria/ui/new_book_dialog.rb:
 

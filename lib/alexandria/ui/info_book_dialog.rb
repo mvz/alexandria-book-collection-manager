@@ -31,17 +31,66 @@ module UI
             buffer.text = (book.notes or "")
             @textview_notes.buffer = buffer
             @library, @book = library, book
+            self.rating = (book.rating or 3)
         end
 
+        def on_image_rating1_press
+            self.rating = 1
+        end
+        
+        def on_image_rating2_press
+            self.rating = 2 
+        end
+        
+        def on_image_rating3_press
+            self.rating = 3 
+        end
+        
+        def on_image_rating4_press
+            self.rating = 4 
+        end
+        
+        def on_image_rating5_press
+            self.rating = 5 
+        end
+        
         def on_close
             new_notes = @textview_notes.buffer.text
-
-            # Notes have changed: we need to re-save the book again.
+            new_rating = @current_rating 
+            need_save = false
+    
+            # Notes have changed.
             if @book.notes.nil? or (new_notes != @book.notes)
                 @book.notes = new_notes
-                @library.save(@book)
+                need_save = true
             end
+            
+            # Rating has changed.
+            if @book.rating.nil? or (new_rating != @book.rating)
+                @book.rating = new_rating
+                need_save = true
+            end
+
+            @library.save(@book) if need_save
             @info_book_dialog.destroy
+        end
+
+        #######
+        private
+        #######
+    
+        def rating=(rating)
+            images = [ 
+                @image_rating1, 
+                @image_rating2, 
+                @image_rating3, 
+                @image_rating4, 
+                @image_rating5
+            ]
+            raise "out of range" if rating < 0 or rating > images.length
+            images[0..rating-1].each { |x| x.pixbuf = Icons::STAR_OK }
+            images[rating..-1].each { |x| x.pixbuf = Icons::STAR_NOK }
+            @current_rating = rating 
         end
     end
 end
