@@ -17,3 +17,6 @@ Future releases:
 [ ] Win32 MinGW port
 [ ] Show more details about books, like the publication date for example
 [ ] Drag-and-drop books within libraries
+[ ] Printing
+[ ] Editable views; for icons, renaming their title, for list, editing each
+    field
