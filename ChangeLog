@@ -1,3 +1,10 @@
+2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
+
+	* ChangeLog,
+	  NEWS:
+
+	Convert to UTF-8.
+
 2005-03-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/new_book_dialog_manual.rb:
@@ -225,7 +232,7 @@
 
 	Added Kevin and Javier.
 
-2005-02-18  Javier Fern·ndez-Sanguino PeÒa  <jfs@debian.org>
+2005-02-18  Javier Fern√°ndez-Sanguino Pe√±a  <jfs@debian.org>
 
 	* lib/alexandria/book_providers/mcu.rb:
 
