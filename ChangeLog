@@ -1,3 +1,17 @@
+2005-04-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  data/alexandria/glade/new_book_dialog.glade,
+	  data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Added an Help button in the Add Book, Add Book Manual, Book Properties and
+	Preferences dialogs that is connected to the Docbook manual.
+
 2005-04-04  Laurent Sansonetti  <lrz@gnome.org>
 
 	* doc/*:

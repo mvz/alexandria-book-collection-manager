@@ -25,12 +25,18 @@ module UI
         def initialize(parent, library, book, &on_close_cb)
             super(parent, library.cover(book))
             @on_close_cb = on_close_cb
-           
+            
             close_button = Gtk::Button.new(Gtk::Stock::CLOSE)
             close_button.signal_connect('pressed') { on_close }
             close_button.show
             @button_box << close_button
-            
+           
+            help_button = Gtk::Button.new(Gtk::Stock::HELP)
+            help_button.signal_connect('pressed') { on_help }
+            help_button.show
+            @button_box << help_button
+            @button_box.set_child_secondary(help_button, true)
+           
             @entry_title.text = @book_properties_dialog.title = book.title
             @entry_isbn.text = book.isbn
             @entry_publisher.text = book.publisher
@@ -98,6 +104,14 @@ module UI
             @library.save(@book) 
             @on_close_cb.call(@book)
             @book_properties_dialog.destroy
+        end
+
+        def on_help
+            begin
+                Gnome::Help.display('alexandria', 'editing-book-properties')
+            rescue 
+                ErrorDialog.new(@preferences_dialog, e.message)
+            end
         end
     end
 end

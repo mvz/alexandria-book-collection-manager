@@ -191,14 +191,10 @@ module UI
         private
         #######
 
-        def display_help(linkid=nil)
-            begin
-                Gnome::Help.display('alexandria', linkid)
-            rescue => e
-                ErrorDialog.new(@main_app, e.message,
-                                _("Check out that the help manual is properly " +
-                                  "installed and try again."))
-            end
+        def display_help
+            Gnome::Help.display('alexandria', 
+                                nil) rescue ErrorDialog.new(@main_app, 
+                                                            e.message)
         end
 
         def open_web_browser(url)

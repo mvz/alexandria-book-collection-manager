@@ -157,6 +157,14 @@ module UI
             @preferences_dialog.destroy
         end
 
+        def on_help
+            begin
+                Gnome::Help.display('alexandria', 'alexandria-preferences')
+            rescue 
+                ErrorDialog.new(@preferences_dialog, e.message)
+            end
+        end
+
         #######
         private
         #######

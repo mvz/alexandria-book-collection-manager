@@ -267,6 +267,14 @@ module UI
             end
         end
  
+        def on_help
+            begin
+                Gnome::Help.display('alexandria', 'add-book-by-isbn')
+            rescue 
+                ErrorDialog.new(@preferences_dialog, e.message)
+            end
+        end
+
         #######
         private
         #######

@@ -39,6 +39,12 @@ module UI
             add_button.show
             @button_box << add_button
             
+            help_button = Gtk::Button.new(Gtk::Stock::HELP)
+            help_button.signal_connect('pressed') { on_help }
+            help_button.show
+            @button_box << help_button
+            @button_box.set_child_secondary(help_button, true)
+           
             self.rating = Book::DEFAULT_RATING
             self.cover = Icons::BOOK
         end
@@ -104,6 +110,14 @@ module UI
             rescue => e
                 ErrorDialog.new(@parent, _("Couldn't add the book"),
                                 e.message)
+            end
+        end
+        
+        def on_help
+            begin
+                Gnome::Help.display('alexandria', 'add-book-manually')
+            rescue 
+                ErrorDialog.new(@preferences_dialog, e.message)
             end
         end
     end
