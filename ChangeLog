@@ -3,8 +3,9 @@
 	* lib/alexandria/book_providers/proxis.rb:
 
 	- Moved book creation to parse_book ;
-	- Added a preference for the language.
-	
+	- Added a preference for the language ;
+	- Encode search criterion.
+
 2004-06-21  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb:
