@@ -1,3 +1,18 @@
+2004-07-11  Laurent Sansonetti  <lrz@gnome.org>
+
+	* bin/pre-setup.rb:
+
+	Added.  This generates bin/alexandria with a dummy #! line that
+	will be replaced with the correct Ruby path by install.rb.
+
+	* bin/alexandria:
+	
+	Removed.
+
+	* bin/.cvsignore:
+
+	Added.  Ignores bin/alexandria since it's now a generated file.
+
 === Alexandria 0.3.1 ===
 
 2004-07-10  Laurent Sansonetti  <lrz@gnome.org>
