@@ -1,3 +1,9 @@
+2005-04-03  Pascal Terjan  <pterjan@linuxfr.org>
+
+	* lib/alexandria/book_providers/proxis.rb:
+
+	Workaround proxis returning all editions of a book in ISBN search
+		
 2005-04-03  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/alert_dialog.rb:

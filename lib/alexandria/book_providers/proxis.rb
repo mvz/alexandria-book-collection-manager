@@ -65,6 +65,11 @@ class BookProviders
                 end
             end
 
+	    # Workaround Proxis returning all editions of a book when searching on ISBN
+	    if type == SEARCH_BY_ISBN
+		    products.delete_if {|n, p| p.isbn != criterion}
+	    end
+	    
             raise NoResultsError if products.values.empty?
             type == SEARCH_BY_ISBN ? products.values.first : products.values
         end
