@@ -4,6 +4,10 @@
 
 	Ngettextise some strings.
 
+	* po/ChangeLog:
+
+	New ChangeLog for translation changes.
+
 2004-06-13  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/post-clean.rb:
