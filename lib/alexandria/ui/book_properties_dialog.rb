@@ -56,29 +56,35 @@ module UI
             end
         end
 
-        def on_destroy; on_close; end
-        
         #######
         private
         #######
         
         def on_close
-			   @book.saved_ident = @book.ident
-            @book.title = @entry_title.text
-            @book.isbn = begin
-                Library.canonicalise_isbn(@entry_isbn.text)
-            rescue Alexandria::Library::InvalidISBNError
-                unless @entry_isbn.text == ""
+            if @entry_isbn.text == ""
+                @book.isbn = nil
+            else
+                ary = @library.select { |book| book.ident == @entry_isbn.text }
+                unless ary.empty? or ary == [@book]
+                    ErrorDialog.new(@parent, 
+                                    _("Couldn't modify the book"), 
+                                    _("The EAN/ISBN you provided is already " +
+                                      "used in this library."))
+                    return
+                end                   
+                @book.isbn = begin
+                    Library.canonicalise_isbn(@entry_isbn.text)
+                rescue Alexandria::Library::InvalidISBNError
                     ErrorDialog.new(@parent, 
                                     _("Couldn't modify the book"), 
                                     _("Couldn't validate the EAN/ISBN you " +
                                       "provided.  Make sure it is written " +
                                       "correcty, and try again."))
                     return
-                else
-                    nil
                 end
             end
+            @book.saved_ident = @book.ident
+            @book.title = @entry_title.text
             @book.publisher = @entry_publisher.text
             @book.edition = @entry_edition.text
             @book.authors = []

@@ -1,5 +1,17 @@
 2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/book_properties_dialog.rb:
+
+	- Do not save the book properties on destroy ;
+	- Display an error message when trying to set an EAN/ISBN that is already
+	  used by another book in the same library.
+
+	* lib/alexandria/ui/new_book_dialog_manual.rb:
+
+	- Forgot to mark some translatable strings ;
+	- Display an error message when trying to add a book with an EAN/ISBN 
+	  that is already used by another book in the same library.
+
 	* .cvsignore:
 	
 	Added alexandria.desktop and alexandria.desktop.in.h.

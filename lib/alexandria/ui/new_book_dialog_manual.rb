@@ -57,30 +57,33 @@ module UI
                     raise _("A title must be provided.")
                 end
 
-                isbn = begin
-                    Library.canonicalise_isbn(@entry_isbn.text)
-                rescue Alexandria::Library::InvalidISBNError
-                    unless @entry_isbn.text == ""
+                isbn = nil
+                if @entry_isbn.text != ""
+                    ary = @library.select { |book| book.ident == 
+                                                   @entry_isbn.text }
+                    raise _("The EAN/ISBN you provided is already used " +
+                            "in this library.") unless ary.empty?
+                    isbn = begin
+                        Library.canonicalise_isbn(@entry_isbn.text)
+                    rescue Alexandria::Library::InvalidISBNError
                         raise _("Couldn't validate the EAN/ISBN you " +
                                 "provided.  Make sure it is written " +
                                 "correcty, and try again.")
-                    else
-                        isbn = nil
                     end
                 end
-                    
+
                 if (publisher = @entry_publisher.text.strip).empty?
-                    raise ("A publisher must be provided.")
+                    raise _("A publisher must be provided.")
                 end
                 
                 if (edition = @entry_edition.text.strip).empty?
-                    raise ("A binding must be provided.")
+                    raise _("A binding must be provided.")
                 end
                 
                 authors = []
                 @treeview_authors.model.each { |m, p, i| authors << i[0] }
                 if authors.empty?
-                    raise ("At least one author must be provided.") 
+                    raise _("At least one author must be provided.") 
                 end
 
                 book = Book.new(title, authors, isbn, publisher, edition)
