@@ -17,8 +17,8 @@
 
 module Alexandria
     class Book
-        attr_reader :title, :authors, :isbn, :publisher, :edition
-        attr_accessor :rating, :notes
+        attr_accessor :title, :authors, :isbn, :publisher, :edition, 
+                      :rating, :notes
 
         DEFAULT_RATING = 0 
 

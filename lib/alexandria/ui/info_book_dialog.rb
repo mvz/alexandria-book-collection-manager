@@ -18,23 +18,57 @@
 module Alexandria
 module UI
     class InfoBookDialog < GladeBase
-        def initialize(parent, library, book, &upon_save_block)
+        include GetText
+        extend GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize(parent, library, book, &on_close_cb)
             super('info_book_dialog.glade')
             @info_book_dialog.transient_for = parent
-            @upon_save_block = upon_save_block
+            @on_close_cb = on_close_cb
+            
             @image_cover.pixbuf = Icons.medium_cover(library, book)
-            @label_title.text = @info_book_dialog.title = book.title
-            @label_authors.text = book.authors.join("\n")
-            @label_isbn.text = book.isbn
-            @label_publisher.text = book.publisher
-            @label_edition.text = book.edition
+            @entry_title.text = @info_book_dialog.title = book.title
+            @entry_isbn.text = book.isbn
+            @entry_publisher.text = book.publisher
+            @entry_edition.text = book.edition
+            
+            @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
+            @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
+            renderer = Gtk::CellRendererText.new
+            renderer.signal_connect('edited') do |cell, path_string, new_text|
+                path = Gtk::TreePath.new(path_string)
+                iter = @treeview_authors.model.get_iter(path)
+                iter[0] = new_text 
+            end
+            col = Gtk::TreeViewColumn.new("", renderer, :text => 0, :editable => 1)
+            @treeview_authors.append_column(col)
+            book.authors.each do |author|
+                iter = @treeview_authors.model.append
+                iter[0] = author
+                iter[1] = true
+            end
+        
             buffer = Gtk::TextBuffer.new
             buffer.text = (book.notes or "")
             @textview_notes.buffer = buffer
+           
             @library, @book = library, book
             self.rating = (book.rating or Book::DEFAULT_RATING)
         end
 
+        def on_add_author
+            iter = @treeview_authors.model.append
+            iter[0] = _("Author")
+            iter[1] = true
+        end
+
+        def on_remove_author
+            if iter = @treeview_authors.selection.selected
+	            @treeview_authors.model.remove(iter)
+            end
+        end
+        
         def on_image_rating1_press
             self.rating = 1
         end
@@ -56,26 +90,17 @@ module UI
         end
         
         def on_close
-            new_notes = @textview_notes.buffer.text
-            new_rating = @current_rating 
-            need_save = false
-    
-            # Notes have changed.
-            if @book.notes.nil? or (new_notes != @book.notes)
-                @book.notes = new_notes
-                need_save = true
-            end
+            @book.title = @entry_title.text
+            @book.isbn = @entry_isbn.text
+            @book.publisher = @entry_publisher.text
+            @book.edition = @entry_edition.text
+            @book.authors = []
+            @treeview_authors.model.each { |m, p, i| @book.authors << i[0] }      
+            @book.notes = @textview_notes.buffer.text 
+            @book.rating = @current_rating
             
-            # Rating has changed.
-            if @book.rating.nil? or (new_rating != @book.rating)
-                @book.rating = new_rating
-                need_save = true
-            end
-
-            if need_save
-                @library.save(@book) 
-                @upon_save_block.call
-            end
+            @library.save(@book) 
+            @on_close_cb.call
             @info_book_dialog.destroy
         end
 
@@ -94,7 +119,7 @@ module UI
             raise "out of range" if rating < 0 or rating > images.length
             images[0..rating-1].each { |x| x.pixbuf = Icons::STAR_SET }
             images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }
-            @current_rating = rating 
+            @current_rating = rating
         end
     end
 end

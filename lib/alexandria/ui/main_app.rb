@@ -409,9 +409,7 @@ module UI
             on_properties = proc do
                 books = selected_books
                 if books.length == 1
-                    InfoBookDialog.new(@main_app, selected_library, books.first) do
-                        on_refresh
-                    end
+                    InfoBookDialog.new(@main_app, selected_library, books.first) { on_refresh }
                 end
             end
 

@@ -43,7 +43,8 @@ module Alexandria
                             _("Couldn't reach the provider '%s': timeout expired.") % factory.name
                         
                         when NoResultsError
-                            _("No results were found.  Make sure your search criterion is spelled correctly, and try again.")
+                            _("No results were found.  Make sure your search criterion is " +
+                              "spelled correctly, and try again.")
 
                         when TooManyResultsError
                             _("Too much results for that search.")

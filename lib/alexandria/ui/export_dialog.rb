@@ -43,7 +43,7 @@ module UI
             theme_label.mnemonic_widget = theme_combo 
 
             types_combo = Gtk::ComboBox.new
-            types_combo.append_text(_("Archived ONIX XML (*.xml.tgz)"))
+            types_combo.append_text(_("Archived ONIX XML (*.xml.tbz2)"))
             types_combo.append_text(_("Archived Bookcase XML (*.xml.zip)"))
             types_combo.append_text("XHTML (*.xhtml)")
             types_combo.active = 0
