@@ -118,27 +118,6 @@ module UI
             @menu_view_as_list.active = true
         end
 
-        def on_sort_title
-        end
-        
-        def on_sort_authors
-        end
-        
-        def on_sort_isbn
-        end
-        
-        def on_sort_publisher
-        end
- 
-        def on_sort_edition
-        end
-
-        def on_go_up
-        end
-
-        def on_home
-        end
- 
         def on_about
             AboutDialog.new.show
         end

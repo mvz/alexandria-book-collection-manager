@@ -3,6 +3,7 @@
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
 
+	- Removed obsolete callbacks ;
 	- Added a popup menu for multiple selections and a default one
 	  when nothing is selected yet ;
 	- Implemented the 'Refresh' action.
