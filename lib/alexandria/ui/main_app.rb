@@ -251,7 +251,7 @@ module UI
             @listview.model = @listview_model
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Title"))
-            column.pack_start(renderer, true)
+            column.pack_start(renderer, false)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 iter = @listview_model.convert_iter_to_child_iter(iter)
                 iter = @filtered_model.convert_iter_to_child_iter(iter)

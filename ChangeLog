@@ -1,3 +1,9 @@
+2005-03-13  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+	
+	Pack the cover as non-expandable in the list view.
+
 === Alexandria 0.5.0 ===
 
 2005-03-13  Laurent Sansonetti  <lrz@gnome.org>
