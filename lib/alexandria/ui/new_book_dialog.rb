@@ -44,14 +44,21 @@ module UI
         end
    
         def on_criterion_toggled(item)
-            ok = item == @isbn_radiobutton
-            @entry_isbn.sensitive = ok 
-            @combo_search.sensitive = !ok 
-            @entry_search.sensitive = !ok 
-            @button_find.sensitive = !ok
-            @scrolledwindow.visible = !ok
-            on_changed(ok ? @entry_isbn : @entry_search)
-            @button_add.sensitive = @treeview_results.selection.count_selected_rows > 0 unless ok
+            return unless item.active?
+            if is_isbn = item == @isbn_radiobutton
+                @latest_size = @new_book_dialog.size
+                @new_book_dialog.resizable = false 
+            else
+                @new_book_dialog.resizable = true 
+                @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
+            end
+            @entry_isbn.sensitive = is_isbn 
+            @combo_search.sensitive = !is_isbn 
+            @entry_search.sensitive = !is_isbn 
+            @button_find.sensitive = !is_isbn
+            @scrolledwindow.visible = !is_isbn
+            on_changed(is_isbn ? @entry_isbn : @entry_search)
+            @button_add.sensitive = @treeview_results.selection.count_selected_rows > 0 unless is_isbn
         end
 
         def on_changed(entry)

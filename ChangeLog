@@ -1,5 +1,11 @@
 2004-07-04  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	- Removed the first label ;
+	- The dialog is now resizable on search purposes.
+
 	* lib/alexandria/library.rb:
 
 	Fixed a bug when removing a book that doesn't have any cover image.
