@@ -266,7 +266,7 @@ module UI
                 ok = iter.next!
             end
         end
- 
+
         def selected_books
             a = []
             case @notebook.page
@@ -591,6 +591,7 @@ module UI
                 on_refresh unless @filter_entry.text.strip.empty?
             end
             toolitem = Gtk::ToolItem.new
+            toolitem.border_width = 5
             toolitem << cb
             @toolbar.insert(-1, toolitem)
             
@@ -598,6 +599,7 @@ module UI
             @filter_entry.signal_connect('activate') { on_refresh }
             toolitem = Gtk::ToolItem.new
             toolitem.expand = true
+            toolitem.border_width = 5
             toolitem << @filter_entry
             @toolbar.insert(-1, toolitem)
             
@@ -617,6 +619,7 @@ module UI
                 action.active = true
             end
             toolitem = Gtk::ToolItem.new
+            toolitem.border_width = 5 
             toolitem << @toolbar_view_as
             @toolbar.insert(-1, toolitem)
             

@@ -1,3 +1,22 @@
+2004-09-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* TODO:
+
+	Updated.
+
+	* make_release.sh:
+
+	Improved.
+
+	* lib/alexandria/book_providers.rb:
+
+	- Fixed catching of the Timeout::Error exception ;
+	- Added a $DEBUG trace before calling each provider. 
+
+	* lib/alexandria/ui/main_app.rb:
+		
+	Set correct border width for toolitems.
+
 2004-09-07  Laurent Sansonetti  <lrz@gnome.org>
 	
 	* data/alexandria/glade/main_app.glade:

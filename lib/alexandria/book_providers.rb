@@ -34,11 +34,12 @@ module Alexandria
             factory_n = 0
             begin
                 factory = self.instance[factory_n]
+                puts factory.fullname + " lookup" if $DEBUG
                 return factory.search(criterion, type)
-            rescue => boom
+            rescue Exception => boom
                 if self.last == factory
                     raise case boom
-                        when TimeoutError
+                        when Timeout::Error
                             _("Couldn't reach the provider '%s': timeout expired.") % factory.name
                         
                         when NoResultsError

@@ -19,7 +19,7 @@ cp -r * $TMP_DIR
 cd $TMP_DIR
 
 echo "Removing unnecessary files..."
-$RM `find . -name CVS -or -name ".cvsignore" -or -name ".#*" -or -name "*~"`
+$RM `find . -name CVS -or -name ".*" -or -name "*~" -or -name "*.orig"`
 $RM `find data/alexandria/glade -name "*.gladep" -or -name "*.bak"`
 $RM RELEASE_CHECKLIST make_release.sh InstalledFiles config.save
 $RM data/locale lib/alexandria/config.rb lib/alexandria/version.rb

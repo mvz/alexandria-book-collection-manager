@@ -3,31 +3,30 @@ Alexandria's TODO list
 
 Before next release:
 
-[ ] Zipped-YAML import/export
+[X] Cuecat barcode support (Zachary)
 [ ] Zipped-XML import/export
 [ ] Export to XHTML via an XSL transformation, and to preview the result within
     Alexandria itself
 [ ] Export to Bookcase XML format via an XSL transformation.
-[ ] Import/export via GNOME-DB
 [ ] Add a book filling all fields manually. 
 [ ] Change the cover picture
 
 Future releases:
 
+[ ] Import/export via GNOME-DB
 [ ] Allowing multiple books to be added at once, giving a list of ISBN
     numbers (Xavier)
 [ ] Loaning support
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Writing a z39.50 provider
-[ ] Cuecat barcode support (Zachary)
 [ ] Writing help documentation
 [ ] Win32 MinGW port (Laurent)
 
 Future releases (that depend of Ruby-GNOME2 1.0.0, so not for the moment):
 
-[ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::Combo (new in 2.4).
-[ ] Removing the glade support for main_app, and using the new UI manager
+[ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::ComboBox (new in 2.4).
+[X] Removing the glade support for main_app, and using the new UI manager
     instead.
 [ ] Drag-and-drop books within libraries
-[ ] Using the "new" file chooser
+[X] Using the "new" file chooser
