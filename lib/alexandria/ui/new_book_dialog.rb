@@ -26,6 +26,7 @@ module UI
             @new_book_dialog.transient_for = @parent = parent
             @block = block
             @libraries = libraries
+
             popdown = libraries.map { |x| x.name }
             if selected_library
               popdown.delete selected_library.name
@@ -33,24 +34,62 @@ module UI
             end
             @combo_libraries.popdown_strings = popdown
             @combo_libraries.sensitive = libraries.length > 1
+
+            @treeview_results.model = Gtk::ListStore.new(String, String)
+            @treeview_results.selection.signal_connect('changed') { @button_add.sensitive = true }
+            col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, :text => 0)
+            @treeview_results.append_column(col)
         end
-    
+   
+        def on_criterion_toggled(item)
+            ok = item == @isbn_radiobutton
+            @entry_isbn.sensitive = ok 
+            @entry_title.sensitive = !ok 
+            @button_find.sensitive = !ok
+            @scrolledwindow.visible = !ok
+            on_changed(ok ? @entry_isbn : @entry_title)
+            @button_add.sensitive = !@treeview_results.selection.selected.nil? unless ok
+        end
+
         def on_changed(entry)
-            raise unless entry.is_a?(Gtk::Entry)
-            @button_find.sensitive = !entry.text.strip.empty?
+            ok = !entry.text.strip.empty?
+            (entry == @entry_isbn ? @button_add : @button_find).sensitive = ok
         end
-    
+
+        def on_find
+            begin
+                @results = Alexandria::BookProviders.title_search(@entry_title.text.strip)
+                if @results.empty?
+                    raise _("No results were found.  Make sure all words are spelled correctly, and try again.")
+                else
+                    @treeview_results.model.clear
+                    @results.each do |book, small_cover, medium_cover|
+                        iter = @treeview_results.model.append
+                        iter[0] = _("%s, by %s") % [ book.title, book.authors.join(', ') ]
+                        iter[1] = book.isbn
+                    end
+                end
+            rescue => e
+                ErrorDialog.new(@parent, 
+                                _("Unable to find matches for your search"),
+                                e.message)
+            end
+            @button_add.sensitive = false
+        end
+
         def on_add
             begin
-                # First check that the book doesn't already exist in the library.
-                isbn = @entry_isbn.text.delete('-')
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
-                if book = library.find { |book| book.isbn == isbn }
-                    raise _("'%s' already exists in '%s' (titled '%s').") % [ book.isbn, library.name, book.title ] 
-                end
-
-                # Perform the search via the providers.
-                book, small_cover, medium_cover = Alexandria::BookProviders.search(isbn)
+                
+                if @isbn_radiobutton.active?
+                    # Perform the ISBN search via the providers.
+                    isbn = @entry_isbn.text.delete('-')
+                    assert_not_exist(library, isbn)
+                    book, small_cover, medium_cover = Alexandria::BookProviders.isbn_search(isbn)
+                else
+                    book, small_cover, medium_cover = selected_result
+                    assert_not_exist(library, book.isbn)
+                end 
 
                 # Save the book in the library.
                 library.save(book, small_cover, medium_cover)
@@ -59,13 +98,31 @@ module UI
                 @new_book_dialog.destroy
                 @block.call(book, library)
             rescue => e
-                ErrorDialog.new(@parent, _("Couldn't add book"), e.message)
+                ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
             end
         end
     
         def on_cancel
             @new_book_dialog.destroy
         end
+        
+        #######
+        private
+        #######
+
+        def selected_result
+            @results.find do |book, small_cover, medium_cover|
+                 book.isbn == @treeview_results.selection.selected[1]
+            end
+        end
+
+        def assert_not_exist(library, isbn)
+            # Check that the book doesn't already exist in the library.
+            if book = library.find { |book| book.isbn == isbn }
+                raise _("'%s' already exists in '%s' (titled '%s').") % [ book.isbn, library.name, book.title ] 
+            end
+        end
+
     end
 end
 end

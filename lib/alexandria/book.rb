@@ -1,7 +1,6 @@
 require 'amazon/search'
 require 'tempfile'
-require 'net/http'
-require 'uri'
+require 'open-uri'
 require 'yaml'
 require 'fileutils'
 require 'singleton'
@@ -77,12 +76,16 @@ module Alexandria
             a
         end
  
-        def save(book, small_cover_path=nil, medium_cover_path=nil)
-            if small_cover_path and medium_cover_path
+        def save(book, small_cover_uri=nil, medium_cover_uri=nil)
+            if small_cover_uri and medium_cover_uri
                 Dir.chdir(self.path) do
-                    # Rename the cover pictures.
-                    FileUtils.mv(small_cover_path, small_cover(book))
-                    FileUtils.mv(medium_cover_path, medium_cover(book))
+                    # Fetch the cover pictures.
+                    File.open(small_cover(book), "w") do |io|
+						io.puts URI.parse(small_cover_uri).read
+					end
+                    File.open(medium_cover(book), "w") do |io|
+						io.puts URI.parse(medium_cover_uri).read
+					end
                 end
                 self << book
             end
@@ -130,11 +133,12 @@ module Alexandria
         include Singleton
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+		SEARCH_BY_ISBN, SEARCH_BY_TITLE = 1, 2
 
-    	def self.search(criteria)
+    	def self.search(criterion, type)
             self.instance.each do |factory|
                 begin
-                    if stuff = factory.search(criteria)
+                    if stuff = factory.search(criterion, type)
                         return stuff
                     end
                 rescue TimeoutError
@@ -142,6 +146,14 @@ module Alexandria
                 end 
             end
     	end
+
+		def self.isbn_search(criterion)
+			self.search(criterion, SEARCH_BY_ISBN)
+		end
+
+		def self.title_search(criterion)
+			self.search(criterion, SEARCH_BY_TITLE)
+		end
 
         class Preferences < Array
             def initialize(provider_name)
@@ -196,7 +208,7 @@ module Alexandria
                 
             include GetText
             GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-            
+           
             def initialize
                 @name = "Amazon"
                 @prefs = Preferences.new(@name.downcase)
@@ -206,32 +218,37 @@ module Alexandria
                 @prefs.add("associate", _("Associate ID"), "calibanorg-20")
             end
                
-            def search(criteria)
-                results = []
+            def search(criterion, type)
                 prefs.read
-                req = Amazon::Search::Request.new(prefs["dev_token"])
+                
+				req = Amazon::Search::Request.new(prefs["dev_token"])
                 req.locale = prefs["locale"]
-                req.asin_search(criteria) do |product|
+				
+				products = []
+				if type == Alexandria::BookProviders::SEARCH_BY_ISBN
+					req.asin_search(criterion) { |product| products << product }
+                	raise _("Too many results") if products.length > 1 # shouldn't happen
+				else
+					req.keyword_search(criterion) do |product|
+						if /#{criterion}/i.match(product.product_name)
+							products << product
+						end
+					end  
+				end
+ 
+				results = []
+				products.each do |product|
                     next unless product.catalog == 'Book'
-                    fetch = lambda do |url|
-                        io = Tempfile.open(product.isbn)
-                        io.puts(Net::HTTP.get(URI.parse(url)))
-                        io.close
-                        io.path
-                    end
-                    conv = lambda { |str| GLib.convert(str, "ISO-8859-1", "UTF-8") }
+                    conv = proc { |str| GLib.convert(str, "ISO-8859-1", "UTF-8") }
                     book = Book.new(conv.call(product.product_name),
                                     (product.authors.map { |x| conv.call(x) } rescue [ "n/a" ]),
                                     conv.call(product.isbn),
                                     conv.call(product.manufacturer),
                                     conv.call(product.media))
-                    small_cover = fetch.call(product.image_url_small)
-                    medium_cover = fetch.call(product.image_url_medium)
 
-                    results << [ book, small_cover, medium_cover ]
+                    results << [ book, product.image_url_small, product.image_url_medium ]
                 end
-                raise "Too many results" unless results.length == 1
-                results.first
+				type == Alexandria::BookProviders::SEARCH_BY_ISBN ? results.first : results
             end
         end
        
