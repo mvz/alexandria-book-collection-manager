@@ -203,11 +203,12 @@ module Alexandria
                         io.close
                         io.path
                     end
-                    book = Book.new(product.product_name,
-                                    (product.authors rescue [ "n/a" ]),
-                                    product.isbn,
-                                    product.manufacturer,
-                                    product.media)
+                    conv = lambda { |str| GLib.convert(str, "ISO-8859-1", "UTF-8") }
+                    book = Book.new(conv.call(product.product_name),
+                                    (product.authors.map { |x| conv.call(x) } rescue [ "n/a" ]),
+                                    conv.call(product.isbn),
+                                    conv.call(product.manufacturer),
+                                    conv.call(product.media))
                     small_cover = fetch.call(product.image_url_small)
                     medium_cover = fetch.call(product.image_url_medium)
 
