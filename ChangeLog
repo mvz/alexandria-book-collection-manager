@@ -1,3 +1,37 @@
+2004-11-01  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/import_dialog.rb:
+
+	Added.
+
+	* lib/alexandria.rb:
+
+	Erase the 'http_proxy' environment variable if its content is invalid.
+
+	* lib/alexandria/library.rb:
+
+	- Refactored (moved the save cover code here);
+	- Introduced an ISBN-list import and export ;
+
+	* lib/alexandria/ui.rb:
+
+	Requires the import_dialog.rb file.
+
+	* lib/alexandria/ui/export_dialog.rb:
+
+	- Fixed the default button (text = "Export", no icon) ;
+	- Commented the XHTML combo item ;
+	- Added an ISBN-list combo item.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Refactored ;
+	- Follows the import dialog.
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Follows the library.rb refactoring.
+
 2004-10-28  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:

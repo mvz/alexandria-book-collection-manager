@@ -20,6 +20,8 @@ require 'fileutils'
 require 'rexml/document'
 require 'tempfile'
 require 'etc'
+require 'gdk_pixbuf2'
+require 'open-uri'
 
 class Array
     def sum
@@ -170,6 +172,22 @@ module Alexandria
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml } 
         end
 
+        def save_cover(book, cover_uri)
+            Dir.chdir(self.path) do
+                # Fetch the cover picture.
+                cover_file = cover(book)
+                File.open(cover_file, "w") do |io|
+				    io.puts URI.parse(cover_uri).read
+				end
+            
+                # Remove the file if it's blank.
+                pixbuf = Gdk::Pixbuf.new(cover_file)
+                if pixbuf.width == 1 and pixbuf.height == 1
+                    File.delete(cover_file)
+                end
+            end
+        end
+        
         alias_method :old_delete, :delete
         def delete(book=nil)
             if book.nil?
@@ -204,6 +222,7 @@ module Alexandria
 
         def export_as_onix_xml_archive(filename)
             filename += ".onix.tbz2" if File.extname(filename).empty?
+            FileUtils.rm(filename) if File.exists?(filename)
             File.open(File.join(Dir.tmpdir, "onix.xml"), "w") do |io|
                 to_onix_document.write(io, 0)
             end
@@ -217,9 +236,7 @@ module Alexandria
 
         def export_as_tellico_xml_archive(filename)
             filename += ".bc" if File.extname(filename).empty?
-            if File.exists?(filename)
-                FileUtils.rm(filename)
-            end
+            FileUtils.rm(filename) if File.exists?(filename)
             File.open(File.join(Dir.tmpdir, "bookcase.xml"), "w") do |io|
                 to_tellico_document.write(io, 0)
             end
@@ -231,6 +248,43 @@ module Alexandria
             FileUtils.rm(File.join(Dir.tmpdir, "bookcase.xml"))
         end
 
+        def export_as_isbn_list(filename)
+            filename += ".txt" if File.extname(filename).empty?
+            FileUtils.rm(filename) if File.exists?(filename)
+            File.open(filename, 'w') do |io|
+                each do |book|
+                    io.puts book.isbn
+                end
+            end
+        end
+        
+        def self.import_autodetect(name, filename)
+            import_as_isbn_list(name, filename) or
+                import_as_tellico_xml_archive(name, filename)
+        end
+        
+        def self.import_as_tellico_xml_archive(name, filename) 
+            # TODO
+            nil
+        end
+        
+        def self.import_as_isbn_list(name, filename)
+            isbn_list = IO.readlines(filename)
+            unless isbn_list.all? { |isbn| canonicalise_isbn(isbn) rescue nil }
+                return nil 
+            end
+            library = load(name)
+            isbn_list.each do |isbn|
+                # FIXME: handle provider exceptions
+                book, cover_uri = \
+                    Alexandria::BookProviders.isbn_search(isbn.chomp)
+                library.save_cover(book, cover_uri)
+                library << book
+                library.save(book)
+            end
+            return library
+        end
+        
         def n_rated
             select { |x| !x.rating.nil? and x.rating > 0 }.length
         end

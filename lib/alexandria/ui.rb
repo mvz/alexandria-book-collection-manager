@@ -29,6 +29,7 @@ require 'alexandria/ui/new_book_dialog_manual'
 require 'alexandria/ui/new_book_dialog'
 require 'alexandria/ui/preferences_dialog'
 require 'alexandria/ui/export_dialog'
+require 'alexandria/ui/import_dialog'
 require 'alexandria/ui/main_app'
 
 module Alexandria

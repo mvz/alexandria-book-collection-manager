@@ -235,12 +235,17 @@ module UI
             return iter
         end
 
-        def append_library(library)
+        def append_library(library, autoselect=false)
             iter = @treeview_sidepane.model.append
             iter[0] = Icons::LIBRARY_SMALL
             iter[1] = library.name
             iter[2] = true  #editable?
-            return iter
+            if autoselect
+                @treeview_sidepane.set_cursor(iter.path, 
+                                              @treeview_sidepane.get_column(0), 
+                                              true)
+                @actiongroup["Sidepane"].active = true
+            end
         end
 
         def build_books_listview
@@ -454,12 +459,7 @@ module UI
                 end
                 library = Library.load(name)
                 @libraries << library
-                iter = append_library(library)
-                @actiongroup["Sidepane"].active = true
-                @treeview_sidepane.set_cursor(iter.path, 
-                                              @treeview_sidepane.get_column(0), 
-                                              true)
-                setup_move_actions
+                append_library(library, true)
             end
     
             on_add_book = proc do
@@ -480,7 +480,13 @@ module UI
                 end
             end
             
-            on_import = proc {}
+            on_import = proc do 
+                ImportDialog.new(@main_app, @libraries) do |library|
+                    @libraries << library
+                    append_library(library, true)
+                end
+            end
+
             on_export = proc { ExportDialog.new(@main_app, selected_library) }
         
             on_properties = proc do

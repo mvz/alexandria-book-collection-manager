@@ -15,8 +15,6 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-require 'open-uri'
-
 module Alexandria
 module UI
     class NewBookDialog < GladeBase
@@ -171,19 +169,7 @@ module UI
                 # Save the books in the library.
                 books_to_add.each do |book, cover_uri| 
                     unless cover_uri.nil?
-                        Dir.chdir(library.path) do
-                            # Fetch the cover picture.
-                            cover_file = library.cover(book)
-                            File.open(cover_file, "w") do |io|
-						        io.puts URI.parse(cover_uri).read
-					        end
-            
-                            # Remove the file if it's blank.
-                            pixbuf = Gdk::Pixbuf.new(cover_file)
-                            if pixbuf.width == 1 and pixbuf.height == 1
-                                File.delete(cover_file)
-                            end
-                        end
+                        library.save_cover(book, cover_uri)
                     end
                     library << book
                     library.save(book)
