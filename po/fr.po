@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-14 12:59+0200\n"
+"POT-Creation-Date: 2004-06-26 16:05+0200\n"
 "PO-Revision-Date: 2004-06-08 20:26+0200\n"
 "Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
 "Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
@@ -67,73 +67,135 @@ msgstr ""
 "Préférences du bureau -> Préférences avancées -> Applications préférées) et "
 "ré-essayez encore."
 
-#: ../lib/alexandria/ui/main_app.rb:425
+#: ../lib/alexandria/ui/main_app.rb:420
 msgid "Title"
 msgstr "Titre"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "Authors"
 msgstr "Auteurs"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "ISBN"
 msgstr ""
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "Publisher"
 msgstr "Éditeur"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "Edition"
 msgstr "Édition"
 
-#: ../lib/alexandria/ui/main_app.rb:449
+#: ../lib/alexandria/ui/main_app.rb:444
 msgid "Rating"
 msgstr "Notation"
 
-#: ../lib/alexandria/ui/main_app.rb:514
+#: ../lib/alexandria/ui/main_app.rb:509
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: ../lib/alexandria/ui/main_app.rb:528
+#: ../lib/alexandria/ui/main_app.rb:523
 msgid "Invalid library name '%s'"
 msgstr "Nom de bibliothèque invalide '%s'"
 
-#: ../lib/alexandria/ui/main_app.rb:529
+#: ../lib/alexandria/ui/main_app.rb:524
 msgid "The name provided contains the illegal character '<i>%s</i>'."
 msgstr "Le nom entré contient le caractère invalide '<i>%s</i>'."
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:49
+#: ../lib/alexandria/ui/new_book_dialog.rb:65
+#: ../data/alexandria/glade/new_book_dialog.glade:262
+#: ../data/alexandria/glade/new_book_dialog.glade:279
+msgid "by title"
+msgstr "par titre"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:67
+#: ../data/alexandria/glade/new_book_dialog.glade:287
+msgid "by authors"
+msgstr "par auteurs"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:69
+#: ../data/alexandria/glade/new_book_dialog.glade:295
+msgid "by keyword"
+msgstr "par mot clef"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:74
+msgid ""
+"No results were found.  Make sure all words are spelled correctly, and try "
+"again."
+msgstr ""
+"Aucun résultat trouvé.  Vérifiez l'orthographe des termes de "
+"la recherche, et ré-essayez encore."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:79
+msgid "%s, by %s"
+msgstr "%s, par %s"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:85
+msgid "Unable to find matches for your search"
+msgstr "Impossible de trouver des correspondances pour votre recherche"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:109
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"Impossible de valider la donnée EAN/ISBN.  Vérifiez que le numéro est écrit "
+"correctement, et ré-essayez."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:130
+msgid "Couldn't add the book"
+msgstr "Impossible d'ajouter le livre"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:153
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' existe déjà dans '%s' (titré '%s')."
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:62
-msgid "Couldn't add book"
-msgstr "Impossible d'ajouter le livre"
 
 #: ../lib/alexandria/ui/preferences_dialog.rb:25
 msgid "Preferences for %s"
 msgstr "Préférences pour %s"
 
-#: ../lib/alexandria/book.rb:75
+#: ../lib/alexandria/ui/preferences_dialog.rb:109
+msgid "The '%s' provider doesn't have any preference to setup"
+msgstr "Le fournisseur '%s' ne possède pas de paramètres à configurer"
+
+#: ../lib/alexandria/library.rb:73
 msgid "My Library"
 msgstr "Ma bibliothèque"
 
-#: ../lib/alexandria/book.rb:141
-msgid "Couldn't reach the provider '%s': timeout expired."
-msgstr "Impossible de joindre le fournisseur '%s': durée maximale dépassée."
-
-#: ../lib/alexandria/book.rb:203
+#: ../lib/alexandria/book_providers/amazon.rb:28
 msgid "Locale site to contact"
 msgstr "Site local à contacter"
 
-#: ../lib/alexandria/book.rb:205
+#: ../lib/alexandria/book_providers/amazon.rb:30
 msgid "Development token"
 msgstr "Jeton de développeur"
 
-#: ../lib/alexandria/book.rb:206
+#: ../lib/alexandria/book_providers/amazon.rb:31
 msgid "Associate ID"
 msgstr "Identifiant d'associé"
+
+#: ../lib/alexandria/book_providers/amazon.rb:52
+msgid "Too many results"
+msgstr "Trop de résultats"
+
+#: ../lib/alexandria/book_providers/amazon.rb:68
+#: ../lib/alexandria/book_providers/proxis.rb:64
+msgid "Invalid search type"
+msgstr "Type de recherche invalide"
+
+#: ../lib/alexandria/book_providers/amazon.rb:76
+#: ../lib/alexandria/book_providers/amazon.rb:78
+msgid "n/a"
+msgstr "Inconnu"
+
+#: ../lib/alexandria/book_providers/proxis.rb:35
+msgid "Language of the books to search"
+msgstr "Langue du livre à rechercher"
+
+#: ../lib/alexandria/book_providers.rb:35
+msgid "Couldn't reach the provider '%s': timeout expired."
+msgstr "Impossible de joindre le fournisseur '%s': durée maximale dépassée."
 
 #: ../lib/alexandria.rb:24
 msgid "A program to help you manage your book collection."
@@ -171,30 +233,37 @@ msgstr "Général"
 msgid "Notes"
 msgstr ""
 
-#: ../data/alexandria/glade/new_book_dialog.glade:10
+#: ../data/alexandria/glade/new_book_dialog.glade:9
 msgid "Adding a Book"
 msgstr "Ajout d'un livre"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:110
+#: ../data/alexandria/glade/new_book_dialog.glade:111
 msgid ""
-"Please provide an ISBN (International Standard Book Number) to search for, "
-"and select the library which the book will be added to."
+"Please provide either an ISBN (International Standard Book Number) or "
+"something to search for, and select the library which the book will be added "
+"to."
 msgstr ""
-"Veuillez fournir un ISBN (International Standard Book Number) pour la "
-"recherche, et sélectionnez une bibliothèque dans laquelle le livre sera "
-"ajouté."
+"Veuillez fournir soit un ISBN (International Standard Book Number) ou un "
+"critère quelconque pour la recherche, et sélectionnez une bibliothèque dans "
+"laquelle le livre sera ajouté."
 
-#: ../data/alexandria/glade/new_book_dialog.glade:140
-msgid "_ISBN:"
-msgstr ""
-
-#: ../data/alexandria/glade/new_book_dialog.glade:171
-#: ../data/alexandria/glade/new_book_dialog.glade:228
+#: ../data/alexandria/glade/new_book_dialog.glade:147
+#: ../data/alexandria/glade/new_book_dialog.glade:264
+#: ../data/alexandria/glade/new_book_dialog.glade:318
+#: ../data/alexandria/glade/new_book_dialog.glade:403
 #: ../data/alexandria/glade/main_app.glade:706
 msgid "*"
 msgstr "*"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:188
+#: ../data/alexandria/glade/new_book_dialog.glade:166
+msgid "_ISBN:"
+msgstr ""
+
+#: ../data/alexandria/glade/new_book_dialog.glade:189
+msgid "_Search:"
+msgstr "_Rechercher"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:362
 msgid "_Library:"
 msgstr "_Bibliothèque:"
 
@@ -238,7 +307,7 @@ msgstr "<b>_Fournisseurs</b>"
 msgid "_Setup"
 msgstr "_Configurer"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:433
+#: ../data/alexandria/glade/preferences_dialog.glade:435
 msgid ""
 "Providers are libraries that supply information about books.  Some of them "
 "can be configured to get better results.  You can also customize the order "
@@ -249,7 +318,7 @@ msgstr ""
 "meilleurs résultats.  Vous pouvez également personnaliser l'ordre dans "
 "lequel ils seront interrogés."
 
-#: ../data/alexandria/glade/preferences_dialog.glade:460
+#: ../data/alexandria/glade/preferences_dialog.glade:462
 msgid "Providers"
 msgstr "Fournisseurs"
 
