@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+# Copyright (C) 2004-2005 Dafydd Harries
 
 require 'test/unit'
 require 'gettext'
@@ -27,4 +28,3 @@ class TestISBN < Test::Unit::TestCase
             Alexandria::Library.canonicalise_isbn("9780345431929")
     end
 end
-

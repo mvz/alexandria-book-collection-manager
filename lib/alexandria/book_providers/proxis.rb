@@ -1,4 +1,4 @@
-# Copyright (C) 2004 Pascal Terjan 
+# Copyright (C) 2004-2005 Pascal Terjan 
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as

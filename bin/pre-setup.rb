@@ -1,4 +1,4 @@
-# Copyright (C) 2004 Laurent Sansonetti
+# Copyright (C) 2004-2005 Laurent Sansonetti
 
 File.open('alexandria', 'w') do |file|
     file.print <<EOF
