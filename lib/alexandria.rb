@@ -40,7 +40,8 @@ module Alexandria
         'Joachim Breitner <mail@joachim-breitner.de> (de)',
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
-        'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)'
+        'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)',
+        'Mirko Maischberger <mirko@lilik.it> (it)'
     ]
     ARTISTS = [
         'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
