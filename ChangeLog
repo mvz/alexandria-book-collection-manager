@@ -1,3 +1,29 @@
+2004-06-07  Laurent Sansonetti  <lrz@gnome.org>
+
+	Introduced i18n.  Almost all the investigation has been made by
+	Dafydd.
+
+	* pre-setup.rb,
+	  po/fr.po,
+	  po/genpot.sh:
+
+	Added.
+
+	* data/alexandria/glade/info_book_dialog.glade,
+	  data/alexandria/glade/main_app.glade:
+
+	Empted strings that shouldn't be translated. 
+
+	* bin/alexandria,
+	  lib/alexandria.rb,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui/about_dialog.rb,
+	  lib/alexandria/ui/glade_base.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+	  
+	Localised strings using Ruby/GetText.
+
 2004-06-06  Laurent Sansonetti  <lrz@gnome.org>
 	
 	* schemas/alexandria.schemas,

@@ -145,7 +145,7 @@ module Alexandria
             class Variable
                 attr_reader :provider_name, :name, :description, :possible_values
                 attr_accessor :value
-
+            
                 def initialize(provider_name, name, description, default_value,
                                possible_values=nil)
 
@@ -186,22 +186,25 @@ module Alexandria
         end
         
         class AmazonProvider
-            attr_reader :prefs, :name
-
+            attr_reader :prefs, :name 
+                
+            include GetText
+            GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+            
             def initialize
                 @name = "Amazon"
                 @prefs = Preferences.new(@name.downcase)
-                @prefs.add("locale", "Locale site to contact", "us",
+                @prefs.add("locale", _("Locale site to contact"), "us",
                            Amazon::Search::LOCALES.keys)
-                @prefs.add("dev_token", "Development token", "D23XFCO2UKJY82")
-                @prefs.add("associate", "Associate ID", "calibanorg-20")
+                @prefs.add("dev_token", _("Development token"), "D23XFCO2UKJY82")
+                @prefs.add("associate", _("Associate ID"), "calibanorg-20")
             end
                
             def search(criteria)
                 results = []
                 prefs.read
-                p req = Amazon::Search::Request.new(prefs["dev_token"])
-                p req.locale = prefs["locale"]
+                req = Amazon::Search::Request.new(prefs["dev_token"])
+                req.locale = prefs["locale"]
                 req.asin_search(criteria) do |product|
                     next unless product.catalog == 'Book'
                     fetch = lambda do |url|

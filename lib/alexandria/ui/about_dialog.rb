@@ -18,6 +18,9 @@
 module Alexandria
 module UI
     class AboutDialog < Gnome::About
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+
         def initialize(parent)
             super(Alexandria::TITLE,
                   Alexandria::VERSION,

@@ -1,0 +1,374 @@
+# Alexandria en Français
+# This file is distributed under the same license as the Alexandria package.
+# Laurent Sansonetti <lrz@gnome.org>, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Alexandria\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-07 21:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
+"Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../lib/alexandria/ui/main_app.rb:79
+msgid "'%s' selected"
+msgstr "'%s' sélectionné"
+
+#: ../lib/alexandria/ui/main_app.rb:81
+msgid "%d books selected"
+msgstr "%d livres sélectionnés"
+
+#: ../lib/alexandria/ui/main_app.rb:120
+msgid "Untitled %d"
+msgstr "Sans Titre %d"
+
+#: ../lib/alexandria/ui/main_app.rb:152
+msgid "Are you sure you want to permanently delete '%s'?"
+msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s'?"
+
+#: ../lib/alexandria/ui/main_app.rb:154
+msgid "Are you sure you want to permanently delete '%s' which has one book?"
+msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient un livre?"
+
+#: ../lib/alexandria/ui/main_app.rb:156
+msgid "Are you sure you want to permanently delete '%s' which has %d books?"
+msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient %d livres?"
+
+#: ../lib/alexandria/ui/main_app.rb:169
+msgid "Are you sure you want to permanently delete '%s' from '%s'?"
+msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s' de '%s'?"
+
+#: ../lib/alexandria/ui/main_app.rb:365
+msgid "Unable to launch the web browser"
+msgstr "Impossible de démarrer le navigateur Internet"
+
+#: ../lib/alexandria/ui/main_app.rb:366
+msgid ""
+"Check out that a web browser is configured as default (Applications -> "
+"Desktop Preferences -> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Vérifiez qu'un nativateur Internet est configuré par défaut (Applications -> "
+"Préférences du bureau -> Préférences avancées -> Applications préférées) et "
+"ré-essayez encore."
+
+#: ../lib/alexandria/ui/main_app.rb:424
+msgid "Title"
+msgstr "Titre"
+
+#: ../lib/alexandria/ui/main_app.rb:448
+msgid "Rating"
+msgstr "Notation"
+
+#: ../lib/alexandria/ui/main_app.rb:513
+msgid "Library"
+msgstr "Bibliothèque"
+
+#: ../lib/alexandria/ui/main_app.rb:527
+msgid "Invalid library name '%s'"
+msgstr "Nom de bibliothèque invalide '%s'"
+
+#: ../lib/alexandria/ui/main_app.rb:528
+msgid "The name provided contains the illegal character '<i>%s</i>'."
+msgstr "Le nom entré contient le caractère invalide '<i>%s</i>'."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:49
+msgid "'%s' already exists in '%s' (titled '%s')."
+msgstr "'%s' existe déjà dans '%s' (titré '%s')."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:62
+msgid "Couldn't add book"
+msgstr "Impossible d'ajouter le libre"
+
+#: ../lib/alexandria/book.rb:197
+msgid "Locale site to contact"
+msgstr "Site local à contacter"
+
+#: ../lib/alexandria/book.rb:199
+msgid "Development token"
+msgstr "Jeton de développeur"
+
+#: ../lib/alexandria/book.rb:200
+msgid "Associate ID"
+msgstr "Identifiant d'associé"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:126
+msgid "<span weight=\"bold\">Title:</span>"
+msgstr "<span weight=\"bold\">Titre:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:175
+msgid "<span weight=\"bold\">Authors:</span>"
+msgstr "<span weight=\"bold\">Auteurs:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:224
+msgid "<span weight=\"bold\">ISBN:</span>"
+msgstr ""
+
+#: ../data/alexandria/glade/info_book_dialog.glade:273
+msgid "<span weight=\"bold\">Publisher:</span>"
+msgstr "<span weight=\"bold\">Éditeur:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:322
+msgid "<span weight=\"bold\">Edition:</span>"
+msgstr "<span weight=\"bold\">Édition:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:371
+msgid "<span weight=\"bold\">Rating:</span>"
+msgstr "<span weight=\"bold\">Notation:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:544
+msgid "General"
+msgstr "Général"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:599
+msgid "Notes"
+msgstr ""
+
+#: ../data/alexandria/glade/main_app.glade:12
+msgid "Alexandria"
+msgstr ""
+
+#: ../data/alexandria/glade/main_app.glade:57
+msgid "_Library"
+msgstr "_Bibliothèque"
+
+#: ../data/alexandria/glade/main_app.glade:66
+msgid "_New..."
+msgstr "_Nouveau..."
+
+#: ../data/alexandria/glade/main_app.glade:88
+msgid "_Add Book..."
+msgstr "_Ajouter un livre..."
+
+#: ../data/alexandria/glade/main_app.glade:116
+msgid "_Properties"
+msgstr "_Propriétés"
+
+#: ../data/alexandria/glade/main_app.glade:164
+#: ../data/alexandria/glade/main_app.glade:1064
+#: ../data/alexandria/glade/main_app.glade:1266
+msgid "Select _All"
+msgstr "_Tout sélectionner"
+
+#: ../data/alexandria/glade/main_app.glade:174
+#: ../data/alexandria/glade/main_app.glade:1073
+#: ../data/alexandria/glade/main_app.glade:1275
+msgid "Dese_lect All"
+msgstr "Tout _déselectionner"
+
+#: ../data/alexandria/glade/main_app.glade:190
+#: ../data/alexandria/glade/main_app.glade:1215
+msgid "_Delete"
+msgstr "_Supprimer"
+
+#: ../data/alexandria/glade/main_app.glade:218
+msgid "_Search"
+msgstr "_Rechercher"
+
+#: ../data/alexandria/glade/main_app.glade:240
+msgid "_Clear Results"
+msgstr "_Effacer les résultats"
+
+#: ../data/alexandria/glade/main_app.glade:276
+msgid "_Refresh"
+msgstr "_Raffraichir"
+
+#: ../data/alexandria/glade/main_app.glade:304
+msgid "_Side pane"
+msgstr "_Panneau latéral"
+
+#: ../data/alexandria/glade/main_app.glade:315
+msgid "_Toolbar"
+msgstr "Barre d'_outils"
+
+#: ../data/alexandria/glade/main_app.glade:325
+msgid "_Statusbar"
+msgstr "Barre d'é_tat"
+
+#: ../data/alexandria/glade/main_app.glade:341
+#: ../data/alexandria/glade/main_app.glade:1088
+#: ../data/alexandria/glade/main_app.glade:1290
+msgid "Arran_ge Icons"
+msgstr "Ranger les icônes"
+
+#: ../data/alexandria/glade/main_app.glade:351
+#: ../data/alexandria/glade/main_app.glade:1097
+#: ../data/alexandria/glade/main_app.glade:1299
+msgid "By _Title"
+msgstr "Par _titre"
+
+#: ../data/alexandria/glade/main_app.glade:361
+#: ../data/alexandria/glade/main_app.glade:1107
+#: ../data/alexandria/glade/main_app.glade:1309
+msgid "By _Authors"
+msgstr "Par _auteurs"
+
+#: ../data/alexandria/glade/main_app.glade:372
+#: ../data/alexandria/glade/main_app.glade:1118
+#: ../data/alexandria/glade/main_app.glade:1320
+msgid "By _ISBN"
+msgstr "Par _ISBN"
+
+#: ../data/alexandria/glade/main_app.glade:383
+#: ../data/alexandria/glade/main_app.glade:1129
+#: ../data/alexandria/glade/main_app.glade:1331
+msgid "By _Publisher"
+msgstr "Par _éditeur"
+
+#: ../data/alexandria/glade/main_app.glade:394
+#: ../data/alexandria/glade/main_app.glade:1140
+#: ../data/alexandria/glade/main_app.glade:1342
+msgid "By _Edition"
+msgstr "Par é_dition"
+
+#: ../data/alexandria/glade/main_app.glade:405
+#: ../data/alexandria/glade/main_app.glade:1151
+#: ../data/alexandria/glade/main_app.glade:1353
+msgid "By _Rating"
+msgstr "Par _notation"
+
+#: ../data/alexandria/glade/main_app.glade:422
+#: ../data/alexandria/glade/main_app.glade:1168
+#: ../data/alexandria/glade/main_app.glade:1370
+msgid "Re_versed Order"
+msgstr "_Ordre inversé"
+
+#: ../data/alexandria/glade/main_app.glade:442
+#: ../data/alexandria/glade/main_app.glade:1188
+#: ../data/alexandria/glade/main_app.glade:1390
+msgid "View as _Icons"
+msgstr "Voir en tant qu'_icônes"
+
+#: ../data/alexandria/glade/main_app.glade:452
+#: ../data/alexandria/glade/main_app.glade:1198
+#: ../data/alexandria/glade/main_app.glade:1400
+msgid "View as _List"
+msgstr "Voir en tant que _liste"
+
+#: ../data/alexandria/glade/main_app.glade:475
+msgid "Submit _Bug Report"
+msgstr "Soumettre un rapport de bogue"
+
+#: ../data/alexandria/glade/main_app.glade:555
+#: ../data/alexandria/glade/main_app.glade:584
+msgid "New File"
+msgstr "Nouveau fichier"
+
+#: ../data/alexandria/glade/main_app.glade:639
+msgid "Title contains"
+msgstr "Titre contient"
+
+#: ../data/alexandria/glade/main_app.glade:648
+msgid "Authors contain"
+msgstr "Auteurs contiennent"
+
+#: ../data/alexandria/glade/main_app.glade:657
+msgid "ISBN contains"
+msgstr "ISBN contient"
+
+#: ../data/alexandria/glade/main_app.glade:666
+msgid "Publisher contains"
+msgstr "Éditeur contient"
+
+#: ../data/alexandria/glade/main_app.glade:675
+msgid "Notes contain"
+msgstr "Notes contiennent"
+
+#: ../data/alexandria/glade/main_app.glade:708
+#: ../data/alexandria/glade/new_book_dialog.glade:171
+#: ../data/alexandria/glade/new_book_dialog.glade:228
+msgid "*"
+msgstr "*"
+
+#: ../data/alexandria/glade/main_app.glade:753
+msgid "View as Icons"
+msgstr "Voir en tant qu'icônes"
+
+#: ../data/alexandria/glade/main_app.glade:762
+msgid "View as List"
+msgstr "Voir en tant que liste"
+
+#: ../data/alexandria/glade/main_app.glade:817
+msgid "_Libraries:"
+msgstr "_Bibliothèques:"
+
+#: ../data/alexandria/glade/main_app.glade:1239
+msgid "_Add a Book"
+msgstr "_Ajouter un livre"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:10
+msgid "Adding a Book"
+msgstr "Ajout d'un livre"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:110
+msgid ""
+"Please provide an ISBN (International Standard Book Number) to search for, "
+"and select the library which the book will be added to."
+msgstr ""
+"Veuillez fournir un ISBN (International Standard Book Number) pour la recherche, "
+"et sélectionnez une bibliothèque dans laquelle le livre sera ajouté."
+
+#: ../data/alexandria/glade/new_book_dialog.glade:140
+msgid "_ISBN:"
+msgstr ""
+
+#: ../data/alexandria/glade/new_book_dialog.glade:188
+msgid "_Library:"
+msgstr "_Bibliothèque:"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:9
+msgid "Preferences"
+msgstr "Préférences"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:76
+msgid "<b>Visible Columns</b>"
+msgstr "<b>Colonnes visibles</b>"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:108
+msgid "_Authors"
+msgstr "_Auteurs"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:131
+msgid "_Edition"
+msgstr "_Édition"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:154
+msgid "_Rating"
+msgstr "_Notation"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:177
+msgid "_ISBN"
+msgstr ""
+
+#: ../data/alexandria/glade/preferences_dialog.glade:200
+msgid "_Publisher"
+msgstr "É_diteur"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:235
+msgid "List Columns"
+msgstr "Liste en colonnes"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:261
+msgid "<b>_Providers</b>"
+msgstr "<b>_Fournisseurs</b>"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:368
+msgid "_Setup"
+msgstr "_Configurer"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:433
+msgid ""
+"Providers are libraries that supply information about books.  Some of them "
+"can be configured to get better results.  You can also customize the order "
+"in which they are queried."
+msgstr ""
+"Les fournisseurs sont des bibliothèques partageant des informations sur des livres. "
+"Certains d'entre eux peuvent-être configurés afin d'obtenir de meilleurs résultats.  "
+"Vous pouvez également personnaliser l'ordre dans lequel ils seront interrogés."
+
+#: ../data/alexandria/glade/preferences_dialog.glade:460
+msgid "Providers"
+msgstr "Fournisseurs"

@@ -18,6 +18,9 @@
 module Alexandria
 module UI
     class MainApp < GladeBase 
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+
         def initialize
             super("main_app.glade")
             @main_app.icon = Icons::ALEXANDRIA_SMALL
@@ -73,9 +76,9 @@ module UI
                 when 0
                     ""
                 when 1
-                    "'#{books.first.title}' selected"
+                    _("'%s' selected") % books.first.title
                 else
-                    "#{books.length} books selected"
+                    _("%d books selected") % books.length
             end
             @popup_properties.sensitive = @menu_properties.sensitive = books.length == 1
             @menu_delete.sensitive = !books.empty? 
@@ -114,7 +117,7 @@ module UI
         def on_new_library
             i = 1
             while true do
-                name = "Untitled %d" % i
+                name = _("Untitled %d") % i
                 break unless @libraries.find { |x| x.name == name }
                 i += 1
             end
@@ -146,13 +149,11 @@ module UI
             if @treeview_sidepane.focus?
                 message = case library.length
                     when 0
-                        "Are you sure you want to permanently delete '#{library.name}'?"
+                        _("Are you sure you want to permanently delete '%s'?") % library.name
                     when 1
-                        "Are you sure you want to permanently delete '#{library.name}', " \
-                        "which has one book?"
+                        _("Are you sure you want to permanently delete '%s' which has one book?") % library.name
                     else
-                        "Are you sure you want to permanently delete '#{library.name}', " \
-                        "which has #{library.length} books?"
+                        _("Are you sure you want to permanently delete '%s' which has %d books?") % [ library.name, library.size ]
                 end
                 if confirm.call(message)
                     library.delete
@@ -165,8 +166,7 @@ module UI
                 end
             else
                 selected_books.each do |book|
-                    if confirm.call("Are you sure you want to permanently delete '#{book.title}' " \
-                                    "from '#{library.name}'?")
+                    if confirm.call(_("Are you sure you want to permanently delete '%s' from '%s'?") % [ book.title, library.name ])
                         library.delete(book)
                         on_refresh
                     end
@@ -362,10 +362,8 @@ module UI
                 system(cmd % "\"" + BUGREPORT_URL + "\"")
             else 
                 ErrorDialog.new(@main_app,
-                                "Unable to launch the web browser",
-                                "Check out that a web browser is configured as default " +
-                                "(Applications -> Desktop Preferences -> Advanced -> " +
-                                "Preferred Applications) and try again.")
+                                _("Unable to launch the web browser"),
+                                _("Check out that a web browser is configured as default (Applications -> Desktop Preferences -> Advanced -> Preferred Applications) and try again."))
             end
         end
 
@@ -423,7 +421,7 @@ module UI
 
             # first column
             renderer = Gtk::CellRendererPixbuf.new
-            column = Gtk::TreeViewColumn.new("Title")
+            column = Gtk::TreeViewColumn.new(_("Title"))
             column.pack_start(renderer, true)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 cell.pixbuf = iter[0]
@@ -438,7 +436,7 @@ module UI
             @listview.append_column(column)
 
             # other columns
-            names = %w{Authors ISBN Publisher Edition}
+            names = %w{Authors ISBN Publisher Edition}.map { |x| _(x) }
             names.each_index do |i|
                 column = Gtk::TreeViewColumn.new(names[i], renderer, :text => i + 2)
                 column.resizable = true
@@ -447,7 +445,7 @@ module UI
             end
 
             # final column
-            column = Gtk::TreeViewColumn.new("Rating")
+            column = Gtk::TreeViewColumn.new(_("Rating"))
             5.times do |i|
                 renderer = Gtk::CellRendererPixbuf.new
                 column.pack_start(renderer, false)
@@ -512,7 +510,7 @@ module UI
             @treeview_sidepane.model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
             @libraries.each { |library| append_library(library) } 
             renderer = Gtk::CellRendererPixbuf.new
-            column = Gtk::TreeViewColumn.new("Library")
+            column = Gtk::TreeViewColumn.new(_("Library"))
             column.pack_start(renderer, true)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 cell.pixbuf = iter[0]
@@ -526,8 +524,8 @@ module UI
                 if cell.text != new_text
                     if match = /([^\w\s'"()?!:;.\-])/.match(new_text)
                         ErrorDialog.new(@main_app,
-                                        "Invalid library name '#{new_text}'",
-                                        "The name provided contains the illegal character '<i>#{match[1]}</i>'.")
+                                        _("Invalid library name '%s'") % new_text,
+                                        _("The name provided contains the illegal character '<i>%s</i>'.") % match[1])
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
                         iter[1] = selected_library.name = new_text

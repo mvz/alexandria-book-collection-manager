@@ -18,6 +18,9 @@
 module Alexandria
 module UI
     class NewBookDialog < GladeBase
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+
         def initialize(parent, libraries, selected_library=nil, &block)
             super('new_book_dialog.glade')
             @new_book_dialog.transient_for = @parent = parent
@@ -43,7 +46,7 @@ module UI
                 isbn = @entry_isbn.text.delete('-')
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
                 if book = library.find { |book| book.isbn == isbn }
-                    raise "'#{book.isbn}' already exists in '#{library.name}' (titled '#{book.title}')."
+                    raise _("'%s' already exists in '%s' (titled '%s').") % [ book.isbn, library.name, book.title ] 
                 end
 
                 # Perform the search via the providers.
@@ -56,7 +59,7 @@ module UI
                 @new_book_dialog.destroy
                 @block.call(book, library)
             rescue => e
-                ErrorDialog.new(@parent, "Couldn't add book", e.message)
+                ErrorDialog.new(@parent, _("Couldn't add book"), e.message)
             end
         end
     

@@ -15,13 +15,9 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-require 'alexandria/config.rb'
-require 'alexandria/book.rb'
-require 'alexandria/preferences.rb'
-require 'alexandria/ui.rb'
-
-module Alexandria
+module Alexandria 
     TITLE = 'Alexandria'
+    TEXTDOMAIN = 'alexandria'
     VERSION = '0.1.2'
     DESCRIPTION = 'A program to help you manage your book collection.'
     COPYRIGHT = 'Copyright (C) 2004 Laurent Sansonetti'
@@ -40,3 +36,8 @@ module Alexandria
         Alexandria::UI.main
     end
 end
+
+require 'alexandria/config.rb'
+require 'alexandria/book.rb'
+require 'alexandria/preferences.rb'
+require 'alexandria/ui.rb'
