@@ -8,7 +8,7 @@ msgstr ""
 "Last-Translator: Joachim Breitner <mail@joachim-breitner.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;"
 
@@ -707,3 +707,56 @@ msgstr ""
 #: ../data/alexandria/glade/preferences_dialog.glade:462
 msgid "Providers"
 msgstr "Anbieter"
+
+#~ msgid ""
+#~ "Are you sure you want to permanently delete '%s' which has %d book?Are "
+#~ "you sure you want to permanently delete '%s' which has %d books?"
+#~ msgstr ""
+#~ "Sind Sie sicher, '%s', welches '%d' Buch enthÃ¤lt, unwiederbringlich "
+#~ "lÃ¶schen zu wollen?Sind Sie sicher, '%s', welches '%d' BÃ¼cher enthÃ¤lt, "
+#~ "unwiederbringlich lÃ¶schen zu wollen?"
+
+#~ msgid "*"
+#~ msgstr "*"
+
+#~ msgid "Alexandria"
+#~ msgstr "Alexandria"
+
+#~ msgid "The '%s' provider doesn't have any preference to setup"
+#~ msgstr "Der Anbieter '%s' benÃÂÃÂ¶tigt keine Einstellungen"
+
+#~ msgid "Edition"
+#~ msgstr "Ausgabe"
+
+#~ msgid "by title"
+#~ msgstr "nach Titel"
+
+#~ msgid "by authors"
+#~ msgstr "nach Autoren"
+
+#~ msgid "by keyword"
+#~ msgstr "nach SchlÃÂÃÂÃÂÃÂsselwort"
+
+#~ msgid "<span weight=\"bold\">Title:</span>"
+#~ msgstr "<span weight=\"bold\">Titel:</span>"
+
+#~ msgid "<span weight=\"bold\">Authors:</span>"
+#~ msgstr "<span weight=\"bold\">Autoren:</span>"
+
+#~ msgid "<span weight=\"bold\">ISBN:</span>"
+#~ msgstr "<spanÃÂÃÂÃÂÃÂ·weight=\"bold\">ISBN:</span>"
+
+#~ msgid "<span weight=\"bold\">Publisher:</span>"
+#~ msgstr "<span weight=\"bold\">Verlag:</span>"
+
+#~ msgid "<span weight=\"bold\">Edition:</span>"
+#~ msgstr "<span weight=\"bold\">Ausgabe:</span>"
+
+#~ msgid "<span weight=\"bold\">Rating:</span>"
+#~ msgstr "<span weight=\"bold\">Bewertung:</span>"
+
+#~ msgid "By _Edition"
+#~ msgstr "Nach A_usgabe"
+
+#~ msgid "_Add a Book"
+#~ msgstr "_Buch hinzufÃÂÃÂÃÂÃÂgen"
