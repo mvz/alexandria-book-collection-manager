@@ -30,6 +30,10 @@ module Alexandria
         SMALL_COVER_EXT = '_small.jpg'
         MEDIUM_COVER_EXT = '_medium.jpg'
 
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+        def self._(s); GetText.gettext(s); end
+ 
         def path
             File.join(DIR, @name)
         end
@@ -68,7 +72,7 @@ module Alexandria
             end
             # create the default library if there is no library yet 
             if a.empty?
-                a << self.load("My Library")
+                a << self.load(_("My Library"))
             end
             a
         end
@@ -124,6 +128,8 @@ module Alexandria
    
     class BookProviders < Array
         include Singleton
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
 
     	def self.search(criteria)
             self.instance.each do |factory|
@@ -132,7 +138,7 @@ module Alexandria
                         return stuff
                     end
                 rescue TimeoutError
-                    raise "Couldn't reach the provider '#{factory.name}': timeout expired."
+                    raise _("Couldn't reach the provider '%s': timeout expired.") % factory.name
                 end 
             end
     	end

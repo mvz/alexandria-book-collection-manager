@@ -19,7 +19,10 @@ module Alexandria
     TITLE = 'Alexandria'
     TEXTDOMAIN = 'alexandria'
     VERSION = '0.1.2'
-    DESCRIPTION = 'A program to help you manage your book collection.'
+    include GetText
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+    def self._(s); GetText.gettext(s); end
+    DESCRIPTION = _('A program to help you manage your book collection.')
     COPYRIGHT = 'Copyright (C) 2004 Laurent Sansonetti'
     AUTHORS = [
         'Dafydd Harries <daf@muse.19inch.net>',

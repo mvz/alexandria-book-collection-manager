@@ -18,8 +18,11 @@
 module Alexandria
 module UI
     class ProviderPreferencesDialog < Gtk::Dialog
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+
         def initialize(parent, provider)
-            super("Preferences for #{provider.name}",
+            super(_("Preferences for %s") % provider.name,
                   parent,
                   Gtk::Dialog::MODAL,
                   [ Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE ])

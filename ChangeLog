@@ -1,3 +1,24 @@
+2004-06-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* README:
+
+	- Corrected the name of the ruby-gettext project ;
+	- Fixed the required GNOME version to 2.6.
+
+	* data/alexandria/glade/main_app.glade:
+
+	Removed some tooltips.
+
+	* lib/alexandria.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Marked a few strings to be translated.
+
+	* po/fr.po:
+
+	Updated.
+
 2004-06-07  Laurent Sansonetti  <lrz@gnome.org>
 
 	Introduced i18n.  Almost all the investigation has been made by

@@ -552,7 +552,6 @@
 	      <child>
 		<widget class="GtkToolButton" id="button12">
 		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">New File</property>
 		  <property name="stock_id">gtk-add</property>
 		  <property name="visible_horizontal">True</property>
 		  <property name="visible_vertical">True</property>
@@ -581,7 +580,6 @@
 	      <child>
 		<widget class="GtkToolButton" id="button17">
 		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">New File</property>
 		  <property name="stock_id">gtk-refresh</property>
 		  <property name="visible_horizontal">True</property>
 		  <property name="visible_vertical">True</property>

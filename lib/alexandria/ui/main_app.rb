@@ -436,7 +436,7 @@ module UI
             @listview.append_column(column)
 
             # other columns
-            names = %w{Authors ISBN Publisher Edition}.map { |x| _(x) }
+            names = [ _("Authors"), _("ISBN"), _("Publisher"), _("Edition") ]
             names.each_index do |i|
                 column = Gtk::TreeViewColumn.new(names[i], renderer, :text => i + 2)
                 column.resizable = true
