@@ -1,5 +1,11 @@
 2005-03-25  Dafydd Harries  <daf@muse.19inch.net>
 
+	* data/alexandria/glade/preferences_dialog.glade:
+
+	Rename the "List Columns" tab to "List View".
+
+2005-03-25  Dafydd Harries  <daf@muse.19inch.net>
+
 	* data/alexandria/glade/new_book_dialog.glade:
 
 	Use alternating colours for rows in the search results list.
