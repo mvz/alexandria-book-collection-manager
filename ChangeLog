@@ -1,3 +1,16 @@
+2004-04-20  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/ui/preferences_dialog.rb,
+	  lib/alexandria/ui.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Added a basic Preferences dialog.
+
+	* lib/alexandria/book.rb:
+
+	Refactored.
+
 2004-04-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* README:

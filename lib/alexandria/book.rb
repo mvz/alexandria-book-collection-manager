@@ -1,26 +1,10 @@
-# Copyright (C) 2004 Laurent Sansonetti
-#
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
-
 require 'amazon/search'
 require 'tempfile'
 require 'net/http'
 require 'uri'
 require 'yaml'
 require 'fileutils'
+require 'singleton'
 
 module Alexandria
     class Book
@@ -147,41 +131,60 @@ module Alexandria
             @name = name
         end
     end
-    
-    module BookProvider
+   
+    class BookProvider
+        include Singleton
+
     	def self.find(criteria, factory=nil)
             book = nil
             begin
                 if factory.nil?
-                    self.each_factory do |factory|
-                        break if book = factory.find(criteria)
+                    PROVIDERS.each do |factory|
+                        if book = factory.instance.find(criteria)
+                            break
+                        end
                     end
                 else
-                    book = factory.find(criteria)
+                    book = factory.instance.find(criteria)
                 end
             rescue TimeoutError
-                raise "Couldn't reach the provider '#{factory.name}': timeout expired."
+                raise "Couldn't reach the provider '#{factory.instance.name}': timeout expired."
             end 
             return book
     	end
-    
-    	def self.factories
-    		self.constants.map { |x| self.module_eval(x) }.delete_if { |x| !x.is_a?(Module) }
-    	end
-    
-        def self.each_factory
-            self.factories.each { |factory| yield factory }
-            nil
-        end
-            
-    	module AmazonProvider
-            def self.name
-                "Amazon"
-            end
 
-    		def self.find(criteria)
+        class ConfVariable
+            attr_reader :name, :description, :possible_values
+            attr_accessor :value
+
+            def initialize(name, description, possible_values, default_value)
+                @name = name
+                @description = description
+                @possible_values = possible_values
+                @value = default_value
+            end
+        end
+        
+        class AmazonProvider < self
+            attr_reader :prefs, :name
+
+            def initialize
+                @name = "Amazon"
+                @prefs = {
+                    :locale    => ConfVariable.new("locale",
+                                                   "Locale site to contact.",
+                                                   Amazon::Search::LOCALES.keys,
+                                                   "us"),
+                    :dev_token => ConfVariable.new("dev_token",
+                                                   "Development token.",
+                                                   nil, "0xDEADBEEF")
+                }
+            end
+                
+        	def find(criteria)
                 results = []
-                req = Amazon::Search::Request.new('foo')
+                req = Amazon::Search::Request.new(prefs[:dev_token].value)
+                req.locale = prefs[:locale].value
                 req.asin_search(criteria) do |product|
                     next unless product.catalog == 'Book'
                     fetch = lambda do |url|
@@ -201,8 +204,17 @@ module Alexandria
                 end
                 raise "Too many results" unless results.length == 1
                 results.first
-    		end
-    	end
-    end
+        	end
+        end
+        
+        PROVIDERS = [ AmazonProvider ]
 
+        def self.all
+            PROVIDERS
+        end
+
+        def self.each
+            PROVIDERS.each { |x| yield x } if block_given?
+        end
+    end
 end

@@ -176,7 +176,7 @@ module UI
         end
  
         def on_preferences
-            puts "Not yet implemented :-)"
+            PreferencesDialog.new(@main_app)
         end
 
         def on_refresh  
