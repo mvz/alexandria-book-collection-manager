@@ -81,7 +81,15 @@ class BookProviders
             results = []
             products.each do |product|
                 next unless product.catalog == 'Book'
-                book = Book.new(product.product_name.squeeze(' '),
+                title = product.product_name.squeeze(' ')
+                
+                # Work around Amazon US encoding bug. Amazon US apparently
+                # interprets UTF-8 titles as ISO-8859 titles and then converts
+                # the garbled titles to UTF-8. This tries to convert back into
+                # valid UTF-8. It does not always work - see isbn 2259196098
+                # (from the mailing list) for an example.
+                title = GLib.convert(title,'iso-8859-1','utf-8') if req.locale == 'us'
+                book = Book.new(title,
                                 (product.authors.map { |x| x.squeeze(' ') } rescue [ _("n/a") ]),
                                 product.isbn.squeeze(' '),
                                 (product.manufacturer.squeeze(' ') rescue _("n/a")),

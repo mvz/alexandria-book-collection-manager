@@ -1,3 +1,10 @@
+2005-02-25  Constantine Evans  <cevans@costinet.org>
+
+	* lib/alexandria/book_providers/amazon.rb:
+
+	Added workaround for an Amazon US encoding bug. See comments in code
+	for details.
+
 2005-02-25  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb,
