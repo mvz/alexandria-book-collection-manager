@@ -20,4 +20,6 @@ Dir.glob("po/*.po") do |file|
     end
 
     system("msgfmt po/#{lang}.po -o #{mo_path}/#{basename}.mo")
+
+    raise "msgfmt failed on po/#{lang}.po" if $? != 0
 end
