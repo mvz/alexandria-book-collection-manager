@@ -3,21 +3,16 @@ Alexandria's TODO list
 
 Future releases:
 
+[X] Loaning support
 [ ] XHTML export
 [ ] ONIX import 
 [ ] Import/export via GNOME-DB
-[X] Loaning support
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Writing a z39.50 provider
 [ ] Writing help documentation
 [ ] Win32 MinGW port (Laurent)
 [ ] Show more details about books, like the publication date for example
-
-Future releases (that depend of Ruby-GNOME2 1.0.0, so not for the moment):
-
-[X] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::ComboBox (new in 2.4).
-[X] Removing the glade support for main_app, and using the new UI manager
-    instead.
 [ ] Drag-and-drop books within libraries
-[X] Using the "new" file chooser
+[ ] Migrate from GnomeIconView to GtkIconView
+[ ] Migrate from GnomeAbout to GtkAboutDialog
