@@ -182,7 +182,6 @@ module UI
             column.pack_start(renderer, true) 
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 cell.text = iter[1]
-                p cell
             end
             column.sort_column_id = 1
             column.resizable = true
