@@ -1,3 +1,10 @@
+2004-07-24  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/library.rb:
+
+	Fix bug #752, where the ISBN checksum didn't get converted to an X
+	when it was a 10.
+
 2004-07-21  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO:

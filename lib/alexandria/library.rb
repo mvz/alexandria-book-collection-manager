@@ -91,9 +91,11 @@ module Alexandria
         end
 
         def self.isbn_checksum(numbers)
-            (0 ... numbers.length).inject(0) { |accumulator,i|
+            sum = (0 ... numbers.length).inject(0) { |accumulator,i|
                 accumulator + numbers[i] * (i + 1)
             } % 11
+
+            sum == 10 ? 'X' : sum
         end
 
         def self.valid_isbn?(isbn)
@@ -132,7 +134,7 @@ module Alexandria
                 numbers[3 .. 11] + [self.isbn_checksum(numbers[3 .. 11])]
             elsif self.valid_isbn?(isbn)
                 # Seems to be a valid ISBN number.
-                numbers
+                numbers[0 .. -2] + [isbn_checksum(numbers[0 .. -2])]
             else
                 raise "Invalid ISBN number '#{isbn}'."
             end
