@@ -1,5 +1,13 @@
 2005-03-22  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/library.rb:
+
+	Really ignores hidden directories in ~/.alexandria/.
+
+	* lib/alexandria/web_themes.rb:
+	
+	Allows user-specific themes in ~/.alexandria/.web-themes/.
+
 	* AUTHORS,
 	  lib/alexandria.rb:
 

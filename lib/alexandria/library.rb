@@ -72,8 +72,8 @@ module Alexandria
             a = []
             begin
                 Dir.entries(DIR).each do |file|
-                    # skip '.', '..' and hidden files
-                    next if file =~ /^\.+$/
+                    # skip hidden files
+                    next if /^\./.match(file)
                     # skip non-directory files
                     next unless File.stat(File.join(DIR, file)).directory?
     
