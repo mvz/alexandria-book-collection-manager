@@ -28,13 +28,19 @@ module UI
         end
 
         def self.small_cover(library, book)
-            pixbuf = Gdk::Pixbuf.new(library.small_cover(book))
-            (pixbuf.width == 1 and pixbuf.height == 1) ? BOOK : pixbuf
+            self.cover(library.small_cover(book))
         end
         
         def self.medium_cover(library, book)
-            pixbuf = Gdk::Pixbuf.new(library.medium_cover(book))
-            (pixbuf.width == 1 and pixbuf.height == 1) ? BOOK : pixbuf
+            self.cover(library.medium_cover(book))
+        end
+
+        #######
+        private
+        #######
+    
+        def self.cover(filename)
+            File.exists?(filename) ? Gdk::Pixbuf.new(filename) : BOOK
         end
     end
 end

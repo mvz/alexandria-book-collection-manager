@@ -44,7 +44,9 @@ module Alexandria
     end
 end
 
-require 'alexandria/config.rb'
-require 'alexandria/book.rb'
-require 'alexandria/preferences.rb'
-require 'alexandria/ui.rb'
+require 'alexandria/config'
+require 'alexandria/book'
+require 'alexandria/library'
+require 'alexandria/book_providers'
+require 'alexandria/preferences'
+require 'alexandria/ui'

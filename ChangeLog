@@ -1,3 +1,29 @@
+2004-06-21  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book.rb:
+
+	Splitted.
+
+	* lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/book_providers.rb,
+	  lib/alexandria/book_providers,
+	  lib/alexandria/library.rb:
+
+	- Added ;
+	- The Proxis provider has been contributed by Pascal Terjan ; 
+	- Do not save covers that are blank ;
+	- The book providers factory should handle multiple providers now.
+
+	* lib/alexandria/ui/icons.rb:
+
+	Uses the default icon when the cover files don't exist.
+
+	* lib/alexandria/ui/preferences_dialog.rb:
+
+	Handles providers that don't provide any preference, and display
+	an error message when the user tries to setup them.
+
 2004-06-20  Pascal Terjan  <pterjan@linuxfr.org>
 
 	* lib/alexandria/ui/main_app.rb,

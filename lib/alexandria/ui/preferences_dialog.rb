@@ -71,6 +71,9 @@ module UI
     end
 
     class PreferencesDialog < GladeBase
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
         def initialize(parent, &changed_block)
             super('preferences_dialog.glade')
             @preferences_dialog.transient_for = parent
@@ -102,11 +105,14 @@ module UI
         end
 
         def on_setup
-            iter = @treeview_providers.selection.selected
-            provider = BookProviders.find { |x| x.name == iter[0] }
-            dialog = ProviderPreferencesDialog.new(@preferences_dialog, provider)
-            dialog.show_all.run
-            dialog.destroy
+            provider = selected_provider
+            if provider.prefs.empty?
+                ErrorDialog.new(@preferences_dialog, _("The '%s' provider doesn't have any preference to setup") % provider.name)
+            else
+                dialog = ProviderPreferencesDialog.new(@preferences_dialog, provider)
+                dialog.show_all.run
+                dialog.destroy
+            end
         end
 
         def on_column_toggled(checkbutton)
@@ -126,6 +132,15 @@ module UI
         
         def on_close
             @preferences_dialog.destroy
+        end
+
+        #######
+        private
+        #######
+
+        def selected_provider
+            iter = @treeview_providers.selection.selected
+            provider = BookProviders.find { |x| x.name == iter[0] }
         end
     end
 end
