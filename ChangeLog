@@ -1,3 +1,24 @@
+2004-03-21  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Implemented libraries tree view in the sidepane
+	- Implemented 'View/Toolbar' and 'View/Statusbar'
+	- Added and implemented 'View/Side pane'
+
+	* lib/alexandria/book.rb:
+	Removed our check on the ISBN number (since it can contain
+	non-numerical data and it seems that Ruby/Amazon checks it
+	for us already).
+
+	* data/alexandria/glade/main_app.glade:
+
+	- Following changes in main_app.rb
+	- Added a Home item in the toolbar
+	- Added Go menu with a Home menu item
+	- Renamed 'Tool Bar' -> 'Toolbar' (View menu)
+	- Renamed 'Status Bar' -> 'Statusbar' (View menu)
+
 2004-03-20  Laurent Sansonetti  <lrz@gnome.org>
 
 	Initial RubyForge import.

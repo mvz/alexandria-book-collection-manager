@@ -82,7 +82,6 @@ module Alexandria
     
     module BookProvider
     	def self.find(criteria, factory=nil)
-            raise "Not a valid ISBN number" unless criteria =~ /^\d{10}$/
     	    if factory
                 book = factory.find(criteria)
             else
