@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-08 02:14-0500\n"
-"PO-Revision-Date: 2004-11-05 17:50-0500\n"
+"PO-Revision-Date: 2004-12-28 19:28+0000\n"
 "Last-Translator: Miguel Ángel García <magmax@ieee.org>\n"
 "Language-Team: Miguel Ángel García <magmax@ieee.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "n/a"
 
 #: ../lib/alexandria/book_providers/proxis.rb:35
 msgid "Language of the books to search"
-msgstr "Idioma de los libros a bucar"
+msgstr "Idioma de los libros a buscar"
 
 #: ../lib/alexandria/library.rb:90
 msgid "My Library"
@@ -91,7 +91,7 @@ msgstr "Lista ISBN (*.txt)"
 
 #: ../lib/alexandria/ui/export_dialog.rb:57
 msgid "Export for_mat:"
-msgstr "Exportar al For_mato:"
+msgstr "Fo_rmato de exportado:"
 
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:57
 msgid "A title must be provided."
@@ -136,7 +136,7 @@ msgstr "Preferencias para %s"
 
 #: ../lib/alexandria/ui/preferences_dialog.rb:111
 msgid "The '%s' provider doesn't have any preference to setup"
-msgstr "El proveedor '%s' no dipone de preferencias de configuración"
+msgstr "El proveedor '%s' no dispone de preferencias de configuración"
 
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:52
 #, fuzzy
@@ -155,8 +155,8 @@ msgstr "Biblioteca '%s' seleccionada"
 #: ../lib/alexandria/ui/main_app.rb:75
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Biblioteca '%s' seleccionada, libro %d, %d unrated"
-msgstr[1] "Biblioteca '%s' seleccionada, %d libros, %d unrated"
+msgstr[0] "Biblioteca '%s' seleccionada, libro %d, %d no puntuados"
+msgstr[1] "Biblioteca '%s' seleccionada, %d libros, %d no puntuados"
 
 #: ../lib/alexandria/ui/main_app.rb:80
 msgid "'%s' selected"
@@ -166,7 +166,7 @@ msgstr "'%s' seleccionado"
 #, fuzzy
 msgid "%d book selected"
 msgid_plural "%d books selected"
-msgstr[0] "%d libros seleccionados"
+msgstr[0] "%d libro seleccionado"
 msgstr[1] "%d libros seleccionados"
 
 #: ../lib/alexandria/ui/main_app.rb:199
@@ -178,8 +178,8 @@ msgid ""
 "Check out that a web browser is configured as default (Applications -> "
 "Desktop Preferences -> Advanced -> Preferred Applications) and try again."
 msgstr ""
-"Compruebe que existe un navegador web configurado por defecto (Aplicaciones -"
-"> Preferencias de Escritorio -> Avanzadas -> Aplicaciones Favoritas) y "
+"Compruebe que existe un navegador web configurado por defecto (Aplicaciones "
+"-> Preferencias de Escritorio -> Avanzadas -> Aplicaciones Preferidas) y "
 "pruebe de nuevo"
 
 #: ../lib/alexandria/ui/main_app.rb:259
@@ -252,7 +252,7 @@ msgid_plural ""
 "Are you sure you want to permanently delete '%s' which has %d books?"
 msgstr[0] ""
 "¿Está seguro de que desea eliminar permanentemente '%s', que contiene %d "
-"libros?"
+"libro?"
 msgstr[1] ""
 "¿Está seguro de que desea eliminar permanentemente '%s', que contiene %d "
 "libros?"
@@ -277,15 +277,15 @@ msgstr "_Añadir Libro..."
 #: ../lib/alexandria/ui/main_app.rb:586
 #, fuzzy
 msgid "Add Book _Manually..."
-msgstr "_Añadir Libro..."
+msgstr "Añadir Libo _Manualmente..."
 
 #: ../lib/alexandria/ui/main_app.rb:587
 msgid "_Import..."
-msgstr ""
+msgstr "_Importar..."
 
 #: ../lib/alexandria/ui/main_app.rb:588
 msgid "_Export..."
-msgstr ""
+msgstr "_Exportar..."
 
 #: ../lib/alexandria/ui/main_app.rb:589
 msgid "_Properties"
@@ -402,7 +402,7 @@ msgstr "_Por Editor"
 #: ../lib/alexandria/ui/main_app.rb:640
 #, fuzzy
 msgid "By _Binding"
-msgstr "Po_r Puntuación"
+msgstr "Por Encuadernació (_b)"
 
 #: ../lib/alexandria/ui/main_app.rb:641
 msgid "By _Rating"
@@ -443,7 +443,7 @@ msgstr "Ver como Lista"
 #: ../lib/alexandria/ui/import_dialog.rb:27
 #, fuzzy
 msgid "Import a Library"
-msgstr "Mi Biblioteca"
+msgstr "Importar una Biblioteca"
 
 #: ../lib/alexandria/ui/import_dialog.rb:33
 msgid "Import"
@@ -456,7 +456,7 @@ msgstr "Autodetectar"
 #: ../lib/alexandria/ui/import_dialog.rb:54
 #, fuzzy
 msgid "Library _name:"
-msgstr "Bib_lioteca:"
+msgstr "_Nombre de la Biblioteca:"
 
 #: ../lib/alexandria/ui/import_dialog.rb:75
 #: ../lib/alexandria/ui/import_dialog.rb:107
@@ -474,11 +474,11 @@ msgstr ""
 #: ../lib/alexandria/ui/book_properties_dialog.rb:66
 #, fuzzy
 msgid "Couldn't modify the book"
-msgstr "No se pudo añadir el libro"
+msgstr "No se pudo modificar el libro"
 
 #: ../lib/alexandria.rb:23
 msgid "A program to help you manage your book collection."
-msgstr "Un programa para ayudarte a organizar tu colección de libros"
+msgstr "Un programa para ayudarle a organizar su colección de libros"
 
 #: ../data/alexandria/glade/main_app.glade:12
 msgid "Alexandria"
@@ -491,7 +491,7 @@ msgstr "Bib_liotecas:"
 #: ../data/alexandria/glade/book_properties_dialog.glade:72
 #, fuzzy
 msgid "_Title:"
-msgstr "Título"
+msgstr "_Título"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:97
 #, fuzzy
@@ -556,7 +556,7 @@ msgstr "Encuadernación(_b)"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:154
 msgid "_Rating"
-msgstr "_Puntuación"
+msgstr "Puntuació(_r)"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:177
 msgid "_ISBN"
@@ -609,13 +609,13 @@ msgid ""
 msgstr ""
 "por título\n"
 "por autores\n"
-"por palabras clave"
+"por palabra clave"
 
 
 #: ../data/alexandria/glade/new_book_dialog.glade:252
 #, fuzzy
 msgid "Save in _Library:"
-msgstr "Bib_lioteca:"
+msgstr "Guardar en la Bib_lioteca:"
 
 #~ msgid "Edition"
 #~ msgstr "Edición"
