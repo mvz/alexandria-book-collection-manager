@@ -16,8 +16,6 @@ Alexandria
       * generates from your libraries XHTML web pages themable with CSS ;
       * allows marking your books as loaned, each with the loan-date and the 
         name of the person who has borrowed them ;
-      * helps you marking books you have loaned and to who and when you have 
-        loaned them ;
       * features a HIG-compliant user interface ;
       * shows books in different views (standard list or icons list), that
         can be either filtered or sorted ;
