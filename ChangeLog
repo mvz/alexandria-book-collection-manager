@@ -1,3 +1,9 @@
+2004-04-16  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade:
+
+	Set the 'Rules Hint' property of tree views to true.
+
 2004-04-15  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/ui/alert_dialog.rb:
