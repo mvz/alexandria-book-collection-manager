@@ -170,5 +170,17 @@
         <long>Whether the rating column should be visible in the list view.</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/providers_priority</key>
+      <applyto>/apps/alexandria/providers_priority</applyto>
+      <owner>alexandria</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <default>[Amazon,Proxis]</default>
+      <locale name="C">
+        <short>Providers priority</short>
+        <long>A list of provider names sorted by priority.  They will be queried in that order.</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

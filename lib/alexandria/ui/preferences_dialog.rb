@@ -97,15 +97,14 @@ module UI
                                              Gtk::CellRendererText.new,
                                              :text => 0)
             @treeview_providers.append_column(column)
-            @treeview_providers.selection.signal_connect('changed') do
-                @button_prov_setup.sensitive = true
-            end
+            @treeview_providers.selection.signal_connect('changed') { sensitize_providers } 
             @button_prov_setup.sensitive = false
             @button_prov_up.sensitive =  @button_prov_down.sensitive = BookProviders.length > 1
         end
 
-        def on_setup
-            provider = selected_provider
+        def on_provider_setup
+            iter = @treeview_providers.selection.selected
+            provider = BookProviders.find { |x| x.name == iter[0] }
             if provider.prefs.empty?
                 ErrorDialog.new(@preferences_dialog, _("The '%s' provider doesn't have any preference to setup") % provider.name)
             else
@@ -113,6 +112,25 @@ module UI
                 dialog.show_all.run
                 dialog.destroy
             end
+        end
+
+        def on_provider_up
+            iter = @treeview_providers.selection.selected
+            previous_path = iter.path
+            previous_path.prev!
+            model = @treeview_providers.model
+            model.move_after(model.get_iter(previous_path), iter)
+            sensitize_providers
+            update_priority
+        end
+
+        def on_provider_down
+            iter = @treeview_providers.selection.selected
+            next_iter = iter.dup
+            next_iter.next!
+            @treeview_providers.model.move_after(iter, next_iter)
+            sensitize_providers
+            update_priority
         end
 
         def on_column_toggled(checkbutton)
@@ -126,7 +144,7 @@ module UI
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
                event.button == 1 
 
-                on_setup
+                on_provider_setup
             end
         end
         
@@ -138,9 +156,20 @@ module UI
         private
         #######
 
-        def selected_provider
-            iter = @treeview_providers.selection.selected
-            provider = BookProviders.find { |x| x.name == iter[0] }
+        def sensitize_providers 
+            @button_prov_setup.sensitive = true
+            model = @treeview_providers.model 
+            sel_iter = @treeview_providers.selection.selected
+            last_iter = model.get_iter((BookProviders.length - 1).to_s)
+            @button_prov_up.sensitive = sel_iter != model.iter_first
+            @button_prov_down.sensitive = sel_iter != last_iter 
+        end
+
+        def update_priority
+            priority = []
+            @treeview_providers.model.each { |model, path, iter| priority << iter[0] }
+            Preferences.instance.providers_priority = priority
+            BookProviders.update_priority
         end
     end
 end

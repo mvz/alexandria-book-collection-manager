@@ -1,3 +1,21 @@
+2004-06-23  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Implemented "up" and "down" buttons in the providers list.
+
+	* schemas/alexandria.schemas:
+	
+	Added the "providers_priority" variable.
+
+	* lib/alexandria/book_providers.rb,
+	  lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/proxis.rb:
+
+	- Introduced GenericProviders, the base class for all providers ;
+	- Introduced providers priority.
+
 2004-06-22  Pascal Terjan  <pterjan@linuxfr.org>
 
 	* lib/alexandria/book_providers/proxis.rb:

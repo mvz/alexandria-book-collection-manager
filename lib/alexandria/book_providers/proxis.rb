@@ -20,9 +20,7 @@ require 'net/http'
 
 module Alexandria
 class BookProviders
-    class ProxisProvider
-        attr_reader :prefs, :name 
-           
+    class ProxisProvider < GenericProvider
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
         
@@ -33,10 +31,9 @@ class BookProviders
         }
 
         def initialize
-            @name = "Proxis"
-            @prefs = Preferences.new(@name.downcase)
-            @prefs.add("lang", _("Language of the books to search"), "fr",
-                       LANGUAGES.keys)
+            super("Proxis")
+            prefs.add("lang", _("Language of the books to search"), "fr",
+                      LANGUAGES.keys)
         end
         
         def search(criterion, type)

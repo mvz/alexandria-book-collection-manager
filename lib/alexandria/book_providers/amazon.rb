@@ -19,19 +19,16 @@ require 'amazon/search'
 
 module Alexandria
 class BookProviders
-    class AmazonProvider
-        attr_reader :prefs, :name 
-            
+    class AmazonProvider < GenericProvider
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-       
+        
         def initialize
-            @name = "Amazon"
-            @prefs = Preferences.new(@name.downcase)
-            @prefs.add("locale", _("Locale site to contact"), "us",
+            super("Amazon")
+            prefs.add("locale", _("Locale site to contact"), "us",
                        Amazon::Search::LOCALES.keys)
-            @prefs.add("dev_token", _("Development token"), "D23XFCO2UKJY82")
-            @prefs.add("associate", _("Associate ID"), "calibanorg-20")
+            prefs.add("dev_token", _("Development token"), "D23XFCO2UKJY82")
+            prefs.add("associate", _("Associate ID"), "calibanorg-20")
         end
            
         def search(criterion, type)

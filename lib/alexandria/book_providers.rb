@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'singleton'
+
 module Alexandria
     class BookProviders < Array
         include Singleton
@@ -86,12 +88,27 @@ module Alexandria
                 end
             end
         end
-       
+      
+        class GenericProvider
+            attr_reader :name, :prefs
+            include Singleton
+            
+            def initialize(name)
+                @name = name 
+                @prefs = Preferences.new(name.downcase)
+            end
+        end
+ 
         require 'alexandria/book_providers/amazon'
         require 'alexandria/book_providers/proxis'
        
         def initialize
-            self.replace [ AmazonProvider, ProxisProvider ].map { |x| x.new }
+            @prefs = Alexandria::Preferences.instance
+            update_priority
+        end
+
+        def update_priority
+            self.replace(@prefs.providers_priority.map { |x| self.class.module_eval("#{x}Provider").instance }) 
         end
 
         def self.method_missing(id, *args, &block)
