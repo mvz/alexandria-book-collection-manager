@@ -76,21 +76,25 @@ module Alexandria
             a
         end
 
-		def self.valid_isbn?(isbn)
-            digits = isbn.strip.delete('-').scan(/./)
-            return false unless digits.length == 10
-            t = 0
-            (digits.length - 1).times do |i|
-                digit = digits[i]
-                if /\d/.match(digit)
-                    t += digit.to_i * (i + 1)
-                end
+        def self.valid_isbn?(isbn)
+            return false if isbn == nil
+
+            digits = isbn.strip.delete('-').split('').map { |x|
+                return false unless x =~ /[\dX]/
+                x == 'X' ? 10 : x.to_i
+            }
+
+            if digits.length == 13
+                # hope it's an EAN number
+                digits = digits[3 .. 12]
+            elsif digits.length != 10
+                return false
             end
-            t %= 11
-            last_digit = digits.last
-            (/\d/.match(last_digit) and t == last_digit.to_i) or
-            (t == 10 and last_digit == 'X')
-		end 
+
+            (0 ... digits.length).inject(0) { |accumulator,i|
+                accumulator + digits[i] * (i + 1)
+            } % 11 == 0
+        end
 
         def save(book, small_cover_uri=nil, medium_cover_uri=nil)
             if small_cover_uri and medium_cover_uri
