@@ -17,6 +17,29 @@
 
 module Alexandria
 module UI
+    class KeepBadISBNDialog < AlertDialog
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize(parent, book)
+            super(parent, _("Invalid ISBN '%s'") % book.isbn,
+                  Gtk::Stock::DIALOG_QUESTION,
+                  [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+                   [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
+                  _("The book titled '%s' has an invalid ISBN, but still " +
+                    "exists in the providers libraries.  Do you want to " +
+                    "keep the book but the ISBN or cancel the add?") \
+                    % book.title)
+            self.default_response = Gtk::Dialog::RESPONSE_OK
+            show_all and @response = run
+            destroy
+        end
+
+        def keep?
+            @response == Gtk::Dialog::RESPONSE_OK
+        end
+    end
+
     class NewBookDialog < GladeBase
         include GetText
         extend GetText
@@ -159,21 +182,32 @@ module UI
                 else
                     @treeview_results.selection.selected_each do |model, path, 
                                                                   iter| 
-                        books_to_add << @results.find do |book, cover|
-                            book.isbn == iter[1] and 
-                            assert_not_exist(library, book.isbn)
+                        @results.each do |book, cover|
+                            next unless book.isbn == iter[1]
+                            begin
+                                next unless
+                                    assert_not_exist(library, book.isbn)
+                            rescue Alexandria::Library::InvalidISBNError
+                                next unless
+                                    KeepBadISBNDialog.new(@parent, book).keep?
+                                book.isbn = book.saved_ident = ""
+                            end
+                            books_to_add << [book, cover]
                         end
                     end
                 end 
 
                 # Save the books in the library.
-                books_to_add.each do |book, cover_uri| 
+                books_to_add.each do |book, cover_uri|
                     unless cover_uri.nil?
                         library.save_cover(book, cover_uri)
                     end
                     library << book
                     library.save(book)
                 end
+
+                # Do not destroy if there is no addition.
+                return if books_to_add.empty?
 
                 # Now we can destroy the dialog and go back to the main 
                 # application.
@@ -243,10 +277,9 @@ module UI
                 id, barcode_type, barcode = cuecat.gets.split(/,/)
                 begin
                     @entry_isbn.text = Library.canonicalise_isbn(barcode)
-                rescue RuntimeError => e
+                rescue Alexandria::Library::InvalidISBNError
                     ErrorDialog.new(@parent, 
-                                    _("Couldn't validate the scanner input"), 
-                                    e.message)
+                                    _("Couldn't validate the scanner input"))
                 end
             end
         end

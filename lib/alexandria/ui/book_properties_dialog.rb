@@ -67,7 +67,7 @@ module UI
             @book.title = @entry_title.text
             @book.isbn = begin
                 Library.canonicalise_isbn(@entry_isbn.text)
-            rescue
+            rescue Alexandria::Library::InvalidISBNError
                 unless @entry_isbn.text == ""
                     ErrorDialog.new(@parent, 
                                     _("Couldn't modify the book"), 

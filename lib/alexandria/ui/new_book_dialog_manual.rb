@@ -59,7 +59,7 @@ module UI
 
                 isbn = begin
                     Library.canonicalise_isbn(@entry_isbn.text)
-                rescue
+                rescue Alexandria::Library::InvalidISBNError
                     unless @entry_isbn.text == ""
                         raise _("Couldn't validate the EAN/ISBN you " +
                                 "provided.  Make sure it is written " +

@@ -101,11 +101,19 @@ module Alexandria
             end
         end
 
+        class InvalidISBNError < StandardError
+            attr_reader :isbn
+            def initialize(isbn=nil)
+                super()
+                @isbn = isbn
+            end
+        end
+
         def self.extract_numbers(isbn)
-            raise "Invalid ISBN '#{isbn}'" if isbn == nil
+            raise "Nil ISBN" if isbn == nil
 
             isbn.strip.delete('-').split('').map { |x|
-                raise "Invalid ISBN '#{isbn}'" unless x =~ /[\dX]/
+                raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
                 x == 'X' ? 10 : x.to_i
             }
         end
@@ -122,7 +130,7 @@ module Alexandria
             begin
                 numbers = self.extract_numbers(isbn)
                 numbers.length == 10 and self.isbn_checksum(numbers) == 0
-            rescue
+            rescue InvalidISBNError
                 false
             end
         end
@@ -139,7 +147,7 @@ module Alexandria
                     numbers[12]) or
                 (numbers.length == 18 and self.ean_checksum(numbers[0..12]) ==
                     numbers[12])
-            rescue
+            rescue InvalidISBNError
                 false
             end
         end
@@ -156,7 +164,7 @@ module Alexandria
                 # Seems to be a valid ISBN number.
                 numbers[0 .. -2] + [isbn_checksum(numbers[0 .. -2])]
             else
-                raise "Invalid ISBN number '#{isbn}'."
+                raise InvalidISBNError.new(isbn)
             end
 
             canonical.map { |x| x.to_s }.join()
@@ -165,7 +173,9 @@ module Alexandria
         def save(book)
             if book.ident != book.saved_ident
                 FileUtils.rm(yaml(book.saved_ident))
-                FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exists?(cover(book.saved_ident))
+                if File.exists?(cover(book.saved_ident))
+                    FileUtils.mv(cover(book.saved_ident), cover(book.ident)) 
+                end
                 book.saved_ident = book.ident
             end
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml } 
