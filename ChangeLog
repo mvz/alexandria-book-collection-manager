@@ -1,5 +1,16 @@
 2004-04-05  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/book.rb:
+
+	Fixed a bug when loading books (the reference to the Library obj
+	is not saved in the YAML description).
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Implemented the "New Library" feature.
+
+2004-04-04  Laurent Sansonetti  <lrz@gnome.org>
+
 	* lib/alexandria/book.rb,
 	  lib/alexandria/ui/main_app.rb,
 	  lib/alexandria/ui/new_book_dialog.rb:

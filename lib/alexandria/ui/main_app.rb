@@ -62,6 +62,12 @@ module UI
         end
      
         def on_new_library
+            name = "Untitled 1"
+            name.succ! while @libraries.find { |x| x.name == name }
+            library = Library.load(name)
+            @libraries << library
+            iter = append_library(library)
+            @treeview_sidepane.set_cursor(iter.path, @treeview_sidepane.get_column(0), true)
         end
     
         def on_quit
@@ -165,6 +171,15 @@ module UI
             iter[3] = book.isbn
             iter[4] = book.publisher
             iter[5] = book.edition
+            return iter
+        end
+
+        def append_library(library)
+            iter = @treeview_sidepane.model.append
+            iter[0] = Icons::LIBRARY_SMALL
+            iter[1] = library.name
+            iter[2] = true  #editable?
+            return iter
         end
 
         def build_books_listview
@@ -225,14 +240,8 @@ module UI
         end   
 
         def build_sidepane
-            model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
-            @libraries.each do |library|
-                iter = model.append
-                iter[0] = Icons::LIBRARY_SMALL
-                iter[1] = library.name
-                iter[2] = true
-            end
-            @treeview_sidepane.model = model
+            @treeview_sidepane.model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
+            @libraries.each { |library| append_library(library) } 
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new("Library")
             column.pack_start(renderer, true)
@@ -246,14 +255,14 @@ module UI
             end
             renderer.signal_connect('edited') do |cell, path_string, new_text|
                 if cell.text != new_text
-                    iter = model.get_iter(Gtk::TreePath.new(path_string))
+                    iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
                     selected_library.name = new_text
                     iter[1] = new_text
                 end
             end
             @treeview_sidepane.append_column(column)
             @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
-            @treeview_sidepane.selection.select_iter(model.iter_first) 
+            @treeview_sidepane.selection.select_iter(@treeview_sidepane.model.iter_first) 
         end
     end
 end

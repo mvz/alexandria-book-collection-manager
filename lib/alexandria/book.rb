@@ -56,6 +56,7 @@ module Alexandria
                     File.open(filename) do |io|
                         book = YAML.load(io)
                         raise "Not a book" unless book.is_a?(Book)
+                        book.library = library
                         library << book
                     end
                 end
