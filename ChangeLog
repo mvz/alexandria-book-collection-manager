@@ -1,3 +1,10 @@
+2005-01-01  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/library.rb:
+
+	Fix a bug where importing an ISBN list file would cause a crash when
+	an ISBN in the list did not have a cover image.
+
 2004-12-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,

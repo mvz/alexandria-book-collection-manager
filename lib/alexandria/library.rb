@@ -331,7 +331,7 @@ module Alexandria
                 # FIXME: handle provider exceptions
                 book, cover_uri = \
                     Alexandria::BookProviders.isbn_search(isbn)
-                library.save_cover(book, cover_uri)
+                library.save_cover(book, cover_uri) if cover_uri != nil
                 library << book
                 library.save(book)
             end
