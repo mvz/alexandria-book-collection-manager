@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-07 21:44+0100\n"
+"POT-Creation-Date: 2005-03-07 21:55+0100\n"
 "PO-Revision-Date: 2004-06-08 20:26+0200\n"
 "Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
 "Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
@@ -594,16 +594,6 @@ msgstr "É_dition:"
 msgid "Rating:"
 msgstr "Notation:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:362
-#: ../data/alexandria/glade/book_properties_dialog.glade:384
-#: ../data/alexandria/glade/book_properties_dialog.glade:405
-#: ../data/alexandria/glade/book_properties_dialog.glade:451
-#: ../data/alexandria/glade/book_properties_dialog.glade:747
-#: ../data/alexandria/glade/new_book_dialog.glade:206
-#: ../data/alexandria/glade/new_book_dialog.glade:296
-msgid "*"
-msgstr ""
-
 #: ../data/alexandria/glade/book_properties_dialog.glade:420
 #: ../data/alexandria/glade/new_book_dialog.glade:86
 msgid "_ISBN:"
@@ -639,10 +629,6 @@ msgstr "Prêt"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:923
 msgid "Notes"
-msgstr ""
-
-#: ../data/alexandria/glade/main_app.glade:12
-msgid "Alexandria"
 msgstr ""
 
 #: ../data/alexandria/glade/main_app.glade:60
