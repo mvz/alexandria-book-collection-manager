@@ -425,7 +425,7 @@ msgstr "_Affichage"
 
 #: ../lib/alexandria/ui/main_app.rb:771
 msgid "_Refresh"
-msgstr "_Rafraichir"
+msgstr "_Rafraîchir"
 
 #: ../lib/alexandria/ui/main_app.rb:772
 msgid "Arran_ge Icons"
