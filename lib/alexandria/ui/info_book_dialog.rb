@@ -18,10 +18,11 @@
 module Alexandria
 module UI
     class InfoBookDialog < GladeBase
-        def initialize(parent, library, book)
+        def initialize(parent, library, book, &upon_save_block)
             super('info_book_dialog.glade')
             @info_book_dialog.transient_for = parent
-            @image_cover.file = library.medium_cover(book)
+            @upon_save_block = upon_save_block
+            @image_cover.pixbuf = Icons.medium_cover(library, book)
             @label_title.text = @info_book_dialog.title = book.title
             @label_authors.text = book.authors.join("\n")
             @label_isbn.text = book.isbn
@@ -31,7 +32,7 @@ module UI
             buffer.text = (book.notes or "")
             @textview_notes.buffer = buffer
             @library, @book = library, book
-            self.rating = (book.rating or 3)
+            self.rating = (book.rating or Book::DEFAULT_RATING)
         end
 
         def on_image_rating1_press
@@ -71,7 +72,10 @@ module UI
                 need_save = true
             end
 
-            @library.save(@book) if need_save
+            if need_save
+                @library.save(@book) 
+                @upon_save_block.call
+            end
             @info_book_dialog.destroy
         end
 

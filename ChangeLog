@@ -1,3 +1,29 @@
+2004-05-26  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/icons/book.png:
+
+	Added.
+
+	* lib/alexandria/book.rb:
+
+	Added Book::DEFAULT_RATING.
+
+	* lib/alexandria/ui/icons.rb:
+
+	Added .small_cover and .medium_cover functions.
+
+	* lib/alexandria/ui/info_book_dialog.rb:
+
+	Follow book.rb changes and refresh the book views if the 
+	properties has changed.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Rating is shown in the tree view ;
+	- Fixed several sorting bugs in the tree view ;
+	- Now saves the size of the main window properly ;
+	- Refactored some parts of the code.
+
 2004-05-25  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/info_book_dialog.glade,

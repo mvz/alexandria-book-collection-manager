@@ -26,6 +26,16 @@ module UI
                 const_set(name, Gdk::Pixbuf.new(File.join(icons_dir, file)))
             end
         end
+
+        def self.small_cover(library, book)
+            pixbuf = Gdk::Pixbuf.new(library.small_cover(book))
+            (pixbuf.width == 1 and pixbuf.height == 1) ? BOOK : pixbuf
+        end
+        
+        def self.medium_cover(library, book)
+            pixbuf = Gdk::Pixbuf.new(library.medium_cover(book))
+            (pixbuf.width == 1 and pixbuf.height == 1) ? BOOK : pixbuf
+        end
     end
 end
 end

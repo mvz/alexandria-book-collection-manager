@@ -80,7 +80,9 @@ module UI
         def on_book_properties
             books = selected_books
             if books.length == 1
-                InfoBookDialog.new(@main_app, selected_library, books.first)
+                InfoBookDialog.new(@main_app, selected_library, books.first) do
+                    on_refresh
+                end
             end
         end
 
@@ -247,15 +249,20 @@ module UI
         ICON_MAXLEN = 20
         def append_book(book)
             icon_title = book.title.length > ICON_MAXLEN ? book.title[0..ICON_MAXLEN] + '...' : book.title
-            small_cover = selected_library.small_cover(book)
-            @iconlist.append(small_cover, icon_title)
+            small_cover = Icons.small_cover(selected_library, book)
+            @iconlist.append_pixbuf(small_cover, "", icon_title)
             iter = @listview.model.append 
-            iter[0] = Gdk::Pixbuf.new(small_cover).scale(25, 25)
+            iter[0] = small_cover.scale(20, 25)
             iter[1] = book.title
             iter[2] = book.authors.join(', ')
             iter[3] = book.isbn
             iter[4] = book.publisher
             iter[5] = book.edition
+            rating = (book.rating or Book::DEFAULT_RATING)
+            5.times do |i|
+                iter[i + 6] = rating >= i.succ ? Icons::STAR_OK : Icons::STAR_NOK
+            end
+            iter[11] = rating
             return iter
         end
 
@@ -268,8 +275,7 @@ module UI
         end
 
         def build_books_listview
-            model = Gtk::ListStore.new(Gdk::Pixbuf, String, String, String, String, String)
-            @listview.model = model
+            @listview.model = Gtk::ListStore.new(Gdk::Pixbuf, String, *([String] * 4 + [Gdk::Pixbuf] * 5 + [Integer]))
 
             # first column
             renderer = Gtk::CellRendererPixbuf.new
@@ -294,6 +300,25 @@ module UI
                 column.resizable = true
                 column.sort_column_id = i + 2
                 @listview.append_column(column)
+            end
+
+            # final column
+            column = Gtk::TreeViewColumn.new("Rating")
+            5.times do |i|
+                renderer = Gtk::CellRendererPixbuf.new
+                column.pack_start(renderer, false)
+                column.set_cell_data_func(renderer) do |column, cell, model, iter|
+                    cell.pixbuf = iter[i + 6]
+                end
+            end
+            column.sort_column_id = 11 
+            column.resizable = false 
+            @listview.append_column(column)
+
+            # we need to overwrite the default sort function for columns that may
+            # handle UTF-8 foreign strings
+            [1, 2, 4, 5].each do |i|
+                @listview.model.set_sort_func(i) { |x, y| x[i] <=> y[i] }
             end
 
             @listview.selection.mode = Gtk::SELECTION_MULTIPLE
@@ -361,8 +386,7 @@ module UI
                                         "The name provided contains the illegal character '<i>#{match[1]}</i>'.")
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
-                        selected_library.name = new_text
-                        iter[1] = new_text
+                        iter[1] = selected_library.name = new_text
                     end
                 end
             end
@@ -398,7 +422,7 @@ module UI
         def save_preferences
             prefs = Preferences.instance
             prefs.position = @main_app.position
-            prefs.size = @main_app.size
+            prefs.size = @main_app.allocation.to_a[2..3]
             prefs.sidepane_position = @paned.position
             prefs.sidepane_visible = @paned.child1.visible?
             prefs.toolbar_visible = @bonobodock_toolbar.visible?
