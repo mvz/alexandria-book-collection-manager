@@ -13,7 +13,7 @@ Future releases:
 [ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::Combo (new in 2.4).
 [ ] Allowing multiple books to be added at once, giving a list of ISBN
     numbers (Xavier)
-[ ] Drag-and-drop books withih libraries
+[ ] Drag-and-drop books within libraries
 [ ] Improving the "Add New Book" dialog to allow books to search books by
     title alternatively to ISBN, in case of multiple results, opens a new
     dialog which displays thumbnails of each book so the user can choose the
