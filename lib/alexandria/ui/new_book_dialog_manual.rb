@@ -90,6 +90,7 @@ module UI
                 book.loaned_to = @entry_loaned_to.text
                 book.loaned_since = @date_loaned_since.time
 
+                @library << book
                 @library.save(book)
                 if File.exists?(TMP_COVER_FILE)
                     FileUtils.cp(TMP_COVER_FILE, @library.cover(book))

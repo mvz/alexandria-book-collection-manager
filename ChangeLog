@@ -1,3 +1,9 @@
+2005-03-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/new_book_dialog_manual.rb:
+
+	Manually added books were not automatically added in the library in memory.
+
 2005-03-13  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
