@@ -69,7 +69,7 @@ msgstr "Auteurs"
 
 #: ../lib/alexandria/ui/main_app.rb:439
 msgid "ISBN"
-msgstr "Par ISBN"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:439
 msgid "Publisher"
