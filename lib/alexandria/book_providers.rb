@@ -54,7 +54,7 @@ module Alexandria
                               "try again.")
 
                         when TooManyResultsError
-                            _("Too much results for that search.")
+                            _("Too many results for that search.")
 
                         when InvalidSearchTypeError
                             _("Invalid search type.")

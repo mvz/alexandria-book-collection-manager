@@ -145,9 +145,9 @@ module UI
             else
                 if File.exists?(filename) 
                     unless File.directory?(filename)
-                        msg = _("The target file, named '%s', is a regular " +
+                        msg = _("The target, named '%s', is a regular " +
                                 "file.  A directory is needed for this " +
-                                "operation.  Please select another file and " + 
+                                "operation.  Please select a directory and " + 
                                 "try again.") % filename
                         ErrorDialog.new(@parent, _("Not a directory"), msg)
                         return
