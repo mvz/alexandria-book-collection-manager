@@ -172,6 +172,31 @@
 		      <property name="spacing">3</property>
 
 		      <child>
+			<widget class="GtkEventBox" id="eventbox6">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_no_rating_press" last_modification_time="Fri, 14 Jan 2005 21:46:36 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image5">
+			      <property name="width_request">10</property>
+			      <property name="visible">True</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">False</property>
+			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
 			<widget class="GtkEventBox" id="eventbox1">
 			  <property name="visible">True</property>
 			  <property name="visible_window">True</property>
@@ -288,6 +313,30 @@
 			  <property name="padding">0</property>
 			  <property name="expand">False</property>
 			  <property name="fill">False</property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkEventBox" id="eventbox7">
+			  <property name="visible">True</property>
+			  <property name="visible_window">True</property>
+			  <property name="above_child">False</property>
+			  <signal name="button_press_event" handler="on_image_rating5_press" last_modification_time="Fri, 14 Jan 2005 21:42:22 GMT"/>
+
+			  <child>
+			    <widget class="GtkImage" id="image4">
+			      <property name="visible">True</property>
+			      <property name="xalign">0.5</property>
+			      <property name="yalign">0.5</property>
+			      <property name="xpad">0</property>
+			      <property name="ypad">0</property>
+			    </widget>
+			  </child>
+			</widget>
+			<packing>
+			  <property name="padding">0</property>
+			  <property name="expand">True</property>
+			  <property name="fill">True</property>
 			</packing>
 		      </child>
 		    </widget>

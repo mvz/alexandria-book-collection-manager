@@ -45,7 +45,7 @@ Install
     that, it should be automatically spawned when needed. 
 
     [**]: This step is only mandatory if you are upgrading from a 0.3.x
-    version to 0.4.x.  It will introduce the Barnes and Noble provider. 
+    version.  It will introduce the Barnes and Noble provider. 
 
 Usage
 -----

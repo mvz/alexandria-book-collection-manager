@@ -1,3 +1,52 @@
+2005-01-19  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  lib/alexandria/ui/book_properties_dialog_base.rb:
+
+	- Added two additional event boxes to control the rating, one to reset
+	  the rating (0) and one to set it to the highest value (5) ;
+	- Display "One day" when the loaning date is yesterday.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	When deleting more than one books, display a single alert dialog instead
+	of an alert dialog for each book.
+
+	* lib/alexandria/book_providers.rb:
+
+	- Catchs the SocketError exception when calling providers, and returns
+	  an appropriate message ;
+	- Fixed indentation.
+
+	* lib/alexandria/library.rb:
+
+	- In Library.load, mkdir the directory if it does not already exist, 
+	  outside of the Dir.chdir block (to avoid nested blocks within threads) ;
+	- Fixed indentation.
+
+	* lib/alexandria/ui/export_dialog.rb:
+
+	Fixed a wording bug plus a GTK table attachment bug. 
+
+	* lib/alexandria/import_library.rb,
+	  lib/alexandria/ui/import_dialog.rb:
+
+	- The import dialog now displays the progress of the operation, and 
+	  throws alert boxes when an error occured in the meantime ;
+	- Fixed some things.
+
+	* lib/alexandria/execution_queue.rb:
+
+	Added.
+
+	* lib/alexandria.rb:
+
+	Follows previous change.
+
+	* README:
+
+	Removed the reference to 0.4.x for the bn.com upgrading note.
+
 2005-01-13  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/export_library.rb,

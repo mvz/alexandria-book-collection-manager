@@ -30,22 +30,27 @@ module Alexandria
             self.new(_("Archived Tellico XML"), "tc",
                      :export_as_tellico_xml_archive),
             self.new(_("ISBN List"), "txt", :export_as_isbn_list),
-            self.new(_("HTML Web Page"), nil, :export_as_html)
+            self.new(_("HTML Web Page"), nil, :export_as_html, true)
         ]
         end
 
         def invoke(library, filename, *args)
             library.send(@message, filename, *args)
         end
-        
+       
+        def needs_preview?
+            @needs_preview
+        end
+       
         #######
         private
         #######
         
-        def initialize(name, ext, message)
+        def initialize(name, ext, message, needs_preview=false)
             @name = name
             @ext = ext
             @message = message
+            @needs_preview = needs_preview
         end
     end
 

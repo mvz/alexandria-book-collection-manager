@@ -23,7 +23,8 @@ module Alexandria
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-		SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS, SEARCH_BY_KEYWORD = (0..3).to_a 
+		SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS, 
+            SEARCH_BY_KEYWORD = (0..3).to_a 
 
         class SearchError < StandardError; end
         class NoResultsError < SearchError; end
@@ -40,11 +41,17 @@ module Alexandria
                 if self.last == factory
                     raise case boom
                         when Timeout::Error
-                            _("Couldn't reach the provider '%s': timeout expired.") % factory.name
+                            _("Couldn't reach the provider '%s': timeout " +
+                              "expired.") % factory.name
                         
+                        when SocketError 
+                            _("Couldn't reach the provider '%s': socket " +
+                              "error (%s).") % [factory.name, boom.message]
+
                         when NoResultsError
-                            _("No results were found.  Make sure your search criterion is " +
-                              "spelled correctly, and try again.")
+                            _("No results were found.  Make sure your " +
+                              "search criterion is spelled correctly, and " +
+                              "try again.")
 
                         when TooManyResultsError
                             _("Too much results for that search.")
@@ -53,7 +60,7 @@ module Alexandria
                             _("Invalid search type.")
 
                         else
-                            nil 
+                            boom.message 
                     end
                 else
                     factory_n += 1
@@ -72,7 +79,8 @@ module Alexandria
             end
 
             class Variable
-                attr_reader :provider_name, :name, :description, :possible_values
+                attr_reader :provider_name, :name, :description, 
+                            :possible_values
                 attr_accessor :value
             
                 def initialize(provider_name, name, description, default_value,
@@ -86,7 +94,8 @@ module Alexandria
                 end
 
                 def new_value=(new_value)
-                    Alexandria::Preferences.instance.send("#{provider_name}_#{name}=", new_value)
+                    message = "#{provider_name}_#{name}="
+                    Alexandria::Preferences.instance.send(message, new_value)
                     self.value = new_value
                 end
             end
@@ -108,7 +117,8 @@ module Alexandria
             
             def read
                 self.each do |var|
-                    val = Alexandria::Preferences.instance.send("#{@provider_name}_#{var.name}")
+                    message = "#{@provider_name}_#{var.name}"
+                    val = Alexandria::Preferences.instance.send(message)
                     var.value = val unless val.nil?
                 end
             end
@@ -143,7 +153,8 @@ module Alexandria
         end
 
         def update_priority
-            self.replace(@prefs.providers_priority.map { |x| self.class.module_eval("#{x}Provider").instance }) 
+            self.replace(@prefs.providers_priority.map \
+                { |x| self.class.module_eval("#{x}Provider").instance }) 
         end
 
         def self.method_missing(id, *args, &block)

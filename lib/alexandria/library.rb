@@ -45,28 +45,25 @@ module Alexandria
 
         def self.load(name)
             library = Library.new(name)
-            begin
-                Dir.chdir(library.path) do
-                    Dir["*" + EXT[:book]].each do |filename|
-                        File.open(filename) do |io|
-                            book = YAML.load(io)
-                            raise "Not a book" unless book.is_a?(Book)
-                            library << book
-                        end
+            FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
+            Dir.chdir(library.path) do
+                Dir["*" + EXT[:book]].each do |filename|
+                    File.open(filename) do |io|
+                        book = YAML.load(io)
+                        raise "Not a book" unless book.is_a?(Book)
+                        library << book
                     end
-
-                    # Since 0.4.0 the cover files '_small.jpg' and 
-                    # '_medium.jpg' have been deprecated for a single medium
-                    # cover file named '.cover'.
-                    Dir["*" + '_medium.jpg'].each do |medium_cover|
-                        FileUtils.mv(medium_cover, 
-                                     medium_cover.sub(/_medium\.jpg$/,
-                                                      EXT[:cover]))
-                    end
-                    FileUtils.rm_f(Dir['*_small.jpg'])
                 end
-            rescue Errno::ENOENT
-                FileUtils.mkdir_p(library.path)
+
+                # Since 0.4.0 the cover files '_small.jpg' and 
+                # '_medium.jpg' have been deprecated for a single medium
+                # cover file named '.cover'.
+                Dir["*" + '_medium.jpg'].each do |medium_cover|
+                    FileUtils.mv(medium_cover, 
+                                 medium_cover.sub(/_medium\.jpg$/,
+                                                  EXT[:cover]))
+                end
+                FileUtils.rm_f(Dir['*_small.jpg'])
             end
             library
         end
@@ -129,8 +126,8 @@ module Alexandria
         end
 
         def self.ean_checksum(numbers)
-                10 - ([1, 3, 5, 7, 9, 11].map { |x| numbers[x] }.sum * 3 +
-                      [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum) % 10
+            10 - ([1, 3, 5, 7, 9, 11].map { |x| numbers[x] }.sum * 3 +
+                  [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum) % 10
         end
 
         def self.valid_ean?(ean)

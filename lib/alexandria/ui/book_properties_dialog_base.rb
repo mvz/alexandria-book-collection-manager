@@ -81,7 +81,11 @@ module UI
         def on_image_rating5_press
             self.rating = 5 
         end
-       
+   
+        def on_image_no_rating_press
+            self.rating = 0
+        end
+   
         def on_change_cover
             backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
             dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
@@ -116,9 +120,11 @@ module UI
 
         def on_loaned_date_changed
             loaned_time = Time.at(@date_loaned_since.time)
-            n_days = (Time.now - loaned_time) / (3600*24)
+            n_days = ((Time.now - loaned_time) / (3600*24)).to_i
             if n_days > 1
                 @label_loaning_duration.label = _("%d days") % n_days 
+            elsif n_days == 1
+                @label_loaning_duration.label = _("One day") 
             else
                 @label_loaning_duration.label = ""
             end
@@ -129,7 +135,7 @@ module UI
         #######
     
         def rating=(rating)
-            images = [ 
+            images = [
                 @image_rating1, 
                 @image_rating2, 
                 @image_rating3, 

@@ -32,9 +32,18 @@ module Alexandria
                          :import_as_isbn_list)
             ]
         end
-    
+   
+        def on_iterate(&on_iterate_cb)
+            @on_iterate_cb = on_iterate_cb
+        end
+
+        def on_error(&on_error_cb)
+            @on_error_cb = on_error_cb
+        end
+   
         def invoke(library_name, filename)
-            Library.send(@message, library_name, filename)
+            Library.send(@message, library_name, filename,
+                         @on_iterate_cb, @on_error_cb)
         end
         
         #######
@@ -49,12 +58,12 @@ module Alexandria
     end
 
     class Library
-        def self.import_autodetect(name, filename)
-            import_as_isbn_list(name, filename) or
-                import_as_tellico_xml_archive(name, filename)
+        def self.import_autodetect(*args)
+            import_as_isbn_list(*args) or import_as_tellico_xml_archive(*args)
         end
         
-        def self.import_as_tellico_xml_archive(name, filename) 
+        def self.import_as_tellico_xml_archive(name, filename,
+                                               on_iterate_cb, on_error_cb)
             return nil unless system("unzip -qqt \"#{filename}\"")
             tmpdir = File.join(Dir.tmpdir, "tellico_export")
             FileUtils.rm_rf(tmpdir) if File.exists?(tmpdir)
@@ -75,7 +84,9 @@ module Alexandria
 		            raise unless (type == 2 or type == 5)
                     
                     content = []
-                    collection.elements.each('entry') do |entry|
+                    entries = collection.elements.to_a('entry')
+                    (total = entries.size).times do |n|
+                        entry = entries[n]
                         elements = entry.elements
                         book = Book.new(elements['title'].text,
                                         elements['authors'].elements.to_a.map \
@@ -86,6 +97,7 @@ module Alexandria
                         content << [ book, elements['cover'] \
                                                 ? elements['cover'].text \
                                                 : nil ]
+                        on_iterate_cb.call(n+1, total) if on_iterate_cb
                     end
 
                     library = Library.load(name)
@@ -98,23 +110,31 @@ module Alexandria
                         library << book
                         library.save(book)
                     end
-                    return library
-                rescue 
-                    return nil
+                    break library
+                rescue
+                    break nil
                 end
             end
         end
         
-        def self.import_as_isbn_list(name, filename)
+        def self.import_as_isbn_list(name, filename, on_iterate_cb, 
+                                     on_error_cb)
             isbn_list = IO.readlines(filename).map do |line|
                 canonicalise_isbn(line.chomp) rescue nil
             end 
             return nil unless isbn_list.all?
+            books = []
+            isbn_list.each_with_index do |isbn, n|
+                begin
+                    books << Alexandria::BookProviders.isbn_search(isbn)
+                rescue => e
+                    return nil unless
+                        (on_error_cb and on_error_cb.call(e.message))
+                end
+                on_iterate_cb.call(n+1, isbn_list.length) if on_iterate_cb
+            end
             library = load(name)
-            isbn_list.each do |isbn|
-                # FIXME: handle provider exceptions
-                book, cover_uri = \
-                    Alexandria::BookProviders.isbn_search(isbn)
+            books.each do |book, cover_uri|
                 library.save_cover(book, cover_uri) if cover_uri != nil
                 library << book
                 library.save(book)

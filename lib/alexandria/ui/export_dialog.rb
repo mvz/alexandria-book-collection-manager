@@ -79,13 +79,20 @@ module UI
 
             types_combo = Gtk::ComboBox.new
             FORMATS.each do |format|
-                types_combo.append_text(format.name  + " (*." + 
-                                        (format.ext or _("directory")) + ")")
+                text = format.name + " ("
+                if format.ext
+                    text += "*." + format.ext
+                else
+                    text += _("directory")
+                end
+                text += ")"
+                types_combo.append_text(text)
             end
             types_combo.active = 0
             types_combo.signal_connect('changed') do
-                theme_label.visible = theme_combo.visible = 
-                    preview_image.visible = types_combo.active == 3
+                theme_label.visible = theme_combo.visible =
+                    preview_image.visible = 
+                    FORMATS[types_combo.active].needs_preview?
             end
             types_combo.show
 
@@ -105,7 +112,7 @@ module UI
             internal_table.attach(types_combo, 1, 2, 2, 3)
             internal_table.attach(theme_label, 0, 1, 3, 4)
             internal_table.attach(theme_combo, 1, 2, 3, 4)
-            internal_table.attach(preview_image, 3, 4, 0, 4)
+            internal_table.attach(preview_image, 2, 3, 0, 4)
             
             while run == Gtk::Dialog::RESPONSE_ACCEPT
                 begin

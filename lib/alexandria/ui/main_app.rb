@@ -527,8 +527,12 @@ module UI
                 confirm = lambda do |message|
                     dialog = AlertDialog.new(@main_app, message,
                                              Gtk::Stock::DIALOG_QUESTION,
-                                             [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                                              [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]])
+                                             [[Gtk::Stock::CANCEL, 
+                                               Gtk::Dialog::RESPONSE_CANCEL],
+                                              [Gtk::Stock::DELETE, 
+                                               Gtk::Dialog::RESPONSE_OK]],
+                                             _("If you continue, the selection will be " + 
+                                               "permanently deleted."))
                     dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
                     dialog.show_all
                     res = dialog.run == Gtk::Dialog::RESPONSE_OK
@@ -559,12 +563,11 @@ module UI
                         setup_move_actions
                     end
                 else
-                    selected_books.each do |book|
-                        if confirm.call(_("Are you sure you want to permanently " +
-                                          "delete '%s' from '%s'?") % [ book.title, library.name ])
-                            library.delete(book)
-                            on_refresh
-                        end
+                    if confirm.call(_("Are you sure you want to permanently " +
+                                      "delete the selected books from '%s'?") \
+                                    % [ library.name ])
+                        selected_books.each { |book| library.delete(book) } 
+                        on_refresh
                     end
                 end
             end
