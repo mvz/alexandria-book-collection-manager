@@ -1,0 +1,33 @@
+Alexandria
+==========
+
+    Alexandria is a GNOME application to manage one or more collections of
+    books.  It features a user interface compliant with the HIG rules, and
+    it retrieves information about books from Amazon, using its web service. 
+
+Requirements
+------------
+
+    Ruby >= 1.8.0:          http://www.ruby-lang.org
+    GNOME >= 2.x:           http://www.gnome.org
+    Ruby-GNOME2 >= 0.9.x:   http://ruby-gnome2.sourceforge.jp
+    Ruby/Amazon >= 0.7.x:   http://www.caliban.org/ruby/ruby-amazon.shtml
+
+Install
+-------
+
+    $ ruby install.rb setup
+    $ ruby install.rb config
+   ($ su)
+    $ ruby install.rb install
+
+Usage
+-----
+
+    $ alexandria
+
+License
+-------
+
+    Alexandria is distributed under the terms of the GNU General Public License.
+    See the COPYING file for more information.
