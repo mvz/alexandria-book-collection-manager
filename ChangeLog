@@ -6,6 +6,11 @@
 	- Proper support for EAN numbers. Also, ISBN numbers are tidied more
 	  consistently.
 
+	* lib/alexandria/ui/main_app.rb:
+
+	- Remove custom sorting functions as they appear not to make anything
+	  work better and may actually cause some problems, such as bug #698.
+
 2004-07-09  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers.rb,

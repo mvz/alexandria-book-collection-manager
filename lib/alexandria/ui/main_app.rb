@@ -453,12 +453,6 @@ module UI
             column.resizable = false 
             @listview.append_column(column)
 
-            # we need to overwrite the default sort function for columns that may
-            # handle UTF-8 foreign strings
-            [1, 2, 4, 5].each do |i|
-                @listview.model.set_sort_func(i) { |x, y| x[i] <=> y[i] rescue 0 }
-            end
-
             @listview.selection.mode = Gtk::SELECTION_MULTIPLE
             @listview.selection.signal_connect('changed') { on_books_selection_changed }
         end
