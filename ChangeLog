@@ -1,5 +1,12 @@
 2005-03-22  Dafydd Harries  <daf@muse.19inch.net>
 
+	* po/genpot.sh:
+
+	Add a comment mentioning that the script needs to be run inside the
+	po/ directory.
+
+2005-03-22  Dafydd Harries  <daf@muse.19inch.net>
+
 	* README:
 
 	Update with the URL of the newly created intltool webpage.
