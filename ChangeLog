@@ -12,7 +12,7 @@
 
 	* lib/alexandria/library.rb:
 
-	The class is now obversable, and sends notifications when books are
+	The class is now observable, and sends notifications when books are
 	added, updated or removed from the library.
 
 	* lib/alexandria/ui/completion_models.rb,
