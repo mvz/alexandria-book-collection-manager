@@ -20,7 +20,7 @@ module Alexandria
         attr_reader :title, :authors, :isbn, :publisher, :edition
         attr_accessor :rating, :notes
 
-        DEFAULT_RATING = 3
+        DEFAULT_RATING = 0 
 
         def initialize(title, authors, isbn, publisher, edition)
             @title = title

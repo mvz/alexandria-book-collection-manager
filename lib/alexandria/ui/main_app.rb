@@ -36,6 +36,17 @@ module UI
                     @maximized = e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
                 end
             end
+            
+            providers_menu = Gtk::Menu.new
+            BookProviders.each do |provider|
+                item = Gtk::MenuItem.new("_" + provider.fullname, true) 
+                item.signal_connect('activate') do
+                    open_web_browser(provider.url(selected_books.first))
+                end 
+                providers_menu.append(item)
+            end
+            providers_menu.show_all
+            @popup_online_info.submenu = providers_menu
         end
 
         def on_books_button_press_event(widget, event)
@@ -87,7 +98,7 @@ module UI
                     n_("%d book selected", "%d books selected", books.length) \
                         % books.length
             end
-            @popup_properties.sensitive = @menu_properties.sensitive = books.length == 1
+            @popup_properties.sensitive = @popup_online_info.sensitive = @menu_properties.sensitive = books.length == 1
             @menu_delete.sensitive = !books.empty? 
         end
 
@@ -95,10 +106,6 @@ module UI
             if widget == @treeview_sidepane
                 @menu_properties.sensitive = false
                 @menu_delete.sensitive = true
-            else
-                n = selected_books.length
-                @popup_properties.sensitive = @menu_properties.sensitive = n == 1
-                @menu_delete.sensitive = n > 0
             end
         end
 
@@ -251,7 +258,13 @@ module UI
                 proc { |x, y| x.isbn <=> y.isbn },
                 proc { |x, y| x.publisher <=> y.publisher },
                 proc { |x, y| x.edition <=> y.edition },
-                proc { |x, y| x.rating <=> y.rating rescue 0 }
+                proc do |x, y| 
+                    if x.rating.nil? or y.rating.nil?
+                        0
+                    else
+                        x.rating <=> y.rating
+                    end
+                end 
             ]
             sort = sort_funcs[@prefs.arrange_icons_mode]
             library.sort! { |x, y| sort.call(x, y) } 
@@ -373,13 +386,7 @@ module UI
         end
 
         def on_submit_bug_report
-            unless (cmd = Preferences.instance.www_browser).nil?
-                system(cmd % "\"" + BUGREPORT_URL + "\"")
-            else 
-                ErrorDialog.new(@main_app,
-                                _("Unable to launch the web browser"),
-                                _("Check out that a web browser is configured as default (Applications -> Desktop Preferences -> Advanced -> Preferred Applications) and try again."))
-            end
+            open_web_browser(BUGREPORT_URL)
         end
 
         def on_about
@@ -389,6 +396,16 @@ module UI
         #######
         private
         #######
+
+        def open_web_browser(url)
+            unless (cmd = Preferences.instance.www_browser).nil?
+                system(cmd % "\"" + url + "\"")
+            else 
+                ErrorDialog.new(@main_app,
+                                _("Unable to launch the web browser"),
+                                _("Check out that a web browser is configured as default (Applications -> Desktop Preferences -> Advanced -> Preferred Applications) and try again."))
+            end
+        end
 
         def load_libraries
             @libraries = Library.loadall

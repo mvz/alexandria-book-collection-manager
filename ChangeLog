@@ -1,3 +1,44 @@
+2004-09-25  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade:
+
+	Added a "Online Information at" menu item in the popup
+	menu of a book.
+	  
+	* lib/alexandria/ui/main_app.rb:
+
+	- Fills the "Online Information at" menu item ;
+	- Fixed a bug when sorting by rating books that aren't rated yet ;
+	- Refactored a bit.
+
+	* lib/alexandria/book.rb:
+
+	Set the default rating to 0 instead of 3.
+
+	* lib/alexandria/book_providers/bn.rb:
+
+	Added.
+
+	* lib/alexandria/book_providers.rb:
+
+	- Includes the BN provider.
+	- Moved the HTTP proxy code there;
+	- Introduced GenericProvider#fullname. 
+
+	* lib/alexandria/book_providers/amazon.rb:
+
+	- Removed the GLib.convert call, that seems unnecessary ;
+	- Follow changes in book_provider.rb.
+
+	* lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/ui/preferences_dialog.rb: 
+
+	Follow changes in book_provider.rb.
+
+	* schemas/alexandria.schemas:
+
+	Added BN in the providers_priority variable.
+
 2004-09-24  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/main_app.glade:

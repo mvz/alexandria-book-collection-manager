@@ -113,16 +113,26 @@ module Alexandria
         end
       
         class GenericProvider
-            attr_reader :name, :prefs
+            attr_reader :name, :fullname, :prefs
             include Singleton
 
-            def initialize(name)
+            def initialize(name, fullname=nil)
                 @name = name 
+                @fullname = (fullname or name)
                 @prefs = Preferences.new(name.downcase)
+            end
+            
+            def transport
+                if config = Alexandria::Preferences.instance.http_proxy_config
+                    Net::HTTP.Proxy(*config)
+                else
+                    Net::HTTP
+                end
             end
         end
  
         require 'alexandria/book_providers/amazon'
+        require 'alexandria/book_providers/bn'
         require 'alexandria/book_providers/proxis'
        
         def initialize

@@ -81,20 +81,19 @@ class BookProviders
 			results = []
 			products.each do |product|
                 next unless product.catalog == 'Book'
-                conv = proc do |str|
-                    # FIXME looks like we don't need to decode the charset anymore
-                    # should fix that ASAP
-                    GLib.convert(str.squeeze(' '), "ISO-8859-1", "UTF-8")
-                end 
-                book = Book.new(conv.call(product.product_name),
-                                (product.authors.map { |x| conv.call(x) } rescue [ _("n/a") ]),
-                                conv.call(product.isbn),
-                                (conv.call(product.manufacturer) rescue _("n/a")),
-                                conv.call(product.media))
+                book = Book.new(product.product_name.squeeze(' '),
+                                (product.authors.map { |x| x.squeeze(' ') } rescue [ _("n/a") ]),
+                                product.isbn.squeeze(' '),
+                                (product.manufacturer.squeeze(' ') rescue _("n/a")),
+                                product.media.squeeze(' '))
 
                 results << [ book, product.image_url_small, product.image_url_medium ]
             end
             type == SEARCH_BY_ISBN ? results.first : results
+        end
+
+        def url(book)
+            "http://www.amazon.com/exec/obidos/ASIN/" + book.isbn
         end
     end
 end

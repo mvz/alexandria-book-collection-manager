@@ -22,7 +22,7 @@ module UI
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize(parent, provider)
-            super(_("Preferences for %s") % provider.name,
+            super(_("Preferences for %s") % provider.fullname,
                   parent,
                   Gtk::Dialog::MODAL,
                   [ Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE ])
@@ -90,8 +90,12 @@ module UI
                 checkbutton.active = Preferences.instance.send(pref_name)
             end           
  
-            model = Gtk::ListStore.new(String)
-            BookProviders.each { |x| model.append.set_value(0, x.name) }
+            model = Gtk::ListStore.new(String, String)
+            BookProviders.each do |x| 
+                iter = model.append
+                iter[0] = x.fullname
+                iter[1] = x.name
+            end
             @treeview_providers.model = model
             column = Gtk::TreeViewColumn.new("Providers",
                                              Gtk::CellRendererText.new,
@@ -104,9 +108,9 @@ module UI
 
         def on_provider_setup
             iter = @treeview_providers.selection.selected
-            provider = BookProviders.find { |x| x.name == iter[0] }
+            provider = BookProviders.find { |x| x.name == iter[1] }
             if provider.prefs.empty?
-                ErrorDialog.new(@preferences_dialog, _("The '%s' provider doesn't have any preference to setup") % provider.name)
+                ErrorDialog.new(@preferences_dialog, _("The '%s' provider doesn't have any preference to setup") % provider.fullname)
             else
                 dialog = ProviderPreferencesDialog.new(@preferences_dialog, provider)
                 dialog.show_all.run
@@ -167,7 +171,7 @@ module UI
 
         def update_priority
             priority = []
-            @treeview_providers.model.each { |model, path, iter| priority << iter[0] }
+            @treeview_providers.model.each { |model, path, iter| priority << iter[1] }
             Preferences.instance.providers_priority = priority
             BookProviders.update_priority
         end

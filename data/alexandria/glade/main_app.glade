@@ -1075,6 +1075,26 @@
   </child>
 
   <child>
+    <widget class="GtkImageMenuItem" id="popup_online_info">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">_Online Information at</property>
+      <property name="use_underline">True</property>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image634">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-jump-to</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
+  </child>
+
+  <child>
     <widget class="GtkSeparatorMenuItem" id="separator13">
       <property name="visible">True</property>
     </widget>
@@ -1239,7 +1259,7 @@
       <signal name="activate" handler="on_delete" last_modification_time="Mon, 29 Mar 2004 23:27:15 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image513">
+	<widget class="GtkImage" id="image635">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-delete</property>
 	  <property name="icon_size">1</property>
@@ -1263,7 +1283,7 @@
       <signal name="activate" handler="on_new_book" last_modification_time="Wed, 31 Mar 2004 00:53:44 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image342">
+	<widget class="GtkImage" id="image632">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-add</property>
 	  <property name="icon_size">1</property>
@@ -1277,7 +1297,7 @@
   </child>
 
   <child>
-    <widget class="GtkMenuItem" id="separator16">
+    <widget class="GtkSeparatorMenuItem" id="separator16">
       <property name="visible">True</property>
     </widget>
   </child>
@@ -1301,7 +1321,7 @@
   </child>
 
   <child>
-    <widget class="GtkMenuItem" id="separator18">
+    <widget class="GtkSeparatorMenuItem" id="separator18">
       <property name="visible">True</property>
     </widget>
   </child>
@@ -1401,7 +1421,7 @@
   </child>
 
   <child>
-    <widget class="GtkMenuItem" id="separator60">
+    <widget class="GtkSeparatorMenuItem" id="separator60">
       <property name="visible">True</property>
     </widget>
   </child>
@@ -1411,7 +1431,7 @@
       <property name="visible">True</property>
       <property name="label" translatable="yes">View as _Icons</property>
       <property name="use_underline">True</property>
-      <property name="active">True</property>
+      <property name="active">False</property>
       <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 03 Apr 2004 15:05:48 GMT"/>
     </widget>
   </child>
@@ -1421,7 +1441,7 @@
       <property name="visible">True</property>
       <property name="label" translatable="yes">View as _List</property>
       <property name="use_underline">True</property>
-      <property name="active">False</property>
+      <property name="active">True</property>
       <property name="group">popup_view_as_icons</property>
       <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 03 Apr 2004 15:05:38 GMT"/>
     </widget>
