@@ -1,8 +1,9 @@
 2004-06-15  Laurent Sansonetti  <lrz@gnome.org>
 
-	* AUTHORS:
+	* AUTHORS,
+	  lib/alexandria.rb:
 
-	Added Pascal.
+	Added Pascal, added language prefixes after each translator.
 
 	* data/alexandria/glade/new_book_dialog.glade,
 	  lib/alexandria/ui/new_book_dialog.rb:
