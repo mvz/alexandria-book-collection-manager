@@ -481,8 +481,6 @@ module UI
                 refresh_libraries
                 refresh_books
             end
-            iter = @library_listview.model.iter_first
-            @library_listview.selection.select_iter(iter)
         end
 
         def refresh_libraries
@@ -519,11 +517,18 @@ module UI
                     @actiongroup["AsList"]
             end
             action.activate
+            library = nil
             unless @prefs.selected_library.nil?
                 library = @libraries.find do |x|
                     x.name == @prefs.selected_library
                 end
-                select_library(library) unless library.nil?
+            end
+            if library
+                select_library(library)
+            else
+                # Select the first item by default.
+                iter = @library_listview.model.iter_first
+                @library_listview.selection.select_iter(iter)
             end
         end
 
@@ -950,13 +955,16 @@ module UI
                 if filter.empty?
                     true
                 else
-                    /#{filter}/i.match case @filter_books_mode
+                    data = case @filter_books_mode
                         when 0 then iter[Columns::TITLE]
                         when 1 then iter[Columns::AUTHORS]
                         when 2 then iter[Columns::ISBN]
                         when 3 then iter[Columns::PUBLISHER]
-                        when 4 then "" # FIXME iter[Columns::NOTES]
+                        when 4 then
+                            book = book_from_iter(selected_library, iter)
+                            ((book != nil and book.notes) or "")
                     end
+                    data != nil and data.downcase.include?(filter.downcase)
                 end     
             end
 

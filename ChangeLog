@@ -1,3 +1,12 @@
+2005-03-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Restored the possibility to filter books by notes ;
+	- Filtering text field is more robust ;
+	- Make sure we do not select a library before having setup the moves
+	  action at the beginning.
+
 2005-03-03  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/mcu.rb:
