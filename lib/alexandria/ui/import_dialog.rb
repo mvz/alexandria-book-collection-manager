@@ -15,12 +15,23 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+class Alexandria::ImportFilter
+    def to_filefilter
+        filefilter = Gtk::FileFilter.new
+        filefilter.name = name
+        patterns.each { |x| filefilter.add_pattern(x) }
+        return filefilter
+    end
+end
+
 module Alexandria
 module UI
     class ImportDialog < Gtk::FileChooserDialog
         include GetText
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        FILTERS = Alexandria::ImportFilter.all
 
         def initialize(parent, libraries, &on_accept_cb)
             backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
@@ -38,19 +49,16 @@ module UI
             self.signal_connect('destroy') { hide }
 
             name_entry = Gtk::Entry.new
-            
             name_entry.signal_connect('changed') do
                 import_button.sensitive = !name_entry.text.strip.empty?
             end
-            
-            insert_filter(_("Autodetect"), '*') \
-                { Library.import_autodetect(name_entry.text, self.filename) }
-            insert_filter(_("Archived Tellico XML (*.bc, *.tc)"), 
-                          '*.tc', '*.bc') \
-                { Library.import_as_tellico_xml_archive(name_entry.text,
-                                                        self.filename) }
-            insert_filter(_("ISBN List (*.txt)"), '*.txt') \
-                { Library.import_as_isbn_list(name_entry.text, self.filename) }
+          
+            @filters = {}
+            FILTERS.each do |filter|
+                filefilter = filter.to_filefilter
+                self.add_filter(filefilter)
+                @filters[filefilter] = filter
+            end
             
             name_label = Gtk::Label.new(_("Library _name:"), true)
             name_label.xalign = 0
@@ -79,38 +87,21 @@ module UI
                                       "Please choose a different name."))
                     name_entry.grab_focus
                 else
-                    library = activate 
-                    if library
+                    library = @filters[self.filter].invoke(name_entry.text, 
+                                                           self.filename)
+                    if library.nil?
+                        ErrorDialog.new(@parent, 
+                                        _("Couldn't import the library"),
+                                        _("The format of the file you " +
+                                          "provided is unknown.  Please retry " +
+                                          "with another file."))
+                    else
                         on_accept_cb.call(library)
                         break
                     end
                 end
             end
             destroy
-        end
-          
-        #######
-        private
-        #######
-        
-        def insert_filter(name, *patterns, &block)
-            filter = Gtk::FileFilter.new
-            filter.name = name
-            patterns.each { |x| filter.add_pattern(x) }
-            self.add_filter(filter)
-            @filters ||= { }
-            @filters[filter] = block
-        end
-          
-        def activate
-            library = @filters[self.filter].call
-            if library.nil?
-                ErrorDialog.new(@parent, 
-                                _("Couldn't import the library"),
-                                _("The format of the file you provided is " +
-                                  "unknown.  Please retry with another file."))
-            end
-            return library
         end
     end
 end

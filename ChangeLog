@@ -1,3 +1,20 @@
+2005-01-13  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/export_library.rb,
+	  lib/alexandria/import_library.rb:
+
+	Added.
+
+	* lib/alexandria/library.rb:
+
+	Splitted.
+
+	* lib/alexandria.rb,
+	  lib/alexandria/ui/export_dialog.rb, 
+	  lib/alexandria/ui/import_dialog.rb:
+
+	Follow changes.
+
 2005-01-10  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/web-themes/clean/clean.css,

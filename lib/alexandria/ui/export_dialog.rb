@@ -44,16 +44,7 @@ module UI
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
         
-        Format = Struct.new("Format", :name, :ext, :message)
-        FORMATS = [
-            Format.new(_("Archived ONIX XML"), "onix.tbz2",
-                       "export_as_onix_xml_archive"),
-            Format.new(_("Archived Tellico XML"), "tc",
-                       "export_as_tellico_xml_archive"),
-            Format.new(_("ISBN List"), "txt", "export_as_isbn_list"),
-            Format.new(_("HTML Web Page"), nil, "export_as_html")
-        ]
-
+        FORMATS = Alexandria::ExportFormat.all
         THEMES = Alexandria::WebTheme.all
 
         def initialize(parent, library)
@@ -159,7 +150,7 @@ module UI
                 end
                 args = [theme] 
             end
-            @library.send(format.message, filename, *args)
+            format.invoke(@library, filename, *args)
             return true
         end
     end
