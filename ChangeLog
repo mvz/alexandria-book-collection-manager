@@ -1,3 +1,9 @@
+2004-06-13  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/post-clean.rb:
+
+	Added.  This script removes the 'locale' directory.
+	
 2004-06-13  Dafydd Harries  <daf@muse.19inch.net>
 
 	* pre-setup.rb:
