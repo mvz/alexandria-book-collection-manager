@@ -1,3 +1,13 @@
+2004-04-22  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/info_book_dialog.glade,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui/info_book_dialog.rb:
+
+	- Redesigned the layout of the Book Property dialog, adding
+	  a notebook and packing the cover image in a frame ;
+	- Introduced notes (not yet saved though). 
+
 2004-04-21  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/preferences_dialog.glade:

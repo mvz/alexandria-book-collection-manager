@@ -27,9 +27,16 @@ module UI
             @label_isbn.text = book.isbn
             @label_publisher.text = book.publisher
             @label_edition.text = book.edition
+            buffer = Gtk::TextBuffer.new
+            buffer.text = (book.notes or "")
+            @textview_notes.buffer = buffer
+            @book = book
         end
 
         def on_close
+            if @book.notes.nil? or (@textview_notes.buffer.text != @book.notes)
+                # TODO: save the book there
+            end
             @info_book_dialog.destroy
         end
     end

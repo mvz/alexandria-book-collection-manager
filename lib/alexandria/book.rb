@@ -10,7 +10,7 @@ module Alexandria
     class Book
         attr_reader :title, :authors, :isbn, :publisher, :edition
         attr_writer :saved, :small_cover, :medium_cover
-        attr_accessor :library
+        attr_accessor :library, :notes
 
         def initialize(title, authors, isbn, publisher, edition,
                        small_cover, medium_cover)
