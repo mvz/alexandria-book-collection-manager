@@ -21,8 +21,8 @@ Requirements
 Install
 -------
 
-    $ ruby install.rb setup
     $ ruby install.rb config
+    $ ruby install.rb setup
    ($ su)
     $ ruby install.rb install
 
