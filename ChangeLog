@@ -1,3 +1,9 @@
+2005-01-20  Zachary Landau  <kapheine@hypa.net>
+
+	* CUECAT_SUPPORT:
+
+	Added.
+
 2005-01-19  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/book_properties_dialog.glade,
