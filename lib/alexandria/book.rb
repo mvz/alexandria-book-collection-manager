@@ -68,13 +68,17 @@ module Alexandria
        
         def self.loadall
             a = []
-            Dir.entries(DIR).each do |file|
-                # skip '.', '..' and hidden files
-                next if file =~ /^\.+$/
-                # skip non-directory files
-                next unless File.stat(File.join(DIR, file)).directory?
-
-                a << self.load(file)       
+            begin
+                Dir.entries(DIR).each do |file|
+                    # skip '.', '..' and hidden files
+                    next if file =~ /^\.+$/
+                    # skip non-directory files
+                    next unless File.stat(File.join(DIR, file)).directory?
+    
+                    a << self.load(file)       
+                end
+            rescue Errno::ENOENT
+                FileUtils.mkdir_p(DIR)
             end
             # create the default library if there is no library yet 
             if a.empty?
