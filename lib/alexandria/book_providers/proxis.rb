@@ -26,12 +26,21 @@ class BookProviders
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
         
+        LANGUAGES = {
+            'nl' => '1',
+            'en' => '2',
+            'fr' => '3'
+        }
+
         def initialize
             @name = "Proxis"
             @prefs = Preferences.new(@name.downcase)
+            @prefs.add("lang", _("Language of the books to search"), "fr",
+                       LANGUAGES.keys)
         end
         
         def search(criterion, type)
+            prefs.read
             req = case type
                 when Alexandria::BookProviders::SEARCH_BY_ISBN
                     "p_isbn=#{CGI::escape(criterion)}&p_title=&p_author="
@@ -51,31 +60,18 @@ class BookProviders
           
             products = {}
  
-            # languages = {"NL"=>'1', "EN"=>'2', "FR"=>'3'}
-            1.upto(3) do |id_lang|
-                results_page = 'http://oas2000.proxis.be/gate/jabba.search.submit_e?'+req+'&p_item='+id_lang.to_s+'&p_code=1'
-                Net::HTTP.get(URI.parse(results_page)).each do |line|
-                    if (line =~ /BR>.*DETAILS&mi=([^&]*)&si=/) and (!products[$1]) and (book = parseBook($1)) then
-                        products[$1] = book
-                    end
+            results_page = "http://oas2000.proxis.be/gate/jabba.search.submit_e?#{req}&p_item=#{LANGUAGES[prefs['lang']]}&p_code=1"
+            Net::HTTP.get(URI.parse(results_page)).each do |line|
+                if (line =~ /BR>.*DETAILS&mi=([^&]*)&si=/) and (!products[$1]) and (book = parseBook($1)) then
+                    products[$1] = book
                 end
             end
-          
-            results = []
-            products.each_value do |product|
-                conv = proc { |str| GLib.convert(str, "UTF-8", "WINDOWS-1252") }
-                book = Book.new(conv.call(product['name']),
-                                (product['authors'].map { |x| conv.call(x) } rescue [ "n/a" ]),
-                                conv.call(product['isbn']),
-                                (conv.call(product['manufacturer']) rescue _("n/a")),
-                                (conv.call(product['media']) rescue _("n/a")))
-              
-                results << [ book, product['image_url_small'], product['image_url_medium'] ]
-            end
-            type == Alexandria::BookProviders::SEARCH_BY_ISBN ? results.first : results
+
+            type == Alexandria::BookProviders::SEARCH_BY_ISBN ? products.values.first : products.values
         end
         
         def parseBook(product_id)
+            conv = proc { |str| GLib.convert(str, "UTF-8", "WINDOWS-1252") }
             detailspage='http://oas2000.proxis.be/gate/jabba.coreii.g_p?bi=4&sp=DETAILS&mi='+product_id
             product = {}
             product['authors'] = []
@@ -99,10 +95,17 @@ class BookProviders
                 end
             end
 
-            %w{name authors isbn media manufacturer}.each do |field|
+            %w{name isbn media manufacturer}.each do |field|
                 return nil if product[field].nil?
             end 
-            return product
+            
+            book = Book.new(conv.call(product['name']),
+                            (product['authors'].map { |x| conv.call(x) } rescue [ "n/a" ]),
+                            conv.call(product['isbn']),
+                            conv.call(product['manufacturer']),
+                            conv.call(product['media']))
+        
+            return [ book, product['image_url_small'], product['image_url_medium'] ]
         end
     end
 end
