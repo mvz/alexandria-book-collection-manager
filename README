@@ -5,15 +5,21 @@ Alexandria
 
     Alexandria:
 
-      * retrieves and displays book information (including cover pictures) from 
-        several online libraries, such as Amazon, Proxis and Barnes and Noble;
+      * retrieves and displays book information (including cover pictures) 
+        from several online libraries, such as Amazon, Proxis, Barnes and 
+        Noble, and the Spanish Ministry of Culture ;
       * allows books to be added and updated by hand ; 
       * enables searches either by EAN/ISBN, title, authors or keyword ; 
       * saves data using the YAML format ;
-      * can import and export data into ONIX, Tellico and ISBN-list formats ;
+      * can import and export data into XHTML+CSS, ONIX, Tellico and 
+        EAN/ISBN-list formats ;
+      * allows marking your books as loaned, each with the loan-date and the 
+        name of the person who has borrowed them ;
+      * helps you marking books you have loaned and to who and when you have 
+        loaned them ;
       * features a HIG-compliant user interface ;
-      * shows books in different views (standard list or icons list), that can
-        be either filtered or sorted ;
+      * shows books in different views (standard list or icons list), that
+        can be either filtered or sorted ;
       * handles book rating and notes ;
       * supports CueCat (R) barcode readers ;
       * includes translations for several languages.
@@ -22,13 +28,15 @@ Requirements
 ------------
 
     Ruby >= 1.8.0:              http://www.ruby-lang.org
-    GNOME >= 2.6:               http://www.gnome.org
+    GNOME >= 2.6 [*]:           http://www.gnome.org
     Ruby/Amazon >= 0.8.3:       http://www.caliban.org/ruby/ruby-amazon.shtml
     Ruby-GetText >= 0.6.1:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
-    Ruby-GNOME2 >= 0.10.1 [*]:  http://ruby-gnome2.sourceforge.jp
+    Ruby-GNOME2 >= 0.12.0 [**]: http://ruby-gnome2.sourceforge.jp
 
-    [*]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2
-                                 and Ruby/GConf2.
+    [*]: GTK+ >= 2.6.0 is required though.
+
+    [**]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2
+                                  and Ruby/GConf2.
 
 Install
 -------
@@ -41,11 +49,11 @@ Install
     $ gconftool-2 --unset '/apps/alexandria/providers_priority' [**] 
 
     [*]: This is needed because the current GConf implementation won't
-    dynamically reload the schemas.  Note that you don't have to start it after
-    that, it should be automatically spawned when needed. 
+    dynamically reload the schemas.  Note that you don't have to start it
+    after that, it should be automatically spawned when needed. 
 
     [**]: This step is only mandatory if you are upgrading from a 0.3.x
-    version.  It will introduce the Barnes and Noble provider. 
+    or a newer version.  It will introduce new providers. 
 
 Usage
 -----

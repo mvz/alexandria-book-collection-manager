@@ -36,6 +36,7 @@ module Alexandria
     DOCUMENTERS = []  
     TRANSLATORS = [ 
         'Dafydd Harries <daf@muse.19inch.net> (cy)',
+        'David Weinehall <tao@debian.org> (sv)',
         'Joachim Breitner <mail@joachim-breitner.de> (de)',
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
