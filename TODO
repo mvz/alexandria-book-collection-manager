@@ -3,6 +3,7 @@ Alexandria's TODO list
 
 Before next release:
 
+[ ] Zipped-YAML import/export
 [ ] Zipped-XML import/export
 [ ] Export to XHTML via an XSL transformation, and to preview the result within
     Alexandria itself
