@@ -1,5 +1,19 @@
 2004-09-11  Laurent Sansonetti  <lrz@gnome.org>
 
+	* README:
+
+	- Requires Ruby-GNOME2 0.10.1 ;
+	- Requires Ruby-GetText 0.6.1 ;
+	- Added information for the "/apps/alexandria/providers_priority" &
+	  Barnes and Noble provider upgrading issue.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Fixed keyboard shortcut for "Show Sidepane" (F9) ;
+	- Fixed library creation ;
+	- Fixed the alignment of cell renderers in the sidepane treeview ;
+	- Fixed indentation.
+
 	* lib/alexandria/ui/new_book_dialog.rb,
 	  data/alexandria/glade/new_book_dialog.glade,
 	  lib/alexandria/ui/preferences_dialog.rb:

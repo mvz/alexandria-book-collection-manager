@@ -162,7 +162,10 @@ module UI
             else 
                 ErrorDialog.new(@main_app,
                                 _("Unable to launch the web browser"),
-                                _("Check out that a web browser is configured as default (Applications -> Desktop Preferences -> Advanced -> Preferred Applications) and try again."))
+                                _("Check out that a web browser is " +
+                                  "configured as default (Applications -> " +
+                                  "Desktop Preferences -> Advanced -> " +
+                                  "Preferred Applications) and try again."))
             end
         end
 
@@ -203,7 +206,10 @@ module UI
         end
 
         def build_books_listview
-            @listview.model = Gtk::ListStore.new(Gdk::Pixbuf, String, *([String] * 4 + [Gdk::Pixbuf] * 5 + [Integer]))
+            @listview.model = Gtk::ListStore.new(Gdk::Pixbuf, String, 
+                                                 *([String] * 4 + 
+                                                   [Gdk::Pixbuf] * 5 + 
+                                                   [Integer]))
 
             # first column
             renderer = Gtk::CellRendererPixbuf.new
@@ -291,7 +297,7 @@ module UI
             @libraries.each { |library| append_library(library) } 
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Library"))
-            column.pack_start(renderer, true)
+            column.pack_start(renderer, false)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 cell.pixbuf = iter[0]
             end        
@@ -305,7 +311,8 @@ module UI
                     if match = /([^\w\s'"()?!:;.\-])/.match(new_text)
                         ErrorDialog.new(@main_app,
                                         _("Invalid library name '%s'") % new_text,
-                                        _("The name provided contains the illegal character '<i>%s</i>'.") % match[1])
+                                        _("The name provided contains the illegal " +
+                                          "character '<i>%s</i>'.") % match[1])
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
                         iter[1] = selected_library.name = new_text
@@ -369,7 +376,7 @@ module UI
                 library = Library.load(name)
                 @libraries << library
                 iter = append_library(library)
-                @paned.child1.visible = @menu_view_sidepane.active = true
+                @actiongroup["Sidepane"].active = true
                 @treeview_sidepane.set_cursor(iter.path, @treeview_sidepane.get_column(0), true)
             end
     
@@ -436,9 +443,13 @@ module UI
                         when 0
                             _("Are you sure you want to permanently delete '%s'?") % library.name
                         when 1
-                            _("Are you sure you want to permanently delete '%s' which has one book?") % library.name
+                            _("Are you sure you want to permanently delete '%s' " +
+                              "which has one book?") % library.name
                         else
-                            n_("Are you sure you want to permanently delete '%s' which has %d book?", "Are you sure you want to permanently delete '%s' which has %d books?", library.size) % [ library.name, library.size ]
+                            n_("Are you sure you want to permanently delete '%s' " +
+                               "which has %d book?", 
+                               "Are you sure you want to permanently delete '%s' " +
+                               "which has %d books?", library.size) % [ library.name, library.size ]
                     end
                     if confirm.call(message)
                         library.delete
@@ -451,7 +462,8 @@ module UI
                     end
                 else
                     selected_books.each do |book|
-                        if confirm.call(_("Are you sure you want to permanently delete '%s' from '%s'?") % [ book.title, library.name ])
+                        if confirm.call(_("Are you sure you want to permanently " +
+                                          "delete '%s' from '%s'?") % [ book.title, library.name ])
                             library.delete(book)
                             on_refresh
                         end
@@ -505,7 +517,7 @@ module UI
             end
 
             toggle_actions = [
-                ["Sidepane", nil, _("Side _Pane"), nil, nil, on_view_sidepane, true],
+                ["Sidepane", nil, _("Side _Pane"), "F9", nil, on_view_sidepane, true],
                 ["Toolbar", nil, _("_Toolbar"), nil, nil, on_view_toolbar, true],
                 ["Statusbar", nil, _("_Statusbar"), nil, nil, on_view_statusbar, true],
                 ["ReversedOrder", nil, _("Re_versed Order"), nil, nil, on_reverse_order],

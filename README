@@ -22,8 +22,8 @@ Requirements
     Ruby >= 1.8.0:              http://www.ruby-lang.org
     GNOME >= 2.6:               http://www.gnome.org
     Ruby/Amazon >= 0.8.3:       http://www.caliban.org/ruby/ruby-amazon.shtml
-    Ruby-GetText >= 0.5.4:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
-    Ruby-GNOME2 >= 0.9.x [*]:   http://ruby-gnome2.sourceforge.jp
+    Ruby-GetText >= 0.6.1:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
+    Ruby-GNOME2 >= 0.10.1 [*]:  http://ruby-gnome2.sourceforge.jp
 
     [*]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2
                                  and Ruby/GConf2.
@@ -36,10 +36,14 @@ Install
    ($ su)
     $ ruby install.rb install
     $ gconftool-2 --shutdown [*]
+    $ gconftool-2 --unset '/apps/alexandria/providers_priority' [**] 
 
     [*]: This is needed because the current GConf implementation won't
     dynamically reload the schemas.  Note that you don't have to start it after
     that, it should be automatically spawned when needed. 
+
+    [**]: This step is only mandatory if you are upgrading from a 0.3.x
+    version to 0.4.x.  It will introduce the Barnes and Noble provider. 
 
 Usage
 -----
