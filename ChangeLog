@@ -1,3 +1,9 @@
+2005-03-27  Laurent Sansonetti  <lrz@gnome.org>
+
+	* tests/test_provider.rb:
+
+	Added a test for the Amadeus Buch provider.
+
 2005-03-26  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO:
