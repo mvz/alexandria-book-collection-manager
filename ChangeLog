@@ -1,3 +1,17 @@
+2004-05-27  Laurent Sansonetti  <lrz@gnome.org>
+
+	* README:
+
+	Incremented Ruby/Amazon version (0.8.1 -> 0.8.2).
+	
+	* data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Implemented the preferences backend for the preferences
+	dialog box.
+
 2004-05-26  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/icons/book.png:

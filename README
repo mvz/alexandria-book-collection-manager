@@ -16,7 +16,7 @@ Requirements
     Ruby >= 1.8.0:          http://www.ruby-lang.org
     GNOME >= 2.x:           http://www.gnome.org
     Ruby-GNOME2 >= 0.9.x:   http://ruby-gnome2.sourceforge.jp
-    Ruby/Amazon >= 0.8.1:   http://www.caliban.org/ruby/ruby-amazon.shtml
+    Ruby/Amazon >= 0.8.2:   http://www.caliban.org/ruby/ruby-amazon.shtml
 
 Install
 -------
