@@ -162,7 +162,7 @@ msgstr "Impossible d'éditer les propriétés du livre"
 #: ../lib/alexandria/ui/book_properties_dialog.rb:71
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:64
 msgid "The EAN/ISBN you provided is already used in this library."
-msgstr ""
+msgstr "La donnée EAN/ISBN fournie est déjà utilisée dans cette bibliothèque."
 
 #: ../lib/alexandria/ui/book_properties_dialog.rb:80
 #: ../lib/alexandria/ui/new_book_dialog.rb:187
@@ -234,11 +234,11 @@ msgstr "Le livre '%s' existe déjà dans '%s'. Voulez-vous le remplacer?"
 
 #: ../lib/alexandria/ui/main_app.rb:52
 msgid "_Skip"
-msgstr ""
+msgstr "_Passer"
 
 #: ../lib/alexandria/ui/main_app.rb:54
 msgid "If you replace the existing book, its contents will be overwritten."
-msgstr ""
+msgstr "Si vous remplacez le livre existant, son contenu sera écrasé."
 
 #: ../lib/alexandria/ui/main_app.rb:116
 msgid "Library '%s' selected"
@@ -300,7 +300,7 @@ msgstr "Auteurs"
 
 #: ../lib/alexandria/ui/main_app.rb:297
 msgid "ISBN"
-msgstr ""
+msgstr "ISBN"
 
 #: ../lib/alexandria/ui/main_app.rb:298
 msgid "Publisher"
@@ -628,7 +628,7 @@ msgstr "Notation:"
 #: ../data/alexandria/glade/book_properties_dialog.glade:420
 #: ../data/alexandria/glade/new_book_dialog.glade:86
 msgid "_ISBN:"
-msgstr ""
+msgstr "_ISBN:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:575
 msgid "_Authors:"
@@ -660,7 +660,7 @@ msgstr "Prêt"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:923
 msgid "Notes"
-msgstr ""
+msgstr "Notes"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:10
 msgid "Adding a Book"
@@ -706,7 +706,7 @@ msgstr "_Notation"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:182
 msgid "_ISBN"
-msgstr ""
+msgstr "_ISBN"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:205
 msgid "_Publisher"
