@@ -22,3 +22,4 @@ Future releases:
 [ ] Writing a z39.50 provider
 [ ] Cuecat barcode support (Zachary)
 [ ] Writing help documentation
+[ ] Win32 MinGW port (Laurent)
