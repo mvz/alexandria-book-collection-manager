@@ -1,4 +1,20 @@
-2004-09-25  Laurent Sansonetti  <lrz@gnome.org>
+2004-09-07  Laurent Sansonetti  <lrz@gnome.org>
+	
+	* data/alexandria/glade/main_app.glade:
+
+	Removed the toolbar, popups and menubar definitions.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Introduced GtkUIManager to handle the toolbar, popups and
+	menubar.
+
+	* data/alexandria/ui/menus.xml,
+	  data/alexandria/ui/popups.xml:
+
+	Added.
+
+2004-08-25  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui.rb:
 
@@ -43,7 +59,7 @@
 
 	Added BN in the providers_priority variable.
 
-2004-09-24  Laurent Sansonetti  <lrz@gnome.org>
+2004-08-24  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/main_app.glade:
 

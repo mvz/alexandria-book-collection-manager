@@ -15,6 +15,12 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+class Gtk::ActionGroup
+    def [](x)
+        get_action(x)
+    end
+end
+
 module Alexandria
 module UI
     class MainApp < GladeBase 
@@ -23,30 +29,13 @@ module UI
 
         def initialize
             super("main_app.glade")
-            @main_app.icon = Icons::ALEXANDRIA_SMALL
             @prefs = Preferences.instance
+            initialize_ui
             load_libraries
             build_books_listview
             build_sidepane
             on_books_selection_changed
             restore_preferences
-
-            @main_app.signal_connect('window-state-event') do |w, e|
-                if e.is_a?(Gdk::EventWindowState)
-                    @maximized = e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
-                end
-            end
-            
-            providers_menu = Gtk::Menu.new
-            BookProviders.each do |provider|
-                item = Gtk::MenuItem.new("_" + provider.fullname, true) 
-                item.signal_connect('activate') do
-                    open_web_browser(provider.url(selected_books.first))
-                end 
-                providers_menu.append(item)
-            end
-            providers_menu.show_all
-            @popup_online_info.submenu = providers_menu
         end
 
         def on_books_button_press_event(widget, event)
@@ -54,36 +43,14 @@ module UI
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
                event.button == 1 
 
-                on_book_properties
+                @actiongroup["Properties"].activate
 
             # right click
             elsif event.event_type == Gdk::Event::BUTTON_PRESS and
                   event.button == 3
 
-                books = selected_books
-                if books.empty?
-                    popup = @nobook_popup
-                    va_icons, va_list = popup.children[-2..-1]
-                    arr_icons = popup.children[-4]
-                else
-                    popup = @book_popup
-                    va_icons, va_list = popup.children[-4..-3]
-                    arr_icons = popup.children[-6]
-                end
-
-                case @notebook.page
-                    when 0
-                        va_icons.active = true
-                        arr_icons.sensitive = true
-                        arr_icons.submenu.children[@prefs.arrange_icons_mode].active = true
-                        arr_icons.submenu.children.last.active = @prefs.reverse_icons
-
-                    when 1
-                        va_list.active = true
-                        arr_icons.sensitive = false
-                end
-                
-                popup.popup(nil, nil, event.button, event.time) 
+                menu = (selected_books.empty?) ? @nobook_popup : @book_popup
+                menu.popup(nil, nil, event.button, event.time) 
             end
         end
 
@@ -98,133 +65,24 @@ module UI
                     n_("%d book selected", "%d books selected", books.length) \
                         % books.length
             end
-            @popup_properties.sensitive = @popup_online_info.sensitive = @menu_properties.sensitive = books.length == 1
-            @menu_delete.sensitive = !books.empty? 
+            @actiongroup["Properties"].sensitive = @actiongroup["OnlineInformation"].sensitive = books.length == 1
+            @actiongroup["SelectAll"].sensitive = books.length < selected_library.length
+            @actiongroup["Delete"].sensitive = @actiongroup["DeselectAll"].sensitive = !books.empty?
         end
 
-        def on_focus(widget, event_focus)
-            if widget == @treeview_sidepane
-                @menu_properties.sensitive = false
-                @menu_delete.sensitive = true
-            end
-        end
-
-        def on_import
-            # TODO
-        end
-
-        def on_export
-            ExportDialog.new(@main_app, selected_library)
+        def on_switch_page
+            @actiongroup["ArrangeIcons"].sensitive = @notebook.page == 0
+            on_books_selection_changed
         end
         
-        def on_book_properties
-            books = selected_books
-            if books.length == 1
-                InfoBookDialog.new(@main_app, selected_library, books.first) do
-                    on_refresh
-                end
-            end
-        end
-
-        def on_new_book
-            NewBookDialog.new(@main_app, @libraries, selected_library) do |books, library|
-                if selected_library == library
-                    on_refresh
-                else
-                    select_library(library)
-                end
-            end
-        end
-     
-        def on_new_library
-            i = 1
-            while true do
-                name = _("Untitled %d") % i
-                break unless @libraries.find { |x| x.name == name }
-                i += 1
-            end
-            library = Library.load(name)
-            @libraries << library
-            iter = append_library(library)
-            @paned.child1.visible = @menu_view_sidepane.active = true
-            @treeview_sidepane.set_cursor(iter.path, @treeview_sidepane.get_column(0), true)
-        end
-    
-        def on_quit
-            save_preferences
-            Gtk.main_quit
-        end
-   
-        def on_delete
-            library = selected_library
-            confirm = lambda do |message|
-                dialog = AlertDialog.new(@main_app, message,
-                                         Gtk::Stock::DIALOG_QUESTION,
-                                         [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                                          [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]])
-                dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
-                dialog.show_all
-                res = dialog.run == Gtk::Dialog::RESPONSE_OK
-                dialog.destroy
-                res
-            end
-            if @treeview_sidepane.focus?
-                message = case library.length
-                    when 0
-                        _("Are you sure you want to permanently delete '%s'?") % library.name
-                    when 1
-                        _("Are you sure you want to permanently delete '%s' which has one book?") % library.name
-                    else
-                        n_("Are you sure you want to permanently delete '%s' which has %d book?", "Are you sure you want to permanently delete '%s' which has %d books?", library.size) % [ library.name, library.size ]
-                end
-                if confirm.call(message)
-                    library.delete
-                    @libraries.delete_if { |lib| lib.name == library.name }
-                    iter = @treeview_sidepane.selection.selected
-                    next_iter = @treeview_sidepane.selection.selected
-                    next_iter.next!
-                    @treeview_sidepane.model.remove(iter)
-                    @treeview_sidepane.selection.select_iter(next_iter)
-                end
+        def on_focus(widget, event_focus)
+            if widget == @treeview_sidepane
+                %w{Properties OnlineInformation 
+                   SelectAll DeselectAll}.each { |action| @actiongroup[action].sensitive = false }
+                @actiongroup["Delete"].sensitive = true
             else
-                selected_books.each do |book|
-                    if confirm.call(_("Are you sure you want to permanently delete '%s' from '%s'?") % [ book.title, library.name ])
-                        library.delete(book)
-                        on_refresh
-                    end
-                end
+                on_books_selection_changed
             end
-        end
-
-        def on_select_all
-            case @notebook.page
-                when 0
-                    @iconlist.num_icons.times { |i| @iconlist.select_icon(i) }
-                when 1
-                    @listview.selection.select_all
-            end
-        end
-
-        def on_deselect_all
-            case @notebook.page
-                when 0
-                    @iconlist.unselect_all
-                when 1
-                    @listview.selection.unselect_all
-            end
-        end
-
-        def on_search
-            @filter_entry.grab_focus
-        end
- 
-        def on_clear_search_results
-            @filter_entry.text = ""
-            on_refresh
-        end
-
-        def on_preferences
-            PreferencesDialog.new(@main_app) { on_refresh } 
         end
 
         def on_refresh  
@@ -291,106 +149,7 @@ module UI
         end
 
         def on_close_sidepane
-            @paned.child1.visible = false
-            @menu_view_sidepane.active = false
-        end
-
-        def on_view_sidepane(item)
-            @paned.child1.visible = item.active?
-        end    
-
-        def on_view_toolbar(item)
-            @bonobodock_toolbar.visible = item.active?        
-        end
-    
-        def on_view_statusbar(item)
-            @appbar.visible = item.active?
-        end
- 
-        def on_view_as_icons(widget)
-            @notebook.page = 0
-            @menu_arrange_icons.sensitive = true
-            if widget.name.include?('popup_view_as_icons') or widget == @menu_view_as_icons
-                @toolbar_view_as.menu.active = @toolbar_view_as.history = 0
-            end
-            if widget.name.include?('popup_view_as_icons') or widget == @toolbar_view_as_icons
-                @menu_view_as_icons.active = true
-            end
-        end
-
-        def on_view_as_list(widget)
-            @notebook.page = 1
-            @menu_arrange_icons.sensitive = false 
-            if widget.name.include?('popup_view_as_list') or widget == @menu_view_as_list
-                @toolbar_view_as.menu.active = @toolbar_view_as.history = 1
-            end
-            if widget.name.include?('popup_view_as_list') or widget == @toolbar_view_as_list
-                @menu_view_as_list.active = true
-            end
-        end
-
-        def on_filter_by_title
-            update_filter_books_mode(0)
-        end
-
-        def on_filter_by_authors
-            update_filter_books_mode(1)
-        end
-
-        def on_filter_by_isbn
-            update_filter_books_mode(2)
-        end
-        
-        def on_filter_by_publisher
-            update_filter_books_mode(3)
-        end
-        
-        def on_filter_by_notes
-            update_filter_books_mode(4)
-        end
-        
-        def on_menu_arrange_icons_selected
-            items = [ @menu_icons_by_title, @menu_icons_by_authors, @menu_icons_by_isbn,
-                      @menu_icons_by_publisher, @menu_icons_by_edition, @menu_icons_by_rating ]
-            items[Preferences.instance.arrange_icons_mode].active = true
-            @menu_icons_reversed_order.active = Preferences.instance.reverse_icons
-        end
-
-        def on_arrange_icons_by_title
-            update_arrange_icons_mode(0)
-        end
-
-        def on_arrange_icons_by_authors
-            update_arrange_icons_mode(1)
-        end
-
-        def on_arrange_icons_by_isbn
-            update_arrange_icons_mode(2)
-        end
-
-        def on_arrange_icons_by_publisher
-            update_arrange_icons_mode(3)
-        end
-
-        def on_arrange_icons_by_edition
-            update_arrange_icons_mode(4)
-        end
-
-        def on_arrange_icons_by_rating
-            update_arrange_icons_mode(5)
-        end
-
-        def on_arrange_icons_reversed(item)
-            Preferences.instance.reverse_icons = item.active? 
-            on_refresh
-        end
-
-        def on_submit_bug_report
-            open_web_browser(BUGREPORT_URL)
-        end
-
-        def on_about
-            AboutDialog.new(@main_app).show
+            @actiongroup["Sidepane"].active = false
         end
 
         #######
@@ -559,20 +318,6 @@ module UI
             @treeview_sidepane.selection.select_iter(@treeview_sidepane.model.iter_first) 
         end
 
-        def update_arrange_icons_mode(mode)
-            if @prefs.arrange_icons_mode != mode
-                @prefs.arrange_icons_mode = mode
-                on_refresh
-            end
-        end 
-
-        def update_filter_books_mode(mode)
-            if @filter_books_mode != mode
-                @filter_books_mode = mode
-                on_refresh unless @filter_entry.text.strip.empty?
-            end
-        end
-       
         def restore_preferences
             if @prefs.maximized
                 @main_app.maximize
@@ -582,17 +327,17 @@ module UI
                 @maximized = false
             end
             @paned.position = @prefs.sidepane_position
-            @paned.child1.visible = @menu_view_sidepane.active = @prefs.sidepane_visible
-            @bonobodock_toolbar.visible = @menu_view_toolbar.active = @prefs.toolbar_visible
-            @appbar.visible = @menu_view_statusbar.active = @prefs.statusbar_visible 
-            case @prefs.view_as
+            @actiongroup["Sidepane"].active = @prefs.sidepane_visible
+            @actiongroup["Toolbar"].active = @prefs.toolbar_visible
+            @actiongroup["Statusbar"].active = @prefs.statusbar_visible 
+            @appbar.visible = @prefs.statusbar_visible 
+            action = case @prefs.view_as
                 when 0
-                    @notebook.page = 0 
-                    @menu_view_as_icons.active = true
+                    @actiongroup["AsIcons"]
                 when 1
-                    @notebook.page = 1 
-                    @menu_view_as_list.active = true
+                    @actiongroup["AsList"]
             end
+            action.activate
             unless @prefs.selected_library.nil?
                 library = @libraries.find { |x| x.name == @prefs.selected_library }
                 select_library(library) unless library.nil?
@@ -604,12 +349,291 @@ module UI
             @prefs.size = @main_app.allocation.to_a[2..3]
             @prefs.maximized = @maximized
             @prefs.sidepane_position = @paned.position
-            @prefs.sidepane_visible = @paned.child1.visible?
-            @prefs.toolbar_visible = @bonobodock_toolbar.visible?
-            @prefs.statusbar_visible = @appbar.visible?
+            @prefs.sidepane_visible = @actiongroup["Sidepane"].active?
+            @prefs.toolbar_visible = @actiongroup["Toolbar"].active? 
+            @prefs.statusbar_visible = @actiongroup["Statusbar"].active?
             @prefs.view_as = @notebook.page
             @prefs.selected_library = selected_library.name
         end 
+        
+        def initialize_ui
+            @main_app.icon = Icons::ALEXANDRIA_SMALL
+
+            on_new = proc do
+                i = 1
+                while true do
+                    name = _("Untitled %d") % i
+                    break unless @libraries.find { |x| x.name == name }
+                    i += 1
+                end
+                library = Library.load(name)
+                @libraries << library
+                iter = append_library(library)
+                @paned.child1.visible = @menu_view_sidepane.active = true
+                @treeview_sidepane.set_cursor(iter.path, @treeview_sidepane.get_column(0), true)
+            end
+    
+            on_add_book = proc do
+                NewBookDialog.new(@main_app, @libraries, selected_library) do |books, library|
+                    if selected_library == library
+                        on_refresh
+                    else
+                        select_library(library)
+                    end
+                end
+            end
+     
+            on_import = proc {}
+            on_export = proc { ExportDialog.new(@main_app, selected_library) }
+        
+            on_properties = proc do
+                books = selected_books
+                if books.length == 1
+                    InfoBookDialog.new(@main_app, selected_library, books.first) do
+                        on_refresh
+                    end
+                end
+            end
+
+            on_quit = proc do
+                save_preferences
+                Gtk.main_quit
+            end
+   
+            on_select_all = proc do
+                case @notebook.page
+                    when 0
+                        @iconlist.num_icons.times { |i| @iconlist.select_icon(i) }
+                    when 1
+                        @listview.selection.select_all
+                end
+            end
+            
+            on_deselect_all = proc do
+                case @notebook.page
+                    when 0
+                        @iconlist.unselect_all
+                    when 1
+                        @listview.selection.unselect_all
+                end
+            end
+            
+            on_delete = proc do
+                library = selected_library
+                confirm = lambda do |message|
+                    dialog = AlertDialog.new(@main_app, message,
+                                             Gtk::Stock::DIALOG_QUESTION,
+                                             [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+                                              [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]])
+                    dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
+                    dialog.show_all
+                    res = dialog.run == Gtk::Dialog::RESPONSE_OK
+                    dialog.destroy
+                    res
+                end
+                if @treeview_sidepane.focus?
+                    message = case library.length
+                        when 0
+                            _("Are you sure you want to permanently delete '%s'?") % library.name
+                        when 1
+                            _("Are you sure you want to permanently delete '%s' which has one book?") % library.name
+                        else
+                            n_("Are you sure you want to permanently delete '%s' which has %d book?", "Are you sure you want to permanently delete '%s' which has %d books?", library.size) % [ library.name, library.size ]
+                    end
+                    if confirm.call(message)
+                        library.delete
+                        @libraries.delete_if { |lib| lib.name == library.name }
+                        iter = @treeview_sidepane.selection.selected
+                        next_iter = @treeview_sidepane.selection.selected
+                        next_iter.next!
+                        @treeview_sidepane.model.remove(iter)
+                        @treeview_sidepane.selection.select_iter(next_iter)
+                    end
+                else
+                    selected_books.each do |book|
+                        if confirm.call(_("Are you sure you want to permanently delete '%s' from '%s'?") % [ book.title, library.name ])
+                            library.delete(book)
+                            on_refresh
+                        end
+                    end
+                end
+            end
+     
+            on_clear_search_results = proc do
+                @filter_entry.text = ""
+                on_refresh
+            end
+    
+            on_search = proc { @filter_entry.grab_focus }
+            on_preferences = proc { PreferencesDialog.new(@main_app) { on_refresh } }
+            on_submit_bug_report = proc { open_web_browser(BUGREPORT_URL) }
+            on_about = proc { AboutDialog.new(@main_app).show }
+
+            standard_actions = [
+                ["LibraryMenu", nil, _("_Library")],
+                ["New", Gtk::Stock::NEW, _("_New"), "<control>L", nil, on_new],
+                ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", nil, on_add_book],
+                ["Import", nil, _("Import..."), nil, nil, on_import],
+                ["Export", nil, _("Export..."), nil, nil, on_export],
+                ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, nil, on_properties],
+                ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", nil, on_quit],
+                ["EditMenu", nil, _("_Edit")],
+                ["SelectAll", nil, _("_Select All"), "<control>A", nil, on_select_all],
+                ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", nil, on_deselect_all],
+                ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", nil, on_delete],
+                ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", nil, on_search],
+                ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", nil, 
+                 on_clear_search_results],
+                ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), nil, nil, on_preferences],
+                ["ViewMenu", nil, _("_View")],
+                ["Refresh", Gtk::Stock::REFRESH, _("_Refresh"), "<control>F", nil, proc { on_refresh }],
+                ["ArrangeIcons", nil, _("Arran_ge Icons")],
+                ["OnlineInformation", nil, _("Online _Information")],
+                ["HelpMenu", nil, _("_Help")],
+                ["SubmitBugReport", Gnome::Stock::MAIL_NEW, _("Submit _Bug Report"), nil, nil,
+                 on_submit_bug_report],
+                ["About", Gnome::Stock::ABOUT, _("_About"), nil, nil, on_about]
+            ]
+
+            on_view_sidepane = proc { |ag, a| @paned.child1.visible = a.active? }
+            on_view_toolbar = proc { |ag, a| @toolbar.parent.visible = a.active? }
+            on_view_statusbar = proc { |ag, a| @appbar.visible = a.active? }
+            
+            on_reverse_order = proc do |actiongroup, action|
+                Preferences.instance.reverse_icons = action.active? 
+                on_refresh
+            end
+
+            toggle_actions = [
+                ["Sidepane", nil, _("Side _Pane"), nil, nil, on_view_sidepane, true],
+                ["Toolbar", nil, _("_Toolbar"), nil, nil, on_view_toolbar, true],
+                ["Statusbar", nil, _("_Statusbar"), nil, nil, on_view_statusbar, true],
+                ["ReversedOrder", nil, _("Re_versed Order"), nil, nil, on_reverse_order],
+            ]
+            
+            view_as_actions = [
+                ["AsIcons", nil, _("View as _Icons"), nil, nil, 0],
+                ["AsList", nil, _("View as _List"), nil, nil, 1]
+            ]
+
+            arrange_icons_actions = [
+                ["ByTitle", nil, _("By _Title"), nil, nil, 0],
+                ["ByAuthors", nil, _("By _Authors"), nil, nil, 1],
+                ["ByISBN", nil, _("By _ISBN"), nil, nil, 2],
+                ["ByPublisher", nil, _("By _Publisher"), nil, nil, 3],
+                ["ByEdition", nil, _("By _Edition"), nil, nil, 4],
+                ["ByRating", nil, _("By _Rating"), nil, nil, 5]
+            ]
+
+            providers_actions = BookProviders.map do |provider|
+                ["At" + provider.name, Gtk::Stock::JUMP_TO, 
+                 _("At %s") % provider.fullname, nil, nil, 
+                 proc { open_web_browser(provider.url(selected_books.first)) }]
+            end
+                          
+            @actiongroup = Gtk::ActionGroup.new("actions")
+            @actiongroup.add_actions(standard_actions)
+            @actiongroup.add_actions(providers_actions)
+            @actiongroup.add_toggle_actions(toggle_actions)
+            @actiongroup.add_radio_actions(view_as_actions) do |action, current|
+                @notebook.page = current.current_value
+                @toolbar_view_as.signal_handler_block(@toolbar_view_as_signal_hid) do
+                    @toolbar_view_as.active = current.current_value 
+                end
+            end
+            @actiongroup.add_radio_actions(arrange_icons_actions) do |action, current|
+                @prefs.arrange_icons_mode = current.current_value 
+                on_refresh
+            end
+            
+            uimanager = Gtk::UIManager.new
+            uimanager.insert_action_group(@actiongroup, 0)
+            @main_app.add_accel_group(uimanager.accel_group)
+            
+            [ "menus.xml", "popups.xml" ].each do |ui_file|
+                uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR, "ui", ui_file))
+            end
+
+            mid = uimanager.new_merge_id 
+            BookProviders.each do |provider|
+                name = "At" + provider.name    
+                [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
+                  "ui/BookPopup/OnlineInformation/",
+                  "ui/NoBookPopup/OnlineInformation/" ].each do |path|
+                    uimanager.add_ui(mid, path, name, name, Gtk::UIManager::MENUITEM, false)
+                end
+            end
+
+            mid = uimanager.new_merge_id 
+            uimanager.add_ui(mid, "ui/", "MainToolbar", "MainToolbar", 
+                             Gtk::UIManager::TOOLBAR, false)        
+            uimanager.add_ui(mid, "ui/MainToolbar/", "New", "New", 
+                             Gtk::UIManager::TOOLITEM, false)        
+            uimanager.add_ui(mid, "ui/MainToolbar/", "AddBook", "AddBook", 
+                             Gtk::UIManager::TOOLITEM, false)        
+            uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
+                             Gtk::UIManager::SEPARATOR, false)
+            uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh", 
+                             Gtk::UIManager::TOOLITEM, false)        
+            
+            @toolbar = uimanager.get_widget("/MainToolbar")
+            @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+            
+            cb = Gtk::ComboBox.new
+            [ _("Title contains"), _("Authors contain"), 
+              _("ISBN contains"), _("Publisher contains"), 
+              _("Notes contain") ].each do |item|
+                cb.append_text(item)
+            end
+            cb.active = 0
+            cb.signal_connect('changed') do |cb|
+                @filter_books_mode = cb.active 
+                on_refresh unless @filter_entry.text.strip.empty?
+            end
+            toolitem = Gtk::ToolItem.new
+            toolitem << cb
+            @toolbar.insert(-1, toolitem)
+            
+            @filter_entry = Gtk::Entry.new
+            @filter_entry.signal_connect('activate') { on_refresh }
+            toolitem = Gtk::ToolItem.new
+            toolitem.expand = true
+            toolitem << @filter_entry
+            @toolbar.insert(-1, toolitem)
+            
+            @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+           
+            @toolbar_view_as = Gtk::ComboBox.new
+            @toolbar_view_as.append_text(_("View as Icons"))
+            @toolbar_view_as.append_text(_("View as List"))
+            @toolbar_view_as.active = 0
+            @toolbar_view_as_signal_hid = @toolbar_view_as.signal_connect('changed') do |cb| 
+                action = case cb.active
+                    when 0
+                        @actiongroup['AsIcons']
+                    when 1
+                        @actiongroup['AsList']
+                end
+                action.active = true
+            end
+            toolitem = Gtk::ToolItem.new
+            toolitem << @toolbar_view_as
+            @toolbar.insert(-1, toolitem)
+            
+            @toolbar.show_all
+            
+            @main_app.toolbar = @toolbar
+            @main_app.menus = uimanager.get_widget("/MainMenubar")
+            @book_popup = uimanager.get_widget("/BookPopup") 
+            @nobook_popup = uimanager.get_widget("/NoBookPopup") 
+            
+            @main_app.signal_connect('window-state-event') do |w, e|
+                if e.is_a?(Gdk::EventWindowState)
+                    @maximized = e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
+                end
+            end
+            @main_app.signal_connect('destroy') { @actiongroup["Quit"].activate }
+        end
     end
 end
 end
