@@ -10,6 +10,8 @@ New features:
    as loaned and specify a person name and a date ;
  * Possibility to manually add ISBN-less books ;
  * The ISBN-list import supports EAN ;
+ * The Amazon provider supports the French and Canadian web-services (via 
+   Ruby/Amazon 0.9.0) ;
  * Improved the usability of the main, import and export dialogs ;
  * Performances and memory usage have been improved ;
  * Migration to new GTK+ 2.6 widgets.
