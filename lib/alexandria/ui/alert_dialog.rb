@@ -29,7 +29,8 @@ module UI
             vbox.pack_start(label)
 
             if message
-                label = Gtk::Label.new(message.strip)
+                label = Gtk::Label.new
+                label.markup = message.strip
                 label.set_alignment(0, 0)
                 label.wrap = true
                 vbox.pack_start(label)

@@ -1,3 +1,14 @@
+2004-04-15  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/ui/alert_dialog.rb:
+
+	Make the ErrorDialog use markup for the error.
+
+	* lib/alexandria/ui/main_app.rb
+
+	Allow more characters in library names, and improve the error message
+	for invalid names by including the invalid character found.
+
 === Alexandria 0.1.2 ===
 
 2004-04-15  Laurent Sansonetti  <lrz@gnome.org>

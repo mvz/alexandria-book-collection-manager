@@ -320,10 +320,10 @@ module UI
             end
             renderer.signal_connect('edited') do |cell, path_string, new_text|
                 if cell.text != new_text
-                    if new_text !~ /^[\w\s\-]+$/
+                    if match = /([^\w\s'"()?!:;.\-])/.match(new_text)
                         ErrorDialog.new(@main_app,
                                         "Invalid library name '#{new_text}'",
-                                        "The provided name contains at least one illegal character.")
+                                        "The name provided contains the illegal character '<i>#{match[1]}</i>'.")
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
                         selected_library.name = new_text
