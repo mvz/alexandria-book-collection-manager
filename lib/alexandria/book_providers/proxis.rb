@@ -76,21 +76,23 @@ class BookProviders
             product['authors'] = []
             nextline = nil
             transport.get(URI.parse(detailspage)).each do |line|
-                if line =~ /SPAN CLASS=AUTHOR>([^<]*)</ 
+                if line =~ /SPAN CLASS="?AUTHOR"?>([^<]*)</i
                     author = $1.gsub('&nbsp;',' ').sub(/ +$/,'')
                     product['authors'] << author
-                elsif line =~ /SRC="(http:\/\/www.proxis.be\/IMG.\/.*)M\.jpg"/ 
+                elsif line =~ /SRC="(http:\/\/www.proxis.be\/IMG.\/.*)M\.jpg"/i 
                     product['image_url_small'] = $1+'S.jpg'
                     product['image_url_medium'] = $1+'M.jpg'
                     product['image_url_large'] = $1+'L.jpg'
-                elsif line =~ /class=TITLECOLOR>([^<]*)</ 
+                elsif line =~ /class="?TITLECOLOR"?>([^<]*)</i 
                     product['name'] = $1.sub(/ +$/,'')
-                elsif line =~ /ISBN<\/TD><TD class=INFO> : ([^<]*)</ 
+                elsif line =~ /ISBN<\/TD><TD class="?INFO"?> : ([^<]*)</i 
                     product['isbn'] = $1
-                elsif line =~ /Type<\/TD><TD CLASS=INFO>: ([^<]*)</ 
-                    product['media'] = $1
-                elsif line =~ /Publisher<\/TD><TD CLASS=INFO>: ([^<]*)</ 
-                    product['manufacturer'] = $1
+                elsif line =~ /Type<\/TD>/i
+                    nextline = "media"
+                elsif line =~ /(Publisher|Editeur|Uitgever)<\/TD><TD CLASS="?INFO"?>: ([^<]*)</i 
+                    product['manufacturer'] = $2
+                elsif line =~ /TD CLASS="?INFO"?>: ([^<]*)</i and nextline
+                    product[nextline] = $1
                 end
             end
 
