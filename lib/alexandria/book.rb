@@ -31,8 +31,8 @@ module Alexandria
         MEDIUM_COVER_EXT = '_medium.jpg'
 
         include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
-        def self._(s); GetText.gettext(s); end
+        extend GetText
+        bindtextdomain(Alexandria::TEXTDOMAIN)
  
         def path
             File.join(DIR, @name)

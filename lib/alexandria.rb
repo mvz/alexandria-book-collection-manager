@@ -19,9 +19,8 @@ module Alexandria
     TITLE = 'Alexandria'
     TEXTDOMAIN = 'alexandria'
     VERSION = '0.1.2'
-    include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
-    def self._(s); GetText.gettext(s); end
+    extend GetText
+    bindtextdomain(Alexandria::TEXTDOMAIN)
     DESCRIPTION = _('A program to help you manage your book collection.')
     COPYRIGHT = 'Copyright (C) 2004 Laurent Sansonetti'
     AUTHORS = [
@@ -30,7 +29,11 @@ module Alexandria
         'Zachary P. Landau <kapheine@hypa.net>'
     ]
     DOCUMENTERS = [ 'Laurent Sansonetti <lrz@gnome.org>' ]  
-    TRANSLATORS = [ 'Laurent Sansonetti <lrz@gnome.org>' ]
+    TRANSLATORS = [ 
+        'Dafydd Harries <daf@muse.19inch.net>',
+        'Laurent Sansonetti <lrz@gnome.org>',
+        'Masao Mutoh <mutoh@highway.ne.jp>'
+    ]
     LIST = 'alexandria-list@rubyforge.org'
     BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
 
