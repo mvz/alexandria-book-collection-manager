@@ -42,6 +42,13 @@ module UI
             col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, :text => 0)
             @treeview_results.append_column(col)
             @entry_isbn.grab_focus
+
+            if File.exist?(CUECAT_DEV)
+              @cuecat_image.pixbuf = Icons::CUECAT
+              create_scanner_input
+            else
+              @cuecat_image.pixbuf = Icons::CUECAT_INACTIVE
+            end
         end
    
         def on_criterion_toggled(item)
@@ -186,6 +193,18 @@ module UI
                 raise _("'%s' already exists in '%s' (titled '%s').") % [ isbn, library.name, book.title ] 
             end
             true
+        end
+
+        def create_scanner_input()
+          cuecat = File.open(CUECAT_DEV, File::RDONLY | File::NONBLOCK)
+          Gdk::Input.add(cuecat.to_i, Gdk::Input::Condition::READ) do
+            id, barcode_type, barcode = cuecat.gets.split(/,/)
+            begin
+              @entry_isbn.text = Library.canonicalise_isbn(barcode)
+            rescue RuntimeError => e
+              puts e
+            end
+          end
         end
 
     end
