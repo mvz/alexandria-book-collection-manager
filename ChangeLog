@@ -1,5 +1,10 @@
 2004-04-03  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/info_book_dialog.glade,
+	  data/alexandria/glade/new_book_dialog.glade:
+
+	Fixed Gtk::Button response IDs.
+
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
 
