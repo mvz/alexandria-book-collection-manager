@@ -61,7 +61,7 @@
 			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image347">
+				<widget class="GtkImage" id="image355">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -84,7 +84,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image348">
+				<widget class="GtkImage" id="image356">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-add</property>
 				  <property name="icon_size">1</property>
@@ -112,7 +112,7 @@
 			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image349">
+				<widget class="GtkImage" id="image357">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -186,7 +186,7 @@
 			      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image350">
+				<widget class="GtkImage" id="image358">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -234,7 +234,7 @@
 			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image351">
+				<widget class="GtkImage" id="image359">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-refresh</property>
 				  <property name="icon_size">1</property>
@@ -254,7 +254,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkCheckMenuItem" id="menu_view_side_pane">
+			    <widget class="GtkCheckMenuItem" id="menu_view_sidepane">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Side pane</property>
 			      <property name="use_underline">True</property>
@@ -307,7 +307,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">View as _List</property>
 			      <property name="use_underline">True</property>
-			      <property name="active">False</property>
+			      <property name="active">True</property>
 			      <property name="group">menu_view_as_icons</property>
 			      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 27 Mar 2004 14:45:18 GMT"/>
 			    </widget>

@@ -1,3 +1,22 @@
+2004-04-06  Laurent Sansonetti  <lrz@gnome.org>
+	
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	- Displays an error dialog when the user picks a new name for a 
+	  library which contains at least one illegal character ;
+
+	- Automatically show the sidepane upon "New Library", because it
+	  may be hidden ;
+
+	- Fixed a bug in the random name chooser (for "New Library") ; 
+
+	- Displays an error dialog when the user tries to add a book
+	  which already exists in the selected library ;
+
+	- Displays smaller names on the icon view (max 15 characters).
+
 2004-04-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb:

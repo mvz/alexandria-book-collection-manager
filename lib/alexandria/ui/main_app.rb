@@ -57,16 +57,25 @@ module UI
             NewBookDialog.new(@main_app, @libraries) do |book, library|
                 library << book
                 library.save
-                append_book(book)
+                if selected_library == library
+                    append_book(book)
+                else
+                    select_library(library)
+                end
             end
         end
      
         def on_new_library
-            name = "Untitled 1"
-            name.succ! while @libraries.find { |x| x.name == name }
+            i = 1
+            while true do
+                name = "Untitled %d" % i
+                break unless @libraries.find { |x| x.name == name }
+                i += 1
+            end
             library = Library.load(name)
             @libraries << library
             iter = append_library(library)
+            @paned.child1.visible = @menu_view_sidepane.active = true
             @treeview_sidepane.set_cursor(iter.path, @treeview_sidepane.get_column(0), true)
         end
     
@@ -163,7 +172,8 @@ module UI
         #######
 
         def append_book(book)
-            @iconlist.append(book.small_cover, book.title)
+            icon_title = book.title.length > 17 ? book.title[0..17] + '...' : book.title
+            @iconlist.append(book.small_cover, icon_title)
             iter = @listview.model.append 
             iter[0] = Gdk::Pixbuf.new(book.small_cover).scale(25, 25)
             iter[1] = book.title
@@ -219,7 +229,19 @@ module UI
             iter = @treeview_sidepane.selection.selected
             @libraries.find { |x| x.name == iter[1] }
         end
-    
+   
+        def select_library(library)
+            iter = @treeview_sidepane.model.iter_first
+            ok = true
+            while ok do
+                if iter[1] == library.name
+                    @treeview_sidepane.selection.select_iter(iter)
+                    break 
+                end
+                ok = iter.next!
+            end
+        end
+ 
         def selected_books
             a = []
             case @notebook.page
@@ -255,9 +277,15 @@ module UI
             end
             renderer.signal_connect('edited') do |cell, path_string, new_text|
                 if cell.text != new_text
-                    iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
-                    selected_library.name = new_text
-                    iter[1] = new_text
+                    if new_text !~ /^[\w\s\-]+$/
+                        ErrorDialog.new(@main_app,
+                                        "Invalid library name '#{new_text}'",
+                                        "The provided name contains at least one illegal character.")
+                    else
+                        iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
+                        selected_library.name = new_text
+                        iter[1] = new_text
+                    end
                 end
             end
             @treeview_sidepane.append_column(column)
