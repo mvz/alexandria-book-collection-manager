@@ -130,7 +130,7 @@ module Alexandria
                 # calculate a checksum. It would be nice if we could validate
                 # the EAN number somehow.
                 numbers[3 .. 11] + [self.isbn_checksum(numbers[3 .. 11])]
-            elsif self.valid_isbn?(numbers)
+            elsif self.valid_isbn?(isbn)
                 # Seems to be a valid ISBN number.
                 numbers
             else
