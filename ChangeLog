@@ -1,3 +1,15 @@
+2005-04-03  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb:
+
+	The class is now obversable, and sends notifications when books are
+	added, updated or removed from the library.
+
+	* lib/alexandria/ui/completion_models.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Observes the libraries and update the models accordingly.
+
 2005-04-01  Laurent Sansonetti  <lrz@gnome.org>
 
 	Introduced completion in the manual add book and book properties dialogs.
@@ -11,7 +23,9 @@
 	  lib/alexandria/ui/book_properties_dialog_base.rb,
 	  lib/alexandria/ui/main_app.rb:
 
-	Follow latest change.
+	- Follow latest change ;
+	- Tweaked the model loading code to make it faster ;
+	- Auto-resize the books list view columns.
 
 === Alexandria 0.5.1 ===
 

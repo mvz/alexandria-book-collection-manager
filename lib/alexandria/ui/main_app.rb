@@ -169,6 +169,24 @@ module UI
             @actiongroup["Sidepane"].active = false
         end
 
+        def update(library, kind, book)
+            if library == selected_library
+                @iconview.freeze
+                case kind 
+                    when Library::BOOK_ADDED
+                        append_book(book)
+     
+                    when Library::BOOK_UPDATED
+                        iter = iter_from_ident(book.saved_ident)
+                        fill_iter_with_book(iter, book)
+    
+                    when Library::BOOK_REMOVED
+                        @model.remove(iter_from_book(book))
+                end
+                @iconview.unfreeze
+            end
+        end
+
         #######
         private
         #######
@@ -200,8 +218,18 @@ module UI
         end
 
         def load_libraries
+            completion_models = CompletionModels.instance
+            if @libraries
+                @libraries.each do |library| 
+                    library.delete_observer(self)
+                    completion_models.remove_source(library)
+                end
+            end
             @libraries = Library.loadall
-            CompletionModels.instance.libraries = @libraries
+            @libraries.each do |library| 
+                library.add_observer(self)
+                completion_models.add_source(library)
+            end
         end
 
         def cache_scaled_icon(icon, width, height)
@@ -613,12 +641,6 @@ module UI
                                                        library,
                                                        book).replace?
                     end
-                    @iconview.freeze
-                    books.each do |book|
-                        iter = iter_from_book(book)
-                        @model.remove(iter)
-                    end
-                    @iconview.unfreeze
                     Library.move(selected_library,
                                  library, *books)
                 end
@@ -660,11 +682,7 @@ module UI
                 NewBookDialog.new(@main_app, 
                                   @libraries, 
                                   selected_library) do |books, library|
-                    if selected_library == library
-                        @iconview.freeze
-                        books.each { |book| append_book(book) }
-                        @iconview.unfreeze
-                    else
+                    if selected_library != library
                         select_library(library)
                     end
                 end
@@ -672,11 +690,7 @@ module UI
      
             on_add_book_manual = proc do
                 library = selected_library
-                NewBookDialogManual.new(@main_app, library) do |book|
-                    @iconview.freeze
-                    append_book(book)
-                    @iconview.unfreeze
-                end
+                NewBookDialogManual.new(@main_app, library) { |book| }
             end
             
             on_import = proc do 
@@ -694,14 +708,9 @@ module UI
                 books = selected_books
                 if books.length == 1
                     book = books.first
-                    iter = iter_from_book(book)
                     BookPropertiesDialog.new(@main_app,
                                              selected_library, 
-                                             book) do |modified_book|
-                        @iconview.freeze
-                        fill_iter_with_book(iter, modified_book)
-                        @iconview.unfreeze
-                    end
+                                             book) { |modified_book| }
                 end
             end
 
@@ -782,12 +791,7 @@ module UI
                           "selected books from '%s'?") % library.name
                     end
                     if confirm.call(message)
-                        books.each do |book| 
-                            library.delete(book)
-                            @iconview.freeze
-                            @model.remove(iter_from_book(book))
-                            @iconview.unfreeze
-                        end
+                        books.each { |book| library.delete(book) }
                     end
                 end
             end

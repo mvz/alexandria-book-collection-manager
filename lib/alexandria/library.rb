@@ -22,6 +22,7 @@ require 'tempfile'
 require 'etc'
 require 'gdk_pixbuf2'
 require 'open-uri'
+require 'observer'
 
 class Array
     def sum
@@ -38,7 +39,10 @@ module Alexandria
         include GetText
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
- 
+
+        BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
+        include Observable
+    
         def path
             File.join(DIR, @name)
         end
@@ -86,7 +90,7 @@ module Alexandria
             if a.empty?
                 a << self.load(_("My Library"))
             end
-            a
+            return a
         end
 
         def self.move(source_library, dest_library, *books)
@@ -96,9 +100,17 @@ module Alexandria
                 if File.exists?(source_library.cover(book))
                     FileUtils.mv(source_library.cover(book), dest)
                 end
+
+                source_library.changed
                 source_library.old_delete(book)
+                source_library.notify_observers(source_library, 
+                                                BOOK_REMOVED, 
+                                                book)
+
+                dest_library.changed
                 dest_library.delete_if { |book2| book2.ident == book.ident }
                 dest_library << book
+                dest_library.notify_observers(dest_library, BOOK_ADDED, book)
             end
         end
 
@@ -172,15 +184,32 @@ module Alexandria
         end
 
         def save(book)
+            changed
+            
+            # Let's initialize the saved identifier if not already
+            # (backward compatibility from 0.4.0).
             book.saved_ident ||= book.ident
+
             if book.ident != book.saved_ident
                 FileUtils.rm(yaml(book.saved_ident))
                 if File.exists?(cover(book.saved_ident))
-                    FileUtils.mv(cover(book.saved_ident), cover(book.ident)) 
+                    FileUtils.mv(cover(book.saved_ident), cover(book.ident))
                 end
+    
+                # Notify before updating the saved identifier, so the views
+                # can still use the old one to update their models.
+                notify_observers(self, BOOK_UPDATED, book)
                 book.saved_ident = book.ident
             end
-            File.open(yaml(book), "w") { |io| io.puts book.to_yaml } 
+            yaml_exists = File.exists?(yaml(book))
+            File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
+            
+            # Do not notify twice.
+            if changed? 
+                notify_observers(self, 
+                                 yaml_exists ? BOOK_UPDATED : BOOK_ADDED, 
+                                 book)
+            end
         end
 
         def save_cover(book, cover_uri)
@@ -212,8 +241,10 @@ module Alexandria
                 # delete the whole library
                 FileUtils.rm_rf(self.path)
             else
+                changed
                 FileUtils.rm_f([yaml(book), cover(book)])
                 old_delete(book)
+                notify_observers(self, BOOK_REMOVED, book)
             end
         end
 

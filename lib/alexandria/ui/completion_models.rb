@@ -53,48 +53,64 @@ module UI
         TITLE, AUTHOR, PUBLISHER, EDITION = (0..4).to_a
 
         def initialize
-            @models = []
+            @models, @libraries = [], []
             4.times { @models << Gtk::ListStore.new(String) }
             touch
         end
 
-        def libraries=(libraries)
-            @libraries = libraries
+        def add_source(library)
+            @libraries << library
+            library.add_observer(self)
             touch
         end
 
-        def touch
-            @dirty = true
+        def remove_source(library)
+            @libraries.delete_if { |x| x.name == library.name}
+            library.delete_observer(self)
+            touch
+        end
+
+        def update(library, kind, book)
+            # FIXME: Do not rebuild all the models there.
+            touch
         end
 
         def models
-            rebuild_models if @dirty
+            rebuild_models if dirty?
             @models
         end
  
         def title_model
-            rebuild_models if @dirty
+            rebuild_models if dirty?
             @models[TITLE]
         end
 
         def author_model
-            rebuild_models if @dirty
+            rebuild_models if dirty?
             @models[AUTHOR]
         end
 
         def publisher_model
-            rebuild_models if @dirty
+            rebuild_models if dirty?
             @models[PUBLISHER]
         end
         
         def edition_model
-            rebuild_models if @dirty
+            rebuild_models if dirty?
             @models[EDITION]
         end
 
         #######
         private
         #######
+            
+        def touch
+            @dirty = true
+        end
+
+        def dirty?
+            @dirty
+        end
 
         def rebuild_models
             titles, authors, publishers, editions = [], [], [], []
