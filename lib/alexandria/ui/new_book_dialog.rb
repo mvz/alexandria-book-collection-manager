@@ -77,15 +77,11 @@ module UI
                         BookProviders::SEARCH_BY_KEYWORD
                 end
                 @results = Alexandria::BookProviders.search(@entry_search.text.strip, mode)
-                if @results.empty?
-                    raise _("No results were found.  Make sure all words are spelled correctly, and try again.")
-                else
-                    @treeview_results.model.clear
-                    @results.each do |book, small_cover, medium_cover|
-                        iter = @treeview_results.model.append
-                        iter[0] = _("%s, by %s") % [ book.title, book.authors.join(', ') ]
-                        iter[1] = book.isbn
-                    end
+                @treeview_results.model.clear
+                @results.each do |book, small_cover, medium_cover|
+                    iter = @treeview_results.model.append
+                    iter[0] = _("%s, by %s") % [ book.title, book.authors.join(', ') ]
+                    iter[1] = book.isbn
                 end
             rescue => e
                 ErrorDialog.new(@parent, 

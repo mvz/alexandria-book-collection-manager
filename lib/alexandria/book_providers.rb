@@ -25,23 +25,34 @@ module Alexandria
 
 		SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS, SEARCH_BY_KEYWORD = (0..3).to_a 
 
+        class SearchError < StandardError; end
+        class NoResultsError < SearchError; end
+        class TooMuchResultsError < SearchError; end
+        class InvalidSearchTypeError < SearchError; end 
+
     	def self.search(criterion, type)
             factory_n = 0
             begin
                 factory = self.instance[factory_n]
-                if stuff = factory.search(criterion, type)
-                    return stuff
-                end
-                raise
+                return factory.search(criterion, type)
             rescue => boom
-                msg = case boom
-                    when TimeoutError
-                        _("Couldn't reach the provider '%s': timeout expired.") % factory.name
-                    else
-                        boom.message
-                end
                 if self.last == factory
-                    raise msg
+                    raise case boom
+                        when TimeoutError
+                            _("Couldn't reach the provider '%s': timeout expired.") % factory.name
+                        
+                        when NoResultsError
+                            _("No results were found.  Make sure your search criterion is spelled correctly, and try again.")
+
+                        when TooMuchResultsError
+                            _("Too much results for that search.")
+
+                        when InvalidSearchTypeError
+                            _("Invalid search type.")
+
+                        else
+                            nil 
+                    end
                 else
                     factory_n += 1
                     retry
@@ -104,7 +115,7 @@ module Alexandria
         class GenericProvider
             attr_reader :name, :prefs
             include Singleton
-            
+
             def initialize(name)
                 @name = name 
                 @prefs = Preferences.new(name.downcase)

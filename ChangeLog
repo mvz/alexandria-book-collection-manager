@@ -1,3 +1,14 @@
+2004-07-09  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers.rb,
+	  lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	- Improved exception handling ;
+	- Fixed the Amazon provider to perform another lookup using the
+	  next locale when the previous one gives no results.
+
 2004-07-08  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers.rb:

@@ -44,37 +44,35 @@ class BookProviders
             else
                 @transport = Net::HTTP
             end
-            p @transport
 
             criterion = GLib.convert(criterion, "WINDOWS-1252", "UTF-8")
             req = case type
-                when Alexandria::BookProviders::SEARCH_BY_ISBN
+                when SEARCH_BY_ISBN
                     "p_isbn=#{CGI::escape(criterion)}&p_title=&p_author="
           
-                when Alexandria::BookProviders::SEARCH_BY_TITLE
+                when SEARCH_BY_TITLE
                     "p_isbn=&p_title=#{CGI::escape(criterion)}&p_author="
           
-                when Alexandria::BookProviders::SEARCH_BY_AUTHORS
+                when SEARCH_BY_AUTHORS
                     "p_isbn=&p_title=&p_author=#{CGI::escape(criterion)}"
             
-                when Alexandria::BookProviders::SEARCH_BY_KEYWORD
+                when SEARCH_BY_KEYWORD
                     "p_isbn=&p_title=&p_author=&p_keyword=#{CGI::escape(criterion)}"
           
                 else
-                    raise _("Invalid search type")
+                    raise InvalidSearchTypeError
             end
           
             products = {}
- 
             results_page = "http://oas2000.proxis.be/gate/jabba.search.submit_search?#{req}&p_item=#{LANGUAGES[prefs['lang']]}&p_order=1&p_operator=K&p_filter=1"
-
             @transport.get(URI.parse(results_page)).each do |line|
                 if (line =~ /BR>.*DETAILS&mi=([^&]*)&si=/) and (!products[$1]) and (book = parseBook($1)) then
                     products[$1] = book
                 end
             end
 
-            type == Alexandria::BookProviders::SEARCH_BY_ISBN ? products.values.first : products.values
+            raise NoResultsError if products.values.empty?
+            type == SEARCH_BY_ISBN ? products.values.first : products.values
         end
         
         def parseBook(product_id)

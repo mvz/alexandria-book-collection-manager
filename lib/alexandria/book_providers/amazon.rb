@@ -43,30 +43,40 @@ class BookProviders
             end
 
 			req = Amazon::Search::Request.new(prefs["dev_token"])
-            req.locale = prefs["locale"]
-			
-			products = []
-			case type
-                when Alexandria::BookProviders::SEARCH_BY_ISBN
-				    req.asin_search(criterion) { |product| products << product }
-            	    raise _("Too many results") if products.length > 1 # shouldn't happen
-		
-                when Alexandria::BookProviders::SEARCH_BY_TITLE
-				    req.keyword_search(criterion) do |product|
-					    if /#{criterion}/i.match(product.product_name)
-						    products << product
-					    end
-				    end
-                
-                when Alexandria::BookProviders::SEARCH_BY_AUTHORS
-				    req.author_search(criterion) { |product| products << product }
-                
-                when Alexandria::BookProviders::SEARCH_BY_KEYWORD
-				    req.keyword_search(criterion) { |product| products << product }
+            locales = Amazon::Search::LOCALES.keys
+            locales.delete prefs["locale"]
+            locales.unshift prefs["locale"]
+            locales.reverse!
 
-                else
-                    raise _("Invalid search type")
-			end
+            begin		
+                req.locale = locales.pop
+    			products = []
+    			case type
+                    when SEARCH_BY_ISBN
+    				    req.asin_search(criterion) { |product| products << product }
+                	    raise TooManyResultsError if products.length > 1 # shouldn't happen
+    		
+                    when SEARCH_BY_TITLE
+    				    req.keyword_search(criterion) do |product|
+    					    if /#{criterion}/i.match(product.product_name)
+    						    products << product
+    					    end
+    				    end
+                    
+                    when SEARCH_BY_AUTHORS
+    				    req.author_search(criterion) { |product| products << product }
+                    
+                    when SEARCH_BY_KEYWORD
+    				    req.keyword_search(criterion) { |product| products << product }
+    
+                    else
+                        raise InvalidSearchTypeError
+    			end
+                raise NoResultsError if products.empty?
+            rescue Amazon::Search::Request::SearchError
+                retry unless locales.empty?
+                raise NoResultsError
+            end
  
 			results = []
 			products.each do |product|
@@ -80,7 +90,7 @@ class BookProviders
 
                 results << [ book, product.image_url_small, product.image_url_medium ]
             end
-			type == Alexandria::BookProviders::SEARCH_BY_ISBN ? results.first : results
+            type == SEARCH_BY_ISBN ? results.first : results
         end
     end
 end
