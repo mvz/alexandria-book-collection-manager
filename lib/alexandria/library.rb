@@ -172,6 +172,7 @@ module Alexandria
         end
 
         def save(book)
+            book.saved_ident ||= book.ident
             if book.ident != book.saved_ident
                 FileUtils.rm(yaml(book.saved_ident))
                 if File.exists?(cover(book.saved_ident))
