@@ -1,4 +1,10 @@
+=== Alexandria 0.2.0 ===
+
 2004-06-13  Laurent Sansonetti  <lrz@gnome.org>
+
+	* NEWS:
+
+	Final update for 0.2.0.
 
 	* lib/alexandria.rb,
 	  lib/alexandria/book.rb:

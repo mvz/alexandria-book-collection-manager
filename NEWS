@@ -4,9 +4,9 @@ Alexandria 0.2.0
 
 New features:
  * full i18n support ;
- * preferences are saved and restored using a GConf backend ;
  * a preferences dialog has been created, to configure the application and
    the providers ; 
+ * preferences are saved and restored using a GConf backend ;
  * notes can be associated with books ;
  * books can be rated ;
  * books icons can be sorted ;
@@ -19,13 +19,14 @@ Bugs fixed:
  * display a default cover icon for a book which cover is not available ;
  * the treeview is now sortable with UTF-8 data ; 
  * the 'clicked' signal is used instead of 'pressed' for Gtk::Button widgets ; 
+ * when the current selected library is renamed the title of the application
+   is accordingly renamed.
  * a lot of code has been refactored.
 
 Added translations:
  * Dafydd Harries (cy) ;
  * Laurent Sansonetti (fr) ;
- * Masao Mutoh (ja) ;
- * Bart Demeyer (nl). 
+ * Masao Mutoh (ja). 
 
 ================
 Alexandria 0.1.2
