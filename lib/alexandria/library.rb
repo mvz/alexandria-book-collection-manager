@@ -208,7 +208,7 @@ module Alexandria
         end
 
         def n_rated
-                select { |x| !x.rating.nil? and x.rating > 0 }.length
+            select { |x| !x.rating.nil? and x.rating > 0 }.length
         end
        
         def n_unrated
