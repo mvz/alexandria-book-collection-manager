@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 0.5.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-27 01:04+0100\n"
-"PO-Revision-Date: 2005-03-27 01:19+0100\n"
+"PO-Revision-Date: 2005-03-27 12:20+0200\n"
 "Last-Translator: Mirko Maischberger <mirko@lilik.it>\n"
 "Language-Team: Alexandria\n"
 "MIME-Version: 1.0\n"
@@ -110,7 +110,7 @@ msgstr "Impossibile modificare il libro"
 #: ../lib/alexandria/ui/book_properties_dialog.rb:71
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:64
 msgid "The EAN/ISBN you provided is already used in this library."
-msgstr ""
+msgstr "Il codice EAN/ISBN fornito è già in uso in questa biblioteca."
 
 #: ../lib/alexandria/ui/book_properties_dialog.rb:80
 #: ../lib/alexandria/ui/new_book_dialog.rb:187
@@ -745,6 +745,3 @@ msgstr "Gestore biblioteca"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Gestisce la vostra biblioteca"
-
-#~ msgid "List Columns"
-#~ msgstr ""
