@@ -1,5 +1,12 @@
 2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/main_app.rb:
+
+	Raises an error dialog when trying to rename a library to an empty
+	name, or when the name is already used by another library.
+
+2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
+
 	General reformat of the code.	
 
 	* data/alexandria/glade/info_book_dialog.glade,

@@ -329,9 +329,17 @@ module UI
                                         _("Invalid library name '%s'") % new_text,
                                         _("The name provided contains the illegal " +
                                           "character '<i>%s</i>'.") % match[1])
+                    elsif new_text.strip.empty?
+                        ErrorDialog.new(@main_app, _("The library name can not be empty"))
+                    elsif @libraries.find { |library| library.name == new_text.strip }
+                        ErrorDialog.new(@main_app, 
+                                        _("The library can not be renamed"),
+                                        _("There is already a library named " +
+                                          "'#{new_text.strip}'.  Please choose a " +
+                                          "different name."))
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
-                        iter[1] = selected_library.name = new_text
+                        iter[1] = selected_library.name = new_text.strip
                         on_refresh 
                     end
                 end
