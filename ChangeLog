@@ -1,3 +1,9 @@
+2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
+
+	* .cvsignore:
+	
+	Added alexandria.desktop and alexandria.desktop.in.h.
+	
 2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
 
 	* alexandria.desktop.in:
