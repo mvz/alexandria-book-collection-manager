@@ -1,3 +1,9 @@
+2004-04-11  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book.rb:
+
+	Fixed a bug introduced in the latest commit entry. 
+
 2004-04-08  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb:

@@ -129,6 +129,7 @@ module Alexandria
     
     module BookProvider
     	def self.find(criteria, factory=nil)
+            book = nil
             begin
                 if factory.nil?
                     self.each_factory do |factory|
@@ -140,7 +141,7 @@ module Alexandria
             rescue TimeoutError
                 raise "Couldn't reach the provider '#{factory.name}': timeout expired."
             end 
-            book
+            return book
     	end
     
     	def self.factories
