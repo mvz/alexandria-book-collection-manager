@@ -100,7 +100,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="label1">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">Please provide an ISBN (International Standard Book Number) to search for, and select a library in which the book will be added.</property>
+		      <property name="label" translatable="yes">Please provide an ISBN (International Standard Book Number) to search for, and select the library which the book will be added to.</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
