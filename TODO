@@ -3,21 +3,17 @@ Alexandria's TODO list
 
 Before next release:
 
-[X] Saving and restoring preferences (Laurent)
-[X] Search bar to filter books (Zachary, Laurent)
-[X] i18n (Dafydd)
-[X] Rating support (Laurent)
+[X] Improving the "Add New Book" dialog to allow books to search books by
+    title alternatively to ISBN (Laurent)
 
 Future releases:
 
 [ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::Combo (new in 2.4).
+[ ] Removing the glade support for main_app, and using the new UI manager
+    instead.
 [ ] Allowing multiple books to be added at once, giving a list of ISBN
     numbers (Xavier)
 [ ] Drag-and-drop books within libraries
-[ ] Improving the "Add New Book" dialog to allow books to search books by
-    title alternatively to ISBN, in case of multiple results, opens a new
-    dialog which displays thumbnails of each book so the user can choose the
-    one to add in the library. 
 [ ] Import/export via GNOME-DB
 [ ] Loaning support
 [ ] Zoom in the current view, giving more or less details
