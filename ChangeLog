@@ -1,9 +1,27 @@
-2005-02-25  Constantine Evans  <cevans@costinet.org>
+2005-02-28  Constantine Evans  <cevans@costinet.org>
 
 	* lib/alexandria/book_providers/amazon.rb:
 
 	Added workaround for an Amazon US encoding bug. See comments in code
 	for details.
+
+2005-02-28  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb:
+
+	Specialized the ISBN validation exceptions.
+
+	* lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/new_book_dialog.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb:
+
+	Follow latest change.
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Fixes #974 (when a book returned by a search by title/authors/keyword
+	contains an invalid ISBN, propose the user to either add the book with a
+	blank ISBN or cancel the add).
 
 2005-02-25  Laurent Sansonetti  <lrz@gnome.org>
 
