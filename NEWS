@@ -2,7 +2,7 @@
 Alexandria 0.3.1
 ================
 
-Bug fixed:
+Bugs fixed:
  * removed custom sorting functions as they appear not to make anything
    work better and may actually cause some problems ; 
  * fixed the Amazon provider to perform another lookup using the next 
@@ -13,6 +13,11 @@ Bug fixed:
  * sorting by edition and publisher were reversed ;
  * the Add Book dialog is now resizable in search mode ;
  * removing a book without a cover image did crash. 
+
+Updated translations:
+ * Dafydd Harries (cy) ;
+ * Laurent Sansonetti (fr) ;
+ * Masao Mutoh (ja). 
 
 ================
 Alexandria 0.3.0
@@ -29,7 +34,7 @@ New features:
  * HTTP connections to Amazon and Proxis are configured to pass via a proxy
    or not according to the GNOME preferences.
 
-Bug fixed:
+Bugs fixed:
  * do not split title icons inside a multibyte character ;
  * fixed the Amazon provider to not set the manufacturer attribute to nil
    for some books that are not yet released ; 
