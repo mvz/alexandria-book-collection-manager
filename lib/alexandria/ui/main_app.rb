@@ -44,6 +44,15 @@ module UI
             restore_preferences
         end
 
+        def on_library_button_press_event(widget, event)
+            # right click
+            if event.event_type == Gdk::Event::BUTTON_PRESS and
+               event.button == 3
+
+                @library_popup.popup(nil, nil, event.button, event.time) 
+            end
+        end
+        
         def on_books_button_press_event(widget, event)
             # double left click
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
@@ -522,6 +531,13 @@ module UI
                 end
             end
             
+            on_rename = proc do
+                iter = @treeview_sidepane.selection.selected
+                @treeview_sidepane.set_cursor(iter.path, 
+                                              @treeview_sidepane.get_column(0), 
+                                              true)
+            end
+            
             on_delete = proc do
                 library = selected_library
                 confirm = lambda do |message|
@@ -595,6 +611,7 @@ module UI
                 ["SelectAll", nil, _("_Select All"), "<control>A", nil, on_select_all],
                 ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", nil, on_deselect_all],
                 ["Move", nil, _("_Move")],
+                ["Rename", nil, _("_Rename"), "Rename", nil, on_rename],
                 ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", nil, on_delete],
                 ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", nil, on_search],
                 ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", nil, 
@@ -607,7 +624,7 @@ module UI
                 ["HelpMenu", nil, _("_Help")],
                 ["SubmitBugReport", Gnome::Stock::MAIL_NEW, _("Submit _Bug Report"), nil, nil,
                  on_submit_bug_report],
-                ["About", Gnome::Stock::ABOUT, _("_About"), nil, nil, on_about]
+                ["About", Gnome::Stock::ABOUT, _("_About"), nil, nil, on_about],
             ]
 
             on_view_sidepane = proc { |ag, a| @paned.child1.visible = a.active? }
@@ -749,6 +766,7 @@ module UI
             
             @main_app.toolbar = @toolbar
             @main_app.menus = @uimanager.get_widget("/MainMenubar")
+            @library_popup = @uimanager.get_widget("/LibraryPopup") 
             @book_popup = @uimanager.get_widget("/BookPopup") 
             @nobook_popup = @uimanager.get_widget("/NoBookPopup") 
             

@@ -19,6 +19,10 @@
 -->
 
 <ui>
+  <popup name="LibraryPopup">
+    <menuitem action="Rename"/>
+    <menuitem action="Delete"/>
+  </popup>
   <popup name="BookPopup">
     <menuitem action="Properties"/>
     <menu action="OnlineInformation"/>

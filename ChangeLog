@@ -1,3 +1,11 @@
+2005-02-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb,
+	  data/alexandria/glade/main_app.glade,
+	  data/alexandria/ui/popups.xml:
+
+	Added a popup menu for the library list.
+
 2005-02-10  Dafydd Harries  <daf@muse.19inch.net>
 
 	* alexandria.desktop:
