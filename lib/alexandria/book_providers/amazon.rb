@@ -23,6 +23,8 @@ class BookProviders
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
+        CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
+        
         def initialize
             super("Amazon")
             prefs.add("locale", _("Locale site to contact"), "us",
@@ -43,6 +45,7 @@ class BookProviders
             end
 
             req = Amazon::Search::Request.new(prefs["dev_token"])
+            req.cache = Amazon::Search::Cache.new(CACHE_DIR)
             locales = Amazon::Search::LOCALES.keys
             locales.delete prefs["locale"]
             locales.unshift prefs["locale"]

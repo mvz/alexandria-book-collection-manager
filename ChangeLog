@@ -1,3 +1,9 @@
+2005-03-23  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/amazon.rb:
+
+	Caches in ~/.alexandria/.amazon_cache/ instead of /tmp/cache.
+
 2005-03-22  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb:
