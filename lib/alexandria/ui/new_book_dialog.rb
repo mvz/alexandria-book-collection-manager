@@ -51,7 +51,7 @@ module UI
             @button_find.sensitive = !ok
             @scrolledwindow.visible = !ok
             on_changed(ok ? @entry_isbn : @entry_search)
-            @button_add.sensitive = !@treeview_results.selection.selected.nil? unless ok
+            @button_add.sensitive = @treeview_results.selection.count_selected_rows > 0 unless ok
         end
 
         def on_changed(entry)
