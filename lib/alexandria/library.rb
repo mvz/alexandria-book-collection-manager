@@ -177,7 +177,14 @@ module Alexandria
                 # Fetch the cover picture.
                 cover_file = cover(book)
                 File.open(cover_file, "w") do |io|
-				    io.puts URI.parse(cover_uri).read
+                    uri = URI.parse(cover_uri)
+                    if uri.scheme.nil?
+                        # Regular filename.
+                        File.open(cover_uri) { |io2| io.puts io2.read }
+                    else
+                        # Try open-uri.
+                        io.puts uri.read
+                    end
 				end
             
                 # Remove the file if it's blank.
@@ -264,8 +271,48 @@ module Alexandria
         end
         
         def self.import_as_tellico_xml_archive(name, filename) 
-            # TODO
-            nil
+            return nil unless system("unzip -qqt \"#{filename}\"")
+            tmpdir = File.join(Dir.tmpdir, "tellico_export")
+            FileUtils.rm_rf(tmpdir) if File.exists?(tmpdir)
+            Dir.mkdir(tmpdir)
+            Dir.chdir(tmpdir) do
+                begin
+                    system("unzip -qq \"#{filename}\"")
+                    xml = REXML::Document.new(File.open('bookcase.xml'))
+                    raise unless xml.root.name == 'bookcase'
+                    # FIXME: handle multiple collections
+                    raise unless xml.root.elements.size == 1
+                    collection = xml.root.elements[1]
+                    raise unless collection.name == 'collection'
+
+                    content = []
+                    collection.elements.each('entry') do |entry|
+                        elements = entry.elements
+                        book = Book.new(elements['title'].text,
+                                        elements['authors'].elements.to_a.map \
+                                            { |x| x.text },
+                                        elements['isbn'].text,
+                                        elements['publisher'].text,
+                                        elements['binding'].text)
+                        content << [ book, elements['cover'] \
+                                                ? elements['cover'].text \
+                                                : nil ]
+                    end
+
+                    library = Library.load(name)
+                    content.each do |book, cover|
+                        unless cover.nil?
+                            library.save_cover(book, 
+                                               File.join(Dir.pwd, "images", cover))
+                        end
+                        library << book
+                        library.save(book)
+                    end
+                    return library
+                rescue 
+                    return nil
+                end
+            end
         end
         
         def self.import_as_isbn_list(name, filename)

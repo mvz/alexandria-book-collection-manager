@@ -1,5 +1,15 @@
 2004-11-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/library.rb:
+
+	- Added an experimental Tellico importer ;
+	- Refactored the #save_cover method.
+
+	* lib/alexandria/ui/import_dialog.rb:
+
+	- Fixed the parent reference of alert dialogs ;
+	- Fixed a crash when pressing the escape key.
+
 	* lib/alexandria.rb:
 
 	Fixed a crash when the 'http_proxy' environment variable was not set. 

@@ -29,11 +29,12 @@ module UI
                   Gtk::FileChooser::ACTION_OPEN,
                   backend, 
                   [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
+                  
             import_button = add_button(_("Import"), 
                                        Gtk::Dialog::RESPONSE_ACCEPT)
             import_button.sensitive = false
-                                       
-            self.transient_for = parent
+                 
+            self.transient_for = @parent = parent
             self.signal_connect('destroy') { hide }
 
             name_entry = Gtk::Entry.new
@@ -69,8 +70,7 @@ module UI
             box.show_all
             self.extra_widget = box
             
-            while true
-                break if run == Gtk::Dialog::RESPONSE_CANCEL
+            while run == Gtk::Dialog::RESPONSE_ACCEPT
                 if libraries.find { |x| x.name == name_entry.text.strip }
                     ErrorDialog.new(@parent, _("Couldn't import the library"),
                                     _("There is already a library named " +
