@@ -1,3 +1,9 @@
+2005-02-24  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	More fixes.
+
 2005-02-23  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb,

@@ -186,7 +186,7 @@ module UI
             iter[Columns::PUBLISHER] = book.publisher
             iter[Columns::EDITION] = book.edition
             rating = (book.rating or Book::DEFAULT_RATING)
-            iter[Columns::RATING] = rating
+            iter[Columns::RATING] = 5 - rating # ascending order is the default
             iter[Columns::IDENT] = book.ident
         end
 
@@ -216,8 +216,9 @@ module UI
             @iconview.pixbuf_column = Columns::COVER_ICON
             @iconview.orientation = Gtk::ORIENTATION_VERTICAL
             @iconview.row_spacing = 4
-            @iconview.column_spacing = 2
-          
+            @iconview.column_spacing = 16
+            @iconview.item_width = ICON_WIDTH + 16
+         
             @iconview.signal_connect('selection-changed') do 
                 on_books_selection_changed
             end
@@ -263,7 +264,8 @@ module UI
                 column.pack_start(renderer, false)
                 column.set_cell_data_func(renderer) do |column, cell, 
                                                         model, iter|
-                    cell.pixbuf = iter[Columns::RATING] >= i.succ ? 
+                    rating = (iter[Columns::RATING] - 5).abs
+                    cell.pixbuf = rating >= i.succ ? 
                         Icons::STAR_SET : Icons::STAR_UNSET
                 end
             end
@@ -513,7 +515,8 @@ module UI
                 next unless /^MoveIn/.match(action.name)
                 @actiongroup.remove_action(action)
             end
-            actions = @libraries.map do |library|
+            actions = []
+            @libraries.each do |library|
                 on_move = proc do
                     books = selected_books
                     books.each do |book| 
@@ -523,8 +526,11 @@ module UI
                     Library.move(selected_library,
                                  library, *books)
                 end
-                [ library.action_name, nil,
-                  _("In '_%s'") % library.name, nil, nil, on_move ]
+                actions << [ 
+                    library.action_name, nil,
+                    _("In '_%s'") % library.name, 
+                    nil, nil, on_move 
+                ]
             end
             @actiongroup.add_actions(actions)
             @uimanager.remove_ui(@move_mid) if @move_mid
