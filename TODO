@@ -4,24 +4,26 @@ Alexandria's TODO list
 Before next release:
 
 [X] Cuecat barcode support (Zachary)
-[ ] Zipped-XML import/export
-[ ] Export to XHTML via an XSL transformation, and to preview the result within
-    Alexandria itself
-[ ] Export to Bookcase XML format via an XSL transformation.
-[ ] Add a book filling all fields manually. 
-[ ] Change the cover picture
+[ ] ONIX import 
+[X] ONIX export (Laurent)
+[ ] XHTML export
+[ ] Tellico/Bookcase import
+[X] Tellico/Bookcase export (Robby)
+[ ] Import of a file that contains a list of ISBNs
+[ ] Manual addition of a book 
+[X] Editing the properties of a book (Laurent)
+[ ] Changing the cover picture of a book
 
 Future releases:
 
 [ ] Import/export via GNOME-DB
-[ ] Allowing multiple books to be added at once, giving a list of ISBN
-    numbers (Xavier)
 [ ] Loaning support
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Writing a z39.50 provider
 [ ] Writing help documentation
 [ ] Win32 MinGW port (Laurent)
+[ ] Show more details about books, like the publication date for example
 
 Future releases (that depend of Ruby-GNOME2 1.0.0, so not for the moment):
 
