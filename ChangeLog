@@ -1,3 +1,15 @@
+2004-10-23  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/library.rb:
+
+	Clean up whitespace/indentation.
+
+	* test,
+	* test/test.rb,
+	* test/test_isbn.rb:
+
+	Initial set of unit tests, dealing with ISBNs.
+
 2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:

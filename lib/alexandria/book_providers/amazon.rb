@@ -22,7 +22,7 @@ class BookProviders
     class AmazonProvider < GenericProvider
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-        
+
         def initialize
             super("Amazon")
             prefs.add("locale", _("Locale site to contact"), "us",
@@ -30,7 +30,7 @@ class BookProviders
             prefs.add("dev_token", _("Development token"), "D23XFCO2UKJY82")
             prefs.add("associate", _("Associate ID"), "calibanorg-20")
         end
-           
+
         def search(criterion, type)
             prefs.read
 
@@ -42,44 +42,44 @@ class BookProviders
                 ENV['http_proxy'] = url
             end
 
-			req = Amazon::Search::Request.new(prefs["dev_token"])
+            req = Amazon::Search::Request.new(prefs["dev_token"])
             locales = Amazon::Search::LOCALES.keys
             locales.delete prefs["locale"]
             locales.unshift prefs["locale"]
             locales.reverse!
 
-            begin		
+            begin
                 req.locale = locales.pop
-    			products = []
-    			case type
+                products = []
+                case type
                     when SEARCH_BY_ISBN
-    				    req.asin_search(criterion) { |product| products << product }
-                	    raise TooManyResultsError if products.length > 1 # shouldn't happen
-    		
+                        req.asin_search(criterion) { |product| products << product }
+                        raise TooManyResultsError if products.length > 1 # shouldn't happen
+
                     when SEARCH_BY_TITLE
-    				    req.keyword_search(criterion) do |product|
-    					    if /#{criterion}/i.match(product.product_name)
-    						    products << product
-    					    end
-    				    end
-                    
+                        req.keyword_search(criterion) do |product|
+                            if /#{criterion}/i.match(product.product_name)
+                                products << product
+                            end
+                        end
+
                     when SEARCH_BY_AUTHORS
-    				    req.author_search(criterion) { |product| products << product }
-                    
+                        req.author_search(criterion) { |product| products << product }
+
                     when SEARCH_BY_KEYWORD
-    				    req.keyword_search(criterion) { |product| products << product }
-    
+                        req.keyword_search(criterion) { |product| products << product }
+
                     else
                         raise InvalidSearchTypeError
-    			end
+                end
                 raise NoResultsError if products.empty?
             rescue Amazon::Search::Request::SearchError
                 retry unless locales.empty?
                 raise NoResultsError
             end
- 
-			results = []
-			products.each do |product|
+
+            results = []
+            products.each do |product|
                 next unless product.catalog == 'Book'
                 book = Book.new(product.product_name.squeeze(' '),
                                 (product.authors.map { |x| x.squeeze(' ') } rescue [ _("n/a") ]),
