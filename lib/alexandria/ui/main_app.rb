@@ -102,6 +102,14 @@ module UI
             end
         end
 
+        def on_import
+            # TODO
+        end
+
+        def on_export
+            ExportDialog.new(@main_app, selected_library)
+        end
+        
         def on_book_properties
             books = selected_books
             if books.length == 1

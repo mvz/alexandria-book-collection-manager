@@ -26,6 +26,7 @@ require 'alexandria/ui/about_dialog.rb'
 require 'alexandria/ui/info_book_dialog.rb'
 require 'alexandria/ui/new_book_dialog.rb'
 require 'alexandria/ui/preferences_dialog.rb'
+require 'alexandria/ui/export_dialog.rb'
 require 'alexandria/ui/main_app.rb'
 
 module Alexandria

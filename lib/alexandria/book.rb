@@ -15,13 +15,6 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-require 'amazon/search'
-require 'tempfile'
-require 'open-uri'
-require 'yaml'
-require 'fileutils'
-require 'singleton'
-
 module Alexandria
     class Book
         attr_reader :title, :authors, :isbn, :publisher, :edition

@@ -1,3 +1,26 @@
+2004-09-24  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade:
+
+	Added Library/Import and Library/Export.
+
+	* lib/alexandria/ui/export_dialog.rb:
+
+	Added.
+
+	* lib/alexandria/book.rb:
+
+	Removed unnecessary require statements.
+
+	* lib/alexandria/library.rb:
+
+	Added code for the compressed XML export.	
+
+	* lib/alexandria/ui.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Follows Alexandria::ExportDialog.
+
 2004-08-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb,

@@ -19,6 +19,8 @@ require 'open-uri'
 require 'yaml'
 require 'fileutils'
 require 'gdk_pixbuf2'
+require 'rexml/document'
+require 'tempfile'
 
 class Array
     def sum
@@ -194,12 +196,48 @@ module Alexandria
             @name = name
         end
 
+        def export_as_xml_archive(filename)
+            filename += ".xml.tar.bz2" if File.extname(filename).empty?
+            File.open(File.join(Dir.tmpdir, "library.xml"), "w") do |io|
+                to_xml_doc.write(io, 0)
+            end
+            Dir.chdir(self.path) do  
+                system("tar -cjf \"#{filename}\" *.jpg -C \"#{Dir.tmpdir}\" library.xml")
+            end
+        end
+
         #######
         private
         #######
 
         def initialize(name)
             @name = name
+        end
+
+        def to_xml_doc
+            doc = REXML::Document.new
+            root = doc.add_element('library')
+            root.add_element('name').text = name
+            each do |book|
+                elem = root.add_element('book')
+                elem.add_element('isbn').text = book.isbn
+                elem.add_element('title').text = book.title
+                unless book.authors.empty?
+                    book.authors.each do |author|
+                        elem.add_element('author').text = author
+                    end
+                end
+                elem.add_element('publisher').text = book.publisher
+                elem.add_element('edition').text = book.edition
+                elem.add_element('isbn').text = book.isbn
+                elem.add_element('rating').text = book.rating if book.rating
+                if book.notes and not book.notes.empty?
+                    elem.add_element('notes').text = book.notes 
+                end
+                elem.add_element('small_cover').text = book.isbn + SMALL_COVER_EXT
+                elem.add_element('medium_cover').text = book.isbn + MEDIUM_COVER_EXT
+            end
+            doc
         end
     end
 end
