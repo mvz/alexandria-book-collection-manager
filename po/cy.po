@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-14 10:06+0100\n"
-"PO-Revision-Date: 2004-06-14 10:31+0100\n"
+"POT-Creation-Date: 2004-06-30 10:28+0100\n"
+"PO-Revision-Date: 2004-06-30 10:42+0100\n"
 "Last-Translator: Dafydd Harries <daf@muse.19inch.net>\n"
 "Language-Team: Welsh <cy@pengwyn.linux.org.uk>\n"
 "MIME-Version: 1.0\n"
@@ -15,37 +15,99 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n == 2) ? 1 : 0;\n"
 
-#: ../lib/alexandria/book.rb:79
-msgid "My Library"
-msgstr "Fy Llyfrgell"
-
-#: ../lib/alexandria/book.rb:149
+#: ../lib/alexandria/book_providers.rb:35
 msgid "Couldn't reach the provider '%s': timeout expired."
 msgstr "Methwyd cyrraedd y darparwr '%s': terfyn aros."
 
-#: ../lib/alexandria/book.rb:211
+#: ../lib/alexandria/book_providers/amazon.rb:28
 msgid "Locale site to contact"
 msgstr "Safle lleol i'w gysylltu"
 
-#: ../lib/alexandria/book.rb:213
+#: ../lib/alexandria/book_providers/amazon.rb:30
 msgid "Development token"
 msgstr "Tocyn datblygu"
 
-#: ../lib/alexandria/book.rb:214
+#: ../lib/alexandria/book_providers/amazon.rb:31
 msgid "Associate ID"
 msgstr "ID Partner"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:49
+#: ../lib/alexandria/book_providers/amazon.rb:52
+msgid "Too many results"
+msgstr "Gormod o ganlyniadau"
+
+#: ../lib/alexandria/book_providers/amazon.rb:68
+#: ../lib/alexandria/book_providers/proxis.rb:64
+msgid "Invalid search type"
+msgstr "Math chwilio annilys"
+
+#: ../lib/alexandria/book_providers/amazon.rb:76
+#: ../lib/alexandria/book_providers/amazon.rb:78
+msgid "n/a"
+msgstr "-"
+
+#: ../lib/alexandria/book_providers/proxis.rb:35
+msgid "Language of the books to search"
+msgstr "Iaith y llyfrau i'w chwilio"
+
+#: ../lib/alexandria/library.rb:73
+msgid "My Library"
+msgstr "Fy Llyfrgell"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:65
+#: ../data/alexandria/glade/new_book_dialog.glade:262
+#: ../data/alexandria/glade/new_book_dialog.glade:279
+msgid "by title"
+msgstr "yn ôl teitl"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:67
+#: ../data/alexandria/glade/new_book_dialog.glade:287
+msgid "by authors"
+msgstr "yn ôl awdur"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:69
+#: ../data/alexandria/glade/new_book_dialog.glade:295
+msgid "by keyword"
+msgstr "yn ôl allweddair"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:74
+msgid ""
+"No results were found.  Make sure all words are spelled correctly, and try "
+"again."
+msgstr ""
+"Ni chanfuwyd unrhyw ganlyniadau. Sicrhewch fod pob gair wedi eu sillafu'n "
+"gymir, a ceisiwch eto."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:79
+msgid "%s, by %s"
+msgstr "%s, gan %s"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:85
+msgid "Unable to find matches for your search"
+msgstr "Methwyd canfod canlyniadau ar gyfer eich ymchwil"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:109
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"Methwyd dilydu yr EAN/ISBN a rhoddwyd. Sicrhewch ei fod wedi ei "
+"ysgrifennu'n gywir, a ceisiwch eto."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:130
+msgid "Couldn't add the book"
+msgstr "Methwyd ychwanegu'r llyfr"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:153
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "Mae '%s' yn bodoli yn '%s' eisioes (gyda'r teitl '%s')."
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:62
-msgid "Couldn't add book"
-msgstr "Methwyd ychwanegu'r llyfr"
 
 #: ../lib/alexandria/ui/preferences_dialog.rb:25
 msgid "Preferences for %s"
 msgstr "Hoffteray ar gyfer %s"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:109
+msgid "The '%s' provider doesn't have any preference to setup"
+msgstr "Nid oes gan y darparwr '%s' unrhyw hoffterau i'w gosod"
 
 #: ../lib/alexandria/ui/main_app.rb:79
 msgid "'%s' selected"
@@ -71,14 +133,13 @@ msgstr ""
 "Ydych chi'n siŵr eich bod chi am ddileu '%s', sydd ag un llygr, am byth?"
 
 #: ../lib/alexandria/ui/main_app.rb:157
-#, fuzzy
 msgid "Are you sure you want to permanently delete '%s' which has %d book?"
 msgid_plural ""
 "Are you sure you want to permanently delete '%s' which has %d books?"
 msgstr[0] ""
 "Ydych chi'n siŵr eich bod chi am ddileu '%s', sydd a %d llyfr, am byth?"
 msgstr[1] ""
-"Ydych chi'n siŵr eich bod chi am ddileu '%s', sydd a %d llyfr, am byth?"
+"Ydych chi'n siŵr eich bod chi am ddileu '%s', sydd a %d lyfr, am byth?"
 
 #: ../lib/alexandria/ui/main_app.rb:170
 msgid "Are you sure you want to permanently delete '%s' from '%s'?"
@@ -96,43 +157,43 @@ msgstr ""
 "Gwiriwch fod porwr gwe wedi ei gyflunio fel rhagosodiad (Rhaglenni -> "
 "Hoffterau'r Penbwrdd -> Pelach -> Rhaglenni Amgen) a ceisiwch eto."
 
-#: ../lib/alexandria/ui/main_app.rb:425
+#: ../lib/alexandria/ui/main_app.rb:420
 msgid "Title"
 msgstr "Teitl"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "Authors"
 msgstr "Awduron"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "ISBN"
 msgstr "ISBN"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "Publisher"
 msgstr "Cyhoeddwr"
 
-#: ../lib/alexandria/ui/main_app.rb:440
+#: ../lib/alexandria/ui/main_app.rb:435
 msgid "Edition"
 msgstr "Rhifyn"
 
-#: ../lib/alexandria/ui/main_app.rb:449
+#: ../lib/alexandria/ui/main_app.rb:444
 msgid "Rating"
 msgstr "Serennau"
 
-#: ../lib/alexandria/ui/main_app.rb:514
+#: ../lib/alexandria/ui/main_app.rb:509
 msgid "Library"
 msgstr "Llyfrgell"
 
-#: ../lib/alexandria/ui/main_app.rb:528
+#: ../lib/alexandria/ui/main_app.rb:523
 msgid "Invalid library name '%s'"
 msgstr "Enw llyfrgell annilys '%s'"
 
-#: ../lib/alexandria/ui/main_app.rb:529
+#: ../lib/alexandria/ui/main_app.rb:524
 msgid "The name provided contains the illegal character '<i>%s</i>'."
 msgstr "Mae'r enw a rhoddwyd yn cynnwys y nod annilys '<i>%s</i>'."
 
-#: ../lib/alexandria.rb:24
+#: ../lib/alexandria.rb:23
 msgid "A program to help you manage your book collection."
 msgstr "Rhaglen i'ch helpu chi drefnu eich casgliad llyfrau."
 
@@ -282,8 +343,10 @@ msgid "Notes contain"
 msgstr "Mae'r nodiadau yn cynnwys"
 
 #: ../data/alexandria/glade/main_app.glade:706
-#: ../data/alexandria/glade/new_book_dialog.glade:171
-#: ../data/alexandria/glade/new_book_dialog.glade:228
+#: ../data/alexandria/glade/new_book_dialog.glade:147
+#: ../data/alexandria/glade/new_book_dialog.glade:264
+#: ../data/alexandria/glade/new_book_dialog.glade:318
+#: ../data/alexandria/glade/new_book_dialog.glade:403
 msgid "*"
 msgstr "*"
 
@@ -375,7 +438,7 @@ msgstr "<b>_Darparwyr</b>"
 msgid "_Setup"
 msgstr "_Cyfluniad"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:433
+#: ../data/alexandria/glade/preferences_dialog.glade:435
 msgid ""
 "Providers are libraries that supply information about books.  Some of them "
 "can be configured to get better results.  You can also customize the order "
@@ -385,26 +448,32 @@ msgstr ""
 "cyflunio rhai ohonynt er mwyn cael canlyniadau gwell. Gallwch hefyd gyflunio "
 "y trefn caent eu holi ynddi."
 
-#: ../data/alexandria/glade/preferences_dialog.glade:460
+#: ../data/alexandria/glade/preferences_dialog.glade:462
 msgid "Providers"
 msgstr "Darparwyr"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:10
+#: ../data/alexandria/glade/new_book_dialog.glade:9
 msgid "Adding a Book"
 msgstr "Ychwanegu Llyfr"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:110
+#: ../data/alexandria/glade/new_book_dialog.glade:111
 msgid ""
-"Please provide an ISBN (International Standard Book Number) to search for, "
-"and select the library which the book will be added to."
+"Please provide either an ISBN (International Standard Book Number) or "
+"something to search for, and select the library which the book will be added "
+"to."
 msgstr ""
-"Os gwelwch yn dda, rhowch ISBN (International Standard Book Number) i'w "
-"chwilio amdani a dewiswch y llyfrgell caiff y llyfr ei ychwanegu ati."
+"Os gwelwch yn dda, rhowch ISBN (International Standard Book Number) neu "
+"rhywbeith i'w chwilio amdani a dewiswch y llyfrgell caiff y llyfr ei "
+"ychwanegu ati."
 
-#: ../data/alexandria/glade/new_book_dialog.glade:140
+#: ../data/alexandria/glade/new_book_dialog.glade:166
 msgid "_ISBN:"
 msgstr "_ISBN:"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:188
+#: ../data/alexandria/glade/new_book_dialog.glade:189
+msgid "_Search:"
+msgstr "_Chwilio:"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:362
 msgid "_Library:"
 msgstr "_Llyfrgell:"
