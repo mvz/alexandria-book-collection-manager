@@ -1,4 +1,34 @@
 ================
+Alexandria 0.3.0
+================
+
+New features:
+ * the Add Book dialog allows searches by title, authors and keyword as well  
+   as regular ISBNs ;
+ * ISBNs are now validated before usage ;
+ * the Add Book dialog will autofill the ISBN text entry using the clipboard
+   content if it contains a valid EAN/ISBN ; 
+ * the Add Book dialog will automatically convert EANs to ISBNs ;
+ * a provider to the Proxis library (http://www.proxis.be) has been added ;
+ * HTTP connections to Amazon and Proxis are configured to pass via a proxy
+   or not according to the GNOME preferences.
+
+Bug fixed:
+ * do not split title icons inside a multibyte character ;
+ * fixed the Amazon provider to not set the manufacturer attribute to nil
+   for some books that are not yet released ; 
+ * enforced the use of UTF-8 for gettext ;
+ * some strings have been ngettexted ;
+ * the data/locale directory is cleaned by install.rb ;
+ * pre-setup.rb doesn't require Ruby-GetText anymore since all this does
+   is run msgfmt. 
+
+Updated translations:
+ * Dafydd Harries (cy) ;
+ * Laurent Sansonetti (fr) ;
+ * Masao Mutoh (ja). 
+
+================
 Alexandria 0.2.0
 ================
 
