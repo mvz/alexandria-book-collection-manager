@@ -1,3 +1,14 @@
+2005-02-18  Javier Fernández-Sanguino Peña  <jfs@debian.org>
+
+	* lib/alexandria/book_providers/mcu.rb:
+
+	Added.
+
+	* lib/alexandria/book_providers.rb,
+	  schemas/alexandria.schemas:
+
+	Follow previous change.
+
 2005-02-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
