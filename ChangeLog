@@ -1,3 +1,9 @@
+2004-07-31  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/book_providers.rb:
+
+	Replace "TooMuchResultsError" with "TooManyResultsError".
+
 2004-07-24  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/library.rb:

@@ -27,7 +27,7 @@ module Alexandria
 
         class SearchError < StandardError; end
         class NoResultsError < SearchError; end
-        class TooMuchResultsError < SearchError; end
+        class TooManyResultsError < SearchError; end
         class InvalidSearchTypeError < SearchError; end 
 
     	def self.search(criterion, type)
@@ -44,7 +44,7 @@ module Alexandria
                         when NoResultsError
                             _("No results were found.  Make sure your search criterion is spelled correctly, and try again.")
 
-                        when TooMuchResultsError
+                        when TooManyResultsError
                             _("Too much results for that search.")
 
                         when InvalidSearchTypeError
