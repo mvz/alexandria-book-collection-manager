@@ -322,15 +322,15 @@ module Alexandria
         end
         
         def self.import_as_isbn_list(name, filename)
-            isbn_list = IO.readlines(filename)
-            unless isbn_list.all? { |isbn| canonicalise_isbn(isbn) rescue nil }
-                return nil 
-            end
+            isbn_list = IO.readlines(filename).map do |line|
+                canonicalise_isbn(line.chomp) rescue nil
+            end 
+            return nil unless isbn_list.all?
             library = load(name)
             isbn_list.each do |isbn|
                 # FIXME: handle provider exceptions
                 book, cover_uri = \
-                    Alexandria::BookProviders.isbn_search(isbn.chomp)
+                    Alexandria::BookProviders.isbn_search(isbn)
                 library.save_cover(book, cover_uri)
                 library << book
                 library.save(book)

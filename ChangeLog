@@ -1,3 +1,9 @@
+2004-12-15  Takayuki Kusano  <AE5T-KSN@asahi-net.or.jp>
+
+	* lib/alexandria/library.rb:
+
+	Improved the ISBN-list import code to support EAN.
+
 2004-12-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/import_dialog.rb,
