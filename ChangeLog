@@ -1,5 +1,9 @@
 2004-05-24  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/preferences_dialog.glade:
+
+	Fixed the wording (called -> queried), thanks to Dafydd.
+
 	* TODO:
 
 	Added.
