@@ -5,7 +5,7 @@ Before next release:
 
 [X] Improving the "Add New Book" dialog to allow books to search books by
     title alternatively to ISBN (Laurent)
-[ ] Writing a proxis.be provider (Pascal)
+[X] Writing a proxis.be provider (Pascal)
 
 Future releases:
 
