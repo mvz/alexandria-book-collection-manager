@@ -21,6 +21,7 @@ require 'gnome2'
 
 require 'alexandria/ui/icons'
 require 'alexandria/ui/glade_base'
+require 'alexandria/ui/completion_models'
 require 'alexandria/ui/alert_dialog'
 require 'alexandria/ui/about_dialog'
 require 'alexandria/ui/book_properties_dialog_base'

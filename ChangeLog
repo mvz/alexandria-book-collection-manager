@@ -1,3 +1,18 @@
+2005-04-01  Laurent Sansonetti  <lrz@gnome.org>
+
+	Introduced completion in the manual add book and book properties dialogs.
+	The design is not yet finished, and is susceptible to change.
+
+	* lib/alexandria/ui/completion_models.rb:
+
+	Added.
+
+	* lib/alexandria/ui.rb,
+	  lib/alexandria/ui/book_properties_dialog_base.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Follow latest change.
+
 === Alexandria 0.5.1 ===
 
 2005-03-27  Laurent Sansonetti  <lrz@gnome.org>

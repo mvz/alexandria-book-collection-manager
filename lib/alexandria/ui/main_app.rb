@@ -62,7 +62,7 @@ module UI
             @response == Gtk::Dialog::RESPONSE_OK
         end
     end
-    
+
     class MainApp < GladeBase 
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -201,17 +201,25 @@ module UI
 
         def load_libraries
             @libraries = Library.loadall
+            CompletionModels.instance.libraries = @libraries
+        end
+
+        def cache_scaled_icon(icon, width, height)
+            @cache ||= {}
+            @cache[[icon, width, height]] ||= icon.scale(width, height)
         end
 
         ICON_TITLE_MAXLEN = 20   # characters
         ICON_WIDTH = 48          # pixels
+        REDUCE_TITLE_REGEX = /^(.{#{ICON_TITLE_MAXLEN}}).*$/
         def fill_iter_with_book(iter, book)
             icon = Icons.cover(selected_library, book)
-            iter[Columns::COVER_LIST] = icon.scale(20, 25)
+            iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
             new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
-            iter[Columns::COVER_ICON] = icon.scale(ICON_WIDTH, new_height)
+            iter[Columns::COVER_ICON] = cache_scaled_icon(icon, ICON_WIDTH, 
+                                                                new_height)
             iter[Columns::TITLE] = book.title
-            title = book.title.sub(/^(.{#{ICON_TITLE_MAXLEN}}).*$/, '\1...')
+            title = book.title.sub(REDUCE_TITLE_REGEX, '\1...')
             iter[Columns::TITLE_REDUCED] = title
             iter[Columns::AUTHORS] = book.authors.join(', ')
             iter[Columns::ISBN] = book.isbn
@@ -222,8 +230,8 @@ module UI
             iter[Columns::IDENT] = book.ident
         end
 
-        def append_book(book)
-            iter = @model.append 
+        def append_book(book, tail=nil)
+            iter = tail ? @model.insert_after(tail) : @model.append
             fill_iter_with_book(iter, book)
             return iter
         end
@@ -268,7 +276,7 @@ module UI
                                                    : Gtk::SORT_ASCENDING)
             @filtered_model.refilter    # force redraw
         end
-        
+
         def setup_books_listview
             # first column
             @listview.model = @listview_model
@@ -281,11 +289,29 @@ module UI
                 cell.pixbuf = iter[Columns::COVER_LIST]
             end        
             renderer = Gtk::CellRendererText.new
-            column.pack_start(renderer, true) 
+=begin
+            # Editable tree views are behaving strangely
+            renderer.signal_connect('editing_started') do |cell, entry, 
+                                                           path_string|
+                entry.complete_titles
+            end
+            renderer.signal_connect('edited') do |cell, path_string, new_string|
+                path = Gtk::TreePath.new(path_string)
+                path = @listview_model.convert_path_to_child_path(path)
+                path = @filtered_model.convert_path_to_child_path(path)
+                iter = @model.get_iter(path)
+                book = book_from_iter(selected_library, iter)
+                book.title = new_string
+                @iconview.freeze
+                fill_iter_with_book(iter, book)
+                @iconview.unfreeze
+            end
+=end
+            column.pack_start(renderer, true)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 iter = @listview_model.convert_iter_to_child_iter(iter)
                 iter = @filtered_model.convert_iter_to_child_iter(iter)
-                cell.text = iter[Columns::TITLE]
+                cell.text, cell.editable = iter[Columns::TITLE], false #true
             end
             column.sort_column_id = Columns::TITLE 
             column.resizable = true
@@ -299,10 +325,11 @@ module UI
                 [ _("Binding"), Columns::EDITION ]
             ]
             names.each do |title, iterid|
-                column = Gtk::TreeViewColumn.new(title, renderer, 
+                renderer = Gtk::CellRendererText.new
+                column = Gtk::TreeViewColumn.new(title, renderer,
                                                  :text => iterid)
-                column.resizable = true
                 column.sort_column_id = iterid
+                column.resizable = true
                 @listview.append_column(column)
             end
 
@@ -344,15 +371,17 @@ module UI
                 cols[i].visible = cols_visibility[i]
             end
         end
-      
+ 
         def refresh_books
             # Clear the views.
             @model.clear
-
+    
             @iconview.freeze
-            selected_library.each { |x| append_book(x) }
+            tail = nil
+            selected_library.each { |book| tail = append_book(book, tail) }
             @filtered_model.refilter
             @iconview.unfreeze
+            @listview.columns_autosize
 
 =begin      
             # Append books - we do that in a separate thread.
@@ -666,7 +695,7 @@ module UI
                 if books.length == 1
                     book = books.first
                     iter = iter_from_book(book)
-                    BookPropertiesDialog.new(@main_app, 
+                    BookPropertiesDialog.new(@main_app,
                                              selected_library, 
                                              book) do |modified_book|
                         @iconview.freeze
@@ -978,7 +1007,8 @@ module UI
             Gtk::AboutDialog.set_email_hook do |about, link|
                 open_email_client("mailto:" + link)
             end
-            
+ 
+            # The active model. 
             @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
                                         String, String, String, String, 
                                         String, Integer, String)

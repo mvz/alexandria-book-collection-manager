@@ -23,12 +23,16 @@ module UI
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         COVER_MAXWIDTH = 140    # pixels
-        
+
         def initialize(parent, cover_file)
             super('book_properties_dialog.glade')
             @book_properties_dialog.transient_for = parent
             @parent, @cover_file = parent, cover_file
-            
+
+            @entry_title.complete_titles
+            @entry_publisher.complete_publishers
+            @entry_edition.complete_editions
+
             @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
             @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
             renderer = Gtk::CellRendererText.new
@@ -36,6 +40,10 @@ module UI
                 path = Gtk::TreePath.new(path_string)
                 iter = @treeview_authors.model.get_iter(path)
                 iter[0] = new_text 
+            end
+            renderer.signal_connect('editing_started') do |cell, entry, 
+                                                           path_string|
+                entry.complete_authors
             end
             col = Gtk::TreeViewColumn.new("", renderer, 
                                           :text => 0, 
