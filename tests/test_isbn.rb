@@ -14,6 +14,10 @@ class TestISBN < Test::Unit::TestCase
 
     def test_valid_EAN
         assert Alexandria::Library.valid_ean?("9780345431929")
+
+        # Regression test: this EAN has a checksum of 10, which should be
+        # treated like a checksum of 0.
+        assert Alexandria::Library.valid_ean?("9784047041790")
     end
 
     def test_canonical_ISBN

@@ -98,7 +98,7 @@ module Alexandria
                 end
             end
         end
-        
+
         def self.extract_numbers(isbn)
             raise "Invalid ISBN '#{isbn}'" if isbn == nil
 
@@ -126,8 +126,8 @@ module Alexandria
         end
 
         def self.ean_checksum(numbers)
-            10 - ([1, 3, 5, 7, 9, 11].map { |x| numbers[x] }.sum * 3 +
-                  [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum) % 10
+            (10 - ([1, 3, 5, 7, 9, 11].map { |x| numbers[x] }.sum * 3 +
+                  [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum)) % 10
         end
 
         def self.valid_ean?(ean)

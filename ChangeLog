@@ -1,3 +1,14 @@
+2005-01-24  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/library.rb:
+
+	Fix tracker bug #1026, where EAN numbers with a checksum of 10 were
+	incorrectly marked as invalid.
+
+	* test/test_isbn.rb:
+
+	Add a regression test for bug #1026.
+
 2005-01-20  Laurent Sansonetti  <lrz@gnome.org>
 
 	* Updated all copyrights to 2005 (except .po files).
