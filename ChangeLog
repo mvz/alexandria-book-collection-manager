@@ -1,5 +1,28 @@
 2004-04-16  Laurent Sansonetti  <lrz@gnome.org>
 
+	* HACKING:
+
+	New file.
+
+	* lib/alexandria.rb,
+	  AUTHORS:
+
+	Added Daffyd and Zachary.
+
+	* bin/alexandria,
+	  lib/alexandria.rb,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui.rb,
+	  lib/alexandria/ui/about_dialog.rb,
+	  lib/alexandria/ui/alert_dialog.rb,
+	  lib/alexandria/ui/glade_base.rb,
+	  lib/alexandria/ui/icons.rb,
+	  lib/alexandria/ui/info_book_dialog.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	Prefixed with GPL header (required by the the license).
+
 	* data/alexandria/glade/main_app.glade:
 
 	Set the 'Rules Hint' property of tree views to true.
