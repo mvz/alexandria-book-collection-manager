@@ -1,3 +1,16 @@
+2004-06-19  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb,
+	  lib/alexandria/book.rb:
+
+	- Improved the add new book dialog to allow searches by authors and
+	  keyword ;
+	- Validate ISBNs before sending them to providers ;
+	- Perform an ISBN search when enter is detected in the ISBN entry ;
+	- Fixed a bug in the Amazon provider, when some books that are not
+	  released yet don't have a 'manufacturer' attribute.
+
 2004-06-19  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/book.rb:

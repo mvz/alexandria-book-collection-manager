@@ -153,7 +153,8 @@ module Alexandria
         include Singleton
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-		SEARCH_BY_ISBN, SEARCH_BY_TITLE = 1, 2
+
+		SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS, SEARCH_BY_KEYWORD = (0..3).to_a 
 
     	def self.search(criterion, type)
             self.instance.each do |factory|
@@ -169,10 +170,6 @@ module Alexandria
 
 		def self.isbn_search(criterion)
 			self.search(criterion, SEARCH_BY_ISBN)
-		end
-
-		def self.title_search(criterion)
-			self.search(criterion, SEARCH_BY_TITLE)
 		end
 
         class Preferences < Array
@@ -240,20 +237,31 @@ module Alexandria
                
             def search(criterion, type)
                 prefs.read
-                
+
 				req = Amazon::Search::Request.new(prefs["dev_token"])
                 req.locale = prefs["locale"]
 				
 				products = []
-				if type == Alexandria::BookProviders::SEARCH_BY_ISBN
-					req.asin_search(criterion) { |product| products << product }
-                	raise _("Too many results") if products.length > 1 # shouldn't happen
-				else
-					req.keyword_search(criterion) do |product|
-						if /#{criterion}/i.match(product.product_name)
-							products << product
-						end
-					end  
+				case type
+                    when Alexandria::BookProviders::SEARCH_BY_ISBN
+					    req.asin_search(criterion) { |product| products << product }
+                	    raise _("Too many results") if products.length > 1 # shouldn't happen
+			
+                    when Alexandria::BookProviders::SEARCH_BY_TITLE
+					    req.keyword_search(criterion) do |product|
+						    if /#{criterion}/i.match(product.product_name)
+							    products << product
+						    end
+					    end
+                    
+                    when Alexandria::BookProviders::SEARCH_BY_AUTHORS
+					    req.author_search(criterion) { |product| products << product }
+                    
+                    when Alexandria::BookProviders::SEARCH_BY_KEYWORD
+					    req.keyword_search(criterion) { |product| products << product }
+
+                    else
+                        raise _("Invalid search type")
 				end
  
 				results = []
@@ -261,9 +269,9 @@ module Alexandria
                     next unless product.catalog == 'Book'
                     conv = proc { |str| GLib.convert(str, "ISO-8859-1", "UTF-8") }
                     book = Book.new(conv.call(product.product_name),
-                                    (product.authors.map { |x| conv.call(x) } rescue [ "n/a" ]),
+                                    (product.authors.map { |x| conv.call(x) } rescue [ _("n/a") ]),
                                     conv.call(product.isbn),
-                                    conv.call(product.manufacturer),
+                                    (conv.call(product.manufacturer) rescue _("n/a")),
                                     conv.call(product.media))
 
                     results << [ book, product.image_url_small, product.image_url_medium ]

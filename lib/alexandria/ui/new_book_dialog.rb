@@ -19,6 +19,7 @@ module Alexandria
 module UI
     class NewBookDialog < GladeBase
         include GetText
+        extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize(parent, libraries, selected_library=nil, &block)
@@ -44,10 +45,11 @@ module UI
         def on_criterion_toggled(item)
             ok = item == @isbn_radiobutton
             @entry_isbn.sensitive = ok 
-            @entry_title.sensitive = !ok 
+            @combo_search.sensitive = !ok 
+            @entry_search.sensitive = !ok 
             @button_find.sensitive = !ok
             @scrolledwindow.visible = !ok
-            on_changed(ok ? @entry_isbn : @entry_title)
+            on_changed(ok ? @entry_isbn : @entry_search)
             @button_add.sensitive = !@treeview_results.selection.selected.nil? unless ok
         end
 
@@ -58,7 +60,15 @@ module UI
 
         def on_find
             begin
-                @results = Alexandria::BookProviders.title_search(@entry_title.text.strip)
+                mode = case @combo_search.entry.text
+                    when _("by title")
+                        BookProviders::SEARCH_BY_TITLE 
+                    when _("by authors") 
+                        BookProviders::SEARCH_BY_AUTHORS
+                    when _("by keyword") 
+                        BookProviders::SEARCH_BY_KEYWORD
+                end
+                @results = Alexandria::BookProviders.search(@entry_search.text.strip, mode)
                 if @results.empty?
                     raise _("No results were found.  Make sure all words are spelled correctly, and try again.")
                 else
@@ -93,6 +103,9 @@ module UI
                 if @isbn_radiobutton.active?
                     # Perform the ISBN search via the providers.
                     isbn = @entry_isbn.text.delete('-')
+                    unless Library.valid_isbn?(isbn)
+                        raise _("Couldn't validate the EAN/ISBN you provided.  Make sure it is written correcty, and try again.")
+                    end 
                     assert_not_exist(library, isbn)
                     book, small_cover, medium_cover = Alexandria::BookProviders.isbn_search(isbn)
                 else
