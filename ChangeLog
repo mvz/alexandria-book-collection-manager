@@ -1,5 +1,10 @@
 2005-03-25  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/preferences_dialog.glade:
+
+	- Use alternating colours for rows in the providers list ;
+	- Make the dialog resizable.
+	
 	* lib/alexandria/library.rb:
 
 	Preserves backward compatibility when saving a book by resetting the
