@@ -1,3 +1,16 @@
+2004-09-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb,
+	  lib/alexandria/ui/export_dialog.rb:
+
+	Introduced an experimental ONIX export.
+
+	* lib/alexandria/ui/new_book_dialog.rb,
+	  data/alexandria/glade/new_book_dialog.glade:
+
+	- Migrated another GtkCombo to GtkComboBox ;
+	- Fixed a bug introduced in the previous commit.
+
 2004-09-11  Laurent Sansonetti  <lrz@gnome.org>
 
 	* README:

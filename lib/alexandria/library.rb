@@ -21,6 +21,7 @@ require 'fileutils'
 require 'gdk_pixbuf2'
 require 'rexml/document'
 require 'tempfile'
+require 'etc'
 
 class Array
     def sum
@@ -196,10 +197,10 @@ module Alexandria
             @name = name
         end
 
-        def export_as_xml_archive(filename)
-            filename += ".xml.tar.bz2" if File.extname(filename).empty?
+        def export_as_onix_xml_archive(filename)
+            filename += ".xml.tbz2" if File.extname(filename).empty?
             File.open(File.join(Dir.tmpdir, "library.xml"), "w") do |io|
-                to_xml_doc.write(io, 0)
+                to_onix_document.write(io, 0)
             end
             Dir.chdir(self.path) do  
                 system("tar -cjf \"#{filename}\" *.jpg -C \"#{Dir.tmpdir}\" library.xml")
@@ -214,30 +215,63 @@ module Alexandria
             @name = name
         end
 
-        def to_xml_doc
+        ONIX_DTD_URL = "http://www.editeur.org/onix/2.1/reference/onix-international.dtd"
+        def to_onix_document
             doc = REXML::Document.new
-            root = doc.add_element('library')
-            root.add_element('name').text = name
-            each do |book|
-                elem = root.add_element('book')
-                elem.add_element('isbn').text = book.isbn
-                elem.add_element('title').text = book.title
+            doc << REXML::XMLDecl.new
+            doc << REXML::DocType.new('ONIXMessage', "SYSTEM \"#{ONIX_DTD_URL}\"")
+            msg = doc.add_element('ONIXMessage')
+            header = msg.add_element('Header')
+            now = Time.now
+            header.add_element('SentDate').text = "%.4d%.2d%.2d%.2d%.2d" % [ 
+                now.year, now.month, now.day, now.hour, now.min 
+            ]
+            header.add_element('FromPerson').text = Etc.getlogin
+            header.add_element('MessageNote').text = name
+            each_with_index do |book, idx|
+                # fields that are missing: edition and rating.
+                prod = msg.add_element('Product')
+                prod.add_element('RecordSourceName').text = "Alexandria " + VERSION
+                prod.add_element('RecordReference').text = idx.to_s
+                prod.add_element('NotificationType').text = "03" # confirmed
+                prod.add_element('ProductForm').text = 'BA' # book
+                prod.add_element('ISBN').text = book.isbn
+                prod.add_element('DistinctiveTitle').text = book.title
                 unless book.authors.empty?
                     book.authors.each do |author|
-                        elem.add_element('author').text = author
+                        elem = prod.add_element('Contributor')
+                        elem.add_element('ContributorRole').text = 'A01' # author
+                        elem.add_element('PersonName').text = author
                     end
                 end
-                elem.add_element('publisher').text = book.publisher
-                elem.add_element('edition').text = book.edition
-                elem.add_element('isbn').text = book.isbn
-                elem.add_element('rating').text = book.rating if book.rating
+                prod.add_element('PublisherName').text = book.publisher
                 if book.notes and not book.notes.empty?
-                    elem.add_element('notes').text = book.notes 
+                    elem = prod.add_element('OtherText')
+                    elem.add_element('TextTypeCode').text = '12' # reader description
+                    elem.add_element('TextFormat').text = '00' # ASCII
+                    elem.add_element('Text').text = book.notes 
                 end
-                elem.add_element('small_cover').text = book.isbn + SMALL_COVER_EXT
-                elem.add_element('medium_cover').text = book.isbn + MEDIUM_COVER_EXT
+                if File.exists?(small_cover(book))
+                    elem = prod.add_element('MediaFile')
+                    elem.add_element('MediaFileTypeCode').text = '07' # front cover thumbnail
+                    elem.add_element('MediaFileFormatCode').text = '03' # jpeg
+                    elem.add_element('MediaFileLinkTypeCode').text = '06' # filename
+                    elem.add_element('MediaFileLink').text = book.isbn + SMALL_COVER_EXT
+                end
+                if File.exists?(medium_cover(book))
+                    elem = prod.add_element('MediaFile')
+                    elem.add_element('MediaFileTypeCode').text = '04' # front cover image
+                    elem.add_element('MediaFileFormatCode').text = '03' # jpeg
+                    elem.add_element('MediaFileLinkTypeCode').text = '06' # filename
+                    elem.add_element('MediaFileLink').text = book.isbn + MEDIUM_COVER_EXT
+                end
+                    BookProviders.each do |provider|
+                    elem = prod.add_element('ProductWebSite')
+                    elem.add_element('ProductWebsiteDescription').text = provider.fullname
+                    elem.add_element('ProductWebsiteLink').text = provider.url(book)
+                end
             end
-            doc
+            return doc
         end
     end
 end

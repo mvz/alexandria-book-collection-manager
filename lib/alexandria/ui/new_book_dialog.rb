@@ -55,7 +55,8 @@ module UI
             col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, :text => 0)
             @treeview_results.append_column(col)
             @entry_isbn.grab_focus
-
+            @combo_search.active = 0
+            
             if File.exist?(Preferences.instance.cuecat_device)
               @cuecat_image.pixbuf = Icons::CUECAT
               create_scanner_input
@@ -89,12 +90,12 @@ module UI
 
         def on_find
             begin
-                mode = case @combo_search.entry.text
-                    when _("by title")
+                mode = case @combo_search.active
+                    when 0
                         BookProviders::SEARCH_BY_TITLE 
-                    when _("by authors") 
+                    when 1 
                         BookProviders::SEARCH_BY_AUTHORS
-                    when _("by keyword") 
+                    when 2 
                         BookProviders::SEARCH_BY_KEYWORD
                 end
                 @results = Alexandria::BookProviders.search(@entry_search.text.strip, mode)
@@ -130,7 +131,7 @@ module UI
         def on_add
             return unless @button_add.sensitive?
             begin
-                library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
+                library = @libraries.find { |x| x.name == @combo_libraries.active_iter[1] }
                 books_to_add = []                
 
                 if @isbn_radiobutton.active?
