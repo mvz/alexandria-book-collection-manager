@@ -1,0 +1,402 @@
+# Alexandria yn Gymraeg.
+# This file is distributed under the same license as the Alexandria package.
+# Dafydd Harries <daf@muse.19inch.net>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: alexandria\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-11 19:38+0100\n"
+"PO-Revision-Date: 2004-06-12 18:26+0100\n"
+"Last-Translator: Dafydd Harries <daf@muse.19inch.net>\n"
+"Language-Team: Welsh <cy@pengwyn.linux.org.uk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../lib/alexandria/book.rb:75
+msgid "My Library"
+msgstr "Fy Llyfrgell"
+
+#: ../lib/alexandria/book.rb:141
+msgid "Couldn't reach the provider '%s': timeout expired."
+msgstr "Methwyd cyrraedd y darparwr '%s': terfyn aros."
+
+#: ../lib/alexandria/book.rb:203
+msgid "Locale site to contact"
+msgstr "Safle lleol i'w gysylltu"
+
+#: ../lib/alexandria/book.rb:205
+msgid "Development token"
+msgstr "Tocyn datblygu"
+
+#: ../lib/alexandria/book.rb:206
+msgid "Associate ID"
+msgstr "ID Partner"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:49
+msgid "'%s' already exists in '%s' (titled '%s')."
+msgstr "Mae '%s' yn bodoli yn '%s' eisioes (gyda'r teitl '%s')."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:62
+msgid "Couldn't add book"
+msgstr "Methwyd ychwanegu'r llyfr"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:25
+msgid "Preferences for %s"
+msgstr "Hoffteray ar gyfer %s"
+
+#: ../lib/alexandria/ui/main_app.rb:79
+msgid "'%s' selected"
+msgstr "Dewiswyd '%s'"
+
+#: ../lib/alexandria/ui/main_app.rb:81
+msgid "%d books selected"
+msgstr "%d llyfr wedi eu dewis"
+
+#: ../lib/alexandria/ui/main_app.rb:120
+msgid "Untitled %d"
+msgstr "Dideitl %d"
+
+#: ../lib/alexandria/ui/main_app.rb:152
+msgid "Are you sure you want to permanently delete '%s'?"
+msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%s' am byth?"
+
+#: ../lib/alexandria/ui/main_app.rb:154
+msgid "Are you sure you want to permanently delete '%s' which has one book?"
+msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%s', sydd ag un llygr, "
+"am byth?"
+
+#: ../lib/alexandria/ui/main_app.rb:156
+msgid "Are you sure you want to permanently delete '%s' which has %d books?"
+msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%'s, sydd a %d llyfr, "
+"am byth?"
+
+#: ../lib/alexandria/ui/main_app.rb:169
+msgid "Are you sure you want to permanently delete '%s' from '%s'?"
+msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%s' o '%s' am byth?"
+
+#: ../lib/alexandria/ui/main_app.rb:365
+msgid "Unable to launch the web browser"
+msgstr "Ni ellir lansio'r porwr gwe"
+
+#: ../lib/alexandria/ui/main_app.rb:366
+msgid ""
+"Check out that a web browser is configured as default (Applications -> "
+"Desktop Preferences -> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Gwiriwch fod porwr gwe wedi ei gyflunio fel rhagosodiad (Rhaglenni -> "
+"Hoffterau'r Penbwrdd -> Pelach -> Rhaglenni Amgen) a ceisiwch eto."
+
+#: ../lib/alexandria/ui/main_app.rb:424
+msgid "Title"
+msgstr "Teitl"
+
+#: ../lib/alexandria/ui/main_app.rb:439
+msgid "Authors"
+msgstr "Awduron"
+
+#: ../lib/alexandria/ui/main_app.rb:439
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ../lib/alexandria/ui/main_app.rb:439
+msgid "Publisher"
+msgstr "Cyhoeddwr"
+
+#: ../lib/alexandria/ui/main_app.rb:439
+msgid "Edition"
+msgstr "Rhifyn"
+
+#: ../lib/alexandria/ui/main_app.rb:448
+msgid "Rating"
+msgstr "Serennau"
+
+#: ../lib/alexandria/ui/main_app.rb:513
+msgid "Library"
+msgstr "Llyfrgell"
+
+#: ../lib/alexandria/ui/main_app.rb:527
+msgid "Invalid library name '%s'"
+msgstr "Enw llyfrgell annilys '%s'"
+
+#: ../lib/alexandria/ui/main_app.rb:528
+msgid "The name provided contains the illegal character '<i>%s</i>'."
+msgstr "Mae'r enw a rhoddwyd yn cynnwys y nod annilys '<i>%s</i>'."
+
+#: ../lib/alexandria.rb:25
+msgid "A program to help you manage your book collection."
+msgstr "Rhaglen i'ch helpu chi drefnu eich casgliad llyfrau."
+
+#: ../data/alexandria/glade/main_app.glade:12
+msgid "Alexandria"
+msgstr "Alexandria"
+
+#: ../data/alexandria/glade/main_app.glade:57
+msgid "_Library"
+msgstr "_Llyfrgell"
+
+#: ../data/alexandria/glade/main_app.glade:66
+msgid "_New..."
+msgstr "_Newydd..."
+
+#: ../data/alexandria/glade/main_app.glade:88
+msgid "_Add Book..."
+msgstr "_Ychwanegu Llyfr..."
+
+#: ../data/alexandria/glade/main_app.glade:116
+msgid "_Properties"
+msgstr "_Priodweddau"
+
+#: ../data/alexandria/glade/main_app.glade:164
+#: ../data/alexandria/glade/main_app.glade:1062
+#: ../data/alexandria/glade/main_app.glade:1264
+msgid "Select _All"
+msgstr "Dewis _Popeth"
+
+#: ../data/alexandria/glade/main_app.glade:174
+#: ../data/alexandria/glade/main_app.glade:1071
+#: ../data/alexandria/glade/main_app.glade:1273
+msgid "Dese_lect All"
+msgstr "Datddewis P_opeth"
+
+#: ../data/alexandria/glade/main_app.glade:190
+#: ../data/alexandria/glade/main_app.glade:1213
+msgid "_Delete"
+msgstr "_Dileu"
+
+#: ../data/alexandria/glade/main_app.glade:218
+msgid "_Search"
+msgstr "_Chwilio"
+
+#: ../data/alexandria/glade/main_app.glade:240
+msgid "_Clear Results"
+msgstr "C_lirio'r Canlyniadau"
+
+#: ../data/alexandria/glade/main_app.glade:276
+msgid "_Refresh"
+msgstr "_Adnewyddu"
+
+#: ../data/alexandria/glade/main_app.glade:304
+msgid "_Side pane"
+msgstr "_Cwarel ochr"
+
+#: ../data/alexandria/glade/main_app.glade:315
+msgid "_Toolbar"
+msgstr "Blwch _offer"
+
+#: ../data/alexandria/glade/main_app.glade:325
+msgid "_Statusbar"
+msgstr "Bar _statws"
+
+#: ../data/alexandria/glade/main_app.glade:341
+#: ../data/alexandria/glade/main_app.glade:1086
+#: ../data/alexandria/glade/main_app.glade:1288
+msgid "Arran_ge Icons"
+msgstr "Trefnu _Eiconau"
+
+#: ../data/alexandria/glade/main_app.glade:351
+#: ../data/alexandria/glade/main_app.glade:1095
+#: ../data/alexandria/glade/main_app.glade:1297
+msgid "By _Title"
+msgstr "Yn Ôl _Teitl"
+
+#: ../data/alexandria/glade/main_app.glade:361
+#: ../data/alexandria/glade/main_app.glade:1105
+#: ../data/alexandria/glade/main_app.glade:1307
+msgid "By _Authors"
+msgstr "Yn Ôl _Awdur"
+
+#: ../data/alexandria/glade/main_app.glade:372
+#: ../data/alexandria/glade/main_app.glade:1116
+#: ../data/alexandria/glade/main_app.glade:1318
+msgid "By _ISBN"
+msgstr "Yn Ôl _ISBN"
+
+#: ../data/alexandria/glade/main_app.glade:383
+#: ../data/alexandria/glade/main_app.glade:1127
+#: ../data/alexandria/glade/main_app.glade:1329
+msgid "By _Publisher"
+msgstr "Yn Ôl _Cyhoeddwr"
+
+#: ../data/alexandria/glade/main_app.glade:394
+#: ../data/alexandria/glade/main_app.glade:1138
+#: ../data/alexandria/glade/main_app.glade:1340
+msgid "By _Edition"
+msgstr "Yn Ôl _Rhifyn"
+
+#: ../data/alexandria/glade/main_app.glade:405
+#: ../data/alexandria/glade/main_app.glade:1149
+#: ../data/alexandria/glade/main_app.glade:1351
+msgid "By _Rating"
+msgstr "Yn Ôl _Serennau"
+
+#: ../data/alexandria/glade/main_app.glade:422
+#: ../data/alexandria/glade/main_app.glade:1166
+#: ../data/alexandria/glade/main_app.glade:1368
+msgid "Re_versed Order"
+msgstr "Trefn _Gwrthdroedig"
+
+#: ../data/alexandria/glade/main_app.glade:442
+#: ../data/alexandria/glade/main_app.glade:1186
+#: ../data/alexandria/glade/main_app.glade:1388
+msgid "View as _Icons"
+msgstr "Gweld fel _Eiconau"
+
+#: ../data/alexandria/glade/main_app.glade:452
+#: ../data/alexandria/glade/main_app.glade:1196
+#: ../data/alexandria/glade/main_app.glade:1398
+msgid "View as _List"
+msgstr "Gweld fel _Rhestr"
+
+#: ../data/alexandria/glade/main_app.glade:475
+msgid "Submit _Bug Report"
+msgstr "Cyflwyno Adroddiad _Nam"
+
+#: ../data/alexandria/glade/main_app.glade:637
+msgid "Title contains"
+msgstr "Mae'r teitl yn cynnwys"
+
+#: ../data/alexandria/glade/main_app.glade:646
+msgid "Authors contain"
+msgstr "Mae'r awduron yn cynnwys"
+
+#: ../data/alexandria/glade/main_app.glade:655
+msgid "ISBN contains"
+msgstr "Mae'r ISBN yn cynnwys"
+
+#: ../data/alexandria/glade/main_app.glade:664
+msgid "Publisher contains"
+msgstr "Mae'r cyhoeddwr yn cynnwys"
+
+#: ../data/alexandria/glade/main_app.glade:673
+msgid "Notes contain"
+msgstr "Mae'r nodiadau yn cynnwys"
+
+#: ../data/alexandria/glade/main_app.glade:706
+#: ../data/alexandria/glade/new_book_dialog.glade:171
+#: ../data/alexandria/glade/new_book_dialog.glade:228
+msgid "*"
+msgstr "*"
+
+#: ../data/alexandria/glade/main_app.glade:751
+msgid "View as Icons"
+msgstr "Gweld fel Eiconau"
+
+#: ../data/alexandria/glade/main_app.glade:760
+msgid "View as List"
+msgstr "Gweld fel Rhestr"
+
+#: ../data/alexandria/glade/main_app.glade:815
+msgid "_Libraries:"
+msgstr "_Llyfrgellau:"
+
+#: ../data/alexandria/glade/main_app.glade:1237
+msgid "_Add a Book"
+msgstr "_Ychwanegu Llyfr"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:126
+msgid "<span weight=\"bold\">Title:</span>"
+msgstr "<span weight=\"bold\">Teitl:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:175
+msgid "<span weight=\"bold\">Authors:</span>"
+msgstr "<span weight=\"bold\">Awduron:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:224
+msgid "<span weight=\"bold\">ISBN:</span>"
+msgstr "<span weight=\"bold\">ISBN:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:273
+msgid "<span weight=\"bold\">Publisher:</span>"
+msgstr "<span weight=\"bold\">Cyhoeddwr:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:322
+msgid "<span weight=\"bold\">Edition:</span>"
+msgstr "<span weight=\"bold\">Rhifyn:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:371
+msgid "<span weight=\"bold\">Rating:</span>"
+msgstr "<span weight=\"bold\">Serennau:</span>"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:544
+msgid "General"
+msgstr "Cyffredinol"
+
+#: ../data/alexandria/glade/info_book_dialog.glade:599
+msgid "Notes"
+msgstr "Nodiadau"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:9
+msgid "Preferences"
+msgstr "Hoffterau"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:76
+msgid "<b>Visible Columns</b>"
+msgstr "<b>Colofnau Gweladwy</b>"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:108
+msgid "_Authors"
+msgstr "_Awduron"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:131
+msgid "_Edition"
+msgstr "_Rhifyn"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:154
+msgid "_Rating"
+msgstr "_Serennau"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:177
+msgid "_ISBN"
+msgstr "_ISBN"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:200
+msgid "_Publisher"
+msgstr "_Cyhoeddwr"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:235
+msgid "List Columns"
+msgstr "Colofnau Rhestr"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:261
+msgid "<b>_Providers</b>"
+msgstr "<b>_Darparwyr</b>"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:368
+msgid "_Setup"
+msgstr "_Cyfluniad"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:433
+msgid ""
+"Providers are libraries that supply information about books.  Some of them "
+"can be configured to get better results.  You can also customize the order "
+"in which they are queried."
+msgstr ""
+"Mae darparwyr yn lyfrgellau sy'n darparu gwybodaeth ynghylch llyfrau. Gellir "
+"cyflunio rhai ohonynt er mwyn cael canlyniadau gwell. Gallwch hefyd gyflunio "
+"y trefn caent eu holi ynddi."
+
+#: ../data/alexandria/glade/preferences_dialog.glade:460
+msgid "Providers"
+msgstr "Darparwyr"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:10
+msgid "Adding a Book"
+msgstr "Ychwanegu Llyfr"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:110
+msgid ""
+"Please provide an ISBN (International Standard Book Number) to search for, "
+"and select the library which the book will be added to."
+msgstr ""
+"Os gwelwch yn dda, rhowch ISBN (International Standard Book Number) i'w "
+"chwilio amdani a dewiswch y llyfrgell caiff y llyfr ei ychwanegu ati."
+
+#: ../data/alexandria/glade/new_book_dialog.glade:140
+msgid "_ISBN:"
+msgstr "_ISBN:"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:188
+msgid "_Library:"
+msgstr "_Llyfrgell:"
