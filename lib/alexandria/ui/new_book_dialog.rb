@@ -40,13 +40,14 @@ module UI
         def on_add
             begin
                 # First check that the book doesn't already exist in the library.
+                isbn = @entry_isbn.text.delete('-')
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
-                if book = library.find { |book| book.isbn == @entry_isbn.text }
+                if book = library.find { |book| book.isbn == isbn }
                     raise "'#{book.isbn}' already exists in '#{library.name}' (titled '#{book.title}')."
                 end
 
                 # Perform the search via the providers.
-                book, small_cover, medium_cover = Alexandria::BookProviders.search(@entry_isbn.text)
+                book, small_cover, medium_cover = Alexandria::BookProviders.search(isbn)
 
                 # Save the book in the library.
                 library.save(book, small_cover, medium_cover)

@@ -1,3 +1,14 @@
+2004-05-25  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	User is not able to enter ISBN which contains "-" character(s).
+
+	* TODO:
+
+	Updated (added rating support).
+
 2004-05-24  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/preferences_dialog.glade:
