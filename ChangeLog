@@ -1,3 +1,50 @@
+2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
+
+	Features the manual addition of books and the
+	move of books within libraries.
+
+	* data/alexandria/ui/menus.xml,
+	  data/alexandria/ui/popups.xml:
+
+	Added AddBookManual and Move tags.
+
+	* lib/alexandria.rb:
+
+	- Added more authors/translators ;
+	- Removed the documenters tab.
+
+	* data/alexandria/glade/info_book_dialog.glade,
+	  lib/alexandria/ui/info_book_dialog.rb:
+
+	Removed.
+
+	* lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/book_properties_dialog_base.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb,
+	  data/alexandria/glade/book_properties_dialog.glade:
+
+	Added.
+
+	* lib/alexandria/library.rb:
+
+	- Introduced Library.move ;
+	- Improved Library#save(book), to rename the .yaml
+	  file if the ISBN has changed.
+
+	* lib/alexandria/ui.rb:
+
+	Requires the new files.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Follow the changes related to the manual addition of
+	  books and the move of books;
+	- Clean up whitespace/indentation ;
+	- When renaming a library in the sidepane, do not try
+	  to check if a library already exists with the new
+	  name if the new name corresponds to the name of the
+	  selected library.
+
 2004-10-23  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/library.rb:

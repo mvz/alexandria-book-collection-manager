@@ -30,8 +30,8 @@ module UI
         def initialize
             super("main_app.glade")
             @prefs = Preferences.instance
-            initialize_ui
             load_libraries
+            initialize_ui
             build_books_listview
             build_sidepane
             on_books_selection_changed
@@ -77,7 +77,7 @@ module UI
             end
             @actiongroup["Properties"].sensitive = @actiongroup["OnlineInformation"].sensitive = books.length == 1
             @actiongroup["SelectAll"].sensitive = books.length < library.length
-            @actiongroup["Delete"].sensitive = @actiongroup["DeselectAll"].sensitive = !books.empty?
+            @actiongroup["Delete"].sensitive = @actiongroup["DeselectAll"].sensitive = @actiongroup["Move"].sensitive = !books.empty?
         end
 
         def on_switch_page
@@ -331,7 +331,8 @@ module UI
                                           "character '<i>%s</i>'.") % match[1])
                     elsif new_text.strip.empty?
                         ErrorDialog.new(@main_app, _("The library name can not be empty"))
-                    elsif @libraries.find { |library| library.name == new_text.strip }
+                    elsif x = @libraries.find { |library| library.name == new_text.strip } \
+                       and x.name != selected_library.name
                         ErrorDialog.new(@main_app, 
                                         _("The library can not be renamed"),
                                         _("There is already a library named " +
@@ -353,7 +354,8 @@ module UI
             if @prefs.maximized
                 @main_app.maximize
             else
-                @main_app.move(*@prefs.position) unless @prefs.position == [0, 0] 
+                @main_app.move(*@prefs.position) \
+                    unless @prefs.position == [0, 0] 
                 @main_app.resize(*@prefs.size)
                 @maximized = false
             end
@@ -370,7 +372,9 @@ module UI
             end
             action.activate
             unless @prefs.selected_library.nil?
-                library = @libraries.find { |x| x.name == @prefs.selected_library }
+                library = @libraries.find do |x|
+                    x.name == @prefs.selected_library
+                end
                 select_library(library) unless library.nil?
             end
         end
@@ -401,11 +405,15 @@ module UI
                 @libraries << library
                 iter = append_library(library)
                 @actiongroup["Sidepane"].active = true
-                @treeview_sidepane.set_cursor(iter.path, @treeview_sidepane.get_column(0), true)
+                @treeview_sidepane.set_cursor(iter.path, 
+                                              @treeview_sidepane.get_column(0), 
+                                              true)
             end
     
             on_add_book = proc do
-                NewBookDialog.new(@main_app, @libraries, selected_library) do |books, library|
+                NewBookDialog.new(@main_app, 
+                                  @libraries, 
+                                  selected_library) do |books, library|
                     if selected_library == library
                         on_refresh
                     else
@@ -414,13 +422,20 @@ module UI
                 end
             end
      
+            on_add_book_manual = proc do
+                NewBookDialogManual.new(@main_app, selected_library) do |book|
+                    on_refresh
+                end
+            end
+            
             on_import = proc {}
             on_export = proc { ExportDialog.new(@main_app, selected_library) }
         
             on_properties = proc do
                 books = selected_books
                 if books.length == 1
-                    InfoBookDialog.new(@main_app, selected_library, books.first) { on_refresh }
+                    BookPropertiesDialog.new(@main_app, selected_library, 
+                                             books.first) { on_refresh }
                 end
             end
 
@@ -432,7 +447,9 @@ module UI
             on_select_all = proc do
                 case @notebook.page
                     when 0
-                        @iconlist.num_icons.times { |i| @iconlist.select_icon(i) }
+                        @iconlist.num_icons.times do |i|
+                            @iconlist.select_icon(i)
+                        end
                     when 1
                         @listview.selection.select_all
                 end
@@ -507,13 +524,15 @@ module UI
                 ["LibraryMenu", nil, _("_Library")],
                 ["New", Gtk::Stock::NEW, _("_New"), "<control>L", nil, on_new],
                 ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", nil, on_add_book],
-                ["Import", nil, _("Import..."), "<control>I", nil, on_import],
-                ["Export", nil, _("Export..."), "<control><shift>E", nil, on_export],
+                ["AddBookManual", nil, _("Add Book _Manually..."), nil, nil, on_add_book_manual],
+                ["Import", nil, _("_Import..."), "<control>I", nil, on_import],
+                ["Export", nil, _("_Export..."), "<control><shift>E", nil, on_export],
                 ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, nil, on_properties],
                 ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", nil, on_quit],
                 ["EditMenu", nil, _("_Edit")],
                 ["SelectAll", nil, _("_Select All"), "<control>A", nil, on_select_all],
                 ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", nil, on_deselect_all],
+                ["Move", nil, _("_Move")],
                 ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", nil, on_delete],
                 ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", nil, on_search],
                 ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", nil, 
@@ -522,7 +541,7 @@ module UI
                 ["ViewMenu", nil, _("_View")],
                 ["Refresh", Gtk::Stock::REFRESH, _("_Refresh"), "<control>F", nil, proc { on_refresh }],
                 ["ArrangeIcons", nil, _("Arran_ge Icons")],
-                ["OnlineInformation", nil, _("Online _Information")],
+                ["OnlineInformation", nil, _("Display Online _Information")],
                 ["HelpMenu", nil, _("_Help")],
                 ["SubmitBugReport", Gnome::Stock::MAIL_NEW, _("Submit _Bug Report"), nil, nil,
                  on_submit_bug_report],
@@ -539,10 +558,14 @@ module UI
             end
 
             toggle_actions = [
-                ["Sidepane", nil, _("Side _Pane"), "F9", nil, on_view_sidepane, true],
-                ["Toolbar", nil, _("_Toolbar"), nil, nil, on_view_toolbar, true],
-                ["Statusbar", nil, _("_Statusbar"), nil, nil, on_view_statusbar, true],
-                ["ReversedOrder", nil, _("Re_versed Order"), nil, nil, on_reverse_order],
+                ["Sidepane", nil, _("Side _Pane"), "F9", nil, 
+                 on_view_sidepane, true],
+                ["Toolbar", nil, _("_Toolbar"), nil, nil, 
+                 on_view_toolbar, true],
+                ["Statusbar", nil, _("_Statusbar"), nil, nil, 
+                 on_view_statusbar, true],
+                ["ReversedOrder", nil, _("Re_versed Order"), nil, nil, 
+                 on_reverse_order],
             ]
             
             view_as_actions = [
@@ -564,10 +587,19 @@ module UI
                  _("At %s") % provider.fullname, nil, nil, 
                  proc { open_web_browser(provider.url(selected_books.first)) }]
             end
-                          
+
+            move_libraries_actions = @libraries.map do |library|
+                ["In" + library.name.gsub(/\s/, ''), nil,
+                 _("In '%s'") % library.name, nil, nil,
+                 proc { Library.move(selected_library, 
+                                     library, *selected_books)
+                        on_refresh }]
+            end
+            
             @actiongroup = Gtk::ActionGroup.new("actions")
             @actiongroup.add_actions(standard_actions)
             @actiongroup.add_actions(providers_actions)
+            @actiongroup.add_actions(move_libraries_actions)
             @actiongroup.add_toggle_actions(toggle_actions)
             @actiongroup.add_radio_actions(view_as_actions) do |action, current|
                 @notebook.page = current.current_value
@@ -585,7 +617,8 @@ module UI
             @main_app.add_accel_group(uimanager.accel_group)
             
             [ "menus.xml", "popups.xml" ].each do |ui_file|
-                uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR, "ui", ui_file))
+                uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR, 
+                                           "ui", ui_file))
             end
 
             mid = uimanager.new_merge_id 
@@ -594,10 +627,21 @@ module UI
                 [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
                   "ui/BookPopup/OnlineInformation/",
                   "ui/NoBookPopup/OnlineInformation/" ].each do |path|
-                    uimanager.add_ui(mid, path, name, name, Gtk::UIManager::MENUITEM, false)
+                    uimanager.add_ui(mid, path, name, name, 
+                                     Gtk::UIManager::MENUITEM, false)
                 end
             end
 
+            mid = uimanager.new_merge_id 
+            @libraries.each do |library|
+                name = "In" + library.name.gsub(/\s/, '')
+                [ "ui/MainMenubar/EditMenu/Move/",
+                  "ui/BookPopup/Move/" ].each do |path|
+                    uimanager.add_ui(mid, path, name, name,
+                                     Gtk::UIManager::MENUITEM, false)
+                end
+            end
+            
             mid = uimanager.new_merge_id 
             uimanager.add_ui(mid, "ui/", "MainToolbar", "MainToolbar", 
                              Gtk::UIManager::TOOLBAR, false)        
@@ -643,15 +687,16 @@ module UI
             @toolbar_view_as.append_text(_("View as Icons"))
             @toolbar_view_as.append_text(_("View as List"))
             @toolbar_view_as.active = 0
-            @toolbar_view_as_signal_hid = @toolbar_view_as.signal_connect('changed') do |cb| 
-                action = case cb.active
-                    when 0
-                        @actiongroup['AsIcons']
-                    when 1
-                        @actiongroup['AsList']
+            @toolbar_view_as_signal_hid = \
+                @toolbar_view_as.signal_connect('changed') do |cb| 
+                    action = case cb.active
+                        when 0
+                            @actiongroup['AsIcons']
+                        when 1
+                            @actiongroup['AsList']
+                    end
+                    action.active = true
                 end
-                action.active = true
-            end
             toolitem = Gtk::ToolItem.new
             toolitem.border_width = 5 
             toolitem << @toolbar_view_as
@@ -666,10 +711,13 @@ module UI
             
             @main_app.signal_connect('window-state-event') do |w, e|
                 if e.is_a?(Gdk::EventWindowState)
-                    @maximized = e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
+                    @maximized = \
+                        e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
                 end
             end
-            @main_app.signal_connect('destroy') { @actiongroup["Quit"].activate }
+            @main_app.signal_connect('destroy') do 
+                @actiongroup["Quit"].activate
+            end
         end
     end
 end

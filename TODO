@@ -10,7 +10,7 @@ Before next release:
 [ ] Tellico/Bookcase import
 [X] Tellico/Bookcase export (Robby)
 [ ] Import of a file that contains a list of ISBNs
-[ ] Manual addition of a book 
+[X] Manual addition of a book 
 [X] Editing the properties of a book (Laurent)
 [X] Changing the cover picture of a book (Laurent)
 

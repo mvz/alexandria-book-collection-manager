@@ -23,6 +23,7 @@
     <menu action="LibraryMenu">
       <menuitem action="New"/>
       <menuitem action="AddBook"/>
+      <menuitem action="AddBookManual"/>
       <separator/>
       <menuitem action="Import"/>
       <menuitem action="Export"/>
@@ -34,6 +35,8 @@
     <menu action="EditMenu">
       <menuitem action="SelectAll"/>
       <menuitem action="DeselectAll"/>
+      <separator/>
+      <menu action="Move"/>
       <separator/>
       <menuitem action="Delete"/>
       <separator/>

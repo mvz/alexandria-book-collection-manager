@@ -90,6 +90,16 @@ module Alexandria
             a
         end
 
+        def self.move(source_library, dest_library, *books)
+            dest = dest_library.path
+            books.each do |book|
+                FileUtils.mv(source_library.yaml(book), dest)
+                if File.exists?(source_library.cover(book))
+                    FileUtils.mv(source_library.cover(book), dest)
+                end
+            end
+        end
+        
         def self.extract_numbers(isbn)
             raise "Invalid ISBN '#{isbn}'" if isbn == nil
 
@@ -151,9 +161,13 @@ module Alexandria
             canonical.map { |x| x.to_s }.join()
         end
 
-        def save(book)
-            File.open(File.join(self.path, book.isbn + EXT[:book]), 
-                      "w") { |io| io.puts book.to_yaml } 
+        def save(book, new_isbn=nil)
+            if new_isbn and book.isbn != new_isbn
+                FileUtils.rm(yaml(book))
+                FileUtils.mv(cover(book), cover(new_isbn)) 
+                book.isbn = new_isbn
+            end
+            File.open(yaml(book), "w") { |io| io.puts book.to_yaml } 
         end
 
         alias_method :old_delete, :delete
@@ -162,16 +176,27 @@ module Alexandria
                 # delete the whole library
                 FileUtils.rm_rf(self.path)
             else
-                FileUtils.rm_f([File.join(self.path, book.isbn + EXT[:book]),
-                                small_cover(book), medium_cover(book)])
+                FileUtils.rm_f([yaml(book), cover(book)])
                 old_delete(book)
             end
         end
 
-        def cover(book)
-            File.join(self.path, book.isbn + EXT[:cover])
+        def cover(something)
+            isbn = case something
+                when Book
+                    something.isbn
+                when String
+                    something
+                else
+                    raise
+            end
+            File.join(self.path, isbn + EXT[:cover])
         end
-
+    
+        def yaml(book)
+            File.join(self.path, book.isbn + EXT[:book])
+        end
+        
         def name=(name)
             File.rename(path, File.join(DIR, name))
             @name = name

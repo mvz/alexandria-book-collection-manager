@@ -17,22 +17,17 @@
 
 module Alexandria
 module UI
-    class InfoBookDialog < GladeBase
+    class BookPropertiesDialogBase < GladeBase
         include GetText
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         COVER_MAXWIDTH = 140    # pixels
         
-        def initialize(parent, library, book, &on_close_cb)
-            super('info_book_dialog.glade')
-            @info_book_dialog.transient_for = parent
-            @on_close_cb = on_close_cb
-            
-            @entry_title.text = @info_book_dialog.title = book.title
-            @entry_isbn.text = book.isbn
-            @entry_publisher.text = book.publisher
-            @entry_edition.text = book.edition
+        def initialize(parent, cover_file)
+            super('book_properties_dialog.glade')
+            @book_properties_dialog.transient_for = parent
+            @parent, @cover_file = parent, cover_file
             
             @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
             @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
@@ -46,21 +41,12 @@ module UI
                                           :text => 0, 
                                           :editable => 1)
             @treeview_authors.append_column(col)
-            book.authors.each do |author|
-                iter = @treeview_authors.model.append
-                iter[0] = author
-                iter[1] = true
-            end
-        
-            buffer = Gtk::TextBuffer.new
-            buffer.text = (book.notes or "")
-            @textview_notes.buffer = buffer
-           
-            @library, @book = library, book
-            self.cover = Icons.cover(library, book)
-            self.rating = (book.rating or Book::DEFAULT_RATING)
         end
 
+        def on_title_changed
+            @book_properties_dialog.title = @entry_title.text
+        end
+        
         def on_add_author
             iter = @treeview_authors.model.append
             iter[0] = _("Author")
@@ -99,7 +85,7 @@ module UI
         def on_change_cover
             backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
             dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
-                                                @info_book_dialog,
+                                                @book_properties_dialog,
                                                 Gtk::FileChooser::ACTION_OPEN,
                                                 backend, 
                                                 [Gtk::Stock::CANCEL, 
@@ -110,30 +96,17 @@ module UI
                 begin
                     cover = Gdk::Pixbuf.new(dialog.filename)
                     # At this stage the file format is recognized.
-                    FileUtils.cp(dialog.filename, @library.cover(@book))
+                    FileUtils.cp(dialog.filename, @cover_file)
                     self.cover = cover
                 rescue RuntimeError => e 
-                    ErrorDialog.new(@info_book_dialog, e.message)
+                    ErrorDialog.new(@book_properties_dialog, e.message)
                 end
             end
             dialog.destroy
         end
+       
+        def on_destroy; end     # no action by default
         
-        def on_close
-            @book.title = @entry_title.text
-            @book.isbn = @entry_isbn.text
-            @book.publisher = @entry_publisher.text
-            @book.edition = @entry_edition.text
-            @book.authors = []
-            @treeview_authors.model.each { |m, p, i| @book.authors << i[0] }      
-            @book.notes = @textview_notes.buffer.text 
-            @book.rating = @current_rating
-            
-            @library.save(@book) 
-            @on_close_cb.call
-            @info_book_dialog.destroy
-        end
-
         #######
         private
         #######

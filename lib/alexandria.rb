@@ -26,13 +26,16 @@ module Alexandria
         'Dafydd Harries <daf@muse.19inch.net>',
         'Laurent Sansonetti <lrz@gnome.org>',
         'Pascal Terjan <pterjan@linuxfr.org>',
+        'Robby Stephenson <robby@periapsis.org>',
         'Zachary P. Landau <kapheine@hypa.net>'
     ]
-    DOCUMENTERS = [ 'Laurent Sansonetti <lrz@gnome.org>' ]  
+    DOCUMENTERS = []  
     TRANSLATORS = [ 
         'Dafydd Harries <daf@muse.19inch.net> (cy)',
+        'Joachim Breitner <mail@joachim-breitner.de> (de)',
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
-        'Masao Mutoh <mutoh@highway.ne.jp> (ja)'
+        'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
+        'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)'
     ]
     LIST = 'alexandria-list@rubyforge.org'
     BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'

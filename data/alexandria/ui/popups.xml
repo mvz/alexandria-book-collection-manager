@@ -23,6 +23,8 @@
     <menuitem action="Properties"/>
     <menu action="OnlineInformation"/>
     <separator/>
+    <menu action="Move"/>
+    <separator/>
     <menuitem action="SelectAll"/>
     <menuitem action="DeselectAll"/>
     <separator/>
@@ -44,6 +46,7 @@
   </popup>
   <popup name="NoBookPopup">
     <menuitem action="AddBook"/>
+    <menuitem action="AddBookManual"/>
     <separator/>
     <menuitem action="SelectAll"/>
     <menuitem action="DeselectAll"/>
