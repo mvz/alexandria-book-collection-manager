@@ -1,3 +1,14 @@
+2005-04-06  Claudio Belotti  <bel8@lilik.it>
+	
+	* lib/alexandria/book_providers/ibs_it.rb:
+
+	Added (provided to the Internet Bookshop Italia).
+
+	* lib/alexandria/book_providers.rb,
+	  schemas/alexandria.schemas:
+
+	Follow latest change.
+
 2005-04-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/book_properties_dialog.glade,

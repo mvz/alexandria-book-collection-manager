@@ -148,6 +148,7 @@ module Alexandria
         require 'alexandria/book_providers/proxis'
         require 'alexandria/book_providers/mcu'
         require 'alexandria/book_providers/amadeus'
+        require 'alexandria/book_providers/ibs_it'
        
         def initialize
             @prefs = Alexandria::Preferences.instance
