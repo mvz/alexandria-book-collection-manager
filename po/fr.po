@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-07 21:55+0100\n"
+"POT-Creation-Date: 2005-03-19 18:34+0100\n"
 "PO-Revision-Date: 2004-06-08 20:26+0200\n"
 "Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
 "Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
@@ -554,7 +554,7 @@ msgid "Unable to find matches for your search"
 msgstr "Impossible de trouver des correspondances pour votre recherche"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:217
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:101
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:102
 msgid "Couldn't add the book"
 msgstr "Impossible d'ajouter le livre"
 
@@ -711,3 +711,15 @@ msgstr ""
 #: ../data/alexandria/glade/preferences_dialog.glade:462
 msgid "Providers"
 msgstr "Fournisseurs"
+
+#: ../alexandria.desktop.in.h:1
+msgid "Alexandria Book Collection Manager"
+msgstr "Gestionnaire de collection de livres Alexandria"
+
+#: ../alexandria.desktop.in.h:2
+msgid "Book Collection Manager"
+msgstr "Gestionnaire de collection de livres"
+
+#: ../alexandria.desktop.in.h:3
+msgid "Manage your book collection"
+msgstr "Gérez votre collection de livres"

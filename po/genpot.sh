@@ -5,12 +5,10 @@ POT=./alexandria.pot
 
 set -e
 
-intltool-extract --type=gettext/ini alexandria.desktop.in
+intltool-extract --type=gettext/ini ../alexandria.desktop.in
 
 rm -f $POT
 rgettext ../bin/alexandria $(find ../lib -name '*.rb') -o $POT
-xgettext --extract-all --join-existing \
-	$(find ../data -name '*.glade') \
-	$(find .. -name '*.h') \
-	--output=$POT
+xgettext --join-existing $(find ../data -name '*.glade') --output=$POT 
+xgettext --extract-all --join-existing $(find .. -name '*.h') --output=$POT
 

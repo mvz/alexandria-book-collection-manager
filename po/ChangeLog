@@ -1,3 +1,9 @@
+2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
+
+	* genpot.sh: Fix path to alexandria.desktop.in and do not use the
+	  --extract-all xgettext switch when working with .glade files.
+	* fr.po: Update.
+
 2005-03-12  Miguel Ángel García  <magmax@ieee.org>
 
 	* es.po: Update.
