@@ -8,16 +8,34 @@ module UI
             build_books_listview
             build_sidepane
         end
+ 
+        def on_books_mouse_event(widget, event)
+            # double left click
+            if event.event_type == Gdk::Event::BUTTON2_PRESS and
+               event.button == 1 
 
-        def on_select_icon(iconlist, n, event)
-            if event
-                handle_mouse_event(event)
+                on_book_properties
+
+            # right click
+            elsif event.event_type == Gdk::Event::BUTTON_PRESS and
+                  event.button == 3
+
+                books = selected_books
+                if books.empty?
+                    popup = @nobook_popup
+                else
+                    popup = @book_popup
+                    # disable 'property' in case of multiple selections
+                    popup.children.first.sensitive = books.length == 1
+                end
+                popup.popup(nil, nil, event.button, event.time) 
             end
         end
 
         def on_book_properties
-            if book = selected_book
-                InfoBookDialog.new(@main_app, book)
+            books = selected_books
+            if books.length == 1
+                InfoBookDialog.new(@main_app, books.first)
             end
         end
 
@@ -63,6 +81,9 @@ module UI
         end
 
         def on_refresh
+            @listview.model.clear
+            @iconlist.clear
+            selected_library.each { |book| append_book(book) }
         end
 
         def on_view_sidepane(item)
@@ -166,10 +187,6 @@ module UI
                 @listview.append_column(column)
             end
 
-            @listview.signal_connect("button_press_event") do |listview, event|
-                handle_mouse_event(event)
-            end
-
             @listview.selection.mode = Gtk::SELECTION_MULTIPLE
         end
 
@@ -178,38 +195,24 @@ module UI
             @libraries.find { |x| x.name == iter[1] }
         end
     
-        def selected_book
+        def selected_books
+            a = []
             case @notebook.page
                 when 0
-                    if @iconlist.selection.length == 1
-                        selected_library[@iconlist.selection.first]    
+                    @iconlist.selection.each do |i|
+                        a << selected_library[i]    
                     end
 
                 when 1
-                    a = []
-                    @listview.selection.selected_each { |model, path, iter| a << iter }
-                    if a.length == 1
-                        selected_library.find { |x| x.isbn == a.first[3] }
+                    @listview.selection.selected_each do |model, path, iter| 
+                        book = selected_library.find { |x| x.isbn == iter[3] }
+                        if book
+                            a << book
+                        end
                     end
             end
+            return a
         end   
- 
-        def handle_mouse_event(event)
-            # double left click
-            if event.event_type == Gdk::Event::BUTTON2_PRESS and
-               event.button == 1 
-
-                on_book_properties
-
-            # right click
-            elsif event.event_type == Gdk::Event::BUTTON_PRESS and
-                  event.button == 3
-
-                # disable 'property' in case of multiple selections
-                @book_popup.children.first.sensitive = !selected_book.nil?
-                @book_popup.popup(nil, nil, event.button, event.time) 
-            end
-        end
 
         def build_sidepane
             model = Gtk::ListStore.new(Gdk::Pixbuf, String)
@@ -223,11 +226,7 @@ module UI
             @treeview_sidepane.insert_column(-1, "Icon", renderer, :pixbuf => 0)
             renderer = Gtk::CellRendererText.new
             @treeview_sidepane.insert_column(-1, "Name", renderer, :text => 1)
-            @treeview_sidepane.selection.signal_connect('changed') do
-                @listview.model.clear
-                @iconlist.clear
-                selected_library.each { |book| append_book(book) }
-            end
+            @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
             @treeview_sidepane.selection.select_iter(model.iter_first) 
         end
     end

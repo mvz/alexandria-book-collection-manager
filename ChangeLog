@@ -3,6 +3,15 @@
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
 
+	- Added a popup menu for multiple selections and a default one
+	  when nothing is selected yet ;
+	- Implemented the 'Refresh' action.
+
+2004-03-31  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
 	Added 'Edit/Select All' and 'Edit/Deselect All'.
 
 2004-03-30  Laurent Sansonetti  <lrz@gnome.org>
