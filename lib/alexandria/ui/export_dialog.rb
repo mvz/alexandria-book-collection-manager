@@ -44,7 +44,7 @@ module UI
 
             types_combo = Gtk::ComboBox.new
             types_combo.append_text(_("Archived ONIX XML (*.onix.tbz2)"))
-            types_combo.append_text(_("Archived Tellico XML (*.bc)"))
+            types_combo.append_text(_("Archived Tellico XML (*.tc)"))
             types_combo.append_text(_("ISBN List (*.txt)"))
             #types_combo.append_text("XHTML (*.xhtml)")
             types_combo.active = 0

@@ -45,7 +45,8 @@ module UI
             
             insert_filter(_("Autodetect"), '*') \
                 { Library.import_autodetect(name_entry.text, self.filename) }
-            insert_filter(_("Archived Tellico XML (*.bc)"), '*.bc') \
+            insert_filter(_("Archived Tellico XML (*.bc, *.tc)"), 
+                          '*.tc', '*.bc') \
                 { Library.import_as_tellico_xml_archive(name_entry.text,
                                                         self.filename) }
             insert_filter(_("ISBN List (*.txt)"), '*.txt') \
@@ -76,6 +77,7 @@ module UI
                                     _("There is already a library named " +
                                       "'#{name_entry.text.strip}'.  " + 
                                       "Please choose a different name."))
+                    name_entry.grab_focus
                 else
                     library = activate 
                     if library

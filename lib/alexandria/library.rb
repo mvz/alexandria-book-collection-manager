@@ -242,7 +242,7 @@ module Alexandria
         end
 
         def export_as_tellico_xml_archive(filename)
-            filename += ".bc" if File.extname(filename).empty?
+            filename += ".tc" if File.extname(filename).empty?
             FileUtils.rm(filename) if File.exists?(filename)
             File.open(File.join(Dir.tmpdir, "bookcase.xml"), "w") do |io|
                 to_tellico_document.write(io, 0)

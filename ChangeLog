@@ -1,3 +1,14 @@
+2004-12-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/import_dialog.rb,
+	  lib/alexandria/ui/export_dialog.rb,
+	  lib/alexandria/library.rb:
+
+	- Changed the Tellico archive file extention from 'bc' to 'tc' ;
+	- In the export dialog, in case the user tries to use a library name
+	  that is already used, grab the focus on the library name text field
+	  after the alert message.
+
 2004-12-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO:
