@@ -7,7 +7,7 @@ Alexandria
 
       * retrieves and displays book information (including cover pictures) 
         from several online libraries, such as Amazon, Proxis, Barnes and 
-        Noble, and the Spanish Ministry of Culture ;
+        Noble, the Spanish Ministry of Culture and Amadeus Buch ;
       * allows books to be added and updated by hand ; 
       * enables searches either by EAN/ISBN, title, authors or keyword ; 
       * saves data using the YAML format ;
