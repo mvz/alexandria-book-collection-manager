@@ -32,7 +32,7 @@ module Alexandria
 
         include GetText
         extend GetText
-        bindtextdomain(Alexandria::TEXTDOMAIN)
+        bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
  
         def path
             File.join(DIR, @name)
@@ -129,7 +129,7 @@ module Alexandria
     class BookProviders < Array
         include Singleton
         include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
     	def self.search(criteria)
             self.instance.each do |factory|
@@ -195,7 +195,7 @@ module Alexandria
             attr_reader :prefs, :name 
                 
             include GetText
-            GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+            GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
             
             def initialize
                 @name = "Amazon"

@@ -19,7 +19,7 @@ module Alexandria
 module UI
     class ProviderPreferencesDialog < Gtk::Dialog
         include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize(parent, provider)
             super(_("Preferences for %s") % provider.name,

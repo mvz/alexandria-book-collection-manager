@@ -19,7 +19,7 @@ module Alexandria
 module UI
     class MainApp < GladeBase 
         include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize
             super("main_app.glade")

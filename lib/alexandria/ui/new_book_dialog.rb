@@ -19,7 +19,7 @@ module Alexandria
 module UI
     class NewBookDialog < GladeBase
         include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize(parent, libraries, selected_library=nil, &block)
             super('new_book_dialog.glade')

@@ -19,7 +19,7 @@ module Alexandria
 module UI
     class AboutDialog < Gnome::About
         include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN)
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize(parent)
             super(Alexandria::TITLE,

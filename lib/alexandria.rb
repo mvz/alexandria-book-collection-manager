@@ -20,7 +20,7 @@ module Alexandria
     TEXTDOMAIN = 'alexandria'
     VERSION = '0.1.2'
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN)
+    bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
     DESCRIPTION = _('A program to help you manage your book collection.')
     COPYRIGHT = 'Copyright (C) 2004 Laurent Sansonetti'
     AUTHORS = [

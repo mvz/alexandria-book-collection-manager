@@ -1,3 +1,11 @@
+2004-06-14  Pascal Terjan  <pterjan@linuxfr.org>
+
+	* lib/alexandria.rb, lib/alexandria/book.rb,
+	  lib/alexandria/ui/about_dialog.rb, lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb, lib/alexandria/ui/preferences_dialog.rb:
+
+	Enforce use of UTF-8 for gettext
+
 2004-06-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/.cvsignore: 
