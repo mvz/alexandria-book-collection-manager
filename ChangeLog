@@ -1,3 +1,12 @@
+2004-04-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	Libraries (in the side pane) are now 'editable' (means that it's
+	possible to rename them).
+
 2004-04-03  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/main_app.glade,

@@ -182,6 +182,7 @@ module UI
             column.pack_start(renderer, true) 
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 cell.text = iter[1]
+                p cell
             end
             column.sort_column_id = 1
             column.resizable = true
@@ -225,17 +226,33 @@ module UI
         end   
 
         def build_sidepane
-            model = Gtk::ListStore.new(Gdk::Pixbuf, String)
+            model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
             @libraries.each do |library|
                 iter = model.append
                 iter[0] = Icons::LIBRARY_SMALL
                 iter[1] = library.name
+                iter[2] = true
             end
             @treeview_sidepane.model = model
             renderer = Gtk::CellRendererPixbuf.new
-            @treeview_sidepane.insert_column(-1, "Icon", renderer, :pixbuf => 0)
+            column = Gtk::TreeViewColumn.new("Library")
+            column.pack_start(renderer, true)
+            column.set_cell_data_func(renderer) do |column, cell, model, iter|
+                cell.pixbuf = iter[0]
+            end        
             renderer = Gtk::CellRendererText.new
-            @treeview_sidepane.insert_column(-1, "Name", renderer, :text => 1)
+            column.pack_start(renderer, true) 
+            column.set_cell_data_func(renderer) do |column, cell, model, iter|
+                cell.text, cell.editable = iter[1], iter[2]
+            end
+            renderer.signal_connect('edited') do |cell, path_string, new_text|
+                if cell.text != new_text
+                    iter = model.get_iter(Gtk::TreePath.new(path_string))
+                    selected_library.name = new_text
+                    iter[1] = new_text
+                end
+            end
+            @treeview_sidepane.append_column(column)
             @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
             @treeview_sidepane.selection.select_iter(model.iter_first) 
         end

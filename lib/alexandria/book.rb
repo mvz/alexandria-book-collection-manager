@@ -8,7 +8,8 @@ require 'fileutils'
 module Alexandria
     class Book
         attr_reader :title, :authors, :isbn, :publisher, :edition
-        attr_accessor :small_cover, :medium_cover
+        attr_writer :saved, :small_cover, :medium_cover
+        attr_accessor :library
 
         def initialize(title, authors, isbn, publisher, edition,
                        small_cover, medium_cover)
@@ -27,8 +28,12 @@ module Alexandria
             @saved
         end
 
-        def saved=(state)
-            @saved = state
+        def small_cover
+            @library ? File.join(@library.path, @small_cover) : @small_cover
+        end
+        
+        def medium_cover
+            @library ? File.join(@library.path, @medium_cover) : @medium_cover
         end
     end
 
@@ -36,7 +41,9 @@ module Alexandria
         attr_reader :name
         DIR = File.join(ENV['HOME'], '.alexandria')
         EXT = '.yaml'
-       
+        SMALL_COVER_EXT = '_small.jpg'
+        MEDIUM_COVER_EXT = '_medium.jpg'
+
         def path
             File.join(DIR, @name)
         end
@@ -62,7 +69,7 @@ module Alexandria
             a = []
             Dir.entries(DIR).each do |file|
                 # skip '.', '..' and hidden files
-                next if file =~ /^.+$/
+                next if file =~ /^\.+$/
                 # skip non-directory files
                 next unless File.stat(File.join(DIR, file)).directory?
 
@@ -80,12 +87,12 @@ module Alexandria
             self.each do |book|
                 next if book.saved?
                 File.open(File.join(self.path, book.isbn + EXT), "w") do |io|
-                    small = File.join(self.path, book.isbn + "_small.jpg")
-                    medium = File.join(self.path, book.isbn + "_medium.jpg")
+                    small = File.join(self.path, book.isbn + SMALL_COVER_EXT)
+                    medium = File.join(self.path, book.isbn + MEDIUM_COVER_EXT)
                     FileUtils.mv(book.small_cover, small)
                     FileUtils.mv(book.medium_cover, medium)
-                    book.small_cover = small
-                    book.medium_cover = medium
+                    book.small_cover = File.basename(small)
+                    book.medium_cover = File.basename(medium)
                     book.saved = true
                     io.puts book.to_yaml
                 end
@@ -95,9 +102,14 @@ module Alexandria
         alias_method :old_delete, :delete
         def delete(book)
             File.delete(File.join(self.path, book.isbn + EXT),
-                        File.join(self.path, book.isbn + "_small.jpg"),
-                        File.join(self.path, book.isbn + "_medium.jpg"))
+                        File.join(self.path, book.isbn + SMALL_COVER_EXT),
+                        File.join(self.path, book.isbn + MEDIUM_COVER_EXT))
             old_delete(book)
+        end
+
+        def name=(name)
+            File.rename(path, File.join(DIR, name))
+            @name = name
         end
 
         #######

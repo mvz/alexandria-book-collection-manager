@@ -18,8 +18,8 @@ module UI
         def on_add
             begin
                 book = Alexandria::BookProvider.find(@entry_isbn.text)
-                @new_book_dialog.destroy
                 library = @libraries.delete_if { |x| x.name != @combo_libraries.entry.text }.first
+                @new_book_dialog.destroy
                 @block.call(book, library)
             rescue Errno::EINVAL
                 # For a strange reason it seems that the first request always fails
