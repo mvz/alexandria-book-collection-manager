@@ -1,5 +1,11 @@
 2005-03-25  Dafydd Harries  <daf@muse.19inch.net>
 
+	* lib/alexandria/ui/export_dialog.rb:
+
+	Say "already exists" rather than "is already existing".
+
+2005-03-25  Dafydd Harries  <daf@muse.19inch.net>
+
 	* data/alexandria/glade/preferences_dialog.glade:
 
 	Rename the "List Columns" tab to "List View".
