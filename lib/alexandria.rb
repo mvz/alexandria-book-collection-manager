@@ -17,6 +17,7 @@
 
 require 'alexandria/config.rb'
 require 'alexandria/book.rb'
+require 'alexandria/preferences.rb'
 require 'alexandria/ui.rb'
 
 module Alexandria
@@ -32,6 +33,7 @@ module Alexandria
     DOCUMENTERS = [ 'Laurent Sansonetti <lrz@gnome.org>' ]  
     TRANSLATORS = [ 'Laurent Sansonetti <lrz@gnome.org>' ]
     LIST = 'alexandria-list@rubyforge.org'
+    BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
 
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?

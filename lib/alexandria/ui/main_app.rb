@@ -25,8 +25,9 @@ module UI
             build_books_listview
             build_sidepane
             on_books_selection_changed
+            restore_preferences           
         end
- 
+
         def on_books_button_press_event(widget, event)
             # double left click
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
@@ -108,6 +109,7 @@ module UI
         end
     
         def on_quit
+            save_preferences
             Gtk.main_quit
         end
    
@@ -223,8 +225,15 @@ module UI
         end
 
         def on_submit_bug_report
-            # TODO: open default browser on 
-            # 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'.
+            unless (cmd = Preferences.instance.www_browser).nil?
+                system(cmd % "\"" + BUGREPORT_URL + "\"")
+            else 
+                ErrorDialog.new(@main_app,
+                                "Unable to launch the web browser",
+                                "Check out that a web browser is configured as default " +
+                                "(Applications -> Desktop Preferences -> Advanced -> " +
+                                "Preferred Applications) and try again.")
+            end
         end
 
         def on_about
@@ -361,6 +370,35 @@ module UI
             @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
             @treeview_sidepane.selection.select_iter(@treeview_sidepane.model.iter_first) 
         end
+        
+        def restore_preferences
+            prefs = Preferences.instance
+            @main_app.move(*prefs.position) unless prefs.position.nil? 
+            @main_app.resize(*prefs.size) unless prefs.size.nil?
+            @paned.child1.visible = @menu_view_sidepane.active = prefs.sidepane_visible unless prefs.sidepane_visible.nil? 
+            @bonobodock_toolbar.visible = @menu_view_toolbar.active = prefs.toolbar_visible unless prefs.toolbar_visible.nil? 
+            @appbar.visible = @menu_view_statusbar.active = prefs.statusbar_visible unless prefs.statusbar_visible.nil?
+            unless prefs.view_as.nil? 
+                case prefs.view_as
+                    when 0
+                        @notebook.page = 0 
+                        @menu_view_as_icons.active = true
+                    when 1
+                        @notebook.page = 1 
+                        @menu_view_as_list.active = true
+                end
+            end
+        end
+
+        def save_preferences
+            prefs = Preferences.instance
+            prefs.position = @main_app.position
+            prefs.size = @main_app.size
+            prefs.sidepane_visible = @paned.child1.visible?
+            prefs.toolbar_visible = @bonobodock_toolbar.visible?
+            prefs.statusbar_visible = @appbar.visible?
+            prefs.view_as = @notebook.page
+        end 
     end
 end
 end

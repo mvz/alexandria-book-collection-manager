@@ -1,9 +1,28 @@
 2004-05-20  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/preferences.rb:
+
+	Added with a single implementation using GConf.
+	  
+	* lib/alexandria.rb:
+
+	Required preferences.rb and added an URL which leads to the
+	RubyForge bug tracker.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Saves and restores preferences (window position and size,
+	  whether toolbar, statusbar and sidepane are active, and whether
+	  the books are viewed as icons or list) ;
+
+	- Implemented the 'report_bug' handler, where the default web
+	  browser is started. 
+
 	* data/alexandria/glade/main_app.glade:
 
 	- Embed the sidepane's header in a Gtk::Frame (like Evolution) ;
 	- Added a toolbar separator between "Refresh" and "View as Icons|List". 
+
 2004-05-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/main_app.glade,
