@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -Ku
 #
 # Copyright (C) 2004 Laurent Sansonetti
 #

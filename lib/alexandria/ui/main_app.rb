@@ -382,7 +382,7 @@ module UI
 
         ICON_MAXLEN = 20
         def append_book_as_icon(book)
-            icon_title = book.title.length > ICON_MAXLEN ? book.title[0..ICON_MAXLEN] + '...' : book.title
+            icon_title = book.title.sub(/^(.{#{ICON_MAXLEN}}).*$/, '\1...')
             small_cover = Icons.small_cover(selected_library, book)
             @iconlist.append_pixbuf(small_cover, "", icon_title)
         end
