@@ -61,7 +61,7 @@
 			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image322">
+				<widget class="GtkImage" id="image347">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -84,7 +84,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image323">
+				<widget class="GtkImage" id="image348">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-add</property>
 				  <property name="icon_size">1</property>
@@ -104,7 +104,7 @@
 			  </child>
 
 			  <child>
-			    <widget class="GtkImageMenuItem" id="properties2">
+			    <widget class="GtkImageMenuItem" id="menu_properties">
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">_Properties</property>
 			      <property name="use_underline">True</property>
@@ -112,7 +112,7 @@
 			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image324">
+				<widget class="GtkImage" id="image349">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -186,7 +186,7 @@
 			      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image325">
+				<widget class="GtkImage" id="image350">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -234,7 +234,7 @@
 			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image326">
+				<widget class="GtkImage" id="image351">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-refresh</property>
 				  <property name="icon_size">1</property>
@@ -655,7 +655,7 @@
 <widget class="GtkMenu" id="book_popup">
 
   <child>
-    <widget class="GtkImageMenuItem" id="properties1">
+    <widget class="GtkImageMenuItem" id="popup_properties">
       <property name="visible">True</property>
       <property name="stock_item">GNOMEUIINFO_MENU_PROPERTIES_ITEM</property>
       <signal name="activate" handler="on_book_properties" last_modification_time="Mon, 29 Mar 2004 23:23:27 GMT"/>
@@ -727,7 +727,7 @@
       <signal name="activate" handler="on_delete" last_modification_time="Mon, 29 Mar 2004 23:27:15 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image330">
+	<widget class="GtkImage" id="image341">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-delete</property>
 	  <property name="icon_size">1</property>
@@ -751,7 +751,7 @@
       <signal name="activate" handler="on_new_book" last_modification_time="Wed, 31 Mar 2004 00:53:44 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image331">
+	<widget class="GtkImage" id="image342">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-add</property>
 	  <property name="icon_size">1</property>

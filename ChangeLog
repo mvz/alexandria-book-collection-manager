@@ -1,5 +1,11 @@
 2004-04-03  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	Properties [menu|popup] items are now disabled unless a single book
+	is selected.
+	
 	* data/alexandria/glade/info_book_dialog.glade,
 	  data/alexandria/glade/new_book_dialog.glade:
 
