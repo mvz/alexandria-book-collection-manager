@@ -160,11 +160,11 @@ module Alexandria
             canonical.map { |x| x.to_s }.join()
         end
 
-        def save(book, new_isbn=nil)
-            if new_isbn and book.isbn != new_isbn
-                FileUtils.rm(yaml(book))
-                FileUtils.mv(cover(book), cover(new_isbn)) 
-                book.isbn = new_isbn
+        def save(book)
+            if book.ident != book.saved_ident
+                FileUtils.rm(yaml(book.saved_ident))
+                FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exists?(cover(book.saved_ident))
+                book.saved_ident = book.ident
             end
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml } 
         end
@@ -182,7 +182,7 @@ module Alexandria
                         # Try open-uri.
                         io.puts uri.read
                     end
-				end
+                end
             
                 # Remove the file if it's blank.
                 pixbuf = Gdk::Pixbuf.new(cover_file)
@@ -204,19 +204,27 @@ module Alexandria
         end
 
         def cover(something)
-            isbn = case something
+            ident = case something
                 when Book
-                    something.isbn
+                    something.ident
                 when String
                     something
                 else
                     raise
             end
-            File.join(self.path, isbn + EXT[:cover])
+            File.join(self.path, ident + EXT[:cover])
         end
     
-        def yaml(book)
-            File.join(self.path, book.isbn + EXT[:book])
+        def yaml(something)
+            ident = case something
+                when Book
+                    something.ident
+                when String
+                    something
+                else
+                    raise
+            end
+            File.join(self.path, ident + EXT[:book])
         end
         
         def name=(name)
@@ -245,7 +253,7 @@ module Alexandria
             FileUtils.mkdir(somewhere)
             each do |book|
                 next unless File.exists?(cover(book))
-                FileUtils.cp(File.join(self.path, book.isbn + EXT[:cover]),
+                FileUtils.cp(File.join(self.path, book.ident + EXT[:cover]),
                              File.join(somewhere, final_cover(book))) 
             end
         end
@@ -255,7 +263,7 @@ module Alexandria
         end
 
         def final_cover(book)
-            book.isbn + (jpeg?(cover(book)) ? '.jpg' : '.gif')
+            book.ident + (jpeg?(cover(book)) ? '.jpg' : '.gif')
         end
     end
 end

@@ -60,9 +60,13 @@ module UI
                 isbn = begin
                     Library.canonicalise_isbn(@entry_isbn.text)
                 rescue
-                    raise _("Couldn't validate the EAN/ISBN you " +
-                            "provided.  Make sure it is written " +
-                            "correcty, and try again.")
+                    unless @entry_isbn.text == ""
+                        raise _("Couldn't validate the EAN/ISBN you " +
+                                "provided.  Make sure it is written " +
+                                "correcty, and try again.")
+                    else
+                        isbn = nil
+                    end
                 end
                     
                 if (publisher = @entry_publisher.text.strip).empty?

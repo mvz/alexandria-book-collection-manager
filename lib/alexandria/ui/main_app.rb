@@ -35,7 +35,7 @@ module UI
 
         module Columns
             COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
-                ISBN, PUBLISHER, EDITION, RATING = (0..9).to_a
+                ISBN, PUBLISHER, EDITION, RATING, IDENT = (0..10).to_a
         end
 
         def initialize
@@ -171,7 +171,7 @@ module UI
         def create_models
             @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
                                         String, String, String, String, 
-                                        String, Integer)
+                                        String, Integer, String)
             @icon_model = Gtk::TreeModelSort.new(@model)
             @list_model = Gtk::TreeModelSort.new(@model)
         end
@@ -192,6 +192,7 @@ module UI
             iter[Columns::EDITION] = book.edition
             rating = (book.rating or Book::DEFAULT_RATING)
             iter[Columns::RATING] = rating
+            iter[Columns::IDENT] = book.ident
         end
 
         def append_book(book)
@@ -365,14 +366,14 @@ module UI
         end
 
         def book_from_iter(library, iter)
-            library.find { |x| x.isbn == iter[Columns::ISBN] }
+            library.find { |x| x.ident == iter[Columns::IDENT] }
         end
 
-        def iter_from_isbn(isbn)
+        def iter_from_ident(ident)
             iter = @model.iter_first
             ok = true
             while ok do
-                if iter[Columns::ISBN] == isbn
+                if iter[Columns::IDENT] == ident
                     return iter
                 end
                 ok = iter.next!
@@ -381,7 +382,7 @@ module UI
         end
 
         def iter_from_book(book)
-            iter_from_isbn(book.isbn)
+            iter_from_ident(book.ident)
         end
         
         def selected_books
@@ -584,12 +585,11 @@ module UI
                 books = selected_books
                 if books.length == 1
                     book = books.first
-                    old_isbn = book.isbn
+                    iter = iter_from_book(book)
                     BookPropertiesDialog.new(@main_app, 
                                              selected_library, 
                                              book) do |modified_book|
-                        fill_iter_with_book(iter_from_isbn(old_isbn),
-                                            modified_book)
+                        fill_iter_with_book(iter, modified_book)
                     end
                 end
             end

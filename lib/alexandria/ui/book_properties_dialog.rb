@@ -63,16 +63,21 @@ module UI
         #######
         
         def on_close
+			   @book.saved_ident = @book.ident
             @book.title = @entry_title.text
-            new_isbn = begin
+            @book.isbn = begin
                 Library.canonicalise_isbn(@entry_isbn.text)
             rescue
-                ErrorDialog.new(@parent, 
-                                _("Couldn't modify the book"), 
-                                _("Couldn't validate the EAN/ISBN you " +
-                                  "provided.  Make sure it is written " +
-                                  "correcty, and try again."))
-                return
+                unless @entry_isbn.text == ""
+                    ErrorDialog.new(@parent, 
+                                    _("Couldn't modify the book"), 
+                                    _("Couldn't validate the EAN/ISBN you " +
+                                      "provided.  Make sure it is written " +
+                                      "correcty, and try again."))
+                    return
+                else
+                    nil
+                end
             end
             @book.publisher = @entry_publisher.text
             @book.edition = @entry_edition.text
@@ -85,7 +90,7 @@ module UI
             @book.loaned_to = @entry_loaned_to.text
             @book.loaned_since = @date_loaned_since.time
            
-            @library.save(@book, new_isbn) 
+            @library.save(@book) 
             @on_close_cb.call(@book)
             @book_properties_dialog.destroy
         end

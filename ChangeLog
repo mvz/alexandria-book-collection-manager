@@ -1,5 +1,37 @@
 2005-02-22  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/main_app.rb:
+
+	Changed all references to book.isbn to retrieve iterators model to
+	book.ident.
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Constantine.
+
+2005-02-22  Constantine Evans  <cevans@costinet.org>
+
+	* lib/alexandria/book.rb
+
+	Added ident and saved_ident to hold isbn or hash used for filenames.
+
+	* lib/alexandria/library.rb
+
+	- Changed save() to use ident instead of isbn. Note that giving a new_isbn
+	  to save is not necessary now - the Book class tracks ident changes.
+
+	- Changed all references to book.isbn for filenames to book.ident.
+
+	- Changed yaml() to allow String and Book arguments like cover().
+
+	* lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb
+
+	Changed to use new filename system and allow blank ISBN.
+
+2005-02-22  Laurent Sansonetti  <lrz@gnome.org>
+
 	* data/alexandria/COPYING:
 
 	Added.
