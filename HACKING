@@ -1,19 +1,19 @@
 In order to keep the code nice and clean we have a few requirements you'll
 need to stick to in order to get your patch accepted:
 
-	- use 4-space tabs for indentation and expand tabs to spaces
-	  (if you use VIM, `set ts=4' and `set et') ; 
+    - use 4-space tabs for indentation and expand tabs to spaces
+      (if you use VIM, `set ts=4' and `set et') ; 
 
-	- for code blocks, use { ... } when they can be written into a 
-	  single line, otherwise use do ... end ;
+    - for code blocks, use { ... } when they can be written into a 
+      single line, otherwise use do ... end ;
 
-	- when accessing properties of Ruby-GNOME2 objects, always use
-	  foo= instead of set_foo ;
+    - when accessing properties of Ruby-GNOME2 objects, always use
+      foo= instead of set_foo ;
 
-	- when hacking the user interface, make sure your changes don't
-	  break the HIG rules (http://developer.gnome.org/projects/gup/hig/) ;
+    - when hacking the user interface, make sure your changes don't
+      break the HIG rules (http://developer.gnome.org/projects/gup/hig/) ;
 
-	- always provide patches in unified form (`cvs diff -u') and with
-	  a ChangeLog entry. 
+    - always provide patches in unified form (`cvs diff -u') and with
+      a ChangeLog entry. 
 
 Please do not commit without my permission (lrz@gnome.org).
