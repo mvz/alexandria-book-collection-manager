@@ -1,5 +1,11 @@
 2004-04-08  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/book.rb:
+
+	Rescues the TimerError exception raised by Ruby/Amazon (when
+	it could not reach amazon.com), and displays a meaningful
+	error dialog box.
+
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
 

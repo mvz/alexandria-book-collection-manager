@@ -129,14 +129,18 @@ module Alexandria
     
     module BookProvider
     	def self.find(criteria, factory=nil)
-    	    if factory
-                book = factory.find(criteria)
-            else
-                self.each_factory do |factory|
-                    break if book = factory.find(criteria)
+            begin
+                if factory.nil?
+                    self.each_factory do |factory|
+                        break if book = factory.find(criteria)
+                    end
+                else
+                    book = factory.find(criteria)
                 end
-            end
-            book or raise "Search failed"
+            rescue TimeoutError
+                raise "Couldn't reach the provider '#{factory.name}': timeout expired."
+            end 
+            book
     	end
     
     	def self.factories
@@ -149,6 +153,10 @@ module Alexandria
         end
             
     	module AmazonProvider
+            def self.name
+                "Amazon"
+            end
+
     		def self.find(criteria)
                 results = []
                 req = Amazon::Search::Request.new('foo')
