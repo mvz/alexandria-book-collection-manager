@@ -25,7 +25,7 @@ Future releases:
 
 Future releases (that depend of Ruby-GNOME2 1.0.0, so not for the moment):
 
-[ ] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::ComboBox (new in 2.4).
+[X] Replacing Gtk::OptionMenu (deprecated in 2.4) by Gtk::ComboBox (new in 2.4).
 [X] Removing the glade support for main_app, and using the new UI manager
     instead.
 [ ] Drag-and-drop books within libraries
