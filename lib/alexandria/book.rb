@@ -32,31 +32,49 @@ module Alexandria
         end
     end
 
-    class BookList < Array
+    class Library < Array
         attr_reader :name
+        DIR = File.join(ENV['HOME'], '.alexandria')
         EXT = '.yaml'
        
         def path
-            File.join(ENV['HOME'], '.alexandria', @name)
+            File.join(DIR, @name)
         end
-        
+
         def self.load(name)
-            list = BookList.new(name)
+            library = Library.new(name)
             begin
-                Dir.chdir(list.path)
+                Dir.chdir(library.path)
                 Dir["*" + EXT].each do |filename|
                     File.open(filename) do |io|
                         book = YAML.load(io)
                         raise "Not a book" unless book.is_a?(Book)
-                        list << book
+                        library << book
                     end
                 end
             rescue Errno::ENOENT
-                FileUtils.mkdir_p(list.path)
+                FileUtils.mkdir_p(library.path)
             end
-            list
+            library
         end
-        
+       
+        def self.loadall
+            a = []
+            Dir.entries(DIR).each do |file|
+                # skip '.', '..' and hidden files
+                next if file =~ /^.+$/
+                # skip non-directory files
+                next unless File.stat(File.join(DIR, file)).directory?
+
+                a << self.load(file)       
+            end
+            # create the default library if there is no library yet 
+            if a.empty?
+                a << self.load("My Library")
+            end
+            a
+        end
+ 
         def save
             Dir.chdir(self.path)
             self.each do |book|
@@ -74,7 +92,10 @@ module Alexandria
             end
         end
 
+        #######
         private
+        #######
+
         def initialize(name)
             @name = name
         end

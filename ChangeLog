@@ -1,3 +1,28 @@
+2004-03-30  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/icons/alexandria_small.png,
+	  data/alexandria/icons/library.png,
+	  data/alexandria/icons/library_small.png,
+	  lib/alexandria/ui/icons.rb:
+
+	Added.
+
+	* data/alexandria/glade/main_app.glade,
+	  data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui.rb,
+	  lib/alexandria/ui/about_dialog.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+	
+	- Implemented the side pane ;
+	- Implemented 'View as Icons/List' ;
+	- Added popup menu for single selections ;
+	- The new book dialog has been modified to accept a library
+	  in which the book will be added ;
+	- Added 'New Library', 'Refresh' and 'View as Icons/List' on
+	  the toolbar.
+
 2004-03-21  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:

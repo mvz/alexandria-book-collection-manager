@@ -31,222 +31,281 @@
 	  <property name="shadow_type">GTK_SHADOW_NONE</property>
 
 	  <child>
-	    <widget class="GtkMenuBar" id="menubar1">
+	    <widget class="GtkAlignment" id="alignment1">
 	      <property name="visible">True</property>
+	      <property name="xalign">0.5</property>
+	      <property name="yalign">0.5</property>
+	      <property name="xscale">1</property>
+	      <property name="yscale">1</property>
 
 	      <child>
-		<widget class="GtkMenuItem" id="menu_book">
+		<widget class="GtkMenuBar" id="menubar1">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">_Library</property>
-		  <property name="use_underline">True</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="menu_book_menu">
+		    <widget class="GtkMenuItem" id="menu_book">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">_Library</property>
+		      <property name="use_underline">True</property>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="menu_book_new_list">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Adding a new book list</property>
-			  <property name="label" translatable="yes">_New...</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_new_book_list" last_modification_time="Fri, 12 Mar 2004 00:45:11 GMT"/>
-			  <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+			<widget class="GtkMenu" id="menu_book_menu">
 
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image78">
+			  <child>
+			    <widget class="GtkImageMenuItem" id="menu_book_new_list">
 			      <property name="visible">True</property>
-			      <property name="stock">gtk-new</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
+			      <property name="tooltip" translatable="yes">Adding a new book list</property>
+			      <property name="label" translatable="yes">_New...</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_new_library" last_modification_time="Mon, 29 Mar 2004 00:09:48 GMT"/>
+			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image278">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-new</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
 			    </widget>
 			  </child>
-			</widget>
-		      </child>
 
-		      <child>
-			<widget class="GtkImageMenuItem" id="menu_book_new">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Adding a new book in the book list</property>
-			  <property name="label" translatable="yes">_Add Book...</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_new_book" last_modification_time="Fri, 12 Mar 2004 00:45:05 GMT"/>
-			  <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image79">
+			  <child>
+			    <widget class="GtkImageMenuItem" id="menu_book_new">
 			      <property name="visible">True</property>
-			      <property name="stock">gtk-add</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
+			      <property name="tooltip" translatable="yes">Adding a new book in the book list</property>
+			      <property name="label" translatable="yes">_Add Book...</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_new_book" last_modification_time="Fri, 12 Mar 2004 00:45:05 GMT"/>
+			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image279">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-add</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
 			    </widget>
 			  </child>
-			</widget>
-		      </child>
 
-		      <child>
-			<widget class="GtkMenuItem" id="separator5">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="menu_quit">
-			  <property name="visible">True</property>
-			  <property name="stock_item">GNOMEUIINFO_MENU_EXIT_ITEM</property>
-			  <signal name="activate" handler="on_quit" last_modification_time="Fri, 12 Mar 2004 00:39:45 GMT"/>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-
-	      <child>
-		<widget class="GtkMenuItem" id="edit1">
-		  <property name="visible">True</property>
-		  <property name="stock_item">GNOMEUIINFO_MENU_EDIT_TREE</property>
-
-		  <child>
-		    <widget class="GtkMenu" id="edit1_menu">
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="menu_delete">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">_Delete</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_delete" last_modification_time="Wed, 17 Mar 2004 23:00:19 GMT"/>
-			  <accelerator key="Delete" modifiers="0" signal="activate"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image80">
+			  <child>
+			    <widget class="GtkMenuItem" id="separator5">
 			      <property name="visible">True</property>
-			      <property name="stock">gtk-delete</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
 			    </widget>
 			  </child>
-			</widget>
-		      </child>
 
-		      <child>
-			<widget class="GtkMenuItem" id="separator8">
-			  <property name="visible">True</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="menu_edit_preferences">
-			  <property name="visible">True</property>
-			  <property name="stock_item">GNOMEUIINFO_MENU_PREFERENCES_ITEM</property>
-			  <signal name="activate" handler="on_preferences" last_modification_time="Thu, 11 Mar 2004 22:26:46 GMT"/>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-
-	      <child>
-		<widget class="GtkMenuItem" id="view1">
-		  <property name="visible">True</property>
-		  <property name="stock_item">GNOMEUIINFO_MENU_VIEW_TREE</property>
-
-		  <child>
-		    <widget class="GtkMenu" id="view1_menu">
-
-		      <child>
-			<widget class="GtkCheckMenuItem" id="menu_view_side_pane">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">_Side pane</property>
-			  <property name="use_underline">True</property>
-			  <property name="active">True</property>
-			  <signal name="activate" handler="on_view_sidepane" last_modification_time="Sat, 20 Mar 2004 21:01:57 GMT"/>
-			  <accelerator key="F9" modifiers="0" signal="activate"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkCheckMenuItem" id="menu_view_toolbar">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Show/hide tool bar.</property>
-			  <property name="label" translatable="yes">_Toolbar</property>
-			  <property name="use_underline">True</property>
-			  <property name="active">True</property>
-			  <signal name="activate" handler="on_view_toolbar" last_modification_time="Thu, 11 Mar 2004 22:27:51 GMT"/>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkCheckMenuItem" id="menu_view_statusbar">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Show/hide status bar.</property>
-			  <property name="label" translatable="yes">_Statusbar</property>
-			  <property name="use_underline">True</property>
-			  <property name="active">True</property>
-			  <signal name="activate" handler="on_view_statusbar" last_modification_time="Thu, 11 Mar 2004 22:28:46 GMT"/>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-	      </child>
-
-	      <child>
-		<widget class="GtkMenuItem" id="menu_go">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">_Go</property>
-		  <property name="use_underline">True</property>
-
-		  <child>
-		    <widget class="GtkMenu" id="menu_go_menu">
-
-		      <child>
-			<widget class="GtkImageMenuItem" id="home1">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">_Home</property>
-			  <property name="use_underline">True</property>
-			  <signal name="activate" handler="on_home" last_modification_time="Sun, 21 Mar 2004 00:13:22 GMT"/>
-
-			  <child internal-child="image">
-			    <widget class="GtkImage" id="image81">
+			  <child>
+			    <widget class="GtkImageMenuItem" id="properties2">
 			      <property name="visible">True</property>
-			      <property name="stock">gtk-home</property>
-			      <property name="icon_size">1</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
+			      <property name="label" translatable="yes">_Properties</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_book_properties" last_modification_time="Mon, 29 Mar 2004 23:29:02 GMT"/>
+			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image280">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-properties</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="separator14">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkImageMenuItem" id="menu_quit">
+			      <property name="visible">True</property>
+			      <property name="stock_item">GNOMEUIINFO_MENU_EXIT_ITEM</property>
+			      <signal name="activate" handler="on_quit" last_modification_time="Fri, 12 Mar 2004 00:39:45 GMT"/>
 			    </widget>
 			  </child>
 			</widget>
 		      </child>
 		    </widget>
 		  </child>
-		</widget>
-	      </child>
-
-	      <child>
-		<widget class="GtkMenuItem" id="help1">
-		  <property name="visible">True</property>
-		  <property name="stock_item">GNOMEUIINFO_MENU_HELP_TREE</property>
 
 		  <child>
-		    <widget class="GtkMenu" id="help1_menu">
+		    <widget class="GtkMenuItem" id="edit1">
+		      <property name="visible">True</property>
+		      <property name="stock_item">GNOMEUIINFO_MENU_EDIT_TREE</property>
 
 		      <child>
-			<widget class="GtkImageMenuItem" id="menu_about">
-			  <property name="visible">True</property>
-			  <property name="stock_item">GNOMEUIINFO_MENU_ABOUT_ITEM</property>
-			  <signal name="activate" handler="on_about" last_modification_time="Fri, 12 Mar 2004 00:46:11 GMT"/>
+			<widget class="GtkMenu" id="edit1_menu">
+
+			  <child>
+			    <widget class="GtkImageMenuItem" id="menu_delete">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">_Delete</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_delete" last_modification_time="Wed, 17 Mar 2004 23:00:19 GMT"/>
+			      <accelerator key="Delete" modifiers="0" signal="activate"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image281">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-delete</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="separator8">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkImageMenuItem" id="menu_edit_preferences">
+			      <property name="visible">True</property>
+			      <property name="stock_item">GNOMEUIINFO_MENU_PREFERENCES_ITEM</property>
+			      <signal name="activate" handler="on_preferences" last_modification_time="Thu, 11 Mar 2004 22:26:46 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="view1">
+		      <property name="visible">True</property>
+		      <property name="stock_item">GNOMEUIINFO_MENU_VIEW_TREE</property>
+
+		      <child>
+			<widget class="GtkMenu" id="view1_menu">
+
+			  <child>
+			    <widget class="GtkImageMenuItem" id="refresh1">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">_Refresh</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_refresh" last_modification_time="Sun, 28 Mar 2004 21:16:25 GMT"/>
+			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+			      <child internal-child="image">
+				<widget class="GtkImage" id="image282">
+				  <property name="visible">True</property>
+				  <property name="stock">gtk-refresh</property>
+				  <property name="icon_size">1</property>
+				  <property name="xalign">0.5</property>
+				  <property name="yalign">0.5</property>
+				  <property name="xpad">0</property>
+				  <property name="ypad">0</property>
+				</widget>
+			      </child>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="separator12">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkCheckMenuItem" id="menu_view_side_pane">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">_Side pane</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">True</property>
+			      <signal name="activate" handler="on_view_sidepane" last_modification_time="Sat, 20 Mar 2004 21:01:57 GMT"/>
+			      <accelerator key="F9" modifiers="0" signal="activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkCheckMenuItem" id="menu_view_toolbar">
+			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Show/hide tool bar.</property>
+			      <property name="label" translatable="yes">_Toolbar</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">True</property>
+			      <signal name="activate" handler="on_view_toolbar" last_modification_time="Thu, 11 Mar 2004 22:27:51 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkCheckMenuItem" id="menu_view_statusbar">
+			      <property name="visible">True</property>
+			      <property name="tooltip" translatable="yes">Show/hide status bar.</property>
+			      <property name="label" translatable="yes">_Statusbar</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">True</property>
+			      <signal name="activate" handler="on_view_statusbar" last_modification_time="Thu, 11 Mar 2004 22:28:46 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="separator9">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkRadioMenuItem" id="menu_view_as_icons">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">View as _Icons</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">True</property>
+			      <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 27 Mar 2004 14:45:05 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkRadioMenuItem" id="menu_view_as_list">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">View as _List</property>
+			      <property name="use_underline">True</property>
+			      <property name="active">False</property>
+			      <property name="group">menu_view_as_icons</property>
+			      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 27 Mar 2004 14:45:18 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkMenuItem" id="help1">
+		      <property name="visible">True</property>
+		      <property name="stock_item">GNOMEUIINFO_MENU_HELP_TREE</property>
+
+		      <child>
+			<widget class="GtkMenu" id="help1_menu">
+
+			  <child>
+			    <widget class="GtkImageMenuItem" id="menu_about">
+			      <property name="visible">True</property>
+			      <property name="stock_item">GNOMEUIINFO_MENU_ABOUT_ITEM</property>
+			      <signal name="activate" handler="on_about" last_modification_time="Fri, 12 Mar 2004 00:46:11 GMT"/>
+			    </widget>
+			  </child>
 			</widget>
 		      </child>
 		    </widget>
@@ -278,6 +337,15 @@
 	      <property name="tooltips">True</property>
 
 	      <child>
+		<widget class="button" id="button16">
+		  <property name="visible">True</property>
+		  <property name="label">gtk-new</property>
+		  <property name="use_stock">True</property>
+		  <signal name="pressed" handler="on_new_library" last_modification_time="Mon, 29 Mar 2004 00:10:07 GMT"/>
+		</widget>
+	      </child>
+
+	      <child>
 		<widget class="button" id="button12">
 		  <property name="visible">True</property>
 		  <property name="tooltip" translatable="yes">New File</property>
@@ -288,16 +356,61 @@
 	      </child>
 
 	      <child>
-		<widget class="button" id="button13">
+		<widget class="button" id="button17">
 		  <property name="visible">True</property>
-		  <property name="label">gtk-home</property>
+		  <property name="tooltip" translatable="yes">New File</property>
+		  <property name="label">gtk-refresh</property>
 		  <property name="use_stock">True</property>
 		  <property name="new_group">True</property>
-		  <signal name="pressed" handler="on_home" last_modification_time="Sat, 20 Mar 2004 20:52:23 GMT"/>
+		  <signal name="pressed" handler="on_refresh" last_modification_time="Mon, 29 Mar 2004 00:09:09 GMT"/>
 		</widget>
 		<packing>
 		  <property name="new_group">True</property>
 		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkHBox" id="hbox1">
+		  <property name="visible">True</property>
+		  <property name="homogeneous">False</property>
+		  <property name="spacing">0</property>
+
+		  <child>
+		    <widget class="GtkOptionMenu" id="toolbar_view_as">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="history">0</property>
+
+		      <child>
+			<widget class="GtkMenu" id="menu1">
+
+			  <child>
+			    <widget class="GtkMenuItem" id="toolbar_view_as_icons">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">View as Icons</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_view_as_icons2" last_modification_time="Mon, 29 Mar 2004 21:18:55 GMT"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="toolbar_view_as_list">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">View as List</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_view_as_list2" last_modification_time="Mon, 29 Mar 2004 21:18:55 GMT"/>
+			    </widget>
+			  </child>
+			</widget>
+		      </child>
+		    </widget>
+		    <packing>
+		      <property name="padding">5</property>
+		      <property name="expand">False</property>
+		      <property name="fill">False</property>
+		    </packing>
+		  </child>
+		</widget>
 	      </child>
 	    </widget>
 	  </child>
@@ -315,14 +428,13 @@
 	<widget class="GtkHPaned" id="paned">
 	  <property name="visible">True</property>
 	  <property name="can_focus">True</property>
-	  <property name="position">130</property>
+	  <property name="position">140</property>
 
 	  <child>
 	    <widget class="GtkVBox" id="vbox1">
-	      <property name="border_width">2</property>
 	      <property name="visible">True</property>
 	      <property name="homogeneous">False</property>
-	      <property name="spacing">3</property>
+	      <property name="spacing">0</property>
 
 	      <child>
 		<widget class="GtkLabel" id="label1">
@@ -335,9 +447,8 @@
 		  <property name="selectable">False</property>
 		  <property name="xalign">0</property>
 		  <property name="yalign">0</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		  <property name="mnemonic_widget">treeview_libraries</property>
+		  <property name="xpad">4</property>
+		  <property name="ypad">4</property>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -356,7 +467,7 @@
 		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		  <child>
-		    <widget class="GtkTreeView" id="treeview_libraries">
+		    <widget class="GtkTreeView" id="treeview_sidepane">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="headers_visible">False</property>
@@ -380,27 +491,106 @@
 	  </child>
 
 	  <child>
-	    <widget class="GtkScrolledWindow" id="scrolledwindow2">
+	    <widget class="GtkNotebook" id="notebook">
 	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-	      <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-	      <property name="shadow_type">GTK_SHADOW_NONE</property>
-	      <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+	      <property name="show_tabs">False</property>
+	      <property name="show_border">True</property>
+	      <property name="tab_pos">GTK_POS_TOP</property>
+	      <property name="scrollable">False</property>
+	      <property name="enable_popup">False</property>
 
 	      <child>
-		<widget class="GnomeIconList" id="iconlist">
+		<widget class="GtkScrolledWindow" id="scrolledwindow5">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
-		  <property name="selection_mode">GTK_SELECTION_MULTIPLE</property>
-		  <property name="icon_width">78</property>
-		  <property name="row_spacing">4</property>
-		  <property name="column_spacing">2</property>
-		  <property name="text_spacing">2</property>
-		  <property name="text_editable">False</property>
-		  <property name="text_static">False</property>
-		  <signal name="select_icon" handler="on_select_icon" last_modification_time="Fri, 19 Mar 2004 23:21:30 GMT"/>
+		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		  <property name="shadow_type">GTK_SHADOW_NONE</property>
+		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+		  <child>
+		    <widget class="GnomeIconList" id="iconlist">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="selection_mode">GTK_SELECTION_MULTIPLE</property>
+		      <property name="icon_width">78</property>
+		      <property name="row_spacing">4</property>
+		      <property name="column_spacing">2</property>
+		      <property name="text_spacing">2</property>
+		      <property name="text_editable">False</property>
+		      <property name="text_static">False</property>
+		      <signal name="select_icon" handler="on_select_icon" last_modification_time="Fri, 19 Mar 2004 23:21:30 GMT"/>
+		    </widget>
+		  </child>
 		</widget>
+		<packing>
+		  <property name="tab_expand">False</property>
+		  <property name="tab_fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="label2">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">label2</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0.5</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="type">tab</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkScrolledWindow" id="scrolledwindow4">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+		  <property name="shadow_type">GTK_SHADOW_NONE</property>
+		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+		  <child>
+		    <widget class="GtkTreeView" id="listview">
+		      <property name="visible">True</property>
+		      <property name="can_focus">True</property>
+		      <property name="headers_visible">True</property>
+		      <property name="rules_hint">False</property>
+		      <property name="reorderable">False</property>
+		      <property name="enable_search">True</property>
+		    </widget>
+		  </child>
+		</widget>
+		<packing>
+		  <property name="tab_expand">False</property>
+		  <property name="tab_fill">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="label3">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">label3</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0.5</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="type">tab</property>
+		</packing>
 	      </child>
 	    </widget>
 	    <packing>
@@ -429,6 +619,44 @@
       <property name="expand">True</property>
       <property name="fill">True</property>
     </packing>
+  </child>
+</widget>
+
+<widget class="GtkMenu" id="book_popup">
+
+  <child>
+    <widget class="GtkImageMenuItem" id="properties1">
+      <property name="visible">True</property>
+      <property name="stock_item">GNOMEUIINFO_MENU_PROPERTIES_ITEM</property>
+      <signal name="activate" handler="on_book_properties" last_modification_time="Mon, 29 Mar 2004 23:23:27 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="separator13">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkImageMenuItem" id="delete1">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">_Delete</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_delete" last_modification_time="Mon, 29 Mar 2004 23:27:15 GMT"/>
+
+      <child internal-child="image">
+	<widget class="GtkImage" id="image246">
+	  <property name="visible">True</property>
+	  <property name="stock">gtk-delete</property>
+	  <property name="icon_size">1</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+      </child>
+    </widget>
   </child>
 </widget>
 

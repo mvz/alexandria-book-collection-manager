@@ -9,7 +9,7 @@ module UI
                   Alexandria::AUTHORS,
                   Alexandria::DOCUMENTERS,
                   Alexandria::TRANSLATORS.join("\n"),
-                  nil)
+                  Icons::ALEXANDRIA_SMALL)
             signal_connect('destroy') { hide }
         end
     end
