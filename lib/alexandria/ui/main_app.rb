@@ -164,7 +164,9 @@ module UI
         def on_refresh  
             @listview.model.clear
             @iconlist.clear
-            selected_library.each { |book| append_book(book) }
+            library = selected_library
+            library.each { |book| append_book(book) }
+            @main_app.title = library.name + " - " + TITLE
         end
 
         def on_view_sidepane(item)

@@ -2,7 +2,9 @@
 
 	* lib/alexandria/ui/main_app.rb:
 
-	Fixed the length of icons titles to 20 instead of 15.
+	- Fixed the length of icons titles to 20 instead of 15 ;
+	- Changes the title of the main window according to the
+	  selected library.
 
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
