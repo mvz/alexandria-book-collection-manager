@@ -41,15 +41,15 @@ module UI
 
             label = Gtk::Label.new
             label.set_alignment(0, 0)
-            label.wrap = true
+            label.wrap = label.selectable = true
             label.markup = "<b><big>#{title}</big></b>"
             vbox.pack_start(label)
 
             if message
                 label = Gtk::Label.new
-                label.markup = message.strip
                 label.set_alignment(0, 0)
-                label.wrap = true
+                label.wrap = label.selectable = true
+                label.markup = message.strip
                 vbox.pack_start(label)
             end
         end

@@ -1,5 +1,9 @@
 2005-04-03  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/alert_dialog.rb:
+
+	Make the labels selectable.
+
 	* lib/alexandria/library.rb:
 
 	The class is now obversable, and sends notifications when books are
