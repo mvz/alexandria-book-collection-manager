@@ -1,4 +1,48 @@
 ================
+Alexandria 0.5.1
+================
+
+New features:
+ * Added provider for book information retrieval of the Amadeus Buch online
+   library (Austrian books) ;
+ * Allows user-specific themes in ~/.alexandria/.web-themes ;
+ * Localized .desktop file.
+
+Bugs fixed:
+ * Fixed the wording of some messages ;
+ * Use alternating colours for rows in the search list of the Add Book dialog
+   and the providers list of the Preferences dialog ;
+ * The Amazon provider will cache information on ~/.alexandria/.amazon_cache
+   instead of /tmp/amazon, allowing multiple users with different credentials
+   to use it ;
+ * Really ignores hidden directories in ~/.alexandria ;
+ * Be more intelligent when building the list of providers by taking into 
+   account nil values from the GConf schema ;
+ * Do not display the whole GPL text in the About dialog, just the header ;
+ * Display an confirmation message when trying to move a book into a library 
+   that already has a book with the same ident ;
+ * Fixed the moves action after an import process ;
+ * Display an error message when trying to set an EAN/ISBN that is already
+   used by another book in the same library ;
+ * Forgot to mark some translatable strings ;
+ * Display an error message when trying to add a book with an EAN/ISBN that is 
+   already used by another book in the same library ;
+ * Manually added books were not automatically added in the memory 
+   representation of the library ;
+ * Pack the cover image as non-expandable in the books list view.
+
+Added translation:
+ * Mirko Maischberger <mirko@lilik.it> (it).
+
+Updated translations:
+ * Dafydd Harries <daf@muse.19inch.net> (cy) ;
+ * David Weinehall <tao@debian.org> (sv) ;
+ * Joachim Breitner <mail@joachim-breitner.de> (de) ;
+ * Laurent Sansonetti <lrz@gnome.org> (fr) ;
+ * Masao Mutoh <mutoh@highway.ne.jp> (ja) ;
+ * Miguel Ángel García (es).
+
+================
 Alexandria 0.5.0
 ================
 
