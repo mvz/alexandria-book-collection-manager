@@ -29,8 +29,9 @@ module UI
             self.comments = Alexandria::DESCRIPTION
             self.authors = Alexandria::AUTHORS
             self.documenters = Alexandria::DOCUMENTERS
+            self.artists = Alexandria::ARTISTS
             self.translator_credits = Alexandria::TRANSLATORS.join("\n")
-            self.logo = Icons::ALEXANDRIA_SMALL
+            self.logo = Icons::ALEXANDRIA
             self.website = Alexandria::WEBSITE_URL
             self.license = File.read(File.join(Alexandria::Config::DATA_DIR,
                                                "COPYING"))

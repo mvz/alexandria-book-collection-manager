@@ -42,6 +42,9 @@ module Alexandria
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
         'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)'
     ]
+    ARTISTS = [
+        'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
+    ]
     LIST = 'alexandria-list@rubyforge.org'
     BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
     WEBSITE_URL = 'http://alexandria.rubyforge.org'

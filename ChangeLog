@@ -1,3 +1,15 @@
+2005-03-12  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/icons/alexandria.png,
+	  data/alexandria/icons/alexandria_small.png:
+
+	New icon, by Stefanie Dijoux.
+
+	* README,
+	  lib/alexandria.rb:
+
+	Added Stefanie.
+
 2005-03-12  Pascal Terjan  <pterjan@linuxfr.org>
 
 	* lib/alexandria/book_providers/proxis.rb:
