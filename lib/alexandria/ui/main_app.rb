@@ -596,7 +596,6 @@ module UI
                                   @libraries, 
                                   selected_library) do |books, library|
                     if selected_library == library
-                        library.concat(books)
                         @iconview.freeze
                         books.each { |book| append_book(book) }
                         @iconview.unfreeze
@@ -609,7 +608,6 @@ module UI
             on_add_book_manual = proc do
                 library = selected_library
                 NewBookDialogManual.new(@main_app, library) do |book|
-                    library << book
                     @iconview.freeze
                     append_book(book)
                     @iconview.unfreeze

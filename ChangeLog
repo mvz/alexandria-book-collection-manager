@@ -1,3 +1,9 @@
+2005-03-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Do not add the books twice in the library.
+
 2005-03-01  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/amazon.rb:
