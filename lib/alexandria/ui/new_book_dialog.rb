@@ -114,7 +114,14 @@ module UI
         def on_cancel
             @new_book_dialog.destroy
         end
-        
+       
+        def on_focus
+            if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
+                text = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD).wait_for_text
+                @entry_isbn.text = text if Library.valid_isbn?(text)
+            end
+        end
+ 
         #######
         private
         #######

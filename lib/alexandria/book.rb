@@ -75,7 +75,23 @@ module Alexandria
             end
             a
         end
- 
+
+		def self.valid_isbn?(isbn)
+            digits = isbn.strip.delete('-').scan(/./)
+            return false unless digits.length == 10
+            t = 0
+            (digits.length - 1).times do |i|
+                digit = digits[i]
+                if /\d/.match(digit)
+                    t += digit.to_i * (i + 1)
+                end
+            end
+            t %= 11
+            last_digit = digits.last
+            (/\d/.match(last_digit) and t == last_digit.to_i) or
+            (t == 10 and last_digit == 'X')
+		end 
+
         def save(book, small_cover_uri=nil, medium_cover_uri=nil)
             if small_cover_uri and medium_cover_uri
                 Dir.chdir(self.path) do

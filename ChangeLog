@@ -1,5 +1,14 @@
 2004-06-16  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	Autofill the ISBN entry with the clipboard contents upon focus.
+
+	* lib/alexandria/book.rb:
+
+	Added code to validate ISBNs.
+
 	* README:
 
 	- Updated the list of features ;
