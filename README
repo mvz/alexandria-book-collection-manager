@@ -11,8 +11,9 @@ Alexandria
       * allows books to be added and updated by hand ; 
       * enables searches either by EAN/ISBN, title, authors or keyword ; 
       * saves data using the YAML format ;
-      * can import and export data into XHTML+CSS, ONIX, Tellico and 
-        EAN/ISBN-list formats ;
+      * can import and export data into ONIX, Tellico and EAN/ISBN-list 
+        formats ;
+      * generates from your libraries XHTML web pages themable with CSS ;
       * allows marking your books as loaned, each with the loan-date and the 
         name of the person who has borrowed them ;
       * helps you marking books you have loaned and to who and when you have 

@@ -1,3 +1,12 @@
+=== Alexandria 0.5.0 ===
+
+2005-03-13  Laurent Sansonetti  <lrz@gnome.org>
+
+	* README,
+	  NEWS:
+
+	Final tweak for 0.5.0.
+
 2005-03-12  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/icons/alexandria.png,
