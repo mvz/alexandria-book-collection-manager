@@ -43,7 +43,7 @@ module UI
             @treeview_results.append_column(col)
             @entry_isbn.grab_focus
 
-            if File.exist?(CUECAT_DEV)
+            if File.exist?(Preferences.instance.cuecat_device)
               @cuecat_image.pixbuf = Icons::CUECAT
               create_scanner_input
             else
@@ -195,18 +195,19 @@ module UI
             true
         end
 
-        def create_scanner_input()
-          cuecat = File.open(CUECAT_DEV, File::RDONLY | File::NONBLOCK)
-          Gdk::Input.add(cuecat.to_i, Gdk::Input::Condition::READ) do
-            id, barcode_type, barcode = cuecat.gets.split(/,/)
-            begin
-              @entry_isbn.text = Library.canonicalise_isbn(barcode)
-            rescue RuntimeError => e
-              puts e
+        def create_scanner_input
+            cuecat = File.open(Preferences.instance.cuecat_device,
+                               File::RDONLY | File::NONBLOCK)
+            Gdk::Input.add(cuecat.to_i, Gdk::Input::Condition::READ) do
+                id, barcode_type, barcode = cuecat.gets.split(/,/)
+                begin
+                    @entry_isbn.text = Library.canonicalise_isbn(barcode)
+                rescue RuntimeError => e
+                    ErrorDialog.new(@parent, _("Couldn't validate the scanner input"), 
+                                    e.message)
+                end
             end
-          end
         end
-
     end
 end
 end

@@ -93,6 +93,17 @@
         <long>The library that should be selected when Alexandria starts.  In case of null ("") the first library will be selected.</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/cuecat_device</key>
+      <applyto>/apps/alexandria/cuecat_device</applyto>
+      <owner>alexandria</owner>
+      <type>string</type>
+      <default>/dev/scanners/cuecat</default>
+      <locale name="C">
+        <short>CueCat device</short>
+        <long>Full path to the CueCat device driver (Linux only).</long>
+      </locale>
+    </schema>
     <schema>        
       <key>/schemas/apps/alexandria/toolbar_visible</key>
       <applyto>/apps/alexandria/toolbar_visible</applyto>

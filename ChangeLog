@@ -1,3 +1,22 @@
+2004-09-10  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/new_book_dialog.rb,
+	  schemas/alexandria.schemas:
+
+	Moved the CUECAT_DEV constant to a GConf variable.
+
+2004-09-10  Zachary P. Landau  <kapheine@hypa.net> 
+
+	* lib/alexandria/ui/new_book_dialog.rb,
+	  data/alexandria/glade/new_book_dialog.glade
+
+	Added CueCat support.
+	  
+	* data/alexandria/icons/cuecat.png,
+	  data/alexandria/icons/cuecat_inactive.png:
+
+	Added.
+
 2004-09-08  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO:
