@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-03 22:15+0100\n"
+"POT-Creation-Date: 2005-03-06 13:27+0100\n"
 "PO-Revision-Date: 2004-06-08 20:26+0200\n"
 "Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
 "Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
@@ -124,12 +124,10 @@ msgid "Select a cover image"
 msgstr "Sélectionnez une image de couverture"
 
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:125
-msgid "%d days"
-msgstr "%d jours"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:127
-msgid "One day"
-msgstr "Un jour"
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d jour"
+msgstr[1] "%d jours"
 
 #: ../lib/alexandria/ui/export_dialog.rb:25
 msgid "File already exists"
@@ -308,31 +306,31 @@ msgstr "Le nom de la bibliothèque ne peut être blanc"
 msgid "The library can not be renamed"
 msgstr "La bibliothèque ne peut être renommée"
 
-#: ../lib/alexandria/ui/main_app.rb:562
+#: ../lib/alexandria/ui/main_app.rb:567
 msgid "In '_%s'"
 msgstr "Dans '_%s'"
 
-#: ../lib/alexandria/ui/main_app.rb:585
+#: ../lib/alexandria/ui/main_app.rb:590
 msgid "Untitled %d"
 msgstr "Sans Titre %d"
 
-#: ../lib/alexandria/ui/main_app.rb:680
+#: ../lib/alexandria/ui/main_app.rb:685
 msgid "If you continue, the selection will be permanently deleted."
 msgstr ""
 "Si vous continuez, le contenu de la sélection sera supprimé de manière "
 "permanente."
 
-#: ../lib/alexandria/ui/main_app.rb:691
+#: ../lib/alexandria/ui/main_app.rb:696
 msgid "Are you sure you want to permanently delete '%s'?"
 msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s'?"
 
-#: ../lib/alexandria/ui/main_app.rb:693
+#: ../lib/alexandria/ui/main_app.rb:698
 msgid "Are you sure you want to permanently delete '%s' which has one book?"
 msgstr ""
 "Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient "
 "un livre?"
 
-#: ../lib/alexandria/ui/main_app.rb:699
+#: ../lib/alexandria/ui/main_app.rb:704
 msgid "Are you sure you want to permanently delete '%s' which has %d book?"
 msgid_plural ""
 "Are you sure you want to permanently delete '%s' which has %d books?"
@@ -343,186 +341,190 @@ msgstr[1] ""
 "Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient %"
 "d livres?"
 
-#: ../lib/alexandria/ui/main_app.rb:712
+#: ../lib/alexandria/ui/main_app.rb:719
+msgid "Are you sure you want to permanently delete '%s' from '%s'?"
+msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s' de '%s'?"
+
+#: ../lib/alexandria/ui/main_app.rb:722
 msgid ""
 "Are you sure you want to permanently delete the selected books from '%s'?"
 msgstr ""
 "Êtes-vous sûr de vouloir supprimer de manière permanente les livres "
 "sélectionnés de '%s'?"
 
-#: ../lib/alexandria/ui/main_app.rb:742
+#: ../lib/alexandria/ui/main_app.rb:753
 msgid "_Library"
 msgstr "_Bibliothèque"
 
-#: ../lib/alexandria/ui/main_app.rb:743
+#: ../lib/alexandria/ui/main_app.rb:754
 msgid "_New"
 msgstr "_Nouveau"
 
-#: ../lib/alexandria/ui/main_app.rb:744
+#: ../lib/alexandria/ui/main_app.rb:755
 msgid "_Add Book..."
 msgstr "_Ajouter un livre..."
 
-#: ../lib/alexandria/ui/main_app.rb:745
+#: ../lib/alexandria/ui/main_app.rb:756
 msgid "Add Book _Manually..."
 msgstr "Ajouter _manuellement un livre..."
 
-#: ../lib/alexandria/ui/main_app.rb:746
+#: ../lib/alexandria/ui/main_app.rb:757
 msgid "_Import..."
 msgstr "_Importer..."
 
-#: ../lib/alexandria/ui/main_app.rb:747
+#: ../lib/alexandria/ui/main_app.rb:758
 msgid "_Export..."
 msgstr "_Exporter..."
 
-#: ../lib/alexandria/ui/main_app.rb:748
+#: ../lib/alexandria/ui/main_app.rb:759
 msgid "_Properties"
 msgstr "_Propriétés"
 
-#: ../lib/alexandria/ui/main_app.rb:749
+#: ../lib/alexandria/ui/main_app.rb:760
 msgid "_Quit"
 msgstr "_Quitter"
 
-#: ../lib/alexandria/ui/main_app.rb:750
+#: ../lib/alexandria/ui/main_app.rb:761
 msgid "_Edit"
 msgstr "_Édition"
 
-#: ../lib/alexandria/ui/main_app.rb:751
+#: ../lib/alexandria/ui/main_app.rb:762
 msgid "_Select All"
 msgstr "_Tout sélectionner"
 
-#: ../lib/alexandria/ui/main_app.rb:752
+#: ../lib/alexandria/ui/main_app.rb:763
 msgid "Dese_lect All"
 msgstr "Tout _déselectionner"
 
-#: ../lib/alexandria/ui/main_app.rb:753
+#: ../lib/alexandria/ui/main_app.rb:764
 msgid "_Move"
 msgstr "_Déplacer"
 
-#: ../lib/alexandria/ui/main_app.rb:754
+#: ../lib/alexandria/ui/main_app.rb:765
 msgid "_Rename"
 msgstr "_Renommer"
 
-#: ../lib/alexandria/ui/main_app.rb:755
+#: ../lib/alexandria/ui/main_app.rb:766
 msgid "_Delete"
 msgstr "_Supprimer"
 
-#: ../lib/alexandria/ui/main_app.rb:756
+#: ../lib/alexandria/ui/main_app.rb:767
 msgid "_Search"
 msgstr "_Rechercher"
 
-#: ../lib/alexandria/ui/main_app.rb:757
+#: ../lib/alexandria/ui/main_app.rb:768
 msgid "_Clear Results"
 msgstr "_Effacer les résultats"
 
-#: ../lib/alexandria/ui/main_app.rb:759
+#: ../lib/alexandria/ui/main_app.rb:770
 msgid "_Preferences"
 msgstr "_Préférences"
 
-#: ../lib/alexandria/ui/main_app.rb:760
+#: ../lib/alexandria/ui/main_app.rb:771
 msgid "_View"
 msgstr "_Affichage"
 
-#: ../lib/alexandria/ui/main_app.rb:761
+#: ../lib/alexandria/ui/main_app.rb:772
 msgid "_Refresh"
 msgstr "_Rafraichir"
 
-#: ../lib/alexandria/ui/main_app.rb:762
+#: ../lib/alexandria/ui/main_app.rb:773
 msgid "Arran_ge Icons"
 msgstr "_Ranger les icônes"
 
-#: ../lib/alexandria/ui/main_app.rb:763
+#: ../lib/alexandria/ui/main_app.rb:774
 msgid "Display Online _Information"
 msgstr "Afficher les _informations en ligne"
 
-#: ../lib/alexandria/ui/main_app.rb:764
+#: ../lib/alexandria/ui/main_app.rb:775
 msgid "_Help"
 msgstr "_Aide"
 
-#: ../lib/alexandria/ui/main_app.rb:765
+#: ../lib/alexandria/ui/main_app.rb:776
 msgid "Submit _Bug Report"
 msgstr "Soumettre un rapport de _bogue"
 
-#: ../lib/alexandria/ui/main_app.rb:767
+#: ../lib/alexandria/ui/main_app.rb:778
 msgid "_About"
 msgstr "À _propos"
 
-#: ../lib/alexandria/ui/main_app.rb:780
+#: ../lib/alexandria/ui/main_app.rb:791
 msgid "Side _Pane"
 msgstr "_Panneau latéral"
 
-#: ../lib/alexandria/ui/main_app.rb:782
+#: ../lib/alexandria/ui/main_app.rb:793
 msgid "_Toolbar"
 msgstr "Barre d'_outils"
 
-#: ../lib/alexandria/ui/main_app.rb:784
+#: ../lib/alexandria/ui/main_app.rb:795
 msgid "_Statusbar"
 msgstr "Barre d'é_tat"
 
-#: ../lib/alexandria/ui/main_app.rb:786
+#: ../lib/alexandria/ui/main_app.rb:797
 msgid "Re_versed Order"
 msgstr "_Ordre inversé"
 
-#: ../lib/alexandria/ui/main_app.rb:791
+#: ../lib/alexandria/ui/main_app.rb:802
 msgid "View as _Icons"
 msgstr "Voir en tant qu'_icônes"
 
-#: ../lib/alexandria/ui/main_app.rb:792
+#: ../lib/alexandria/ui/main_app.rb:803
 msgid "View as _List"
 msgstr "Voir en tant que _liste"
 
-#: ../lib/alexandria/ui/main_app.rb:796
+#: ../lib/alexandria/ui/main_app.rb:807
 msgid "By _Title"
 msgstr "Par _titre"
 
-#: ../lib/alexandria/ui/main_app.rb:797
+#: ../lib/alexandria/ui/main_app.rb:808
 msgid "By _Authors"
 msgstr "Par _auteurs"
 
-#: ../lib/alexandria/ui/main_app.rb:798
+#: ../lib/alexandria/ui/main_app.rb:809
 msgid "By _ISBN"
 msgstr "Par _ISBN"
 
-#: ../lib/alexandria/ui/main_app.rb:799
+#: ../lib/alexandria/ui/main_app.rb:810
 msgid "By _Publisher"
 msgstr "Par _éditeur"
 
-#: ../lib/alexandria/ui/main_app.rb:800
+#: ../lib/alexandria/ui/main_app.rb:811
 msgid "By _Binding"
 msgstr "Par _édition"
 
-#: ../lib/alexandria/ui/main_app.rb:801
+#: ../lib/alexandria/ui/main_app.rb:812
 msgid "By _Rating"
 msgstr "Par _notation"
 
-#: ../lib/alexandria/ui/main_app.rb:806
+#: ../lib/alexandria/ui/main_app.rb:817
 msgid "At _%s"
 msgstr "Sur _%s"
 
-#: ../lib/alexandria/ui/main_app.rb:863
+#: ../lib/alexandria/ui/main_app.rb:874
 msgid "Title contains"
 msgstr "Le titre contient"
 
-#: ../lib/alexandria/ui/main_app.rb:863
+#: ../lib/alexandria/ui/main_app.rb:874
 msgid "Authors contain"
 msgstr "Les auteurs contiennent"
 
-#: ../lib/alexandria/ui/main_app.rb:864
+#: ../lib/alexandria/ui/main_app.rb:875
 msgid "ISBN contains"
 msgstr "L'ISBN contient"
 
-#: ../lib/alexandria/ui/main_app.rb:864
+#: ../lib/alexandria/ui/main_app.rb:875
 msgid "Publisher contains"
 msgstr "L'éditeur contient"
 
-#: ../lib/alexandria/ui/main_app.rb:865
+#: ../lib/alexandria/ui/main_app.rb:876
 msgid "Notes contain"
 msgstr "Les notes contiennent"
 
-#: ../lib/alexandria/ui/main_app.rb:897
+#: ../lib/alexandria/ui/main_app.rb:908
 msgid "View as Icons"
 msgstr "Voir en tant qu'icônes"
 
-#: ../lib/alexandria/ui/main_app.rb:898
+#: ../lib/alexandria/ui/main_app.rb:909
 msgid "View as List"
 msgstr "Voir en tant que liste"
 
