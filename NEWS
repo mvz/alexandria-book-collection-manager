@@ -1,4 +1,11 @@
 ================
+Alexandria 0.1.1
+================
+
+This release fixes a bug when Alexandria fails to start if
+the directory ~/.alexandria doesn't exist.
+
+================
 Alexandria 0.1.0
 ================
 
