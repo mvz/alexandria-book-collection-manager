@@ -1,3 +1,11 @@
+2004-11-08  Dafydd Harries  <daf@muse.19inch.net>
+
+	* post-install.rb:
+
+	Don't do anything if ENV['GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL'] is
+	set. This makes it easier to build the package without gconftool-2
+	being installed.
+
 2004-11-05  Dafydd Harries  <daf@muse.19inch.net>
 
 	* pre-setup.rb:

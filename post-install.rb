@@ -2,6 +2,8 @@
 
 # Install GConf2 .schemas files
 
+exit 0 if ENV['GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL']
+
 unless system("which gconftool-2")
     $stderr.puts "gconftool-2 cannot be found, is GConf2 correctly installed?"
     exit 1
