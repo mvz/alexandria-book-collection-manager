@@ -93,11 +93,13 @@ module UI
                             _("Library '%s' selected") % library.name        
                                 
                         else
-                            n_("Library '%s' selected, %d book, %d unrated", 
-                               "Library '%s' selected, %d books, %d unrated", 
-                               library.length) % [ library.name, 
-                                                   library.length, 
-                                                   library.n_unrated ] 
+                            s = n_("Library '%s' selected, %d book", 
+                                   "Library '%s' selected, %d books", 
+                                   library.length) % [ library.name, 
+                                                       library.length ]
+                            s << ", "
+                            s << n_("%d unrated", "%d unrated",
+                                    library.n_unrated) % library.n_unrated
                     end
                 when 1
                     _("'%s' selected") % books.first.title
@@ -156,8 +158,8 @@ module UI
                                 _("Unable to launch the web browser"),
                                 _("Check out that a web browser is " +
                                   "configured as default (Desktop " +
-                                  "Preferences -> Preferred Applications) " +
-                                  "and try again."))
+                                  "Preferences -> Advanced -> Preferred " +
+                                  "Applications) and try again."))
             end
         end
 
@@ -169,8 +171,8 @@ module UI
                                 _("Unable to launch the mail reader"),
                                 _("Check out that a mail reader is " +
                                   "configured as default (Desktop " +
-                                  "Preferences -> Preferred Applications) " +
-                                  "and try again."))
+                                  "Preferences -> Advanced -> Preferred " +
+                                  "Applications) and try again."))
             end
         end
 
@@ -694,9 +696,6 @@ module UI
                     message = case library.length
                         when 0
                             _("Are you sure you want to permanently delete '%s'?") % library.name
-                        when 1
-                            _("Are you sure you want to permanently delete '%s' " +
-                              "which has one book?") % library.name
                         else
                             n_("Are you sure you want to permanently delete '%s' " +
                                "which has %d book?", 

@@ -1,9 +1,24 @@
+2005-03-07  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  data/alexandria/glade/main_app.glade,
+	  data/alexandria/glade/new_book_dialog.glade:
+
+	Marked '*' and 'Alexandria' as not translable.
+
+	* lib/alexandria/ui/main_app.rb.
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	Fixed wording (thanks to David Weinehall).
+
 2005-03-06  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb,
-	  lib/alexandria/ui/book_properties_dialog_base.rb:
+	  lib/alexandria/ui/book_properties_dialog_base.rb,
+	  lib/alexandria/book_providers.rb,
+	  lib/alexandria/ui/export_dialog.rb:
 
-	Fixed wording.
+	Fixed wording (thanks to David Weinehall).
 
 2005-03-05  Laurent Sansonetti  <lrz@gnome.org>
 

@@ -28,7 +28,7 @@ module UI
                    [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
                   _("The book titled '%s' has an invalid ISBN, but still " +
                     "exists in the providers libraries.  Do you want to " +
-                    "keep the book but the ISBN or cancel the add?") \
+                    "keep the book but change the ISBN or cancel the add?") \
                     % book.title)
             self.default_response = Gtk::Dialog::RESPONSE_OK
             show_all and @response = run
