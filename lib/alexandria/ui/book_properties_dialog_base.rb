@@ -106,7 +106,24 @@ module UI
         end
        
         def on_destroy; end     # no action by default
-        
+
+        def on_loaned
+            loaned = @checkbutton_loaned.active?
+            @entry_loaned_to.sensitive = loaned
+            @date_loaned_since.sensitive = loaned
+            @label_loaning_duration.visible = loaned
+        end
+
+        def on_loaned_date_changed
+            loaned_time = Time.at(@date_loaned_since.time)
+            n_days = (Time.now - loaned_time) / (3600*24)
+            if n_days > 1
+                @label_loaning_duration.label = _("%d days") % n_days 
+            else
+                @label_loaning_duration.label = ""
+            end
+        end
+            
         #######
         private
         #######
@@ -134,6 +151,12 @@ module UI
                 pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
             end
             @image_cover.pixbuf = pixbuf
+        end
+
+        def loaned_since=(time)
+            @date_loaned_since.time = time
+            # XXX 'date_changed' signal not automatically called after #time=.
+            on_loaned_date_changed
         end
     end
 end

@@ -18,7 +18,7 @@
 module Alexandria
     class Book
         attr_accessor :title, :authors, :isbn, :publisher, :edition, 
-                      :rating, :notes
+                      :rating, :notes, :loaned, :loaned_since, :loaned_to
 
         DEFAULT_RATING = 0 
 
@@ -30,7 +30,9 @@ module Alexandria
             @edition = edition
             @notes = ""
         end
+
+        def loaned? 
+            (loaned or false)
+        end
     end
 end
-
-   

@@ -1,3 +1,18 @@
+2004-12-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* TODO:
+
+	Removed points that have been implemented.
+
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/book_properties_dialog_base.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb:
+
+	Introduced very basic loaning support (is the book borrowed?,
+	who borrowed it? and when?).
+
 2004-11-08  Dafydd Harries  <daf@muse.19inch.net>
 
 	* post-install.rb:

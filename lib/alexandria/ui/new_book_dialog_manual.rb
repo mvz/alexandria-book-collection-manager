@@ -82,7 +82,10 @@ module UI
                 book = Book.new(title, authors, isbn, publisher, edition)
                 book.rating = @current_rating
                 book.notes = @textview_notes.buffer.text 
-                
+                book.loaned = @checkbutton_loaned.active?
+                book.loaned_to = @entry_loaned_to.text
+                book.loaned_since = @date_loaned_since.time
+
                 @library.save(book)
                 if File.exists?(TMP_COVER_FILE)
                     FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
