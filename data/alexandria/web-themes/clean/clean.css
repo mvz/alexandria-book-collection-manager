@@ -1,0 +1,84 @@
+/*
+ * Copyright (C) 2005 Laurent Sansonetti
+ *
+ * Alexandria is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * Alexandria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with Alexandria; see the file COPYING.  If not,
+ * write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+ * Boston, MA 02111-1307, USA.
+ */
+
+body {
+    background: #FFFFFF;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.library_name {
+    text-align: center;
+}
+
+.book {
+    float: left;
+    border: 1px solid #D2D2D2; 
+    display: block; 
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.book_isbn {
+    float: right;
+    font-family: monospace;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+.book_cover {
+    float: left;
+    padding: 5px 20px 5px 5px;
+}
+
+.no_book_cover {
+    /* do nothing */
+}
+
+.book_title {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.book_authors {
+    list-style-type: none;
+}
+
+.book_author {
+    font-size: 90%;
+    font-style: italic;
+    padding-left: 20px;
+}
+
+.book_binding {
+    padding-left: 10px;
+    font-size: 90%;
+}
+
+.book_publisher {
+    padding-left: 10px;
+    font-size: 90%;
+}
+
+.copyright {
+    clear: both;
+    font-size: 80%;
+    text-align: right;
+}

@@ -1,3 +1,21 @@
+2005-01-10  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/web-themes/clean/clean.css,
+	  data/alexandria/web-themes/clean/preview.jpg,
+	  lib/alexandria/web_themes.rb:
+
+	Added.
+
+	* lib/alexandria.rb,
+	  lib/alexandria/library.rb,
+	  lib/alexandria/ui/export_dialog.rb:
+
+	Introduced XHTML export.
+
+	* lib/alexandria/ui/alert_dialog.rb:
+
+	Fixed indentation.
+
 2005-01-07  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/preferences_dialog.rb:

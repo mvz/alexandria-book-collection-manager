@@ -1,17 +1,20 @@
 Alexandria's TODO list
 ======================
 
-Future releases:
+For the next release:
 
 [X] Loaning support
-[ ] XHTML export
+[X] XHTML export
+
+Future releases:
+
 [ ] ONIX import 
 [ ] Import/export via GNOME-DB
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Writing a z39.50 provider
 [ ] Writing help documentation
-[ ] Win32 MinGW port (Laurent)
+[ ] Win32 MinGW port
 [ ] Show more details about books, like the publication date for example
 [ ] Drag-and-drop books within libraries
 [ ] Migrate from GnomeIconView to GtkIconView

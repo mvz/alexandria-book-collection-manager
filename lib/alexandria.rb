@@ -40,6 +40,7 @@ module Alexandria
     ]
     LIST = 'alexandria-list@rubyforge.org'
     BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
+    WEBSITE_URL = 'http://alexandria.rubyforge.org'
 
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?
@@ -55,4 +56,5 @@ require 'alexandria/book'
 require 'alexandria/library'
 require 'alexandria/book_providers'
 require 'alexandria/preferences'
+require 'alexandria/web_themes'
 require 'alexandria/ui'

@@ -57,7 +57,8 @@ module UI
 
     class ErrorDialog < AlertDialog
         def initialize(parent, title, message=nil)
-            super(parent, title, Gtk::Stock::DIALOG_ERROR, [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
+            super(parent, title, Gtk::Stock::DIALOG_ERROR, 
+                  [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
             self.default_response = Gtk::Dialog::RESPONSE_OK
             show_all and run
             destroy
