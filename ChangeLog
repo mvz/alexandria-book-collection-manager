@@ -1,3 +1,9 @@
+2005-03-01  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/amazon.rb:
+
+	Setup the online information url according to the selected locale.
+
 2005-02-28  Constantine Evans  <cevans@costinet.org>
 
 	* lib/alexandria/book_providers/amazon.rb:

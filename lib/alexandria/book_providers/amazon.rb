@@ -101,7 +101,21 @@ class BookProviders
         end
 
         def url(book)
-            "http://www.amazon.com/exec/obidos/ASIN/" + book.isbn
+            url = case prefs["locale"]
+                when "fr"
+                    "http://www.amazon.fr/exec/obidos/ASIN/%s"
+                when "uk"    
+                    "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
+                when "de"
+                    "http://www.amazon.de/exec/obidos/ASIN/%s"
+                when "ca"
+                    "http://www.amazon.ca/exec/obidos/ASIN/%s"
+                when "jp"
+                    "http://www.amazon.jp/exec/obidos/ASIN/%s"
+                when "us"
+                    "http://www.amazon.com/exec/obidos/ASIN/%s"
+            end
+            url % book.isbn
         end
     end
 end
