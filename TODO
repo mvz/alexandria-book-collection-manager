@@ -1,10 +1,7 @@
 Alexandria's TODO list
 ======================
 
-For the next release:
-
-[X] Loaning support
-[X] XHTML export
+[X] Writing help documentation (Liam)
 
 Future releases:
 
@@ -13,7 +10,6 @@ Future releases:
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Writing a z39.50 provider
-[ ] Writing help documentation
 [ ] Win32 MinGW port
 [ ] Show more details about books, like the publication date for example
 [ ] Drag-and-drop books within libraries
