@@ -438,7 +438,7 @@ msgstr "_Hilfe"
 
 #: ../lib/alexandria/ui/main_app.rb:775
 msgid "Submit _Bug Report"
-msgstr "_Fehlerbericht einschicken"
+msgstr "_Fehlerbericht erstellen"
 
 #: ../lib/alexandria/ui/main_app.rb:777
 msgid "_About"
@@ -700,8 +700,8 @@ msgid ""
 "can be configured to get better results.  You can also customize the order "
 "in which they are queried."
 msgstr ""
-"Anbieter sind Datenbanken die Informationen über Bücher bereitstellen.  "
-"Machen können angepasst werden, um bessere Ergebnisse zu erzielen. Sie "
+"Anbieter sind Datenbanken, die Informationen über Bücher bereitstellen.  "
+"Manche können angepasst werden, um bessere Ergebnisse zu erzielen. Sie "
 "können auch die Reihenfolge der Abfrage einstellen."
 
 #: ../data/alexandria/glade/preferences_dialog.glade:462
