@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-08 21:00+0200\n"
+"POT-Creation-Date: 2004-06-14 12:59+0200\n"
 "PO-Revision-Date: 2004-06-08 20:26+0200\n"
 "Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
 "Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
@@ -19,38 +19,45 @@ msgid "'%s' selected"
 msgstr "'%s' sélectionné"
 
 #: ../lib/alexandria/ui/main_app.rb:81
-msgid "%d books selected"
-msgstr "%d livres sélectionnés"
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "%d livre sélectionné"
+msgstr[1] "%d livres sélectionnés"
 
-#: ../lib/alexandria/ui/main_app.rb:120
+#: ../lib/alexandria/ui/main_app.rb:121
 msgid "Untitled %d"
 msgstr "Sans Titre %d"
 
-#: ../lib/alexandria/ui/main_app.rb:152
+#: ../lib/alexandria/ui/main_app.rb:153
 msgid "Are you sure you want to permanently delete '%s'?"
 msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s'?"
 
-#: ../lib/alexandria/ui/main_app.rb:154
+#: ../lib/alexandria/ui/main_app.rb:155
 msgid "Are you sure you want to permanently delete '%s' which has one book?"
 msgstr ""
 "Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient "
 "un livre?"
 
-#: ../lib/alexandria/ui/main_app.rb:156
-msgid "Are you sure you want to permanently delete '%s' which has %d books?"
-msgstr ""
+#: ../lib/alexandria/ui/main_app.rb:157
+msgid "Are you sure you want to permanently delete '%s' which has %d book?"
+msgid_plural ""
+"Are you sure you want to permanently delete '%s' which has %d books?"
+msgstr[0] ""
+"Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient %"
+"d livre?"
+msgstr[1] ""
 "Êtes-vous sûr de vouloir supprimer de manière permanente '%s', qui contient %"
 "d livres?"
 
-#: ../lib/alexandria/ui/main_app.rb:169
+#: ../lib/alexandria/ui/main_app.rb:170
 msgid "Are you sure you want to permanently delete '%s' from '%s'?"
 msgstr "Êtes-vous sûr de vouloir supprimer de manière permanente '%s' de '%s'?"
 
-#: ../lib/alexandria/ui/main_app.rb:365
+#: ../lib/alexandria/ui/main_app.rb:366
 msgid "Unable to launch the web browser"
 msgstr "Impossible de démarrer le navigateur Internet"
 
-#: ../lib/alexandria/ui/main_app.rb:366
+#: ../lib/alexandria/ui/main_app.rb:367
 msgid ""
 "Check out that a web browser is configured as default (Applications -> "
 "Desktop Preferences -> Advanced -> Preferred Applications) and try again."
@@ -59,39 +66,39 @@ msgstr ""
 "Préférences du bureau -> Préférences avancées -> Applications préférées) et "
 "ré-essayez encore."
 
-#: ../lib/alexandria/ui/main_app.rb:424
+#: ../lib/alexandria/ui/main_app.rb:425
 msgid "Title"
 msgstr "Titre"
 
-#: ../lib/alexandria/ui/main_app.rb:439
+#: ../lib/alexandria/ui/main_app.rb:440
 msgid "Authors"
 msgstr "Auteurs"
 
-#: ../lib/alexandria/ui/main_app.rb:439
+#: ../lib/alexandria/ui/main_app.rb:440
 msgid "ISBN"
 msgstr ""
 
-#: ../lib/alexandria/ui/main_app.rb:439
+#: ../lib/alexandria/ui/main_app.rb:440
 msgid "Publisher"
 msgstr "Éditeur"
 
-#: ../lib/alexandria/ui/main_app.rb:439
+#: ../lib/alexandria/ui/main_app.rb:440
 msgid "Edition"
 msgstr "Édition"
 
-#: ../lib/alexandria/ui/main_app.rb:448
+#: ../lib/alexandria/ui/main_app.rb:449
 msgid "Rating"
 msgstr "Notation"
 
-#: ../lib/alexandria/ui/main_app.rb:513
+#: ../lib/alexandria/ui/main_app.rb:514
 msgid "Library"
 msgstr "Bibliothèque"
 
-#: ../lib/alexandria/ui/main_app.rb:527
+#: ../lib/alexandria/ui/main_app.rb:528
 msgid "Invalid library name '%s'"
 msgstr "Nom de bibliothèque invalide '%s'"
 
-#: ../lib/alexandria/ui/main_app.rb:528
+#: ../lib/alexandria/ui/main_app.rb:529
 msgid "The name provided contains the illegal character '<i>%s</i>'."
 msgstr "Le nom entré contient le caractère invalide '<i>%s</i>'."
 
@@ -107,27 +114,27 @@ msgstr "Impossible d'ajouter le libre"
 msgid "Preferences for %s"
 msgstr "Préférences pour %s"
 
-#: ../lib/alexandria/book.rb:74
+#: ../lib/alexandria/book.rb:75
 msgid "My Library"
 msgstr "Ma bibliothèque"
 
-#: ../lib/alexandria/book.rb:140
+#: ../lib/alexandria/book.rb:141
 msgid "Couldn't reach the provider '%s': timeout expired."
 msgstr "Impossible de joindre le fournisseur '%s': durée maximale dépassée."
 
-#: ../lib/alexandria/book.rb:202
+#: ../lib/alexandria/book.rb:203
 msgid "Locale site to contact"
 msgstr "Site local à contacter"
 
-#: ../lib/alexandria/book.rb:204
+#: ../lib/alexandria/book.rb:205
 msgid "Development token"
 msgstr "Jeton de développeur"
 
-#: ../lib/alexandria/book.rb:205
+#: ../lib/alexandria/book.rb:206
 msgid "Associate ID"
 msgstr "Identifiant d'associé"
 
-#: ../lib/alexandria.rb:25
+#: ../lib/alexandria.rb:24
 msgid "A program to help you manage your book collection."
 msgstr "Un programme pour vous aider à gérer votre collection de livres."
 
@@ -162,6 +169,88 @@ msgstr "Général"
 #: ../data/alexandria/glade/info_book_dialog.glade:599
 msgid "Notes"
 msgstr ""
+
+#: ../data/alexandria/glade/new_book_dialog.glade:10
+msgid "Adding a Book"
+msgstr "Ajout d'un livre"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:110
+msgid ""
+"Please provide an ISBN (International Standard Book Number) to search for, "
+"and select the library which the book will be added to."
+msgstr ""
+"Veuillez fournir un ISBN (International Standard Book Number) pour la "
+"recherche, et sélectionnez une bibliothèque dans laquelle le livre sera "
+"ajouté."
+
+#: ../data/alexandria/glade/new_book_dialog.glade:140
+msgid "_ISBN:"
+msgstr ""
+
+#: ../data/alexandria/glade/new_book_dialog.glade:171
+#: ../data/alexandria/glade/new_book_dialog.glade:228
+#: ../data/alexandria/glade/main_app.glade:706
+msgid "*"
+msgstr "*"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:188
+msgid "_Library:"
+msgstr "_Bibliothèque:"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:9
+msgid "Preferences"
+msgstr "Préférences"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:76
+msgid "<b>Visible Columns</b>"
+msgstr "<b>Colonnes visibles</b>"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:108
+msgid "_Authors"
+msgstr "_Auteurs"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:131
+msgid "_Edition"
+msgstr "_Édition"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:154
+msgid "_Rating"
+msgstr "_Notation"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:177
+msgid "_ISBN"
+msgstr ""
+
+#: ../data/alexandria/glade/preferences_dialog.glade:200
+msgid "_Publisher"
+msgstr "É_diteur"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:235
+msgid "List Columns"
+msgstr "Liste en colonnes"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:261
+msgid "<b>_Providers</b>"
+msgstr "<b>_Fournisseurs</b>"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:368
+msgid "_Setup"
+msgstr "_Configurer"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:433
+msgid ""
+"Providers are libraries that supply information about books.  Some of them "
+"can be configured to get better results.  You can also customize the order "
+"in which they are queried."
+msgstr ""
+"Les fournisseurs sont des bibliothèques partageant des informations sur des "
+"livres. Certains d'entre eux peuvent-être configurés afin d'obtenir de "
+"meilleurs résultats.  Vous pouvez également personnaliser l'ordre dans "
+"lequel ils seront interrogés."
+
+#: ../data/alexandria/glade/preferences_dialog.glade:460
+msgid "Providers"
+msgstr "Fournisseurs"
 
 #: ../data/alexandria/glade/main_app.glade:12
 msgid "Alexandria"
@@ -308,12 +397,6 @@ msgstr "L'éditeur contient"
 msgid "Notes contain"
 msgstr "Les notes contiennent"
 
-#: ../data/alexandria/glade/main_app.glade:706
-#: ../data/alexandria/glade/new_book_dialog.glade:171
-#: ../data/alexandria/glade/new_book_dialog.glade:228
-msgid "*"
-msgstr "*"
-
 #: ../data/alexandria/glade/main_app.glade:751
 msgid "View as Icons"
 msgstr "Voir en tant qu'icônes"
@@ -329,79 +412,3 @@ msgstr "_Bibliothèques:"
 #: ../data/alexandria/glade/main_app.glade:1237
 msgid "_Add a Book"
 msgstr "_Ajouter un livre"
-
-#: ../data/alexandria/glade/new_book_dialog.glade:10
-msgid "Adding a Book"
-msgstr "Ajout d'un livre"
-
-#: ../data/alexandria/glade/new_book_dialog.glade:110
-msgid ""
-"Please provide an ISBN (International Standard Book Number) to search for, "
-"and select the library which the book will be added to."
-msgstr ""
-"Veuillez fournir un ISBN (International Standard Book Number) pour la "
-"recherche, et sélectionnez une bibliothèque dans laquelle le livre sera "
-"ajouté."
-
-#: ../data/alexandria/glade/new_book_dialog.glade:140
-msgid "_ISBN:"
-msgstr ""
-
-#: ../data/alexandria/glade/new_book_dialog.glade:188
-msgid "_Library:"
-msgstr "_Bibliothèque:"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:9
-msgid "Preferences"
-msgstr "Préférences"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:76
-msgid "<b>Visible Columns</b>"
-msgstr "<b>Colonnes visibles</b>"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:108
-msgid "_Authors"
-msgstr "_Auteurs"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:131
-msgid "_Edition"
-msgstr "_Édition"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:154
-msgid "_Rating"
-msgstr "_Notation"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:177
-msgid "_ISBN"
-msgstr ""
-
-#: ../data/alexandria/glade/preferences_dialog.glade:200
-msgid "_Publisher"
-msgstr "É_diteur"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:235
-msgid "List Columns"
-msgstr "Liste en colonnes"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:261
-msgid "<b>_Providers</b>"
-msgstr "<b>_Fournisseurs</b>"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:368
-msgid "_Setup"
-msgstr "_Configurer"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:433
-msgid ""
-"Providers are libraries that supply information about books.  Some of them "
-"can be configured to get better results.  You can also customize the order "
-"in which they are queried."
-msgstr ""
-"Les fournisseurs sont des bibliothèques partageant des informations sur des "
-"livres. Certains d'entre eux peuvent-être configurés afin d'obtenir de "
-"meilleurs résultats.  Vous pouvez également personnaliser l'ordre dans "
-"lequel ils seront interrogés."
-
-#: ../data/alexandria/glade/preferences_dialog.glade:460
-msgid "Providers"
-msgstr "Fournisseurs"

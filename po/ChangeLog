@@ -1,3 +1,8 @@
+2004-06-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* fr.po: Update French translation for new plural messages.
+	* .cvsignore: Added.
+
 2004-06-14  Dafydd Harries  <daf@muse.19inch.net>
 
 	* cy.po: Update Welsh translation for new plural messages.
