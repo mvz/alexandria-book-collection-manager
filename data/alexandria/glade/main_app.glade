@@ -61,7 +61,7 @@
 			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image355">
+				<widget class="GtkImage" id="image359">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -84,7 +84,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image356">
+				<widget class="GtkImage" id="image360">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-add</property>
 				  <property name="icon_size">1</property>
@@ -112,7 +112,7 @@
 			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image357">
+				<widget class="GtkImage" id="image361">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -186,7 +186,7 @@
 			      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image358">
+				<widget class="GtkImage" id="image362">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -234,7 +234,7 @@
 			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image359">
+				<widget class="GtkImage" id="image363">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-refresh</property>
 				  <property name="icon_size">1</property>
@@ -500,6 +500,7 @@
 		      <property name="rules_hint">False</property>
 		      <property name="reorderable">False</property>
 		      <property name="enable_search">False</property>
+		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:13:21 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -539,6 +540,7 @@
 		    <widget class="GnomeIconList" id="iconlist">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
+		      <property name="has_focus">True</property>
 		      <property name="selection_mode">GTK_SELECTION_MULTIPLE</property>
 		      <property name="icon_width">80</property>
 		      <property name="row_spacing">4</property>
@@ -549,6 +551,7 @@
 		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:21 GMT"/>
 		      <signal name="select_icon" handler="on_books_selection_changed" last_modification_time="Sat, 03 Apr 2004 14:48:10 GMT"/>
 		      <signal name="unselect_icon" handler="on_books_selection_changed" last_modification_time="Sat, 03 Apr 2004 14:48:07 GMT"/>
+		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:13:58 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -595,6 +598,7 @@
 		      <property name="reorderable">False</property>
 		      <property name="enable_search">True</property>
 		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:38 GMT"/>
+		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:14:09 GMT"/>
 		    </widget>
 		  </child>
 		</widget>

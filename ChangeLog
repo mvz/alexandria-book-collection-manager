@@ -1,3 +1,11 @@
+2004-04-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	Auto-sensitize File/Properties and Edit/Delete according to
+	the current focus.
+
 2004-04-07  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb,

@@ -7,7 +7,7 @@ module UI
             @libraries = Library.loadall
             build_books_listview
             build_sidepane
-            on_refresh
+            on_books_selection_changed
         end
  
         def on_books_button_press_event(widget, event)
@@ -45,6 +45,18 @@ module UI
                     "#{books.length} books selected"
             end
             @popup_properties.sensitive = @menu_properties.sensitive = books.length == 1
+            @menu_delete.sensitive = !books.empty? 
+        end
+
+        def on_focus(widget, event_focus)
+            if widget == @treeview_sidepane
+                @menu_properties.sensitive = false
+                @menu_delete.sensitive = true
+            else
+                n = selected_books.length
+                @popup_properties.sensitive = @menu_properties.sensitive = n == 1
+                @menu_delete.sensitive = n > 0
+            end
         end
 
         def on_book_properties
