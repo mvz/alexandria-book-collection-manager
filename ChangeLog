@@ -1,3 +1,11 @@
+2004-07-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers.rb:
+
+	Fixed the providers calling mechanism (if a provider raises an
+	exception we call the next one if any, otherwise we pass the exception
+	to the main app). 
+
 2004-07-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:

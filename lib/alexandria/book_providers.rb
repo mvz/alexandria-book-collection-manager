@@ -26,15 +26,27 @@ module Alexandria
 		SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS, SEARCH_BY_KEYWORD = (0..3).to_a 
 
     	def self.search(criterion, type)
-            self.instance.each do |factory|
-                begin
-                    if stuff = factory.search(criterion, type)
-                        return stuff
-                    end
-                rescue TimeoutError
-                    raise _("Couldn't reach the provider '%s': timeout expired.") % factory.name
-                end 
-            end
+            factory_n = 0
+            begin
+                factory = self.instance[factory_n]
+                if stuff = factory.search(criterion, type)
+                    return stuff
+                end
+                raise
+            rescue => boom
+                msg = case boom
+                    when TimeoutError
+                        _("Couldn't reach the provider '%s': timeout expired.") % factory.name
+                    else
+                        boom.message
+                end
+                if self.last == factory
+                    raise msg
+                else
+                    factory_n += 1
+                    retry
+                end
+            end 
     	end
 
 		def self.isbn_search(criterion)
