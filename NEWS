@@ -10,7 +10,7 @@ New features:
  * manual addition of books ;
  * allow the edition of all fields of the properties of a book (including cover 
    change) ;
- * move books within libraries ;
+ * move books between libraries ;
  * display online information (amazon, proxis, bn) for a book ;
  * improved the usability of the Add Book dialog (the ISBN text entry grabs the
    focus at the beginning, the criterion is automatically selected upon clicks
