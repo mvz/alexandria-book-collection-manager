@@ -2,7 +2,8 @@
 
 	* README:
 
-	Added "gconftool-2 --shutdown" to the install steps.
+	- Updated the list of features ;
+	- Added "gconftool-2 --shutdown" to the install steps.
 
 2004-06-15  Laurent Sansonetti  <lrz@gnome.org>
 
