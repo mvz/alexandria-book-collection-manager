@@ -80,30 +80,6 @@
 	  <property name="column_spacing">20</property>
 
 	  <child>
-	    <widget class="GtkEntry" id="entry_isbn">
-	      <property name="visible">True</property>
-	      <property name="can_focus">True</property>
-	      <property name="editable">True</property>
-	      <property name="visibility">True</property>
-	      <property name="max_length">18</property>
-	      <property name="text" translatable="yes"></property>
-	      <property name="has_frame">True</property>
-	      <property name="invisible_char" translatable="yes">*</property>
-	      <property name="activates_default">False</property>
-	      <property name="width_chars">13</property>
-	      <signal name="changed" handler="on_changed" last_modification_time="Thu, 18 Mar 2004 23:45:37 GMT"/>
-	      <signal name="activate" handler="on_add" last_modification_time="Sat, 19 Jun 2004 17:33:18 GMT"/>
-	    </widget>
-	    <packing>
-	      <property name="left_attach">1</property>
-	      <property name="right_attach">2</property>
-	      <property name="top_attach">0</property>
-	      <property name="bottom_attach">1</property>
-	      <property name="y_options"></property>
-	    </packing>
-	  </child>
-
-	  <child>
 	    <widget class="GtkRadioButton" id="isbn_radiobutton">
 	      <property name="visible">True</property>
 	      <property name="can_focus">True</property>
@@ -187,56 +163,65 @@
 	      <property name="spacing">6</property>
 
 	      <child>
-		<widget class="GtkCombo" id="combo_search">
+		<widget class="GtkEventBox" id="eventbox_combo_search">
 		  <property name="visible">True</property>
-		  <property name="sensitive">False</property>
-		  <property name="value_in_list">False</property>
-		  <property name="allow_empty">True</property>
-		  <property name="case_sensitive">False</property>
-		  <property name="enable_arrow_keys">True</property>
-		  <property name="enable_arrows_always">False</property>
+		  <property name="visible_window">False</property>
+		  <property name="above_child">True</property>
+		  <signal name="button_press_event" handler="on_clicked" last_modification_time="Wed, 04 Aug 2004 18:11:04 GMT"/>
 
-		  <child internal-child="entry">
-		    <widget class="GtkEntry" id="combo-entry2">
+		  <child>
+		    <widget class="GtkCombo" id="combo_search">
 		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="editable">False</property>
-		      <property name="visibility">True</property>
-		      <property name="max_length">0</property>
-		      <property name="text" translatable="yes"></property>
-		      <property name="has_frame">True</property>
-		      <property name="invisible_char" translatable="yes">*</property>
-		      <property name="activates_default">False</property>
-		      <property name="width_chars">10</property>
-		    </widget>
-		  </child>
+		      <property name="sensitive">False</property>
+		      <property name="value_in_list">False</property>
+		      <property name="allow_empty">True</property>
+		      <property name="case_sensitive">False</property>
+		      <property name="enable_arrow_keys">True</property>
+		      <property name="enable_arrows_always">False</property>
 
-		  <child internal-child="list">
-		    <widget class="GtkList" id="combo-list2">
-		      <property name="visible">True</property>
-		      <property name="selection_mode">GTK_SELECTION_BROWSE</property>
-
-		      <child>
-			<widget class="GtkListItem" id="listitem34">
+		      <child internal-child="entry">
+			<widget class="GtkEntry" id="combo-entry2">
 			  <property name="visible">True</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">by title</property>
+			  <property name="editable">False</property>
+			  <property name="visibility">True</property>
+			  <property name="max_length">0</property>
+			  <property name="text" translatable="yes"></property>
+			  <property name="has_frame">True</property>
+			  <property name="invisible_char" translatable="yes">*</property>
+			  <property name="activates_default">False</property>
+			  <property name="width_chars">10</property>
 			</widget>
 		      </child>
 
-		      <child>
-			<widget class="GtkListItem" id="listitem35">
+		      <child internal-child="list">
+			<widget class="GtkList" id="combo-list2">
 			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">by authors</property>
-			</widget>
-		      </child>
+			  <property name="selection_mode">GTK_SELECTION_BROWSE</property>
 
-		      <child>
-			<widget class="GtkListItem" id="listitem36">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">by keyword</property>
+			  <child>
+			    <widget class="GtkListItem" id="listitem34">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="label" translatable="yes">by title</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkListItem" id="listitem35">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="label" translatable="yes">by authors</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkListItem" id="listitem36">
+			      <property name="visible">True</property>
+			      <property name="can_focus">True</property>
+			      <property name="label" translatable="yes">by keyword</property>
+			    </widget>
+			  </child>
 			</widget>
 		      </child>
 		    </widget>
@@ -250,20 +235,30 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkEntry" id="entry_search">
+		<widget class="GtkEventBox" id="eventbox_entry_search">
 		  <property name="visible">True</property>
-		  <property name="sensitive">False</property>
-		  <property name="can_focus">True</property>
-		  <property name="editable">True</property>
-		  <property name="visibility">True</property>
-		  <property name="max_length">0</property>
-		  <property name="text" translatable="yes"></property>
-		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
-		  <property name="activates_default">False</property>
-		  <property name="width_chars">30</property>
-		  <signal name="changed" handler="on_changed" last_modification_time="Mon, 14 Jun 2004 16:24:17 GMT"/>
-		  <signal name="activate" handler="on_find" last_modification_time="Tue, 15 Jun 2004 18:40:01 GMT"/>
+		  <property name="visible_window">False</property>
+		  <property name="above_child">True</property>
+		  <signal name="button_press_event" handler="on_clicked" last_modification_time="Wed, 04 Aug 2004 18:01:43 GMT"/>
+
+		  <child>
+		    <widget class="GtkEntry" id="entry_search">
+		      <property name="visible">True</property>
+		      <property name="sensitive">False</property>
+		      <property name="can_focus">True</property>
+		      <property name="events">GDK_EXPOSURE_MASK</property>
+		      <property name="editable">True</property>
+		      <property name="visibility">True</property>
+		      <property name="max_length">0</property>
+		      <property name="text" translatable="yes"></property>
+		      <property name="has_frame">True</property>
+		      <property name="invisible_char" translatable="yes">*</property>
+		      <property name="activates_default">False</property>
+		      <property name="width_chars">30</property>
+		      <signal name="changed" handler="on_changed" last_modification_time="Mon, 14 Jun 2004 16:24:17 GMT"/>
+		      <signal name="activate" handler="on_find" last_modification_time="Tue, 15 Jun 2004 18:40:01 GMT"/>
+		    </widget>
+		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -363,6 +358,40 @@
 	      <property name="bottom_attach">4</property>
 	      <property name="y_padding">12</property>
 	      <property name="y_options"></property>
+	    </packing>
+	  </child>
+
+	  <child>
+	    <widget class="GtkEventBox" id="eventbox_entry_isbn">
+	      <property name="visible">True</property>
+	      <property name="visible_window">False</property>
+	      <property name="above_child">False</property>
+	      <signal name="button_press_event" handler="on_clicked" last_modification_time="Wed, 04 Aug 2004 18:17:48 GMT"/>
+
+	      <child>
+		<widget class="GtkEntry" id="entry_isbn">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="editable">True</property>
+		  <property name="visibility">True</property>
+		  <property name="max_length">18</property>
+		  <property name="text" translatable="yes"></property>
+		  <property name="has_frame">True</property>
+		  <property name="invisible_char" translatable="yes">*</property>
+		  <property name="activates_default">False</property>
+		  <property name="width_chars">13</property>
+		  <signal name="changed" handler="on_changed" last_modification_time="Thu, 18 Mar 2004 23:45:37 GMT"/>
+		  <signal name="activate" handler="on_add" last_modification_time="Sat, 19 Jun 2004 17:33:18 GMT"/>
+		</widget>
+	      </child>
+	    </widget>
+	    <packing>
+	      <property name="left_attach">1</property>
+	      <property name="right_attach">2</property>
+	      <property name="top_attach">0</property>
+	      <property name="bottom_attach">1</property>
+	      <property name="x_options">fill</property>
+	      <property name="y_options">fill</property>
 	    </packing>
 	  </child>
 	</widget>

@@ -41,6 +41,7 @@ module UI
             @treeview_results.selection.signal_connect('changed') { @button_add.sensitive = true }
             col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, :text => 0)
             @treeview_results.append_column(col)
+            @entry_isbn.grab_focus
         end
    
         def on_criterion_toggled(item)
@@ -107,6 +108,7 @@ module UI
         end
 
         def on_add
+            return unless @button_add.sensitive?
             begin
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
                 books_to_add = []                
@@ -151,6 +153,25 @@ module UI
                     @entry_isbn.text = text if
                         Library.valid_isbn?(text) or Library.valid_ean?(text)
                 end
+            end
+        end
+
+        def on_clicked(widget, event)
+            if event.event_type == Gdk::Event::BUTTON_PRESS and
+               event.button == 1
+            
+                radio, target_widget, box2, box3 = case widget
+                    when @eventbox_entry_search
+                        [@title_radiobutton, @entry_search, @eventbox_combo_search, @eventbox_entry_isbn]
+                    when @eventbox_combo_search 
+                        [@title_radiobutton, @combo_search, @eventbox_entry_search, @eventbox_entry_isbn]
+                    when @eventbox_entry_isbn 
+                        [@isbn_radiobutton, @entry_isbn, @eventbox_entry_search, @eventbox_combo_search]
+                end
+                radio.active = true
+                target_widget.grab_focus 
+                widget.above_child = false
+                box2.above_child = box3.above_child = true
             end
         end
  

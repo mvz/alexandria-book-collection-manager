@@ -1,3 +1,13 @@
+2004-08-04  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	- Do not try to add the book if the add button is disabled ;
+	- Grab the focus on the ISBN entry at the beginning (#760) ;
+	- Autoselect the criterion when the user clicks on an insensitive
+	  widget (#761).
+
 2004-07-31  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/book_providers.rb:
