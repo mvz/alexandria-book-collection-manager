@@ -33,13 +33,16 @@ module UI
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
+        module Columns
+            COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
+                ISBN, PUBLISHER, EDITION, RATING = (0..9).to_a
+        end
+
         def initialize
             super("main_app.glade")
             @prefs = Preferences.instance
             load_libraries
             initialize_ui
-            build_books_listview
-            build_sidepane
             on_books_selection_changed
             restore_preferences
         end
@@ -91,7 +94,7 @@ module UI
                     n_("%d book selected", "%d books selected", books.length) \
                         % books.length
             end
-            unless @treeview_sidepane.has_focus?
+            unless @library_listview.has_focus?
                 @actiongroup["Properties"].sensitive = \
                     @actiongroup["OnlineInformation"].sensitive = \
                     books.length == 1
@@ -106,10 +109,11 @@ module UI
         def on_switch_page
             @actiongroup["ArrangeIcons"].sensitive = @notebook.page == 0
             on_books_selection_changed
+            arrange_books
         end
         
         def on_focus(widget, event_focus)
-            if widget == @treeview_sidepane
+            if widget == @library_listview
                 %w{Properties OnlineInformation 
                    SelectAll DeselectAll}.each do |action| 
                     @actiongroup[action].sensitive = false
@@ -121,75 +125,9 @@ module UI
         end
 
         def on_refresh  
-            # Clear the views.
-            @listview.model.clear
-            @iconlist.clear
-
-            load_libraries            
-            library = selected_library
-            
-            # Filter books according to the search toolbar widgets. 
-            @filter_entry.text = filter_crit = @filter_entry.text.strip
-            @filter_books_mode ||= 0
-            library.delete_if do |book|
-                !/#{filter_crit}/i.match case @filter_books_mode
-                    when 0 then book.title
-                    when 1 then book.authors.join
-                    when 2 then book.isbn
-                    when 3 then book.publisher
-                    when 4 then (book.notes or "")
-                end     
-            end 
-
-            # Append books in the list view.
-            library.each { |book| append_book_in_list(book) }
-
-            # Sort and reverse books according to the "Arrange Icons" menus.
-            sort_funcs = [
-                proc { |x, y| x.title <=> y.title },
-                proc { |x, y| x.authors <=> y.authors },
-                proc { |x, y| x.isbn <=> y.isbn },
-                proc { |x, y| x.publisher <=> y.publisher },
-                proc { |x, y| x.edition <=> y.edition },
-                proc do |x, y| 
-                    if x.rating.nil? or y.rating.nil?
-                        0
-                    else
-                        x.rating <=> y.rating
-                    end
-                end 
-            ]
-            sort = sort_funcs[@prefs.arrange_icons_mode]
-            library.sort! { |x, y| sort.call(x, y) } 
-            library.reverse! if @prefs.reverse_icons
-            
-            # Append books in the icon view.
-            library.each { |book| append_book_as_icon(book) }
-
-            # Change the application's title.
-            @main_app.title = library.name + " - " + TITLE
-           
-            # Show or hide list view columns according to the preferences. 
-            cols_visibility = [
-                @prefs.col_authors_visible,
-                @prefs.col_isbn_visible,
-                @prefs.col_publisher_visible,
-                @prefs.col_edition_visible,
-                @prefs.col_rating_visible
-            ]
-            cols = @listview.columns[1..-1] # skip "Title"
-            cols.each_index do |i|
-                cols[i].visible = cols_visibility[i]
-            end
-
-            # Disable the selected library in the move libraries actions.
-            @libraries.each do |i_library|
-                action = @actiongroup[i_library.action_name]
-                action.sensitive = i_library != library if action
-            end
-            
-            # Refresh the status bar.
-            on_books_selection_changed
+            load_libraries
+            refresh_libraries
+            refresh_books
         end
 
         def on_close_sidepane
@@ -202,14 +140,27 @@ module UI
 
         def open_web_browser(url)
             unless (cmd = Preferences.instance.www_browser).nil?
-                system(cmd % "\"" + url + "\"")
+                Thread.new { system(cmd % "\"" + url + "\"") }
             else 
                 ErrorDialog.new(@main_app,
                                 _("Unable to launch the web browser"),
                                 _("Check out that a web browser is " +
-                                  "configured as default (Applications -> " +
-                                  "Desktop Preferences -> Advanced -> " +
-                                  "Preferred Applications) and try again."))
+                                  "configured as default (Desktop " +
+                                  "Preferences -> Preferred Applications) " +
+                                  "and try again."))
+            end
+        end
+
+        def open_email_client(url)
+            unless (cmd = Preferences.instance.email_client).nil?
+                Thread.new { system(cmd % "\"" + url + "\"") }
+            else 
+                ErrorDialog.new(@main_app,
+                                _("Unable to launch the mail reader"),
+                                _("Check out that a mail reader is " +
+                                  "configured as default (Desktop " +
+                                  "Preferences -> Preferred Applications) " +
+                                  "and try again."))
             end
         end
 
@@ -217,74 +168,97 @@ module UI
             @libraries = Library.loadall
         end
 
-        ICON_TITLE_MAXLEN = 20   # characters
-        ICON_WIDTH = 48          # pixels
-        def append_book_as_icon(book)
-            title = book.title.sub(/^(.{#{ICON_TITLE_MAXLEN}}).*$/, '\1...')
-            icon = Icons.cover(selected_library, book)
-            new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
-            @iconlist.append_pixbuf(icon.scale(ICON_WIDTH, new_height), '', 
-                                    title)
+        def create_models
+            @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
+                                        String, String, String, String, 
+                                        String, Integer)
+            @icon_model = Gtk::TreeModelSort.new(@model)
+            @list_model = Gtk::TreeModelSort.new(@model)
         end
 
-        def append_book_in_list(book)
-            iter = @listview.model.append 
-            iter[0] = Icons.cover(selected_library, book).scale(20, 25)
-            iter[1] = book.title
-            iter[2] = book.authors.join(', ')
-            iter[3] = book.isbn
-            iter[4] = book.publisher
-            iter[5] = book.edition
+        ICON_TITLE_MAXLEN = 20   # characters
+        ICON_WIDTH = 48          # pixels
+        def fill_iter_with_book(iter, book)
+            icon = Icons.cover(selected_library, book)
+            iter[Columns::COVER_LIST] = icon.scale(20, 25)
+            new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
+            iter[Columns::COVER_ICON] = icon.scale(ICON_WIDTH, new_height)
+            iter[Columns::TITLE] = book.title
+            title = book.title.sub(/^(.{#{ICON_TITLE_MAXLEN}}).*$/, '\1...')
+            iter[Columns::TITLE_REDUCED] = title
+            iter[Columns::AUTHORS] = book.authors.join(', ')
+            iter[Columns::ISBN] = book.isbn
+            iter[Columns::PUBLISHER] = book.publisher
+            iter[Columns::EDITION] = book.edition
             rating = (book.rating or Book::DEFAULT_RATING)
-            5.times do |i|
-                iter[i + 6] = rating >= i.succ ? 
-                    Icons::STAR_SET : Icons::STAR_UNSET
-            end
-            iter[11] = rating
+            iter[Columns::RATING] = rating
+        end
+
+        def append_book(book)
+            iter = @model.append 
+            fill_iter_with_book(iter, book)
             return iter
         end
 
         def append_library(library, autoselect=false)
-            iter = @treeview_sidepane.model.append
+            iter = @library_listview.model.append
             iter[0] = Icons::LIBRARY_SMALL
             iter[1] = library.name
             iter[2] = true  #editable?
             if autoselect
-                @treeview_sidepane.set_cursor(iter.path, 
-                                              @treeview_sidepane.get_column(0), 
-                                              true)
+                @library_listview.set_cursor(iter.path, 
+                                             @library_listview.get_column(0), 
+                                             true)
                 @actiongroup["Sidepane"].active = true
             end
         end
 
-        def build_books_listview
-            @listview.model = Gtk::ListStore.new(Gdk::Pixbuf, String, 
-                                                 *([String] * 4 + 
-                                                   [Gdk::Pixbuf] * 5 + 
-                                                   [Integer]))
+        def setup_books_iconview
+            @iconview.model = @icon_model
+            @iconview.selection_mode = Gtk::SELECTION_MULTIPLE
+            @iconview.text_column = Columns::TITLE_REDUCED 
+            @iconview.pixbuf_column = Columns::COVER_ICON
+            @iconview.orientation = Gtk::ORIENTATION_VERTICAL
+            @iconview.row_spacing = 4
+            @iconview.column_spacing = 2
+            #@iconview.item_width = 100
+          
+            @iconview.signal_connect('selection-changed') do 
+                on_books_selection_changed
+            end
+        end
+
+        def setup_books_listview
+            @listview.model = @list_model
 
             # first column
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Title"))
             column.pack_start(renderer, true)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
-                cell.pixbuf = iter[0]
+                cell.pixbuf = iter[Columns::COVER_LIST]
             end        
             renderer = Gtk::CellRendererText.new
             column.pack_start(renderer, true) 
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
-                cell.text = iter[1]
+                cell.text = iter[Columns::TITLE]
             end
-            column.sort_column_id = 1
+            column.sort_column_id = Columns::TITLE 
             column.resizable = true
             @listview.append_column(column)
 
             # other columns
-            names = [ _("Authors"), _("ISBN"), _("Publisher"), _("Binding") ]
-            names.each_index do |i|
-                column = Gtk::TreeViewColumn.new(names[i], renderer, :text => i + 2)
+            names = [ 
+                [ _("Authors"), Columns::AUTHORS ],
+                [ _("ISBN"), Columns::ISBN ],
+                [ _("Publisher"), Columns::PUBLISHER ],
+                [ _("Binding"), Columns::EDITION ]
+            ]
+            names.each do |title, iterid|
+                column = Gtk::TreeViewColumn.new(title, renderer, 
+                                                 :text => iterid)
                 column.resizable = true
-                column.sort_column_id = i + 2
+                column.sort_column_id = iterid
                 @listview.append_column(column)
             end
 
@@ -293,20 +267,85 @@ module UI
             5.times do |i|
                 renderer = Gtk::CellRendererPixbuf.new
                 column.pack_start(renderer, false)
-                column.set_cell_data_func(renderer) do |column, cell, model, iter|
-                    cell.pixbuf = iter[i + 6]
+                column.set_cell_data_func(renderer) do |column, cell, 
+                                                        model, iter|
+                    cell.pixbuf = iter[Columns::RATING] >= i.succ ? 
+                        Icons::STAR_SET : Icons::STAR_UNSET
                 end
             end
-            column.sort_column_id = 11 
+            column.sort_column_id = Columns::RATING
             column.resizable = false 
             @listview.append_column(column)
 
             @listview.selection.mode = Gtk::SELECTION_MULTIPLE
-            @listview.selection.signal_connect('changed') { on_books_selection_changed }
+            @listview.selection.signal_connect('changed') do 
+                on_books_selection_changed
+            end
         end
 
+        def arrange_books
+            if @notebook.page == 0
+                # Sort and reverse books according to the "Arrange Icons" 
+                # menus.
+                sorts = [
+                    Columns::TITLE, Columns::AUTHORS, Columns::ISBN, 
+                    Columns::PUBLISHER, Columns::EDITION, Columns::RATING
+                ]
+                @icon_model.set_sort_column_id(sorts[@prefs.arrange_icons_mode],
+                                               @prefs.reverse_icons \
+                                                   ? Gtk::SORT_DESCENDING \
+                                                   : Gtk::SORT_ASCENDING)
+                
+                # Force redraw.
+                @icon_model.row_changed(@icon_model.iter_first.path,
+                                        @icon_model.iter_first)
+            end
+        end
+       
+        def setup_listview_columns_visibility
+            # Show or hide list view columns according to the preferences. 
+            cols_visibility = [
+                @prefs.col_authors_visible,
+                @prefs.col_isbn_visible,
+                @prefs.col_publisher_visible,
+                @prefs.col_edition_visible,
+                @prefs.col_rating_visible
+            ]
+            cols = @listview.columns[1..-1] # skip "Title"
+            cols.each_index do |i|
+                cols[i].visible = cols_visibility[i]
+            end
+        end
+       
+        def refresh_books
+            # Clear the views.
+            @model.clear
+            
+            # Filter books according to the search toolbar widgets. 
+            @filter_entry.text = filter_crit = @filter_entry.text.strip
+            @filter_books_mode ||= 0
+            library = selected_library.select do |book|
+                /#{filter_crit}/i.match case @filter_books_mode
+                    when 0 then book.title
+                    when 1 then book.authors.join
+                    when 2 then book.isbn
+                    when 3 then book.publisher
+                    when 4 then (book.notes or "")
+                end     
+            end 
+
+            # Append books.
+            library.each { |book| append_book(book) }
+
+            # Refresh the status bar.
+            on_books_selection_changed
+
+            setup_listview_columns_visibility
+            arrange_books
+        end
+        
         def selected_library
-            if iter = @treeview_sidepane.selection.selected
+            if iter = @library_listview.selection.selected
                 @libraries.find { |x| x.name == iter[1] }
             else
                 @libraries.first
@@ -314,39 +353,58 @@ module UI
         end
    
         def select_library(library)
-            iter = @treeview_sidepane.model.iter_first
+            iter = @library_listview.model.iter_first
             ok = true
             while ok do
                 if iter[1] == library.name
-                    @treeview_sidepane.selection.select_iter(iter)
+                    @library_listview.selection.select_iter(iter)
                     break 
                 end
                 ok = iter.next!
             end
         end
 
+        def book_from_iter(library, iter)
+            library.find { |x| x.isbn == iter[Columns::ISBN] }
+        end
+
+        def iter_from_isbn(isbn)
+            iter = @model.iter_first
+            ok = true
+            while ok do
+                if iter[Columns::ISBN] == isbn
+                    return iter
+                end
+                ok = iter.next!
+            end
+            return nil
+        end
+
+        def iter_from_book(book)
+            iter_from_isbn(book.isbn)
+        end
+        
         def selected_books
             a = []
-            case @notebook.page
+            library = selected_library
+            view = case @notebook.page
                 when 0
-                    @iconlist.selection.each do |i|
-                        a << selected_library[i]    
+                    @iconview.selected_each do |iconview, path|
+                        iter = @icon_model.get_iter(path)
+                        a << book_from_iter(library, iter)
                     end
 
                 when 1
                     @listview.selection.selected_each do |model, path, iter| 
-                        book = selected_library.find { |x| x.isbn == iter[3] }
-                        if book
-                            a << book
-                        end
+                        a << book_from_iter(library, iter)
                     end
             end
             return a
         end   
 
-        def build_sidepane
-            @treeview_sidepane.model = Gtk::ListStore.new(Gdk::Pixbuf, 
-                                                          String, TrueClass)
+        def setup_sidepane
+            @library_listview.model = Gtk::ListStore.new(Gdk::Pixbuf, 
+                                                         String, TrueClass)
             @libraries.each { |library| append_library(library) } 
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Library"))
@@ -363,29 +421,51 @@ module UI
                 if cell.text != new_text
                     if match = /([^\w\s'"()?!:;.\-])/.match(new_text)
                         ErrorDialog.new(@main_app,
-                                        _("Invalid library name '%s'") % new_text,
-                                        _("The name provided contains the illegal " +
-                                          "character '<i>%s</i>'.") % match[1])
+                                        _("Invalid library name '%s'") % 
+                                          new_text,
+                                        _("The name provided contains the " +
+                                          "illegal character '<i>%s</i>'.") % 
+                                          match[1])
                     elsif new_text.strip.empty?
-                        ErrorDialog.new(@main_app, _("The library name can not be empty"))
-                    elsif x = @libraries.find { |library| library.name == new_text.strip } \
+                        ErrorDialog.new(@main_app, _("The library name " +
+                                                     "can not be empty"))
+                    elsif x = @libraries.find { |library| library.name == 
+                                                          new_text.strip } \
                        and x.name != selected_library.name
                         ErrorDialog.new(@main_app, 
                                         _("The library can not be renamed"),
                                         _("There is already a library named " +
-                                          "'#{new_text.strip}'.  Please choose a " +
-                                          "different name."))
+                                          "'%s'.  Please choose a different " +
+                                          "name.") % new_text.strip)
                     else
-                        iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
+                        path = Gtk::TreePath.new(path_string)
+                        iter = @library_listview.model.get_iter(path)
                         iter[1] = selected_library.name = new_text.strip
                         setup_move_actions
-                        on_refresh 
+                        refresh_libraries
                     end
                 end
             end
-            @treeview_sidepane.append_column(column)
-            @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
-            @treeview_sidepane.selection.select_iter(@treeview_sidepane.model.iter_first) 
+            @library_listview.append_column(column)
+            @library_listview.selection.signal_connect('changed') do 
+                refresh_libraries
+                refresh_books
+            end
+            iter = @library_listview.model.iter_first
+            @library_listview.selection.select_iter(iter)
+        end
+
+        def refresh_libraries
+            library = selected_library
+            
+            # Change the application's title.
+            @main_app.title = library.name + " - " + TITLE
+           
+            # Disable the selected library in the move libraries actions.
+            @libraries.each do |i_library|
+                action = @actiongroup[i_library.action_name]
+                action.sensitive = i_library != library if action
+            end
         end
 
         def restore_preferences
@@ -435,16 +515,14 @@ module UI
                 @actiongroup.remove_action(action)
             end
             actions = @libraries.map do |library|
-                [library.action_name, nil,
-                 _("In '_%s'") % library.name, nil, nil,
-                 proc { Library.move(selected_library, 
-                                     library, *selected_books)
-                        on_refresh }]
+                [ library.action_name, nil,
+                  _("In '_%s'") % library.name, nil, nil,
+                  proc { Library.move(selected_library, 
+                                      library, *selected_books)
+                         refresh_books } ]
             end
             @actiongroup.add_actions(actions)
-            if @move_mid
-                @uimanager.remove_ui(@move_mid)
-            end
+            @uimanager.remove_ui(@move_mid) if @move_mid
             @move_mid = @uimanager.new_merge_id 
             @libraries.each do |library|
                 name = library.action_name
@@ -476,7 +554,9 @@ module UI
                                   @libraries, 
                                   selected_library) do |books, library|
                     if selected_library == library
-                        on_refresh
+                        library.concat(books)
+                        books.each { |book| append_book(book) }
+                        arrange_books
                     else
                         select_library(library)
                     end
@@ -485,7 +565,9 @@ module UI
      
             on_add_book_manual = proc do
                 NewBookDialogManual.new(@main_app, selected_library) do |book|
-                    on_refresh
+                    selected_library << book
+                    append_book(book)
+                    arrange_books
                 end
             end
             
@@ -501,8 +583,14 @@ module UI
             on_properties = proc do
                 books = selected_books
                 if books.length == 1
-                    BookPropertiesDialog.new(@main_app, selected_library, 
-                                             books.first) { on_refresh }
+                    book = books.first
+                    old_isbn = book.isbn
+                    BookPropertiesDialog.new(@main_app, 
+                                             selected_library, 
+                                             book) do |modified_book|
+                        fill_iter_with_book(iter_from_isbn(old_isbn),
+                                            modified_book)
+                    end
                 end
             end
 
@@ -514,9 +602,7 @@ module UI
             on_select_all = proc do
                 case @notebook.page
                     when 0
-                        @iconlist.num_icons.times do |i|
-                            @iconlist.select_icon(i)
-                        end
+                        @iconview.select_all
                     when 1
                         @listview.selection.select_all
                 end
@@ -525,17 +611,17 @@ module UI
             on_deselect_all = proc do
                 case @notebook.page
                     when 0
-                        @iconlist.unselect_all
+                        @iconview.unselect_all
                     when 1
                         @listview.selection.unselect_all
                 end
             end
             
             on_rename = proc do
-                iter = @treeview_sidepane.selection.selected
-                @treeview_sidepane.set_cursor(iter.path, 
-                                              @treeview_sidepane.get_column(0), 
-                                              true)
+                iter = @library_listview.selection.selected
+                @library_listview.set_cursor(iter.path, 
+                                             @library_listview.get_column(0), 
+                                             true)
             end
             
             on_delete = proc do
@@ -555,7 +641,7 @@ module UI
                     dialog.destroy
                     res
                 end
-                if @treeview_sidepane.focus?
+                if @library_listview.focus?
                     message = case library.length
                         when 0
                             _("Are you sure you want to permanently delete '%s'?") % library.name
@@ -571,30 +657,36 @@ module UI
                     if confirm.call(message)
                         library.delete
                         @libraries.delete_if { |lib| lib.name == library.name }
-                        iter = @treeview_sidepane.selection.selected
-                        next_iter = @treeview_sidepane.selection.selected
+                        iter = @library_listview.selection.selected
+                        next_iter = @library_listview.selection.selected
                         next_iter.next!
-                        @treeview_sidepane.model.remove(iter)
-                        @treeview_sidepane.selection.select_iter(next_iter)
+                        @library_listview.model.remove(iter)
+                        @library_listview.selection.select_iter(next_iter)
                         setup_move_actions
                     end
                 else
                     if confirm.call(_("Are you sure you want to permanently " +
                                       "delete the selected books from '%s'?") \
                                     % [ library.name ])
-                        selected_books.each { |book| library.delete(book) } 
-                        on_refresh
+                        selected_books.each do |book| 
+                            library.delete(book)
+                            @model.remove(iter_from_book(book))
+                        end
                     end
                 end
             end
      
             on_clear_search_results = proc do
                 @filter_entry.text = ""
-                on_refresh
+                refresh_books
             end
     
             on_search = proc { @filter_entry.grab_focus }
-            on_preferences = proc { PreferencesDialog.new(@main_app) { on_refresh } }
+            on_preferences = proc do
+                PreferencesDialog.new(@main_app) do 
+                    setup_listview_columns_visibility
+                end
+            end
             on_submit_bug_report = proc { open_web_browser(BUGREPORT_URL) }
             on_about = proc { AboutDialog.new(@main_app).show }
 
@@ -611,7 +703,7 @@ module UI
                 ["SelectAll", nil, _("_Select All"), "<control>A", nil, on_select_all],
                 ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", nil, on_deselect_all],
                 ["Move", nil, _("_Move")],
-                ["Rename", nil, _("_Rename"), "Rename", nil, on_rename],
+                ["Rename", nil, _("_Rename"), nil, nil, on_rename],
                 ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", nil, on_delete],
                 ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", nil, on_search],
                 ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", nil, 
@@ -633,7 +725,7 @@ module UI
             
             on_reverse_order = proc do |actiongroup, action|
                 Preferences.instance.reverse_icons = action.active? 
-                on_refresh
+                arrange_books
             end
 
             toggle_actions = [
@@ -673,13 +765,15 @@ module UI
             @actiongroup.add_toggle_actions(toggle_actions)
             @actiongroup.add_radio_actions(view_as_actions) do |action, current|
                 @notebook.page = current.current_value
-                @toolbar_view_as.signal_handler_block(@toolbar_view_as_signal_hid) do
+                hid = @toolbar_view_as_signal_hid
+                @toolbar_view_as.signal_handler_block(hid) do
                     @toolbar_view_as.active = current.current_value 
                 end
             end
-            @actiongroup.add_radio_actions(arrange_icons_actions) do |action, current|
+            @actiongroup.add_radio_actions(arrange_icons_actions) do |action, 
+                                                                      current|
                 @prefs.arrange_icons_mode = current.current_value 
-                on_refresh
+                arrange_books 
             end
             
             @uimanager = Gtk::UIManager.new
@@ -726,7 +820,7 @@ module UI
             cb.active = 0
             cb.signal_connect('changed') do |cb|
                 @filter_books_mode = cb.active 
-                on_refresh unless @filter_entry.text.strip.empty?
+                refresh_books unless @filter_entry.text.strip.empty?
             end
             toolitem = Gtk::ToolItem.new
             toolitem.border_width = 5
@@ -734,7 +828,7 @@ module UI
             @toolbar.insert(-1, toolitem)
             
             @filter_entry = Gtk::Entry.new
-            @filter_entry.signal_connect('activate') { on_refresh }
+            @filter_entry.signal_connect('activate') { refresh_books }
             toolitem = Gtk::ToolItem.new
             toolitem.expand = true
             toolitem.border_width = 5
@@ -781,6 +875,17 @@ module UI
                 @actiongroup["Quit"].activate
             end
             
+            Gtk::AboutDialog.set_url_hook do |about, link|
+                open_web_browser(link)
+            end
+            Gtk::AboutDialog.set_email_hook do |about, link|
+                open_email_client("mailto:" + link)
+            end
+            
+            create_models
+            setup_books_listview
+            setup_books_iconview
+            setup_sidepane
             setup_move_actions
         end
     end

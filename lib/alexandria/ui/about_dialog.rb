@@ -17,19 +17,23 @@
 
 module Alexandria
 module UI
-    class AboutDialog < Gnome::About
+    class AboutDialog < Gtk::AboutDialog
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize(parent)
-            super(Alexandria::TITLE,
-                  Alexandria::VERSION,
-                  Alexandria::COPYRIGHT,
-                  Alexandria::DESCRIPTION,
-                  Alexandria::AUTHORS,
-                  Alexandria::DOCUMENTERS,
-                  Alexandria::TRANSLATORS.join("\n"),
-                  Icons::ALEXANDRIA_SMALL)
+            super()
+            self.name = Alexandria::TITLE
+            self.version = Alexandria::VERSION
+            self.copyright = Alexandria::COPYRIGHT
+            self.comments = Alexandria::DESCRIPTION
+            self.authors = Alexandria::AUTHORS
+            self.documenters = Alexandria::DOCUMENTERS
+            self.translator_credits = Alexandria::TRANSLATORS.join("\n")
+            self.logo = Icons::ALEXANDRIA_SMALL
+            self.website = Alexandria::WEBSITE_URL
+            self.license = File.read(File.join(Alexandria::Config::DATA_DIR,
+                                               "COPYING"))
             self.transient_for = parent
             signal_connect('destroy') { hide }
         end

@@ -21,14 +21,12 @@ require 'singleton'
 module Alexandria
     class Preferences
         include Singleton
-        
-        APP_DIR = "/apps/alexandria/"
-        WWW_DIR = "/desktop/gnome/url-handlers/http/"
 
         def initialize
             @client = GConf::Client.default
         end
 
+        APP_DIR = "/apps/alexandria/"
         def method_missing(id, *args)
             method = id.id2name
             if match = /(.*)=$/.match(method)
@@ -46,8 +44,15 @@ module Alexandria
             end                
         end
 
+        URL_HANDLERS_DIR = "/desktop/gnome/url-handlers/"
         def www_browser
-            @client[WWW_DIR + "command"] if @client[WWW_DIR + "enabled"]
+            dir = URL_HANDLERS_DIR + "http/"
+            @client[dir + "command"] if @client[dir + "enabled"]
+        end
+
+        def email_client
+            dir = URL_HANDLERS_DIR + "mailto/"
+            @client[dir + "command"] if @client[dir + "enabled"]
         end
 
         def http_proxy_config

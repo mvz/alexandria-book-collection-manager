@@ -1,3 +1,19 @@
+2005-02-22  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/COPYING:
+
+	Added.
+	
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/preferences.rb,
+	  lib/alexandria/ui/about_dialog.rb,
+	  lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	- use Gtk::AboutDialog instead of Gnome::About ;
+	- use Gtk::IconView instead of Gnome::IconList ;
+	- improved performances.
+
 2005-02-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* tests/test_providers.rb:

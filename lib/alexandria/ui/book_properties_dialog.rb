@@ -50,9 +50,10 @@ module UI
             self.cover = Icons.cover(library, book)
             self.rating = (book.rating or Book::DEFAULT_RATING)
             
-            @checkbutton_loaned.active = book.loaned?
-            @entry_loaned_to.text = (book.loaned_to or "")
-            self.loaned_since = (book.loaned_since or Time.now.tv_sec)
+            if @checkbutton_loaned.active = book.loaned?
+                @entry_loaned_to.text = (book.loaned_to or "")
+                self.loaned_since = (book.loaned_since or Time.now.tv_sec)
+            end
         end
 
         def on_destroy; on_close; end
@@ -85,7 +86,7 @@ module UI
             @book.loaned_since = @date_loaned_since.time
            
             @library.save(@book, new_isbn) 
-            @on_close_cb.call
+            @on_close_cb.call(@book)
             @book_properties_dialog.destroy
         end
     end

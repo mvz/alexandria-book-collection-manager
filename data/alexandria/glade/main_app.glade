@@ -67,7 +67,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">10</property>
 			  <property name="ypad">0</property>
-			  <property name="mnemonic_widget">treeview_sidepane</property>
+			  <property name="mnemonic_widget">library_listview</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>
@@ -122,7 +122,7 @@
 		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		  <child>
-		    <widget class="GtkTreeView" id="treeview_sidepane">
+		    <widget class="GtkTreeView" id="library_listview">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="headers_visible">False</property>
@@ -167,20 +167,11 @@
 		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
 
 		  <child>
-		    <widget class="GnomeIconList" id="iconlist">
+		    <widget class="GtkIconView" id="iconview">
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="has_focus">True</property>
-		      <property name="selection_mode">GTK_SELECTION_MULTIPLE</property>
-		      <property name="icon_width">80</property>
-		      <property name="row_spacing">4</property>
-		      <property name="column_spacing">2</property>
-		      <property name="text_spacing">2</property>
-		      <property name="text_editable">False</property>
-		      <property name="text_static">True</property>
 		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:21 GMT"/>
-		      <signal name="select_icon" handler="on_books_selection_changed" last_modification_time="Sat, 03 Apr 2004 14:48:10 GMT"/>
-		      <signal name="unselect_icon" handler="on_books_selection_changed" last_modification_time="Sat, 03 Apr 2004 14:48:07 GMT"/>
 		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:13:58 GMT"/>
 		    </widget>
 		  </child>
