@@ -21,6 +21,17 @@ class Gtk::ActionGroup
     end
 end
 
+class Gtk::IconView
+    def freeze
+        @old_model = self.model
+        self.model = nil
+    end
+
+    def unfreeze
+        self.model = @old_model
+    end
+end
+
 class Alexandria::Library
     def action_name
         "MoveIn" + name.gsub(/\s/, '')
@@ -109,10 +120,6 @@ module UI
         def on_switch_page
             @actiongroup["ArrangeIcons"].sensitive = @notebook.page == 0
             on_books_selection_changed
-            if @notebook.page == 0
-                @list_sort_column_id = @model.sort_column_id
-            end
-            arrange_books
         end
         
         def on_focus(widget, event_focus)
@@ -210,7 +217,7 @@ module UI
         end
 
         def setup_books_iconview
-            @iconview.model = @model
+            @iconview.model = @iconview_model
             @iconview.selection_mode = Gtk::SELECTION_MULTIPLE
             @iconview.text_column = Columns::TITLE_REDUCED 
             @iconview.pixbuf_column = Columns::COVER_ICON
@@ -224,18 +231,35 @@ module UI
             end
         end
 
+        ICONS_SORTS = [
+            Columns::TITLE, Columns::AUTHORS, Columns::ISBN, 
+            Columns::PUBLISHER, Columns::EDITION, Columns::RATING
+        ]
+        def setup_books_iconview_sorting
+            mode = ICONS_SORTS[@prefs.arrange_icons_mode]
+            @iconview_model.set_sort_column_id(mode,
+                                               @prefs.reverse_icons \
+                                                   ? Gtk::SORT_DESCENDING \
+                                                   : Gtk::SORT_ASCENDING)
+            @filtered_model.refilter    # force redraw
+        end
+        
         def setup_books_listview
             # first column
-            @listview.model = @model
+            @listview.model = @listview_model
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Title"))
             column.pack_start(renderer, true)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
+                iter = @listview_model.convert_iter_to_child_iter(iter)
+                iter = @filtered_model.convert_iter_to_child_iter(iter)
                 cell.pixbuf = iter[Columns::COVER_LIST]
             end        
             renderer = Gtk::CellRendererText.new
             column.pack_start(renderer, true) 
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
+                iter = @listview_model.convert_iter_to_child_iter(iter)
+                iter = @filtered_model.convert_iter_to_child_iter(iter)
                 cell.text = iter[Columns::TITLE]
             end
             column.sort_column_id = Columns::TITLE 
@@ -264,6 +288,8 @@ module UI
                 column.pack_start(renderer, false)
                 column.set_cell_data_func(renderer) do |column, cell, 
                                                         model, iter|
+                    iter = @listview_model.convert_iter_to_child_iter(iter)
+                    iter = @filtered_model.convert_iter_to_child_iter(iter)
                     rating = (iter[Columns::RATING] - 5).abs
                     cell.pixbuf = rating >= i.succ ? 
                         Icons::STAR_SET : Icons::STAR_UNSET
@@ -279,30 +305,6 @@ module UI
             end
         end
 
-        def arrange_books
-            if @notebook.page == 0
-                # Sort and reverse books according to the "Arrange Icons" 
-                # menus.
-                sorts = [
-                    Columns::TITLE, Columns::AUTHORS, Columns::ISBN, 
-                    Columns::PUBLISHER, Columns::EDITION, Columns::RATING
-                ]
-                @model.set_sort_column_id(sorts[@prefs.arrange_icons_mode],
-                                          @prefs.reverse_icons \
-                                               ? Gtk::SORT_DESCENDING \
-                                               : Gtk::SORT_ASCENDING)
-                
-                # Force redraw.
-                if iter = @model.iter_first
-                    @model.row_changed(iter.path, iter)
-                end
-            else
-                if @list_sort_column_id
-                    @model.set_sort_column_id(*@list_sort_column_id)
-                end
-            end
-        end
-       
         def setup_listview_columns_visibility
             # Show or hide list view columns according to the preferences. 
             cols_visibility = [
@@ -317,31 +319,53 @@ module UI
                 cols[i].visible = cols_visibility[i]
             end
         end
-       
+      
         def refresh_books
             # Clear the views.
             @model.clear
 
-            # Filter books according to the search toolbar widgets. 
-            @filter_entry.text = filter_crit = @filter_entry.text.strip
-            @filter_books_mode ||= 0
-            library = selected_library.select do |book|
-                /#{filter_crit}/i.match case @filter_books_mode
-                    when 0 then book.title
-                    when 1 then book.authors.join
-                    when 2 then book.isbn
-                    when 3 then book.publisher
-                    when 4 then (book.notes or "")
-                end     
-            end 
+            @iconview.freeze
+            selected_library.each { |x| append_book(x) }
+            @filtered_model.refilter
+            @iconview.unfreeze
 
-            # Append books.
-            library.each { |book| append_book(book) }
+=begin      
+            # Append books - we do that in a separate thread.
+            library = selected_library
+            @appbar.progress_percentage = 0
+            @appbar.children.first.visible = true   # show the progress bar
+            @appbar.status = _("Loading '%s'...") % library.name
+            exec_queue = ExecutionQueue.new
+            
+            on_progress = proc do |percent|
+                @appbar.progress_percentage = percent
+            end
+            
+            thread = Thread.start do
+                total = library.length
+                library.each_with_index do |book, n|
+                    append_book(book)
+                    # convert to percents
+                    coeff = total / 100.0
+                    percent = n / coeff
+                    fraction = percent / 100
+                    #puts "#index #{n} percent #{percent} fraction #{fraction}"
+                    exec_queue.call(on_progress, fraction)
+                end
+            end
 
+            while thread.alive?
+                exec_queue.iterate
+                Gtk.main_iteration_do(false)
+            end
+ 
+            @appbar.progress_percentage = 1 
+=end           
+
+            @appbar.children.first.visible = false  # hide the progress bar
+            
             # Refresh the status bar.
             on_books_selection_changed
-
-            arrange_books
         end
         
         def selected_library
@@ -390,6 +414,8 @@ module UI
             view = case @notebook.page
                 when 0
                     @iconview.selected_each do |iconview, path|
+                        path = @iconview_model.convert_path_to_child_path(path)
+                        path = @filtered_model.convert_path_to_child_path(path)
                         iter = @model.get_iter(path)
                         a << book_from_iter(library, iter)
                     end
@@ -397,6 +423,9 @@ module UI
                 when 1
                     @listview.selection.selected_each do |model, path, 
                                                           iter|
+                        path = @listview_model.convert_path_to_child_path(path)
+                        path = @filtered_model.convert_path_to_child_path(path)
+                        iter = @model.get_iter(path)
                         a << book_from_iter(library, iter)
                     end
             end
@@ -519,10 +548,12 @@ module UI
             @libraries.each do |library|
                 on_move = proc do
                     books = selected_books
+                    @iconview.freeze
                     books.each do |book| 
                         iter = iter_from_book(book)
                         @model.remove(iter)
                     end
+                    @iconview.unfreeze
                     Library.move(selected_library,
                                  library, *books)
                 end
@@ -566,8 +597,9 @@ module UI
                                   selected_library) do |books, library|
                     if selected_library == library
                         library.concat(books)
+                        @iconview.freeze
                         books.each { |book| append_book(book) }
-                        arrange_books
+                        @iconview.unfreeze
                     else
                         select_library(library)
                     end
@@ -575,10 +607,12 @@ module UI
             end
      
             on_add_book_manual = proc do
-                NewBookDialogManual.new(@main_app, selected_library) do |book|
-                    selected_library << book
+                library = selected_library
+                NewBookDialogManual.new(@main_app, library) do |book|
+                    library << book
+                    @iconview.freeze
                     append_book(book)
-                    arrange_books
+                    @iconview.unfreeze
                 end
             end
             
@@ -599,7 +633,9 @@ module UI
                     BookPropertiesDialog.new(@main_app, 
                                              selected_library, 
                                              book) do |modified_book|
+                        @iconview.freeze
                         fill_iter_with_book(iter, modified_book)
+                        @iconview.unfreeze
                     end
                 end
             end
@@ -680,7 +716,9 @@ module UI
                                     % [ library.name ])
                         selected_books.each do |book| 
                             library.delete(book)
+                            @iconview.freeze
                             @model.remove(iter_from_book(book))
+                            @iconview.unfreeze
                         end
                     end
                 end
@@ -688,7 +726,9 @@ module UI
      
             on_clear_search_results = proc do
                 @filter_entry.text = ""
-                refresh_books
+                @iconview.freeze
+                @filtered_model.refilter
+                @iconview.unfreeze
             end
     
             on_search = proc { @filter_entry.grab_focus }
@@ -735,7 +775,7 @@ module UI
             
             on_reverse_order = proc do |actiongroup, action|
                 Preferences.instance.reverse_icons = action.active? 
-                arrange_books
+                setup_books_iconview_sorting
             end
 
             toggle_actions = [
@@ -783,7 +823,7 @@ module UI
             @actiongroup.add_radio_actions(arrange_icons_actions) do |action, 
                                                                       current|
                 @prefs.arrange_icons_mode = current.current_value 
-                arrange_books 
+                setup_books_iconview_sorting
             end
             
             @uimanager = Gtk::UIManager.new
@@ -820,7 +860,7 @@ module UI
             
             @toolbar = @uimanager.get_widget("/MainToolbar")
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
-            
+           
             cb = Gtk::ComboBox.new
             [ _("Title contains"), _("Authors contain"), 
               _("ISBN contains"), _("Publisher contains"), 
@@ -830,7 +870,10 @@ module UI
             cb.active = 0
             cb.signal_connect('changed') do |cb|
                 @filter_books_mode = cb.active 
-                refresh_books unless @filter_entry.text.strip.empty?
+                @filter_entry.text.strip!
+                @iconview.freeze
+                @filtered_model.refilter
+                @iconview.unfreeze
             end
             toolitem = Gtk::ToolItem.new
             toolitem.border_width = 5
@@ -838,7 +881,12 @@ module UI
             @toolbar.insert(-1, toolitem)
             
             @filter_entry = Gtk::Entry.new
-            @filter_entry.signal_connect('activate') { refresh_books }
+            @filter_entry.signal_connect('activate') do 
+                @filter_entry.text.strip!
+                @iconview.freeze
+                @filtered_model.refilter
+                @iconview.unfreeze
+            end
             toolitem = Gtk::ToolItem.new
             toolitem.expand = true
             toolitem.border_width = 5
@@ -895,6 +943,27 @@ module UI
             @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
                                         String, String, String, String, 
                                         String, Integer, String)
+
+            # Filter books according to the search toolbar widgets. 
+            @filtered_model = Gtk::TreeModelFilter.new(@model)
+            @filtered_model.set_visible_func do |model, iter| 
+                @filter_books_mode ||= 0
+                filter = @filter_entry.text
+                if filter.empty?
+                    true
+                else
+                    /#{filter}/i.match case @filter_books_mode
+                        when 0 then iter[Columns::TITLE]
+                        when 1 then iter[Columns::AUTHORS]
+                        when 2 then iter[Columns::ISBN]
+                        when 3 then iter[Columns::PUBLISHER]
+                        when 4 then "" # FIXME iter[Columns::NOTES]
+                    end
+                end     
+            end
+
+            @listview_model = Gtk::TreeModelSort.new(@filtered_model)
+            @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
 
             setup_books_listview
             setup_books_iconview

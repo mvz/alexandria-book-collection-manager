@@ -1,3 +1,13 @@
+2005-02-25  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb,
+	  data/alexandria/glade/main_app.glade:
+
+	- Filter the model with a Gtk::TreeModelFilter ;
+	- Each view has its own Gtk::TreeModelSort ;
+	- Freeze/unfreeze the icon view each time the model changes ;
+	- Dispatch the library load in a separate thread (code is commented).
+
 2005-02-24  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
