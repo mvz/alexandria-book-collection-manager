@@ -31,7 +31,7 @@ Requirements
     Ruby/Amazon >= 0.8.3:       http://www.caliban.org/ruby/ruby-amazon.shtml
     Ruby-GetText >= 0.6.1:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
     Ruby-GNOME2 >= 0.12.0 [**]: http://ruby-gnome2.sourceforge.jp
-    Intltool:                   http://ftp.gnome.org/pub/gnome/sources/intltool/
+    Intltool:                   http://freedesktop.org/wiki/Software_2fintltool
 
     [*]: GTK+ >= 2.6.0 is required though.
 
