@@ -21,6 +21,7 @@ module UI
         def initialize
             super("main_app.glade")
             @main_app.icon = Icons::ALEXANDRIA_SMALL
+            @prefs = Preferences.instance
             load_libraries
             build_books_listview
             build_sidepane
@@ -54,9 +55,8 @@ module UI
                     when 0
                         va_icons.active = true
                         arr_icons.sensitive = true
-                        mode = (Preferences.instance.arrange_icons_mode or 0)
-                        arr_icons.submenu.children[mode].active = true
-                        arr_icons.submenu.children.last.active = Preferences.instance.reverse_icons
+                        arr_icons.submenu.children[@prefs.arrange_icons_mode].active = true
+                        arr_icons.submenu.children.last.active = @prefs.reverse_icons
 
                     when 1
                         va_list.active = true
@@ -212,7 +212,6 @@ module UI
 
             load_libraries            
             library = selected_library
-            prefs = Preferences.instance            
             
             # Filter books according to the search toolbar widgets. 
             @filter_entry.text = filter_crit = @filter_entry.text.strip
@@ -239,9 +238,9 @@ module UI
                 proc { |x, y| x.edition <=> y.edition },
                 proc { |x, y| x.rating <=> y.rating }
             ]
-            sort = sort_funcs[(prefs.arrange_icons_mode or 0)]
+            sort = sort_funcs[@prefs.arrange_icons_mode]
             library.sort! { |x, y| sort.call(x, y) } 
-            library.reverse! if prefs.reverse_icons
+            library.reverse! if @prefs.reverse_icons
             
             # Append books in the icon view.
             library.each { |book| append_book_as_icon(book) }
@@ -251,11 +250,11 @@ module UI
            
             # Show or hide list view columns according to the preferences. 
             cols_visibility = [
-                prefs.col_authors_visible,
-                prefs.col_isbn_visible,
-                prefs.col_publisher_visible,
-                prefs.col_edition_visible,
-                prefs.col_rating_visible
+                @prefs.col_authors_visible,
+                @prefs.col_isbn_visible,
+                @prefs.col_publisher_visible,
+                @prefs.col_edition_visible,
+                @prefs.col_rating_visible
             ]
             cols = @listview.columns[1..-1] # skip "Title"
             cols.each_index do |i|
@@ -325,7 +324,7 @@ module UI
         def on_menu_arrange_icons_selected
             items = [ @menu_icons_by_title, @menu_icons_by_authors, @menu_icons_by_isbn,
                       @menu_icons_by_publisher, @menu_icons_by_edition, @menu_icons_by_rating ]
-            items[(Preferences.instance.arrange_icons_mode or 0)].active = true
+            items[Preferences.instance.arrange_icons_mode].active = true
             @menu_icons_reversed_order.active = Preferences.instance.reverse_icons
         end
 
@@ -541,9 +540,8 @@ module UI
         end
 
         def update_arrange_icons_mode(mode)
-            prefs = Preferences.instance
-            if prefs.arrange_icons_mode != mode
-                prefs.arrange_icons_mode = mode
+            if @prefs.arrange_icons_mode != mode
+                @prefs.arrange_icons_mode = mode
                 on_refresh
             end
         end 
@@ -556,39 +554,35 @@ module UI
         end
        
         def restore_preferences
-            prefs = Preferences.instance
-            @main_app.move(*prefs.position) unless prefs.position.nil? 
-            @main_app.resize(*prefs.size) unless prefs.size.nil?
-            @paned.position = prefs.sidepane_position unless prefs.sidepane_position.nil?
-            @paned.child1.visible = @menu_view_sidepane.active = prefs.sidepane_visible unless prefs.sidepane_visible.nil? 
-            @bonobodock_toolbar.visible = @menu_view_toolbar.active = prefs.toolbar_visible unless prefs.toolbar_visible.nil? 
-            @appbar.visible = @menu_view_statusbar.active = prefs.statusbar_visible unless prefs.statusbar_visible.nil?
-            unless prefs.view_as.nil? 
-                case prefs.view_as
-                    when 0
-                        @notebook.page = 0 
-                        @menu_view_as_icons.active = true
-                    when 1
-                        @notebook.page = 1 
-                        @menu_view_as_list.active = true
-                end
+            @main_app.move(*@prefs.position) unless @prefs.position == [0, 0] 
+            @main_app.resize(*@prefs.size)
+            @paned.position = @prefs.sidepane_position
+            @paned.child1.visible = @menu_view_sidepane.active = @prefs.sidepane_visible
+            @bonobodock_toolbar.visible = @menu_view_toolbar.active = @prefs.toolbar_visible
+            @appbar.visible = @menu_view_statusbar.active = @prefs.statusbar_visible 
+            case @prefs.view_as
+                when 0
+                    @notebook.page = 0 
+                    @menu_view_as_icons.active = true
+                when 1
+                    @notebook.page = 1 
+                    @menu_view_as_list.active = true
             end
-            unless prefs.selected_library.nil?
-                library = @libraries.find { |x| x.name == prefs.selected_library }
+            unless @prefs.selected_library.nil?
+                library = @libraries.find { |x| x.name == @prefs.selected_library }
                 select_library(library) unless library.nil?
             end
         end
 
         def save_preferences
-            prefs = Preferences.instance
-            prefs.position = @main_app.position
-            prefs.size = @main_app.allocation.to_a[2..3]
-            prefs.sidepane_position = @paned.position
-            prefs.sidepane_visible = @paned.child1.visible?
-            prefs.toolbar_visible = @bonobodock_toolbar.visible?
-            prefs.statusbar_visible = @appbar.visible?
-            prefs.view_as = @notebook.page
-            prefs.selected_library = selected_library.name
+            @prefs.position = @main_app.position
+            @prefs.size = @main_app.allocation.to_a[2..3]
+            @prefs.sidepane_position = @paned.position
+            @prefs.sidepane_visible = @paned.child1.visible?
+            @prefs.toolbar_visible = @bonobodock_toolbar.visible?
+            @prefs.statusbar_visible = @appbar.visible?
+            @prefs.view_as = @notebook.page
+            @prefs.selected_library = selected_library.name
         end 
     end
 end

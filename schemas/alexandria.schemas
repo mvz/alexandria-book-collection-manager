@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gconfschemafile>
+  <schemalist>
+    <schema>        
+      <key>/schemas/apps/alexandria/position</key>
+      <applyto>/apps/alexandria/position</applyto>
+      <owner>alexandria</owner>
+      <type>pair</type>
+      <car_type>int</car_type>
+      <cdr_type>int</cdr_type>
+      <default>(0,0)</default>
+      <locale name="C">
+        <short>Window position</short>
+        <long>The (X,Y) position Alexandria should take on the screen when started.  In case of a (0,0) position the window will be screen centered.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/size</key>
+      <applyto>/apps/alexandria/size</applyto>
+      <owner>alexandria</owner>
+      <type>pair</type>
+      <car_type>int</car_type>
+      <cdr_type>int</cdr_type>
+      <default>(640,480)</default>
+      <locale name="C">
+        <short>Window size</short>
+        <long>The (width,length) size Alexandria should take when started.  This cannot be smaller than (320,200).</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/sidepane_position</key>
+      <applyto>/apps/alexandria/sidepane_position</applyto>
+      <owner>alexandria</owner>
+      <type>int</type>
+      <default>140</default>
+      <locale name="C">
+        <short>Sidepane slider position</short>
+        <long>The slider position of the sidepane.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/view_as</key>
+      <applyto>/apps/alexandria/view_as</applyto>
+      <owner>alexandria</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Books view</short>
+        <long>The view that will be used to display books when Alexandria starts.  Valid choices are either 0 (as icons) or 1 (as list).</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/arrange_icons_mode</key>
+      <applyto>/apps/alexandria/arrange_icons_mode</applyto>
+      <owner>alexandria</owner>
+      <type>int</type>
+      <default>0</default>
+      <locale name="C">
+        <short>Arrange icons mode</short>
+        <long>This configures the way that icons will be arranged in their view.  0 means by title, 1 by authors, 2 by ISBN, 3 by publisher, 4 by edition and finally 5 by rating.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/reverse_icons</key>
+      <applyto>/apps/alexandria/reverse_icons</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Reverse icons</short>
+        <long>Whether the icons should be reversed in their view.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/selected_library</key>
+      <applyto>/apps/alexandria/selected_library</applyto>
+      <owner>alexandria</owner>
+      <type>string</type>
+      <default></default>
+      <locale name="C">
+        <short>Selected library</short>
+        <long>The library that should be selected when Alexandria starts.  In case of null ("") the first library will be selected.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/toolbar_visible</key>
+      <applyto>/apps/alexandria/toolbar_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Toolbar visibility</short>
+        <long>Whether the toolbar should be visible.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/sidepane_visible</key>
+      <applyto>/apps/alexandria/sidepane_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Sidepane visibility</short>
+        <long>Whether the sidepane should be visible.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/statusbar_visible</key>
+      <applyto>/apps/alexandria/statusbar_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Statusbar visibility</short>
+        <long>Whether the statusbar should be visible.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_authors_visible</key>
+      <applyto>/apps/alexandria/col_authors_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Authors column visibility</short>
+        <long>Whether the authors column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_edition_visible</key>
+      <applyto>/apps/alexandria/col_edition_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Edition column visibility</short>
+        <long>Whether the edition column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_isbn_visible</key>
+      <applyto>/apps/alexandria/col_isbn_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>ISBN column visibility</short>
+        <long>Whether the ISBN column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_publisher_visible</key>
+      <applyto>/apps/alexandria/col_publisher_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Publisher column visibility</short>
+        <long>Whether the publisher column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_rating_visible</key>
+      <applyto>/apps/alexandria/col_rating_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Rating column visibility</short>
+        <long>Whether the rating column should be visible in the list view.</long>
+      </locale>
+    </schema>
+  </schemalist>
+</gconfschemafile>

@@ -1,3 +1,14 @@
+2004-06-06  Laurent Sansonetti  <lrz@gnome.org>
+	
+	* schemas/alexandria.schemas,
+	  post-install.rb:
+	
+	Added.  GConf2 schemas have been introduced.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Refactored the code since GConf preferences have now default values.  
+
 2004-06-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* bin/alexandria:
