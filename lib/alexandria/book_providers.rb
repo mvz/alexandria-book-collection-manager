@@ -154,8 +154,20 @@ module Alexandria
         end
 
         def update_priority
-            self.replace(@prefs.providers_priority.map \
-                { |x| self.class.module_eval("#{x}Provider").instance }) 
+            providers = {}
+            self.class.constants.each do |constant|
+                next unless md = /(.+)Provider$/.match(constant)
+                klass = self.class.module_eval(constant)
+                if klass.superclass == GenericProvider
+                    providers[md[1]] = klass.instance
+                end
+            end
+            self.clear
+            priority = (@prefs.providers_priority or [])
+            priority.map! { |x| x.strip }
+            rest = providers.keys - priority
+            priority.each { |pname| self << providers[pname] }
+            rest.sort.each { |pname| self << providers[pname] }
         end
 
         def self.method_missing(id, *args, &block)
