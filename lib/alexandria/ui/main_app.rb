@@ -375,6 +375,7 @@ module UI
             prefs = Preferences.instance
             @main_app.move(*prefs.position) unless prefs.position.nil? 
             @main_app.resize(*prefs.size) unless prefs.size.nil?
+            @paned.position = prefs.sidepane_position unless prefs.sidepane_position.nil?
             @paned.child1.visible = @menu_view_sidepane.active = prefs.sidepane_visible unless prefs.sidepane_visible.nil? 
             @bonobodock_toolbar.visible = @menu_view_toolbar.active = prefs.toolbar_visible unless prefs.toolbar_visible.nil? 
             @appbar.visible = @menu_view_statusbar.active = prefs.statusbar_visible unless prefs.statusbar_visible.nil?
@@ -388,16 +389,22 @@ module UI
                         @menu_view_as_list.active = true
                 end
             end
+            unless prefs.selected_library.nil?
+                library = @libraries.find { |x| x.name == prefs.selected_library }
+                select_library(library) unless library.nil?
+            end
         end
 
         def save_preferences
             prefs = Preferences.instance
             prefs.position = @main_app.position
             prefs.size = @main_app.size
+            prefs.sidepane_position = @paned.position
             prefs.sidepane_visible = @paned.child1.visible?
             prefs.toolbar_visible = @bonobodock_toolbar.visible?
             prefs.statusbar_visible = @appbar.visible?
             prefs.view_as = @notebook.page
+            prefs.selected_library = selected_library.name
         end 
     end
 end
