@@ -15,10 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-require 'open-uri'
 require 'yaml'
 require 'fileutils'
-require 'gdk_pixbuf2'
 require 'rexml/document'
 require 'tempfile'
 require 'etc'
@@ -33,10 +31,8 @@ module Alexandria
     class Library < Array
         attr_reader :name
         DIR = File.join(ENV['HOME'], '.alexandria')
-        EXT = '.yaml'
-        SMALL_COVER_EXT = '_small.jpg'
-        MEDIUM_COVER_EXT = '_medium.jpg'
-
+        EXT = { :book => '.yaml', :cover => '.cover' }
+        
         include GetText
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -49,13 +45,23 @@ module Alexandria
             library = Library.new(name)
             begin
                 Dir.chdir(library.path) do
-                    Dir["*" + EXT].each do |filename|
+                    Dir["*" + EXT[:book]].each do |filename|
                         File.open(filename) do |io|
                             book = YAML.load(io)
                             raise "Not a book" unless book.is_a?(Book)
                             library << book
                         end
                     end
+
+                    # Since 0.4.0 the cover files '_small.jpg' and 
+                    # '_medium.jpg' have been deprecated for a single medium
+                    # cover file named '.cover'.
+                    Dir["*" + '_medium.jpg'].each do |medium_cover|
+                        FileUtils.mv(medium_cover, 
+                                     medium_cover.sub(/_medium\.jpg$/,
+                                                      EXT[:cover]))
+                    end
+                    FileUtils.rm_f(Dir['*_small.jpg'])
                 end
             rescue Errno::ENOENT
                 FileUtils.mkdir_p(library.path)
@@ -145,31 +151,9 @@ module Alexandria
             canonical.map { |x| x.to_s }.join()
         end
 
-        def save(book, small_cover_uri=nil, medium_cover_uri=nil)
-            if small_cover_uri and medium_cover_uri
-                Dir.chdir(self.path) do
-                    # Fetch the cover pictures.
-                    File.open(small_cover(book), "w") do |io|
-						io.puts URI.parse(small_cover_uri).read
-					end
-                    File.open(medium_cover(book), "w") do |io|
-						io.puts URI.parse(medium_cover_uri).read
-					end
-            
-                    # Remove the files if they are blank.
-                    [ small_cover(book), medium_cover(book) ].each do |file|
-                        pixbuf = Gdk::Pixbuf.new(file)
-                        if pixbuf.width == 1 and pixbuf.height == 1
-                            File.delete(file)
-                        end
-                    end
-                end
-                self << book
-            end
-                
-            File.open(File.join(self.path, book.isbn + EXT), "w") do |io|
-                io.puts book.to_yaml
-            end
+        def save(book)
+            File.open(File.join(self.path, book.isbn + EXT[:book]), 
+                      "w") { |io| io.puts book.to_yaml } 
         end
 
         alias_method :old_delete, :delete
@@ -178,18 +162,14 @@ module Alexandria
                 # delete the whole library
                 FileUtils.rm_rf(self.path)
             else
-                FileUtils.rm_f([File.join(self.path, book.isbn + EXT),
+                FileUtils.rm_f([File.join(self.path, book.isbn + EXT[:book]),
                                 small_cover(book), medium_cover(book)])
                 old_delete(book)
             end
         end
 
-        def small_cover(book)
-            File.join(self.path, book.isbn + SMALL_COVER_EXT)
-        end
-        
-        def medium_cover(book)
-            File.join(self.path, book.isbn + MEDIUM_COVER_EXT)
+        def cover(book)
+            File.join(self.path, book.isbn + EXT[:cover])
         end
 
         def name=(name)
@@ -198,13 +178,16 @@ module Alexandria
         end
 
         def export_as_onix_xml_archive(filename)
-            filename += ".xml.tbz2" if File.extname(filename).empty?
-            File.open(File.join(Dir.tmpdir, "library.xml"), "w") do |io|
+            filename += ".onix.tbz2" if File.extname(filename).empty?
+            File.open(File.join(Dir.tmpdir, "onix.xml"), "w") do |io|
                 to_onix_document.write(io, 0)
             end
-            Dir.chdir(self.path) do  
-                system("tar -cjf \"#{filename}\" *.jpg -C \"#{Dir.tmpdir}\" library.xml")
+            copy_covers(File.join(Dir.tmpdir, "images"))
+            Dir.chdir(Dir.tmpdir) do  
+                system("tar -cjf \"#{filename}\" onix.xml images")
             end
+            FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
+            FileUtils.rm(File.join(Dir.tmpdir, "onix.xml"))
         end
 
         def export_as_tellico_xml_archive(filename)
@@ -215,14 +198,7 @@ module Alexandria
             File.open(File.join(Dir.tmpdir, "bookcase.xml"), "w") do |io|
                 to_tellico_document.write(io, 0)
             end
-            # remove tmp dir first
-            if File.exists?(File.join(Dir.tmpdir, "images"))
-                FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
-            end
-            FileUtils.mkdir(File.join(Dir.tmpdir, "images"))
-            Dir.chdir(self.path) do
-                FileUtils.cp(Dir.glob('*_medium.jpg'), File.join(Dir.tmpdir, "images"))
-            end
+            copy_covers(File.join(Dir.tmpdir, "images"))
             Dir.chdir(Dir.tmpdir) do
                 system("zip -q -r \"#{filename}\" bookcase.xml images")
             end
@@ -250,7 +226,8 @@ module Alexandria
         def to_onix_document
             doc = REXML::Document.new
             doc << REXML::XMLDecl.new
-            doc << REXML::DocType.new('ONIXMessage', "SYSTEM \"#{ONIX_DTD_URL}\"")
+            doc << REXML::DocType.new('ONIXMessage', 
+                                      "SYSTEM \"#{ONIX_DTD_URL}\"")
             msg = doc.add_element('ONIXMessage')
             header = msg.add_element('Header')
             now = Time.now
@@ -262,44 +239,46 @@ module Alexandria
             each_with_index do |book, idx|
                 # fields that are missing: edition and rating.
                 prod = msg.add_element('Product')
-                prod.add_element('RecordSourceName').text = "Alexandria " + VERSION
+                prod.add_element('RecordSourceName').text = 
+                    "Alexandria " + VERSION
                 prod.add_element('RecordReference').text = idx.to_s
-                prod.add_element('NotificationType').text = "03" # confirmed
-                prod.add_element('ProductForm').text = 'BA' # book
+                prod.add_element('NotificationType').text = "03"  # confirmed
+                prod.add_element('ProductForm').text = 'BA'       # book
                 prod.add_element('ISBN').text = book.isbn
                 prod.add_element('DistinctiveTitle').text = book.title
                 unless book.authors.empty?
                     book.authors.each do |author|
                         elem = prod.add_element('Contributor')
-                        elem.add_element('ContributorRole').text = 'A01' # author
+                        # author
+                        elem.add_element('ContributorRole').text = 'A01'
                         elem.add_element('PersonName').text = author
                     end
                 end
                 prod.add_element('PublisherName').text = book.publisher
                 if book.notes and not book.notes.empty?
                     elem = prod.add_element('OtherText')
-                    elem.add_element('TextTypeCode').text = '12' # reader description
-                    elem.add_element('TextFormat').text = '00' # ASCII
+                    # reader description
+                    elem.add_element('TextTypeCode').text = '12' 
+                    elem.add_element('TextFormat').text = '00'  # ASCII
                     elem.add_element('Text').text = book.notes 
                 end
-                if File.exists?(small_cover(book))
+                if File.exists?(cover(book))
                     elem = prod.add_element('MediaFile')
-                    elem.add_element('MediaFileTypeCode').text = '07' # front cover thumbnail
-                    elem.add_element('MediaFileFormatCode').text = '03' # jpeg
-                    elem.add_element('MediaFileLinkTypeCode').text = '06' # filename
-                    elem.add_element('MediaFileLink').text = book.isbn + SMALL_COVER_EXT
+                    # front cover image
+                    elem.add_element('MediaFileTypeCode').text = '04'
+                    # JPEG (FIXME may be GIF is bn.com is used)
+                    elem.add_element('MediaFileFormatCode').text = '03'
+                    # filename
+                    elem.add_element('MediaFileLinkTypeCode').text = '06'
+                    elem.add_element('MediaFileLink').text = 
+                        File.join('images', book.isbn + EXT[:cover])
                 end
-                if File.exists?(medium_cover(book))
-                    elem = prod.add_element('MediaFile')
-                    elem.add_element('MediaFileTypeCode').text = '04' # front cover image
-                    elem.add_element('MediaFileFormatCode').text = '03' # jpeg
-                    elem.add_element('MediaFileLinkTypeCode').text = '06' # filename
-                    elem.add_element('MediaFileLink').text = book.isbn + MEDIUM_COVER_EXT
-                end
-                    BookProviders.each do |provider|
+                BookProviders.each do |provider|
                     elem = prod.add_element('ProductWebSite')
-                    elem.add_element('ProductWebsiteDescription').text = provider.fullname
-                    elem.add_element('ProductWebsiteLink').text = provider.url(book)
+                    elem.add_element('ProductWebsiteDescription').text = 
+                        provider.fullname
+                    elem.add_element('ProductWebsiteLink').text = 
+                        provider.url(book)
                 end
             end
             return doc
@@ -317,7 +296,8 @@ module Alexandria
             collection.add_attribute('type', "2")
             fields = collection.add_element('fields')
             field1 = fields.add_element('field')
-            # a field named _default implies adding all default book collection fields
+            # a field named _default implies adding all default book 
+            # collection fields
             field1.add_attribute('name', "_default")
             # make the rating field just have numbers
             field2 = fields.add_element('field')
@@ -349,14 +329,23 @@ module Alexandria
                 if book.notes and not book.notes.empty?
                     entry.add_element('comments').text = book.notes
                 end
-                if File.exists?(medium_cover(book))
-                    entry.add_element('cover').text = book.isbn + MEDIUM_COVER_EXT
+                if File.exists?(cover(book))
+                    entry.add_element('cover').text = book.isbn + EXT[:cover]
                     image = images.add_element('image')
-                    image.add_attribute('id', book.isbn + MEDIUM_COVER_EXT)
+                    image.add_attribute('id', book.isbn + EXT[:cover])
                     image.add_attribute('format', "JPEG")
                 end
             end
             return doc
+        end
+        
+        def copy_covers(somewhere)
+            # remove tmp dir first
+            FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
+            FileUtils.mkdir(somewhere)
+            Dir.chdir(self.path) do
+                FileUtils.cp(Dir.glob('*' + EXT[:cover]), somewhere)
+            end
         end
     end
 end

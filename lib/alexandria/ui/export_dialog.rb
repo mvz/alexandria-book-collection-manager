@@ -43,11 +43,14 @@ module UI
             theme_label.mnemonic_widget = theme_combo 
 
             types_combo = Gtk::ComboBox.new
-            types_combo.append_text(_("Archived ONIX XML (*.xml.tbz2)"))
+            types_combo.append_text(_("Archived ONIX XML (*.onix.tbz2)"))
             types_combo.append_text(_("Archived Tellico XML (*.bc)"))
             types_combo.append_text("XHTML (*.xhtml)")
             types_combo.active = 0
-            types_combo.signal_connect('changed') { theme_label.visible = theme_combo.visible = types_combo.active == 2 } 
+            types_combo.signal_connect('changed') do
+                theme_label.visible = theme_combo.visible = 
+                    types_combo.active == 2
+            end
             types_combo.show
 
             types_label = Gtk::Label.new(_("Export for_mat:"), true)

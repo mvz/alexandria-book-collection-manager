@@ -104,7 +104,7 @@ class BookProviders
                             conv.call(product['manufacturer']),
                             conv.call(product['media']))
         
-            return [ book, product['image_url_small'], product['image_url_medium'] ]
+            return [ book, product['image_url_medium'] ]
         end
 
         def url(book)

@@ -90,7 +90,8 @@ class BookProviders
             raise unless md = /<IMG SRC="(.+\/(\d+).gif)" ALT="Book Cover" WIDTH="100" HEIGHT="\d+" BORDER="0">/.match(data)
             medium_cover = md[1]
             small_cover = medium_cover.sub(/#{md[2]}/, (md[2].to_i - 1).to_s)
-            [ Book.new(title, authors, isbn, publisher, edition), small_cover, medium_cover ]
+            return [ Book.new(title, authors, isbn, publisher, edition), 
+                     medium_cover ]
         end
     
         def each_book_page(data)

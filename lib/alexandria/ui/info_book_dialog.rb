@@ -22,12 +22,13 @@ module UI
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
+        COVER_MAXWIDTH = 140    # pixels
+        
         def initialize(parent, library, book, &on_close_cb)
             super('info_book_dialog.glade')
             @info_book_dialog.transient_for = parent
             @on_close_cb = on_close_cb
             
-            @image_cover.pixbuf = Icons.medium_cover(library, book)
             @entry_title.text = @info_book_dialog.title = book.title
             @entry_isbn.text = book.isbn
             @entry_publisher.text = book.publisher
@@ -41,7 +42,9 @@ module UI
                 iter = @treeview_authors.model.get_iter(path)
                 iter[0] = new_text 
             end
-            col = Gtk::TreeViewColumn.new("", renderer, :text => 0, :editable => 1)
+            col = Gtk::TreeViewColumn.new("", renderer, 
+                                          :text => 0, 
+                                          :editable => 1)
             @treeview_authors.append_column(col)
             book.authors.each do |author|
                 iter = @treeview_authors.model.append
@@ -54,6 +57,7 @@ module UI
             @textview_notes.buffer = buffer
            
             @library, @book = library, book
+            self.cover = Icons.cover(library, book)
             self.rating = (book.rating or Book::DEFAULT_RATING)
         end
 
@@ -91,6 +95,29 @@ module UI
         def on_image_rating5_press
             self.rating = 5 
         end
+       
+        def on_change_cover
+            backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
+            dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
+                                                @info_book_dialog,
+                                                Gtk::FileChooser::ACTION_OPEN,
+                                                backend, 
+                                                [Gtk::Stock::CANCEL, 
+                                                 Gtk::Dialog::RESPONSE_CANCEL],
+                                                [Gtk::Stock::OPEN, 
+                                                 Gtk::Dialog::RESPONSE_ACCEPT])
+            if dialog.run == Gtk::Dialog::RESPONSE_ACCEPT
+                begin
+                    cover = Gdk::Pixbuf.new(dialog.filename)
+                    # At this stage the file format is recognized.
+                    FileUtils.cp(dialog.filename, @library.cover(@book))
+                    self.cover = cover
+                rescue RuntimeError => e 
+                    ErrorDialog.new(@info_book_dialog, e.message)
+                end
+            end
+            dialog.destroy
+        end
         
         def on_close
             @book.title = @entry_title.text
@@ -123,6 +150,17 @@ module UI
             images[0..rating-1].each { |x| x.pixbuf = Icons::STAR_SET }
             images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }
             @current_rating = rating
+        end
+
+        def cover=(pixbuf)
+            if pixbuf.width > COVER_MAXWIDTH
+                new_height = pixbuf.height / 
+                             (pixbuf.width / COVER_MAXWIDTH.to_f)
+                # We don't want to modify in place the given pixbuf, 
+                # that's why we make a copy.
+                pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
+            end
+            @image_cover.pixbuf = pixbuf
         end
     end
 end

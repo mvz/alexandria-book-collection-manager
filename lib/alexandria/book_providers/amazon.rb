@@ -87,7 +87,7 @@ class BookProviders
                                 (product.manufacturer.squeeze(' ') rescue _("n/a")),
                                 product.media.squeeze(' '))
 
-                results << [ book, product.image_url_small, product.image_url_medium ]
+                results << [ book, product.image_url_medium ]
             end
             type == SEARCH_BY_ISBN ? results.first : results
         end

@@ -12,7 +12,7 @@ Before next release:
 [ ] Import of a file that contains a list of ISBNs
 [ ] Manual addition of a book 
 [X] Editing the properties of a book (Laurent)
-[ ] Changing the cover picture of a book
+[X] Changing the cover picture of a book (Laurent)
 
 Future releases:
 

@@ -186,17 +186,19 @@ module UI
             @libraries = Library.loadall
         end
 
-        ICON_MAXLEN = 20
+        ICON_TITLE_MAXLEN = 20   # characters
+        ICON_WIDTH = 48          # pixels
         def append_book_as_icon(book)
-            icon_title = book.title.sub(/^(.{#{ICON_MAXLEN}}).*$/, '\1...')
-            small_cover = Icons.small_cover(selected_library, book)
-            @iconlist.append_pixbuf(small_cover, "", icon_title)
+            title = book.title.sub(/^(.{#{ICON_TITLE_MAXLEN}}).*$/, '\1...')
+            icon = Icons.cover(selected_library, book)
+            new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
+            @iconlist.append_pixbuf(icon.scale(ICON_WIDTH, new_height), '', 
+                                    title)
         end
 
         def append_book_in_list(book)
-            small_cover = Icons.small_cover(selected_library, book)
             iter = @listview.model.append 
-            iter[0] = small_cover.scale(20, 25)
+            iter[0] = Icons.cover(selected_library, book).scale(20, 25)
             iter[1] = book.title
             iter[2] = book.authors.join(', ')
             iter[3] = book.isbn
@@ -204,7 +206,8 @@ module UI
             iter[5] = book.edition
             rating = (book.rating or Book::DEFAULT_RATING)
             5.times do |i|
-                iter[i + 6] = rating >= i.succ ? Icons::STAR_SET : Icons::STAR_UNSET
+                iter[i + 6] = rating >= i.succ ? 
+                    Icons::STAR_SET : Icons::STAR_UNSET
             end
             iter[11] = rating
             return iter

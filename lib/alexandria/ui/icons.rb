@@ -27,19 +27,8 @@ module UI
             end
         end
 
-        def self.small_cover(library, book)
-            self.cover(library.small_cover(book))
-        end
-        
-        def self.medium_cover(library, book)
-            self.cover(library.medium_cover(book))
-        end
-
-        #######
-        private
-        #######
-    
-        def self.cover(filename)
+        def self.cover(library, book)
+            filename = library.cover(book)
             File.exists?(filename) ? Gdk::Pixbuf.new(filename) : BOOK
         end
     end

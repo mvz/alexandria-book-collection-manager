@@ -1,3 +1,33 @@
+2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
+
+	General reformat of the code.	
+
+	* data/alexandria/glade/info_book_dialog.glade,
+	  lib/alexandria/library.rb,
+	  lib/alexandria/ui/info_book_dialog.rb:
+
+	- Now possible to change the cover of a book via the Properties dialog ;
+	- The data model has been altered: the small covers are now automatically
+	  generated from the medium covers, so they do not need to be downloaded
+	  anymore, and the extension of the medium cover is ".cover".
+
+	* lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/bn.rb,
+	  lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/ui/icons.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+	
+	Follows data model changes.
+
+	* lib/alexandria/ui/export_dialog.rb:
+
+	Changed the ONIX archive extension (xml.tbz2 -> onix.tbz2). 
+
+	* TODO:
+
+	Refresh.
+
 2004-09-30  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS:

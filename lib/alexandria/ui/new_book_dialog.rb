@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'open-uri'
+
 module Alexandria
 module UI
     class NewBookDialog < GladeBase
@@ -51,8 +53,11 @@ module UI
 
             @treeview_results.model = Gtk::ListStore.new(String, String)
             @treeview_results.selection.mode = Gtk::SELECTION_MULTIPLE
-            @treeview_results.selection.signal_connect('changed') { @button_add.sensitive = true }
-            col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, :text => 0)
+            @treeview_results.selection.signal_connect('changed') do
+                @button_add.sensitive = true
+            end
+            col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, 
+                                          :text => 0)
             @treeview_results.append_column(col)
             @entry_isbn.grab_focus
             @combo_search.active = 0
@@ -80,7 +85,10 @@ module UI
             @button_find.sensitive = !is_isbn
             @scrolledwindow.visible = !is_isbn
             on_changed(is_isbn ? @entry_isbn : @entry_search)
-            @button_add.sensitive = @treeview_results.selection.count_selected_rows > 0 unless is_isbn
+            unless is_isbn
+                @button_add.sensitive = 
+                    @treeview_results.selection.count_selected_rows > 0 
+            end
         end
 
         def on_changed(entry)
@@ -98,13 +106,16 @@ module UI
                     when 2 
                         BookProviders::SEARCH_BY_KEYWORD
                 end
-                @results = Alexandria::BookProviders.search(@entry_search.text.strip, mode)
+                criterion = @entry_search.text.strip
+                @results = Alexandria::BookProviders.search(criterion, mode)
                 @treeview_results.model.clear
-                treedata = @results.each do |book, *cs|
-                    s = _("%s, by %s") % [ book.title, book.authors.join(', ') ]
-                    if @results.find { |book2, *cs| book.title == book2.title and
-                                                    book.authors == book2.authors }.length > 1
-
+                treedata = @results.each do |book, cover|
+                    s = _("%s, by %s") % [ book.title, 
+                                           book.authors.join(', ') ]
+                    if @results.find { |book2, cover2| 
+                                        book.title == book2.title and
+                                        book.authors == book2.authors 
+                                     }.length > 1
                         s += " (#{book.edition}, #{book.publisher})"
                     end
                     iter = @treeview_results.model.append
@@ -131,7 +142,9 @@ module UI
         def on_add
             return unless @button_add.sensitive?
             begin
-                library = @libraries.find { |x| x.name == @combo_libraries.active_iter[1] }
+                library = @libraries.find do |x| 
+                    x.name == @combo_libraries.active_iter[1]
+                end
                 books_to_add = []                
 
                 if @isbn_radiobutton.active?
@@ -139,25 +152,45 @@ module UI
                     isbn = begin
                         Library.canonicalise_isbn(@entry_isbn.text)
                     rescue
-                        raise _("Couldn't validate the EAN/ISBN you provided.  " +
-                                "Make sure it is written correcty, and try again.")
+                        raise _("Couldn't validate the EAN/ISBN you " +
+                                "provided.  Make sure it is written " +
+                                "correcty, and try again.")
                     end
                     assert_not_exist(library, @entry_isbn.text)
                     books_to_add << Alexandria::BookProviders.isbn_search(isbn)
                 else
-                    @treeview_results.selection.selected_each do |model, path, iter| 
-                        books_to_add << @results.find do |book, small_cover, medium_cover|
-                            book.isbn == iter[1] and assert_not_exist(library, book.isbn)
+                    @treeview_results.selection.selected_each do |model, path, 
+                                                                  iter| 
+                        books_to_add << @results.find do |book, cover|
+                            book.isbn == iter[1] and 
+                            assert_not_exist(library, book.isbn)
                         end
                     end
                 end 
 
                 # Save the books in the library.
-                books_to_add.each do |book, small_cover, medium_cover|
-                    library.save(book, small_cover, medium_cover)
-                end                
+                books_to_add.each do |book, cover_uri| 
+                    unless cover_uri.nil?
+                        Dir.chdir(library.path) do
+                            # Fetch the cover picture.
+                            cover_file = library.cover(book)
+                            File.open(cover_file, "w") do |io|
+						        io.puts URI.parse(cover_uri).read
+					        end
+            
+                            # Remove the file if it's blank.
+                            pixbuf = Gdk::Pixbuf.new(cover_file)
+                            if pixbuf.width == 1 and pixbuf.height == 1
+                                File.delete(cover_file)
+                            end
+                        end
+                    end
+                    library << book
+                    library.save(book)
+                end
 
-                # Now we can destroy the dialog and go back to the main application.
+                # Now we can destroy the dialog and go back to the main 
+                # application.
                 @new_book_dialog.destroy
                 @block.call(books_to_add.map { |x| x.first }, library)
             rescue => e
@@ -171,7 +204,8 @@ module UI
        
         def on_focus
             if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
-                if text = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD).wait_for_text
+                clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
+                if text = clipboard.wait_for_text
                     @entry_isbn.text = text if
                         Library.valid_isbn?(text) or Library.valid_ean?(text)
                 end
@@ -224,7 +258,8 @@ module UI
                 begin
                     @entry_isbn.text = Library.canonicalise_isbn(barcode)
                 rescue RuntimeError => e
-                    ErrorDialog.new(@parent, _("Couldn't validate the scanner input"), 
+                    ErrorDialog.new(@parent, 
+                                    _("Couldn't validate the scanner input"), 
                                     e.message)
                 end
             end
