@@ -1,3 +1,11 @@
+2004-08-17  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb,
+	  schemas/alexandria.schemas:
+
+	Remember if Alexandria was maximized or not, by saving that state
+	in the /apps/alexandria/maximized GConf variable (#765).
+
 2004-08-04  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/new_book_dialog.glade,

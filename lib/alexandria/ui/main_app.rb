@@ -30,6 +30,12 @@ module UI
             build_sidepane
             on_books_selection_changed
             restore_preferences
+
+            @main_app.signal_connect('window-state-event') do |w, e|
+                if e.is_a?(Gdk::EventWindowState)
+                    @maximized = e.new_window_state == Gdk::EventWindowState::MAXIMIZED 
+                end
+            end
         end
 
         def on_books_button_press_event(widget, event)
@@ -543,8 +549,13 @@ module UI
         end
        
         def restore_preferences
-            @main_app.move(*@prefs.position) unless @prefs.position == [0, 0] 
-            @main_app.resize(*@prefs.size)
+            if @prefs.maximized
+                @main_app.maximize
+            else
+                @main_app.move(*@prefs.position) unless @prefs.position == [0, 0] 
+                @main_app.resize(*@prefs.size)
+                @maximized = false
+            end
             @paned.position = @prefs.sidepane_position
             @paned.child1.visible = @menu_view_sidepane.active = @prefs.sidepane_visible
             @bonobodock_toolbar.visible = @menu_view_toolbar.active = @prefs.toolbar_visible
@@ -566,6 +577,7 @@ module UI
         def save_preferences
             @prefs.position = @main_app.position
             @prefs.size = @main_app.allocation.to_a[2..3]
+            @prefs.maximized = @maximized
             @prefs.sidepane_position = @paned.position
             @prefs.sidepane_visible = @paned.child1.visible?
             @prefs.toolbar_visible = @bonobodock_toolbar.visible?

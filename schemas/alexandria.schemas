@@ -27,6 +27,17 @@
         <long>The (width,length) size Alexandria should take when started.  This cannot be smaller than (320,200).</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/maximized</key>
+      <applyto>/apps/alexandria/maximized</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Window maximized?</short>
+        <long>Whether the main window is maximized.</long>
+      </locale>
+    </schema>
     <schema>        
       <key>/schemas/apps/alexandria/sidepane_position</key>
       <applyto>/apps/alexandria/sidepane_position</applyto>
