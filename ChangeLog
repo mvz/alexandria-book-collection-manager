@@ -1,3 +1,10 @@
+2004-12-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Takayuki.
+	
 2004-12-15  Takayuki Kusano  <AE5T-KSN@asahi-net.or.jp>
 
 	* lib/alexandria/library.rb:

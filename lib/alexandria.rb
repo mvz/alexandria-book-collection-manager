@@ -27,6 +27,7 @@ module Alexandria
         'Laurent Sansonetti <lrz@gnome.org>',
         'Pascal Terjan <pterjan@linuxfr.org>',
         'Robby Stephenson <robby@periapsis.org>',
+        'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
         'Zachary P. Landau <kapheine@hypa.net>'
     ]
     DOCUMENTERS = []  
