@@ -1,3 +1,9 @@
+2005-03-25  Dafydd Harries  <daf@muse.19inch.net>
+
+	* data/alexandria/glade/new_book_dialog.glade:
+
+	Use alternating colours for rows in the search results list.
+
 2005-03-24  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/new_book_dialog.rb:
