@@ -4,7 +4,7 @@ require 'alexandria/ui.rb'
 
 module Alexandria
     TITLE = 'Alexandria'
-    VERSION = '0.1.1'
+    VERSION = '0.1.2'
     DESCRIPTION = 'A program to help you manage your book collection.'
     COPYRIGHT = 'Copyright (C) 2004 Laurent Sansonetti'
     AUTHORS = [ 'Laurent Sansonetti <lrz@gnome.org>' ]
