@@ -450,7 +450,7 @@ msgstr "Symbole an_ordnen"
 
 #: ../lib/alexandria/ui/main_app.rb:804
 msgid "Display Online _Information"
-msgstr "Online-_Hilfe anzeigen"
+msgstr "Online-_Informationen anzeigen"
 
 #: ../lib/alexandria/ui/main_app.rb:805
 msgid "_Help"
