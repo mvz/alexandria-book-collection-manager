@@ -1,6 +1,12 @@
 2004-09-30  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/info_book_dialog.glade,
+	  data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	s/Edition/Binding.
+
+	* data/alexandria/glade/info_book_dialog.glade,
 	  lib/alexandria/book.rb,
 	  lib/alexandria/ui/info_book_dialog.rb,
 	  lib/alexandria/ui/main_app.rb:
