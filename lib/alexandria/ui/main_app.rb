@@ -714,10 +714,16 @@ module UI
                         setup_move_actions
                     end
                 else
-                    if confirm.call(_("Are you sure you want to permanently " +
-                                      "delete the selected books from '%s'?") \
-                                    % [ library.name ])
-                        selected_books.each do |book| 
+                    books = selected_books
+                    message = if books.length == 1
+                        _("Are you sure you want to permanently delete '%s' " +
+                          "from '%s'?") % [ books.first.title, library.name ]
+                    else
+                        _("Are you sure you want to permanently delete the " +
+                          "selected books from '%s'?") % library.name
+                    end
+                    if confirm.call(message)
+                        books.each do |book| 
                             library.delete(book)
                             @iconview.freeze
                             @model.remove(iter_from_book(book))

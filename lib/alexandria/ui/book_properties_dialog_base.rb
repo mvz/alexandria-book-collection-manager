@@ -121,12 +121,10 @@ module UI
         def on_loaned_date_changed
             loaned_time = Time.at(@date_loaned_since.time)
             n_days = ((Time.now - loaned_time) / (3600*24)).to_i
-            if n_days > 1
-                @label_loaning_duration.label = _("%d days") % n_days 
-            elsif n_days == 1
-                @label_loaning_duration.label = _("One day") 
+            @label_loaning_duration.label = if n_days > 0 
+                n_("%d day", "%d days", n_days) % n_days
             else
-                @label_loaning_duration.label = ""
+                ""
             end
         end
             
