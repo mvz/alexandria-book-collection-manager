@@ -34,7 +34,9 @@ module Alexandria
         'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
         'Zachary P. Landau <kapheine@hypa.net>'
     ]
-    DOCUMENTERS = []  
+    DOCUMENTERS = [
+        'Liam Davison <registrations@liamjdavison.info>'
+    ]
     TRANSLATORS = [ 
         'Dafydd Harries <daf@muse.19inch.net> (cy)',
         'David Weinehall <tao@debian.org> (sv)',
