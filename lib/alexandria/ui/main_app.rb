@@ -529,6 +529,7 @@ module UI
                     else
                         iter = @treeview_sidepane.model.get_iter(Gtk::TreePath.new(path_string))
                         iter[1] = selected_library.name = new_text
+                        on_refresh 
                     end
                 end
             end

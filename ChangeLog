@@ -1,3 +1,9 @@
+2004-06-11  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Update the title when the selected library has been renamed.
+
 2004-06-10  Laurent Sansonetti  <lrz@gnome.org>
 
 	* NEWS:
