@@ -1,4 +1,20 @@
 ================
+Alexandria 0.3.1
+================
+
+Bug fixed:
+ * removed custom sorting functions as they appear not to make anything
+   work better and may actually cause some problems ; 
+ * fixed the Amazon provider to perform another lookup using the next 
+   locale if the previous one gives no results ;
+ * improved exception handing to have better error messages ;  
+ * calling providers one after one until at least one book has been found ;
+ * sorting by rating books that were not rated yet did crash ; 
+ * sorting by edition and publisher were reversed ;
+ * the Add Book dialog is now resizable in search mode ;
+ * removing a book without a cover image did crash. 
+
+================
 Alexandria 0.3.0
 ================
 
