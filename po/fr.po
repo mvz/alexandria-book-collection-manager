@@ -109,7 +109,7 @@ msgstr "'%s' existe déjà dans '%s' (titré '%s')."
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:62
 msgid "Couldn't add book"
-msgstr "Impossible d'ajouter le libre"
+msgstr "Impossible d'ajouter le livre"
 
 #: ../lib/alexandria/ui/preferences_dialog.rb:25
 msgid "Preferences for %s"
