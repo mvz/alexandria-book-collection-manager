@@ -207,8 +207,9 @@ module UI
         private
         #######
 
+        ICON_MAXLEN = 20
         def append_book(book)
-            icon_title = book.title.length > 17 ? book.title[0..17] + '...' : book.title
+            icon_title = book.title.length > ICON_MAXLEN ? book.title[0..ICON_MAXLEN] + '...' : book.title
             @iconlist.append(book.small_cover, icon_title)
             iter = @listview.model.append 
             iter[0] = Gdk::Pixbuf.new(book.small_cover).scale(25, 25)

@@ -1,5 +1,9 @@
 2004-04-11  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/main_app.rb:
+
+	Fixed the length of icons titles to 20 instead of 15.
+
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
 
