@@ -82,7 +82,7 @@ class BookProviders
                 authors << md[1]
             end
             raise if authors.empty?
-            raise unless md = /ISBN:[^=]+=\"prodDetailsGen\">([^<]+)/.match(data)
+            raise unless md = /ISBN:.+CLASS=\"prodDetailsGen\" STYLE=\"text-decoration:none\">([^<]+)/.match(data)
             isbn = md[1].strip
             raise unless md = /Format:[^=]+=\"ItemFormat\">([^<]+)/.match(data)
             edition = md[1].strip

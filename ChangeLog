@@ -1,3 +1,9 @@
+2005-03-12  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/bn.rb:
+	
+	Fixed the regexp once again.
+
 2005-03-11  Laurent Sansonetti  <lrz@gnome.org>
 
 	* NEWS:
