@@ -61,6 +61,9 @@ module UI
             iter = @treeview_authors.model.append
             iter[0] = _("Author")
             iter[1] = true
+            @treeview_authors.set_cursor(iter.path, 
+                                         @treeview_authors.get_column(0), 
+                                         true)
         end
 
         def on_remove_author
