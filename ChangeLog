@@ -1,3 +1,11 @@
+2005-01-07  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/preferences_dialog.rb:
+
+	- Disable the Setup button if the selected provider does not have any
+	  preferences to setup, instead of displaying a dialog (HIG) ;
+	- Fixed indentation. 
+
 2005-01-01  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/library.rb:

@@ -46,9 +46,11 @@ module UI
                     variable.possible_values.each do |value|
                         entry.append_text(value.to_s)
                     end
-                    entry.active = variable.possible_values.index(variable.value)
+                    index = variable.possible_values.index(variable.value)
+                    entry.active = index 
                     entry.signal_connect('changed') do |cb|
-                        variable.new_value = variable.possible_values[cb.active]
+                        value = variable.possible_values[cb.active]
+                        variable.new_value = value
                     end
                 else
                     entry = Gtk::Entry.new
@@ -98,19 +100,19 @@ module UI
                                              Gtk::CellRendererText.new,
                                              :text => 0)
             @treeview_providers.append_column(column)
-            @treeview_providers.selection.signal_connect('changed') { sensitize_providers } 
+            @treeview_providers.selection.signal_connect('changed') \
+                { sensitize_providers } 
             @button_prov_setup.sensitive = false
-            @button_prov_up.sensitive =  @button_prov_down.sensitive = BookProviders.length > 1
+            @button_prov_up.sensitive =  @button_prov_down.sensitive = 
+                BookProviders.length > 1
         end
 
         def on_provider_setup
             iter = @treeview_providers.selection.selected
             provider = BookProviders.find { |x| x.name == iter[1] }
-            if provider.prefs.empty?
-                ErrorDialog.new(@preferences_dialog, 
-                                _("The '%s' provider doesn't have any preference to setup") % provider.fullname)
-            else
-                dialog = ProviderPreferencesDialog.new(@preferences_dialog, provider)
+            unless provider.prefs.empty?
+                dialog = ProviderPreferencesDialog.new(@preferences_dialog, 
+                                                       provider)
                 dialog.show_all.run
                 dialog.destroy
             end
@@ -137,7 +139,8 @@ module UI
 
         def on_column_toggled(checkbutton)
             raise if @cols[checkbutton].nil?
-            Preferences.instance.send("#{@cols[checkbutton]}=", checkbutton.active?)
+            Preferences.instance.send("#{@cols[checkbutton]}=", 
+                                      checkbutton.active?)
             @changed_block.call
         end
 
@@ -159,17 +162,20 @@ module UI
         #######
 
         def sensitize_providers 
-            @button_prov_setup.sensitive = true
             model = @treeview_providers.model 
             sel_iter = @treeview_providers.selection.selected
             last_iter = model.get_iter((BookProviders.length - 1).to_s)
             @button_prov_up.sensitive = sel_iter != model.iter_first
             @button_prov_down.sensitive = sel_iter != last_iter 
+            provider = BookProviders.find { |x| x.name == sel_iter[1] }
+            @button_prov_setup.sensitive = (not provider.prefs.empty?)
         end
 
         def update_priority
             priority = []
-            @treeview_providers.model.each { |model, path, iter| priority << iter[1] }
+            @treeview_providers.model.each do |model, path, iter| 
+                priority << iter[1]
+            end
             Preferences.instance.providers_priority = priority
             BookProviders.update_priority
         end
