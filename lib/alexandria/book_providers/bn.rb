@@ -73,21 +73,22 @@ class BookProviders
         #######
     
         def to_book(data)
-            raise unless md = /<sup>&nbsp;<\/sup><font size="-1" color="#006666" face="arial, helvetica, sans-serif"><b>([^<]+)<\/b><\/font>/.match(data)
+            raise unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - ([^<]+)/.match(data)
             title = md[1].strip
             authors = []
-            data.scan(/<a href="\/booksearch\/results.asp\?userid=[\w\d]+&ath=([^"]+)\">([^<]+)<\/a>/) do |md|
+            data.scan(/<SPAN ID=\"CNT[0-9]+\">[^&]+&ath=([^\"]+)\">([^<]+)/) do |md|
+                md[1].gsub!('&nbsp;',' ')
                 next unless CGI.unescape(md[0]) == md[1]
                 authors << md[1]
             end
             raise if authors.empty?
-            raise unless md = /<B>ISBN:<\/B><\/nobr>([^<]+)/.match(data)
+            raise unless md = /ISBN:[^=]+=\"prodDetailsGen\">([^<]+)/.match(data)
             isbn = md[1].strip
-            raise unless md = /<B>Format:<\/B><\/nobr>([^<]+)/.match(data)
+            raise unless md = /Format:[^=]+=\"ItemFormat\">([^<]+)/.match(data)
             edition = md[1].strip
-            raise unless md = /<B>Publisher:<\/B><\/nobr>([^<]+)/.match(data)
+            raise unless md = /Publisher:[^=]+=\"prodDetailsGen\">([^<]+)/.match(data)
             publisher = md[1].strip
-            raise unless md = /<IMG SRC="(.+\/(\d+).gif)" ALT="Book Cover" WIDTH="100" HEIGHT="\d+" BORDER="0">/.match(data)
+            raise unless md = /<IMG SRC="(.+\/(\d+|ImageNA).gif)" ALT=("Book Cover"|"Image Not Available") WIDTH="\d+" HEIGHT="\d+" BORDER="0">/.match(data)
             medium_cover = md[1]
             small_cover = medium_cover.sub(/#{md[2]}/, (md[2].to_i - 1).to_s)
             return [ Book.new(title, authors, isbn, publisher, edition), 

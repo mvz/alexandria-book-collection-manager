@@ -1,3 +1,9 @@
+2005-02-18  Kevin Schultz  <schultkl@ieee.org> 
+
+	* lib/alexandria/book_providers/bn.rb:
+
+	Fixed BN.com query regexes.
+
 2005-02-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb,
