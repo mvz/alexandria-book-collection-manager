@@ -37,6 +37,7 @@ module UI
             @combo_libraries.sensitive = libraries.length > 1
 
             @treeview_results.model = Gtk::ListStore.new(String, String)
+            @treeview_results.selection.mode = Gtk::SELECTION_MULTIPLE
             @treeview_results.selection.signal_connect('changed') { @button_add.sensitive = true }
             col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, :text => 0)
             @treeview_results.append_column(col)
@@ -99,7 +100,8 @@ module UI
         def on_add
             begin
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
-                
+                books_to_add = []                
+
                 if @isbn_radiobutton.active?
                     # Perform the ISBN search via the providers.
                     isbn = @entry_isbn.text.delete('-')
@@ -107,18 +109,23 @@ module UI
                         raise _("Couldn't validate the EAN/ISBN you provided.  Make sure it is written correcty, and try again.")
                     end 
                     assert_not_exist(library, isbn)
-                    book, small_cover, medium_cover = Alexandria::BookProviders.isbn_search(isbn)
+                    books_to_add << Alexandria::BookProviders.isbn_search(isbn)
                 else
-                    book, small_cover, medium_cover = selected_result
-                    assert_not_exist(library, book.isbn)
+                    @treeview_results.selection.selected_each do |model, path, iter| 
+                        books_to_add << @results.find do |book, small_cover, medium_cover|
+                            book.isbn == iter[1] and assert_not_exist(library, book.isbn)
+                        end
+                    end
                 end 
 
-                # Save the book in the library.
-                library.save(book, small_cover, medium_cover)
-                
+                # Save the books in the library.
+                books_to_add.each do |book, small_cover, medium_cover|
+                    library.save(book, small_cover, medium_cover)
+                end                
+
                 # Now we can destroy the dialog and go back to the main application.
                 @new_book_dialog.destroy
-                @block.call(book, library)
+                @block.call(books_to_add.map { |x| x.first }, library)
             rescue => e
                 ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
             end
@@ -140,17 +147,12 @@ module UI
         private
         #######
 
-        def selected_result
-            @results.find do |book, small_cover, medium_cover|
-                 book.isbn == @treeview_results.selection.selected[1]
-            end
-        end
-
         def assert_not_exist(library, isbn)
             # Check that the book doesn't already exist in the library.
             if book = library.find { |book| book.isbn == isbn }
                 raise _("'%s' already exists in '%s' (titled '%s').") % [ book.isbn, library.name, book.title ] 
             end
+            true
         end
 
     end

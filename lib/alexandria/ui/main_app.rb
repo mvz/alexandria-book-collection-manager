@@ -106,7 +106,7 @@ module UI
         end
 
         def on_new_book
-            NewBookDialog.new(@main_app, @libraries, selected_library) do |book, library|
+            NewBookDialog.new(@main_app, @libraries, selected_library) do |books, library|
                 if selected_library == library
                     on_refresh
                 else

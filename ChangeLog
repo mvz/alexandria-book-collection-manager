@@ -1,3 +1,11 @@
+2004-06-20  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	It is now possible to add multiple books at once, by selecting
+	several books in the search results list.
+
 2004-06-19  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/new_book_dialog.glade,
