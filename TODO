@@ -4,18 +4,18 @@ Alexandria's TODO list
 Before next release:
 
 [X] Cuecat barcode support (Zachary)
-[ ] ONIX import 
 [X] ONIX export (Laurent)
-[ ] XHTML export
 [ ] Tellico/Bookcase import
 [X] Tellico/Bookcase export (Robby)
-[ ] Import of a file that contains a list of ISBNs
-[X] Manual addition of a book 
+[X] Import/Export of a file that contains a list of ISBNs (Laurent)
+[X] Manual addition of a book (Laurent)
 [X] Editing the properties of a book (Laurent)
 [X] Changing the cover picture of a book (Laurent)
 
 Future releases:
 
+[ ] XHTML export
+[ ] ONIX import 
 [ ] Import/export via GNOME-DB
 [ ] Loaning support
 [ ] Zoom in the current view, giving more or less details
