@@ -9,7 +9,7 @@ module UI
             build_sidepane
         end
  
-        def on_books_mouse_event(widget, event)
+        def on_books_button_press_event(widget, event)
             # double left click
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
                event.button == 1 
@@ -23,12 +23,27 @@ module UI
                 books = selected_books
                 if books.empty?
                     popup = @nobook_popup
+                    va_icons, va_list = popup.children[-2..-1]
                 else
                     popup = @book_popup
+                    va_icons, va_list = popup.children[-4..-3]
                     # disable 'property' in case of multiple selections
                     popup.children.first.sensitive = books.length == 1
                 end
+                (@notebook.page == 0 ? va_icons : va_list).active = true
                 popup.popup(nil, nil, event.button, event.time) 
+            end
+        end
+
+        def on_books_selection_changed
+            books = selected_books
+            @appbar.status = case books.length
+                when 0
+                    ""
+                when 1
+                    "'#{books.first.title}' selected"
+                else
+                    "#{books.length} books selected"
             end
         end
 
@@ -59,7 +74,7 @@ module UI
             selected_books.each do |book|
                 dialog = AlertDialog.new(@main_app,
                                          "Are you sure you want to permanently " \
-                                         "delete '#{book.title} from '#{library.name}'?",
+                                         "delete '#{book.title}' from '#{library.name}'?",
                                          Gtk::Stock::DIALOG_QUESTION,
                                          [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                                           [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]])
@@ -77,7 +92,6 @@ module UI
             case @notebook.page
                 when 0
                     @iconlist.num_icons.times { |i| @iconlist.select_icon(i) }
-
                 when 1
                     @listview.selection.select_all
             end
@@ -87,7 +101,6 @@ module UI
             case @notebook.page
                 when 0
                     @iconlist.unselect_all
-
                 when 1
                     @listview.selection.unselect_all
             end
@@ -114,24 +127,26 @@ module UI
             @appbar.visible = item.active?
         end
  
-        def on_view_as_icons
-            @notebook.page = @toolbar_view_as.menu.active = 0
-            # FIXME the OptionMenu doesn't refresh itself 
+        def on_view_as_icons(widget)
+            @notebook.page = 0
+            if widget.name.include?('popup_view_as_icons') or widget == @menu_view_as_icons
+                @toolbar_view_as.menu.active = 0
+                # FIXME the OptionMenu doesn't refresh itself 
+            end
+            if widget.name.include?('popup_view_as_icons') or widget == @toolbar_view_as_icons
+                @menu_view_as_icons.active = true
+            end
         end
 
-        def on_view_as_icons2
-            @notebook.page = 0 
-            @menu_view_as_icons.active = true
-        end
-
-        def on_view_as_list
-            @notebook.page = @toolbar_view_as.menu.active = 1
-            # FIXME the OptionMenu doesn't refresh itself 
-        end
-
-        def on_view_as_list2
-            @notebook.page = 1 
-            @menu_view_as_list.active = true
+        def on_view_as_list(widget)
+            @notebook.page = 1
+            if widget.name.include?('popup_view_as_list') or widget == @menu_view_as_list
+                @toolbar_view_as.menu.active = 1
+                # FIXME the OptionMenu doesn't refresh itself 
+            end
+            if widget.name.include?('popup_view_as_list') or widget == @toolbar_view_as_list
+                @menu_view_as_list.active = true
+            end
         end
 
         def on_about
@@ -183,6 +198,7 @@ module UI
             end
 
             @listview.selection.mode = Gtk::SELECTION_MULTIPLE
+            @listview.selection.signal_connect('changed') { on_books_selection_changed }
         end
 
         def selected_library

@@ -1,3 +1,11 @@
+2004-04-03  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	- Added statusbar information about current selection ;
+	- Added "View as [Icons|List]" in the popup menus.
+
 2004-04-01  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/main_app.glade:

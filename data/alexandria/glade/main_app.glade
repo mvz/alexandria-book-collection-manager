@@ -61,7 +61,7 @@
 			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image290">
+				<widget class="GtkImage" id="image322">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -84,7 +84,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image291">
+				<widget class="GtkImage" id="image323">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-add</property>
 				  <property name="icon_size">1</property>
@@ -112,7 +112,7 @@
 			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image292">
+				<widget class="GtkImage" id="image324">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -186,7 +186,7 @@
 			      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image293">
+				<widget class="GtkImage" id="image325">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -234,7 +234,7 @@
 			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image294">
+				<widget class="GtkImage" id="image326">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-refresh</property>
 				  <property name="icon_size">1</property>
@@ -307,7 +307,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">View as _List</property>
 			      <property name="use_underline">True</property>
-			      <property name="active">True</property>
+			      <property name="active">False</property>
 			      <property name="group">menu_view_as_icons</property>
 			      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 27 Mar 2004 14:45:18 GMT"/>
 			    </widget>
@@ -415,7 +415,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">View as Icons</property>
 			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_view_as_icons2" last_modification_time="Mon, 29 Mar 2004 21:18:55 GMT"/>
+			      <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 03 Apr 2004 15:37:06 GMT"/>
 			    </widget>
 			  </child>
 
@@ -424,7 +424,7 @@
 			      <property name="visible">True</property>
 			      <property name="label" translatable="yes">View as List</property>
 			      <property name="use_underline">True</property>
-			      <signal name="activate" handler="on_view_as_list2" last_modification_time="Mon, 29 Mar 2004 21:18:55 GMT"/>
+			      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 03 Apr 2004 15:37:06 GMT"/>
 			    </widget>
 			  </child>
 			</widget>
@@ -524,6 +524,7 @@
 	      <property name="tab_pos">GTK_POS_TOP</property>
 	      <property name="scrollable">False</property>
 	      <property name="enable_popup">False</property>
+	      <signal name="switch_page" handler="on_books_selection_changed" after="yes" last_modification_time="Sat, 03 Apr 2004 14:58:13 GMT"/>
 
 	      <child>
 		<widget class="GtkScrolledWindow" id="scrolledwindow5">
@@ -539,13 +540,15 @@
 		      <property name="visible">True</property>
 		      <property name="can_focus">True</property>
 		      <property name="selection_mode">GTK_SELECTION_MULTIPLE</property>
-		      <property name="icon_width">78</property>
+		      <property name="icon_width">80</property>
 		      <property name="row_spacing">4</property>
 		      <property name="column_spacing">2</property>
 		      <property name="text_spacing">2</property>
 		      <property name="text_editable">False</property>
 		      <property name="text_static">False</property>
-		      <signal name="button_press_event" handler="on_books_mouse_event" last_modification_time="Wed, 31 Mar 2004 22:04:02 GMT"/>
+		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:21 GMT"/>
+		      <signal name="select_icon" handler="on_books_selection_changed" last_modification_time="Sat, 03 Apr 2004 14:48:10 GMT"/>
+		      <signal name="unselect_icon" handler="on_books_selection_changed" last_modification_time="Sat, 03 Apr 2004 14:48:07 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -591,7 +594,7 @@
 		      <property name="rules_hint">False</property>
 		      <property name="reorderable">False</property>
 		      <property name="enable_search">True</property>
-		      <signal name="button_press_event" handler="on_books_mouse_event" last_modification_time="Wed, 31 Mar 2004 22:04:37 GMT"/>
+		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:38 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -690,6 +693,33 @@
   </child>
 
   <child>
+    <widget class="GtkRadioMenuItem" id="popup_view_as_icons">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">View as _Icons</property>
+      <property name="use_underline">True</property>
+      <property name="active">True</property>
+      <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 03 Apr 2004 15:10:02 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkRadioMenuItem" id="popup_view_as_list">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">View as _List</property>
+      <property name="use_underline">True</property>
+      <property name="active">False</property>
+      <property name="group">popup_view_as_icons</property>
+      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 03 Apr 2004 15:10:21 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="separator19">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
     <widget class="GtkImageMenuItem" id="delete1">
       <property name="visible">True</property>
       <property name="label" translatable="yes">_Delete</property>
@@ -697,7 +727,7 @@
       <signal name="activate" handler="on_delete" last_modification_time="Mon, 29 Mar 2004 23:27:15 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image288">
+	<widget class="GtkImage" id="image330">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-delete</property>
 	  <property name="icon_size">1</property>
@@ -721,7 +751,7 @@
       <signal name="activate" handler="on_new_book" last_modification_time="Wed, 31 Mar 2004 00:53:44 GMT"/>
 
       <child internal-child="image">
-	<widget class="GtkImage" id="image289">
+	<widget class="GtkImage" id="image331">
 	  <property name="visible">True</property>
 	  <property name="stock">gtk-add</property>
 	  <property name="icon_size">1</property>
@@ -755,6 +785,33 @@
       <property name="label" translatable="yes">Dese_lect All</property>
       <property name="use_underline">True</property>
       <signal name="activate" handler="on_deselect_all" last_modification_time="Wed, 31 Mar 2004 00:54:00 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="separator18">
+      <property name="visible">True</property>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkRadioMenuItem" id="popup_view_as_icons">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">View as _Icons</property>
+      <property name="use_underline">True</property>
+      <property name="active">True</property>
+      <signal name="activate" handler="on_view_as_icons" last_modification_time="Sat, 03 Apr 2004 15:05:48 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkRadioMenuItem" id="popup_view_as_list">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">View as _List</property>
+      <property name="use_underline">True</property>
+      <property name="active">False</property>
+      <property name="group">popup_view_as_icons</property>
+      <signal name="activate" handler="on_view_as_list" last_modification_time="Sat, 03 Apr 2004 15:05:38 GMT"/>
     </widget>
   </child>
 </widget>
