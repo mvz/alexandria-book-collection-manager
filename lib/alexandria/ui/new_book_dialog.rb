@@ -29,7 +29,7 @@ module UI
                 # on FreeBSD.
                 retry
             rescue => e
-                ErrorDialog.new(@parent, "Could not add the book", e.message)
+                ErrorDialog.new(@parent, "Couldn't add book", e.message)
             end
         end
     

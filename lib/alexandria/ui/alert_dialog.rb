@@ -23,14 +23,14 @@ module UI
             hbox.pack_start(vbox)
 
             label = Gtk::Label.new
-            label.set_alignment(0.5, 0)
+            label.set_alignment(0, 0)
             label.wrap = true
             label.markup = "<b><big>#{title}</big></b>"
             vbox.pack_start(label)
 
             if message
                 label = Gtk::Label.new(message.strip)
-                label.set_alignment(0.5, 0)
+                label.set_alignment(0, 0)
                 label.wrap = true
                 vbox.pack_start(label)
             end

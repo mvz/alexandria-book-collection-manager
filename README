@@ -1,9 +1,14 @@
 Alexandria
 ==========
 
-    Alexandria is a GNOME application to manage one or more collections of
-    books.  It features a user interface compliant with the HIG rules, and
-    it retrieves information about books from Amazon, using its web service. 
+    Alexandria is a GNOME application to help you manage your book collection.
+
+    Alexandria:
+
+      * retrieves book information from Amazon (including cover pictures) ;
+      * saves data using the YAML format ;
+      * features an HIG-compliant user interface ;
+      * shows books in diffent views (standard list or icons list).
 
 Requirements
 ------------

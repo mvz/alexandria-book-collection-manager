@@ -114,11 +114,11 @@ module UI
                     when 0
                         "Are you sure you want to permanently delete '#{library.name}'?"
                     when 1
-                        "Are you sure you want to permanently delete '#{library.name}' with " \
-                        "the included book?"
+                        "Are you sure you want to permanently delete '#{library.name}', " \
+                        "which has one book?"
                     else
-                        "Are you sure you want to permanently delete '#{library.name}' with " \
-                        "all the #{library.length} included books?"
+                        "Are you sure you want to permanently delete '#{library.name}', " \
+                        "which has #{library.length} books?"
                 end
                 if confirm.call(message)
                     library.delete
@@ -159,6 +159,7 @@ module UI
         end
  
         def on_preferences
+            puts "Not yet implemented :-)"
         end
 
         def on_refresh  

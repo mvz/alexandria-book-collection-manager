@@ -1,0 +1,9 @@
+================
+Alexandria 0.1.0
+================
+
+This is the first public release, which:
+  * retrieves book information from Amazon (including cover pictures) ;
+  * saves data using the YAML format ;
+  * features an HIG-compliant user interface ;
+  * shows books in different views (standard list or icons list).
