@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE omf PUBLIC "-//OMF//DTD Scrollkeeper OMF Variant V1.0//EN" "http://scrollkeeper.sourceforge.net/dtds/scrollkeeper-omf-1.0/scrollkeeper-omf.dtd">
+<omf>
+  <resource>
+    <creator>
+      liam@liamjdavison.info (Liam Davison)
+    </creator>
+    <title>
+      Alexandria Manual
+    </title>
+    <date>
+      2005-03-12
+    </date>
+    <subject category="GNOME|Applications"/>
+    <format mime="text/xml"/>
+    <identifier url="file:///usr/share/doc/alexandria/gnome-app-template-alexandria.xml"/>
+    <language code="C"/>
+    <relation seriesid="7591aee4-92d9-11d9-88aa-939bacdd01aa"/>
+  </resource>
+</omf>
+
