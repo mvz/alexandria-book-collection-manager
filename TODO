@@ -6,7 +6,7 @@ Future releases:
 [ ] XHTML export
 [ ] ONIX import 
 [ ] Import/export via GNOME-DB
-[ ] Loaning support
+[X] Loaning support
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Writing a z39.50 provider
