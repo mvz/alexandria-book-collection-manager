@@ -1,5 +1,31 @@
 2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
 
+	Implement i18n of the .desktop file using intltool.
+
+	* alexandria.desktop:
+
+	Removed, as it is now automatically generated.
+
+	* alexandria.desktop.in:
+
+	This is the old .desktop file, with some fields marked for
+	translation.
+
+	* po/genpot.sh:
+
+	Call intltool-extract to generate alexandria.desktop.in.h, and pass
+	that file to xgettext.
+
+	* pre-setup.rb:
+
+	Call intltool-merge to generate alexandria.desktop with translations.
+
+	* README:
+
+	Mention the dependency on intltool.
+
+2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
+
 	* ChangeLog,
 	  NEWS:
 

@@ -6,6 +6,10 @@ basename = "alexandria"
 config = Config::CONFIG
 podir = srcdir_root + "/po/"
 
+# Extract translations from PO files into other files.
+
+system("intltool-merge -d po alexandria.desktop.in alexandria.desktop")
+
 # Create MO files.
 
 Dir.glob("po/*.po") do |file|
