@@ -43,11 +43,26 @@ module UI
                 if books.empty?
                     popup = @nobook_popup
                     va_icons, va_list = popup.children[-2..-1]
+                    arr_icons = popup.children[-4]
                 else
                     popup = @book_popup
                     va_icons, va_list = popup.children[-4..-3]
+                    arr_icons = popup.children[-6]
                 end
-                (@notebook.page == 0 ? va_icons : va_list).active = true
+
+                case @notebook.page
+                    when 0
+                        va_icons.active = true
+                        arr_icons.sensitive = true
+                        mode = Preferences.instance.arrange_icons_mode
+                        arr_icons.submenu.children[mode].active = true
+                        arr_icons.submenu.children.last.active = Preferences.instance.reverse_icons
+
+                    when 1
+                        va_list.active = true
+                        arr_icons.sensitive = false
+                end
+                
                 popup.popup(nil, nil, event.button, event.time) 
             end
         end
@@ -185,7 +200,21 @@ module UI
             @listview.model.clear
             @iconlist.clear
             library = selected_library
-            library.each { |book| append_book(book) }
+            library.each { |book| append_book_in_list(book) }
+            
+            sort_funcs = [
+                lambda { |x, y| x.title <=> y.title },
+                lambda { |x, y| x.authors <=> y.authors },
+                lambda { |x, y| x.isbn <=> y.isbn },
+                lambda { |x, y| x.publisher <=> y.publisher },
+                lambda { |x, y| x.edition <=> y.edition },
+                lambda { |x, y| x.rating <=> y.rating }
+            ]           
+            mode = Preferences.instance.arrange_icons_mode
+            library.sort! { |x, y| sort_funcs[mode].call(x, y) } 
+            library.reverse! if Preferences.instance.reverse_icons
+            library.each { |book| append_book_as_icon(book) }
+
             @main_app.title = library.name + " - " + TITLE
             
             cols_visibility = [
@@ -193,8 +222,7 @@ module UI
                 Preferences.instance.col_isbn_visible,
                 Preferences.instance.col_publisher_visible,
                 Preferences.instance.col_edition_visible,
-                Preferences.instance.col_rating_visible,
-
+                Preferences.instance.col_rating_visible
             ]
             cols = @listview.columns[1..-1] # skip "Title"
             cols.each_index do |i|
@@ -221,6 +249,7 @@ module UI
  
         def on_view_as_icons(widget)
             @notebook.page = 0
+            @menu_arrange_icons.sensitive = true
             if widget.name.include?('popup_view_as_icons') or widget == @menu_view_as_icons
                 @toolbar_view_as.menu.active = @toolbar_view_as.history = 0
             end
@@ -231,12 +260,55 @@ module UI
 
         def on_view_as_list(widget)
             @notebook.page = 1
+            @menu_arrange_icons.sensitive = false 
             if widget.name.include?('popup_view_as_list') or widget == @menu_view_as_list
                 @toolbar_view_as.menu.active = @toolbar_view_as.history = 1
             end
             if widget.name.include?('popup_view_as_list') or widget == @toolbar_view_as_list
                 @menu_view_as_list.active = true
             end
+        end
+
+        def on_menu_arrange_icons_selected
+            items = [ @menu_icons_by_title, @menu_icons_by_authors, @menu_icons_by_isbn,
+                      @menu_icons_by_publisher, @menu_icons_by_edition, @menu_icons_by_rating ]
+            items[Preferences.instance.arrange_icons_mode].active = true
+            @menu_icons_reversed_order.active = Preferences.instance.reverse_icons
+        end
+
+        def on_arrange_icons_by_title
+            Preferences.instance.arrange_icons_mode = 0
+            on_refresh
+        end
+
+        def on_arrange_icons_by_authors
+            Preferences.instance.arrange_icons_mode = 1 
+            on_refresh
+        end
+
+        def on_arrange_icons_by_isbn
+            Preferences.instance.arrange_icons_mode = 2 
+            on_refresh
+        end
+
+        def on_arrange_icons_by_edition
+            Preferences.instance.arrange_icons_mode = 3 
+            on_refresh
+        end
+
+        def on_arrange_icons_by_publisher
+            Preferences.instance.arrange_icons_mode = 4 
+            on_refresh
+        end
+
+        def on_arrange_icons_by_rating
+            Preferences.instance.arrange_icons_mode = 5 
+            on_refresh
+        end
+
+        def on_arrange_icons_reversed(item)
+            Preferences.instance.reverse_icons = item.active? 
+            on_refresh
         end
 
         def on_submit_bug_report
@@ -259,11 +331,20 @@ module UI
         private
         #######
 
-        ICON_MAXLEN = 20
         def append_book(book)
+            append_book_as_icon(book)
+            append_book_in_list(book)
+        end
+
+        ICON_MAXLEN = 20
+        def append_book_as_icon(book)
             icon_title = book.title.length > ICON_MAXLEN ? book.title[0..ICON_MAXLEN] + '...' : book.title
             small_cover = Icons.small_cover(selected_library, book)
             @iconlist.append_pixbuf(small_cover, "", icon_title)
+        end
+
+        def append_book_in_list(book)
+            small_cover = Icons.small_cover(selected_library, book)
             iter = @listview.model.append 
             iter[0] = small_cover.scale(20, 25)
             iter[1] = book.title
@@ -407,7 +488,7 @@ module UI
             @treeview_sidepane.selection.signal_connect('changed') { on_refresh } 
             @treeview_sidepane.selection.select_iter(@treeview_sidepane.model.iter_first) 
         end
-        
+       
         def restore_preferences
             prefs = Preferences.instance
             @main_app.move(*prefs.position) unless prefs.position.nil? 
@@ -430,6 +511,10 @@ module UI
                 library = @libraries.find { |x| x.name == prefs.selected_library }
                 select_library(library) unless library.nil?
             end
+            if prefs.arrange_icons_mode.nil?
+                prefs.arrange_icons_mode = 0
+            end
+            on_menu_arrange_icons_selected
         end
 
         def save_preferences

@@ -13,10 +13,14 @@ Alexandria
 Requirements
 ------------
 
-    Ruby >= 1.8.0:          http://www.ruby-lang.org
-    GNOME >= 2.x:           http://www.gnome.org
-    Ruby-GNOME2 >= 0.9.x:   http://ruby-gnome2.sourceforge.jp
-    Ruby/Amazon >= 0.8.2:   http://www.caliban.org/ruby/ruby-amazon.shtml
+    Ruby >= 1.8.0:              http://www.ruby-lang.org
+    GNOME >= 2.x:               http://www.gnome.org
+    Ruby/Amazon >= 0.8.2:       http://www.caliban.org/ruby/ruby-amazon.shtml
+    Ruby/Gettext >= 0.5.4:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
+    Ruby-GNOME2 >= 0.9.x [*]:   http://ruby-gnome2.sourceforge.jp
+
+    [*]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2
+                                 and Ruby/GConf2.
 
 Install
 -------
