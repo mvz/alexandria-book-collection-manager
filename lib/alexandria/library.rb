@@ -128,8 +128,8 @@ module Alexandria
                 # delete the whole library
                 FileUtils.rm_rf(self.path)
             else
-                File.delete(File.join(self.path, book.isbn + EXT),
-                            small_cover(book), medium_cover(book))
+                FileUtils.rm_f([File.join(self.path, book.isbn + EXT),
+                                small_cover(book), medium_cover(book)])
                 old_delete(book)
             end
         end

@@ -1,3 +1,9 @@
+2004-07-04  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb:
+
+	Fixed a bug when removing a book that doesn't have any cover image.
+
 === Alexandria 0.3.0 ===
 
 2004-07-03  Laurent Sansonetti  <lrz@gnome.org>
