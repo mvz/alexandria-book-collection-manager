@@ -107,11 +107,12 @@ module UI
 
                 if @isbn_radiobutton.active?
                     # Perform the ISBN search via the providers.
-                    isbn = @entry_isbn.text.delete('-')
-                    unless Library.valid_isbn?(isbn)
+                    isbn = begin
+                        Library.canonicalise_isbn(@entry_isbn.text)
+                    rescue
                         raise _("Couldn't validate the EAN/ISBN you provided.  Make sure it is written correcty, and try again.")
-                    end 
-                    assert_not_exist(library, isbn)
+                    end
+                    assert_not_exist(library, @entry_isbn.text)
                     books_to_add << Alexandria::BookProviders.isbn_search(isbn)
                 else
                     @treeview_results.selection.selected_each do |model, path, iter| 
@@ -141,7 +142,8 @@ module UI
         def on_focus
             if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
                 if text = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD).wait_for_text
-                    @entry_isbn.text = text if Library.valid_isbn?(text)
+                    @entry_isbn.text = text if
+                        Library.valid_isbn?(text) or Library.valid_ean?(text)
                 end
             end
         end
@@ -152,8 +154,9 @@ module UI
 
         def assert_not_exist(library, isbn)
             # Check that the book doesn't already exist in the library.
-            if book = library.find { |book| book.isbn == isbn }
-                raise _("'%s' already exists in '%s' (titled '%s').") % [ book.isbn, library.name, book.title ] 
+            canonical = Library.canonicalise_isbn(isbn)
+            if book = library.find { |book| book.isbn == canonical }
+                raise _("'%s' already exists in '%s' (titled '%s').") % [ isbn, library.name, book.title ] 
             end
             true
         end

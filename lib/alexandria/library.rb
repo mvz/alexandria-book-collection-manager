@@ -20,6 +20,12 @@ require 'yaml'
 require 'fileutils'
 require 'gdk_pixbuf2'
 
+class Array
+    def sum
+        self.inject(0) { |a,b| a + b }
+    end
+end
+
 module Alexandria
     class Library < Array
         attr_reader :name
@@ -75,24 +81,63 @@ module Alexandria
             a
         end
 
-        def self.valid_isbn?(isbn)
-            return false if isbn == nil
+        def self.extract_numbers(isbn)
+            raise "Invalid ISBN '#{isbn}'" if isbn == nil
 
-            digits = isbn.strip.delete('-').split('').map { |x|
-                return false unless x =~ /[\dX]/
+            isbn.strip.delete('-').split('').map { |x|
+                raise "Invalid ISBN '#{isbn}'" unless x =~ /[\dX]/
                 x == 'X' ? 10 : x.to_i
             }
+        end
 
-            if digits.length == 13
-                # hope it's an EAN number
-                digits = digits[3 .. 12]
-            elsif digits.length != 10
-                return false
+        def self.isbn_checksum(numbers)
+            (0 ... numbers.length).inject(0) { |accumulator,i|
+                accumulator + numbers[i] * (i + 1)
+            } % 11
+        end
+
+        def self.valid_isbn?(isbn)
+            begin
+                numbers = self.extract_numbers(isbn)
+                numbers.length == 10 and self.isbn_checksum(numbers) == 0
+            rescue
+                false
+            end
+        end
+
+        def self.ean_checksum(numbers)
+                10 - ([1, 3, 5, 7, 9, 11].map { |x| numbers[x] }.sum * 3 +
+                      [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum) % 10
+        end
+
+        def self.valid_ean?(ean)
+            begin
+                numbers = self.extract_numbers(ean)
+                (numbers.length == 13 and self.ean_checksum(numbers) ==
+                    numbers[12]) or
+                (numbers.length == 18 and self.ean_checksum(numbers[0..12]) ==
+                    numbers[12])
+            rescue
+                false
+            end
+        end
+
+        def self.canonicalise_isbn(isbn)
+            numbers = self.extract_numbers(isbn)
+
+            canonical = if self.valid_ean?(isbn)
+                # Looks like an EAN number -- extract the intersting part and
+                # calculate a checksum. It would be nice if we could validate
+                # the EAN number somehow.
+                numbers[3 .. 11] + [self.isbn_checksum(numbers[3 .. 11])]
+            elsif self.valid_isbn?(numbers)
+                # Seems to be a valid ISBN number.
+                numbers
+            else
+                raise "Invalid ISBN number '#{isbn}'."
             end
 
-            (0 ... digits.length).inject(0) { |accumulator,i|
-                accumulator + digits[i] * (i + 1)
-            } % 11 == 0
+            canonical.map { |x| x.to_s }.join()
         end
 
         def save(book, small_cover_uri=nil, medium_cover_uri=nil)
