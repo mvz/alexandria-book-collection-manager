@@ -1,3 +1,10 @@
+2004-05-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade,
+	  lib/alexandria/ui/main_app.rb:
+
+	Added a close button in the sidepane's header.
+
 2004-05-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb:

@@ -179,10 +179,15 @@ module UI
 
         def on_refresh  
             @listview.model.clear
-            @iconlist.clear unless @iconlist.num_icons == 0
+            @iconlist.clear
             library = selected_library
             library.each { |book| append_book(book) }
             @main_app.title = library.name + " - " + TITLE
+        end
+
+        def on_close_sidepane
+            @paned.child1.visible = false
+            @menu_view_sidepane.active = false
         end
 
         def on_view_sidepane(item)
