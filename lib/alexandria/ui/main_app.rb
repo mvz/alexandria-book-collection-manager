@@ -78,7 +78,8 @@ module UI
                 when 1
                     _("'%s' selected") % books.first.title
                 else
-                    _("%d books selected") % books.length
+                    n_("%d book selected", "%d books selected", books.length) \
+                        % books.length
             end
             @popup_properties.sensitive = @menu_properties.sensitive = books.length == 1
             @menu_delete.sensitive = !books.empty? 
@@ -153,7 +154,7 @@ module UI
                     when 1
                         _("Are you sure you want to permanently delete '%s' which has one book?") % library.name
                     else
-                        _("Are you sure you want to permanently delete '%s' which has %d books?") % [ library.name, library.size ]
+                        n_("Are you sure you want to permanently delete '%s' which has %d book?", "Are you sure you want to permanently delete '%s' which has %d books?", library.size) % [ library.name, library.size ]
                 end
                 if confirm.call(message)
                     library.delete
