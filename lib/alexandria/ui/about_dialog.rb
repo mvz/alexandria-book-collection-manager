@@ -18,7 +18,7 @@
 module Alexandria
 module UI
     class AboutDialog < Gnome::About
-        def initialize
+        def initialize(parent)
             super(Alexandria::TITLE,
                   Alexandria::VERSION,
                   Alexandria::COPYRIGHT,
@@ -27,6 +27,7 @@ module UI
                   Alexandria::DOCUMENTERS,
                   Alexandria::TRANSLATORS.join("\n"),
                   Icons::ALEXANDRIA_SMALL)
+            self.transient_for = parent
             signal_connect('destroy') { hide }
         end
     end

@@ -18,10 +18,10 @@
 module Alexandria
 module UI
     class InfoBookDialog < GladeBase
-        def initialize(parent, book)
+        def initialize(parent, library, book)
             super('info_book_dialog.glade')
             @info_book_dialog.transient_for = parent
-            @image_cover.file = book.medium_cover
+            @image_cover.file = library.medium_cover(book)
             @label_title.text = @info_book_dialog.title = book.title
             @label_authors.text = book.authors.join("\n")
             @label_isbn.text = book.isbn
@@ -30,12 +30,16 @@ module UI
             buffer = Gtk::TextBuffer.new
             buffer.text = (book.notes or "")
             @textview_notes.buffer = buffer
-            @book = book
+            @library, @book = library, book
         end
 
         def on_close
-            if @book.notes.nil? or (@textview_notes.buffer.text != @book.notes)
-                # TODO: save the book there
+            new_notes = @textview_notes.buffer.text
+
+            # Notes have changed: we need to re-save the book again.
+            if @book.notes.nil? or (new_notes != @book.notes)
+                @book.notes = new_notes
+                @library.save(@book)
             end
             @info_book_dialog.destroy
         end

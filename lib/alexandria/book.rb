@@ -9,32 +9,15 @@ require 'singleton'
 module Alexandria
     class Book
         attr_reader :title, :authors, :isbn, :publisher, :edition
-        attr_writer :saved, :small_cover, :medium_cover
-        attr_accessor :library, :notes
+        attr_accessor :notes
 
-        def initialize(title, authors, isbn, publisher, edition,
-                       small_cover, medium_cover)
-
+        def initialize(title, authors, isbn, publisher, edition)
             @title = title
             @authors = authors
             @isbn = isbn
             @publisher = publisher
             @edition = edition
-            @small_cover = small_cover
-            @medium_cover = medium_cover
-            @saved = false
-        end
-
-        def saved?
-            @saved
-        end
-
-        def small_cover
-            @library ? File.join(@library.path, @small_cover) : @small_cover
-        end
-        
-        def medium_cover
-            @library ? File.join(@library.path, @medium_cover) : @medium_cover
+            @notes = ""
         end
     end
 
@@ -52,13 +35,13 @@ module Alexandria
         def self.load(name)
             library = Library.new(name)
             begin
-                Dir.chdir(library.path)
-                Dir["*" + EXT].each do |filename|
-                    File.open(filename) do |io|
-                        book = YAML.load(io)
-                        raise "Not a book" unless book.is_a?(Book)
-                        book.library = library
-                        library << book
+                Dir.chdir(library.path) do
+                    Dir["*" + EXT].each do |filename|
+                        File.open(filename) do |io|
+                            book = YAML.load(io)
+                            raise "Not a book" unless book.is_a?(Book)
+                            library << book
+                        end
                     end
                 end
             rescue Errno::ENOENT
@@ -88,20 +71,18 @@ module Alexandria
             a
         end
  
-        def save
-            Dir.chdir(self.path)
-            self.each do |book|
-                next if book.saved?
-                File.open(File.join(self.path, book.isbn + EXT), "w") do |io|
-                    small = File.join(self.path, book.isbn + SMALL_COVER_EXT)
-                    medium = File.join(self.path, book.isbn + MEDIUM_COVER_EXT)
-                    FileUtils.mv(book.small_cover, small)
-                    FileUtils.mv(book.medium_cover, medium)
-                    book.small_cover = File.basename(small)
-                    book.medium_cover = File.basename(medium)
-                    book.saved = true
-                    io.puts book.to_yaml
+        def save(book, small_cover_path=nil, medium_cover_path=nil)
+            if small_cover_path and medium_cover_path
+                Dir.chdir(self.path) do
+                    # Rename the cover pictures.
+                    FileUtils.mv(small_cover_path, small_cover(book))
+                    FileUtils.mv(medium_cover_path, medium_cover(book))
                 end
+                self << book
+            end
+                
+            File.open(File.join(self.path, book.isbn + EXT), "w") do |io|
+                io.puts book.to_yaml
             end
         end
 
@@ -112,10 +93,17 @@ module Alexandria
                 FileUtils.rm_rf(self.path)
             else
                 File.delete(File.join(self.path, book.isbn + EXT),
-                            File.join(self.path, book.isbn + SMALL_COVER_EXT),
-                            File.join(self.path, book.isbn + MEDIUM_COVER_EXT))
+                            small_cover(book), medium_cover(book))
                 old_delete(book)
             end
+        end
+
+        def small_cover(book)
+            File.join(self.path, book.isbn + SMALL_COVER_EXT)
+        end
+        
+        def medium_cover(book)
+            File.join(self.path, book.isbn + MEDIUM_COVER_EXT)
         end
 
         def name=(name)
@@ -138,8 +126,8 @@ module Alexandria
     	def self.search(criteria)
             self.instance.each do |factory|
                 begin
-                    if book = factory.search(criteria)
-                        return book
+                    if stuff = factory.search(criteria)
+                        return stuff
                     end
                 rescue TimeoutError
                     raise "Couldn't reach the provider '#{factory.name}': timeout expired."
@@ -219,10 +207,11 @@ module Alexandria
                                     (product.authors rescue [ "n/a" ]),
                                     product.isbn,
                                     product.manufacturer,
-                                    product.media,
-                                    fetch.call(product.image_url_small),
-                                    fetch.call(product.image_url_medium))
-                    results << book
+                                    product.media)
+                    small_cover = fetch.call(product.image_url_small)
+                    medium_cover = fetch.call(product.image_url_medium)
+
+                    results << [ book, small_cover, medium_cover ]
                 end
                 raise "Too many results" unless results.length == 1
                 results.first

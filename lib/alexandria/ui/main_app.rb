@@ -79,14 +79,12 @@ module UI
         def on_book_properties
             books = selected_books
             if books.length == 1
-                InfoBookDialog.new(@main_app, books.first)
+                InfoBookDialog.new(@main_app, selected_library, books.first)
             end
         end
 
         def on_new_book
             NewBookDialog.new(@main_app, @libraries, selected_library) do |book, library|
-                library << book
-                library.save
                 if selected_library == library
                     append_book(book)
                 else
@@ -220,7 +218,7 @@ module UI
         end
 
         def on_about
-            AboutDialog.new.show
+            AboutDialog.new(@main_app).show
         end
 
         #######
@@ -230,9 +228,10 @@ module UI
         ICON_MAXLEN = 20
         def append_book(book)
             icon_title = book.title.length > ICON_MAXLEN ? book.title[0..ICON_MAXLEN] + '...' : book.title
-            @iconlist.append(book.small_cover, icon_title)
+            small_cover = selected_library.small_cover(book)
+            @iconlist.append(small_cover, icon_title)
             iter = @listview.model.append 
-            iter[0] = Gdk::Pixbuf.new(book.small_cover).scale(25, 25)
+            iter[0] = Gdk::Pixbuf.new(small_cover).scale(25, 25)
             iter[1] = book.title
             iter[2] = book.authors.join(', ')
             iter[3] = book.isbn

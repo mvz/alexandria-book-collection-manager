@@ -1,3 +1,43 @@
+2004-04-30  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/info_book_dialog.glade,
+	  data/alexandria/glade/new_book_dialog.glade,
+	  data/alexandria/glade/preferences_dialog.glade:
+
+	Use the 'clicked' signal instead of 'pressed' for
+	Gtk::Button's.
+
+      	* data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	- Removed the network proxy tab ;
+	- Improved accessibility (via keyboard accelerators) and
+	  HIG compliance ;
+	- Double click on a provider opens its setup dialog.
+
+	* lib/alexandria/book.rb:
+
+	- Refactored the YAML object, by removing the following 
+	  fields: saved, small_cover and medium_cover ;
+	- Improved the loading and saving procedures.
+
+	* lib/alexandria/ui/about_dialog.rb:
+
+	Fixed the transient (parent) window.
+
+	* lib/alexandria/ui/info_book_dialog.rb:
+
+	- Follow changes in book.rb ;
+	- Save the notes in the YAML file if they changed.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Follow changes in book.rb, about_dialog.rb and info_book_dialog.rb.
+
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Follow changes in book.rb.
+
 2004-04-22  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/info_book_dialog.glade,

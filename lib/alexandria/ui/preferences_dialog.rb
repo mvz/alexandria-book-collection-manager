@@ -26,9 +26,17 @@ module UI
             self.has_separator = false
             self.resizable = false
             self.vbox.border_width = 12
+            
+            hbox = Gtk::HBox.new(false, 12)
+            hbox.border_width = 6
+            self.vbox.pack_start(hbox)
+
+            image = Gtk::Image.new(Gtk::Stock::PROPERTIES,
+                                   Gtk::IconSize::DIALOG)
+            image.set_alignment(0.5, 0)
+            hbox.pack_start(image)
 
             table = Gtk::Table.new(provider.prefs.length, 2)
-            table.border_width = 6
             table.row_spacings = 6 
             table.column_spacings = 12 
             i = 0
@@ -56,13 +64,14 @@ module UI
                 i += 1
             end
 
-            self.vbox.pack_start(table)
+            hbox.pack_start(table)
         end
     end
 
     class PreferencesDialog < GladeBase
         def initialize(parent)
             super('preferences_dialog.glade')
+            @preferences_dialog.transient_for = parent
 
             model = Gtk::ListStore.new(String)
             BookProviders.each { |x| model.append.set_value(0, x.name) }
@@ -76,14 +85,6 @@ module UI
             end
             @button_prov_setup.sensitive = false
             @button_prov_up.sensitive =  @button_prov_down.sensitive = BookProviders.length > 1
-
-            # This is an ulgy but needed hack, because Glade doesn't allow
-            # Gtk::RadioButton to use a markup label.
-            [ @radio_direct, @radio_proxy, @radio_gnome ].each do |button|
-                button.children.first.use_markup = true
-            end
-
-            @radio_gnome.active = true
         end
 
         def on_setup
@@ -94,6 +95,15 @@ module UI
             dialog.destroy
         end
 
+        def on_providers_button_press_event(widget, event)
+            # double left click
+            if event.event_type == Gdk::Event::BUTTON2_PRESS and
+               event.button == 1 
+
+                on_setup
+            end
+        end
+        
         def on_close
             @preferences_dialog.destroy
         end

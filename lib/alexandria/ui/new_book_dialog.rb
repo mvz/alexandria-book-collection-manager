@@ -39,11 +39,19 @@ module UI
     
         def on_add
             begin
+                # First check that the book doesn't already exist in the library.
                 library = @libraries.find { |x| x.name == @combo_libraries.entry.text }
                 if book = library.find { |book| book.isbn == @entry_isbn.text }
                     raise "'#{book.isbn}' already exists in '#{library.name}' (titled '#{book.title}')."
                 end
-                book = Alexandria::BookProviders.search(@entry_isbn.text)
+
+                # Perform the search via the providers.
+                book, small_cover, medium_cover = Alexandria::BookProviders.search(@entry_isbn.text)
+
+                # Save the book in the library.
+                library.save(book, small_cover, medium_cover)
+                
+                # Now we can destroy the dialog and go back to the main application.
                 @new_book_dialog.destroy
                 @block.call(book, library)
             rescue Errno::EINVAL
@@ -51,7 +59,6 @@ module UI
                 # on FreeBSD.
                 retry
             rescue => e
-                p e
                 ErrorDialog.new(@parent, "Couldn't add book", e.message)
             end
         end
