@@ -1,22 +1,20 @@
 # HIG compliant error dialog box
 module Alexandria
 module UI
-    class ErrorDialog < Gtk::Dialog
-        def initialize(parent, title, message=nil)
-            super("", parent, Gtk::Dialog::DESTROY_WITH_PARENT,
-                  [Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK])
+    class AlertDialog < Gtk::Dialog
+        def initialize(parent, title, stock_icon, buttons, message=nil)
+            super("", parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
 
             self.border_width = 6
             self.resizable = false
             self.has_separator = false
-            self.default_response = Gtk::Dialog::RESPONSE_OK
             self.vbox.spacing = 12
 
             hbox = Gtk::HBox.new(false, 12)
             hbox.border_width = 6
             self.vbox.pack_start(hbox)
 
-            image = Gtk::Image.new(Gtk::Stock::DIALOG_ERROR,
+            image = Gtk::Image.new(stock_icon,
                                    Gtk::IconSize::DIALOG)
             image.set_alignment(0.5, 0)
             hbox.pack_start(image)
@@ -36,6 +34,13 @@ module UI
                 label.wrap = true
                 vbox.pack_start(label)
             end
+        end
+    end
+
+    class ErrorDialog < AlertDialog
+        def initialize(parent, title, message=nil)
+            super(parent, title, Gtk::Stock::DIALOG_ERROR, [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
+            self.default_response = Gtk::Dialog::RESPONSE_OK
             show_all and run
             destroy
         end

@@ -4,7 +4,7 @@ require 'gnome2'
 
 require 'alexandria/ui/icons.rb'
 require 'alexandria/ui/glade_base.rb'
-require 'alexandria/ui/error_dialog.rb'
+require 'alexandria/ui/alert_dialog.rb'
 require 'alexandria/ui/about_dialog.rb'
 require 'alexandria/ui/info_book_dialog.rb'
 require 'alexandria/ui/new_book_dialog.rb'

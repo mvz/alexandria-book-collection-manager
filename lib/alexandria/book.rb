@@ -92,6 +92,14 @@ module Alexandria
             end
         end
 
+        alias_method :old_delete, :delete
+        def delete(book)
+            File.delete(File.join(self.path, book.isbn + EXT),
+                        File.join(self.path, book.isbn + "_small.jpg"),
+                        File.join(self.path, book.isbn + "_medium.jpg"))
+            old_delete(book)
+        end
+
         #######
         private
         #######

@@ -1,3 +1,20 @@
+2004-04-01  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/main_app.glade:
+
+	Moved 'Edit/Delete' after 'Edit/[De]select All'.
+
+	* lib/alexandria/book.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Implemented the 'Delete' book action.  
+
+	* lib/alexandria/ui/alert_dialog.rb,
+	  lib/alexandria/ui/error_dialog.rb,
+	  lib/alexandria/ui.rb:
+
+	Renamed error_dialog.rb in alert_dialog.rb.
+
 2004-03-31  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/main_app.glade,

@@ -55,6 +55,22 @@ module UI
         end
    
         def on_delete
+            library = selected_library
+            selected_books.each do |book|
+                dialog = AlertDialog.new(@main_app,
+                                         "Are you sure you want to permanently " \
+                                         "delete '#{book.title} from '#{library.name}'?",
+                                         Gtk::Stock::DIALOG_QUESTION,
+                                         [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+                                          [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]])
+                dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
+                dialog.show_all
+                if dialog.run == Gtk::Dialog::RESPONSE_OK
+                    library.delete(book)
+                end
+                dialog.destroy
+            end
+            on_refresh
         end
 
         def on_select_all
