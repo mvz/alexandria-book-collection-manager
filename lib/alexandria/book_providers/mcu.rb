@@ -29,7 +29,7 @@ class BookProviders
 
         BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
         def initialize
-            super("MCU","Spanish Culture Ministry")
+            super("MCU", _("Spanish Culture Ministry"))
 	    # No preferences
         end
         

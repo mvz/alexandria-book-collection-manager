@@ -1,3 +1,9 @@
+2005-03-03  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/mcu.rb:
+
+	Mark the name of the provider as translatable.
+
 2005-03-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
