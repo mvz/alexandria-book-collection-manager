@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Alexandria 0.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-07 21:55+0100\n"
-"PO-Revision-Date: 2005-03-08 01:33+0200\n"
+"PO-Revision-Date: 2005-03-10 16:11+0200\n"
 "Last-Translator: David Weinehall <tao@acc.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -124,7 +124,7 @@ msgstr "Exportera \"%s\""
 
 #: ../lib/alexandria/ui/export_dialog.rb:57
 msgid "_Export"
-msgstr "_Exportera"
+msgstr "E_xportera"
 
 #: ../lib/alexandria/ui/export_dialog.rb:76
 msgid "_Theme:"
@@ -366,7 +366,7 @@ msgstr "_Importera..."
 
 #: ../lib/alexandria/ui/main_app.rb:757
 msgid "_Export..."
-msgstr "_Exportera..."
+msgstr "E_xportera..."
 
 #: ../lib/alexandria/ui/main_app.rb:758
 msgid "_Properties"
@@ -406,7 +406,7 @@ msgstr "_Sök"
 
 #: ../lib/alexandria/ui/main_app.rb:767
 msgid "_Clear Results"
-msgstr "_Töm resultat"
+msgstr "Töm _resultat"
 
 #: ../lib/alexandria/ui/main_app.rb:769
 msgid "_Preferences"
@@ -494,7 +494,7 @@ msgstr "hos _%s"
 
 #: ../lib/alexandria/ui/main_app.rb:873
 msgid "Title contains"
-msgstr "Titeln innehåller"
+msgstr "Titel innehåller"
 
 #: ../lib/alexandria/ui/main_app.rb:873
 msgid "Authors contain"
@@ -702,4 +702,5 @@ msgstr ""
 #: ../data/alexandria/glade/preferences_dialog.glade:462
 msgid "Providers"
 msgstr "Förmedlare"
+
 
