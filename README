@@ -29,6 +29,11 @@ Install
     $ ruby install.rb setup
    ($ su)
     $ ruby install.rb install
+    $ gconftool-2 --shutdown [*]
+
+    [*]: This is needed because the current GConf implementation won't dynamically reload
+         the schemas.  Note that you don't have to start it after that, it should be 
+         automatically spawned when needed. 
 
 Usage
 -----

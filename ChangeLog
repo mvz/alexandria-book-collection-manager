@@ -1,3 +1,9 @@
+2004-06-16  Laurent Sansonetti  <lrz@gnome.org>
+
+	* README:
+
+	Added "gconftool-2 --shutdown" to the install steps.
+
 2004-06-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
