@@ -43,7 +43,7 @@ module UI
                 if book = library.find { |book| book.isbn == @entry_isbn.text }
                     raise "'#{book.isbn}' already exists in '#{library.name}' (titled '#{book.title}')."
                 end
-                book = Alexandria::BookProvider.find(@entry_isbn.text)
+                book = Alexandria::BookProviders.search(@entry_isbn.text)
                 @new_book_dialog.destroy
                 @block.call(book, library)
             rescue Errno::EINVAL
@@ -51,6 +51,7 @@ module UI
                 # on FreeBSD.
                 retry
             rescue => e
+                p e
                 ErrorDialog.new(@parent, "Couldn't add book", e.message)
             end
         end

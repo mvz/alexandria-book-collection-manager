@@ -132,59 +132,81 @@ module Alexandria
         end
     end
    
-    class BookProvider
+    class BookProviders < Array
         include Singleton
 
-    	def self.find(criteria, factory=nil)
-            book = nil
-            begin
-                if factory.nil?
-                    PROVIDERS.each do |factory|
-                        if book = factory.instance.find(criteria)
-                            break
-                        end
+    	def self.search(criteria)
+            self.instance.each do |factory|
+                begin
+                    if book = factory.search(criteria)
+                        return book
                     end
-                else
-                    book = factory.instance.find(criteria)
-                end
-            rescue TimeoutError
-                raise "Couldn't reach the provider '#{factory.instance.name}': timeout expired."
-            end 
-            return book
+                rescue TimeoutError
+                    raise "Couldn't reach the provider '#{factory.name}': timeout expired."
+                end 
+            end
     	end
 
-        class ConfVariable
-            attr_reader :name, :description, :possible_values
-            attr_accessor :value
+        class Preferences < Array
+            def initialize(provider_name)
+                @provider_name = provider_name
+            end
 
-            def initialize(name, description, possible_values, default_value)
-                @name = name
-                @description = description
-                @possible_values = possible_values
-                @value = default_value
+            class Variable
+                attr_reader :name, :description, :possible_values
+                attr_accessor :value
+
+                def initialize(name, description, default_value,
+                               possible_values=nil)
+
+                    @name = name
+                    @description = description
+                    @value = default_value
+                    @possible_values = possible_values
+                end
+            end
+            
+            def add(*args)
+                self << Variable.new(*args) 
+            end
+            
+            def [](obj)
+                case obj
+                    when String
+                        var = self.find { |var| var.name == obj }
+                        var ? var.value : nil
+                    when Integer
+                        old_idx(obj)
+                end
+            end
+            alias_method :old_idx, :[]
+            
+            def read
+                # TODO
+            end
+
+            def write
+                # TODO
             end
         end
         
-        class AmazonProvider < self
+        class AmazonProvider
             attr_reader :prefs, :name
 
             def initialize
                 @name = "Amazon"
-                @prefs = {
-                    :locale    => ConfVariable.new("locale",
-                                                   "Locale site to contact.",
-                                                   Amazon::Search::LOCALES.keys,
-                                                   "us"),
-                    :dev_token => ConfVariable.new("dev_token",
-                                                   "Development token.",
-                                                   nil, "0xDEADBEEF")
-                }
+                @prefs = Preferences.new(@name)
+                @prefs.add("locale", "Locale site to contact", "us",
+                           Amazon::Search::LOCALES.keys)
+                @prefs.add("dev_token", "Development token", "D23XFCO2UKJY82")
+                @prefs.add("associate", "Associate ID", "calibanorg-20")
             end
-                
-        	def find(criteria)
+               
+        	def search(criteria)
                 results = []
-                req = Amazon::Search::Request.new(prefs[:dev_token].value)
-                req.locale = prefs[:locale].value
+                prefs.read
+                req = Amazon::Search::Request.new(prefs["dev_token"])
+                req.locale = prefs["locale"]
                 req.asin_search(criteria) do |product|
                     next unless product.catalog == 'Book'
                     fetch = lambda do |url|
@@ -206,15 +228,14 @@ module Alexandria
                 results.first
         	end
         end
-        
-        PROVIDERS = [ AmazonProvider ]
-
-        def self.all
-            PROVIDERS
+       
+        def initialize
+            providers = [ AmazonProvider ].map { |x| x.new }
+            super(providers.length, *providers)
         end
 
-        def self.each
-            PROVIDERS.each { |x| yield x } if block_given?
+        def self.method_missing(id, *args, &block)
+            self.instance.method(id).call(*args, &block)
         end
     end
 end

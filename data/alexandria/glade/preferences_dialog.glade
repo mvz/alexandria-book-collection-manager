@@ -131,6 +131,7 @@
 			  <property name="can_default">True</property>
 			  <property name="can_focus">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <signal name="pressed" handler="on_setup" last_modification_time="Wed, 21 Apr 2004 18:57:41 GMT"/>
 
 			  <child>
 			    <widget class="GtkAlignment" id="alignment1">
@@ -229,7 +230,7 @@
 	      <child>
 		<widget class="GtkLabel" id="label5">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Providers are libraries that provide information about books.  Some of them can be configured to get best results.  You can also customize the order they will be called.</property>
+		  <property name="label" translatable="yes">Providers are libraries that supply information about books.  Some of them can be configured to get better results.  You can also customize the order in which they are called.</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
