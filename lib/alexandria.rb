@@ -23,6 +23,7 @@ module Alexandria
     DESCRIPTION = _('A program to help you manage your book collection.')
     COPYRIGHT = 'Copyright (C) 2004-2005 Laurent Sansonetti'
     AUTHORS = [
+        'Claudio Belotti <bel8@lilik.it>',
         'Constantine Evans <cevans@costinet.org>',
         'Dafydd Harries <daf@muse.19inch.net>',
         'Javier Fernandez-Sanguino Pena <jfs@debian.org>',

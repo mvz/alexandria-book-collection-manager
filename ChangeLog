@@ -1,3 +1,10 @@
+2005-04-06  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Claudio.
+
 2005-04-06  Claudio Belotti  <bel8@lilik.it>
 	
 	* lib/alexandria/book_providers/ibs_it.rb:
