@@ -1,4 +1,16 @@
 ================
+Alexandria 0.1.2
+================
+
+Bugs fixed:
+  * did not work with the latest version or Ruby/Amazon (0.8.1) ;
+  * crash when Amazon doesn't provide the author(s) for a book.
+
+New feature:
+ * default to the currently selected library in the Add Book Dialog
+   (contributed by Zachary P. Landau).
+
+================
 Alexandria 0.1.1
 ================
 
