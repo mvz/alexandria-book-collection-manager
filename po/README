@@ -1,0 +1,29 @@
+
+This directory
+--------------
+
+This directory (po/) contains the translations for Alexandria.
+
+How to use the Makefile in this directory
+-----------------------------------------
+
+You should be inside this directory in order to use the Makefile.
+
+make:
+	Updates the POT file (alexandria.pot).
+
+make xx.po:
+	(Where xx is a language code.)
+
+	Merge a single PO file with the template. The template is updated if
+	necessary.
+
+make po:
+	Merges all of the PO files with the template. The template is updated
+	if necessary. This command is suitable for generating the PO files to
+	send to translators prior to a release.
+
+make check:
+	Prints the status of all of the PO files, i.e. how complete each
+	translation is. Any problems with the PO files will also be reported.
+

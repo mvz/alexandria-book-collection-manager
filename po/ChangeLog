@@ -1,3 +1,22 @@
+2005-03-25  Dafydd Harries  <daf@muse.19inch.net>
+
+	* Makefile:
+
+	Added: a makefile for updating the template, updating PO
+	files, and checking PO files.
+
+	* README:
+
+	Documentation on how to use the makefile.
+
+	* genpot.sh:
+
+	Removed: it has been made obsolete by the makefile.
+
+	* ChangeLog:
+
+	Convert to UTF-8.
+
 2005-03-23  Joachim Breitner <mail@joachim-breitner.de>
 
 	* de.po: Minor typos
@@ -20,7 +39,7 @@
 	  --extract-all xgettext switch when working with .glade files.
 	* fr.po: Update.
 
-2005-03-12  Miguel ¡ngel GarcÌa  <magmax@ieee.org>
+2005-03-12  Miguel √Ångel Garc√≠a  <magmax@ieee.org>
 
 	* es.po: Update.
 
