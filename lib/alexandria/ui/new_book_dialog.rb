@@ -28,12 +28,25 @@ module UI
             @block = block
             @libraries = libraries
 
-            popdown = libraries.map { |x| x.name }
+            libraries_names = libraries.map { |x| x.name }
             if selected_library
-              popdown.delete selected_library.name
-              popdown.unshift selected_library.name
+              libraries_names.delete selected_library.name
+              libraries_names.unshift selected_library.name
             end
-            @combo_libraries.popdown_strings = popdown
+            @combo_libraries.clear
+            @combo_libraries.model = Gtk::ListStore.new(Gdk::Pixbuf, String)
+            libraries_names.each do |library_name| 
+                iter = @combo_libraries.model.append
+                iter[0] = Icons::LIBRARY_SMALL
+                iter[1] = library_name
+            end
+            renderer = Gtk::CellRendererPixbuf.new
+            @combo_libraries.pack_start(renderer, false)
+            @combo_libraries.set_attributes(renderer, :pixbuf => 0)
+            renderer = Gtk::CellRendererText.new
+            @combo_libraries.pack_start(renderer, true)
+            @combo_libraries.set_attributes(renderer, :text => 1)
+            @combo_libraries.active = 0
             @combo_libraries.sensitive = libraries.length > 1
 
             @treeview_results.model = Gtk::ListStore.new(String, String)

@@ -1,3 +1,11 @@
+2004-09-11  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/new_book_dialog.rb,
+	  data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Migrated to Gtk::ComboBox.	
+
 2004-09-10  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/new_book_dialog.rb,

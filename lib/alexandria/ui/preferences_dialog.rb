@@ -42,17 +42,14 @@ module UI
                 table.attach_defaults(label, 0, 1, i, i + 1)
                
                 unless variable.possible_values.nil?
-                    menu = Gtk::Menu.new
+                    entry = Gtk::ComboBox.new
                     variable.possible_values.each do |value|
-                        item = Gtk::MenuItem.new(value.to_s)
-                        item.signal_connect('activate') do |item|
-                            variable.new_value = value.to_s
-                        end
-                        menu.append(item)
+                        entry.append_text(value.to_s)
                     end
-                    entry = Gtk::OptionMenu.new
-                    entry.menu = menu
-                    entry.history = variable.possible_values.index(variable.value) 
+                    entry.active = variable.possible_values.index(variable.value)
+                    entry.signal_connect('changed') do |cb|
+                        variable.new_value = variable.possible_values[cb.active]
+                    end
                 else
                     entry = Gtk::Entry.new
                     entry.text = variable.value.to_s
@@ -110,7 +107,8 @@ module UI
             iter = @treeview_providers.selection.selected
             provider = BookProviders.find { |x| x.name == iter[1] }
             if provider.prefs.empty?
-                ErrorDialog.new(@preferences_dialog, _("The '%s' provider doesn't have any preference to setup") % provider.fullname)
+                ErrorDialog.new(@preferences_dialog, 
+                                _("The '%s' provider doesn't have any preference to setup") % provider.fullname)
             else
                 dialog = ProviderPreferencesDialog.new(@preferences_dialog, provider)
                 dialog.show_all.run
