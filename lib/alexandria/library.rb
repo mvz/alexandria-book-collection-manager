@@ -207,6 +207,29 @@ module Alexandria
             end
         end
 
+        def export_as_tellico_xml_archive(filename)
+            filename += ".bc" if File.extname(filename).empty?
+            if File.exists?(filename)
+                FileUtils.rm(filename)
+            end
+            File.open(File.join(Dir.tmpdir, "bookcase.xml"), "w") do |io|
+                to_tellico_document.write(io, 0)
+            end
+            # remove tmp dir first
+            if File.exists?(File.join(Dir.tmpdir, "images"))
+                FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
+            end
+            FileUtils.mkdir(File.join(Dir.tmpdir, "images"))
+            Dir.chdir(self.path) do
+                FileUtils.cp(Dir.glob('*_medium.jpg'), File.join(Dir.tmpdir, "images"))
+            end
+            Dir.chdir(Dir.tmpdir) do
+                system("zip -q -r \"#{filename}\" bookcase.xml images")
+            end
+            FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
+            FileUtils.rm(File.join(Dir.tmpdir, "bookcase.xml"))
+        end
+
         def n_rated
             select { |x| !x.rating.nil? and x.rating > 0 }.length
         end
@@ -277,6 +300,60 @@ module Alexandria
                     elem = prod.add_element('ProductWebSite')
                     elem.add_element('ProductWebsiteDescription').text = provider.fullname
                     elem.add_element('ProductWebsiteLink').text = provider.url(book)
+                end
+            end
+            return doc
+        end
+
+        def to_tellico_document
+            doc = REXML::Document.new
+            doc << REXML::XMLDecl.new
+            doc << REXML::DocType.new('bookcase', "SYSTEM \"bookcase.dtd\"")
+            bookcase = doc.add_element('bookcase')
+            bookcase.add_namespace('http://www.periapsis.org/bookcase/')
+            bookcase.add_attribute('syntaxVersion', "5")
+            collection = bookcase.add_element('collection')
+            collection.add_attribute('title', self.name)
+            collection.add_attribute('type', "2")
+            fields = collection.add_element('fields')
+            field1 = fields.add_element('field')
+            # a field named _default implies adding all default book collection fields
+            field1.add_attribute('name', "_default")
+            # make the rating field just have numbers
+            field2 = fields.add_element('field')
+            field2.add_attribute('name', "rating")
+            field2.add_attribute('title', _("Rating"))
+            field2.add_attribute('flags', "2")
+            field2.add_attribute('category', "Personal")
+            field2.add_attribute('format', "0")
+            field2.add_attribute('type', "3")
+            field2.add_attribute('allowed', "5;4;3;2;1")
+            images = collection.add_element('images')
+            each_with_index do |book, idx|
+                entry = collection.add_element('entry')
+                # translate the binding
+                entry.add_attribute('i18n', "true")
+                entry.add_element('title').text = book.title
+                entry.add_element('isbn').text = book.isbn
+                entry.add_element('binding').text = book.edition
+                entry.add_element('publisher').text = book.publisher
+                unless book.authors.empty?
+                    authors = entry.add_element('authors')
+                    book.authors.each do |author|
+                        authors.add_element('author').text = author
+                    end
+                end
+                if not book.rating = Book::DEFAULT_RATING
+                    entry.add_element('rating').text = book.rating
+                end
+                if book.notes and not book.notes.empty?
+                    entry.add_element('comments').text = book.notes
+                end
+                if File.exists?(medium_cover(book))
+                    entry.add_element('cover').text = book.isbn + MEDIUM_COVER_EXT
+                    image = images.add_element('image')
+                    image.add_attribute('id', book.isbn + MEDIUM_COVER_EXT)
+                    image.add_attribute('format', "JPEG")
                 end
             end
             return doc

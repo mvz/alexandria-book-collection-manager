@@ -44,7 +44,7 @@ module UI
 
             types_combo = Gtk::ComboBox.new
             types_combo.append_text(_("Archived ONIX XML (*.xml.tbz2)"))
-            types_combo.append_text(_("Archived Bookcase XML (*.xml.zip)"))
+            types_combo.append_text(_("Archived Tellico XML (*.bc)"))
             types_combo.append_text("XHTML (*.xhtml)")
             types_combo.active = 0
             types_combo.signal_connect('changed') { theme_label.visible = theme_combo.visible = types_combo.active == 2 } 
@@ -70,6 +70,9 @@ module UI
                 case types_combo.active
                     when 0
                         library.export_as_onix_xml_archive(self.filename)
+
+                    when 1
+                        library.export_as_tellico_xml_archive(self.filename)
 
                     else
                         raise "Not yet implemented"
