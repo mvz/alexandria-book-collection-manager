@@ -1,5 +1,10 @@
 2004-07-11  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/new_book_dialog.glade:
+
+	Modified the ISBN text entry to allow 18 characters instead
+	of 13.  
+
 	* bin/pre-setup.rb:
 
 	Added.  This generates bin/alexandria with a dummy #! line that
