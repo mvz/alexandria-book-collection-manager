@@ -1,7 +1,9 @@
 2004-06-20  Pascal Terjan  <pterjan@linuxfr.org>
+
 	* lib/alexandria/ui/main_app.rb,
 	  bin/alexandria:
-	- Don't split string inside multibyte character (#660)
+
+	Don't split string inside multibyte character (#660)
 
 2004-06-20  Laurent Sansonetti  <lrz@gnome.org>
 
