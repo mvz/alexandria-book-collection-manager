@@ -17,5 +17,3 @@ Future releases:
 [ ] Win32 MinGW port
 [ ] Show more details about books, like the publication date for example
 [ ] Drag-and-drop books within libraries
-[ ] Migrate from GnomeIconView to GtkIconView
-[ ] Migrate from GnomeAbout to GtkAboutDialog
