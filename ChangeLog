@@ -1,5 +1,17 @@
 2005-02-18  Laurent Sansonetti  <lrz@gnome.org>
 
+	* tests/test_providers.rb:
+
+	Added.
+
+	* tests/test.rb:
+
+	Follow latest change.
+
+	* lib/alexandria/preferences.rb:
+
+	Fixed deprecated call to GConf::Client.new.
+
 	* AUTHORS,
 	  lib/alexandria.rb:
 

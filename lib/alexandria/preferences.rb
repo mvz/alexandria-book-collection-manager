@@ -26,7 +26,7 @@ module Alexandria
         WWW_DIR = "/desktop/gnome/url-handlers/http/"
 
         def initialize
-            @client = GConf::Client.new
+            @client = GConf::Client.default
         end
 
         def method_missing(id, *args)
