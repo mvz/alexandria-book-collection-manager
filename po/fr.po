@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-06 13:27+0100\n"
+"POT-Creation-Date: 2005-03-06 19:21+0100\n"
 "PO-Revision-Date: 2004-06-08 20:26+0200\n"
 "Last-Translator: Laurent Sansonetti <lrz@gnome.org>\n"
 "Language-Team: Laurent Sansonetti <lrz@gnome.org>\n"
@@ -57,7 +57,7 @@ msgstr ""
 "et ré-essayez encore."
 
 #: ../lib/alexandria/book_providers.rb:57
-msgid "Too much results for that search."
+msgid "Too many results for that search."
 msgstr "Trop de résultats pour cette recherche."
 
 #: ../lib/alexandria/book_providers.rb:60
@@ -101,34 +101,6 @@ msgstr "Liste d'ISBNs (*.txt)"
 msgid "My Library"
 msgstr "Ma bibliothèque"
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:73
-msgid "Couldn't modify the book"
-msgstr "Impossible d'éditer les propriétés du livre"
-
-#: ../lib/alexandria/ui/book_properties_dialog.rb:74
-#: ../lib/alexandria/ui/new_book_dialog.rb:176
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:64
-msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correcty, and try again."
-msgstr ""
-"Impossible de valider la donnée EAN/ISBN.  Vérifiez que le numéro est écrit "
-"correctement, et ré-essayez."
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:52
-msgid "Author"
-msgstr "Auteur"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:91
-msgid "Select a cover image"
-msgstr "Sélectionnez une image de couverture"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:125
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] "%d jour"
-msgstr[1] "%d jours"
-
 #: ../lib/alexandria/ui/export_dialog.rb:25
 msgid "File already exists"
 msgstr "Le fichier existe déjà"
@@ -171,16 +143,44 @@ msgstr "L'export a echoué"
 
 #: ../lib/alexandria/ui/export_dialog.rb:148
 msgid ""
-"The target file, named '%s', is a regular file.  A directory is needed for "
-"this operation.  Please select another file and try again."
+"The target, named '%s', is a regular file.  A directory is needed for this "
+"operation.  Please select a directory and try again."
 msgstr ""
-"Le fichier cible, nommé '%s', est un fichier régulier.  Un répertoire est "
-"nécessaire pour cette opération.  Veuillez sélectionner un autre fichier et "
+"La cible, nommé '%s', est un fichier régulier.  Un répertoire est "
+"nécessaire pour cette opération.  Veuillez sélectionner un répertoire et "
 "ré-essayez."
 
 #: ../lib/alexandria/ui/export_dialog.rb:152
 msgid "Not a directory"
 msgstr "Répertoire nécessaire"
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:73
+msgid "Couldn't modify the book"
+msgstr "Impossible d'éditer les propriétés du livre"
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:74
+#: ../lib/alexandria/ui/new_book_dialog.rb:176
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:64
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"Impossible de valider la donnée EAN/ISBN.  Vérifiez que le numéro est écrit "
+"correctement, et ré-essayez."
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:52
+msgid "Author"
+msgstr "Auteur"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:91
+msgid "Select a cover image"
+msgstr "Sélectionnez une image de couverture"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:125
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d jour"
+msgstr[1] "%d jours"
 
 #: ../lib/alexandria/ui/import_dialog.rb:36
 msgid "Error while importing"
