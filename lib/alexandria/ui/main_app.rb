@@ -38,6 +38,26 @@ module UI
    
         def on_delete
         end
+
+        def on_select_all
+            case @notebook.page
+                when 0
+                    @iconlist.num_icons.times { |i| @iconlist.select_icon(i) }
+
+                when 1
+                    @listview.selection.select_all
+            end
+        end
+
+        def on_deselect_all
+            case @notebook.page
+                when 0
+                    @iconlist.unselect_all
+
+                when 1
+                    @listview.selection.unselect_all
+            end
+        end
  
         def on_preferences
         end

@@ -61,7 +61,7 @@
 			      <accelerator key="L" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image278">
+				<widget class="GtkImage" id="image282">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-new</property>
 				  <property name="icon_size">1</property>
@@ -84,7 +84,7 @@
 			      <accelerator key="N" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image279">
+				<widget class="GtkImage" id="image283">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-add</property>
 				  <property name="icon_size">1</property>
@@ -112,7 +112,7 @@
 			      <accelerator key="I" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image280">
+				<widget class="GtkImage" id="image284">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-properties</property>
 				  <property name="icon_size">1</property>
@@ -160,7 +160,7 @@
 			      <accelerator key="Delete" modifiers="0" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image281">
+				<widget class="GtkImage" id="image285">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-delete</property>
 				  <property name="icon_size">1</property>
@@ -175,6 +175,32 @@
 
 			  <child>
 			    <widget class="GtkMenuItem" id="separator8">
+			      <property name="visible">True</property>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="select_all1">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Select _All</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_select_all" last_modification_time="Tue, 30 Mar 2004 22:47:27 GMT"/>
+			      <accelerator key="A" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="deselect_all1">
+			      <property name="visible">True</property>
+			      <property name="label" translatable="yes">Dese_lect All</property>
+			      <property name="use_underline">True</property>
+			      <signal name="activate" handler="on_deselect_all" last_modification_time="Tue, 30 Mar 2004 22:47:27 GMT"/>
+			      <accelerator key="A" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK" signal="activate"/>
+			    </widget>
+			  </child>
+
+			  <child>
+			    <widget class="GtkMenuItem" id="separator15">
 			      <property name="visible">True</property>
 			    </widget>
 			  </child>
@@ -208,7 +234,7 @@
 			      <accelerator key="R" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 			      <child internal-child="image">
-				<widget class="GtkImage" id="image282">
+				<widget class="GtkImage" id="image286">
 				  <property name="visible">True</property>
 				  <property name="stock">gtk-refresh</property>
 				  <property name="icon_size">1</property>
