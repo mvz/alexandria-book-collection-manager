@@ -22,6 +22,7 @@
 	- Rating is shown in the tree view ;
 	- Fixed several sorting bugs in the tree view ;
 	- Now saves the size of the main window properly ;
+	- book.png is displayed when the provided cover image is blank ;
 	- Refactored some parts of the code.
 
 2004-05-25  Laurent Sansonetti  <lrz@gnome.org>
