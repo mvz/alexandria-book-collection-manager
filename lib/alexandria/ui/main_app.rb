@@ -27,8 +27,6 @@ module UI
                 else
                     popup = @book_popup
                     va_icons, va_list = popup.children[-4..-3]
-                    # disable 'property' in case of multiple selections
-                    #popup.children.first.sensitive = books.length == 1
                 end
                 (@notebook.page == 0 ? va_icons : va_list).active = true
                 popup.popup(nil, nil, event.button, event.time) 
