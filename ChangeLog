@@ -38,6 +38,10 @@
 	  library that already has a book with the same ident ;
 	- Properly setup the moves action after an import process.
 
+2005-03-19  Mirko Maischberger  <mirko@lilik.it>
+
+	* lib/alexandria.rb: Added myself as italian translator.
+	
 2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/book_properties_dialog.rb:
