@@ -1,5 +1,9 @@
 2004-11-05  Laurent Sansonetti  <lrz@gnome.org>
 
+	* NEWS:
+
+	Updated for 0.4.0.
+
 	* lib/alexandria/library.rb:
 
 	- Tellico Import: check for either 'bookcase.xml' or 'tellico.xml' 
