@@ -21,6 +21,7 @@ class TestProviders < Test::Unit::TestCase
             assert_kind_of(String, results.last)
         end
         assert_kind_of(Alexandria::Book, results.first)
+        assert(results.first.isbn == isbn)	
     end
     
     def test_amazon
@@ -40,7 +41,9 @@ class TestProviders < Test::Unit::TestCase
 
     def test_proxis
         __test_provider(Alexandria::BookProviders::ProxisProvider,
-                        '9026965745') 
+                        '9026965745')
+	__test_provider(Alexandria::BookProviders::ProxisProvider,
+			'0586071407')
     end
 
     def test_amadeus

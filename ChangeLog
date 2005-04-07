@@ -1,3 +1,12 @@
+2005-04-07  Pascal Terjan  <pterjan@linuxfr.org>
+	* lib/alexandria/book_providers/proxis.rb:
+	
+	Fix previous fix
+	
+	* tests/test_providers.rb:
+
+	Test that the result of ISBN search has the right ISBN
+	
 2005-04-06  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
