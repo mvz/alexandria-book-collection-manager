@@ -47,4 +47,9 @@ class TestProviders < Test::Unit::TestCase
         __test_provider(Alexandria::BookProviders::AmadeusProvider,
                         '3453864662') 
     end
+
+    def test_ibs_it
+        __test_provider(Alexandria::BookProviders::IBS_itProvider,
+                        '8851520666') 
+    end
 end
