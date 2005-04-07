@@ -2,8 +2,8 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY legal SYSTEM "legal.xml">
 <!ENTITY appversion "0.5">
-<!ENTITY manrevision "0.0.2">
-<!ENTITY date "March 2005">
+<!ENTITY manrevision "0.0.3">
+<!ENTITY date "April 2005">
 <!ENTITY app "<application>Alexandria</application>">
 <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
@@ -42,7 +42,6 @@
     </copyright>
     <copyright>
       <year>2005</year>
-      <year>2005</year>
       <holder>LIAM DAVISON</holder>
     </copyright>
 <!-- translators: uncomment this:
@@ -66,7 +65,7 @@
         <surname>Davison</surname>
         <affiliation>
           <orgname>&app; documentation writing</orgname>
-          <address> web@liamjdavison.info<email>doc-writer1@gnome.org</email> </address>
+          <address> web@liamjdavison.info<email>web@liamjdavison.info</email> </address>
         </affiliation>
       </author>
 <!-- This is appropriate place for other contributors: translators,
@@ -133,7 +132,15 @@
 
   <para>The &app; application enables you manage your collection of books. &app; provides the following features:</para>
     <itemizedlist>
-      	<listitem><para>retrieves and displays book information (including cover pictures) from several online libraries, such as Amazon, Proxis, Barnes and Noble and the Spanish Ministry of Culture</para>
+      	<listitem><para>retrieves and displays book information (including cover pictures) from online libraries:</para>
+	<itemizedlist>
+		<listitem><para>Amazon (.com, co.uk, .de and .jp)</para></listitem>
+		<listitem><para>Proxis</para></listitem>
+		<listitem><para>Barnes and Noble</para></listitem> 
+		<listitem><para>the Spanish Ministry of Culture</para></listitem>
+		<listitem><para>Amadeus Buch</para></listitem>
+		<listitem><para>Internet Bookshop Italia</para></listitem>
+	</itemizedlist>
 	</listitem>
 	<listitem>
 		<para>allows books to be added and updated by hand</para>
@@ -617,7 +624,7 @@ between libraries.</para>
 	<!-- ========= Finding out more online =========== -->
 	<sect2 id="searching-more-online">
 		<title>Finding out more information about your books online</title>
-		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, or Amadeus Buch.</para>
+		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, or Internet Bookshop Italia.</para>
 		<tip>
 			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .fr or .jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
 		</tip>
@@ -722,6 +729,7 @@ between libraries.</para>
 		<listitem><para>The Spanish Culture Ministry</para></listitem>
 		<listitem><para>Barnes and Noble</para></listitem>
 		<listitem><para>Amadeus Buch</para></listitem>
+		<listitem><para>Internet Bookshop Italia</para></listitem>
 	</itemizedlist>
 	</para>
 
