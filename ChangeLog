@@ -1,3 +1,9 @@
+2005-04-07  Claudio Belotti  <bel8@lilik.it>
+
+	* tests/test_provider.rb:
+
+	Added a test for the Internet Bookshop Italia provider.
+
 2005-04-07  Pascal Terjan  <pterjan@linuxfr.org>
 	* lib/alexandria/book_providers/proxis.rb:
 	
