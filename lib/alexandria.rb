@@ -43,6 +43,7 @@ module Alexandria
         'David Weinehall <tao@debian.org> (sv)',
         'Joachim Breitner <mail@joachim-breitner.de> (de)',
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
+        'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
         'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)',
         'Mirko Maischberger <mirko@lilik.it> (it)'

@@ -1,3 +1,10 @@
+2005-04-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Ligia.
+
 2005-04-07  Claudio Belotti  <bel8@lilik.it>
 
 	* tests/test_provider.rb:
@@ -5,6 +12,7 @@
 	Added a test for the Internet Bookshop Italia provider.
 
 2005-04-07  Pascal Terjan  <pterjan@linuxfr.org>
+
 	* lib/alexandria/book_providers/proxis.rb:
 	
 	Fix previous fix
