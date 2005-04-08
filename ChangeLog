@@ -1,3 +1,21 @@
+2005-04-09  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/z3950.rb:
+
+	Added (not complete though).
+
+	* data/alexandria/glade/preferences_dialog.glade:
+
+	Introduced an expert mode which shows Add and Remove providers buttons.
+
+	* lib/alexandria/book_providers.rb:
+
+	Introduced the concept of abstract providers (not complete though).
+	
+	* lib/alexandria/ui/preferences_dialog.rb:
+
+	Introduced an Add Provider dialog (not complete though).
+
 2005-04-08  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,

@@ -74,8 +74,8 @@ module Alexandria
 		end
 
         class Preferences < Array
-            def initialize(provider_name)
-                @provider_name = provider_name
+            def initialize(provider)
+                @provider = provider
             end
 
             class Variable
@@ -83,10 +83,11 @@ module Alexandria
                             :possible_values
                 attr_accessor :value
             
-                def initialize(provider_name, name, description, default_value,
+                def initialize(provider, name, description, default_value,
                                possible_values=nil)
-
-                    @provider_name = provider_name
+                    
+                    @provider = provider
+                    @provider_name = provider.name.downcase
                     @name = name
                     @description = description
                     @value = default_value
@@ -94,14 +95,17 @@ module Alexandria
                 end
 
                 def new_value=(new_value)
-                    message = "#{provider_name}_#{name}="
-                    Alexandria::Preferences.instance.send(message, new_value)
+                    unless @provider.abstract?
+                        message = "#{provider_name}_#{name}="
+                        Alexandria::Preferences.instance.send(message, 
+                                                              new_value)
+                    end
                     self.value = new_value
                 end
             end
             
             def add(*args)
-                self << Variable.new(@provider_name, *args) 
+                self << Variable.new(@provider, *args) 
             end
             
             def [](obj)
@@ -131,7 +135,7 @@ module Alexandria
             def initialize(name, fullname=nil)
                 @name = name 
                 @fullname = (fullname or name)
-                @prefs = Preferences.new(name.downcase)
+                @prefs = Preferences.new(self)
             end
             
             def transport
@@ -141,7 +145,17 @@ module Alexandria
                     Net::HTTP
                 end
             end
+
+            def abstract? 
+                self.class.abstract?
+            end
+
+            def self.abstract?
+                self.superclass == AbstractGenericProvider 
+            end
         end
+
+        class AbstractGenericProvider < GenericProvider; end
  
         require 'alexandria/book_providers/amazon'
         require 'alexandria/book_providers/bn'
@@ -149,19 +163,31 @@ module Alexandria
         require 'alexandria/book_providers/mcu'
         require 'alexandria/book_providers/amadeus'
         require 'alexandria/book_providers/ibs_it'
+        require 'alexandria/book_providers/z3950'
        
+        attr_reader :abstract_classes
+
         def initialize
             @prefs = Alexandria::Preferences.instance
+            @abstract_classes = []
             update_priority
         end
 
         def update_priority
+            @abstract_classes.clear
             providers = {}
             self.class.constants.each do |constant|
                 next unless md = /(.+)Provider$/.match(constant)
                 klass = self.class.module_eval(constant)
-                if klass.superclass == GenericProvider
-                    providers[md[1]] = klass.instance
+                if klass.ancestors.include?(GenericProvider) and
+                   klass != GenericProvider and
+                   klass != AbstractGenericProvider
+
+                    if klass.superclass == AbstractGenericProvider
+                        @abstract_classes << klass
+                    else                    
+                        providers[md[1]] = klass.instance
+                    end
                 end
             end
             self.clear

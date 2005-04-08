@@ -17,24 +17,27 @@
 
 module Alexandria
 module UI
-    class ProviderPreferencesDialog < Gtk::Dialog
-        include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-
-        def initialize(parent, provider)
-            super(_("Preferences for %s") % provider.fullname,
-                  parent,
-                  Gtk::Dialog::MODAL,
-                  [ Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE ])
+    class ProviderPreferencesBaseDialog < Gtk::Dialog
+        def initialize(*args)
+            super(*args)
+            
             self.has_separator = false
             self.resizable = false
             self.vbox.border_width = 12
-            
-            table = Gtk::Table.new(provider.prefs.length, 2)
+        end
+
+        def table_preferences_for_provider(provider, table=nil)
+            unless table
+                i = 0
+                table = Gtk::Table.new(provider.prefs.length, 2)
+            else
+                i = table.n_rows
+                table.resize(table.n_rows + provider.prefs.length,
+                             table.n_columns)
+            end 
             table.border_width = 12
             table.row_spacings = 6 
-            table.column_spacings = 12 
-            i = 0
+            table.column_spacings = 12
             provider.prefs.read.each do |variable|
                 label = Gtk::Label.new("_" + variable.description + ":")
                 label.use_underline = true
@@ -64,8 +67,103 @@ module UI
                 table.attach_defaults(entry, 1, 2, i, i + 1)
                 i += 1
             end
+            return table
+        end
+    end
 
+    class ProviderPreferencesDialog < ProviderPreferencesBaseDialog 
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize(parent, provider)
+            super(_("Preferences for %s") % provider.fullname,
+                  parent,
+                  Gtk::Dialog::MODAL,
+                  [ Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE ])
+            self.has_separator = false
+            self.resizable = false
+            self.vbox.border_width = 12
+            
+            table = table_preferences_for_provider(provider)
             self.vbox.pack_start(table)
+        end
+    end
+    
+    class NewProviderDialog <  ProviderPreferencesBaseDialog
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize(parent)
+            super(_("New Provider"),
+                  parent,
+                  Gtk::Dialog::MODAL,
+                  [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL ])
+            @add_button = add_button(Gtk::Stock::ADD, 
+                                     Gtk::Dialog::RESPONSE_ACCEPT)
+
+            instances = BookProviders::abstract_classes.map { |x| x.instance }
+            first_instance = instances.first
+  
+            @table = Gtk::Table.new(2, 2)
+            self.vbox.pack_start(@table)
+
+            # Name.
+   
+            label = Gtk::Label.new(_("_Name:"))
+            label.use_underline = true
+            label.xalign = 0
+            @table.attach_defaults(label, 0, 1, 0, 1)
+            
+            entry = Gtk::Entry.new
+            label.mnemonic_widget = entry
+            @table.attach_defaults(entry, 1, 2, 0, 1)
+            
+            # Type.
+
+            label = Gtk::Label.new(_("_Type:"))
+            label.use_underline = true
+            label.xalign = 0
+            @table.attach_defaults(label, 0, 1, 1, 2)
+            
+            entry = Gtk::ComboBox.new
+            instances.each do |instance|
+                entry.append_text(instance.name)
+                table_preferences_for_provider(first_instance, @table)
+                sensitize
+                # FIXME this should be re-written once we have multiple
+                # abstract providers.
+            end
+            entry.signal_connect('changed') do |cb|
+                instance = instances[cb.active]
+            end
+            entry.active = 0
+            label.mnemonic_widget = entry
+            @table.attach_defaults(entry, 1, 2, 1, 2)
+ 
+            @add_button.signal_connect('clicked') {}
+        end
+
+        def instance
+            # TODO
+        end
+
+        #######
+        private
+        #######
+
+        def sensitize
+            entries = @table.children.select { |x| x.is_a?(Gtk::Entry) }
+            entries.each do |entry|
+                entry.signal_connect('changed') do
+                    sensitive = true
+                    entries.each do |entry2|
+                        sensitive = !entry2.text.strip.empty?
+                        break unless sensitive
+                    end
+                    @add_button.sensitive = sensitive
+                end
+            end
+            @add_button.sensitive = false 
         end
     end
 
@@ -102,9 +200,13 @@ module UI
             @treeview_providers.append_column(column)
             @treeview_providers.selection.signal_connect('changed') \
                 { sensitize_providers } 
+            
             @button_prov_setup.sensitive = false
             @button_prov_up.sensitive =  @button_prov_down.sensitive = 
                 BookProviders.length > 1
+            
+            @buttonbox_prov.set_child_secondary(@button_prov_add, true)
+            @buttonbox_prov.set_child_secondary(@button_prov_remove, true)
         end
 
         def on_provider_setup
@@ -135,6 +237,22 @@ module UI
             @treeview_providers.model.move_after(iter, next_iter)
             sensitize_providers
             update_priority
+        end
+
+        def on_provider_advanced_toggled(checkbutton)
+            on = checkbutton.active?
+            @button_prov_add.visible = @button_prov_remove.visible = on
+        end
+
+        def on_provider_add
+            dialog = NewProviderDialog.new(@preferences_dialog)
+            dialog.show_all.run
+            dialog.destroy
+            # TODO
+        end
+
+        def on_provider_remove
+            # TODO
         end
 
         def on_column_toggled(checkbutton)
