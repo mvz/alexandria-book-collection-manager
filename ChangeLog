@@ -1,5 +1,15 @@
 2005-04-09  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/icons/favorite_tag.png:
+
+	Added.
+
+	* lib/alexandria/ui/icons.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Tag icons with a heart image when the books they represent have a rating
+	of 5.
+
 	* lib/alexandria/book_providers.rb,
 	  lib/alexandria/book_providers/z3950.rb,
 	  lib/alexandria/ui/preferences_dialog.rb:

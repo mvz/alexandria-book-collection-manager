@@ -247,11 +247,7 @@ module UI
         ICON_WIDTH = 48          # pixels
         REDUCE_TITLE_REGEX = /^(.{#{ICON_TITLE_MAXLEN}}).*$/
         def fill_iter_with_book(iter, book)
-            icon = Icons.cover(selected_library, book)
-            iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
-            new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
-            iter[Columns::COVER_ICON] = cache_scaled_icon(icon, ICON_WIDTH, 
-                                                                new_height)
+            iter[Columns::IDENT] = book.ident
             iter[Columns::TITLE] = book.title
             title = book.title.sub(REDUCE_TITLE_REGEX, '\1...')
             iter[Columns::TITLE_REDUCED] = title
@@ -261,7 +257,16 @@ module UI
             iter[Columns::EDITION] = book.edition
             rating = (book.rating or Book::DEFAULT_RATING)
             iter[Columns::RATING] = 5 - rating # ascending order is the default
-            iter[Columns::IDENT] = book.ident
+
+            icon = Icons.cover(selected_library, book)
+            iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
+
+            new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
+            icon = cache_scaled_icon(icon, ICON_WIDTH, new_height)
+            if rating == 5
+                icon = icon.tag(Icons::FAVORITE_TAG)
+            end
+            iter[Columns::COVER_ICON] = icon
         end
 
         def append_book(book, tail=nil)
