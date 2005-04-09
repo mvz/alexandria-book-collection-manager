@@ -128,9 +128,8 @@ module Alexandria
             end
         end
       
-        class GenericProvider
+        class AbstractProvider
             attr_reader :name, :fullname, :prefs
-            include Singleton
 
             def initialize(name, fullname=nil)
                 @name = name 
@@ -138,12 +137,14 @@ module Alexandria
                 @prefs = Preferences.new(self)
             end
             
+            def reinitialize(fullname)
+                @name << '_' << fullname.hash.to_s
+                @fullname = fullname
+            end
+
             def transport
-                if config = Alexandria::Preferences.instance.http_proxy_config
-                    Net::HTTP.Proxy(*config)
-                else
-                    Net::HTTP
-                end
+                config = Alexandria::Preferences.instance.http_proxy_config
+                config ? Net::HTTP.Proxy(*config) : Net::HTTP
             end
 
             def abstract? 
@@ -151,11 +152,14 @@ module Alexandria
             end
 
             def self.abstract?
-                self.superclass == AbstractGenericProvider 
+                (not self.included_modules.include?(Singleton)) 
             end
         end
 
-        class AbstractGenericProvider < GenericProvider; end
+        class GenericProvider < AbstractProvider
+            include Singleton
+            undef_method :reinitialize
+        end
  
         require 'alexandria/book_providers/amazon'
         require 'alexandria/book_providers/bn'
@@ -164,7 +168,7 @@ module Alexandria
         require 'alexandria/book_providers/amadeus'
         require 'alexandria/book_providers/ibs_it'
         require 'alexandria/book_providers/z3950'
-       
+
         attr_reader :abstract_classes
 
         def initialize
@@ -179,11 +183,11 @@ module Alexandria
             self.class.constants.each do |constant|
                 next unless md = /(.+)Provider$/.match(constant)
                 klass = self.class.module_eval(constant)
-                if klass.ancestors.include?(GenericProvider) and
+                if klass.ancestors.include?(AbstractProvider) and
                    klass != GenericProvider and
-                   klass != AbstractGenericProvider
+                   klass != AbstractProvider
 
-                    if klass.superclass == AbstractGenericProvider
+                    if klass.abstract?
                         @abstract_classes << klass
                     else                    
                         providers[md[1]] = klass.instance

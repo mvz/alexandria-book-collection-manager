@@ -26,15 +26,10 @@ module UI
             self.vbox.border_width = 12
         end
 
-        def table_preferences_for_provider(provider, table=nil)
-            unless table
-                i = 0
-                table = Gtk::Table.new(provider.prefs.length, 2)
-            else
-                i = table.n_rows
-                table.resize(table.n_rows + provider.prefs.length,
-                             table.n_columns)
-            end 
+        def fill_table(table, provider)
+            i = table.n_rows
+            table.resize(table.n_rows + provider.prefs.length,
+                         table.n_columns)
             table.border_width = 12
             table.row_spacings = 6 
             table.column_spacings = 12
@@ -84,8 +79,13 @@ module UI
             self.resizable = false
             self.vbox.border_width = 12
             
-            table = table_preferences_for_provider(provider)
+            table = Gtk::Table.new(0, 0)
+            fill_table(table, provider)
             self.vbox.pack_start(table)
+            
+            show_all
+            run
+            destroy
         end
     end
     
@@ -101,50 +101,56 @@ module UI
             @add_button = add_button(Gtk::Stock::ADD, 
                                      Gtk::Dialog::RESPONSE_ACCEPT)
 
-            instances = BookProviders::abstract_classes.map { |x| x.instance }
-            first_instance = instances.first
-  
+            instances = BookProviders::abstract_classes.map { |x| x.new }
+            @selected_instance = nil
+ 
             @table = Gtk::Table.new(2, 2)
             self.vbox.pack_start(@table)
 
             # Name.
    
-            label = Gtk::Label.new(_("_Name:"))
-            label.use_underline = true
-            label.xalign = 0
-            @table.attach_defaults(label, 0, 1, 0, 1)
+            label_name = Gtk::Label.new(_("_Name:"))
+            label_name.use_underline = true
+            label_name.xalign = 0
+            @table.attach_defaults(label_name, 0, 1, 0, 1)
             
-            entry = Gtk::Entry.new
-            label.mnemonic_widget = entry
-            @table.attach_defaults(entry, 1, 2, 0, 1)
+            entry_name = Gtk::Entry.new
+            label_name.mnemonic_widget = entry_name
+            @table.attach_defaults(entry_name, 1, 2, 0, 1)
             
             # Type.
 
-            label = Gtk::Label.new(_("_Type:"))
-            label.use_underline = true
-            label.xalign = 0
-            @table.attach_defaults(label, 0, 1, 1, 2)
+            label_type = Gtk::Label.new(_("_Type:"))
+            label_type.use_underline = true
+            label_type.xalign = 0
+            @table.attach_defaults(label_type, 0, 1, 1, 2)
             
-            entry = Gtk::ComboBox.new
+            combo_type = Gtk::ComboBox.new
             instances.each do |instance|
-                entry.append_text(instance.name)
-                table_preferences_for_provider(first_instance, @table)
+                combo_type.append_text(instance.name)
+            end
+            combo_type.signal_connect('changed') do |cb|
+                @selected_instance = instances[cb.active]
+                fill_table(@table, @selected_instance)
                 sensitize
                 # FIXME this should be re-written once we have multiple
                 # abstract providers.
             end
-            entry.signal_connect('changed') do |cb|
-                instance = instances[cb.active]
-            end
-            entry.active = 0
-            label.mnemonic_widget = entry
-            @table.attach_defaults(entry, 1, 2, 1, 2)
+            combo_type.active = 0
+            label_type.mnemonic_widget = combo_type
+            @table.attach_defaults(combo_type, 1, 2, 1, 2)
  
-            @add_button.signal_connect('clicked') {}
+            show_all
+            if run == Gtk::Dialog::RESPONSE_ACCEPT
+                @selected_instance.reinitialize(entry_name.text)
+            else
+                @selected_instance = nil
+            end
+            destroy
         end
 
         def instance
-            # TODO
+            @selected_instance
         end
 
         #######
@@ -213,10 +219,7 @@ module UI
             iter = @treeview_providers.selection.selected
             provider = BookProviders.find { |x| x.name == iter[1] }
             unless provider.prefs.empty?
-                dialog = ProviderPreferencesDialog.new(@preferences_dialog, 
-                                                       provider)
-                dialog.show_all.run
-                dialog.destroy
+                ProviderPreferencesDialog.new(@preferences_dialog, provider)
             end
         end
 
@@ -246,9 +249,9 @@ module UI
 
         def on_provider_add
             dialog = NewProviderDialog.new(@preferences_dialog)
-            dialog.show_all.run
-            dialog.destroy
-            # TODO
+            if new_provider = dialog.instance
+                BookProviders << new_provider
+            end
         end
 
         def on_provider_remove
@@ -295,6 +298,7 @@ module UI
             @button_prov_down.sensitive = sel_iter != last_iter 
             provider = BookProviders.find { |x| x.name == sel_iter[1] }
             @button_prov_setup.sensitive = (not provider.prefs.empty?)
+            @button_prov_remove.sensitive = provider.abstract?
         end
 
         def update_priority

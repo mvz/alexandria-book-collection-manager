@@ -19,7 +19,7 @@ require 'zoom'
 
 module Alexandria
 class BookProviders
-    class Z3950Provider < AbstractGenericProvider
+    class Z3950Provider < AbstractProvider
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 

@@ -1,5 +1,13 @@
 2005-04-09  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/book_providers.rb,
+	  lib/alexandria/book_providers/z3950.rb,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	More work on the abstract providers.
+
+2005-04-09  Laurent Sansonetti  <lrz@gnome.org>
+
 	* lib/alexandria/book_providers/z3950.rb:
 
 	Added (not complete though).
