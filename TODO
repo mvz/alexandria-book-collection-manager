@@ -1,7 +1,15 @@
 Alexandria's TODO list
 ======================
 
+For the next release:
+
 [X] Writing help documentation (Liam)
+[X] Auto-completion (Laurent)
+[ ] Z39.50 full support (Laurent)
+[ ] Sort providers meaningfully according to the current locale
+[ ] CueCat userland support
+[ ] Threading of all operations
+[ ] Smart libraries
 
 Future releases:
 
@@ -9,7 +17,6 @@ Future releases:
 [ ] Import/export via GNOME-DB
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
-[ ] Writing a z39.50 provider
 [ ] Win32 MinGW port
 [ ] Show more details about books, like the publication date for example
 [ ] Drag-and-drop books within libraries
