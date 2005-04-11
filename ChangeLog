@@ -1,5 +1,10 @@
 2005-04-11  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/main_app.rb:
+
+	Do not print the '%d unrated books' status line when all books have
+	been rated.
+
 	* lib/alexandria/ui/book_properties_dialog_base.rb,
 	  lib/alexandria/ui/completion_models.rb:
 

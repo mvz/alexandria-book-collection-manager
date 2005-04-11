@@ -120,9 +120,13 @@ module UI
                                    "Library '%s' selected, %d books", 
                                    library.length) % [ library.name, 
                                                        library.length ]
-                            s << ", "
-                            s << n_("%d unrated", "%d unrated",
-                                    library.n_unrated) % library.n_unrated
+                            n_unrated = library.n_unrated
+                            if n_unrated > 0
+                                s << ", "
+                                s << n_("%d unrated", "%d unrated",
+                                        n_unrated) % n_unrated
+                            end
+                            s
                     end
                 when 1
                     _("'%s' selected") % books.first.title
