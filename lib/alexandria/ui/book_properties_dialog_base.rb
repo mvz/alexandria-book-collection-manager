@@ -32,6 +32,7 @@ module UI
             @entry_title.complete_titles
             @entry_publisher.complete_publishers
             @entry_edition.complete_editions
+            @entry_loaned_to.complete_borrowers
 
             @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
             @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE

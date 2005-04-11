@@ -32,6 +32,10 @@ class Gtk::Entry
         complete(Alexandria::UI::CompletionModels::EDITION)
     end
 
+    def complete_borrowers
+        complete(Alexandria::UI::CompletionModels::BORROWER)
+    end
+
     #######
     private
     #######
@@ -50,11 +54,11 @@ module UI
     class CompletionModels
         include Singleton
 
-        TITLE, AUTHOR, PUBLISHER, EDITION = (0..4).to_a
+        TITLE, AUTHOR, PUBLISHER, EDITION, BORROWER = (0..5).to_a
 
         def initialize
             @models, @libraries = [], []
-            4.times { @models << Gtk::ListStore.new(String) }
+            5.times { @models << Gtk::ListStore.new(String) }
             touch
         end
 
@@ -100,6 +104,11 @@ module UI
             @models[EDITION]
         end
 
+        def borrower_model
+            rebuilds_models if dirty?
+            @models[BORROWER]
+        end
+
         #######
         private
         #######
@@ -113,19 +122,21 @@ module UI
         end
 
         def rebuild_models
-            titles, authors, publishers, editions = [], [], [], []
+            titles, authors, publishers, editions, borrowers = [],[],[],[],[]
             @libraries.each do |library|
                 library.each do |book|
                     titles << book.title
                     authors.concat(book.authors)
                     publishers << book.publisher
                     editions << book.edition
+                    borrowers << book.loaned_to
                 end
             end
             fill_model(@models[TITLE], titles)
             fill_model(@models[AUTHOR], authors)
             fill_model(@models[EDITION], editions)
             fill_model(@models[PUBLISHER], publishers)
+            fill_model(@models[BORROWER], borrowers)
             @dirty = false
         end
 
@@ -133,6 +144,7 @@ module UI
             model.clear
             iter = nil
             values.uniq.each do |value|
+                next if value.nil?
                 iter = iter ? model.insert_after(iter) : model.append 
                 iter[0] = value
             end
