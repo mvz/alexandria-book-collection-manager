@@ -748,7 +748,7 @@ msgid "Providers"
 msgstr "Anbieter"
 
 #~ msgid "Alexandria Book Collection Manager"
-#~ msgstr "Alexandiria Büchersammlungs-Manager"
+#~ msgstr "Alexandria Büchersammlungs-Manager"
 
 #~ msgid "Book Collection Manager"
 #~ msgstr "Büchersammlungs-Manager"
