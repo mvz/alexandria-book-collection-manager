@@ -35,7 +35,7 @@
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
   <articleinfo>
-    <title>&app; Manual V&manrevision;</title>
+    <title>&app; Manual</title>
     <copyright>
       <year>2005</year>
       <holder>Liam Davison</holder>
@@ -155,7 +155,7 @@
 		<para>allows marking your books as loaned, each with the loan-date and the name of the person who has borrowed them</para>
 	</listitem>
 	<listitem>
-		<para>handles book rating and additional notes</para>
+		<para>handles book rating, favourite books, and additional notes</para>
 	</listitem>
 	<listitem>
 		<para>can import and export data into ONIX, Tellico and EAN/ISBN-list formats</para>
@@ -187,13 +187,14 @@
       <para>You can start <application>&app;</application> in the following ways:
     </para>
       <variablelist>
-        <varlistentry>
+<!--        <varlistentry>
           <term><guimenu>Applications</guimenu> menu</term>
           <listitem>
             <para>Choose 
     		<menuchoice><guisubmenu>Office </guisubmenu><guimenuitem>Alexandria</guimenuitem></menuchoice>. </para>
           </listitem>
         </varlistentry>
+-->
         <varlistentry>
           <term><guimenu>Command line</guimenu></term>
           <listitem>
@@ -264,6 +265,7 @@
             <para>The main part of the display lists all the books in the current library. <application>&app;</application> can
 		display your books either in an Icon or List view - the List View, similar to that used in the <application>Nautilus</application>
 		file manager, displays detailed information about each book on separate lines.</para>
+	    <para>In the icon view, your favourite books - rated with five stars - will be shown with a heart icon in the top corner.</para>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -401,7 +403,7 @@
 	        </screenshot>
 	     </figure>
 		<tip>
-			<para>&app; will create a new Library when importing a library - its name will be the same as the filename you imported. &app; will automatically select and highlight this library in the library pane - you can immediately rename this by typing a new name, or accept the default by clicking the left mouse button.</para>
+		 <para>&app; will create a new Library when importing a library - its name will be the same as the filename you imported. &app; will automatically select and highlight this library in the library pane - you can immediately rename this by typing a new name, or accept the default by clicking the left mouse button.</para>
 		</tip>
 	</sect2>
 </sect1>
@@ -443,7 +445,7 @@
 	        </screenshot>
 	     </figure>
 		<para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the new name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
-		<tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space imediately to the left of the first star.</para></tip>
+		<tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space imediately to the left of the first star. Your favourite books - those with five stars - will have a small heart icon in the Icon view of the main window.</para></tip>
 	</sect2>
 	
 	<!-- ======== Changing cover images ========= -->
