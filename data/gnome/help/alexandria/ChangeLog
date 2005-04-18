@@ -1,3 +1,9 @@
+2005-04-18	 Laurent Sansonetti    <lrz@gnome.org>
+
+	* alexandria.xml:
+
+	Lists all supported Amazon locales each time we talk about the provider.
+
 2005-04-18	 Liam Davison    <liam@liamjdavison.info>
 
 	* figures/alexandria_add_by_isbn_1.png, alexandria_add_by_search_1.png,

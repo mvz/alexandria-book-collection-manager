@@ -134,7 +134,7 @@
     <itemizedlist>
       	<listitem><para>retrieves and displays book information (including cover pictures) from online libraries:</para>
 	<itemizedlist>
-		<listitem><para>Amazon (.com, co.uk, .de and .jp)</para></listitem>
+		<listitem><para>Amazon (.com, .co.uk, .de, .jp, .fr and .ca)</para></listitem>
 		<listitem><para>Proxis</para></listitem>
 		<listitem><para>Barnes and Noble</para></listitem> 
 		<listitem><para>the Spanish Ministry of Culture</para></listitem>
@@ -628,7 +628,7 @@ between libraries.</para>
 		<title>Finding out more information about your books online</title>
 		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, or Internet Bookshop Italia.</para>
 		<tip>
-			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .fr or .jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
+			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, .jp, .fr or .ca site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
 		</tip>
 		<caution>
 			<para>Not every online information source has a complete list of books and you may have to try several different providers to find the information you want.</para>
@@ -738,7 +738,7 @@ between libraries.</para>
 
       <sect3 id="alexandria-amazon-prefs">
         <title>Amazon preferences</title>
-        <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
+        <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP, FR, CA</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
 	  	<warning>
 			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. If you don't know what this means, it's best to leave it unchanged.</para>
 		</warning>
