@@ -1,3 +1,16 @@
+2005-04-18	 Liam Davison    <liam@liamjdavison.info>
+
+        * figures/alexandria_add_by_isbn_1.png, alexandria_add_by_search_1.png,
+                alexandria_add_maually.png, alexandria_loaning.png,
+                alexandria_edit_info.png:
+
+        - Updated screenshots to include Help buttons
+
+	* alexandria.xml:
+
+	- Removed reference to starting Alexandria from the Applications menu
+	- Includes mention of favourite books with a heart icon
+
 2005-04-07	Liam Davison	<liam@liamjdavison.info>
 
 	* 	Added Internet Bookshop Italia to the online providers list
