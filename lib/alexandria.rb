@@ -44,6 +44,7 @@ module Alexandria
         'Joachim Breitner <mail@joachim-breitner.de> (de)',
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
         'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
+        'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
         'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)',
         'Mirko Maischberger <mirko@lilik.it> (it)'

@@ -1,3 +1,10 @@
+2005-04-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Lucas.
+
 2005-04-11  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
