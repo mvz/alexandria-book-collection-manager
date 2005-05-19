@@ -20,7 +20,6 @@ require 'fileutils'
 require 'rexml/document'
 require 'tempfile'
 require 'etc'
-require 'gdk_pixbuf2'
 require 'open-uri'
 require 'observer'
 
@@ -228,8 +227,7 @@ module Alexandria
                 end
             
                 # Remove the file if it's blank.
-                pixbuf = Gdk::Pixbuf.new(cover_file)
-                if pixbuf.width == 1 and pixbuf.height == 1
+                if Alexandria::UI::Icons.blank?(cover_file)
                     File.delete(cover_file)
                 end
             end
@@ -283,6 +281,10 @@ module Alexandria
        
         def n_unrated
             length - n_rated
+        end
+        
+        def ==(object)
+            object.is_a?(self.class) && object.name == self.name
         end
         
         #######

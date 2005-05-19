@@ -1,0 +1,46 @@
+{
+    IBClasses = (
+        {
+            ACTIONS = {onAdd = id; onCancel = id; onToggleCriterion = id; }; 
+            CLASS = AddBookController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addButton = NSButton; 
+                criterionMatrix = NSMatrix; 
+                isbnButtonCell = NSButtonCell; 
+                isbnTextField = NSTextField; 
+                librariesComboBox = NSComboBox; 
+                mainWindow = NSWindow; 
+                progressIndicator = NSProgressIndicator; 
+                resultsScrollView = NSScrollView; 
+                resultsTableView = NSTableView; 
+                searchButtonCell = NSButtonCell; 
+                searchComboBox = NSComboBox; 
+                searchTextField = NSTextField; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = BooksDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = LibrariesDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = LibrariesTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {
+            CLASS = MainController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addBookController = AddBookController; 
+                booksTableView = NSTableView; 
+                booksView = NSView; 
+                librariesDataSource = id; 
+                librariesTableView = id; 
+                mainWindow = NSWindow; 
+                toolbarSearchView = NSView; 
+                toolbarSwitchModeView = NSView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+    ); 
+    IBVersion = 1; 
+}

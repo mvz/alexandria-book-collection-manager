@@ -15,8 +15,10 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-require 'gconf2'
 require 'singleton'
+
+begin
+require 'gconf2'
 
 module Alexandria
     class Preferences
@@ -74,4 +76,39 @@ module Alexandria
             end
         end
     end
+end
+
+rescue LoadError
+
+module Alexandria
+    class Preferences
+        include Singleton
+
+        # TODO
+
+        def providers_priority
+            ['Amazon']
+        end
+        
+        def http_proxy_config
+            nil
+        end
+        
+        def amazon_locale
+            nil
+        end
+        
+        def amazon_dev_token
+            nil
+        end
+        
+        def amazon_associate
+            nil
+        end
+        
+        def proxis_lang
+            'fr'
+        end
+    end
+end
 end

@@ -35,7 +35,7 @@ module Alexandria
             factory_n = 0
             begin
                 factory = self.instance[factory_n]
-                puts factory.fullname + " lookup" if $DEBUG
+                puts factory.fullname + " lookup" #if $DEBUG
                 return factory.search(criterion, type)
             rescue Exception => boom
                 if self.last == factory
@@ -76,6 +76,7 @@ module Alexandria
         class Preferences < Array
             def initialize(provider)
                 @provider = provider
+                @provider_name = provider.name.downcase
             end
 
             class Variable

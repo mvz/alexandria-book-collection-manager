@@ -66,6 +66,11 @@ module UI
             filename = library.cover(book)
             File.exists?(filename) ? Gdk::Pixbuf.new(filename) : BOOK
         end
+
+        def self.blank?(filename)
+            pixbuf = Gdk::Pixbuf.new(filename)
+            pixbuf.width == 1 and pixbuf.height == 1
+        end
     end
 end
 end

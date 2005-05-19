@@ -1,3 +1,32 @@
+2005-05-20  Laurent Sansonetti  <lrz@gnome.org>
+
+	Initial revision of the Cocoa version.
+
+	* alexandria.xcode,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/utils.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/Info.plist,
+	  lib/alexandria/macui/LibrariesDataSource.rb,
+	  lib/alexandria/macui/LibrariesTableView.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/main.m,
+	  lib/alexandria/macui/main.rb,
+	  lib/alexandria/macui/MainWindow.nib:
+
+	Added.
+
+	* lib/alexandria.rb,
+	  lib/alexandria/book_providers.rb,
+	  lib/alexandria/library.rb,
+	  lib/alexandria/preferences.rb,
+	  lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/ui/icons.rb:
+
+	Refactored to share more code with the Cocoa code.
+
 2005-04-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,

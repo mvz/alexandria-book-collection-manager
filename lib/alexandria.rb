@@ -67,6 +67,7 @@ end
 require 'alexandria/config'
 require 'alexandria/version'
 require 'alexandria/book'
+require 'alexandria/utils'
 require 'alexandria/library'
 require 'alexandria/execution_queue'
 require 'alexandria/import_library'
@@ -74,4 +75,10 @@ require 'alexandria/export_library'
 require 'alexandria/book_providers'
 require 'alexandria/preferences'
 require 'alexandria/web_themes'
-require 'alexandria/ui'
+
+# FIXME: we should do this better
+if `uname`.chomp == 'Darwin'
+    require 'alexandria/macui'
+else
+    require 'alexandria/ui'
+end
