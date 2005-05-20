@@ -1,3 +1,8 @@
+2005-05-20  Dafydd Harries  <daf@muse.19inch.net>
+
+	* ja.po: Apply patch from Akira Yamada which prevents crash for
+	  Japanese users and also updates some translations.
+
 2005-04-18  Lucas Rocha <lucasr@im.ufba.br>
 
 	* pt_BR.po: Update

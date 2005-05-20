@@ -203,12 +203,12 @@ msgstr "ライブラリ名(_n):"
 #: ../lib/alexandria/ui/import_dialog.rb:127
 #: ../lib/alexandria/ui/import_dialog.rb:166
 msgid "Couldn't import the library"
-msgstr "本をインポートできません"
+msgstr "ライブラリをインポートできません"
 
 #: ../lib/alexandria/ui/import_dialog.rb:128
 #: ../lib/alexandria/ui/main_app.rb:492
 msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr "そのライブラリ名はすでに存在します"
+msgstr "そのライブラリ名はすでに存在します。他の名前を指定してください。"
 
 #: ../lib/alexandria/ui/import_dialog.rb:167
 msgid ""
@@ -235,14 +235,14 @@ msgstr "ライブラリ'%s'が選択されています。"
 #: ../lib/alexandria/ui/main_app.rb:121
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本"
-msgstr[1] "ライブラリ'%s'が選択されています。%d冊の本, 無評価が%d冊あります"
+msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があり"
+msgstr[1] "ライブラリ'%s'が選択されています。%d冊の本があり"
 
 #: ../lib/alexandria/ui/main_app.rb:125
 msgid "%d unrated"
 msgid_plural "%d unrated"
-msgstr[0] "%d unrated"
-msgstr[1] "%d unrated"
+msgstr[0] "そのうち%d冊が未評価です。"
+msgstr[1] "そのうち%d冊が未評価です。"
 
 #: ../lib/alexandria/ui/main_app.rb:128
 msgid "'%s' selected"
@@ -251,7 +251,7 @@ msgstr "'%s'が選択されています"
 #: ../lib/alexandria/ui/main_app.rb:131
 msgid "%d book selected"
 msgid_plural "%d books selected"
-msgstr[0] "本が選択されていません"
+msgstr[0] "%d冊の本が選択されています"
 msgstr[1] "%d冊の本が選択されています"
 
 #: ../lib/alexandria/ui/main_app.rb:181
@@ -263,8 +263,7 @@ msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
 msgstr ""
-"標準のWebブラウザの設定を確認してください (ex. 個人設定->他の個人設定->お気に入りのアプリ->"
-"ウェブ・ブラウザ)"
+"標準のWebブラウザの設定を確認してください (デスクトップの設定->拡張設定->お気に入りのアプリ)"
 
 #: ../lib/alexandria/ui/main_app.rb:194
 msgid "Unable to launch the mail reader"
@@ -275,8 +274,7 @@ msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
 msgstr ""
-"標準のメールリーダの設定を確認してください (ex. 個人設定->他の個人設定->お気に入りのアプリ-"
-">ウェブ・ブラウザ)"
+"標準のメールリーダの設定を確認してください (デスクトップの設定->拡張設定->お気に入りのアプリ)"
 
 #: ../lib/alexandria/ui/main_app.rb:276
 msgid "Title"
@@ -320,11 +318,11 @@ msgstr "ライブラリ名は変更できません"
 
 #: ../lib/alexandria/ui/main_app.rb:598
 msgid "In '_%s'"
-msgstr "In '_%s'"
+msgstr "'_%s'へ"
 
 #: ../lib/alexandria/ui/main_app.rb:621
 msgid "Untitled %d"
-msgstr "Untitled %d"
+msgstr "タイトル未設定 %d"
 
 #: ../lib/alexandria/ui/main_app.rb:718
 msgid "If you continue, the selection will be permanently deleted."
@@ -364,7 +362,7 @@ msgstr "本を追加(_A)"
 
 #: ../lib/alexandria/ui/main_app.rb:786
 msgid "Add Book _Manually..."
-msgstr "本をマニュアルで追加(_M)..."
+msgstr "本を手入力で追加(_M)..."
 
 #: ../lib/alexandria/ui/main_app.rb:787
 msgid "_Import..."
@@ -444,7 +442,7 @@ msgstr "バグレポートを送る(_B)"
 
 #: ../lib/alexandria/ui/main_app.rb:808
 msgid "_About"
-msgstr "About(_A)"
+msgstr "Alexandriaについて(_A)"
 
 #: ../lib/alexandria/ui/main_app.rb:821
 msgid "Side _Pane"
@@ -496,7 +494,7 @@ msgstr "評価順(_R)"
 
 #: ../lib/alexandria/ui/main_app.rb:847
 msgid "At _%s"
-msgstr "At _%s"
+msgstr "%sを開く"
 
 #: ../lib/alexandria/ui/main_app.rb:904
 msgid "Title contains"
@@ -528,11 +526,11 @@ msgstr "リスト表示"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:25
 msgid "Invalid ISBN '%s'"
-msgstr "ライブラリ名が不正です '%s'"
+msgstr "ISBNが不正です '%s'"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:28
 msgid "_Keep"
-msgstr "_Keep"
+msgstr "追加する(_K)"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:29
 msgid ""
@@ -545,7 +543,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:145
 msgid "%s, by %s"
-msgstr "%s, by %s"
+msgstr "%s, %s 著"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:159
 msgid "Unable to find matches for your search"
