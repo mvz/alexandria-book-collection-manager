@@ -155,13 +155,48 @@ module Alexandria
         def self.valid_ean?(ean)
             begin
                 numbers = self.extract_numbers(ean)
-                (numbers.length == 13 and self.ean_checksum(numbers) ==
+                (numbers.length == 13 and self.ean_checksum(numbers[0 .. 11]) ==
                     numbers[12]) or
-                (numbers.length == 18 and self.ean_checksum(numbers[0..12]) ==
+                (numbers.length == 18 and self.ean_checksum(numbers[0 .. 11]) ==
                     numbers[12])
             rescue InvalidISBNError
                 false
             end
+        end
+
+        def self.upc_checksum(numbers)
+            (10 - ([0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum * 3 +
+                  [1, 3, 5, 7, 9].map { |x| numbers[x] }.sum)) % 10
+        end
+
+        def self.valid_upc?(upc)
+            begin
+                numbers = self.extract_numbers(upc)
+                (numbers.length == 17 and self.upc_checksum(numbers[0 .. 10]) ==
+                    numbers[11])
+            rescue InvalidISBNError
+                false
+            end
+        end
+
+	    AMERICAN_UPC_LOOKUP = {
+            "014794" => "08041", "018926" => "0445", "02778" => "0449",
+            "037145" => "0812", "042799" => "0785",  "043144" => "0688",
+            "044903" => "0312", "045863" => "0517", "046594" => "0064",
+            "047132" => "0152", "051487" => "08167", "051488" => "0140",
+            "060771" => "0002", "065373" => "0373", "070992" => "0523",
+            "070993" => "0446", "070999" => "0345", "071001" => "0380",
+            "071009" => "0440", "071125" => "088677", "071136" => "0451",
+            "071149" => "0451", "071152" => "0515", "071162" => "0451",
+            "071268" => "08217", "071831" => "0425", "071842" => "08439",
+            "072742" => "0441", "076714" => "0671", "076783" => "0553",
+            "076814" => "0449", "078021" => "0872", "079808" => "0394",
+            "090129" => "0679", "099455" => "0061", "099769" => "0451"
+            }
+
+        def self.upc_convert(upc)
+            test_upc = upc.map { |x| x.to_s }.join()
+            self.extract_numbers(AMERICAN_UPC_LOOKUP[test_upc])
         end
 
         def self.canonicalise_isbn(isbn)
@@ -172,9 +207,14 @@ module Alexandria
                 # calculate a checksum. It would be nice if we could validate
                 # the EAN number somehow.
                 numbers[3 .. 11] + [self.isbn_checksum(numbers[3 .. 11])]
+            elsif self.valid_upc?(isbn)
+                # Seems to be a valid UPC number
+                prefix = self.upc_convert(numbers[0 .. 5])
+                isbn_sans_chcksm = prefix + numbers[(8 + prefix.length) .. 17]
+                isbn_sans_chcksm + [self.isbn_checksum(isbn_sans_chcksm)]
             elsif self.valid_isbn?(isbn)
                 # Seems to be a valid ISBN number.
-                numbers[0 .. -2] + [isbn_checksum(numbers[0 .. -2])]
+                numbers[0 .. -2] + [self.isbn_checksum(numbers[0 .. -2])]
             else
                 raise InvalidISBNError.new(isbn)
             end
