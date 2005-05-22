@@ -1,3 +1,10 @@
+2005-05-22  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Owain.
+
 2005-05-22  Owain Evans  <o.evans@gmail.com> 
 
 	* lib/alexandria/library.rb:
