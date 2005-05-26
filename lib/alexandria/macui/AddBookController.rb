@@ -41,22 +41,22 @@ module UI
             @criterionMatrix.sendAction
         end
         
-        def openWindow(didEndTarget, didEndAction)
+        def openWindow(selectedLibrary, &addBlock)
             app = NSApplication.sharedApplication
-            @didEndTarget, @didEndAction = didEndTarget, didEndAction
+            @addBlock = addBlock
 
             @librariesComboBox.reloadData
             max = @librariesComboBox.numberOfItems
             max = 5 if max > 5
             @librariesComboBox.setNumberOfVisibleItems(max)
-            if @librariesComboBox.indexOfSelectedItem == -1
-                @librariesComboBox.selectItemAtIndex(0)
-            end
+            
+            index = @librariesComboBox.dataSource.libraries.index(selectedLibrary)
+            index ||= 0
+            @librariesComboBox.selectItemAtIndex(index)
             
             @searchComboBox.selectItemAtIndex(0)
             
             unless _isbnCriterion?
-                p !@results.empty?
                 @addButton.setEnabled(!@results.empty?)
             end
 
@@ -117,7 +117,13 @@ module UI
                         books_to_add << result
                     end
                 else
-                    books_to_add.concat(@results)
+                    selection = @resultsTableView.selectedRowIndexes
+                    return if selection.count == 0
+                    index = selection.firstIndex
+                    begin
+                        books_to_add << @results[index]
+                        index = selection.indexGreaterThanIndex(index)
+                    end while index != NSNotFound
                 end
                 
                 return if books_to_add.empty?
@@ -125,6 +131,9 @@ module UI
                 sel = @librariesComboBox.indexOfSelectedItem
                 return if sel == -1
                 library = @librariesComboBox.dataSource.libraries[sel]
+
+                @progressIndicator.setHidden(false)
+                @progressIndicator.startAnimation(self)
 
                 thread = Thread.start do
                     books_to_add.each do |book, cover_uri|
@@ -139,11 +148,12 @@ module UI
                 while thread.alive?
                     NSRunLoop.currentRunLoop.runUntilDate(NSDate.distantPast)
                 end
-                
+
+                @progressIndicator.setHidden(true)
+                @progressIndicator.stopAnimation(self)
+
                 s = true
-                @didEndTarget.send(@didEndAction, 
-                                   library, 
-                                   books_to_add.reject { s = !s })
+                @addBlock.call(library, books_to_add.reject { s = !s })
             end
             sheetWindow.orderOut(self)
         end
@@ -266,9 +276,10 @@ module UI
                     BookProviders::SEARCH_BY_AUTHORS
                 when 2
                     BookProviders::SEARCH_BY_KEYWORD
+                else
+                    BookProviders::SEARCH_BY_TITLE
             end
-            raise if mode.nil?
-            
+
             _asyncSearch(text, mode) do |results|
                 @results = results
                 _reloadResults

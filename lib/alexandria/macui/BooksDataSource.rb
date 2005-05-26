@@ -26,11 +26,11 @@ module UI
             @library != nil ? @library.length : 0
         end
         
-        def tableView_objectValueForTableColumn_row (tableView, col, row)
+        def tableView_objectValueForTableColumn_row(tableView, col, row)
             book = @library[row]
             case col.identifier.to_s
                 when 'title'
-                    book.title
+                    [ book.title, _coverForBook(book) ]
                 when 'authors'
                     book.authors.join(', ')
                 when 'isbn'
@@ -39,6 +39,31 @@ module UI
                     book.publisher
                 when 'binding'
                     book.edition
+            end
+        end
+        
+        def _coverForBook(book)
+            @covers ||= {}
+            cover = @covers[book.ident]
+            return cover if cover
+
+            filename = @library.cover(book)
+            @covers[book.ident] = if File.exists?(filename)
+                cover = NSImage.alloc.initWithContentsOfFile(filename)
+                width, length = cover.size.to_a
+                new_height = 19
+                new_width = (width / (length / new_height)).ceil
+                small_cover = NSImage.alloc.initWithSize(NSSize.new(19, new_height))
+                small_cover.lockFocus
+                cover.drawInRect_fromRect_operation_fraction(NSRect.new((19 - new_width) / 2.0, 
+                                                                        0, new_width, new_height),
+                                                             NSRect.new(0, 0, width, length),
+                                                             NSCompositeSourceOut,
+                                                             1.0)
+                small_cover.unlockFocus
+                small_cover
+            else
+                Icons::BOOK_SMALL
             end
         end
     end

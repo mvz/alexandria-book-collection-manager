@@ -59,7 +59,8 @@ module UI
         end
         
         def tableView_objectValueForTableColumn_row(tableView, col, row)
-            _libraryAtIndex(row).name
+            library = _libraryAtIndex(row)
+            return [library.name, Icons::LIBRARY_SMALL]
         end
         
         def comboBox_objectValueForItemAtIndex(comboBox, index)
@@ -67,12 +68,14 @@ module UI
         end
         
         def tableView_setObjectValue_forTableColumn_row(tableView, objectValue, col, row)
-            newName = objectValue.to_s
-            if newName !~ /([^\w\s'"()?!:;.\-])/ and
+            newName = objectValue.objectAtIndex(0).to_s
+            library = _libraryAtIndex(row)
+            if library.name != newName and 
+               newName !~ /([^\w\s'"()?!:;.\-])/ and
                newName.length > 0 and
                @libraries.find { |x| x.name == newName } == nil
 
-                _libraryAtIndex(row).name = newName
+                library.name = newName
             end
         end
         
@@ -86,7 +89,7 @@ module UI
         
         def _libraryAtIndex(index)
             @libraries[index]
-        end
+        end        
     end
 end
 end

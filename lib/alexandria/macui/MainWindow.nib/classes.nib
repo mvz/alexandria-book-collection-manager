@@ -24,7 +24,6 @@
         {CLASS = BooksDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = LibrariesDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = LibrariesTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
         {
             CLASS = MainController; 
             LANGUAGE = ObjC; 
@@ -35,12 +34,14 @@
                 librariesDataSource = id; 
                 librariesTableView = id; 
                 mainWindow = NSWindow; 
+                toolbarSearchField = NSSearchField; 
                 toolbarSearchView = NSView; 
                 toolbarSwitchModeView = NSView; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
-        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }
+        {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {CLASS = TableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }
     ); 
     IBVersion = 1; 
 }

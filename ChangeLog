@@ -1,3 +1,37 @@
+2005-05-26  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/icons/book.png,
+	  data/alexandria/icons/book_small.png,
+	  data/alexandria/icons/library.png,
+	  data/alexandria/icons/library_small.png:
+
+	New icons, by Stefanie Dijoux.
+
+	* lib/alexandria/book_providers.rb:
+
+	Removed a debug log. 
+
+	* lib/alexandria/library.rb (Library#select):
+
+	Rewrote to return a Library and not an Array.
+
+	* alexandria.xcode/project.pbxproj,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/utils.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/LibrariesDataSource.rb,
+	  lib/alexandria/macui/LibrariesTableView.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/TitledImageCell.m,
+	  lib/alexandria/macui/main.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	Work in progress on the Cocoa port.
+
 2005-05-22  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,

@@ -15,28 +15,23 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-begin
-require 'glib2'
+module Alexandria
+module UI
+    class TableView < OSX::NSTableView
+        include OSX
 
-class String
-    def convert(charset_from, charset_to)
-        GLib.convert(self, charset_from, charset_to)
+        ns_overrides 'keyDown:'
+        
+        def keyDown(event)
+            chars = event.charactersIgnoringModifiers
+            if chars.length > 0 and chars.characterAtIndex(0) == NSDeleteCharacter
+                if self.delegate.respond_to?(:tableView_deleteCharacterDown)
+                    self.delegate.tableView_deleteCharacterDown(self)
+                end
+            else
+                super_keyDown(event)
+            end
+        end
     end
 end
-
-rescue LoadError
-
-# We assume there that Ruby/Cocoa is loaded
-
-class String
-    def convert(charset_from, charset_to)
-        from = OSX::NSString.alloc.initWithString(self)
-        encoding = charset_to.nsencoding
-        p data = from.dataUsingEncoding(encoding)
-        p s = OSX::NSString.alloc.initWithData_encoding(data, encoding).to_s
-        s
-        #self
-    end
-end
-
 end

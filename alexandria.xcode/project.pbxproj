@@ -9,8 +9,8 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = text.script.ruby;
-			name = LibrariesTableView.rb;
-			path = lib/alexandria/macui/LibrariesTableView.rb;
+			name = TableView.rb;
+			path = lib/alexandria/macui/TableView.rb;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -102,6 +102,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DEFE11A0825249D0076ECC9,
+				4DFB34F30842771500F108DD,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -245,8 +246,9 @@
 				4D040794082E9F87005D70E4,
 				4DCD70A1082A962C002AB50D,
 				4DCD70A2082A962C002AB50D,
-				4D040729082E7435005D70E4,
 				4DCD70A3082A962C002AB50D,
+				4D040729082E7435005D70E4,
+				4DFB34F20842771500F108DD,
 			);
 			isa = PBXGroup;
 			name = macui;
@@ -743,6 +745,21 @@
 			isa = PBXCopyFilesBuildPhase;
 			name = "Copy Providers Scripts";
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DFB34F20842771500F108DD = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = TitledImageCell.m;
+			path = lib/alexandria/macui/TitledImageCell.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DFB34F30842771500F108DD = {
+			fileRef = 4DFB34F20842771500F108DD;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 	};
 	rootObject = 4D4D858C082519F80090199E;

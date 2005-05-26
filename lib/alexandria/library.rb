@@ -286,6 +286,15 @@ module Alexandria
             end
         end
 
+        alias_method :old_select, :select
+        def select
+            filtered_library = Library.new(@name)
+            self.each do |book|
+                filtered_library << book if yield(book)
+            end
+            return filtered_library
+        end
+
         def cover(something)
             ident = case something
                 when Book

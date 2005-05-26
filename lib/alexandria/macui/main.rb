@@ -15,10 +15,10 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'osx/objc/oc_all'
 require 'osx/cocoa'
-require 'osx/objc/ruby_addition'
-
 require 'gettext'
+require 'alexandria'
 
 def rb_main_init
     path = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
@@ -32,5 +32,6 @@ end
 if $0 == __FILE__ then
     rb_main_init
     #$DEBUG = true
-    OSX.NSApplicationMain(0, nil)
+    Thread.abort_on_exception = true
+    Alexandria::UI.main
 end
