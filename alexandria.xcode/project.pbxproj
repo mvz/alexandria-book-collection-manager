@@ -103,6 +103,7 @@
 			files = (
 				4DEFE11A0825249D0076ECC9,
 				4DFB34F30842771500F108DD,
+				4DC912CD084B8184004348FC,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,12 +242,44 @@
 			settings = {
 			};
 		};
+		4DA13DB408475AA600D18E8E = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = BookInfoController.rb;
+			path = lib/alexandria/macui/BookInfoController.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DA13DB508475AA600D18E8E = {
+			fileRef = 4DA13DB408475AA600D18E8E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		4DC912CC084B8184004348FC = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = RatingCell.m;
+			path = lib/alexandria/macui/RatingCell.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DC912CD084B8184004348FC = {
+			fileRef = 4DC912CC084B8184004348FC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4DCD70A0082A9607002AB50D = {
 			children = (
 				4D040794082E9F87005D70E4,
 				4DCD70A1082A962C002AB50D,
+				4DA13DB408475AA600D18E8E,
 				4DCD70A2082A962C002AB50D,
 				4DCD70A3082A962C002AB50D,
+				4DC912CC084B8184004348FC,
 				4D040729082E7435005D70E4,
 				4DFB34F20842771500F108DD,
 			);
@@ -328,9 +361,10 @@
 			files = (
 				4D040795082E9F87005D70E4,
 				4DCD70A4082A962C002AB50D,
+				4DA13DB508475AA600D18E8E,
 				4DCD70A5082A962C002AB50D,
-				4D04072A082E7435005D70E4,
 				4DCD70A6082A962C002AB50D,
+				4D04072A082E7435005D70E4,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			name = "Copy UI Scripts";

@@ -1,3 +1,19 @@
+2005-05-30  Laurent Sansonetti  <lrz@gnome.org>
+
+	* alexandria.xcode/project.pbxproj,
+	  lib/alexandria.rb,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/RatingCell.m,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	Work in progress on the Cocoa port (slowly but surely).
+
 2005-05-26  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/icons/book.png,

@@ -26,7 +26,8 @@ module UI
         ib_outlets :mainWindow, :booksView, :booksTableView, 
                    :librariesTableView, :toolbarSearchView, 
                    :toolbarSwitchModeView, :librariesDataSource,
-                   :addBookController, :toolbarSearchField
+                   :addBookController, :toolbarSearchField,
+                   :bookInfoController
         
         VIEW_AS_ICON, VIEW_AS_LIST = 0, 1
         
@@ -155,8 +156,15 @@ module UI
         # NSTableView delegation
         
         def tableViewSelectionDidChange(notification)
-            if notification.object.__ocid__ == @librariesTableView.__ocid__
+            tableView = notification.object
+            if tableView.__ocid__ == @librariesTableView.__ocid__
                 _filterBooks(nil)
+                @mainWindow.setTitle(_selectedLibrary.name)
+            elsif tableView.__ocid__ == @booksTableView.__ocid__
+                books = _selectedBooks
+                unless books.empty?
+                    @bookInfoController.setSelectedBook_library(books.first, _selectedLibrary)
+                end
             end
         end
 
@@ -224,6 +232,25 @@ module UI
             end
         end
         
+        def tableView_mouseDown(tableView, event)
+            if tableView.__ocid__ == @booksTableView.__ocid__
+                point = tableView.convertPoint_fromView(event.locationInWindow, nil)
+                row, col = tableView.rowAtPoint(point), tableView.columnAtPoint(point)
+                return if row == -1 or col == -1
+                tableColumn = tableView.tableColumns.objectAtIndex(col)
+                if tableColumn.identifier.to_s == 'rating'
+                    cellFrame = tableView.frameOfCellAtColumn_row(col, row)
+                    point.x -= cellFrame.origin.x
+                    point.y -= cellFrame.origin.y
+                    rating = RatingCell.valueForPoint(point)
+                    tableView.dataSource.tableView(tableView, :setObjectValue, NSNumber.numberWithUnsignedInt(rating),
+                                                              :forTableColumn, tableColumn,
+                                                              :row, row)
+                    tableView.reloadData
+                end
+            end
+        end
+        
         # NSTextField delegation
         
         def controlTextDidChange(notification)
@@ -233,6 +260,41 @@ module UI
                                                                        :object, nil)
                 self.performSelector(:_filterBooks_, :withObject, nil,
                                                      :afterDelay, 0.5)
+            end
+        end
+        
+        # NSMenuItem validation
+        
+        def validateMenuItem(menuItem)
+            case menuItem.action.to_s
+                when 'showHideInfo:'
+                    title = if @bookInfoController.opened?
+                        'Hide Info'
+                    else
+                        'Show Info'
+                    end
+                    menuItem.setTitle(title)
+            end
+            return true
+        end
+        
+        # Actions
+        
+        def reportBug(sender)
+            url = NSURL.URLWithString(BUGREPORT_URL)
+            NSWorkspace.sharedWorkspace.openURL(url)
+        end
+        
+        def makeDonation(sender)
+            url = NSURL.URLWithString(DONATE_URL)
+            NSWorkspace.sharedWorkspace.openURL(url)
+        end
+        
+        def showHideInfo(sender)
+            if @bookInfoController.opened?
+                @bookInfoController.close
+            else
+                @bookInfoController.open
             end
         end
         
@@ -310,8 +372,14 @@ module UI
         end
 
         def _setupViews
+            RatingCell.setStarSetImage(Icons::STAR_SET)
+            RatingCell.setStarUnsetImage(Icons::STAR_UNSET)
             titleColumn = @booksTableView.tableColumnWithIdentifier(:title)
             titleColumn.setDataCell(TitledImageCell.alloc.init)
+            ratingColumn = @booksTableView.tableColumnWithIdentifier(:rating)
+            ratingColumn.setDataCell(RatingCell.alloc.init)
+            #@booksTableView.setDoubleAction(:_doubleClickOnTableView_)
+            #@booksTableView.setTarget(self)
         end
 
         def _setBooksView(type)

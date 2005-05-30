@@ -39,6 +39,18 @@ module UI
                     book.publisher
                 when 'binding'
                     book.edition
+                when 'rating'
+                    rating = (book.rating or Book::DEFAULT_RATING)
+                    NSNumber.numberWithUnsignedInt(rating)
+            end
+        end
+        
+        def tableView_setObjectValue_forTableColumn_row(tableView, objectValue, col, row)
+            book = @library[row]
+            case col.identifier.to_s
+                when 'rating'
+                    book.rating = objectValue.unsignedIntValue
+                    @library.save(book)
             end
         end
         

@@ -50,6 +50,7 @@ module UI
     end
     
     OSX.ns_import :TitledImageCell
+    OSX.ns_import :RatingCell
 end
 end
 
@@ -57,4 +58,5 @@ require 'alexandria/macui/TableView'
 require 'alexandria/macui/BooksDataSource'
 require 'alexandria/macui/LibrariesDataSource'
 require 'alexandria/macui/AddBookController'
+require 'alexandria/macui/BookInfoController'
 require 'alexandria/macui/MainController'

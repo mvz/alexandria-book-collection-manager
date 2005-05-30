@@ -21,14 +21,27 @@
             }; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = AutoEditableTextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
+        {
+            CLASS = BookInfoController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                coverImageView = NSImageView; 
+                drawer = NSDrawer; 
+                titleTextField = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = BooksDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = LibrariesDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
+            ACTIONS = {makeDonation = id; reportBug = id; showHideInfo = id; }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 addBookController = AddBookController; 
+                bookInfoController = BookInfoController; 
                 booksTableView = NSTableView; 
                 booksView = NSView; 
                 librariesDataSource = id; 

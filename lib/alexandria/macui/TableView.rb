@@ -20,7 +20,7 @@ module UI
     class TableView < OSX::NSTableView
         include OSX
 
-        ns_overrides 'keyDown:'
+        ns_overrides 'keyDown:', 'mouseDown:'
         
         def keyDown(event)
             chars = event.charactersIgnoringModifiers
@@ -30,6 +30,13 @@ module UI
                 end
             else
                 super_keyDown(event)
+            end
+        end
+        
+        def mouseDown(event)
+            super_mouseDown(event)
+            if self.delegate.respond_to?(:tableView_mouseDown)
+                self.delegate.tableView_mouseDown(self, event)
             end
         end
     end
