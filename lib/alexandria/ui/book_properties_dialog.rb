@@ -71,7 +71,7 @@ module UI
                 @book.isbn = nil
             else
                 ary = @library.select { |book| book.ident == @entry_isbn.text }
-                unless ary.empty? or ary == [@book]
+                unless ary.empty? or (ary.length == 1 and ary.first == @book)
                     ErrorDialog.new(@parent, 
                                     _("Couldn't modify the book"), 
                                     _("The EAN/ISBN you provided is already " +

@@ -1,3 +1,10 @@
+2005-06-01  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/book_properties_dialog.rb:
+
+	Fixes the closing of the dialog (the bug was introduced by the latest
+	Library#select commit).
+
 2005-05-30  Laurent Sansonetti  <lrz@gnome.org>
 
 	* alexandria.xcode/project.pbxproj,
