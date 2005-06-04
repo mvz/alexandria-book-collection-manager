@@ -1,5 +1,9 @@
 2005-06-04  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/web_themes.rb:
+
+	Simplified and commented the load method.
+
 	* data/alexandria/icons/book.png,
 	  data/alexandria/icons/book_small.png,
 	  data/alexandria/icons/less.png,

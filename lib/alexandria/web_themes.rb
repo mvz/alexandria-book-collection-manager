@@ -41,11 +41,15 @@ module Alexandria
         def self.load(themes_dir)
             themes = []
             if File.exists?(themes_dir)
-                entries = Dir.entries(themes_dir).reject { |x| x == 'CVS' }
-
                 entries.each do |file|
+                    # ignore hidden files
+                    next if file =~ /^\./
+                    # ignore non-directories
                     path = File.join(themes_dir, file)
-                    next if !File.directory?(path) or file =~ /^\./
+                    next unless File.directory?(path)
+                    # ignore CVS directories
+                    next if file == 'CVS'
+
                     css_file = File.join(path, file + ".css")
                     preview_file = File.join(path, "preview.jpg")
                     [css_file, preview_file].each do |file|
