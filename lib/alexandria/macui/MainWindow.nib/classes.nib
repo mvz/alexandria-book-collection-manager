@@ -1,6 +1,18 @@
 {
     IBClasses = (
         {
+            CLASS = AboutController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                copyrightTextField = NSTextField; 
+                descriptionTextField = NSTextField; 
+                detailsTextView = NSTextView; 
+                versionTextField = NSTextField; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
             ACTIONS = {onAdd = id; onCancel = id; onToggleCriterion = id; }; 
             CLASS = AddBookController; 
             LANGUAGE = ObjC; 
@@ -23,23 +35,51 @@
         }, 
         {CLASS = AutoEditableTextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
+            ACTIONS = {
+                addAuthor = id; 
+                close = id; 
+                nextBook = id; 
+                previousBook = id; 
+                removeAuthor = id; 
+                toggleLoaned = id; 
+            }; 
             CLASS = BookInfoController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                addAuthorButton = NSButton; 
+                authorsTableView = NSTableView; 
+                bindingTextField = NSTextField; 
                 coverImageView = NSImageView; 
-                drawer = NSDrawer; 
+                isbnTextField = NSTextField; 
+                loanedSinceTextField = NSTextField; 
+                loanedSwitchButton = NSButton; 
+                loanedToTextField = NSTextField; 
+                notesTextView = NSTextView; 
+                panel = NSPanel; 
+                publisherTextField = NSTextField; 
+                ratingField = RatingField; 
+                removeAuthorButton = NSButton; 
+                tabView = NSTabView; 
                 titleTextField = NSTextField; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = BooksDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
-        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {CLASS = LibrariesDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {makeDonation = id; reportBug = id; showHideInfo = id; }; 
+            ACTIONS = {
+                about = id; 
+                addBook = id; 
+                delete = id; 
+                getInfo = id; 
+                makeDonation = id; 
+                newLibrary = id; 
+                reportBug = id; 
+            }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                aboutController = AboutController; 
                 addBookController = AddBookController; 
                 bookInfoController = BookInfoController; 
                 booksTableView = NSTableView; 
@@ -54,6 +94,7 @@
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {CLASS = RatingField; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = TableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }
     ); 
     IBVersion = 1; 

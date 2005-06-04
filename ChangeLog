@@ -1,3 +1,30 @@
+2005-06-04  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/icons/book.png,
+	  data/alexandria/icons/book_small.png,
+	  data/alexandria/icons/less.png,
+	  data/alexandria/icons/more.png,
+	  data/alexandria/icons/no_cover.png:
+
+	New icons.
+
+	* alexandria.xcode/project.pbxproj,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/book_providers/z3950.rb,
+	  lib/alexandria/macui/AboutController.rb,
+	  lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/Icons.rb,
+	  lib/alexandria/macui/LibrariesDataSource.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/RatingField.rb,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	Work in progress on the Cocoa port, added book properties, an about
+	dialog and a lot of fixes.
+
 2005-06-04  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/web_themes.rb:

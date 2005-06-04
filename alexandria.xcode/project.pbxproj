@@ -257,6 +257,36 @@
 			settings = {
 			};
 		};
+		4DA1BAA0084F5C4000D0A85C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = RatingField.rb;
+			path = lib/alexandria/macui/RatingField.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DA1BAA1084F5C4000D0A85C = {
+			fileRef = 4DA1BAA0084F5C4000D0A85C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		4DA1BB88084F797200D0A85C = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = AboutController.rb;
+			path = lib/alexandria/macui/AboutController.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DA1BB89084F797200D0A85C = {
+			fileRef = 4DA1BB88084F797200D0A85C;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4DC912CC084B8184004348FC = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -274,12 +304,15 @@
 		};
 		4DCD70A0082A9607002AB50D = {
 			children = (
+				4DA1BB88084F797200D0A85C,
 				4D040794082E9F87005D70E4,
 				4DCD70A1082A962C002AB50D,
 				4DA13DB408475AA600D18E8E,
+				4DE4D3FC0850A6E7009ACF3B,
 				4DCD70A2082A962C002AB50D,
 				4DCD70A3082A962C002AB50D,
 				4DC912CC084B8184004348FC,
+				4DA1BAA0084F5C4000D0A85C,
 				4D040729082E7435005D70E4,
 				4DFB34F20842771500F108DD,
 			);
@@ -359,11 +392,14 @@
 			dstPath = alexandria/macui;
 			dstSubfolderSpec = 7;
 			files = (
+				4DA1BB89084F797200D0A85C,
 				4D040795082E9F87005D70E4,
 				4DCD70A4082A962C002AB50D,
 				4DA13DB508475AA600D18E8E,
+				4DE4D3FD0850A6E7009ACF3B,
 				4DCD70A5082A962C002AB50D,
 				4DCD70A6082A962C002AB50D,
+				4DA1BAA1084F5C4000D0A85C,
 				4D04072A082E7435005D70E4,
 			);
 			isa = PBXCopyFilesBuildPhase;
@@ -372,6 +408,21 @@
 		};
 		4DDBD4F908257A0C007A141D = {
 			fileRef = 4DEFE1150825249D0076ECC9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		4DE4D3FC0850A6E7009ACF3B = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = Icons.rb;
+			path = lib/alexandria/macui/Icons.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DE4D3FD0850A6E7009ACF3B = {
+			fileRef = 4DE4D3FC0850A6E7009ACF3B;
 			isa = PBXBuildFile;
 			settings = {
 			};

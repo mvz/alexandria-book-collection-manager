@@ -42,6 +42,7 @@ module UI
         
         def addLibrary(library)
             @libraries << library
+            return library
         end
         
         def removeLibraryAtIndex(row)

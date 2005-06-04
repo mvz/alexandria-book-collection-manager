@@ -21,7 +21,7 @@ module UI
         include OSX
 
         ns_overrides 'keyDown:', 'mouseDown:'
-        
+
         def keyDown(event)
             chars = event.charactersIgnoringModifiers
             if chars.length > 0 and chars.characterAtIndex(0) == NSDeleteCharacter
@@ -33,10 +33,60 @@ module UI
             end
         end
         
+        def _startEditingWithEvent(event)
+            point = self.convertPoint_fromView(event.locationInWindow, nil)
+            row = self.rowAtPoint(point)
+            col = self.columnAtPoint(point)
+            return if row == -1 or col == -1
+
+            @lastEditClickEvent = nil
+
+            if self.selectedRow != row
+                self.selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(row),
+                                                           false)
+            end
+            self.editColumn(col, :row, row,
+                                 :withEvent, event,
+                                 :select, true)
+        end
+        
         def mouseDown(event)
-            super_mouseDown(event)
-            if self.delegate.respond_to?(:tableView_mouseDown)
-                self.delegate.tableView_mouseDown(self, event)
+            point = self.convertPoint_fromView(event.locationInWindow, nil)
+            row = self.rowAtPoint(point)
+            col = self.columnAtPoint(point)
+            return if row == -1 or col == -1
+
+            # simple click
+            if event.clickCount == 1
+                oldSelectedRow = self.selectedRow
+                super_mouseDown(event)
+                delegate = self.delegate
+                if delegate.respond_to?(:tableView_shouldEditTableColumn_row)
+                    if oldSelectedRow == self.selectedRow and
+                       delegate.tableView_shouldEditTableColumn_row(self,
+                                                                    self.tableColumns.objectAtIndex(col),
+                                                                    row)
+                                                      
+                        NSObject.cancelPreviousPerformRequestsWithTarget(self, :selector, :_startEditingWithEvent,
+                                                                               :object, event)
+                        @lastEditClickEvent = event
+                        self.performSelector(:_startEditingWithEvent, :withObject, event,
+                                                                      :afterDelay, 0.5)                                                                    
+                    end
+                end
+                
+                if delegate.respond_to?(:tableView_mouseDown_oldSelectedRow)
+                    delegate.tableView_mouseDown_oldSelectedRow(self, event, oldSelectedRow)
+                end
+            # double (or more) click 
+            else
+                self.selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(row),
+                                                           false)
+                if @lastEditClickEvent
+                    NSObject.cancelPreviousPerformRequestsWithTarget(self, :selector, :_startEditingWithEvent,
+                                                                           :object, @lastEditClickEvent)
+                end
+                self.target.send(self.doubleAction.gsub(/:/, '_'))
             end
         end
     end
