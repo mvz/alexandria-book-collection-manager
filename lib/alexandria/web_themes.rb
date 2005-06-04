@@ -41,7 +41,9 @@ module Alexandria
         def self.load(themes_dir)
             themes = []
             if File.exists?(themes_dir)
-                Dir.entries(themes_dir).each do |file|
+                entries = Dir.entries(themes_dir).reject { |x| x == 'CVS' }
+
+                entries.each do |file|
                     path = File.join(themes_dir, file)
                     next if !File.directory?(path) or file =~ /^\./
                     css_file = File.join(path, file + ".css")

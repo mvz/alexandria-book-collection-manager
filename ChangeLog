@@ -1,3 +1,9 @@
+2005-06-04  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/web_themes.rb:
+
+	Ignore CVS directories when looking for themes.
+
 2005-06-01  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/book_properties_dialog.rb:
