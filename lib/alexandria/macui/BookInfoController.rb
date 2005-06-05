@@ -26,7 +26,7 @@ module UI
         ib_outlets :titleTextField, :isbnTextField, :authorsTableView,
                    :publisherTextField, :bindingTextField,
                    :coverImageView, :panel, :loanedToTextField,
-                   :loanedSinceTextField, :loanedSwitchButton,
+                   :loanedSinceDatePicker, :loanedSwitchButton,
                    :tabView, :ratingField, :addAuthorButton,
                    :removeAuthorButton, :notesTextView
         
@@ -39,12 +39,13 @@ module UI
             @authorsTableView.setTarget(self)
             @coverImageView.setAction(:coverDidChange)
             @coverImageView.setTarget(self)
+            @loanedSinceDatePicker.setMaxDate(NSDate.date)
 
             @booksToSave = []
         end
                 
-        def openWindow(library, book)
-            @book, @library = book, library
+        def openWindow(library, book, &on_close_block)
+            @book, @library, @on_close_block = book, library, on_close_block
             @booksToSave.clear
             _updateUI
             @tabView.selectTabViewItemAtIndex(0)
@@ -78,16 +79,12 @@ module UI
                                             :withEvent, nil,
                                             :select, true)
         end
-        
-        def close(sender)
-            @panel.close
-        end
-        
+
         def toggleLoaned(sender)
             isLoaned = sender.state == NSOnState
             @book.loaned = isLoaned
             @loanedToTextField.setEnabled(isLoaned)
-            @loanedSinceTextField.setEnabled(isLoaned)
+            @loanedSinceDatePicker.setEnabled(isLoaned)
             _scheduleSave
         end
         
@@ -116,14 +113,24 @@ module UI
         end
 
         def coverDidChange(sender)
-            # TODO
+            newImage = @coverImageView.image
+            newBitmap = NSBitmapImageRep.imageRepWithData(newImage.TIFFRepresentation)
+            properties = NSDictionary.dictionaryWithObject_forKey(NSNumber.numberWithFloat(1),
+                                                                  'NSImageCompressionFactor')
+            jpegData = newBitmap.representationUsingType_properties(NSJPEGFileType,
+                                                                    properties)
+            jpegData.writeToFile_atomically(@library.cover(@book), true)
+            _scheduleSave
         end
 
         # NSWindow delegation
         
         def windowWillClose(notification)
-            _validateEditing
-            @booksToSave.each { |book| @library.save(book) }
+            if @panel.isVisible?
+                _validateEditing
+                @booksToSave.each { |book| @library.save(book) }
+                @on_close_block.call(@booksToSave)
+            end
             NSApplication.sharedApplication.stopModal
         end
         
@@ -263,17 +270,21 @@ module UI
             if @book.loaned?
                 @loanedSwitchButton.setState(NSOnState)
                 @loanedToTextField.setEnabled(true)
-                @loanedToTextField.setStringValue((@book.loaned_to or ""))
-                @loanedSinceTextField.setEnabled(true)
-                @loanedSinceTextField.setStringValue("") # TODO
+                @loanedSinceDatePicker.setEnabled(true)
             else
                 @loanedSwitchButton.setState(NSOffState)
                 @loanedToTextField.setEnabled(false)
-                @loanedToTextField.setStringValue("")
-                @loanedSinceTextField.setEnabled(false)
-                @loanedSinceTextField.setStringValue("")
+                @loanedSinceDatePicker.setEnabled(false)
             end
             
+            @loanedToTextField.setStringValue((@book.loaned_to or ""))
+            date = if @book.loaned_since != nil
+                NSDate.dateWithTimeIntervalSince1970(@book.loaned_since)
+            else
+                NSDate.date
+            end
+            @loanedSinceDatePicker.setDateValue(date)
+
             @notesTextView.setString((@book.notes or ""))
         end
         
@@ -293,8 +304,7 @@ module UI
             if responder != nil and responder.is_a?(NSTextView)
                 [@titleTextField, @isbnTextField, 
                  @authorsTableView, @publisherTextField, 
-                 @bindingTextField, @loanedToTextField, 
-                 @loanedSinceTextField].each do |control| 
+                 @bindingTextField, @loanedToTextField].each do |control| 
                     editor = control.currentEditor
                     if editor != nil and editor.__ocid__ == responder.__ocid__
                         control.selectedCell.endEditing(responder)
@@ -303,10 +313,17 @@ module UI
                 end
             end
 
-            # handle the notes there...
+            # handle the notes...
             newNotes = @notesTextView.string.to_s.strip
             if @book.notes != newNotes
                 @book.notes = newNotes
+                _scheduleSave
+            end
+            
+            # handle the loaning date...
+            newLoaningDate = @loanedSinceDatePicker.dateValue.timeIntervalSince1970
+            if @book.loaned_since != newLoaningDate
+                @book.loaned_since = newLoaningDate
                 _scheduleSave
             end
         end

@@ -1,3 +1,16 @@
+2005-06-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/AboutController.rb,
+	  lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	Work in progress (make the cover view editable, introduced a date
+	picker for the loaning, some fixes).
+
 2005-06-04  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/web_themes.rb:

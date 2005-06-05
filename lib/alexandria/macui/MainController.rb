@@ -240,8 +240,16 @@ module UI
         end
         
         def getInfo(sender)
-            @bookInfoController.openWindow(@booksTableView.dataSource.library, 
-                                           _selectedBooks.first)
+            books = _selectedBooks
+            return if books.length != 1
+            dataSource = @booksTableView.dataSource
+            @bookInfoController.openWindow(dataSource.library, 
+                                           books.first) do |modifiedBooks|
+                modifiedBooks.each do |book|
+                    dataSource.flushCachedInfoForBook(book)
+                end
+                @booksTableView.reloadData
+            end
         end
     
         def newLibrary(sender)

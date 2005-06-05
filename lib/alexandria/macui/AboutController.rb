@@ -75,7 +75,7 @@ module UI
         end
     
         def openWindow
-            @window.orderFront(self)
+            @window.makeKeyAndOrderFront(self)
             @running = true
         end
         

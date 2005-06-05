@@ -54,6 +54,14 @@ module UI
             end
         end
         
+        def flushCachedInfoForBook(book)
+            @covers.delete(book.ident)
+        end
+        
+        #######
+        private
+        #######
+        
         def _coverForBook(book)
             @covers ||= {}
             cover = @covers[book.ident]
