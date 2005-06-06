@@ -44,8 +44,7 @@ static NSString *   _ellipsis = nil;
         return nil;
         
     [self setEditable:YES];
-    [self setDrawsBackground:YES];
-    [self setBackgroundColor:[NSColor whiteColor]];
+    [self setLineBreakMode:NSLineBreakByTruncatingTail];
         
     _title = nil;
     _titleFrame = NSZeroRect;
@@ -72,11 +71,9 @@ static NSString *   _ellipsis = nil;
         _title = [[objectValue objectAtIndex:0] retain];
         _image = [[objectValue objectAtIndex:1] retain];
         
-        NSAttributedString *attString = [[NSAttributedString alloc] initWithString:_title];
-        [self setAttributedStringValue:attString];
-        [attString release];
+        [self setStringValue:_title];
     }
-    else if ([objectValue isKindOfClass:[NSAttributedString class]]) {
+    else if ([objectValue isKindOfClass:[NSString class]]) {
         [super setObjectValue:objectValue];
     }
 }
@@ -86,65 +83,31 @@ static NSString *   _ellipsis = nil;
     return [NSArray arrayWithObjects:_title, _image, nil];
 }
 
+- (NSRect)_frameForTitle:(NSRect)cellFrame
+{
+    float x;
+    
+    x = (_image != nil) ? [_image size].width + 2 : 0;
+	
+    cellFrame.origin.x += x;
+	cellFrame.size.width -= x;
+	cellFrame.origin.y += 1;
+	cellFrame.size.height -= 2;
+    
+    return cellFrame;
+}
+
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)view
 {
-    NSPoint drawPoint;
-    float x;
-
-    x = 0;
-
     // draw image
     if (_image != nil) {    
         NSSize iconSize = [_image size];
-        drawPoint = NSMakePoint(NSMinX (cellFrame), round (NSMaxY (cellFrame) - (NSHeight (cellFrame) - iconSize.height) / 2) - 1.0);
+        NSPoint drawPoint = NSMakePoint(NSMinX (cellFrame), round (NSMaxY (cellFrame) - (NSHeight (cellFrame) - iconSize.height) / 2) - 1.0);
         [_image compositeToPoint:drawPoint operation:NSCompositeSourceOver];
-        
-        x += iconSize.width + 5;
     }
 
     // draw title
-	_titleFrame = cellFrame;
-	_titleFrame.origin.x += x;
-	_titleFrame.size.width -= x + 5;
-	_titleFrame.origin.y += 1;
-	_titleFrame.size.height -= 2;
-
-    NSColor *textColor = [self isHighlighted] && [[view window] firstResponder] == view && [[view window] isKeyWindow]? [NSColor whiteColor] : [NSColor blackColor];
-    
-	NSDictionary * attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-		[self font], NSFontAttributeName,
-		textColor, NSForegroundColorAttributeName,
-		nil];
-
-    NSRange     truncatedRange = NSMakeRange(0, [_title length]);
-    NSSize      truncatedSize;
-    NSString *  truncatedTitle;
-    NSSize      ellipsisSize = [_ellipsis sizeWithAttributes:attributes];
-    
-    do {
-        truncatedTitle = [_title substringWithRange:truncatedRange];
-        truncatedSize = [truncatedTitle sizeWithAttributes:attributes];
-        if (truncatedSize.width + ellipsisSize.width > NSWidth (_titleFrame)) {
-            truncatedRange.length--;
-        }
-        else {
-            break;
-        }
-    }
-    while (YES);
-
-    if (truncatedRange.length < [_title length])
-        truncatedTitle = [truncatedTitle stringByAppendingString:_ellipsis];
-
-	[truncatedTitle drawInRect:_titleFrame withAttributes:attributes];
-}
-
-- (NSRect)_preparedFrameForEdition:(NSRect)frame
-{
-    frame = _titleFrame;
-    frame.origin.x = _titleFrame.origin.x - 2;
-    frame.size.width = _titleFrame.size.width + 6;
-    return frame;
+    [super drawWithFrame:[self _frameForTitle:cellFrame] inView:view];
 }
 
 - (void)editWithFrame:(NSRect)frame inView:(NSView *)controlView 
@@ -152,9 +115,7 @@ static NSString *   _ellipsis = nil;
                                     delegate:(id)delegate 
                                     event:(NSEvent *)theEvent
 {
-    frame = [self _preparedFrameForEdition:frame];
-    
-	[super editWithFrame:frame 
+	[super editWithFrame:[self _frameForTitle:frame] 
            inView:controlView 
            editor:editor 
            delegate:delegate 
@@ -167,9 +128,7 @@ static NSString *   _ellipsis = nil;
                                       start:(int)selStart 
                                       length:(int)selLength
 {
-    frame = [self _preparedFrameForEdition:frame];
-    
-	[super selectWithFrame:frame 
+	[super selectWithFrame:[self _frameForTitle:frame] 
            inView:controlView 
            editor:editor 
            delegate:delegate 

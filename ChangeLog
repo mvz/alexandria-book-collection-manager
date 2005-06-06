@@ -1,3 +1,13 @@
+2005-06-06  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/TitledImageCell.m,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	Work in progress (fixed a lot of bugs in the titled image cell and added
+	a Find main menu item that switches to the search toolbar item).
+
 2005-06-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/AboutController.rb,

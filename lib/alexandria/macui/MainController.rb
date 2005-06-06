@@ -277,12 +277,13 @@ module UI
         end
         
         def doubleClickOnLibraries(sender)
+            # Do nothing.
         end
         
         def doubleClickOnBooks(sender)
             getInfo(sender)
         end
-    
+
         #######
         private
         #######
