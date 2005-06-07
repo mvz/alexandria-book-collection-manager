@@ -70,6 +70,7 @@
                 about = id; 
                 addBook = id; 
                 delete = id; 
+                find = id; 
                 getInfo = id; 
                 makeDonation = id; 
                 newLibrary = id; 
@@ -83,8 +84,7 @@
                 bookInfoController = BookInfoController; 
                 booksTableView = NSTableView; 
                 booksView = NSView; 
-                librariesDataSource = id; 
-                librariesTableView = id; 
+                librariesTableView = NSTableView; 
                 mainWindow = NSWindow; 
                 toolbarSearchField = NSSearchField; 
                 toolbarSearchView = NSView; 

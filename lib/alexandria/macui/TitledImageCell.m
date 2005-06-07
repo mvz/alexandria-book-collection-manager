@@ -20,22 +20,11 @@
 @interface TitledImageCell : NSTextFieldCell
 {
     NSString *  _title;
-    NSRect      _titleFrame;
     NSImage *   _image;
 }
 @end
 
-static NSString *   _ellipsis = nil;
-
 @implementation TitledImageCell
-
-+ (void)initialize
-{
-    if (self == [TitledImageCell class]) {
-        const unichar ellipsisChar = 0x2026;
-        _ellipsis = [[NSString stringWithCharacters:&ellipsisChar length:1] retain];
-    }
-}
 
 - (id)init
 {
@@ -47,7 +36,6 @@ static NSString *   _ellipsis = nil;
     [self setLineBreakMode:NSLineBreakByTruncatingTail];
         
     _title = nil;
-    _titleFrame = NSZeroRect;
     _image = nil;    
 
     return self;
@@ -85,15 +73,11 @@ static NSString *   _ellipsis = nil;
 
 - (NSRect)_frameForTitle:(NSRect)cellFrame
 {
-    float x;
-    
-    x = (_image != nil) ? [_image size].width + 2 : 0;
-	
-    cellFrame.origin.x += x;
-	cellFrame.size.width -= x;
-	cellFrame.origin.y += 1;
-	cellFrame.size.height -= 2;
-    
+    if (_image != nil) {
+        const float x = [_image size].width + 2;
+        cellFrame.origin.x += x;
+        cellFrame.size.width -= x;
+    }
     return cellFrame;
 }
 

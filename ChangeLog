@@ -1,3 +1,15 @@
+2005-06-07  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/TitledImageCell.m,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Automatically show the toolbar when it is hidden and the Find menu item 
+	  is activated ;
+	- Center text in the titled image cell plus removed some dead code.
+
 2005-06-06  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb,
