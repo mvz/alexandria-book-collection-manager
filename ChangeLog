@@ -1,3 +1,9 @@
+2005-06-11  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb:
+
+	Ignores whitespace characters when extracting numbers for ISBN/EAN/etc..
+
 2005-06-07  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb,

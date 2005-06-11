@@ -124,7 +124,7 @@ module Alexandria
         def self.extract_numbers(isbn)
             raise "Nil ISBN" if isbn == nil
 
-            isbn.strip.delete('-').split('').map { |x|
+            isbn.delete('- ').split('').map { |x|
                 raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
                 x == 'X' ? 10 : x.to_i
             }
