@@ -23,28 +23,34 @@ module Alexandria
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-		SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS, 
-            SEARCH_BY_KEYWORD = (0..3).to_a 
+        SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS,
+            SEARCH_BY_KEYWORD = (0..3).to_a
 
         class SearchError < StandardError; end
         class NoResultsError < SearchError; end
         class TooManyResultsError < SearchError; end
-        class InvalidSearchTypeError < SearchError; end 
+        class InvalidSearchTypeError < SearchError; end
 
-    	def self.search(criterion, type)
+        def self.search(criterion, type)
             factory_n = 0
             begin
                 factory = self.instance[factory_n]
                 puts factory.fullname + " lookup" if $DEBUG
-                return factory.search(criterion, type)
+                results = factory.search(criterion, type)
+
+                if results.length == 0
+                    raise NoResultsError
+                else
+                    return results
+                end
             rescue Exception => boom
                 if self.last == factory
                     raise case boom
                         when Timeout::Error
                             _("Couldn't reach the provider '%s': timeout " +
                               "expired.") % factory.name
-                        
-                        when SocketError 
+
+                        when SocketError
                             _("Couldn't reach the provider '%s': socket " +
                               "error (%s).") % [factory.name, boom.message]
 
@@ -60,18 +66,18 @@ module Alexandria
                             _("Invalid search type.")
 
                         else
-                            boom.message 
+                            boom.message
                     end
                 else
                     factory_n += 1
                     retry
                 end
-            end 
-    	end
+            end
+        end
 
-		def self.isbn_search(criterion)
-			self.search(criterion, SEARCH_BY_ISBN)
-		end
+        def self.isbn_search(criterion)
+            self.search(criterion, SEARCH_BY_ISBN)
+        end
 
         class Preferences < Array
             def initialize(provider)
@@ -80,13 +86,13 @@ module Alexandria
             end
 
             class Variable
-                attr_reader :provider_name, :name, :description, 
+                attr_reader :provider_name, :name, :description,
                             :possible_values
                 attr_accessor :value
-            
+
                 def initialize(provider, name, description, default_value,
                                possible_values=nil)
-                    
+
                     @provider = provider
                     @provider_name = provider.name.downcase
                     @name = name
@@ -98,17 +104,17 @@ module Alexandria
                 def new_value=(new_value)
                     unless @provider.abstract?
                         message = "#{provider_name}_#{name}="
-                        Alexandria::Preferences.instance.send(message, 
+                        Alexandria::Preferences.instance.send(message,
                                                               new_value)
                     end
                     self.value = new_value
                 end
             end
-            
+
             def add(*args)
-                self << Variable.new(@provider, *args) 
+                self << Variable.new(@provider, *args)
             end
-            
+
             def [](obj)
                 case obj
                     when String
@@ -119,7 +125,7 @@ module Alexandria
                 end
             end
             alias_method :old_idx, :[]
-            
+
             def read
                 self.each do |var|
                     message = "#{@provider_name}_#{var.name}"
@@ -128,16 +134,16 @@ module Alexandria
                 end
             end
         end
-      
+
         class AbstractProvider
             attr_reader :name, :fullname, :prefs
 
             def initialize(name, fullname=nil)
-                @name = name 
+                @name = name
                 @fullname = (fullname or name)
                 @prefs = Preferences.new(self)
             end
-            
+
             def reinitialize(fullname)
                 @name << '_' << fullname.hash.to_s
                 @fullname = fullname
@@ -148,12 +154,12 @@ module Alexandria
                 config ? Net::HTTP.Proxy(*config) : Net::HTTP
             end
 
-            def abstract? 
+            def abstract?
                 self.class.abstract?
             end
 
             def self.abstract?
-                (not self.included_modules.include?(Singleton)) 
+                (not self.included_modules.include?(Singleton))
             end
         end
 
@@ -161,7 +167,7 @@ module Alexandria
             include Singleton
             undef_method :reinitialize
         end
- 
+
         require 'alexandria/book_providers/amazon'
         require 'alexandria/book_providers/bn'
         require 'alexandria/book_providers/proxis'
@@ -190,7 +196,7 @@ module Alexandria
 
                     if klass.abstract?
                         @abstract_classes << klass
-                    else                    
+                    else
                         providers[md[1]] = klass.instance
                     end
                 end

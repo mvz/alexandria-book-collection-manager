@@ -1,3 +1,11 @@
+2005-06-12  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/book_providers.rb:
+
+	  Always raise NoResultsError if there were no results, rather than
+	  leaving this up to individual book providers. Also, clean up
+	  whitespace.
+
 2005-06-11  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb:
