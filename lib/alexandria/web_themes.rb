@@ -41,7 +41,7 @@ module Alexandria
         def self.load(themes_dir)
             themes = []
             if File.exists?(themes_dir)
-                entries.each do |file|
+                Dir.entries(themes_dir).each do |file|
                     # ignore hidden files
                     next if file =~ /^\./
                     # ignore non-directories

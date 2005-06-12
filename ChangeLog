@@ -1,3 +1,9 @@
+2005-06-13  Dafydd Harries  <daf@muse.19inch.net>
+
+	* lib/alexandria/web_themes.rb:
+
+	  Fix bug in load method introduced by last change to same.
+
 2005-06-12  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/ui/new_book_dialog.rb:
