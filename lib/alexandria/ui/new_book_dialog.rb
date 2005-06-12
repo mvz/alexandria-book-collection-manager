@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'gdk_pixbuf2'
+
 module Alexandria
 module UI
     class KeepBadISBNDialog < AlertDialog
@@ -72,17 +74,35 @@ module UI
             @combo_libraries.active = 0
             @combo_libraries.sensitive = libraries.length > 1
 
-            @treeview_results.model = Gtk::ListStore.new(String, String)
+            @treeview_results.model = Gtk::ListStore.new(String, String,
+                Gdk::Pixbuf)
             @treeview_results.selection.mode = Gtk::SELECTION_MULTIPLE
             @treeview_results.selection.signal_connect('changed') do
                 @button_add.sensitive = true
             end
+
+            renderer = Gtk::CellRendererPixbuf.new
+            col = Gtk::TreeViewColumn.new("", renderer)
+            col.pack_start(renderer, true)
+            col.set_cell_data_func(renderer) do |column, cell, model, iter|
+                pixbuf = iter[2]
+                max_width = 50
+
+                if pixbuf.width > max_width
+                    pixbuf = pixbuf.scale(max_width,
+                        pixbuf.height * (max_width.to_f / pixbuf.width))
+                end
+
+                cell.pixbuf = pixbuf
+            end
+            @treeview_results.append_column(col)
+
             col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, 
                                           :text => 0)
             @treeview_results.append_column(col)
             @entry_isbn.grab_focus
             @combo_search.active = 0
-            
+
             if File.exist?(Preferences.instance.cuecat_device)
                 @cuecat_image.pixbuf = Icons::CUECAT
                 create_scanner_input
@@ -96,8 +116,11 @@ module UI
             rescue NameError
                 @@last_criterion_was_not_isbn = false
             end 
+
+            @find_thread = nil
+            @image_thread = nil
         end
-   
+
         def on_criterion_toggled(item)
             return unless item.active?
             if is_isbn = item == @isbn_radiobutton
@@ -128,38 +151,117 @@ module UI
             (entry == @entry_isbn ? @button_add : @button_find).sensitive = ok
         end
 
+        def image_error_dialog(error)
+            ErrorDialog.new(
+                @parent,
+                _("A problem occurred while downloading images"),
+                error)
+        end
+
+        def get_images_async()
+            @images = {}
+            @image_error = nil
+
+            @image_thread = Thread.new {
+                begin
+                    @results.each_with_index { |result,i|
+                        uri = result[1]
+                        @images[i] = URI.parse(uri).read
+                    }
+                rescue => e
+                    @image_error = e.message
+                end
+            }
+
+            Gtk.timeout_add(100) {
+                if @image_error
+                    image_error_dialog(@image_error)
+                else
+                    @images.each_pair { |key,value|
+                        begin
+                            loader = Gdk::PixbufLoader.new
+                            loader.last_write(value)
+                            pixbuf = loader.pixbuf
+
+                            if pixbuf.width > 1
+                                iter = @treeview_results.model.get_iter(key.to_s)
+                                iter[2] = pixbuf
+                            end
+
+                            @images.delete(key)
+                        rescue => e
+                            image_error_dialog(e.message)
+                        end
+                    }
+                end
+
+                # Stop if the image download thread has stopped.
+                @image_thread.alive? ? true : false
+            }
+        end
+
         def on_find
-            begin
-                mode = case @combo_search.active
-                    when 0
-                        BookProviders::SEARCH_BY_TITLE 
-                    when 1 
-                        BookProviders::SEARCH_BY_AUTHORS
-                    when 2 
-                        BookProviders::SEARCH_BY_KEYWORD
-                end
-                criterion = @entry_search.text.strip
-                @results = Alexandria::BookProviders.search(criterion, mode)
-                @treeview_results.model.clear
-                treedata = @results.each do |book, cover|
-                    s = _("%s, by %s") % [ book.title, 
-                                           book.authors.join(', ') ]
-                    if @results.find { |book2, cover2| 
-                                        book.title == book2.title and
-                                        book.authors == book2.authors 
-                                     }.length > 1
-                        s += " (#{book.edition}, #{book.publisher})"
-                    end
-                    iter = @treeview_results.model.append
-                    iter[0] = s 
-                    iter[1] = book.isbn
-                end
-            rescue => e
-                ErrorDialog.new(@parent, 
-                                _("Unable to find matches for your search"),
-                                e.message)
+            mode = case @combo_search.active
+                when 0
+                    BookProviders::SEARCH_BY_TITLE
+                when 1
+                    BookProviders::SEARCH_BY_AUTHORS
+                when 2
+                    BookProviders::SEARCH_BY_KEYWORD
             end
+
+            criterion = @entry_search.text.strip
+            @treeview_results.model.clear
             @button_add.sensitive = false
+            @find_error = nil
+            @results = nil
+
+            @find_thread = Thread.new {
+                begin
+                    @results = Alexandria::BookProviders.search(criterion, mode)
+                    puts @results.length
+                rescue => e
+                    @find_error = e.message
+                end
+            }
+
+            Gtk.timeout_add(100) {
+                # This block copies results into the tree view, or shows an
+                # error if the search failed.
+
+                if @find_error
+                    ErrorDialog.new(
+                        @parent,
+                        _("Unable to find matches for your search"),
+                        @find_error)
+                    false
+                elsif @results
+                    @results.each do |book, cover|
+                        s = _("%s, by %s") % [ book.title,
+                                               book.authors.join(', ') ]
+
+                        if @results.find { |book2, cover2|
+                                            book.title == book2.title and
+                                            book.authors == book2.authors
+                                         }.length > 1
+                            s += " (#{book.edition}, #{book.publisher})"
+                        end
+
+                        iter = @treeview_results.model.append
+                        iter[0] = s
+                        iter[1] = book.isbn
+                        iter[2] = Icons::BOOK
+                    end
+
+                    # Kick off the image download thread.
+                    get_images_async
+
+                    false
+                else
+                    # Stop if the book find thread has stopped.
+                    @find_thread.alive? ? true : false
+                end
+            }
         end
 
         def on_results_button_press_event(widget, event)
@@ -173,11 +275,14 @@ module UI
 
         def on_add
             return unless @button_add.sensitive?
+            @find_thread.kill if @find_thread
+            @image_thread.kill if @image_thread
+
             begin
                 library = @libraries.find do |x| 
                     x.name == @combo_libraries.active_iter[1]
                 end
-                books_to_add = []                
+                books_to_add = []
 
                 if @isbn_radiobutton.active?
                     # Perform the ISBN search via the providers.
@@ -228,11 +333,13 @@ module UI
                 ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
             end
         end
-    
+
         def on_cancel
+            @find_thread.kill if @find_thread
+            @image_thread.kill if @image_thread
             @new_book_dialog.destroy
         end
-       
+
         def on_focus
             if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
                 clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
@@ -246,7 +353,7 @@ module UI
         def on_clicked(widget, event)
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 1
-            
+
                 radio, target_widget, box2, box3 = case widget
                     when @eventbox_entry_search
                         [@title_radiobutton, @entry_search, 
