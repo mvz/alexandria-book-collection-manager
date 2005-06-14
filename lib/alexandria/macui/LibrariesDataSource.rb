@@ -68,6 +68,48 @@ module UI
             _libraryAtIndex(index).name
         end
         
+        def tableView_validateDrop_proposedRow_proposedDropOperation(tableView, draggingInfo, row, operation)
+            unless operation == NSTableViewDropOn
+                return NSDragOperationNone  
+            end
+            
+            pasteboard = draggingInfo.draggingPasteboard
+            unless pasteboard.types.containsObject?(BooksDataSource::PASTEBOARD_TYPE)
+                return NSDragOperationNone
+            end
+            
+            bookIdents = pasteboard.propertyListForType(BooksDataSource::PASTEBOARD_TYPE).to_a
+            library = _libraryAtIndex(row)
+            if bookIdents.all? { |x| library.find { |book| book.ident == x.to_s } != nil }
+                return NSDragOperationNone
+            end
+
+            return NSDragOperationMove
+        end
+
+        def tableView_acceptDrop_row_dropOperation(tableView, draggingInfo, row, operation)
+            pasteboard = draggingInfo.draggingPasteboard
+            unless pasteboard.types.containsObject?(BooksDataSource::PASTEBOARD_TYPE)
+                return false
+            end
+            
+            bookIdents = pasteboard.propertyListForType(BooksDataSource::PASTEBOARD_TYPE).to_a
+            sourceLibrary = _libraryAtIndex(tableView.selectedRow)
+            books = bookIdents.map { |x| sourceLibrary.find { |book| book.ident == x.to_s } }
+            return false if books.include?(nil)
+            destinationLibrary = _libraryAtIndex(row)
+            books = books.select { |x| destinationLibrary.find { |book| book.ident == x } == nil }
+            return false if sourceLibrary == destinationLibrary
+            
+            Library.move(sourceLibrary, destinationLibrary, *books)
+            
+            if tableView.delegate.respondsToSelector?('acceptedDropOnTableView:')
+                tableView.delegate.acceptedDropOnTableView(tableView)
+            end
+            
+            return true
+        end
+
         def tableView_setObjectValue_forTableColumn_row(tableView, objectValue, col, row)
             newName = objectValue.objectAtIndex(0).to_s
             library = _libraryAtIndex(row)

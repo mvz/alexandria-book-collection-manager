@@ -27,7 +27,8 @@ module UI
                    :librariesTableView, :toolbarSearchView, 
                    :toolbarSwitchModeView,
                    :addBookController, :toolbarSearchField,
-                   :bookInfoController, :aboutController
+                   :bookInfoController, :aboutController, :booksMatrix,
+                   :booksIconView, :booksListView, :splitView
         
         VIEW_AS_ICON, VIEW_AS_LIST = 0, 1
         
@@ -36,7 +37,7 @@ module UI
             _setupLibrariesTableView
             _setupViews
             _setupToolbar
-            _setBooksView(VIEW_AS_LIST)            
+            _setBooksView(VIEW_AS_ICON)  
         end
         
         # NSWindow delegation
@@ -95,9 +96,12 @@ module UI
             end
             
             @toolbarItems[TOOLITEM_SEARCH].setLabel(label)
+            
             @booksTableView.dataSource.library = filteredLibrary
             @booksTableView.reloadData
-        end
+       
+            _relayoutBooksMatrix
+         end
         
         def toolbar_itemForItemIdentifier_willBeInsertedIntoToolbar(toolbar, identifier, flag)
             toolitem = NSToolbarItem.alloc.initWithItemIdentifier(identifier)
@@ -138,6 +142,85 @@ module UI
             toolbarDefaultItemIdentifiers(toolbar)
         end
         
+        # NSViewFrameDidChangeNotification
+        
+        def booksViewFrameDidChange(notification)
+            _relayoutBooksMatrix(false)
+        end
+        
+        # NSSplitView delegation
+
+        def splitView_canCollapseSubview(splitView, view)
+            false
+        end
+
+        def splitView_constrainMinCoordinate_ofSubviewAt(splitView, proposedMin, offset)
+            @splitViewToggled = false
+            @positionAdjust = nil
+            if _sidepaneHidden?
+                proposedMin
+            else
+                offset == 0 ? 100 : proposedMin
+            end
+        end
+
+        def splitView_constrainMaxCoordinate_ofSubviewAt(splitView, proposedMax, offset)
+            if _sidepaneHidden?
+                proposedMax
+            else
+                offset == 0 ? 400 : proposedMax
+            end
+        end
+        
+        def splitView_constrainSplitPosition_ofSubviewAt(splitView, proposedPosition, offset)
+            event = @mainWindow.currentEvent
+            if event.oc_type == NSLeftMouseDragged
+                mouseX = event.locationInWindow.x
+                if mouseX < 100 
+                    if _sidepaneHidden?
+                        proposedPosition = 0
+                    elsif mouseX < 20 and !@splitViewToggled
+                        toggleSidepane(self)
+                        @splitViewToggled = true
+                    end
+                else
+                    if !@splitViewToggled and _sidepaneHidden?
+                        toggleSidepane(self)
+                        @splitViewToggled = true
+                        proposedPosition = 100
+                        @positionAdjust = 100 - mouseX
+                    end
+                end
+            end
+            if @positionAdjust
+                proposedPosition += @positionAdjust
+                proposedPosition = 100 if proposedPosition < 100
+            end
+            return proposedPosition
+        end
+        
+        def splitView_resizeSubviewsWithOldSize(splitView, oldSize)
+            # Do not change the sidepane's width
+            sidepaneWidth = _sidepaneView.frame.size.width
+            _sidepaneView.setFrameSize(NSSize.new(sidepaneWidth, oldSize.height))
+            
+            # Resize the books view
+            width = oldSize.width - sidepaneWidth - splitView.dividerThickness
+            @booksView.setFrameSize(NSSize.new(width, oldSize.height))
+
+            size = @booksMatrix.frame.size
+            size.height = (@booksMatrix.numberOfRows * @booksMatrix.cellSize.height) + ((@booksMatrix.numberOfRows - 1) * @booksMatrix.intercellSpacing.height)
+            @booksMatrix.setFrameSize(size)
+            
+            @booksView.setNeedsDisplay(true)
+        end
+
+        # NSMatrix delegation
+        
+        def matrix_deleteCharacterDown(matrix, event)
+            _deleteSelectedBooks
+        end
+        
         # NSTableView delegation
         
         def tableViewSelectionDidChange(notification)
@@ -156,7 +239,7 @@ module UI
             end
         end
 
-        def tableView_deleteCharacterDown(tableView)
+        def tableView_deleteCharacterDown(tableView, event)
             if tableView.__ocid__ == @librariesTableView.__ocid__
                 _deleteSelectedLibrary
             elsif tableView.__ocid__ == @booksTableView.__ocid__
@@ -186,6 +269,12 @@ module UI
             end
         end
 
+        def acceptedDropOnTableView(tableView)
+            if tableView.__ocid__ == @librariesTableView.__ocid__
+                _filterBooks(nil)
+            end
+        end
+
         # NSTextField delegation
         
         def controlTextDidChange(notification)
@@ -193,8 +282,12 @@ module UI
             if view.__ocid__ == @toolbarSearchField.__ocid__
                 NSObject.cancelPreviousPerformRequestsWithTarget(self, :selector, :_filterBooks_,
                                                                        :object, nil)
-                self.performSelector(:_filterBooks_, :withObject, nil,
-                                                     :afterDelay, 0.5)
+                if @toolbarSearchField.stringValue.to_s.strip.empty?
+                    _filterBooks(nil)
+                else
+                    self.performSelector(:_filterBooks_, :withObject, nil,
+                                                         :afterDelay, 0.5)
+                end
             end
         end
 
@@ -217,6 +310,25 @@ module UI
 
                 when 'delete:'
                     (_focusOnBooksView? and !_selectedBooks.empty?) or _focusOnLibraryView?
+
+                when 'clearSearchResults:'
+                    !@toolbarSearchField.stringValue.to_s.empty?
+
+                when 'viewAsIcons:'
+                    menuItem.setState(@booksViewType == VIEW_AS_ICON ? NSOnState : NSOffState)
+                    true
+
+                when 'viewAsList:'
+                    menuItem.setState(@booksViewType == VIEW_AS_LIST ? NSOnState : NSOffState)
+                    true
+                
+                when 'toggleToolbarShown:'
+                    menuItem.setTitle((@mainWindow.toolbar.isVisible?) ? _('Show Toolbar') : _('Hide Toolbar'))
+                    true
+
+                when 'toggleSidepane:'
+                    menuItem.setTitle((_sidepaneHidden?) ? _('Show Libraries') : _('Hide Libraries'))
+                    true
 
                 else
                     true
@@ -249,10 +361,14 @@ module UI
                     dataSource.flushCachedInfoForBook(book)
                 end
                 @booksTableView.reloadData
+                if _viewAsIcons?
+                    @mainWindow.makeFirstResponder(@booksMatrix)
+                end
             end
         end
     
         def newLibrary(sender)
+            toggleSidepane(self) if _sidepaneHidden?
             library = @librariesTableView.dataSource.addLibraryWithAutogeneratedName
             @librariesTableView.reloadData
             _selectLibrary(library, true)
@@ -284,12 +400,48 @@ module UI
             @mainWindow.makeFirstResponder(@toolbarSearchField)
         end
         
+        def clearSearchResults(sender)
+            @toolbarSearchField.setStringValue("")
+            _filterBooks(nil)
+        end
+        
         def doubleClickOnLibraries(sender)
             # Do nothing.
         end
         
         def doubleClickOnBooks(sender)
             getInfo(sender)
+        end
+        
+        def viewAsIcons(sender)
+            _setBooksView(VIEW_AS_ICON)
+        end
+
+        def viewAsList(sender)
+            _setBooksView(VIEW_AS_LIST)
+        end
+        
+        def toggleSidepane(sender)
+            frame = _sidepaneView.frame
+            if _sidepaneHidden?
+                # Show sidepane
+                @previousSidepaneWidth ||= 100
+                frame.size.width = @previousSidepaneWidth
+                frame.size.height = @booksView.frame.size.height
+                _sidepaneView.setFrame(frame)
+                
+                # Accordingly reduce the books view
+                frame = @booksView.frame
+                frame.origin.x += @previousSidepaneWidth
+                frame.size.width -= @previousSidepaneWidth
+                @booksView.setFrame(frame)
+            else
+                # Hide sidepane, no need to adjust the books view
+                @previousSidepaneWidth = frame.size.width
+                frame.size.width = 0
+                _sidepaneView.setFrame(frame)
+            end
+            @splitView.adjustSubviews        
         end
 
         #######
@@ -304,14 +456,28 @@ module UI
         
         def _selectedBooks
             books = []
-            selection = @booksTableView.selectedRowIndexes
-            library = @booksTableView.dataSource.library
-            if selection.count > 0 and !library.empty?
-                index = selection.firstIndex
-                begin
-                    books << library[index]
-                    index = selection.indexGreaterThanIndex(index)
-                end while index != NSNotFound
+            if _viewAsIcons?
+                dataSource = @booksMatrix.dataSource
+                @booksMatrix.selectedCells.to_a.each do |cell|
+                    next if cell.objectValue.nil?
+                    row = @booksMatrix.rowOfCell(cell)
+                    next if row == -1
+                    col = @booksMatrix.columnOfCell(cell)
+                    next if col == -1
+                    books << dataSource.matrix_bookForColumn_row(@booksMatrix, 
+                                                                 col, 
+                                                                 row)
+                end
+            else
+                selection = @booksTableView.selectedRowIndexes
+                library = @booksTableView.dataSource.library
+                if selection.count > 0 and !library.empty?
+                    index = selection.firstIndex
+                    begin
+                        books << library[index]
+                        index = selection.indexGreaterThanIndex(index)
+                    end while index != NSNotFound
+                end
             end
             return books
         end
@@ -432,39 +598,111 @@ module UI
             librariesColumn.setDataCell(TitledImageCell.alloc.init)
             @librariesTableView.setDoubleAction(:doubleClickOnLibraries_)
             @librariesTableView.setTarget(self)
+            pboardTypes = [BooksDataSource::PASTEBOARD_TYPE]
+            @librariesTableView.registerForDraggedTypes(pboardTypes)
         end
 
-        def _setupViews
+        def _relayoutBooksMatrix(dataChanged=true)            
+            # Compute the new size of the matrix
+            library = @booksMatrix.dataSource.library
+            nBooks = library.length
+            matrixFrame = @booksMatrix.frame
+            width = matrixFrame.size.width
+            nCols = (width / (BooksDataSource::ICON_WIDTH.to_f + @booksMatrix.intercellSpacing.width)).floor
+            nCols = 1 if nCols == 0
+            nRows = (nBooks / nCols.to_f).ceil
+
+            # Current and new sizes are the same
+            if @booksMatrix.numberOfRows == nRows and 
+               @booksMatrix.numberOfColumns == nCols
+                
+                # Do nothing if the data did not change
+                return unless dataChanged
+            else                            
+                # Resize
+                newHeight = (nRows * BooksDataSource::ICON_HEIGHT) + @booksMatrix.intercellSpacing.height * (nRows - 1)
+                matrixFrame.size.height = newHeight
+                @booksMatrix.setFrame(matrixFrame)
+                @booksMatrix.renewRows_columns(nRows, nCols)
+            end
+
+            @booksMatrix.reloadData
+        end
+
+        def _setupViews            
+            # icons
+            @booksMatrix.setDataSource(@booksTableView.dataSource)
+            @booksMatrix.setDelegate(self)
+            @booksMatrix.setCellClass(BookIconCell.oc_class)
+            cellSize = NSSize.new(BooksDataSource::ICON_WIDTH, 
+                                  BooksDataSource::ICON_HEIGHT)
+            @booksMatrix.setCellSize(cellSize)
+            @booksMatrix.setIntercellSpacing(NSSize.new(18, 8))
+            @booksMatrix.setAllowsEmptySelection(true)
+            @booksMatrix.setSelectionByRect(true)
+            @booksMatrix.setAutoscroll(true)
+            @booksMatrix.setMode(NSListModeMatrix)
+            @booksMatrix.setFocusRingType(NSFocusRingTypeNone)
+            @booksMatrix.setDoubleAction(:doubleClickOnBooks_)
+            
+            # list
             titleColumn = @booksTableView.tableColumnWithIdentifier(:title)
             titleColumn.setDataCell(TitledImageCell.alloc.init)
             ratingColumn = @booksTableView.tableColumnWithIdentifier(:rating)
             ratingColumn.setDataCell(RatingCell.alloc.init)
             @booksTableView.setDoubleAction(:doubleClickOnBooks_)
             @booksTableView.setTarget(self)
+            
+            NSNotificationCenter.defaultCenter.addObserver(self, :selector, "booksViewFrameDidChange:",
+                                                                 :name, 'NSViewFrameDidChangeNotification',
+                                                                 :object, @booksView)
         end
 
         def _setBooksView(type)
-            @booksView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
-            case type
-                when VIEW_AS_ICON
-                    # TODO
+            return if @booksViewType == type
+            wasFirstResponder = _focusOnBooksView?
+            @booksViewType = type
 
-                when VIEW_AS_LIST
-                    realView = @booksTableView.superview.superview
-                    realView.setFrameSize(@booksView.frame.size)
-                    @booksView.addSubview(realView)
-            end
-            @booksView.setNeedsDisplay(TRUE)
+            # Remove previous books view
+            @booksView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
+            
+            # Setup new books view
+            newView, newControl = type == VIEW_AS_ICON ? [@booksIconView, @booksMatrix] : [@booksListView, @booksTableView]
+            newView.setFrame(@booksView.bounds)
+            @booksView.addSubview(newView)
+            @mainWindow.makeFirstResponder(newControl) if wasFirstResponder
+            @librariesTableView.setNextKeyView(newControl)
+            newControl.setNextKeyView(@librariesTableView)
+
+            # Redraw
+            @booksView.setNeedsDisplay(true)
         end
         
+        def _viewAsIcons?
+            @booksViewType == VIEW_AS_ICON
+        end
+
+        def _viewAsList?
+            @booksViewType == VIEW_AS_LIST
+        end
+
         def _focusOnBooksView?
             responder = @mainWindow.firstResponder
-            responder != nil and responder.__ocid__ == @booksTableView.__ocid__
+            responder != nil and (responder.__ocid__ == @booksTableView.__ocid__ or
+                                  responder.__ocid__ == @booksMatrix.__ocid__)
         end
         
         def _focusOnLibraryView?
             responder = @mainWindow.firstResponder
             responder != nil and responder.__ocid__ == @librariesTableView.__ocid__
+        end
+        
+        def _sidepaneView
+            @librariesTableView.superview.superview
+        end
+        
+        def _sidepaneHidden?
+            _sidepaneView.frame.size.width == 0
         end
     end
 end

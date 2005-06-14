@@ -69,12 +69,16 @@
             ACTIONS = {
                 about = id; 
                 addBook = id; 
+                clearSearchResults = id; 
                 delete = id; 
                 find = id; 
                 getInfo = id; 
                 makeDonation = id; 
                 newLibrary = id; 
                 reportBug = id; 
+                toggleSidepane = id; 
+                viewAsIcons = id; 
+                viewAsList = id; 
             }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
@@ -82,16 +86,21 @@
                 aboutController = AboutController; 
                 addBookController = AddBookController; 
                 bookInfoController = BookInfoController; 
+                booksIconView = NSView; 
+                booksListView = NSView; 
+                booksMatrix = NSMatrix; 
                 booksTableView = NSTableView; 
                 booksView = NSView; 
                 librariesTableView = NSTableView; 
                 mainWindow = NSWindow; 
+                splitView = NSSplitView; 
                 toolbarSearchField = NSSearchField; 
                 toolbarSearchView = NSView; 
                 toolbarSwitchModeView = NSView; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
+        {CLASS = Matrix; LANGUAGE = ObjC; SUPERCLASS = NSMatrix; }, 
         {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = RatingField; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 

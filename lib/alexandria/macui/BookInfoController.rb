@@ -125,12 +125,17 @@ module UI
 
         # NSWindow delegation
         
-        def windowWillClose(notification)
+        def windowShouldClose(sender)
             if @panel.isVisible?
                 _validateEditing
+                return false if _alertRunning?
                 @booksToSave.each { |book| @library.save(book) }
                 @on_close_block.call(@booksToSave)
             end
+            return true
+        end
+        
+        def windowWillClose(notification)
             NSApplication.sharedApplication.stopModal
         end
         
@@ -155,7 +160,7 @@ module UI
                                  "used in this library."))
                         return false
                     end                   
-                    @book.isbn = begin
+                    newIsbn = begin
                         Library.canonicalise_isbn(string)
                     rescue Alexandria::Library::InvalidISBNError
                         _alert(_("Couldn't modify the book"),
@@ -164,6 +169,7 @@ module UI
                                  "correcty, and try again."))
                         return false
                     end
+                    @isbnTextField.setStringValue(newIsbn)
                 end
             end
             return true
@@ -179,7 +185,7 @@ module UI
                     @book.title = string
                 end
             elsif textView.__ocid__ == @isbnTextField.__ocid__
-                newIsbn = string == "" ? nil : string
+                newIsbn = Library.canonicalise_isbn(string)
                 if @book.isbn != newIsbn
                     changed = true
                     @book.isbn = newIsbn
@@ -288,14 +294,31 @@ module UI
             @notesTextView.setString((@book.notes or ""))
         end
         
+        def _alertRunning?
+            @alertRunning
+        end
+        
+        def _alertDidEnd(sender)
+            @alertRunning = false
+            
+            if @panel.firstResponder.__ocid__ == @panel.__ocid__
+                @panel.makeFirstResponder(@isbnTextField)
+                # Ugly hack to force editing...
+                @isbnTextField.currentEditor.copy(self)
+                @isbnTextField.currentEditor.paste(self)
+            end
+        end
+        
         def _alert(title, description)
             alert = NSAlert.alloc.init
             alert.setMessageText(title)
             alert.setInformativeText(description)
             alert.addButtonWithTitle(_("OK"))
 
-            alert.beginSheetModalForWindow(@panel, :modalDelegate, nil,
-                                                   :didEndSelector, nil,
+            @alertRunning = true
+            @alertFirstResponder = @panel.firstResponder
+            alert.beginSheetModalForWindow(@panel, :modalDelegate, self,
+                                                   :didEndSelector, :_alertDidEnd_,
                                                    :contextInfo, nil)
         end
         

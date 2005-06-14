@@ -25,8 +25,8 @@ module UI
         def keyDown(event)
             chars = event.charactersIgnoringModifiers
             if chars.length > 0 and chars.characterAtIndex(0) == NSDeleteCharacter
-                if self.delegate.respond_to?(:tableView_deleteCharacterDown)
-                    self.delegate.tableView_deleteCharacterDown(self)
+                if self.delegate.respondsToSelector?('tableView:deleteCharacterDown:')
+                    self.delegate.tableView_deleteCharacterDown(self, event)
                 end
             else
                 super_keyDown(event)
@@ -61,7 +61,7 @@ module UI
                 oldSelectedRow = self.selectedRow
                 super_mouseDown(event)
                 delegate = self.delegate
-                if delegate.respond_to?(:tableView_shouldEditTableColumn_row)
+                if delegate.respondsToSelector?('tableView:shouldEditTableColumn:row:')
                     if oldSelectedRow == self.selectedRow and
                        delegate.tableView_shouldEditTableColumn_row(self,
                                                                     self.tableColumns.objectAtIndex(col),
@@ -75,7 +75,7 @@ module UI
                     end
                 end
                 
-                if delegate.respond_to?(:tableView_mouseDown_oldSelectedRow)
+                if delegate.respondsToSelector?('tableView:mouseDown:oldSelectedRow:')
                     delegate.tableView_mouseDown_oldSelectedRow(self, event, oldSelectedRow)
                 end
             # double (or more) click 

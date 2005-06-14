@@ -16,6 +16,7 @@
 # Boston, MA 02111-1307, USA.
 
 require 'alexandria/macui/Icons'
+require 'alexandria/macui/Matrix'
 require 'alexandria/macui/TableView'
 require 'alexandria/macui/RatingField'
 require 'alexandria/macui/BooksDataSource'
@@ -27,8 +28,9 @@ require 'alexandria/macui/MainController'
 
 module Alexandria
 module UI
-    OSX.ns_import :TitledImageCell
+    OSX.ns_import :BookIconCell
     OSX.ns_import :RatingCell
+    OSX.ns_import :TitledImageCell
 
     def self.main
         Icons.init

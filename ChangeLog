@@ -1,3 +1,22 @@
+2005-06-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* alexandria.xcode/project.pbxproj,
+	  data/alexandria/icons/book_icon.png,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/macui/BookIconCell.m,
+	  lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/LibrariesDataSource.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/Utils.m,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	Work in progress on the Cocoa port (icon view, DND, bug fixes...).
+
 2005-06-13  Dafydd Harries  <daf@muse.19inch.net>
 
 	* lib/alexandria/web_themes.rb:

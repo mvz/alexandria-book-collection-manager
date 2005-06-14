@@ -5,6 +5,21 @@
 	};
 	objectVersion = 39;
 	objects = {
+		4D02B5820858D46000684B98 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = Matrix.rb;
+			path = lib/alexandria/macui/Matrix.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4D02B5830858D46000684B98 = {
+			fileRef = 4D02B5820858D46000684B98;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4D040729082E7435005D70E4 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -104,6 +119,8 @@
 				4DEFE11A0825249D0076ECC9,
 				4DFB34F30842771500F108DD,
 				4DC912CD084B8184004348FC,
+				4DAAFD9B08575A8F00DDE6F5,
+				4DA21AEA0859CEE0009E42E6,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +304,36 @@
 			settings = {
 			};
 		};
+		4DA21AE90859CEE0009E42E6 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = Utils.m;
+			path = lib/alexandria/macui/Utils.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DA21AEA0859CEE0009E42E6 = {
+			fileRef = 4DA21AE90859CEE0009E42E6;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		4DAAFD9A08575A8F00DDE6F5 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = BookIconCell.m;
+			path = lib/alexandria/macui/BookIconCell.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DAAFD9B08575A8F00DDE6F5 = {
+			fileRef = 4DAAFD9A08575A8F00DDE6F5;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4DC912CC084B8184004348FC = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -306,15 +353,18 @@
 			children = (
 				4DA1BB88084F797200D0A85C,
 				4D040794082E9F87005D70E4,
+				4DAAFD9A08575A8F00DDE6F5,
 				4DCD70A1082A962C002AB50D,
 				4DA13DB408475AA600D18E8E,
 				4DE4D3FC0850A6E7009ACF3B,
 				4DCD70A2082A962C002AB50D,
 				4DCD70A3082A962C002AB50D,
+				4D02B5820858D46000684B98,
 				4DC912CC084B8184004348FC,
 				4DA1BAA0084F5C4000D0A85C,
 				4D040729082E7435005D70E4,
 				4DFB34F20842771500F108DD,
+				4DA21AE90859CEE0009E42E6,
 			);
 			isa = PBXGroup;
 			name = macui;
@@ -399,6 +449,7 @@
 				4DE4D3FD0850A6E7009ACF3B,
 				4DCD70A5082A962C002AB50D,
 				4DCD70A6082A962C002AB50D,
+				4D02B5830858D46000684B98,
 				4DA1BAA1084F5C4000D0A85C,
 				4D04072A082E7435005D70E4,
 			);
