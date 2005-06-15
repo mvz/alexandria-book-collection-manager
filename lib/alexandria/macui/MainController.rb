@@ -28,7 +28,8 @@ module UI
                    :toolbarSwitchModeView,
                    :addBookController, :toolbarSearchField,
                    :bookInfoController, :aboutController, :booksMatrix,
-                   :booksIconView, :booksListView, :splitView
+                   :booksIconView, :booksListView, :splitView,
+                   :exportController
         
         VIEW_AS_ICON, VIEW_AS_LIST = 0, 1
         
@@ -294,6 +295,7 @@ module UI
         # Completion
 
         def textView_completions_forPartialWordRange_indexOfSelectedItem(textView, words, charRange, index)
+            # TODO
             p 'completion'
             return NSArray.array
         end
@@ -301,6 +303,8 @@ module UI
         # NSMenuItem validation
 
         def validateMenuItem(menuItem)
+            return false unless @mainWindow.isKeyWindow?
+            
             case menuItem.action.to_s
                 when 'getInfo:'
                     _focusOnBooksView? and _selectedBooks.length == 1
@@ -361,6 +365,7 @@ module UI
                     dataSource.flushCachedInfoForBook(book)
                 end
                 @booksTableView.reloadData
+                @booksMatrix.reloadData
                 if _viewAsIcons?
                     @mainWindow.makeFirstResponder(@booksMatrix)
                 end
@@ -442,6 +447,14 @@ module UI
                 _sidepaneView.setFrame(frame)
             end
             @splitView.adjustSubviews        
+        end
+        
+        def import(sender)
+            
+        end
+        
+        def export(sender)
+            @exportController.openWindow(_selectedLibrary)
         end
 
         #######

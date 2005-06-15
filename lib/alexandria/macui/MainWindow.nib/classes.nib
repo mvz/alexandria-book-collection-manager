@@ -64,6 +64,18 @@
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = BooksDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = ExportController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                accessoryView = NSView; 
+                formatsPopupButton = NSPopUpButton; 
+                mainWindow = NSWindow; 
+                previewImageView = NSImageView; 
+                themesPopupButton = NSPopUpButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = LibrariesDataSource; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
             ACTIONS = {
@@ -71,8 +83,10 @@
                 addBook = id; 
                 clearSearchResults = id; 
                 delete = id; 
+                export = id; 
                 find = id; 
                 getInfo = id; 
+                import = id; 
                 makeDonation = id; 
                 newLibrary = id; 
                 reportBug = id; 
@@ -91,6 +105,7 @@
                 booksMatrix = NSMatrix; 
                 booksTableView = NSTableView; 
                 booksView = NSView; 
+                exportController = ExportController; 
                 librariesTableView = NSTableView; 
                 mainWindow = NSWindow; 
                 splitView = NSSplitView; 

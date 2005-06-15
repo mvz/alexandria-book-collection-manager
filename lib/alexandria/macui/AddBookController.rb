@@ -19,7 +19,10 @@ module Alexandria
 module UI
     class AddBookController < OSX::NSObject
         include OSX
-    
+
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
         ib_outlets :window, :mainWindow, :resultsTableView, 
                    :librariesComboBox, :isbnButtonCell,
                    :searchButtonCell, :isbnTextField, :searchTextField,
@@ -66,8 +69,30 @@ module UI
                                     :contextInfo, nil)
         end
         
+        def opened?
+            @window.isVisible?
+        end
+        
         def onAdd(sender)
-            NSApplication.sharedApplication.endSheet_returnCode(@window, RESPONSE_ADD)
+            @books_to_add = []
+            if _isbnCriterion?
+                _asyncSearch(Library.canonicalise_isbn(@isbnTextField.stringValue.to_s),
+                             BookProviders::SEARCH_BY_ISBN) do |result|
+                    @books_to_add << result
+                end
+            else
+                selection = @resultsTableView.selectedRowIndexes
+                return if selection.count == 0
+                index = selection.firstIndex
+                begin
+                    @books_to_add << @results[index]
+                    index = selection.indexGreaterThanIndex(index)
+                end while index != NSNotFound
+            end
+            
+            unless @books_to_add.empty?
+                NSApplication.sharedApplication.endSheet_returnCode(@window, RESPONSE_ADD)
+            end
         end
         
         def onCancel(sender)
@@ -77,7 +102,7 @@ module UI
         def onDoubleClickOnResults(sender)
             NSApplication.sharedApplication.endSheet_returnCode(@window, RESPONSE_ADD)
         end
-
+        
         def onToggleCriterion(sender)
             isbn = _isbnCriterion?
             @isbnTextField.setEnabled(isbn)
@@ -109,25 +134,7 @@ module UI
         end
         
         def sheetDidEnd_returnCode_contextInfo(sheetWindow, returnCode, contextInfo)
-            if returnCode == RESPONSE_ADD
-                books_to_add = []
-                if _isbnCriterion?
-                    _asyncSearch(Library.canonicalise_isbn(@isbnTextField.stringValue.to_s),
-                                 BookProviders::SEARCH_BY_ISBN) do |result|
-                        books_to_add << result
-                    end
-                else
-                    selection = @resultsTableView.selectedRowIndexes
-                    return if selection.count == 0
-                    index = selection.firstIndex
-                    begin
-                        books_to_add << @results[index]
-                        index = selection.indexGreaterThanIndex(index)
-                    end while index != NSNotFound
-                end
-                
-                return if books_to_add.empty?
-                
+            if returnCode == RESPONSE_ADD                
                 sel = @librariesComboBox.indexOfSelectedItem
                 return if sel == -1
                 library = @librariesComboBox.dataSource.libraries[sel]
@@ -136,7 +143,7 @@ module UI
                 @progressIndicator.startAnimation(self)
 
                 thread = Thread.start do
-                    books_to_add.each do |book, cover_uri|
+                    @books_to_add.each do |book, cover_uri|
                         unless cover_uri.nil?
                             library.save_cover(book, cover_uri)
                         end
@@ -153,7 +160,7 @@ module UI
                 @progressIndicator.stopAnimation(self)
 
                 s = true
-                @addBlock.call(library, books_to_add.reject { s = !s })
+                @addBlock.call(library, @books_to_add.reject { s = !s })
             end
             sheetWindow.orderOut(self)
         end
@@ -241,6 +248,17 @@ module UI
 
             do_reload_results = proc { |results| yield results }
             
+            do_error = proc do |errorMessage|
+                alert = NSAlert.alloc.init
+                alert.setMessageText(_("Could not add the book"))
+                alert.setInformativeText(errorMessage)
+                alert.addButtonWithTitle(_("OK"))
+
+                alert.beginSheetModalForWindow(@window, :modalDelegate, nil,
+                                                        :didEndSelector, nil,
+                                                        :contextInfo, nil)                
+            end
+            
             do_stop_progress = proc do
                 @progressIndicator.stopAnimation(self)
                 @progressIndicator.setHidden(true)
@@ -251,8 +269,7 @@ module UI
                     results = Alexandria::BookProviders.search(criterion, mode)
                     queue.sync_call(do_reload_results, results)
                 rescue => e
-                    puts e.message
-                    puts e.backtrace
+                    queue.sync_call(do_error, e.message)
                 ensure
                     queue.sync_call(do_stop_progress)
                 end
@@ -261,7 +278,9 @@ module UI
             while thread.alive?
                 queue.iterate
                 NSRunLoop.currentRunLoop.runUntilDate(NSDate.distantPast)
-            end        
+            end
+            
+            p 'okay'
         end
 
         def _searchForResults

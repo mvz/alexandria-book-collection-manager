@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'fileutils'
+
 module Alexandria
 module UI
     class BookInfoController < OSX::NSObject
@@ -114,12 +116,17 @@ module UI
 
         def coverDidChange(sender)
             newImage = @coverImageView.image
-            newBitmap = NSBitmapImageRep.imageRepWithData(newImage.TIFFRepresentation)
-            properties = NSDictionary.dictionaryWithObject_forKey(NSNumber.numberWithFloat(1),
-                                                                  'NSImageCompressionFactor')
-            jpegData = newBitmap.representationUsingType_properties(NSJPEGFileType,
-                                                                    properties)
-            jpegData.writeToFile_atomically(@library.cover(@book), true)
+            if newImage
+                newBitmap = NSBitmapImageRep.imageRepWithData(newImage.TIFFRepresentation)
+                properties = NSDictionary.dictionaryWithObject_forKey(NSNumber.numberWithFloat(1),
+                                                                      'NSImageCompressionFactor')
+                jpegData = newBitmap.representationUsingType_properties(NSJPEGFileType,
+                                                                        properties)
+                jpegData.writeToFile_atomically(@library.cover(@book), true)
+            else
+                @coverImageView.setImage(Icons::NO_COVER)
+                FileUtils.rm_f(@library.cover(@book))
+            end
             _scheduleSave
         end
 

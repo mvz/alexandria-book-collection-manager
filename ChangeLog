@@ -1,3 +1,26 @@
+2005-06-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/export_library.rb (#export_as_html):
+
+	Create the directory if it does not exist yet.
+
+	* alexandria.xcode/project.pbxproj,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/ExportController.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- DND from the books list view ;
+	- Export pane ;
+	- Shows errors in the add book sheet ;
+	- Misc fixes.
+
 2005-06-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* alexandria.xcode/project.pbxproj,

@@ -72,7 +72,7 @@ module UI
             @mouseDownInitialPoint = point
 
             cell = (row != -1 and col != -1) ? self.cellAtRow_column(row, col) : nil
-            @mouseDownOnCell = cell != nil and cell.isEnabled?
+            @mouseDownOnCell = (cell != nil and cell.isEnabled?)
             if @mouseDownOnCell
                 unless self.selectedCells.containsObject?(cell)
                     self.selectCellAtRow_column(row, col)
@@ -129,7 +129,7 @@ module UI
         end
         
         def _performDraggingWithEvent(event)
-            selectedCells = self.selectedCells.to_a
+            selectedCells = self.selectedCells.to_a.select { |cell| cell.isEnabled? }
             return if selectedCells.empty?
 
             # Prepare the pasteboard

@@ -334,6 +334,21 @@
 			settings = {
 			};
 		};
+		4DB7EBCF085F325400F00399 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = ExportController.rb;
+			path = lib/alexandria/macui/ExportController.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4DB7EBD0085F325400F00399 = {
+			fileRef = 4DB7EBCF085F325400F00399;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4DC912CC084B8184004348FC = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -356,6 +371,7 @@
 				4DAAFD9A08575A8F00DDE6F5,
 				4DCD70A1082A962C002AB50D,
 				4DA13DB408475AA600D18E8E,
+				4DB7EBCF085F325400F00399,
 				4DE4D3FC0850A6E7009ACF3B,
 				4DCD70A2082A962C002AB50D,
 				4DCD70A3082A962C002AB50D,
@@ -446,6 +462,7 @@
 				4D040795082E9F87005D70E4,
 				4DCD70A4082A962C002AB50D,
 				4DA13DB508475AA600D18E8E,
+				4DB7EBD0085F325400F00399,
 				4DE4D3FD0850A6E7009ACF3B,
 				4DCD70A5082A962C002AB50D,
 				4DCD70A6082A962C002AB50D,

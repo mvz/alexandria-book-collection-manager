@@ -90,6 +90,7 @@ module Alexandria
         end
        
         def export_as_html(filename, theme)
+            FileUtils.mkdir(filename) unless File.exists?(filename)
             Dir.chdir(filename) do
                 copy_covers("pixmaps")
                 FileUtils.cp_r(theme.pixmaps_directory, 

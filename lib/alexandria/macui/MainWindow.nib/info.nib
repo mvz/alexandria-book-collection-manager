@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>IBDocumentLocation</key>
-	<string>67 -18 549 431 0 0 1024 746 </string>
+	<string>77 44 549 431 0 0 1024 746 </string>
 	<key>IBEditorPositions</key>
 	<dict>
 		<key>279</key>
-		<string>145 378 733 266 0 0 1024 746 </string>
+		<string>145 377 733 266 0 0 1024 746 </string>
 		<key>29</key>
 		<string>103 637 374 44 0 0 1024 746 </string>
 		<key>306</key>
-		<string>434 479 155 64 0 0 1024 746 </string>
+		<string>434 478 155 64 0 0 1024 746 </string>
 		<key>310</key>
-		<string>444 475 136 71 0 0 1024 746 </string>
+		<string>444 474 136 71 0 0 1024 746 </string>
 		<key>379</key>
 		<string>339 461 345 100 0 0 1024 746 </string>
 		<key>416</key>
-		<string>402 390 220 242 0 0 1024 746 </string>
+		<string>402 389 220 242 0 0 1024 746 </string>
+		<key>741</key>
+		<string>194 560 309 128 0 0 1024 746 </string>
 	</dict>
 	<key>IBFramework Version</key>
 	<string>437.0</string>
@@ -32,14 +34,15 @@
 		<integer>306</integer>
 		<integer>279</integer>
 		<integer>416</integer>
-		<integer>310</integer>
-		<integer>583</integer>
 		<integer>327</integer>
-		<integer>29</integer>
+		<integer>583</integer>
+		<integer>741</integer>
 		<integer>495</integer>
+		<integer>310</integer>
 		<integer>21</integer>
+		<integer>29</integer>
 	</array>
 	<key>IBSystem Version</key>
-	<string>8A428</string>
+	<string>8B15</string>
 </dict>
 </plist>

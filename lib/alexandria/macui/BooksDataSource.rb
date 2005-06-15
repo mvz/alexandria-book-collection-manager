@@ -92,6 +92,21 @@ module UI
             book.ident
         end
         
+        def tableView_writeRowsWithIndexes_toPasteboard(tableView, rowIndexes, pasteboard)
+            books = []
+            pos = rowIndexes.firstIndex
+            while pos != NSNotFound
+                books << @library[pos]
+                pos = rowIndexes.indexGreaterThanIndex(pos)
+            end
+            return nil if books.empty?
+            pasteboard.declareTypes_owner(NSArray.arrayWithObject(PASTEBOARD_TYPE),
+                                          self)
+            booksIdent = books.map { |book| book.ident }
+            pasteboard.setPropertyList_forType(booksIdent, PASTEBOARD_TYPE)
+            return true
+        end
+        
         def flushCachedInfoForBook(book)
             @smallCovers.delete(book.ident) if @smallCovers
             @iconCovers.delete(book.ident) if @iconCovers

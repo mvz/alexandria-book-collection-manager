@@ -24,6 +24,7 @@ require 'alexandria/macui/LibrariesDataSource'
 require 'alexandria/macui/AboutController'
 require 'alexandria/macui/AddBookController'
 require 'alexandria/macui/BookInfoController'
+require 'alexandria/macui/ExportController'
 require 'alexandria/macui/MainController'
 
 module Alexandria
