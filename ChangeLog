@@ -16,6 +16,7 @@
 	  lib/alexandria/macui/MainWindow.nib/info.nib,
 	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
 
+	- Unified title/toolbar look in the main window ;
 	- DND from the books list view ;
 	- Export pane ;
 	- Shows errors in the add book sheet ;
