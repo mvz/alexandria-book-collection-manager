@@ -21,13 +21,14 @@
                 criterionMatrix = NSMatrix; 
                 isbnButtonCell = NSButtonCell; 
                 isbnTextField = NSTextField; 
-                librariesComboBox = NSComboBox; 
+                librariesDataSource = LibrariesDataSource; 
+                librariesPopupButton = NSPopUpButton; 
                 mainWindow = NSWindow; 
                 progressIndicator = NSProgressIndicator; 
                 resultsScrollView = NSScrollView; 
                 resultsTableView = NSTableView; 
                 searchButtonCell = NSButtonCell; 
-                searchComboBox = NSComboBox; 
+                searchPopupButton = NSPopUpButton; 
                 searchTextField = NSTextField; 
                 window = NSWindow; 
             }; 
@@ -71,8 +72,22 @@
                 accessoryView = NSView; 
                 formatsPopupButton = NSPopUpButton; 
                 mainWindow = NSWindow; 
-                previewImageView = NSImageView; 
                 themesPopupButton = NSPopUpButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {stop = id; }; 
+            CLASS = ImportController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                accessoryView = NSView; 
+                formatsPopupButton = NSPopUpButton; 
+                importProgressIndicator = NSProgressIndicator; 
+                librariesDataSource = LibrariesDataSource; 
+                libraryTextField = NSTextField; 
+                mainWindow = NSWindow; 
+                progressWindow = NSWindow; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
@@ -106,6 +121,7 @@
                 booksTableView = NSTableView; 
                 booksView = NSView; 
                 exportController = ExportController; 
+                importController = ImportController; 
                 librariesTableView = NSTableView; 
                 mainWindow = NSWindow; 
                 splitView = NSSplitView; 

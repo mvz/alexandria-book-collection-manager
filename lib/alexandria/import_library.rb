@@ -123,21 +123,28 @@ module Alexandria
                 canonicalise_isbn(line.chomp) rescue nil
             end 
             return nil unless isbn_list.all?
+            max_iterations = isbn_list.length * 2
+            current_iteration = 1
             books = []
-            isbn_list.each_with_index do |isbn, n|
+            isbn_list.each do |isbn|
                 begin
                     books << Alexandria::BookProviders.isbn_search(isbn)
                 rescue => e
                     return nil unless
                         (on_error_cb and on_error_cb.call(e.message))
                 end
-                on_iterate_cb.call(n+1, isbn_list.length) if on_iterate_cb
+
+                on_iterate_cb.call(current_iteration += 1, 
+                                   max_iterations) if on_iterate_cb
             end
             library = load(name)
             books.each do |book, cover_uri|
                 library.save_cover(book, cover_uri) if cover_uri != nil
                 library << book
                 library.save(book)
+
+                on_iterate_cb.call(current_iteration += 1, 
+                                   max_iterations) if on_iterate_cb
             end
             return library
         end

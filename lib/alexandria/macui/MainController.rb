@@ -29,7 +29,7 @@ module UI
                    :addBookController, :toolbarSearchField,
                    :bookInfoController, :aboutController, :booksMatrix,
                    :booksIconView, :booksListView, :splitView,
-                   :exportController
+                   :exportController, :importController
         
         VIEW_AS_ICON, VIEW_AS_LIST = 0, 1
         
@@ -450,7 +450,11 @@ module UI
         end
         
         def import(sender)
-            
+            @importController.openWindow do |newLibrary|
+                @librariesTableView.dataSource.libraries << newLibrary
+                @librariesTableView.reloadData
+                _selectLibrary(newLibrary)
+            end
         end
         
         def export(sender)

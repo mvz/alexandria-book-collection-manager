@@ -36,6 +36,11 @@ module Alexandria
             @protect_pending_calls = Mutex.new
             @protect_pending_retvals = Mutex.new
             @id = 0
+            @@current_queue = self
+        end
+
+        def self.current
+            @@current_queue
         end
 
         # For the requesting thread.
@@ -61,11 +66,15 @@ module Alexandria
                 end
             end
         end
+
+        def stop
+            @@current_queue = nil
+        end
         
         #######
         private
         #######
-        
+
         def push(procedure, args, need_retval=false)
             @protect_pending_calls.synchronize do
                 @id += 1

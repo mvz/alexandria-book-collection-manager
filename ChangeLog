@@ -1,3 +1,30 @@
+2005-06-17  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/import_library.rb:
+
+	In the ISBN-list text file import, call the iterate callback when
+	downloading covers.
+
+	* lib/alexandria/execution_queue.rb:
+
+	Maintain the latest created object in a class variable.
+
+	* alexandria.xcode/project.pbxproj,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/Icons.rb,
+	  lib/alexandria/macui/ImportController.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Utils.m,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Import pane ;
+	- Redesigned the add book dialog to use popup buttons instead of combo
+	  boxes ;
+	- Misc fixes.
+
 2005-06-16  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb:

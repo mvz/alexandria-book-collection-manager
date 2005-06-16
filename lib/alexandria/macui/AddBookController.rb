@@ -24,10 +24,11 @@ module UI
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         ib_outlets :window, :mainWindow, :resultsTableView, 
-                   :librariesComboBox, :isbnButtonCell,
+                   :librariesPopupButton, :isbnButtonCell,
                    :searchButtonCell, :isbnTextField, :searchTextField,
-                   :searchComboBox, :criterionMatrix, :addButton,
-                   :progressIndicator, :resultsScrollView
+                   :searchPopupButton, :criterionMatrix, :addButton,
+                   :progressIndicator, :resultsScrollView, 
+                   :librariesDataSource
 
         RESPONSE_ADD, RESPONSE_CANCEL = 1, 2
 
@@ -42,22 +43,26 @@ module UI
             @resultsDirty = true
             _reloadResults
             @criterionMatrix.sendAction
+            
+            @searchPopupButton.removeAllItems
+            [_('By Title'), _('By Author'), _('By Keyword')].each do |criterion|
+                @searchPopupButton.addItemWithTitle(criterion)
+            end
         end
         
         def openWindow(selectedLibrary, &addBlock)
             app = NSApplication.sharedApplication
             @addBlock = addBlock
 
-            @librariesComboBox.reloadData
-            max = @librariesComboBox.numberOfItems
-            max = 5 if max > 5
-            @librariesComboBox.setNumberOfVisibleItems(max)
-            
-            index = @librariesComboBox.dataSource.libraries.index(selectedLibrary)
+            @librariesPopupButton.removeAllItems
+            @librariesDataSource.libraries.each do |library|
+                @librariesPopupButton.addItemWithTitle(library.name)
+            end
+            index = @librariesDataSource.libraries.index(selectedLibrary)
             index ||= 0
-            @librariesComboBox.selectItemAtIndex(index)
-            
-            @searchComboBox.selectItemAtIndex(0)
+            @librariesPopupButton.selectItemAtIndex(index)
+                        
+            @searchPopupButton.selectItemAtIndex(0)
             
             unless _isbnCriterion?
                 @addButton.setEnabled(!@results.empty?)
@@ -106,7 +111,7 @@ module UI
         def onToggleCriterion(sender)
             isbn = _isbnCriterion?
             @isbnTextField.setEnabled(isbn)
-            @searchComboBox.setEnabled(!isbn)
+            @searchPopupButton.setEnabled(!isbn)
             @searchTextField.setEnabled(!isbn)
             if @results.length > 0
                 isbn ? _packResults : _unpackResults
@@ -135,9 +140,9 @@ module UI
         
         def sheetDidEnd_returnCode_contextInfo(sheetWindow, returnCode, contextInfo)
             if returnCode == RESPONSE_ADD                
-                sel = @librariesComboBox.indexOfSelectedItem
+                sel = @librariesPopupButton.indexOfSelectedItem
                 return if sel == -1
-                library = @librariesComboBox.dataSource.libraries[sel]
+                library = @librariesDataSource.libraries[sel]
 
                 @progressIndicator.setHidden(false)
                 @progressIndicator.startAnimation(self)
@@ -279,16 +284,14 @@ module UI
                 queue.iterate
                 NSRunLoop.currentRunLoop.runUntilDate(NSDate.distantPast)
             end
-            
-            p 'okay'
+            queue.stop
         end
 
         def _searchForResults
             text = @searchTextField.stringValue.to_s.strip
             return if text.length == 0
 
-            @searchComboBox.indexOfSelectedItem
-            mode = case @searchComboBox.indexOfSelectedItem
+            mode = case @searchPopupButton.indexOfSelectedItem
                 when 0
                     BookProviders::SEARCH_BY_TITLE
                 when 1

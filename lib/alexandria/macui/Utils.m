@@ -24,6 +24,12 @@
 
 @end
 
+@interface NSImage (Utils)
+
++ (BOOL)isBlank:(NSString *)filename;
+
+@end
+
 @implementation NSMatrix (Utils)
 
 - (int)rowOfCell:(NSCell *)cell
@@ -48,6 +54,27 @@
 {
     int row, col;
     return ([self getRow:&row column:&col forPoint:point]) ? col : -1;    
+}
+
+@end
+
+@implementation NSImage (Utils)
+
++ (BOOL)isBlank:(NSString *)filename
+{
+    NSImage *   image;
+    BOOL        blank;
+
+    image = [[NSImage alloc] initWithContentsOfFile:filename];
+    if ([image isValid]) {
+        NSSize size = [image size];
+        blank = size.width <= 1 && size.height <= 1;
+    }
+    else {
+        blank = YES;
+    }
+    [image release];
+    return blank;
 }
 
 @end
