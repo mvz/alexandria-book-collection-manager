@@ -146,7 +146,8 @@ class BookProviders
         end
 
         def url(book)
-		"http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+            return nil unless book.isbn
+            "http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
         end
     end
 end

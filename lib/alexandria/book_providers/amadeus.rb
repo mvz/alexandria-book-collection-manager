@@ -70,6 +70,7 @@ class BookProviders
         end
 
         def url(book)
+            return nil unless book.isbn
             BASE_URI + "shop/bde_bu_hg_startseite/schnellsuche/buch/?fqbi=" + book.isbn
         end
 

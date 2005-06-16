@@ -104,6 +104,7 @@ class BookProviders
         end
 
         def url(book)
+            return nil unless book.isbn
             url = case prefs["locale"]
                 when "fr"
                     "http://www.amazon.fr/exec/obidos/ASIN/%s"

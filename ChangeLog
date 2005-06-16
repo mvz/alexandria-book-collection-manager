@@ -1,3 +1,19 @@
+2005-06-16  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/amadeus.rb,
+	  lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/bn.rb,
+	  lib/alexandria/book_providers/ibs_it.rb,
+	  lib/alexandria/book_providers/mcu.rb,
+	  lib/alexandria/book_providers/proxis.rb:
+
+	Make sure #url methods return nil if the given book is ISBN-less.
+
+	* lib/alexandria/export_library.rb:
+
+	In the ONIX export, do not write ProductWebsite elements for providers
+	that return nil URLs.
+
 2005-06-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/export_library.rb (#export_as_html):

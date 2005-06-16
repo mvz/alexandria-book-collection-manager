@@ -158,11 +158,12 @@ module Alexandria
                         File.join('images', final_cover(book))
                 end
                 BookProviders.each do |provider|
+                    url = provider.url(book)
+                    next if url.nil?
                     elem = prod.add_element('ProductWebSite')
                     elem.add_element('ProductWebsiteDescription').text = 
                         provider.fullname
-                    elem.add_element('ProductWebsiteLink').text = 
-                        provider.url(book)
+                    elem.add_element('ProductWebsiteLink').text = url
                 end
             end
             return doc

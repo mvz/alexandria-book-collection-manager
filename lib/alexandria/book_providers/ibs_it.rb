@@ -65,6 +65,7 @@ class BookProviders
         end
 
         def url(book)
+            return nil unless book.isbn
             "http://www.internetbookshop.it/ser/serdsp.asp?isbn=" + book.isbn
         end
 
