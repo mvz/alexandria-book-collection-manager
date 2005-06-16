@@ -1,5 +1,9 @@
 2005-06-16  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/library.rb:
+
+	Handle low-case 'x' when validating ISBN/EAN/...
+
 	* lib/alexandria/book_providers/amadeus.rb,
 	  lib/alexandria/book_providers/amazon.rb,
 	  lib/alexandria/book_providers/bn.rb,
