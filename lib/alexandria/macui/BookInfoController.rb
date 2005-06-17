@@ -30,7 +30,8 @@ module UI
                    :coverImageView, :panel, :loanedToTextField,
                    :loanedSinceDatePicker, :loanedSwitchButton,
                    :tabView, :ratingField, :addAuthorButton,
-                   :removeAuthorButton, :notesTextView
+                   :removeAuthorButton, :notesTextView,
+                   :buttonsView, :infoButtonsView, :addButtonsView
         
         def awakeFromNib
             @coverImageView.setImageFrameStyle(NSImageFramePhoto)
@@ -45,16 +46,61 @@ module UI
 
             @booksToSave = []
         end
+        
+        EDIT_WINDOW, MANUAL_ADD_WINDOW = 1, 2
                 
-        def openWindow(library, book, &on_close_block)
+        def openWindowToEdit(library, book, &on_close_block)
+            @type = EDIT_WINDOW
             @book, @library, @on_close_block = book, library, on_close_block
             @booksToSave.clear
             _updateUI
             @tabView.selectTabViewItemAtIndex(0)
+            @buttonsView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
+            @buttonsView.addSubview(@infoButtonsView)
+            @infoButtonsView.setFrame(@buttonsView.bounds)
+            NSApplication.sharedApplication.runModalForWindow(@panel)
+        end
+        
+        def openWindowToAdd(library, &on_close_block)
+            @type = MANUAL_ADD_WINDOW
+            @library, @on_close_block = library, on_close_block
+            @book = Book.new('', [], nil, '', '')
+            _updateUI
+            @tabView.selectTabViewItemAtIndex(0)
+            @buttonsView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
+            @buttonsView.addSubview(@addButtonsView)
+            @addButtonsView.setFrame(@buttonsView.bounds)
             NSApplication.sharedApplication.runModalForWindow(@panel)
         end
 
         # Actions
+        
+        def add(sender)
+            _validateEditing
+            unless _alertRunning?
+                if @book.title.empty?
+                    _alert(_("Couldn't add the book"),
+                           _("A title must be provided."),
+                           @titleTextField)
+                elsif @book.publisher.empty?
+                    _alert(_("Couldn't add the book"),
+                           _("A publisher must be provided."))
+                elsif @book.edition.empty?
+                    _alert(_("Couldn't add the book"),
+                           _("A binding must be provided."))
+                elsif @book.authors.empty?
+                    _alert(_("Couldn't add the book"),
+                           _("At least one author must be provided."))
+                else
+                    @book.saved_ident = @book.ident
+                    @library.save_cover(@book, @coverFilename) if @coverFilename
+                    @library << @book
+                    @library.save(@book)
+                    @on_close_block.call(@book)
+                    @panel.close
+                end
+            end
+        end
         
         def addAuthor(sender)
             @book.authors << _("Author")
@@ -87,7 +133,7 @@ module UI
             @book.loaned = isLoaned
             @loanedToTextField.setEnabled(isLoaned)
             @loanedSinceDatePicker.setEnabled(isLoaned)
-            _scheduleSave
+            _scheduleSave if @type == EDIT_WINDOW
         end
         
         def previousBook(sender)
@@ -122,22 +168,27 @@ module UI
                                                                       'NSImageCompressionFactor')
                 jpegData = newBitmap.representationUsingType_properties(NSJPEGFileType,
                                                                         properties)
-                jpegData.writeToFile_atomically(@library.cover(@book), true)
+                @coverFilename = @type == EDIT_WINDOW \
+                    ? @library.cover(@book) \
+                    : File.join(OSX::NSTemporaryDirectory(), 'cover.jpg')
+                jpegData.writeToFile_atomically(@coverFilename, true)
             else
                 @coverImageView.setImage(Icons::NO_COVER)
                 FileUtils.rm_f(@library.cover(@book))
             end
-            _scheduleSave
+            _scheduleSave if @type == EDIT_WINDOW
         end
 
         # NSWindow delegation
         
         def windowShouldClose(sender)
             if @panel.isVisible?
-                _validateEditing
-                return false if _alertRunning?
-                @booksToSave.each { |book| @library.save(book) }
-                @on_close_block.call(@booksToSave)
+                if @type == EDIT_WINDOW
+                    _validateEditing
+                    return false if _alertRunning?                
+                    @booksToSave.each { |book| @library.save(book) }
+                    @on_close_block.call(@booksToSave)
+                end
             end
             return true
         end
@@ -192,7 +243,7 @@ module UI
                     @book.title = string
                 end
             elsif textView.__ocid__ == @isbnTextField.__ocid__
-                newIsbn = Library.canonicalise_isbn(string)
+                newIsbn = string == "" ? nil : Library.canonicalise_isbn(string)
                 if @book.isbn != newIsbn
                     changed = true
                     @book.isbn = newIsbn
@@ -213,7 +264,7 @@ module UI
                     @book.loaned_to = string
                 end
             end
-            _scheduleSave if changed
+            _scheduleSave if changed and @type == EDIT_WINDOW
         end
 
         # RatingField delegation
@@ -221,7 +272,7 @@ module UI
         def ratingField_ratingDidChange(ratingField, newRating)
             if @book.rating != newRating
                 @book.rating = newRating
-                _scheduleSave
+                _scheduleSave if @type == EDIT_WINDOW
             end
         end
 
@@ -250,7 +301,7 @@ module UI
             newAuthor = objectValue.to_s.strip
             if author != newAuthor
                 @book.authors[row] = newAuthor
-                _scheduleSave
+                _scheduleSave if @type == EDIT_WINDOW 
             end
         end
 
@@ -309,21 +360,21 @@ module UI
             @alertRunning = false
             
             if @panel.firstResponder.__ocid__ == @panel.__ocid__
-                @panel.makeFirstResponder(@isbnTextField)
+                @panel.makeFirstResponder(@alertFirstResponder)
                 # Ugly hack to force editing...
-                @isbnTextField.currentEditor.copy(self)
-                @isbnTextField.currentEditor.paste(self)
+                @alertFirstResponder.currentEditor.copy(self)
+                @alertFirstResponder.currentEditor.paste(self)
             end
         end
         
-        def _alert(title, description)
+        def _alert(title, description, responder=nil)
             alert = NSAlert.alloc.init
             alert.setMessageText(title)
             alert.setInformativeText(description)
             alert.addButtonWithTitle(_("OK"))
 
             @alertRunning = true
-            @alertFirstResponder = @panel.firstResponder
+            @alertFirstResponder = (responder or @isbnTextField)
             alert.beginSheetModalForWindow(@panel, :modalDelegate, self,
                                                    :didEndSelector, :_alertDidEnd_,
                                                    :contextInfo, nil)
@@ -347,14 +398,14 @@ module UI
             newNotes = @notesTextView.string.to_s.strip
             if @book.notes != newNotes
                 @book.notes = newNotes
-                _scheduleSave
+                _scheduleSave if @type == EDIT_WINDOW
             end
             
             # handle the loaning date...
             newLoaningDate = @loanedSinceDatePicker.dateValue.timeIntervalSince1970
             if @book.loaned_since != newLoaningDate
                 @book.loaned_since = newLoaningDate
-                _scheduleSave
+                _scheduleSave if @type == EDIT_WINDOW
             end
         end
 

@@ -40,7 +40,7 @@ module Alexandria
         end
 
         def self.current
-            @@current_queue
+            @@current_queue rescue nil
         end
 
         # For the requesting thread.

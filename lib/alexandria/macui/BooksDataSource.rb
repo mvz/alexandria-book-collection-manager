@@ -106,7 +106,11 @@ module UI
             pasteboard.setPropertyList_forType(booksIdent, PASTEBOARD_TYPE)
             return true
         end
-        
+
+        def tableView_sortDescriptorsDidChange(tableView, oldDescriptors)
+            p oldDescriptors.to_a
+        end
+
         def flushCachedInfoForBook(book)
             @smallCovers.delete(book.ident) if @smallCovers
             @iconCovers.delete(book.ident) if @iconCovers
@@ -151,7 +155,7 @@ module UI
                 cover = NSImage.alloc.initWithContentsOfFile(filename)
                 width, height = cover.size.to_a
                 new_height = ICON_HEIGHT - 40
-                new_width = (width / (height / new_height)).ceil
+                new_width = [(width / (height / new_height)).ceil, ICON_WIDTH].min
                 small_cover = NSImage.alloc.initWithSize(NSSize.new(ICON_WIDTH, new_height))
                 drawRect = NSRect.new((ICON_WIDTH - new_width) / 2, 0, new_width, new_height)
                 small_cover.lockFocus

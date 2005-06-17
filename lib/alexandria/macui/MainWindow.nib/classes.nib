@@ -37,6 +37,7 @@
         {CLASS = AutoEditableTextField; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }, 
         {
             ACTIONS = {
+                add = id; 
                 addAuthor = id; 
                 nextBook = id; 
                 previousBook = id; 
@@ -47,9 +48,12 @@
             LANGUAGE = ObjC; 
             OUTLETS = {
                 addAuthorButton = NSButton; 
+                addButtonsView = NSView; 
                 authorsTableView = NSTableView; 
                 bindingTextField = NSTextField; 
+                buttonsView = NSView; 
                 coverImageView = NSImageView; 
+                infoButtonsView = NSView; 
                 isbnTextField = NSTextField; 
                 loanedSinceDatePicker = NSDatePicker; 
                 loanedSwitchButton = NSButton; 
@@ -96,6 +100,7 @@
             ACTIONS = {
                 about = id; 
                 addBook = id; 
+                addBookManually = id; 
                 clearSearchResults = id; 
                 delete = id; 
                 export = id; 
@@ -106,6 +111,7 @@
                 newLibrary = id; 
                 reportBug = id; 
                 toggleSidepane = id; 
+                toggleToolbar = id; 
                 viewAsIcons = id; 
                 viewAsList = id; 
             }; 

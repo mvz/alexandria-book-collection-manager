@@ -1,3 +1,20 @@
+2005-06-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/execution_queue.rb:
+
+	Fixed a bug in the .current method.
+
+	* lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Added manual addition of books ;
+	- Draw a gray border around covers in the icon view ;
+	- Misc fixes.
+
 2005-06-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/import_library.rb:

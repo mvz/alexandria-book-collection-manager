@@ -100,7 +100,8 @@ module UI
             
             @booksTableView.dataSource.library = filteredLibrary
             @booksTableView.reloadData
-       
+
+            _updateWindowTitle
             _relayoutBooksMatrix
          end
         
@@ -228,7 +229,7 @@ module UI
             tableView = notification.object
             if tableView.__ocid__ == @librariesTableView.__ocid__
                 _filterBooks(nil)
-                @mainWindow.setTitle(_selectedLibrary.name)
+                _updateWindowTitle
             end
         end
 
@@ -267,6 +268,7 @@ module UI
                                                           :forTableColumn, tableColumn,
                                                           :row, row)
                 tableView.reloadData
+                _updateWindowTitle
             end
         end
 
@@ -326,8 +328,8 @@ module UI
                     menuItem.setState(@booksViewType == VIEW_AS_LIST ? NSOnState : NSOffState)
                     true
                 
-                when 'toggleToolbarShown:'
-                    menuItem.setTitle((@mainWindow.toolbar.isVisible?) ? _('Show Toolbar') : _('Hide Toolbar'))
+                when 'toggleToolbar:'
+                    menuItem.setTitle((@mainWindow.toolbar.isVisible?) ? _('Hide Toolbar') : _('Show Toolbar'))
                     true
 
                 when 'toggleSidepane:'
@@ -359,13 +361,14 @@ module UI
             books = _selectedBooks
             return if books.length != 1
             dataSource = @booksTableView.dataSource
-            @bookInfoController.openWindow(dataSource.library, 
-                                           books.first) do |modifiedBooks|
+            @bookInfoController.openWindowToEdit(dataSource.library, 
+                                                 books.first) do |modifiedBooks|
                 modifiedBooks.each do |book|
                     dataSource.flushCachedInfoForBook(book)
                 end
                 @booksTableView.reloadData
                 @booksMatrix.reloadData
+                _updateWindowTitle
                 if _viewAsIcons?
                     @mainWindow.makeFirstResponder(@booksMatrix)
                 end
@@ -385,6 +388,18 @@ module UI
                     _selectLibrary(library)
                 else
                     _filterBooks(nil)
+                end
+            end
+        end
+
+        def addBookManually(sender)
+            dataSource = @booksTableView.dataSource
+            @bookInfoController.openWindowToAdd(dataSource.library) do |newBook|
+                @booksTableView.reloadData
+                @booksMatrix.reloadData
+                _updateWindowTitle
+                if _viewAsIcons?
+                    @mainWindow.makeFirstResponder(@booksMatrix)
                 end
             end
         end
@@ -447,6 +462,10 @@ module UI
                 _sidepaneView.setFrame(frame)
             end
             @splitView.adjustSubviews        
+        end
+        
+        def toggleToolbar(sender)
+            @mainWindow.toggleToolbarShown(sender)
         end
         
         def import(sender)
@@ -720,6 +739,25 @@ module UI
         
         def _sidepaneHidden?
             _sidepaneView.frame.size.width == 0
+        end
+        
+        def _updateWindowTitle
+            library = _selectedLibrary
+            title = if library.empty?
+                library.name
+            else
+                s = library.name
+                s += ' ('
+                s += n_("%d book", "%d books", library.length) % library.length
+                n_unrated = library.n_unrated
+                if n_unrated > 0
+                    s += ", "
+                    s += n_("%d unrated", "%d unrated", n_unrated) % n_unrated
+                end
+                s += ")"
+                s
+            end
+            @mainWindow.setTitle(title)
         end
     end
 end
