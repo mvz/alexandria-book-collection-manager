@@ -141,7 +141,7 @@ msgstr "Die Datei existiert bereits"
 #: ../lib/alexandria/ui/export_dialog.rb:28
 #: ../lib/alexandria/ui/main_app.rb:53
 msgid "_Replace"
-msgstr "_Ersetzten"
+msgstr "_Ersetzen"
 
 #: ../lib/alexandria/ui/export_dialog.rb:29
 msgid ""
@@ -541,7 +541,7 @@ msgstr "Der Verlag enthält"
 
 #: ../lib/alexandria/ui/main_app.rb:947
 msgid "Notes contain"
-msgstr "Die Bemerkungen enhalten"
+msgstr "Die Bemerkungen enthalten"
 
 #: ../lib/alexandria/ui/main_app.rb:979
 msgid "View as Icons"
