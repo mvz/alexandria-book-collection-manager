@@ -1,3 +1,10 @@
+2005-06-26  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers.rb:
+
+	Avoid infinite loop when calling BookProviders::Preferences[] with an
+	integer.
+
 2005-06-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/execution_queue.rb:

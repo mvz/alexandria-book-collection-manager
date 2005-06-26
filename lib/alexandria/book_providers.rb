@@ -116,15 +116,15 @@ module Alexandria
             end
 
             def [](obj)
+                p obj
                 case obj
                     when String
                         var = self.find { |var| var.name == obj }
                         var ? var.value : nil
                     when Integer
-                        old_idx(obj)
+                        super(obj)
                 end
             end
-            alias_method :old_idx, :[]
 
             def read
                 self.each do |var|
