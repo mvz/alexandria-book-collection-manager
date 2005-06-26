@@ -26,6 +26,7 @@ require 'alexandria/macui/AddBookController'
 require 'alexandria/macui/BookInfoController'
 require 'alexandria/macui/ImportController'
 require 'alexandria/macui/ExportController'
+require 'alexandria/macui/PreferencesController'
 require 'alexandria/macui/MainController'
 
 module Alexandria

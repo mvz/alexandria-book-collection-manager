@@ -89,6 +89,30 @@ module UI
                 self.target.send(self.doubleAction.gsub(/:/, '_'))
             end
         end
+        
+        def setHidden_forColumnWithIdentifier(state, identifier)
+            @hiddenColumns ||= {}
+            identifier = identifier.to_s.strip
+            if state 
+                return if @hiddenColumns.key?(identifier)
+                tableColumn = self.tableColumnWithIdentifier(identifier)
+                return unless tableColumn
+                pos = self.columnWithIdentifier(identifier)
+                @hiddenColumns[identifier] = tableColumn
+                self.removeTableColumn(tableColumn)
+            else
+                tableColumn = @hiddenColumns[identifier]
+                return unless tableColumn
+                @hiddenColumns.delete(identifier)
+                self.addTableColumn(tableColumn)
+            end
+        end
+        
+        def isColumnWithIdentifierHidden(identifier)
+            @hiddenColumns ||= {}
+            identifier = identifier.to_s.strip
+            @hiddenColumns.key?(identifier)
+        end
     end
 end
 end

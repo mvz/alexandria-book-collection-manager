@@ -230,6 +230,21 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
+		4D8210D70865B9F300974EC4 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.script.ruby;
+			name = PreferencesController.rb;
+			path = lib/alexandria/macui/PreferencesController.rb;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		4D8210D80865B9F300974EC4 = {
+			fileRef = 4D8210D70865B9F300974EC4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4D96ED990825785800EA2CD1 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -377,6 +392,7 @@
 				4DCD70A2082A962C002AB50D,
 				4DCD70A3082A962C002AB50D,
 				4D02B5820858D46000684B98,
+				4D8210D70865B9F300974EC4,
 				4DC912CC084B8184004348FC,
 				4DA1BAA0084F5C4000D0A85C,
 				4D040729082E7435005D70E4,
@@ -469,6 +485,7 @@
 				4DCD70A5082A962C002AB50D,
 				4DCD70A6082A962C002AB50D,
 				4D02B5830858D46000684B98,
+				4D8210D80865B9F300974EC4,
 				4DA1BAA1084F5C4000D0A85C,
 				4D04072A082E7435005D70E4,
 			);

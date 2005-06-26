@@ -25,11 +25,12 @@ module UI
 
         ib_outlets :mainWindow, :booksView, :booksTableView, 
                    :librariesTableView, :toolbarSearchView, 
-                   :toolbarSwitchModeView,
                    :addBookController, :toolbarSearchField,
                    :bookInfoController, :aboutController, :booksMatrix,
                    :booksIconView, :booksListView, :splitView,
-                   :exportController, :importController
+                   :exportController, :importController, :preferencesController
+        
+        attr_reader :booksTableView
         
         VIEW_AS_ICON, VIEW_AS_LIST = 0, 1
         
@@ -55,8 +56,8 @@ module UI
         
         # NSToolbar delegation
         
-        TOOLITEM_NEW, TOOLITEM_ADD, TOOLITEM_SEARCH, TOOLITEM_SWITCH_MODE = \
-            (0..3).to_a.map { |x| x.to_s }
+        TOOLITEM_NEW, TOOLITEM_ADD, TOOLITEM_SEARCH, TOOLITEM_VIEW_AS_ICONS,
+            TOOLITEM_VIEW_AS_LIST = (0..4).to_a.map { |x| x.to_s }
         
         def _setupToolbar
             toolbar = NSToolbar.alloc.initWithIdentifier('myToolbar')
@@ -123,10 +124,18 @@ module UI
                     toolitem.setView(@toolbarSearchView)
                     height = @toolbarSearchView.frame.size.height
                     toolitem.setMinSize(NSSize.new(150, height))
-                when TOOLITEM_SWITCH_MODE
-                    toolitem.setLabel('View As')
-                    toolitem.setView(@toolbarSwitchModeView)
-                    toolitem.setMinSize(@toolbarSwitchModeView.frame.size)
+                when TOOLITEM_VIEW_AS_ICONS
+                    toolitem.setLabel('View As Icons')
+                    toolitem.setImage(Icons::VIEW_AS_ICONS)
+                    toolitem.setAction(:viewAsIcons)
+                    toolitem.setTarget(self)
+                    toolitem.setAutovalidates(false)
+                when TOOLITEM_VIEW_AS_LIST
+                    toolitem.setLabel('View As List')
+                    toolitem.setImage(Icons::VIEW_AS_LIST)
+                    toolitem.setAction(:viewAsList)
+                    toolitem.setTarget(self)
+                    toolitem.setAutovalidates(false)
             end
             return toolitem.retain
         end
@@ -137,7 +146,8 @@ module UI
              OSX.NSToolbarFlexibleSpaceItemIdentifier,
              TOOLITEM_SEARCH,
              OSX.NSToolbarFlexibleSpaceItemIdentifier,
-             TOOLITEM_SWITCH_MODE]
+             TOOLITEM_VIEW_AS_ICONS,
+             TOOLITEM_VIEW_AS_LIST]
         end
         
         def toolbarAllowedItemIdentifiers(toolbar)
@@ -306,7 +316,7 @@ module UI
 
         def validateMenuItem(menuItem)
             return false unless @mainWindow.isKeyWindow?
-            
+
             case menuItem.action.to_s
                 when 'getInfo:'
                     _focusOnBooksView? and _selectedBooks.length == 1
@@ -478,6 +488,10 @@ module UI
         
         def export(sender)
             @exportController.openWindow(_selectedLibrary)
+        end
+
+        def preferences(sender)
+            @preferencesController.openWindow
         end
 
         #######
@@ -709,6 +723,10 @@ module UI
             @mainWindow.makeFirstResponder(newControl) if wasFirstResponder
             @librariesTableView.setNextKeyView(newControl)
             newControl.setNextKeyView(@librariesTableView)
+
+            # Sensitize the 'view as' toolbar items
+            @toolbarItems[TOOLITEM_VIEW_AS_ICONS].setEnabled(type != VIEW_AS_ICON)
+            @toolbarItems[TOOLITEM_VIEW_AS_LIST].setEnabled(type == VIEW_AS_ICON)
 
             # Redraw
             @booksView.setNeedsDisplay(true)

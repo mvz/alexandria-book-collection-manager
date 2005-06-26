@@ -5,6 +5,21 @@
 	Avoid infinite loop when calling BookProviders::Preferences[] with an
 	integer.
 
+	* alexandria.xcode/project.pbxproj,
+	  data/alexandria/icons/view_as_icons.png,
+	  data/alexandria/icons/view_as_list.png,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/PreferencesController.rb,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Preferences pane ;
+	- 'View As...' toolbar items ;
+	- Misc fixes.
+
 2005-06-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/execution_queue.rb:

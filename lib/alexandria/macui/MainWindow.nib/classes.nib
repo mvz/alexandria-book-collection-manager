@@ -109,6 +109,7 @@
                 import = id; 
                 makeDonation = id; 
                 newLibrary = id; 
+                preferences = id; 
                 reportBug = id; 
                 toggleSidepane = id; 
                 toggleToolbar = id; 
@@ -130,16 +131,49 @@
                 importController = ImportController; 
                 librariesTableView = NSTableView; 
                 mainWindow = NSWindow; 
+                preferencesController = PreferencesController; 
                 splitView = NSSplitView; 
                 toolbarSearchField = NSSearchField; 
                 toolbarSearchView = NSView; 
-                toolbarSwitchModeView = NSView; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = Matrix; LANGUAGE = ObjC; SUPERCLASS = NSMatrix; }, 
         {CLASS = NSDatePicker; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = NSSegmentedControl; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
+        {
+            ACTIONS = {
+                addProvider = id; 
+                removeProvider = id; 
+                setupProvider = id; 
+                toggleShowColumn = id; 
+            }; 
+            CLASS = PreferencesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                addProviderButton = NSButton; 
+                authorsButton = NSButton; 
+                bindingButton = NSButton; 
+                isbnButton = NSButton; 
+                mainController = MainController; 
+                panel = NSPanel; 
+                providersPreferencesController = ProviderPreferencesController; 
+                providersTableView = NSTableView; 
+                publisherButton = NSButton; 
+                ratingButton = NSButton; 
+                removeProviderButton = NSButton; 
+                setupProviderButton = NSButton; 
+                tabView = NSTabView; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {close = id; }; 
+            CLASS = ProviderPreferencesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {contentView = NSView; preferencesWindow = NSWindow; window = NSWindow; }; 
+            SUPERCLASS = NSObject; 
+        }, 
         {CLASS = RatingField; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 
         {CLASS = TableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }
     ); 
