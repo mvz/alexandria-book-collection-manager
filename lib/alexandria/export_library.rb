@@ -114,12 +114,13 @@ module Alexandria
                                       "SYSTEM \"#{ONIX_DTD_URL}\"")
             msg = doc.add_element('ONIXMessage')
             header = msg.add_element('Header')
-            now = Time.now
+            header.add_element('FromCompany').text = "Alexandria"
+            header.add_element('FromPerson').text = Etc.getlogin
+            header.add_element('MessageNote').text = name
+			now = Time.now
             header.add_element('SentDate').text = "%.4d%.2d%.2d%.2d%.2d" % [ 
                 now.year, now.month, now.day, now.hour, now.min 
             ]
-            header.add_element('FromPerson').text = Etc.getlogin
-            header.add_element('MessageNote').text = name
             each_with_index do |book, idx|
                 # fields that are missing: edition and rating.
                 prod = msg.add_element('Product')
@@ -158,12 +159,11 @@ module Alexandria
                         File.join('images', final_cover(book))
                 end
                 BookProviders.each do |provider|
-                    url = provider.url(book)
-                    next if url.nil?
                     elem = prod.add_element('ProductWebSite')
                     elem.add_element('ProductWebsiteDescription').text = 
                         provider.fullname
-                    elem.add_element('ProductWebsiteLink').text = url
+                    elem.add_element('ProductWebsiteLink').text = 
+                        provider.url(book)
                 end
             end
             return doc
@@ -282,6 +282,7 @@ EOS
 </p>
 </body>
 </html>
+EOS
 EOS
         end
     end
