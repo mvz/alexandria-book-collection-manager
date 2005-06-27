@@ -1,3 +1,10 @@
+2005-06-27	Liam Davison	<carnegie@liamjdavison.info>
+
+	* lib/alexandria/export_library.rb:
+	
+	Added <FromCompany> attribute to the ONIX export. Company is simply set to 'Alexandria'
+	Moved <SentDate> attribute to correct position in ONIX export. Header should now be valid
+
 2005-06-26  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers.rb:
