@@ -36,15 +36,15 @@ module UI
             book = @library[row]
             case col.identifier.to_s
                 when 'title'
-                    [ book.title, _smallCoverForBook(book) ]
+                    [ book.title.to_utf8_nsstring, _smallCoverForBook(book) ]
                 when 'authors'
-                    book.authors.join(', ')
+                    book.authors.join(', ').to_utf8_nsstring
                 when 'isbn'
                     book.isbn
                 when 'publisher'
-                    book.publisher
+                    book.publisher.to_utf8_nsstring
                 when 'binding'
-                    book.edition
+                    book.edition.to_utf8_nsstring
                 when 'rating'
                     rating = (book.rating or Book::DEFAULT_RATING)
                     NSNumber.numberWithUnsignedInt(rating)
@@ -71,7 +71,7 @@ module UI
                                 
         def matrix_objectValueForColumn_row(matrix, col, row)
             book = matrix_bookForColumn_row(matrix, col, row)
-            [_iconCoverForBook(book),  book.title]
+            [_iconCoverForBook(book),  book.title.to_utf8_nsstring]
         end
         
         def matrix_tooltipForColumn_row(matrix, col, row)
@@ -79,7 +79,8 @@ module UI
             if book.authors.empty?
                 book.title
             else
-                _("%s, by %s") % [book.title, book.authors.join(', ')]
+                _("%s, by %s") % [ book.title.to_utf8_nsstring, 
+                                   book.authors.join(', ').to_utf8_nsstring ]
             end
         end
         

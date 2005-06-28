@@ -131,9 +131,9 @@ module UI
         
         def tableView_objectValueForTableColumn_row(tableView, col, row)
             book = @results[row].first
-            line = "#{book.title}"
+            line = "#{book.title.to_utf8_nsstring}"
             unless book.authors.empty?
-                line << ", by #{book.authors.join(', ')}"
+                line << ", by #{book.authors.join(', ').to_utf8_nsstring}"
             end
             return line
         end
@@ -147,6 +147,7 @@ module UI
                 @progressIndicator.setHidden(false)
                 @progressIndicator.startAnimation(self)
 
+                GC.start
                 thread = Thread.start do
                     @books_to_add.each do |book, cover_uri|
                         unless cover_uri.nil?

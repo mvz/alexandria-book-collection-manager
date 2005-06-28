@@ -201,7 +201,7 @@ module UI
 
         def controlTextDidChange(notification)
             textView = notification.object
-            string = textView.stringValue.to_s.strip
+            string = textView.stringValue.UTF8String.strip
             if textView.__ocid__ == @titleTextField.__ocid__
                 @panel.setTitle(string)
             end
@@ -235,7 +235,7 @@ module UI
 
         def controlTextDidEndEditing(notification)
             textView = notification.object
-            string = textView.stringValue.to_s.strip
+            string = textView.stringValue.UTF8String.strip
             changed = false
             if textView.__ocid__ == @titleTextField.__ocid__
                 if @book.title != string
@@ -293,12 +293,12 @@ module UI
         end
         
         def tableView_objectValueForTableColumn_row(tableView, col, row)
-            @book.authors[row]
+            @book.authors[row].to_utf8_nsstring
         end
 
         def tableView_setObjectValue_forTableColumn_row(tableView, objectValue, col, row)
             author = @book.authors[row]
-            newAuthor = objectValue.to_s.strip
+            newAuthor = objectValue.UTF8String.strip
             if author != newAuthor
                 @book.authors[row] = newAuthor
                 _scheduleSave if @type == EDIT_WINDOW 
@@ -310,12 +310,12 @@ module UI
         #######
         
         def _updateUI
-            @panel.setTitle(@book.title)
+            @panel.setTitle(@book.title.to_utf8_nsstring)
         
-            @titleTextField.setStringValue(@book.title)
+            @titleTextField.setStringValue(@book.title.to_utf8_nsstring)
             @isbnTextField.setStringValue((@book.isbn or ""))
-            @publisherTextField.setStringValue(@book.publisher)
-            @bindingTextField.setStringValue(@book.edition)
+            @publisherTextField.setStringValue(@book.publisher.to_utf8_nsstring)
+            @bindingTextField.setStringValue(@book.edition.to_utf8_nsstring)
     
             @authorsTableView.reloadData
             _sensitizeAuthors
@@ -341,7 +341,7 @@ module UI
                 @loanedSinceDatePicker.setEnabled(false)
             end
             
-            @loanedToTextField.setStringValue((@book.loaned_to or ""))
+            @loanedToTextField.setStringValue((@book.loaned_to or "").to_utf8_nsstring)
             date = if @book.loaned_since != nil
                 NSDate.dateWithTimeIntervalSince1970(@book.loaned_since)
             else
@@ -349,7 +349,7 @@ module UI
             end
             @loanedSinceDatePicker.setDateValue(date)
 
-            @notesTextView.setString((@book.notes or ""))
+            @notesTextView.setString((@book.notes or "").to_utf8_nsstring)
         end
         
         def _alertRunning?
@@ -395,7 +395,7 @@ module UI
             end
 
             # handle the notes...
-            newNotes = @notesTextView.string.to_s.strip
+            newNotes = @notesTextView.string.UTF8String.strip
             if @book.notes != newNotes
                 @book.notes = newNotes
                 _scheduleSave if @type == EDIT_WINDOW

@@ -1,9 +1,21 @@
-2005-06-27	Liam Davison	<carnegie@liamjdavison.info>
+2005-06-28  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/utils.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb:
+
+	Fixed encoding issues by forcing encoding to all displayed strings to
+	UTF8.
+
+2005-06-27  Liam Davison  <carnegie@liamjdavison.info>
 
 	* lib/alexandria/export_library.rb:
-	
-	Added <FromCompany> attribute to the ONIX export. Company is simply set to 'Alexandria'
-	Moved <SentDate> attribute to correct position in ONIX export. Header should now be valid
+
+	Added <FromCompany> attribute to the ONIX export. Company is simply set 
+	to 'Alexandria'.
+	Moved <SentDate> attribute to correct position in ONIX export. Header 
+	should now be valid.
 
 2005-06-26  Laurent Sansonetti  <lrz@gnome.org>
 
