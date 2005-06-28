@@ -345,7 +345,7 @@ module UI
                 clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
                 if text = clipboard.wait_for_text
                     @entry_isbn.text = text if
-                        Library.valid_isbn?(text) or Library.valid_ean?(text)
+                        Library.valid_isbn?(text) or Library.valid_ean?(text) or Library.valid_upc?(text)
                 end
             end
         end
