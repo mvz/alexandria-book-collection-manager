@@ -1,3 +1,10 @@
+2005-06-29  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/MainController.rb:
+
+	Make sure the text input from the search toolbar item is converted
+	to UTF8.
+
 2005-06-28  Owain Evans  <o.evans@gmail.com>
 
 	* lib/alexandria/ui/new_book_dialog.rb:

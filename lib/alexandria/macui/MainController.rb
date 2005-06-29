@@ -71,7 +71,7 @@ module UI
         end
     
         def _filterBooks(sender)
-            criterion = @toolbarSearchField.stringValue.to_s.strip.downcase
+            criterion = @toolbarSearchField.stringValue.UTF8String.strip.downcase
             unless criterion.empty?
                 filteredLibrary = _selectedLibrary.select do |book|
                     s = case @searchCategory
