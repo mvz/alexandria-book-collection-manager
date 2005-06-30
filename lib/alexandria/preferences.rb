@@ -83,31 +83,47 @@ rescue LoadError
 module Alexandria
     class Preferences
         include Singleton
+        include OSX
 
-        # TODO
+        def initialize
+            @userDefaults = NSUserDefaults.standardUserDefaults
+            # register defaults here
+        end
 
-        def providers_priority
-            ['Amazon']
+        def method_missing(id, *args)
+            method = id.id2name
+            if match = /(.*)=$/.match(method)
+                if args.length != 1
+                    raise "Set method #{method} should be called with " +
+                          "only one argument (was called with #{args.length})"
+                end
+                puts "#{match[1]} -> #{args.first}"
+                @userDefaults.setObject_forKey(args.first, match[1]) 
+            else
+                unless args.empty?
+                    raise "Get method #{method} should be called " +
+                          "without argument (was called with #{args.length})"
+                end
+                _convertToRubyObject(@userDefaults.objectForKey(method))
+            end                
         end
+
+        #######
+        private
+        #######
         
-        def http_proxy_config
-            nil
-        end
-        
-        def amazon_locale
-            nil
-        end
-        
-        def amazon_dev_token
-            nil
-        end
-        
-        def amazon_associate
-            nil
-        end
-        
-        def proxis_lang
-            'fr'
+        def _convertToRubyObject(object)
+            if object.nil?
+                nil
+            elsif object.isKindOfClass?(NSString.oc_class)
+                object.to_s
+            elsif object.isKindOfClass?(NSNumber.oc_class)
+                object.intValue 
+            elsif object.isKindOfClass?(NSArray.oc_class)
+                object.to_a.map { |x| _convertToRubyObject(x) }
+            else
+                nil
+            end
         end
     end
 end

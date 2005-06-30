@@ -1,3 +1,19 @@
+2005-06-30  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/mcu.rb,
+	  lib/alexandria/book_providers/proxis.rb:
+
+	Use our new String#convert API instead of GLib.convert.
+
+	* alexandria.xcode/project.pbxproj,
+	  lib/alexandria/preferences.rb,
+	  lib/alexandria/macui/Info.plist,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/PreferencesController.rb,
+	  lib/alexandria/macui/MainWindow.nib/info.nib:
+
+	Introduced preferences persistence.
+
 2005-06-29  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb:

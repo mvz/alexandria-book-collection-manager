@@ -36,11 +36,10 @@
 	</array>
 	<key>IBOpenObjects</key>
 	<array>
-		<integer>583</integer>
-		<integer>306</integer>
 		<integer>872</integer>
 		<integer>495</integer>
 		<integer>21</integer>
+		<integer>29</integer>
 		<integer>817</integer>
 		<integer>741</integer>
 		<integer>279</integer>
@@ -50,7 +49,8 @@
 		<integer>851</integer>
 		<integer>416</integer>
 		<integer>829</integer>
-		<integer>29</integer>
+		<integer>583</integer>
+		<integer>306</integer>
 	</array>
 	<key>IBSystem Version</key>
 	<string>8B15</string>

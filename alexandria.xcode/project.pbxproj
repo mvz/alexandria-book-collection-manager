@@ -50,6 +50,22 @@
 			settings = {
 			};
 		};
+		4D0E3E1008735EAC009091D6 = {
+			buildActionMask = 2147483647;
+			dstPath = ..;
+			dstSubfolderSpec = 7;
+			files = (
+				4D0E3E83087360D1009091D6,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4D0E3E83087360D1009091D6 = {
+			fileRef = 4DEFE1150825249D0076ECC9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		4D4D8588082519F80090199E = {
 			children = (
 				4D4D85DD082520430090199E,
@@ -108,7 +124,6 @@
 				4DEFE11B0825249D0076ECC9,
 				4DEFE12B082525270076ECC9,
 				4DEFE11C0825249D0076ECC9,
-				4DDBD4F908257A0C007A141D,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -136,6 +151,7 @@
 		4D4D85AE08251CEC0090199E = {
 			buildPhases = (
 				4D4D85AB08251CEC0090199E,
+				4D0E3E1008735EAC009091D6,
 				4D4D85AC08251CEC0090199E,
 				4D4D85AD08251CEC0090199E,
 				4DEFE1EA082559720076ECC9,
@@ -492,12 +508,6 @@
 			isa = PBXCopyFilesBuildPhase;
 			name = "Copy UI Scripts";
 			runOnlyForDeploymentPostprocessing = 0;
-		};
-		4DDBD4F908257A0C007A141D = {
-			fileRef = 4DEFE1150825249D0076ECC9;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		4DDC8951086053C300A9C675 = {
 			fileEncoding = 30;

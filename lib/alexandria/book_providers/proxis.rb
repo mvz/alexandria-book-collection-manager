@@ -75,7 +75,7 @@ class BookProviders
         end
         
         def parseBook(product_id)
-            conv = proc { |str| str.convert(str, "utf-8", "windows-1252") }
+            conv = proc { |str| str.convert("utf-8", "windows-1252") }
             detailspage='http://oas2000.proxis.be/gate/jabba.coreii.g_p?bi=4&sp=DETAILS&mi='+product_id
             product = {}
             product['authors'] = []

@@ -35,7 +35,7 @@ class BookProviders
         
         def search(criterion, type)
             prefs.read
-	    criterion = GLib.convert(criterion, "WINDOWS-1252", "UTF-8")
+	    criterion = criterion.convert("WINDOWS-1252", "UTF-8")
 	    print "Doing search with MCU #{criterion}, type: #{type}\n" if $DEBUG # for DEBUGing
             req = BASE_URI + "CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
             req += case type
@@ -57,7 +57,7 @@ class BookProviders
             products = {}
 	    print "Request page is #{req}\n" if $DEBUG # for DEBUGing
             transport.get(URI.parse(req)).each do |line|
-	    	#line = GLib.convert(line, "ISO-8859-1", "UTF-8")
+	    	#line = line.convert("ISO-8859-1", "UTF-8")
 	    	print "Reading line: #{line}" if $DEBUG # for DEBUGing
                 if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1,$2)) then
                     products[$1] = book
@@ -85,7 +85,7 @@ class BookProviders
 	    # - CDU      - Last update
 
 	    # There seems to be an issue with accented chars..
-	    line = GLib.convert(line, "UTF-8", "ISO-8859-1")
+	    line = line.convert("UTF-8", "ISO-8859-1")
 	    print "Reading line (robotstate #{robotstate}): #{line}" if $DEBUG # for DEBUGing
                 if line =~ /^<\/td>$/ or line =~ /^<\/tr>$/
 		    robotstate = 0 

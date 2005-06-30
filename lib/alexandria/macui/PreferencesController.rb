@@ -54,9 +54,20 @@ module UI
         # Sheet delegation
         
         def sheetDidEnd_returnCode_contextInfo(sheetWindow, returnCode, contextInfo)
-            # TODO: save things here
-            sheetWindow.orderOut(self)
-            
+            @variableControls.each do |variable, control|
+                variable.new_value = case control
+                    when NSTextField
+                         control.stringValue.to_s
+                     
+                    when NSPopUpButton
+                         variable.possible_values[control.indexOfSelectedItem]
+                         
+                    else
+                        raise
+                end
+            end
+
+            sheetWindow.orderOut(self)            
             @close_cb.call
         end
         
@@ -70,8 +81,9 @@ module UI
             biggestLabelWidth = biggestValueWidth = 0
             
             @window.setMinSize(NSSize.new(1000, 1000))
+            @variableControls = {}
             
-            @provider.prefs.each do |variable|
+            @provider.prefs.read.each do |variable|
                 label = NSTextField.alloc.initWithFrame(NSRect.new(0, 0, 0, 0))
                 label.setStringValue(variable.description + ':')
                 label.setEditable(false)
@@ -94,16 +106,9 @@ module UI
                     end
                     index = variable.possible_values.index(variable.value)
                     valueControl.selectItemAtIndex(index)
-                    #entry.signal_connect('changed') do |cb|
-                    #    value = variable.possible_values[cb.active]
-                    #    variable.new_value = value
-                    #end
                 else
                     valueControl = NSTextField.alloc.initWithFrame(NSRect.new(0, 0, 0, 0))
                     valueControl.setStringValue(variable.value.to_s)
-                    #entry.signal_connect('changed') do |entry|
-                    #    variable.new_value = entry.text
-                    #end
                 end
                 valueControl.cell.setControlSize(NSSmallControlSize)
                 valueControl.setFont(font)
@@ -112,6 +117,7 @@ module UI
                 if width > biggestValueWidth
                     biggestValueWidth = width
                 end
+                @variableControls[variable] = valueControl
                 controls << [label, valueControl]
             end
 
@@ -200,7 +206,10 @@ module UI
         def toggleShowColumn(sender)
             hide = sender.state == NSOffState
             tableView = @mainController.booksTableView
-            tableView.setHidden_forColumnWithIdentifier(hide, _identifierForButton(sender))
+            id = _identifierForButton(sender)
+            tableView.setHidden_forColumnWithIdentifier(hide, id)
+            message = "col_#{id}_visible="
+            Preferences.instance.send(message, !hide)
         end
         
         def addProvider(sender)
@@ -271,7 +280,16 @@ module UI
             provider = BookProviders.instance.find { |x| x.name == providerName }
             return if provider.nil?
             
-            p 'drop!'
+            priority = BookProviders.instance.map { |x| x.name }
+            idx = priority.index(providerName)
+            priority[idx] = nil
+            priority.insert(row, providerName)
+            priority.compact!
+            
+            Preferences.instance.providers_priority = priority
+            BookProviders.update_priority
+
+            tableView.reloadData
             
             return true
         end

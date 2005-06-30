@@ -39,7 +39,6 @@ module UI
             _setupLibrariesTableView
             _setupViews
             _setupToolbar
-            _setBooksView(VIEW_AS_ICON)  
         end
         
         # NSWindow delegation
@@ -49,13 +48,13 @@ module UI
             # do the following in windowDidLoad.
             @windowLoaded ||= false
             unless @windowLoaded
-                _selectLibrary(@librariesTableView.dataSource.libraries.first)
                 @windowLoaded = true
+                _restorePreferences
             end
         end
-        
+
         # NSToolbar delegation
-        
+
         TOOLITEM_NEW, TOOLITEM_ADD, TOOLITEM_SEARCH, TOOLITEM_VIEW_AS_ICONS,
             TOOLITEM_VIEW_AS_LIST = (0..4).to_a.map { |x| x.to_s }
         
@@ -63,9 +62,11 @@ module UI
             toolbar = NSToolbar.alloc.initWithIdentifier('myToolbar')
             toolbar.setDisplayMode(NSToolbarDisplayModeIconAndLabel)
             toolbar.setDelegate(self)
+            toolbar.setAutosavesConfiguration(true)
+            toolbar.setAllowsUserCustomization(false)
             @mainWindow.setToolbar(toolbar)
             @toolbarItems = {}
-            @mainWindow.toolbar.visibleItems.to_a.each do |toolItem|
+            @mainWindow.toolbar.items.to_a.each do |toolItem|
                 @toolbarItems[toolItem.itemIdentifier.to_s] = toolItem
             end
         end
@@ -86,15 +87,15 @@ module UI
                         when FILTER_NOTES
                             (book.notes or "")
                         when FILTER_ALL
-                            [book.title, book.authors.join(', '), book.isbn,
-                             book.publisher, (book.notes or "")].join(' ')
+                            [ book.title, book.authors.join(', '), book.isbn,
+                              book.publisher, (book.notes or "") ].join(' ')
                     end
                     s.downcase.include?(criterion)
                 end
-                label = "#{filteredLibrary.length} of #{_selectedLibrary.length}"
+                label = _("%d of %d") % [ filteredLibrary.length, _selectedLibrary.length ]
             else
                 filteredLibrary = _selectedLibrary
-                label = 'Search'
+                label = _("Search")
             end
             
             @toolbarItems[TOOLITEM_SEARCH].setLabel(label)
@@ -110,28 +111,28 @@ module UI
             toolitem = NSToolbarItem.alloc.initWithItemIdentifier(identifier)
             case identifier.to_s
                 when TOOLITEM_NEW
-                    toolitem.setLabel('New Library')
+                    toolitem.setLabel(_('New Library'))
                     toolitem.setImage(Icons::LIBRARY)
                     toolitem.setAction(:newLibrary)
                     toolitem.setTarget(self)
                 when TOOLITEM_ADD
-                    toolitem.setLabel('Add Book')
+                    toolitem.setLabel(_('Add Book'))
                     toolitem.setImage(Icons::BOOK)
                     toolitem.setAction(:addBook)
                     toolitem.setTarget(self)
                 when TOOLITEM_SEARCH
-                    toolitem.setLabel('Search')
+                    toolitem.setLabel(_('Search'))
                     toolitem.setView(@toolbarSearchView)
                     height = @toolbarSearchView.frame.size.height
                     toolitem.setMinSize(NSSize.new(150, height))
                 when TOOLITEM_VIEW_AS_ICONS
-                    toolitem.setLabel('View As Icons')
+                    toolitem.setLabel(_('View As Icons'))
                     toolitem.setImage(Icons::VIEW_AS_ICONS)
                     toolitem.setAction(:viewAsIcons)
                     toolitem.setTarget(self)
                     toolitem.setAutovalidates(false)
                 when TOOLITEM_VIEW_AS_LIST
-                    toolitem.setLabel('View As List')
+                    toolitem.setLabel(_('View As List'))
                     toolitem.setImage(Icons::VIEW_AS_LIST)
                     toolitem.setAction(:viewAsList)
                     toolitem.setTarget(self)
@@ -240,6 +241,10 @@ module UI
             if tableView.__ocid__ == @librariesTableView.__ocid__
                 _filterBooks(nil)
                 _updateWindowTitle
+                if @windowLoaded 
+                    # Avoid race condition
+                    Preferences.instance.selected_library = _selectedLibrary.name 
+                end
             end
         end
 
@@ -455,6 +460,7 @@ module UI
             frame = _sidepaneView.frame
             if _sidepaneHidden?
                 # Show sidepane
+                Preferences.instance.sidepane_visible = true
                 @previousSidepaneWidth ||= 100
                 frame.size.width = @previousSidepaneWidth
                 frame.size.height = @booksView.frame.size.height
@@ -467,6 +473,7 @@ module UI
                 @booksView.setFrame(frame)
             else
                 # Hide sidepane, no need to adjust the books view
+                Preferences.instance.sidepane_visible = false
                 @previousSidepaneWidth = frame.size.width
                 frame.size.width = 0
                 _sidepaneView.setFrame(frame)
@@ -712,6 +719,7 @@ module UI
             return if @booksViewType == type
             wasFirstResponder = _focusOnBooksView?
             @booksViewType = type
+            Preferences.instance.view_as = type
 
             # Remove previous books view
             @booksView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
@@ -730,6 +738,7 @@ module UI
 
             # Redraw
             @booksView.setNeedsDisplay(true)
+            _relayoutBooksMatrix if type == VIEW_AS_ICON
         end
         
         def _viewAsIcons?
@@ -776,6 +785,41 @@ module UI
                 s
             end
             @mainWindow.setTitle(title)
+        end
+
+        def _restorePreferences
+            preferences = Preferences.instance
+
+            # Selected library
+            libraries = @librariesTableView.dataSource.libraries
+            library = nil
+            if name = preferences.selected_library
+                library = libraries.find { |x| x.name == name }
+            end
+            library ||= libraries.first
+            _selectLibrary(library)
+            
+            # View as mode
+            mode = preferences.view_as
+            _setBooksView(mode != nil ? mode : VIEW_AS_ICON)
+            
+            # Table columns visibility
+            @booksTableView.tableColumns.to_a.each do |tableColumn|
+                id = tableColumn.identifier.to_s
+                message = "col_#{id}_visible"
+                if visible = preferences.send(message)
+                    if visible == 0
+                        @booksTableView.setHidden_forColumnWithIdentifier(true, id)
+                    end
+                end
+            end
+            
+            # Sidepane
+            if visible = preferences.sidepane_visible
+                if visible == 0
+                    toggleSidepane(self)
+                end
+            end
         end
     end
 end
