@@ -1,3 +1,22 @@
+2005-07-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/BooksDataSource.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/PreferencesController.rb,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Fixed some bugs in the Add Book window ;
+	- Fixed a bug related to the empty selection of table views ;
+	- Added 'View/Online Information At' menu ;
+	- Added books table view column sorting ;
+	- Added books matrix sorting (via 'View/Arrange Icons By' menu).
+
 2005-06-30  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/mcu.rb,

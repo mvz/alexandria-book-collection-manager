@@ -28,7 +28,8 @@ module UI
                    :addBookController, :toolbarSearchField,
                    :bookInfoController, :aboutController, :booksMatrix,
                    :booksIconView, :booksListView, :splitView,
-                   :exportController, :importController, :preferencesController
+                   :exportController, :importController, :preferencesController,
+                   :onlineInfoMenuItem
         
         attr_reader :booksTableView
         
@@ -39,6 +40,7 @@ module UI
             _setupLibrariesTableView
             _setupViews
             _setupToolbar
+            _setupMenus
         end
         
         # NSWindow delegation
@@ -326,6 +328,17 @@ module UI
                 when 'getInfo:'
                     _focusOnBooksView? and _selectedBooks.length == 1
 
+                when 'viewOnlineInformation:'
+                    _focusOnBooksView? and _selectedBooks.length == 1
+
+                when 'arrangeIcons:'
+                    menuItem.setState(@arrangeIconsMode == menuItem.tag ? NSOnState : NSOffState)
+                    @booksViewType == VIEW_AS_ICON
+
+                when 'toggleIconsOrder:'
+                    menuItem.setState(@reverseIcons ? NSOnState : NSOffState)
+                    @booksViewType == VIEW_AS_ICON
+
                 when 'about:'
                     !@aboutController.opened?
 
@@ -350,7 +363,7 @@ module UI
                 when 'toggleSidepane:'
                     menuItem.setTitle((_sidepaneHidden?) ? _('Show Libraries') : _('Hide Libraries'))
                     true
-
+                    
                 else
                     true
             end
@@ -501,6 +514,28 @@ module UI
             @preferencesController.openWindow
         end
 
+        def viewOnlineInformation(sender)
+            providerName = sender.representedObject.to_s
+            provider = BookProviders.instance.find { |x| x.name == providerName }
+            if provider
+                urlString = provider.url(_selectedBooks.first)
+                if urlString
+                    url = NSURL.URLWithString(urlString)
+                    NSWorkspace.sharedWorkspace.openURL(url)
+                end
+            end
+        end
+
+        def arrangeIcons(sender)            
+            @arrangeIconsMode = sender.tag
+            _sortBooksMatrix
+        end
+        
+        def toggleIconsOrder(sender)
+            @reverseIcons = !@reverseIcons
+            _sortBooksMatrix
+        end
+
         #######
         private
         #######
@@ -527,11 +562,11 @@ module UI
                 end
             else
                 selection = @booksTableView.selectedRowIndexes
-                library = @booksTableView.dataSource.library
-                if selection.count > 0 and !library.empty?
+                dataSource = @booksTableView.dataSource
+                if selection.count > 0
                     index = selection.firstIndex
                     begin
-                        books << library[index]
+                        books << dataSource.tableView_bookAtRow(@booksTableView, index)
                         index = selection.indexGreaterThanIndex(index)
                     end while index != NSNotFound
                 end
@@ -701,6 +736,8 @@ module UI
             @booksMatrix.setMode(NSListModeMatrix)
             @booksMatrix.setFocusRingType(NSFocusRingTypeNone)
             @booksMatrix.setDoubleAction(:doubleClickOnBooks_)
+            @arrangeIconsMode = 0
+            @reverseIcons = false
             
             # list
             titleColumn = @booksTableView.tableColumnWithIdentifier(:title)
@@ -820,6 +857,40 @@ module UI
                     toggleSidepane(self)
                 end
             end
+        end
+        
+        def _setupMenus
+            # View Online Information at...
+            menu = @onlineInfoMenuItem.submenu
+            menu.numberOfItems.times { |i| p i; menu.removeItemAtIndex(i) }
+            BookProviders.instance.sort.each do |bookProvider|
+                menuItem = NSMenuItem.alloc.init
+                menuItem.setTitle(bookProvider.fullname)
+                menuItem.setTarget(self)
+                menuItem.setAction('viewOnlineInformation_')
+                menuItem.setRepresentedObject(bookProvider.name)
+                menu.addItem(menuItem)
+            end
+        end
+        
+        def _sortBooksMatrix
+            key = case @arrangeIconsMode
+                when 0
+                    :title
+                when 1
+                    :authors
+                when 2
+                    :isbn
+                when 3
+                    :publisher
+                when 4
+                    :edition
+                when 5
+                    :rating
+            end
+            ascending = @reverseIcons
+            sortDescriptor = NSSortDescriptor.alloc.initWithKey_ascending(key, ascending)
+            @booksMatrix.sortUsingSortDescriptor(sortDescriptor)
         end
     end
 end

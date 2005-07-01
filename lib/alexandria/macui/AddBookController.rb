@@ -78,6 +78,8 @@ module UI
             @window.isVisible?
         end
         
+        # Actions
+        
         def onAdd(sender)
             @books_to_add = []
             if _isbnCriterion?
@@ -105,7 +107,7 @@ module UI
         end
 
         def onDoubleClickOnResults(sender)
-            NSApplication.sharedApplication.endSheet_returnCode(@window, RESPONSE_ADD)
+            onAdd(sender)
         end
         
         def onToggleCriterion(sender)
@@ -125,6 +127,14 @@ module UI
             end
         end
         
+        # NSTableView delegation
+        
+        def tableViewSelectionDidChange(notification)
+            @addButton.setEnabled(@resultsTableView.selectedRowIndexes.count != 0)
+        end
+        
+        # NSTableView datasource
+        
         def numberOfRowsInTableView(tableView)
             @results != nil ? @results.length : 0
         end
@@ -137,6 +147,8 @@ module UI
             end
             return line
         end
+        
+        # Sheet delegate
         
         def sheetDidEnd_returnCode_contextInfo(sheetWindow, returnCode, contextInfo)
             if returnCode == RESPONSE_ADD                
@@ -171,6 +183,8 @@ module UI
             sheetWindow.orderOut(self)
         end
         
+        # NSTextField delegate
+        
         def controlTextDidChange(notification)
             textField = notification.object
             text = textField.stringValue.to_s
@@ -191,6 +205,8 @@ module UI
             end
         end
         
+        # NSWindow delegate
+        
         def windowDidBecomeKey(notification)
             if _isbnCriterion?
                 pboard = NSPasteboard.generalPasteboard
@@ -202,6 +218,10 @@ module UI
                 end
             end
         end
+        
+        #######
+        private
+        #######
         
         def _sensitizeAddButtonWithISBN(text, insertIntoISBNTextField=false)
             begin
@@ -306,7 +326,10 @@ module UI
             _asyncSearch(text, mode) do |results|
                 @results = results
                 _reloadResults
-                @addButton.setEnabled(!@results.empty?)
+                @resultsTableView.deselectAll(self)
+                if @results.empty?
+                    @addButton.setEnabled(false)
+                end
             end
         end
         

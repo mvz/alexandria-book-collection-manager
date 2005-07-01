@@ -54,7 +54,10 @@ module UI
             point = self.convertPoint_fromView(event.locationInWindow, nil)
             row = self.rowAtPoint(point)
             col = self.columnAtPoint(point)
-            return if row == -1 or col == -1
+            if row == -1 or col == -1
+                super_mouseDown(event)
+                return
+            end
 
             # simple click
             if event.clickCount == 1
@@ -66,7 +69,7 @@ module UI
                        delegate.tableView_shouldEditTableColumn_row(self,
                                                                     self.tableColumns.objectAtIndex(col),
                                                                     row)
-                                                      
+
                         NSObject.cancelPreviousPerformRequestsWithTarget(self, :selector, :_startEditingWithEvent,
                                                                                :object, event)
                         @lastEditClickEvent = event

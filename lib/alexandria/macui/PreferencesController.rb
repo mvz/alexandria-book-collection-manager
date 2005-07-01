@@ -302,9 +302,13 @@ module UI
         
         def tableViewSelectionDidChange(notification)
             provider = _selectedProvider
-            return if provider.nil?
-            @removeProviderButton.setEnabled(provider.abstract?)
-            @setupProviderButton.setEnabled(!provider.prefs.empty?)
+            unless provider.nil?
+                @removeProviderButton.setEnabled(provider.abstract?)
+                @setupProviderButton.setEnabled(!provider.prefs.empty?)
+            else
+                @removeProviderButton.setEnabled(false)
+                @setupProviderButton.setEnabled(false)
+            end
         end
         
         # NSTabView delegation

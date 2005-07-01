@@ -101,6 +101,7 @@
                 about = id; 
                 addBook = id; 
                 addBookManually = id; 
+                arrangeIcons = id; 
                 clearSearchResults = id; 
                 delete = id; 
                 export = id; 
@@ -111,10 +112,12 @@
                 newLibrary = id; 
                 preferences = id; 
                 reportBug = id; 
+                toggleIconsOrder = id; 
                 toggleSidepane = id; 
                 toggleToolbar = id; 
                 viewAsIcons = id; 
                 viewAsList = id; 
+                viewOnlineInformation = id; 
             }; 
             CLASS = MainController; 
             LANGUAGE = ObjC; 
@@ -131,6 +134,7 @@
                 importController = ImportController; 
                 librariesTableView = NSTableView; 
                 mainWindow = NSWindow; 
+                onlineInfoMenuItem = NSMenuItem; 
                 preferencesController = PreferencesController; 
                 splitView = NSSplitView; 
                 toolbarSearchField = NSSearchField; 

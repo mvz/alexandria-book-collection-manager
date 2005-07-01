@@ -161,6 +161,10 @@ module Alexandria
             def self.abstract?
                 (not self.included_modules.include?(Singleton))
             end
+            
+            def <=>(provider)
+                self.fullname <=> provider.fullname
+            end
         end
 
         class GenericProvider < AbstractProvider

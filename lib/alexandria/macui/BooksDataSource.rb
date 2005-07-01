@@ -23,17 +23,31 @@ module UI
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-        attr_accessor :library
+        attr_reader :library
 
         ICON_WIDTH, ICON_HEIGHT = 70, 130
         PASTEBOARD_TYPE = :BooksPBoardType
+
+        def flushCachedInfoForBook(book)
+            @smallCovers.delete(book.ident) if @smallCovers
+            @iconCovers.delete(book.ident) if @iconCovers
+        end
+        
+        def library=(library)
+            @library = library
+            @tableViewLibrary = nil
+            @matrixLibrary = nil
+        end
+
+        # NSTableView datasource
 
         def numberOfRowsInTableView(tableView)
             @library != nil ? @library.length : 0
         end
         
         def tableView_objectValueForTableColumn_row(tableView, col, row)
-            book = @library[row]
+            @tableViewLibrary ||= _sortedLibraryForTableView(tableView)
+            book = @tableViewLibrary[row]
             case col.identifier.to_s
                 when 'title'
                     [ book.title.to_utf8_nsstring, _smallCoverForBook(book) ]
@@ -51,27 +65,55 @@ module UI
             end
         end
         
+        def tableView_bookAtRow(tableView, row)
+            @tableViewLibrary[row]
+        end
+        
         def tableView_setObjectValue_forTableColumn_row(tableView, objectValue, col, row)
-            book = @library[row]
+            @tableViewLibrary ||= _sortedLibraryForTableView(tableView)
+            book = @tableViewLibrary[row]
             case col.identifier.to_s
                 when 'rating'
                     book.rating = objectValue.unsignedIntValue
                     @library.save(book)
             end
         end
-        
+
+        def tableView_writeRowsWithIndexes_toPasteboard(tableView, rowIndexes, pasteboard)
+            books = []
+            pos = rowIndexes.firstIndex
+            while pos != NSNotFound
+                books << @library[pos]
+                pos = rowIndexes.indexGreaterThanIndex(pos)
+            end
+            return nil if books.empty?
+            pasteboard.declareTypes_owner(NSArray.arrayWithObject(PASTEBOARD_TYPE),
+                                          self)
+            booksIdent = books.map { |book| book.ident }
+            pasteboard.setPropertyList_forType(booksIdent, PASTEBOARD_TYPE)
+            return true
+        end
+
+        def tableView_sortDescriptorsDidChange(tableView, oldDescriptors)
+            @tableViewLibrary = nil
+            tableView.reloadData
+        end
+
+        # NSMatrix datasource
+
         def numberOfCellsInMatrix(matrix)
             @library != nil ? @library.length : 0
         end
         
         def matrix_bookForColumn_row(matrix, col, row)
             pos = (matrix.numberOfColumns * row) + col
-            @library[pos]
+            @matrixLibrary ||= _sortedLibraryForMatrix(matrix)
+            @matrixLibrary[pos]
         end
                                 
         def matrix_objectValueForColumn_row(matrix, col, row)
             book = matrix_bookForColumn_row(matrix, col, row)
-            [_iconCoverForBook(book),  book.title.to_utf8_nsstring]
+            [ _iconCoverForBook(book), book.title.to_utf8_nsstring ]
         end
         
         def matrix_tooltipForColumn_row(matrix, col, row)
@@ -92,31 +134,12 @@ module UI
             book = matrix_bookForColumn_row(matrix, col, row)
             book.ident
         end
-        
-        def tableView_writeRowsWithIndexes_toPasteboard(tableView, rowIndexes, pasteboard)
-            books = []
-            pos = rowIndexes.firstIndex
-            while pos != NSNotFound
-                books << @library[pos]
-                pos = rowIndexes.indexGreaterThanIndex(pos)
-            end
-            return nil if books.empty?
-            pasteboard.declareTypes_owner(NSArray.arrayWithObject(PASTEBOARD_TYPE),
-                                          self)
-            booksIdent = books.map { |book| book.ident }
-            pasteboard.setPropertyList_forType(booksIdent, PASTEBOARD_TYPE)
-            return true
+
+        def matrix_sortDescriptorDidChange(matrix, oldDescriptor)
+            @matrixLibrary = nil
+            matrix.reloadData
         end
 
-        def tableView_sortDescriptorsDidChange(tableView, oldDescriptors)
-            p oldDescriptors.to_a
-        end
-
-        def flushCachedInfoForBook(book)
-            @smallCovers.delete(book.ident) if @smallCovers
-            @iconCovers.delete(book.ident) if @iconCovers
-        end
-        
         #######
         private
         #######
@@ -171,6 +194,37 @@ module UI
             else
                 Icons::BOOK_ICON
             end
+        end
+        
+        def _sortedLibraryForTableView(tableView)
+            return nil if @library.nil?
+
+            descriptors = tableView.sortDescriptors
+            return @library if descriptors.count == 0
+            _sortedLibraryWithSortDescriptor(descriptors.objectAtIndex(0))
+        end
+        
+        def _sortedLibraryForMatrix(matrix)
+            sortDescriptor = matrix.sortDescriptor
+            sortDescriptor == nil ? @library : _sortedLibraryWithSortDescriptor(sortDescriptor)
+        end
+        
+        def _sortedLibraryWithSortDescriptor(sortDescriptor)
+            key = sortDescriptor.key.to_s
+            sortedLibrary = @library.sort do |x, y| 
+                a, b = x.send(key), y.send(key)
+                if a == nil and b == nil
+                    0
+                elsif a == nil and b != nil
+                    -1
+                elsif a != nil and b == nil
+                    1
+                else
+                    a <=> b
+                end
+            end
+            sortedLibrary.reverse! if sortDescriptor.ascending?
+            return sortedLibrary
         end
     end
 end

@@ -20,7 +20,7 @@ module UI
     class Matrix < OSX::NSMatrix
         include OSX
         
-        attr_reader :dataSource
+        attr_reader :dataSource, :sortDescriptor
 
         ns_overrides 'keyDown:', 'mouseDown:', 'mouseDragged:', 'mouseUp:'
 
@@ -58,6 +58,12 @@ module UI
                 end
             end
             self.setNeedsDisplay(true)
+        end
+
+        def sortUsingSortDescriptor(sortDescriptor)
+            oldDescriptor = @sortDescriptor
+            @sortDescriptor = sortDescriptor
+            @dataSource.matrix_sortDescriptorDidChange(self, oldDescriptor)
         end
 
         def mouseDown(event)
@@ -118,7 +124,7 @@ module UI
                 super_keyDown(event)
             end
         end
-        
+
         #######
         private
         #######
