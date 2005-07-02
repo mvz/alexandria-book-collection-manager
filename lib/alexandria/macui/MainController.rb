@@ -236,6 +236,10 @@ module UI
             _deleteSelectedBooks
         end
         
+        def matrix_popupMenuForEvent(matrix, event)
+            _popupMenuForBooks
+        end
+        
         # NSTableView delegation
         
         def tableViewSelectionDidChange(notification)
@@ -292,6 +296,39 @@ module UI
         def acceptedDropOnTableView(tableView)
             if tableView.__ocid__ == @librariesTableView.__ocid__
                 _filterBooks(nil)
+            end
+        end
+        
+        def tableView_popupMenuForEvent(tableView, event)
+            if tableView.__ocid__ == @booksTableView.__ocid__
+                _popupMenuForBooks
+            elsif tableView.__ocid__ == @librariesTableView.__ocid__
+                menu = NSMenu.alloc.init
+                
+                point = tableView.convertPoint_fromView(event.locationInWindow, nil)
+                row = tableView.rowAtPoint(point)
+                
+                if row != -1
+                    menuItem = NSMenuItem.alloc.init
+                    menuItem.setTitle(_('Export'))
+                    menuItem.setTarget(self)
+                    menuItem.setAction('export:')
+                    menu.addItem(menuItem)
+                    
+                    menuItem = NSMenuItem.alloc.init
+                    menuItem.setTitle(_('Delete'))
+                    menuItem.setTarget(self)
+                    menuItem.setAction('delete:')
+                    menu.addItem(menuItem)
+                else
+                    menuItem = NSMenuItem.alloc.init
+                    menuItem.setTitle(_('New Library'))
+                    menuItem.setTarget(self)
+                    menuItem.setAction('newLibrary:')
+                    menu.addItem(menuItem)
+                end
+
+                return menu
             end
         end
 
@@ -857,20 +894,14 @@ module UI
                     toggleSidepane(self)
                 end
             end
+
+            @arrangeIconsMode = 0
+            @reverseIcons = false
+            _sortBooksMatrix
         end
         
         def _setupMenus
-            # View Online Information at...
-            menu = @onlineInfoMenuItem.submenu
-            menu.numberOfItems.times { |i| p i; menu.removeItemAtIndex(i) }
-            BookProviders.instance.sort.each do |bookProvider|
-                menuItem = NSMenuItem.alloc.init
-                menuItem.setTitle(bookProvider.fullname)
-                menuItem.setTarget(self)
-                menuItem.setAction('viewOnlineInformation_')
-                menuItem.setRepresentedObject(bookProvider.name)
-                menu.addItem(menuItem)
-            end
+            _buildOnlineInformationMenu(@onlineInfoMenuItem.submenu)
         end
         
         def _sortBooksMatrix
@@ -891,6 +922,71 @@ module UI
             ascending = @reverseIcons
             sortDescriptor = NSSortDescriptor.alloc.initWithKey_ascending(key, ascending)
             @booksMatrix.sortUsingSortDescriptor(sortDescriptor)
+        end
+
+        def _buildOnlineInformationMenu(menu)
+            menu.numberOfItems.times { |i| p i; menu.removeItemAtIndex(i) }
+            BookProviders.instance.sort.each do |bookProvider|
+                menuItem = NSMenuItem.alloc.init
+                menuItem.setTitle(bookProvider.fullname)
+                menuItem.setTarget(self)
+                menuItem.setAction('viewOnlineInformation_')
+                menuItem.setRepresentedObject(bookProvider.name)
+                menu.addItem(menuItem)
+            end
+        end
+
+        def _popupMenuForBooks
+            menu = NSMenu.alloc.init
+            
+            newItem = proc do |title, selector|
+                menuItem = NSMenuItem.alloc.init
+                menuItem.setTitle(title)
+                menuItem.setTarget(self)
+                menuItem.setAction(selector)
+                menuItem
+            end
+            
+            newItemWithMenu = proc do |title, selector, submenu|
+                menuItem = newItem.call(title, selector)
+                menuItem.setSubmenu(submenu)
+                menuItem
+            end
+            
+            books = _selectedBooks
+            if books.empty?
+                menu.addItem(newItem.call(_('Add Book'), 'addBook:'))
+                menu.addItem(newItem.call(_('Add Book Manually'), 'addBookManually:'))
+            else
+                menu.addItem(newItem.call(_('Get Info'), 'getInfo:'))
+                menu.addItem(newItem.call(_('Delete'), 'delete:'))
+
+                submenu = NSMenu.alloc.init
+                _buildOnlineInformationMenu(submenu)
+                menu.addItem(newItemWithMenu.call(_('Online Information At'), 'viewOnlineInformation:', submenu))                
+            end
+
+            menu.addItem(NSMenuItem.separatorItem)
+
+            menu.addItem(newItem.call(_('View As Icons'), 'viewAsIcons:'))
+            menu.addItem(newItem.call(_('View As List'), 'viewAsList:'))
+
+            menu.addItem(NSMenuItem.separatorItem)
+
+            submenu = NSMenu.alloc.init
+            [ _('Title'), _('Authors'), _('ISBN'), 
+              _('Publisher'), _('Binding'), _('Rating') ].each_with_index do |title, i|
+                menuItem = newItem.call(title, 'arrangeIcons:')
+                menuItem.setTag(i)
+                submenu.addItem(menuItem)
+            end
+            submenu.addItem(NSMenuItem.separatorItem)
+            submenu.addItem(newItem.call(_('Reverse Order'), 'toggleIconsOrder:'))
+            menuItem = newItemWithMenu.call(_('Arrange Icons By'), 'arrangeIcons:', submenu)
+            menuItem.setTag(69)
+            menu.addItem(menuItem)
+
+            return menu
         end
     end
 end

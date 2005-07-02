@@ -20,7 +20,7 @@ module UI
     class TableView < OSX::NSTableView
         include OSX
 
-        ns_overrides 'keyDown:', 'mouseDown:'
+        ns_overrides 'keyDown:', 'mouseDown:', 'menuForEvent:'
 
         def keyDown(event)
             chars = event.charactersIgnoringModifiers
@@ -51,6 +51,7 @@ module UI
         end
         
         def mouseDown(event)
+            p event.oc_type
             point = self.convertPoint_fromView(event.locationInWindow, nil)
             row = self.rowAtPoint(point)
             col = self.columnAtPoint(point)
@@ -90,6 +91,26 @@ module UI
                                                                            :object, @lastEditClickEvent)
                 end
                 self.target.send(self.doubleAction.gsub(/:/, '_'))
+            end
+        end
+        
+        def menuForEvent(event)
+            delegate = self.delegate
+            if delegate.respondsToSelector?('tableView:popupMenuForEvent:')
+                point = self.convertPoint_fromView(event.locationInWindow, nil)
+                row = self.rowAtPoint(point)
+                col = self.columnAtPoint(point)
+                if row != -1 and col != -1
+                    unless self.selectedRowIndexes.containsIndex?(row)
+                        self.selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(row),
+                                                                   false)
+                    end
+                else
+                    self.deselectAll(nil)
+                end
+                delegate.tableView_popupMenuForEvent(self, event)
+            else
+                super_menuForEvent(event)
             end
         end
         

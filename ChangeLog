@@ -1,5 +1,11 @@
 2005-07-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/TableView.rb:
+
+	Added some contextual popup menus in both libraries and books views.
+
 	* lib/alexandria/book_providers.rb,
 	  lib/alexandria/macui/AddBookController.rb,
 	  lib/alexandria/macui/BooksDataSource.rb,

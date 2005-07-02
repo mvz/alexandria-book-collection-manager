@@ -22,7 +22,7 @@ module UI
         
         attr_reader :dataSource, :sortDescriptor
 
-        ns_overrides 'keyDown:', 'mouseDown:', 'mouseDragged:', 'mouseUp:'
+        ns_overrides 'keyDown:', 'mouseDown:', 'mouseDragged:', 'mouseUp:', 'menuForEvent:'
 
         def setDataSource(dataSource)
             raise unless dataSource.respondsToSelector?('matrix:objectValueForColumn:row:')
@@ -122,6 +122,26 @@ module UI
                 end
             else
                 super_keyDown(event)
+            end
+        end
+
+        def menuForEvent(event)
+            delegate = self.delegate
+            if delegate.respondsToSelector?('matrix:popupMenuForEvent:')
+                point = self.convertPoint_fromView(event.locationInWindow, nil)
+                row = self.rowAtPoint(point)
+                col = self.columnAtPoint(point)
+                if row != -1 and col != -1
+                    cell = self.cellAtRow_column(row, col)
+                    unless self.selectedCells.containsObject?(cell)
+                        self.selectCellAtRow_column(row, col)
+                    end
+                else
+                    self.deselectAll(nil)
+                end
+                delegate.matrix_popupMenuForEvent(self, event)
+            else
+                super_menuForEvent(event)
             end
         end
 
