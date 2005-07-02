@@ -376,6 +376,9 @@ module UI
                     menuItem.setState(@reverseIcons ? NSOnState : NSOffState)
                     @booksViewType == VIEW_AS_ICON
 
+                when 'export:'
+                    !_selectedLibrary.empty?
+
                 when 'about:'
                     !@aboutController.opened?
 

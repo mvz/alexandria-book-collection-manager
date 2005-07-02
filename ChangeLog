@@ -4,7 +4,8 @@
 	  lib/alexandria/macui/Matrix.rb,
 	  lib/alexandria/macui/TableView.rb:
 
-	Added some contextual popup menus in both libraries and books views.
+	- Added some contextual popup menus in both libraries and books views ;
+	- Disable the export menu item if the selected library is empty.
 
 	* lib/alexandria/book_providers.rb,
 	  lib/alexandria/macui/AddBookController.rb,
