@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY legal SYSTEM "legal.xml">
-<!ENTITY appversion "0.5">
-<!ENTITY manrevision "0.0.3">
-<!ENTITY date "April 2005">
+<!ENTITY appversion "0.5.1">
+<!ENTITY manrevision "0.0.6">
+<!ENTITY date "June 2005">
 <!ENTITY app "<application>Alexandria</application>">
 <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
@@ -130,7 +130,7 @@
   <sect1 id="myapp-introduction">
     <title>Introduction</title>
 
-  <para>The &app; application enables you manage your collection of books. &app; provides the following features:</para>
+  <para>The &app; application enables you to manage your collection of books. &app; provides the following features:</para>
     <itemizedlist>
       	<listitem><para>retrieves and displays book information (including cover pictures) from online libraries:</para>
 	<itemizedlist>
@@ -331,7 +331,7 @@
 	          </mediaobject>
 	        </screenshot>
 	     </figure>
-		<para>Select the book you want from the list, and click <guibutton>Add</guibutton>.</para>
+		<para>Where possible, &app; will show thumbnails of the books it finds, making it easier to choose the right book or edition of a book. Select the book you want from the list, and click <guibutton>Add</guibutton>.</para>
 		<tip>
 			<para>You may have to try several different search terms to find the book you want.</para>
 		</tip>
@@ -374,7 +374,7 @@
 		<tip>
 			<para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
 		</tip>
-		<para>To supply a book cover image, click on the <guibutton>Cover</guibutton> button. A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
+		<para>To supply a book cover image, click on the <guibutton>Cover</guibutton> button. A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
 		<para>You can rate a book by clicking on the stars. To clear the rating, click on the space imediately to the left of the first star.</para>
 		<para>When you have filled in all the information, click on the <guibutton>Add</guibutton> button.</para>
 	</sect2>
@@ -652,7 +652,7 @@ between libraries.</para>
 	<sect2 id="exporting-as-onix">
 		<title>Exporting as a compressed ONIX archive</title>
 		<para>ONIX is an international standard used by publishers and retailers to define information - title, price, contributors, reviews and many others - about books. For more information about ONIX and its uses, see http://www.editeur.org/ .</para>
-		<para>&app; can gather up all your book information and export it as an archived (.tar.bz2) collection of ONIX files, or messages. To export your library as an ONIX archive, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>Archived ONIX XML (.onix.tbz2)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Specify a file name and a location to save the archive, and press <guibutton>Export</guibutton>.</para>
+		<para>&app; can gather up all your book information and export it as an archived (.tar.bz2) collection of ONIX files (called ONIX messages). To export your library as an ONIX archive, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>Archived ONIX XML (.onix.tbz2)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Specify a file name and a location to save the archive, and press <guibutton>Export</guibutton>.</para>
 	</sect2>
 
 	<sect2 id="exporting-as-Tellico">
@@ -738,7 +738,7 @@ between libraries.</para>
 
       <sect3 id="alexandria-amazon-prefs">
         <title>Amazon preferences</title>
-        <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP, FR, CA</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
+        <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
 	  	<warning>
 			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. If you don't know what this means, it's best to leave it unchanged.</para>
 		</warning>
