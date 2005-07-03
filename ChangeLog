@@ -4,6 +4,17 @@
 
 	Removed a duplicated 'EOS' statement introduced in the previous commit.
 
+	* lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/TableView.rb:
+
+	- Fix a bug when deselecting all cells in the matrix after a right click ;
+	- Fix a bug when ending a drag-and-drop in the table view that could
+	  start editing the cell ;
+	- In the results table of the add book dialog, write the edition if a
+	  book has more than one edition.
+
 2005-07-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb,

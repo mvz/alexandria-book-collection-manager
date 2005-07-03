@@ -966,7 +966,7 @@ module UI
 
                 submenu = NSMenu.alloc.init
                 _buildOnlineInformationMenu(submenu)
-                menu.addItem(newItemWithMenu.call(_('Online Information At'), 'viewOnlineInformation:', submenu))                
+                menu.addItem(newItemWithMenu.call(_('View Online Information At'), 'viewOnlineInformation:', submenu))                
             end
 
             menu.addItem(NSMenuItem.separatorItem)

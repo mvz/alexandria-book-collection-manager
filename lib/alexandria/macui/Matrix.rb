@@ -137,7 +137,7 @@ module UI
                         self.selectCellAtRow_column(row, col)
                     end
                 else
-                    self.deselectAll(nil)
+                    self.deselectAllCells
                 end
                 delegate.matrix_popupMenuForEvent(self, event)
             else

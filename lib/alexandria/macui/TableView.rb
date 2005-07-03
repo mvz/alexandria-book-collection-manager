@@ -20,7 +20,8 @@ module UI
     class TableView < OSX::NSTableView
         include OSX
 
-        ns_overrides 'keyDown:', 'mouseDown:', 'menuForEvent:'
+        ns_overrides 'keyDown:', 'mouseDown:', 'menuForEvent:', 
+                     'draggedImage_endedAt_operation:'
 
         def keyDown(event)
             chars = event.charactersIgnoringModifiers
@@ -51,7 +52,6 @@ module UI
         end
         
         def mouseDown(event)
-            p event.oc_type
             point = self.convertPoint_fromView(event.locationInWindow, nil)
             row = self.rowAtPoint(point)
             col = self.columnAtPoint(point)
@@ -63,8 +63,9 @@ module UI
             # simple click
             if event.clickCount == 1
                 oldSelectedRow = self.selectedRow
+                @draggingEnded = nil
                 super_mouseDown(event)
-                delegate = self.delegate
+                return if @draggingEnded
                 if delegate.respondsToSelector?('tableView:shouldEditTableColumn:row:')
                     if oldSelectedRow == self.selectedRow and
                        delegate.tableView_shouldEditTableColumn_row(self,
@@ -92,6 +93,10 @@ module UI
                 end
                 self.target.send(self.doubleAction.gsub(/:/, '_'))
             end
+        end
+
+        def draggedImage_endedAt_operation(image, location, operation)
+            @draggingEnded = true
         end
         
         def menuForEvent(event)

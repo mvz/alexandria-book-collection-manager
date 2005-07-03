@@ -142,8 +142,11 @@ module UI
         def tableView_objectValueForTableColumn_row(tableView, col, row)
             book = @results[row].first
             line = "#{book.title.to_utf8_nsstring}"
+            if @results.select { |book2, url| book2.title == book.title }.length > 1
+                line << " (%s)" % book.edition.to_utf8_nsstring
+            end
             unless book.authors.empty?
-                line << ", by #{book.authors.join(', ').to_utf8_nsstring}"
+                line << _(", by %s") % book.authors.join(', ').to_utf8_nsstring
             end
             return line
         end
