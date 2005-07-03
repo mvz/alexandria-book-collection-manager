@@ -1,3 +1,9 @@
+2005-07-03  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/export_library.rb:
+
+	Removed a duplicated 'EOS' statement introduced in the previous commit.
+
 2005-07-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb,

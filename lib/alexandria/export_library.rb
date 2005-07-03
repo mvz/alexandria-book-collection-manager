@@ -283,7 +283,6 @@ EOS
 </body>
 </html>
 EOS
-EOS
         end
     end
 end
