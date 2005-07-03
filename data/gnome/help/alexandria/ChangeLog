@@ -1,3 +1,15 @@
+2005-07-03	Liam Davision		<carnegie@liamjdavison.info>
+
+	* alexandria.xml:
+
+	- Updated to include book thumbnails on Adding by Search
+	- Misc. tiny spelling and grammar fixes
+
+	* figures/alexandria_add_by_search_1.png, figures/alexandria_main_window.png
+
+	- Updated screenshots to include thumbnails on add book dialog, 
+	and heart icons on main window
+
 2005-04-18	 Laurent Sansonetti    <lrz@gnome.org>
 
 	* alexandria.xml:
