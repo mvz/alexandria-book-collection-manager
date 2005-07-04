@@ -22,7 +22,8 @@ module UI
         
         attr_reader :dataSource, :sortDescriptor
 
-        ns_overrides 'keyDown:', 'mouseDown:', 'mouseDragged:', 'mouseUp:', 'menuForEvent:'
+        ns_overrides 'keyDown:', 'mouseDown:', 'mouseDragged:', 'mouseUp:', 
+                     'menuForEvent:', 'needsPanelToBecomeKey'
 
         def setDataSource(dataSource)
             raise unless dataSource.respondsToSelector?('matrix:objectValueForColumn:row:')
@@ -67,11 +68,6 @@ module UI
         end
 
         def mouseDown(event)
-            if self.window.firstResponder.__ocid__ != self.__ocid__
-                self.window.makeFirstResponder(self)
-                self.setNeedsDisplay(true)
-            end
-
             point = self.convertPoint_fromView(event.locationInWindow, nil)
             row = self.rowAtPoint(point)
             col = self.columnAtPoint(point)
@@ -143,6 +139,11 @@ module UI
             else
                 super_menuForEvent(event)
             end
+        end
+        
+        def needsPanelToBecomeKey
+            # make sure the view will be activable
+            return true
         end
 
         #######

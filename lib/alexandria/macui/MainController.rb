@@ -437,9 +437,6 @@ module UI
                 @booksTableView.reloadData
                 @booksMatrix.reloadData
                 _updateWindowTitle
-                if _viewAsIcons?
-                    @mainWindow.makeFirstResponder(@booksMatrix)
-                end
             end
         end
     
@@ -466,9 +463,6 @@ module UI
                 @booksTableView.reloadData
                 @booksMatrix.reloadData
                 _updateWindowTitle
-                if _viewAsIcons?
-                    @mainWindow.makeFirstResponder(@booksMatrix)
-                end
             end
         end
 
@@ -773,6 +767,7 @@ module UI
             @booksMatrix.setAllowsEmptySelection(true)
             @booksMatrix.setSelectionByRect(true)
             @booksMatrix.setAutoscroll(true)
+            @booksMatrix.setTabKeyTraversesCells(true)
             @booksMatrix.setMode(NSListModeMatrix)
             @booksMatrix.setFocusRingType(NSFocusRingTypeNone)
             @booksMatrix.setDoubleAction(:doubleClickOnBooks_)
