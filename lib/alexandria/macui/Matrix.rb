@@ -23,7 +23,7 @@ module UI
         attr_reader :dataSource, :sortDescriptor
 
         ns_overrides 'keyDown:', 'mouseDown:', 'mouseDragged:', 'mouseUp:', 
-                     'menuForEvent:', 'needsPanelToBecomeKey'
+                     'menuForEvent:', 'needsPanelToBecomeKey', 'drawRect:'
 
         def setDataSource(dataSource)
             raise unless dataSource.respondsToSelector?('matrix:objectValueForColumn:row:')
@@ -46,18 +46,22 @@ module UI
 
             # Reload cells' object value
             row = col = 0
+            @cellFrames = []
             @dataSource.numberOfCellsInMatrix(self).times do
                 cell = self.cellAtRow_column(row, col)
                 cell.setObjectValue(@dataSource.matrix_objectValueForColumn_row(self, col, row))
                 self.setToolTip_forCell(@dataSource.matrix_tooltipForColumn_row(self, col, row), 
                                         cell)
                 cell.setEnabled(true)
+                frame = self.cellFrameAtRow_column(row, col)
+                @cellFrames << [cell, frame]
                 col += 1
                 if col == self.numberOfColumns
                     col = 0
                     row += 1
                 end
             end
+            
             self.setNeedsDisplay(true)
         end
 
@@ -75,30 +79,43 @@ module UI
 
             cell = (row != -1 and col != -1) ? self.cellAtRow_column(row, col) : nil
             @mouseDownOnCell = (cell != nil and cell.isEnabled?)
+            shiftPressed = event.modifierFlags & NSShiftKeyMask != 0
+            
             if @mouseDownOnCell
                 unless self.selectedCells.containsObject?(cell)
-                    self.selectCellAtRow_column(row, col)
+                    self.deselectAllCells unless shiftPressed
+                    cell.setHighlighted(true)
                 end
-                self.sendDoubleAction if event.clickCount == 2
+                if event.clickCount == 2
+                    self.target.performSelector_withObject(self.doubleAction, self) 
+                end
             else
-                self.deselectAllCells
-                # TODO: write our own rect selection code
-                super_mouseDown(event)
+                self.deselectAllCells unless shiftPressed
             end
         end
         
         def mouseDragged(event)
             if @mouseDownOnCell
                 _performDraggingWithEvent(event)
-#            else
-#                # Performing rect selection
-#
-#                return if @mouseDownInitialPoint.nil?
-#                
-#                selectionRect = NSRect.new([@mouseDownInitialPoint.x, point.x].min,
-#                                           [@mouseDownInitialPoint.y, point.y].min,
-#                                           (@mouseDownInitialPoint.x - point.x).abs,
-#                                           (@mouseDownInitialPoint.y - point.y).abs)                
+            else
+                # Performing rect selection
+
+                return if @mouseDownInitialPoint.nil?
+                point = self.convertPoint_fromView(event.locationInWindow, nil)
+                
+                if @selectionRect
+                    self.setNeedsDisplayInRect(NSInsetRect(@selectionRect, -1, -1))
+                end
+
+                @selectionRect = NSRect.new([@mouseDownInitialPoint.x, point.x].min,
+                                            [@mouseDownInitialPoint.y, point.y].min,
+                                            (@mouseDownInitialPoint.x - point.x).abs,
+                                            (@mouseDownInitialPoint.y - point.y).abs)                
+
+                self.deselectAllCells
+                _selectCellsInRect(@selectionRect)
+
+                self.setNeedsDisplayInRect(NSInsetRect(@selectionRect, -1, -1))
             end
         end
         
@@ -107,6 +124,12 @@ module UI
         end
         
         def mouseUp(event)
+            unless @mouseDownOnCell
+                if @selectionRect
+                    self.setNeedsDisplayInRect(NSInsetRect(@selectionRect, -1, -1))
+                    @selectionRect.size.width = @selectionRect.size.height = 0
+                end
+            end
             _unsetDragInfo
         end
         
@@ -130,6 +153,7 @@ module UI
                 if row != -1 and col != -1
                     cell = self.cellAtRow_column(row, col)
                     unless self.selectedCells.containsObject?(cell)
+                        self.deselectAllCells
                         self.selectCellAtRow_column(row, col)
                     end
                 else
@@ -142,8 +166,31 @@ module UI
         end
         
         def needsPanelToBecomeKey
-            # make sure the view will be activable
+            # Make sure the view will be activable
             return true
+        end
+
+        def drawRect(rect)
+            super_drawRect(rect)
+
+            # Draw selection
+            if @selectionRect and 
+               @selectionRect.size.width > 0 and
+               @selectionRect.size.height > 0
+                
+                drawRect = @selectionRect
+                drawRect.origin.x += 0.5
+                drawRect.origin.y += 0.5
+                
+                @selectionFillColor ||= NSColor.colorWithCalibratedRed_green_blue_alpha(0.0, 0.0, 1.0, 0.1)
+                @selectionBorderColor ||= NSColor.colorWithCalibratedRed_green_blue_alpha(0.0, 0.0, 1.0, 0.4)
+                
+                @selectionFillColor.set             
+                NSBezierPath.fillRect(drawRect)
+                NSBezierPath.setDefaultLineWidth(1.0)
+                @selectionBorderColor.set             
+                NSBezierPath.strokeRect(drawRect)
+            end
         end
 
         #######
@@ -243,6 +290,14 @@ module UI
                                       :pasteboard, pasteboard,
                                       :source, self,
                                       :slideBack, true)
+        end
+
+        def _selectCellsInRect(rect)
+            @cellFrames.each do |cell, frame|
+                if NSIntersectsRect(rect, frame)
+                    cell.setHighlighted(true)
+                end
+            end
         end
     end
 end

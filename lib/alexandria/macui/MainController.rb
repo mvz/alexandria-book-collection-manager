@@ -222,12 +222,6 @@ module UI
             # Resize the books view
             width = oldSize.width - sidepaneWidth - splitView.dividerThickness
             @booksView.setFrameSize(NSSize.new(width, oldSize.height))
-
-            size = @booksMatrix.frame.size
-            size.height = (@booksMatrix.numberOfRows * @booksMatrix.cellSize.height) + ((@booksMatrix.numberOfRows - 1) * @booksMatrix.intercellSpacing.height)
-            @booksMatrix.setFrameSize(size)
-            
-            @booksView.setNeedsDisplay(true)
         end
 
         # NSMatrix delegation
@@ -245,6 +239,8 @@ module UI
         def tableViewSelectionDidChange(notification)
             tableView = notification.object
             if tableView.__ocid__ == @librariesTableView.__ocid__
+                @booksMatrix.deselectAllCells
+                @booksTableView.deselectAll(self)
                 _filterBooks(nil)
                 _updateWindowTitle
                 if @windowLoaded 
@@ -431,12 +427,14 @@ module UI
             dataSource = @booksTableView.dataSource
             @bookInfoController.openWindowToEdit(dataSource.library, 
                                                  books.first) do |modifiedBooks|
-                modifiedBooks.each do |book|
-                    dataSource.flushCachedInfoForBook(book)
+                unless modifiedBooks.empty?
+                    modifiedBooks.each do |book|
+                        dataSource.flushCachedInfoForBook(book)
+                    end
+                    @booksTableView.reloadData
+                    @booksMatrix.reloadData
+                    _updateWindowTitle
                 end
-                @booksTableView.reloadData
-                @booksMatrix.reloadData
-                _updateWindowTitle
             end
         end
     
@@ -492,6 +490,7 @@ module UI
         end
         
         def doubleClickOnBooks(sender)
+p 'doubleClickOnBooks'
             getInfo(sender)
         end
         
@@ -744,9 +743,10 @@ module UI
                 
                 # Do nothing if the data did not change
                 return unless dataChanged
-            else                            
+            else                         
                 # Resize
-                newHeight = (nRows * BooksDataSource::ICON_HEIGHT) + @booksMatrix.intercellSpacing.height * (nRows - 1)
+                newHeight = [ (nRows * BooksDataSource::ICON_HEIGHT) + @booksMatrix.intercellSpacing.height * (nRows - 1), 
+                              @booksMatrix.superview.frame.height ].max
                 matrixFrame.size.height = newHeight
                 @booksMatrix.setFrame(matrixFrame)
                 @booksMatrix.renewRows_columns(nRows, nCols)
@@ -770,6 +770,7 @@ module UI
             @booksMatrix.setTabKeyTraversesCells(true)
             @booksMatrix.setMode(NSListModeMatrix)
             @booksMatrix.setFocusRingType(NSFocusRingTypeNone)
+            @booksMatrix.setTarget(self)
             @booksMatrix.setDoubleAction(:doubleClickOnBooks_)
             @arrangeIconsMode = 0
             @reverseIcons = false
