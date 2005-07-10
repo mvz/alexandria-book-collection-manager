@@ -46,7 +46,6 @@ module UI
 
             # Reload cells' object value
             row = col = 0
-            @cellFrames = []
             @dataSource.numberOfCellsInMatrix(self).times do
                 cell = self.cellAtRow_column(row, col)
                 cell.setObjectValue(@dataSource.matrix_objectValueForColumn_row(self, col, row))
@@ -54,7 +53,6 @@ module UI
                                         cell)
                 cell.setEnabled(true)
                 frame = self.cellFrameAtRow_column(row, col)
-                @cellFrames << [cell, frame]
                 col += 1
                 if col == self.numberOfColumns
                     col = 0
@@ -112,8 +110,21 @@ module UI
                                             (@mouseDownInitialPoint.x - point.x).abs,
                                             (@mouseDownInitialPoint.y - point.y).abs)                
 
+                scrollView = self.superview.superview
+                scrollPoint = scrollView.convertPoint_fromView(event.locationInWindow, nil)
+                scrollRect = scrollView.convertRect_toView(scrollView.frame, nil)
+
+                _invalidateAutoscrollTimerIfNeeded
+
+                unless NSPointInRect(scrollPoint, scrollRect)
+                    @autoscrollTimer = NSTimer.scheduledTimerWithTimeInterval(0.08, :target, self,
+                                                                                    :selector, '_timedAutoscroll:',
+                                                                                    :userInfo, event,
+                                                                                    :repeats, true)
+                end
+
                 self.deselectAllCells
-                _selectCellsInRect(@selectionRect)
+                selectCellsInRect(@selectionRect)
 
                 self.setNeedsDisplayInRect(NSInsetRect(@selectionRect, -1, -1))
             end
@@ -128,6 +139,7 @@ module UI
                 if @selectionRect
                     self.setNeedsDisplayInRect(NSInsetRect(@selectionRect, -1, -1))
                     @selectionRect.size.width = @selectionRect.size.height = 0
+                    _invalidateAutoscrollTimerIfNeeded
                 end
             end
             _unsetDragInfo
@@ -242,13 +254,13 @@ module UI
                 # Adjust if necessary
                 if oldRow != -1 and oldCol != -1
                     if col > oldCol
-                        drawPoint.x += xStep
+                        drawPoint.x += xStep * (col - oldCol)
                     elsif col < oldCol
                         drawPoint.x = 0
                     end
 
                     if row > oldRow
-                        drawPoint.y += yStep
+                        drawPoint.y += yStep * (row - oldRow)
                     elsif row < oldRow
                         drawPoint.y = 0
                     end
@@ -292,12 +304,15 @@ module UI
                                       :slideBack, true)
         end
 
-        def _selectCellsInRect(rect)
-            @cellFrames.each do |cell, frame|
-                if NSIntersectsRect(rect, frame)
-                    cell.setHighlighted(true)
-                end
+        def _invalidateAutoscrollTimerIfNeeded
+            if @autoscrollTimer
+                @autoscrollTimer.invalidate
             end
+        end
+
+        def _timedAutoscroll(timer)
+            event = timer.userInfo
+            self.autoscroll(event)
         end
     end
 end

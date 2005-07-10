@@ -1,3 +1,15 @@
+2005-07-10  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/Utils.m,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Added autoscroll in the matrix ;
+	- Improved performances of the new selection ;
+	- Fixed a lot of small bugs.
+
 2005-07-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb,

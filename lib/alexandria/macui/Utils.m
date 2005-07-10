@@ -21,6 +21,9 @@
 
 - (int)rowOfCell:(NSCell *)cell;
 - (int)columnOfCell:(NSCell *)cell;
+- (int)rowAtPoint:(NSPoint)point;
+- (int)columnAtPoint:(NSPoint)point;
+- (void)selectCellsInRect:(NSRect)rect;
 
 @end
 
@@ -54,6 +57,23 @@
 {
     int row, col;
     return ([self getRow:&row column:&col forPoint:point]) ? col : -1;    
+}
+
+- (void)selectCellsInRect:(NSRect)rect
+{
+    NSArray *cells;
+    unsigned i, count;
+    id cell;
+    int row, col;
+    
+    cells = [self cells];
+    for (i = 0, count = [cells count]; i < count; i++) {
+        cell = [cells objectAtIndex:i];
+        if ([self isEnabled] && [self getRow:&row column:&col ofCell:cell]) {
+            if (NSIntersectsRect (rect, [self cellFrameAtRow:row column:col]))
+                [cell setHighlighted:YES];
+        }
+    }
 }
 
 @end

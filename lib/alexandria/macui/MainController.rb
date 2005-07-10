@@ -292,6 +292,7 @@ module UI
         def acceptedDropOnTableView(tableView)
             if tableView.__ocid__ == @librariesTableView.__ocid__
                 _filterBooks(nil)
+                @booksMatrix.deselectAllCells
             end
         end
         
@@ -490,7 +491,6 @@ module UI
         end
         
         def doubleClickOnBooks(sender)
-p 'doubleClickOnBooks'
             getInfo(sender)
         end
         
@@ -664,7 +664,8 @@ p 'doubleClickOnBooks'
 
             messageText = if books_to_delete.length == 1
                 _("Are you sure you want to permanently delete '%s' " +
-                  "from '%s'?") % [ books_to_delete.first.title, library.name ]
+                  "from '%s'?") % [ books_to_delete.first.title.to_utf8_nsstring, 
+                                    library.name ]
             else
                 _("Are you sure you want to permanently delete the " +
                   "selected books from '%s'?") % library.name
@@ -732,8 +733,9 @@ p 'doubleClickOnBooks'
             library = @booksMatrix.dataSource.library
             nBooks = library.length
             matrixFrame = @booksMatrix.frame
+            intercellWidth, intercellHeight = @booksMatrix.intercellSpacing.to_a
             width = matrixFrame.size.width
-            nCols = (width / (BooksDataSource::ICON_WIDTH.to_f + @booksMatrix.intercellSpacing.width)).floor
+            nCols = ((width + intercellWidth) / (BooksDataSource::ICON_WIDTH.to_f + intercellWidth)).floor
             nCols = 1 if nCols == 0
             nRows = (nBooks / nCols.to_f).ceil
 
@@ -745,7 +747,7 @@ p 'doubleClickOnBooks'
                 return unless dataChanged
             else                         
                 # Resize
-                newHeight = [ (nRows * BooksDataSource::ICON_HEIGHT) + @booksMatrix.intercellSpacing.height * (nRows - 1), 
+                newHeight = [ (nRows * BooksDataSource::ICON_HEIGHT) + intercellHeight * (nRows - 1), 
                               @booksMatrix.superview.frame.height ].max
                 matrixFrame.size.height = newHeight
                 @booksMatrix.setFrame(matrixFrame)
