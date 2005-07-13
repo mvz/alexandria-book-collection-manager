@@ -15,9 +15,30 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-require 'osx/objc/oc_all'
+p RUBY_PLATFORM
+p $:
+
 require 'osx/cocoa'
-require 'gettext'
+require 'osx/objc/oc_all'
+
+begin
+    require 'gettext'
+rescue LoadError
+    module GetText
+        module_function
+        def _(str)
+            str
+        end
+        def n_(str1, str2, n)
+            n > 1 ? str2 : str1
+        end
+        def bindtextdomain(domainname, path = nil, locale = nil, charset = nil)
+        end
+    end
+end
+
+$MACOSX = true
+
 require 'alexandria'
 
 def rb_main_init

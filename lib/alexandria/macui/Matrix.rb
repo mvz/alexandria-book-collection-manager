@@ -83,6 +83,8 @@ module UI
                 unless self.selectedCells.containsObject?(cell)
                     self.deselectAllCells unless shiftPressed
                     cell.setHighlighted(true)
+                else
+                    cell.setHighlighted(false) if shiftPressed
                 end
                 if event.clickCount == 2
                     self.target.performSelector_withObject(self.doubleAction, self) 

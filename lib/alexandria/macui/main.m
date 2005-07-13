@@ -16,9 +16,29 @@
 // Boston, MA 02111-1307, USA.
 
 #import <RubyCocoa/RBRuntime.h>
+#import "ruby.h"
 
 int
 main (int argc, const char *argv[])
 {
+    VALUE               paths;
+    NSAutoreleasePool * pool;
+    const char *        resourcePath;
+    char                rubyPath[PATH_MAX];
+
+    RBRubyCocoaInit ();
+    
+    paths = rb_gv_get (":");
+
+    pool = [[NSAutoreleasePool alloc] init];    
+    resourcePath = [[[NSBundle mainBundle] resourcePath] fileSystemRepresentation];
+    [pool release];
+    
+    snprintf (rubyPath, sizeof rubyPath, "%s/ruby/%s", resourcePath, RUBY_PLATFORM);
+    rb_ary_unshift (paths, rb_str_new2(rubyPath));    
+    
+    snprintf (rubyPath, sizeof rubyPath, "%s/ruby", resourcePath);
+    rb_ary_unshift (paths, rb_str_new2(rubyPath));    
+    
     return RBApplicationMain ("main.rb", argc, argv);
 }

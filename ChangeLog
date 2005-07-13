@@ -1,3 +1,24 @@
+2005-07-13  Laurent Sansonetti  <lrz@gnome.org>
+
+	* alexandria.xcode/.cvsignore,
+	  alexandria.xcode/project.pbxproj,
+	  alexandria.xcodeproj/.cvsignore,
+	  alexandria.xcodeproj/project.pbxproj:
+
+	- Switching to Xcode 2.1 (.xcode -> .xcodeproj) ;
+	- The build target in Xcode now generates an all-in-one binary. 
+
+	* lib/alexandria.rb,
+	  lib/alexandria/macui.rb,
+	  lib/alexandria/macui/Info.plist,
+	  lib/alexandria/macui/Matrix.rb,
+	  lib/alexandria/macui/main.m,
+	  lib/alexandria/macui/main.rb:
+
+	- Follow latest change ;
+	- When clicking on a selected cell in the matrix with the shift key
+	  pressed at the same time, deselect the cell.
+
 2005-07-10  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb,

@@ -30,14 +30,14 @@ require 'alexandria/macui/PreferencesController'
 require 'alexandria/macui/MainController'
 
 module Alexandria
-module UI
-    OSX.ns_import :BookIconCell
-    OSX.ns_import :RatingCell
-    OSX.ns_import :TitledImageCell
+    module UI
+        OSX.ns_import :BookIconCell
+        OSX.ns_import :RatingCell
+        OSX.ns_import :TitledImageCell
 
-    def self.main
-        Icons.init
-        OSX.NSApplicationMain(0, nil)
+        def self.main
+            Icons.init
+            OSX.NSApplicationMain(0, nil)
+        end    
     end    
-end
 end

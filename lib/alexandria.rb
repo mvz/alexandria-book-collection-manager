@@ -66,8 +66,20 @@ module Alexandria
     end
 end
 
-require 'alexandria/config'
-require 'alexandria/version'
+unless $MACOSX
+    require 'alexandria/config'
+    require 'alexandria/version'
+else
+    module Alexandria
+        module Config
+            DATA_DIR = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
+        end
+        VERSION = OSX::NSBundle.mainBundle.infoDictionary.objectForKey('CFBundleVersion').to_s
+    end
+end
+
+p Alexandria::VERSION
+
 require 'alexandria/book'
 require 'alexandria/utils'
 require 'alexandria/library'
@@ -78,9 +90,4 @@ require 'alexandria/book_providers'
 require 'alexandria/preferences'
 require 'alexandria/web_themes'
 
-# FIXME: we should do this better
-if `uname`.chomp == 'Darwin'
-    require 'alexandria/macui'
-else
-    require 'alexandria/ui'
-end
+require $MACOSX ? 'alexandria/macui' : 'alexandria/ui'
