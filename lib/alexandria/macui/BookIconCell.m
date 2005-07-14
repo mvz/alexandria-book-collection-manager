@@ -155,17 +155,29 @@ static NSString *       _ellipsis;
 
 - (NSDictionary *)_drawingAttributes
 {    
+    NSMutableParagraphStyle *paragraphStyle;
+    
+    paragraphStyle = [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+    [paragraphStyle setLineBreakMode:[self lineBreakMode]];
+    [paragraphStyle setAlignment:NSCenterTextAlignment];
+    
     return [NSDictionary dictionaryWithObjectsAndKeys:
                             [self font], NSFontAttributeName,
+                            paragraphStyle, NSParagraphStyleAttributeName,
                             nil];
 }
 
 - (void)_truncateTitleToFitInRect:(NSRect)rect
 {
-    NSDictionary *  attributes;
-    NSRange         truncatedRange;	 
-    NSSize          truncatedSize;	 
-    NSSize          ellipsisSize;	 
+    NSDictionary *          attributes;
+    NSRange                 truncatedRange;	 
+    NSSize                  ellipsisSize;	 
+    NSLayoutManager *       layoutManager;
+    NSTextContainer *       textContainer;
+    NSTextStorage *         textStorage;
+    NSAttributedString *    attributedText;
+    unsigned                glyphCount;
+    NSRect                  boundingRect;
 
     [_truncatedBookTitle release];
     _truncatedBookTitle = nil;
@@ -176,18 +188,43 @@ static NSString *       _ellipsis;
     attributes = [self _drawingAttributes];
     truncatedRange = NSMakeRange(0, [_bookTitle length]);	 
     ellipsisSize = [_ellipsis sizeWithAttributes:attributes];	 
- 	      
-    do {	 
+
+    layoutManager = [[NSLayoutManager alloc] init];
+    textContainer = [[NSTextContainer alloc] init];
+    textStorage = [[NSTextStorage alloc] init];
+
+    [textContainer setContainerSize:NSMakeSize (NSWidth(rect), INFINITY)];
+    
+    [layoutManager addTextContainer:textContainer];
+    [textContainer release];
+
+    [textStorage addLayoutManager:layoutManager];
+
+    do {
         _truncatedBookTitle = [_bookTitle substringWithRange:truncatedRange];
-        truncatedSize = [_truncatedBookTitle sizeWithAttributes:attributes];	
-        if (truncatedSize.width + ellipsisSize.width <= (rect.size.width*1.5))
+        if (truncatedRange.length < [_bookTitle length])	 
+            _truncatedBookTitle = [_truncatedBookTitle stringByAppendingString:_ellipsis];	
+
+        attributedText = [[NSAttributedString alloc] initWithString:_truncatedBookTitle attributes:attributes];
+        [textStorage setAttributedString:attributedText];
+        [attributedText release];
+    
+        glyphCount = [layoutManager numberOfGlyphs];
+        if (glyphCount == 0)
             break;
-        truncatedRange.length--;	 
-    }	 
-    while (YES);	 
- 	 
-    if (truncatedRange.length < [_bookTitle length])	 
-        _truncatedBookTitle = [_truncatedBookTitle stringByAppendingString:_ellipsis];	
+
+        boundingRect = [layoutManager boundingRectForGlyphRange:NSMakeRange (0, [layoutManager numberOfGlyphs])
+                                      inTextContainer:textContainer];
+
+        if (NSHeight(rect) >= NSHeight(boundingRect))
+            break;
+
+        truncatedRange.length--;	         
+    }
+    while (YES);
+
+    [layoutManager release];
+    [textStorage release];
 
     [_truncatedBookTitle retain];
     

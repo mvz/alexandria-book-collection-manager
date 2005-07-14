@@ -1,3 +1,10 @@
+2005-07-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/BookIconCell.m:
+
+	Correctly truncates book titles, the previous implementation was not
+	working all the time.
+
 2005-07-13  Laurent Sansonetti  <lrz@gnome.org>
 
 	* alexandria.xcode/.cvsignore,
