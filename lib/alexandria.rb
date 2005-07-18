@@ -42,6 +42,7 @@ module Alexandria
     TRANSLATORS = [ 
         'Dafydd Harries <daf@muse.19inch.net> (cy)',
         'David Weinehall <tao@debian.org> (sv)',
+        'Jiri Pejchal <jiri.pejchal@gmail.com (cs)>',
         'Joachim Breitner <mail@joachim-breitner.de> (de)',
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
         'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',

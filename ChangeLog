@@ -1,3 +1,10 @@
+2005-07-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Jiri.
+
 2005-07-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/BookIconCell.m:
