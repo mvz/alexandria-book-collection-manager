@@ -1,3 +1,10 @@
+2005-07-19  Topher Cyll <christophercyll@gmail.com>
+
+	* lib/alexandria/scanners.rb,
+	  lib/alexandria/scanners/cuecat.rb:
+
+	Added userland CueCat scanner module and a scanner registry.
+
 2005-07-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
