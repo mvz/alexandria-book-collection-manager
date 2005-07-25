@@ -82,7 +82,6 @@ module Alexandria
         class Preferences < Array
             def initialize(provider)
                 @provider = provider
-                @provider_name = provider.name.downcase
             end
 
             class Variable
@@ -91,23 +90,29 @@ module Alexandria
                 attr_accessor :value
 
                 def initialize(provider, name, description, default_value,
-                               possible_values=nil)
+                               possible_values=nil, mandatory=true)
 
                     @provider = provider
-                    @provider_name = provider.name.downcase
                     @name = name
                     @description = description
                     @value = default_value
                     @possible_values = possible_values
+                    @mandatory = mandatory
                 end
 
                 def new_value=(new_value)
-                    unless @provider.abstract?
-                        message = "#{provider_name}_#{name}="
-                        Alexandria::Preferences.instance.send(message,
-                                                              new_value)
-                    end
+                    message = @provider.variable_name(self) + '='
+                    Alexandria::Preferences.instance.send(message,
+                                                          new_value)
                     self.value = new_value
+                end
+
+                def provider_name
+                    @provider.name.downcase
+                end
+
+                def mandatory?
+                    @mandatory
                 end
             end
 
@@ -116,7 +121,6 @@ module Alexandria
             end
 
             def [](obj)
-                p obj
                 case obj
                     when String
                         var = self.find { |var| var.name == obj }
@@ -128,7 +132,7 @@ module Alexandria
 
             def read
                 self.each do |var|
-                    message = "#{@provider_name}_#{var.name}"
+                    message = @provider.variable_name(var)
                     val = Alexandria::Preferences.instance.send(message)
                     var.value = val unless val.nil?
                 end
@@ -136,7 +140,8 @@ module Alexandria
         end
 
         class AbstractProvider
-            attr_reader :name, :fullname, :prefs
+            attr_reader :prefs
+            attr_accessor :name, :fullname
 
             def initialize(name, fullname=nil)
                 @name = name
@@ -147,6 +152,39 @@ module Alexandria
             def reinitialize(fullname)
                 @name << '_' << fullname.hash.to_s
                 @fullname = fullname
+                prefs = Alexandria::Preferences.instance
+                ary = prefs.abstract_providers
+                ary ||= []
+                ary << @name
+                prefs.abstract_providers = ary
+                message = variable_name('name') + '=' 
+                prefs.send(message, @fullname)
+            end
+            
+            def remove
+                prefs = Alexandria::Preferences.instance
+                if ary = prefs.abstract_providers
+                    ary.delete(@name)
+                    prefs.abstract_providers = ary
+                end
+                self.prefs.each do |variable|
+                    name = variable_name(variable)
+                    prefs.remove_preference(name)
+                end
+                name = variable_name('name')
+                prefs.remove_preference(name)
+            end
+
+            def variable_name(object)
+                s = case object
+                    when String
+                        object
+                    when Preferences::Variable
+                        object.name
+                    else
+                        raise
+                end
+                @name.downcase + '_' + s
             end
 
             def transport
@@ -170,6 +208,9 @@ module Alexandria
         class GenericProvider < AbstractProvider
             include Singleton
             undef_method :reinitialize
+            undef_method :name=
+            undef_method :fullname=
+            undef_method :remove
         end
 
         require 'alexandria/book_providers/amazon'
@@ -205,12 +246,29 @@ module Alexandria
                     end
                 end
             end
+            if ary = @prefs.abstract_providers
+                ary.each do |name|
+                    md = /^(.+)_/.match(name)
+                    next unless md
+                    klass_name = md[1] + 'Provider'
+                    klass = @abstract_classes.find { |x| x.name.include?(klass_name) }
+                    next unless klass
+                    fullname = @prefs.send(name.downcase + '_name')
+                    next unless fullname
+                    instance = klass.new
+                    instance.name = name
+                    instance.fullname = fullname
+                    instance.prefs.read
+                    providers[name] = instance
+                end
+            end
             self.clear
             priority = (@prefs.providers_priority or [])
             priority.map! { |x| x.strip }
             rest = providers.keys - priority
             priority.each { |pname| self << providers[pname] }
             rest.sort.each { |pname| self << providers[pname] }
+            self.compact!
         end
 
         def self.method_missing(id, *args, &block)

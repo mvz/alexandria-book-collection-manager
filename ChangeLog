@@ -1,3 +1,30 @@
+2005-07-26  Laurent Sansonetti  <lrz@gnome.org>
+
+	* alexandria.xcodeproj/project.pbxproj,
+	  data/alexandria/icons/lookup.png,
+	  lib/alexandria.rb,
+	  lib/alexandria/book_providers.rb,
+	  lib/alexandria/import_library.rb,
+	  lib/alexandria/preferences.rb,
+	  lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/book_providers/z3950.rb,
+	  lib/alexandria/macui/AddBookController.rb,
+	  lib/alexandria/macui/PreferencesController.rb,
+	  lib/alexandria/macui/main.m,
+	  lib/alexandria/macui/main.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Completed the abstract providers infrastructure ;
+	- Added a lookup button in the add book dialog ;
+	- Fixed a bug in the generation of the ruby load path ;
+	- Added Ruby/ZOOM and the YAZ library in the target ;
+	- In the ISBN-list import, start importing if there is at least one
+	  valid ISBN in the file ;
+	- Misc fixes.
+
 2005-07-19  Topher Cyll <christophercyll@gmail.com>
 
 	* lib/alexandria/scanners.rb,

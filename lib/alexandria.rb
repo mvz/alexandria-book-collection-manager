@@ -79,8 +79,6 @@ else
     end
 end
 
-p Alexandria::VERSION
-
 require 'alexandria/book'
 require 'alexandria/utils'
 require 'alexandria/library'

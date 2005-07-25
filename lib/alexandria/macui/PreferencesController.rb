@@ -17,81 +17,120 @@
 
 module Alexandria
 module UI
+    class FakeVariable
+        attr_reader :name, :description, :possible_values, :value
+    
+        def initialize(name, description, default_value, possible_values=nil, mandatory=true)
+            @name = name
+            @description = description
+            @value = default_value
+            @possible_values = possible_values
+            @mandatory = mandatory
+        end
+        
+        def mandatory?
+            @mandatory
+        end
+    end
+
     class ProviderPreferencesController < OSX::NSObject
         include OSX
 
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
         
-        ib_outlets :window, :preferencesWindow, :contentView
+        ib_outlets :window, :preferencesWindow, :contentView, :buttonsView
         
-        def openWindow(provider, &close_cb)
-            @provider, @close_cb = provider, close_cb
-
-            _setupContentView
-            
-            size = @window.frame.size
-           
-            app = NSApplication.sharedApplication
-            app.beginSheet(@window, :modalForWindow, @preferencesWindow,
-                                    :modalDelegate, self,
-                                    :didEndSelector, :sheetDidEnd_returnCode_contextInfo_,
-                                    :contextInfo, nil)
-
-            frame = @window.frame
-            delta = frame.size.height - size.height
-            frame.size.height -= delta
-            frame.origin.y += delta
-            @window.setFrame_display(frame, true)
+        SETUP_MODE, ADD_MODE = 1, 2
+        
+        def openWindowToSetup(provider, &close_cb)
+            @mode, @provider, @close_cb = SETUP_MODE, provider, close_cb
+            _setupContentView(@provider.prefs.read)
+            _openWindow
+        end
+        
+        def openWindowToAdd(&close_cb)
+            @mode, @close_cb = ADD_MODE, close_cb
+            # FIXME: this should be rewritten once there will be more than one
+            # abstract provider!
+            @instance = BookProviders.abstract_classes.first.new
+            variables = []
+            variables << FakeVariable.new('name', _('Name'), _('Untitled source'))
+            variables << FakeVariable.new('type', _('Type'), @instance.fullname, [@instance.fullname])
+            variables.concat(@instance.prefs)
+            _setupContentView(variables)
+            @addButton.setEnabled(false)
+            _openWindow
         end
 
         # Actions
-        
+
+        def add(sender)
+            NSApplication.sharedApplication.endSheet_returnCode(@window, 1)
+        end
+
         def close(sender)
             NSApplication.sharedApplication.endSheet_returnCode(@window, 0)
         end
 
         # Sheet delegation
-        
+
         def sheetDidEnd_returnCode_contextInfo(sheetWindow, returnCode, contextInfo)
-            @variableControls.each do |variable, control|
-                variable.new_value = case control
-                    when NSTextField
-                         control.stringValue.to_s
-                     
-                    when NSPopUpButton
-                         variable.possible_values[control.indexOfSelectedItem]
-                         
-                    else
-                        raise
+            sheetWindow.orderOut(self)            
+            if @mode == SETUP_MODE
+                _syncVariables
+                @close_cb.call
+            else
+                if returnCode == 1
+                    name = nil
+                    @variableControls.each do |variable, control|
+                        if variable.is_a?(FakeVariable) and variable.name == 'name'
+                            name = control.stringValue.to_s
+                        end
+                    end
+                    if name
+                        @instance.reinitialize(name)
+                        _syncVariables
+                        @close_cb.call(@instance)
+                    end
                 end
             end
-
-            sheetWindow.orderOut(self)            
-            @close_cb.call
         end
-        
+
+        # NSTextField delegation
+
+        def controlTextDidChange(notification)
+            if @mode == ADD_MODE
+                ok = true
+                @variableControls.each do |variable, control|
+                    next unless variable.mandatory?
+                    if control.stringValue.to_s.strip.empty?
+                        ok = false
+                        break
+                    end
+                end
+                @addButton.setEnabled(ok)
+            end
+        end
+
         #######
         private
         #######
-        
-        def _setupContentView
+
+        def _setupContentView(variables)
             controls = []
     
-            biggestLabelWidth = biggestValueWidth = 0
+            biggestLabelWidth = biggestValueWidth = totalHeight = 0
             
             @window.setMinSize(NSSize.new(1000, 1000))
             @variableControls = {}
             
-            @provider.prefs.read.each do |variable|
+            variables.reverse.each do |variable|
                 label = NSTextField.alloc.initWithFrame(NSRect.new(0, 0, 0, 0))
                 label.setStringValue(variable.description + ':')
                 label.setEditable(false)
                 label.setBordered(false)
                 label.setDrawsBackground(false)
-                label.cell.setControlSize(NSSmallControlSize)
-                font = NSFont.systemFontOfSize(NSFont.smallSystemFontSize)
-                label.cell.setFont(font)
                 label.sizeToFit
                 width = label.frame.size.width
                 if width > biggestLabelWidth
@@ -106,54 +145,135 @@ module UI
                     end
                     index = variable.possible_values.index(variable.value)
                     valueControl.selectItemAtIndex(index)
+#                    valueControl.cell.setControlSize(NSSmallControlSize)
+#                    valueControl.setFont(NSFont.systemFontOfSize(NSFont.smallSystemFontSize))
                 else
                     valueControl = NSTextField.alloc.initWithFrame(NSRect.new(0, 0, 0, 0))
                     valueControl.setStringValue(variable.value.to_s)
+                    valueControl.setDelegate(self)
                 end
-                valueControl.cell.setControlSize(NSSmallControlSize)
-                valueControl.setFont(font)
                 valueControl.sizeToFit
-                width = valueControl.frame.size.width
+                valueControlSize = valueControl.frame.size
+                width = valueControlSize.width
                 if width > biggestValueWidth
                     biggestValueWidth = width
                 end
+                totalHeight += valueControlSize.height + 8
                 @variableControls[variable] = valueControl
                 controls << [label, valueControl]
             end
 
             @contentView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
 
+            if biggestValueWidth < biggestLabelWidth
+                biggestValueWidth = biggestLabelWidth
+            elsif biggestValueWidth < 150
+                biggestValueWidth = 150
+            end
+
             frame = @contentView.frame
-            frame.size.width = biggestLabelWidth + 8 + biggestValueWidth
-            frame.size.height = controls.size * 25
+            frame.size.width = biggestLabelWidth + 10 + biggestValueWidth
+            frame.size.height = totalHeight
             @contentView.setFrameSize(frame.size)
-            
+    
+            valueYOrigin = 0
+
             controls.each_with_index do |ary, i|
                 label, value = ary
-
                 @contentView.addSubview(value)
                 frame = value.frame
-                frame.origin = NSPoint.new(biggestLabelWidth + 8, 
-                                           (i * (frame.size.height + 0)) + (i * 6))
+                frame.origin = NSPoint.new(biggestLabelWidth + 10, valueYOrigin)
                 frame.size.width = biggestValueWidth
+#                frame.size.height = 22
                 value.setFrame(frame)                
 
                 @contentView.addSubview(label)
                 frame = label.frame
                 origin = NSPoint.new(biggestLabelWidth - frame.size.width, 
-                                     value.frame.origin.y + ((value.frame.size.height - label.frame.size.height) / 2.0).floor)
+                                     value.frame.origin.y + ((value.frame.size.height - label.frame.size.height) / 2.0).ceil)
+#                if value.isKindOfClass(NSPopUpButton.oc_class)
+#                    origin.y += 1
+#                end
                 label.setFrameOrigin(origin)
+                
+                valueYOrigin += value.frame.size.height + 8
             end
 
+            buttons = case @mode
+                when ADD_MODE
+                    [[_('Cancel'), :close], [_('Add'), :add]]
+                when SETUP_MODE
+                    [[_('Close'), :close]]
+            end
+
+            buttonOrigin = NSPoint.new(@contentView.frame.size.width + 5, 2)
+
+            @buttonsView.subviews.to_a.each { |x| x.removeFromSuperviewWithoutNeedingDisplay }
+
+            buttons.reverse.each do |title, selector|
+                button = NSButton.alloc.initWithFrame(NSRect.new(0, 0, 0, 0))
+                button.setBezelStyle(NSRoundedBezelStyle)
+                button.setTitle(title)
+                button.setTarget(self)
+                button.setAction(selector)
+                button.sizeToFit
+
+                @buttonsView.addSubview(button)
+
+                frame = button.frame
+                if frame.size.width < 80
+                    frame.size.width = 80
+                end
+                buttonOrigin.x -= frame.size.width
+                frame.origin = buttonOrigin
+                button.setFrame(frame)
+                buttonOrigin.x -= 4
+                
+                instance_variable_set("@#{selector}Button".intern, button)
+            end 
+
             frame = @window.frame
-            frame.size.width = biggestLabelWidth + 24 + biggestValueWidth
+            frame.size.width = biggestLabelWidth + 50 + biggestValueWidth
             oldHeight = frame.size.height
-            frame.size.height = 41 + @contentView.frame.size.height
+            frame.size.height = @contentView.frame.size.height + 80
             @window.setContentSize(frame.size)
             frame.origin.y -= oldHeight - frame.size.height
             @window.setFrame_display(frame, false)
 
-            @contentView.setFrameOrigin(NSPoint.new(8, 33))
+            @contentView.setFrameOrigin(NSPoint.new(20, 60))
+        end
+
+        def _openWindow
+            size = @window.frame.size
+           
+            app = NSApplication.sharedApplication
+            app.beginSheet(@window, :modalForWindow, @preferencesWindow,
+                                    :modalDelegate, self,
+                                    :didEndSelector, :sheetDidEnd_returnCode_contextInfo_,
+                                    :contextInfo, nil)
+
+            frame = @window.frame
+            delta = frame.size.height - size.height
+            frame.size.height -= delta
+            frame.origin.y += delta
+            @window.setFrame_display(frame, true)
+        end
+        
+        def _syncVariables
+            @variableControls.each do |variable, control|
+                next if variable.is_a?(FakeVariable)
+                variable.new_value = case control
+                    when NSTextField
+                        control.stringValue.to_s
+
+                    when NSPopUpButton
+                        idx = control.indexOfSelectedItem
+                        variable.possible_values[idx]
+
+                    else
+                        raise
+                end
+            end
         end
     end
 
@@ -213,9 +333,17 @@ module UI
         end
         
         def addProvider(sender)
+            @panel.setTitle(_('New Provider'))
+            @providersPreferencesController.openWindowToAdd do |new_provider|
+                BookProviders.update_priority
+                @providersTableView.reloadData
+            end
         end
         
         def removeProvider(sender)
+            _selectedProvider.remove
+            BookProviders.update_priority
+            @providersTableView.reloadData
         end
         
         def doubleClickOnProvidersTableView(sender)
@@ -226,7 +354,7 @@ module UI
             provider = _selectedProvider
             if provider != nil and !provider.prefs.empty?
                 @panel.setTitle(_('%s Preferences') % provider.fullname)
-                @providersPreferencesController.openWindow(provider) do
+                @providersPreferencesController.openWindowToSetup(provider) do
                     _updateTitle
                 end
             end

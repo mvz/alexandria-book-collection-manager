@@ -27,10 +27,10 @@ class BookProviders
         
         def initialize
             super("Amazon")
-            prefs.add("locale", _("Locale site to contact"), "us",
+            prefs.add("locale", _("Locale"), "us",
                        Amazon::Search::LOCALES.keys)
             prefs.add("dev_token", _("Development token"), "D23XFCO2UKJY82")
-            prefs.add("associate", _("Associate ID"), "calibanorg-20")
+            prefs.add("associate", _("Associate ID"), "calibanorg-20", nil, false)
         end
 
         def search(criterion, type)

@@ -315,6 +315,8 @@
 				4DFEC88D08856AB2003662A0 /* Copy Ruby */,
 				4DFEC8A208856B3B003662A0 /* Copy Ruby/Amazon */,
 				4DFEC8FB0885776F003662A0 /* Copy Data */,
+				4DD2C4B408952CD700092D5B /* Copy YAZ */,
+				4DD2C4BC08952DA500092D5B /* Copy Ruby/ZOOM */,
 			);
 			buildRules = (
 			);
@@ -425,6 +427,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "mkdir -p $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks\nrm -rf $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks/RubyCocoa.framework\ncp -R $TARGET_BUILD_DIR/RubyCocoa.framework $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Frameworks";
+		};
+		4DD2C4B408952CD700092D5B /* Copy YAZ */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy YAZ";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Resources/libyaz*\ncp -R $TARGET_BUILD_DIR/yaz/libyaz* $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Resources";
+		};
+		4DD2C4BC08952DA500092D5B /* Copy Ruby/ZOOM */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Ruby/ZOOM";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "rm -rf $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Resources/zoom*\nmkdir -p $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Resources/zoom\ncp -R $TARGET_BUILD_DIR/zoom/* $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Resources/zoom\necho \"require 'zoom/zoom'\" > $TARGET_BUILD_DIR/$TARGET_NAME.app/Contents/Resources/zoom.rb";
 		};
 		4DFEC88D08856AB2003662A0 /* Copy Ruby */ = {
 			isa = PBXShellScriptBuildPhase;

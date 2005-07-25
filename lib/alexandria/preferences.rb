@@ -46,6 +46,10 @@ module Alexandria
             end                
         end
 
+        def remove_preference(name)
+            # TODO
+        end
+
         URL_HANDLERS_DIR = "/desktop/gnome/url-handlers/"
         def www_browser
             dir = URL_HANDLERS_DIR + "http/"
@@ -106,6 +110,10 @@ module Alexandria
                 end
                 _convertToRubyObject(@userDefaults.objectForKey(method))
             end                
+        end
+        
+        def remove_preference(name)
+            @userDefaults.removeObjectForKey(name)
         end
 
         #######

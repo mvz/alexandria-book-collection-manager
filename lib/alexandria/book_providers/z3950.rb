@@ -15,7 +15,7 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-#require 'zoom'
+require 'zoom'
 
 module Alexandria
 class BookProviders
@@ -24,15 +24,16 @@ class BookProviders
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize
-            super("Z39.50")
+            super("Z3950", "Z39.50")
             prefs.add("hostname", _("Hostname"), "")
             prefs.add("port", _("Port"), 7070)
             prefs.add("database", _("Database"), "")
+            prefs.add("username", _("Username"), "", nil, false)
+            prefs.add("password", _("Password"), "", nil, false)
         end
        
         def search(criterion, type)
             # TODO
-            raise "should not be there"
             prefs.read
         end
     end

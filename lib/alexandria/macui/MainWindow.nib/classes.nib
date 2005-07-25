@@ -13,7 +13,13 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {onAdd = id; onCancel = id; onToggleCriterion = id; }; 
+            ACTIONS = {
+                onAdd = id; 
+                onCancel = id; 
+                onSearch = id; 
+                onToggleCriterion = id; 
+                onToggleSearchCriterion = id; 
+            }; 
             CLASS = AddBookController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
@@ -27,6 +33,7 @@
                 progressIndicator = NSProgressIndicator; 
                 resultsScrollView = NSScrollView; 
                 resultsTableView = NSTableView; 
+                searchButton = NSButton; 
                 searchButtonCell = NSButtonCell; 
                 searchPopupButton = NSPopUpButton; 
                 searchTextField = NSTextField; 
@@ -175,7 +182,12 @@
             ACTIONS = {close = id; }; 
             CLASS = ProviderPreferencesController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {contentView = NSView; preferencesWindow = NSWindow; window = NSWindow; }; 
+            OUTLETS = {
+                buttonsView = NSView; 
+                contentView = NSView; 
+                preferencesWindow = NSWindow; 
+                window = NSWindow; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {CLASS = RatingField; LANGUAGE = ObjC; SUPERCLASS = NSControl; }, 

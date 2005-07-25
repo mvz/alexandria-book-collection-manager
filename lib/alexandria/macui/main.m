@@ -16,6 +16,9 @@
 // Boston, MA 02111-1307, USA.
 
 #import <RubyCocoa/RBRuntime.h>
+#import <mach-o/dyld.h>
+#import <sys/param.h>
+
 #import "ruby.h"
 
 int
@@ -23,22 +26,28 @@ main (int argc, const char *argv[])
 {
     VALUE               paths;
     NSAutoreleasePool * pool;
-    const char *        resourcePath;
-    char                rubyPath[PATH_MAX];
+    NSString *          resourcePath;
+    NSString *          path;
 
     RBRubyCocoaInit ();
     
     paths = rb_gv_get (":");
 
     pool = [[NSAutoreleasePool alloc] init];    
-    resourcePath = [[[NSBundle mainBundle] resourcePath] fileSystemRepresentation];
+
+    resourcePath = [[NSBundle mainBundle] resourcePath];
+
+    path = [resourcePath stringByAppendingPathComponent:@"libyaz.2.dylib"];
+    assert (NSAddImage ([path cString], 
+                        NSADDIMAGE_OPTION_WITH_SEARCHING) != NULL);
+
+    path = [resourcePath stringByAppendingPathComponent:@"ruby"];
+    rb_ary_unshift (paths, rb_str_new2([path cString]));    
+    
+    path = [path stringByAppendingPathComponent:[NSString stringWithCString:RUBY_PLATFORM]];
+    rb_ary_unshift (paths, rb_str_new2([path cString]));    
+    
     [pool release];
-    
-    snprintf (rubyPath, sizeof rubyPath, "%s/ruby/%s", resourcePath, RUBY_PLATFORM);
-    rb_ary_unshift (paths, rb_str_new2(rubyPath));    
-    
-    snprintf (rubyPath, sizeof rubyPath, "%s/ruby", resourcePath);
-    rb_ary_unshift (paths, rb_str_new2(rubyPath));    
     
     return RBApplicationMain ("main.rb", argc, argv);
 }

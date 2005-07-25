@@ -28,7 +28,7 @@ module UI
                    :searchButtonCell, :isbnTextField, :searchTextField,
                    :searchPopupButton, :criterionMatrix, :addButton,
                    :progressIndicator, :resultsScrollView, 
-                   :librariesDataSource
+                   :librariesDataSource, :searchButton
 
         RESPONSE_ADD, RESPONSE_CANCEL = 1, 2
 
@@ -38,6 +38,8 @@ module UI
             @resultsTableView.tableColumns.objectAtIndex(0).setResizingMask(1) # NSTableColumnAutoresizingMask
             @resultsTableView.setTarget(self)
             @resultsTableView.setDoubleAction(:onDoubleClickOnResults_)
+
+            @searchButton.setImage(Icons::LOOKUP)
 
             @results = []
             @resultsDirty = true
@@ -105,6 +107,13 @@ module UI
         def onCancel(sender)
             NSApplication.sharedApplication.endSheet_returnCode(@window, RESPONSE_CANCEL)
         end
+        
+        def onSearch(sender)
+            if @resultsDirty
+                _searchForResults
+                @resultsDirty = false
+            end
+        end
 
         def onDoubleClickOnResults(sender)
             onAdd(sender)
@@ -115,6 +124,7 @@ module UI
             @isbnTextField.setEnabled(isbn)
             @searchPopupButton.setEnabled(!isbn)
             @searchTextField.setEnabled(!isbn)
+            @searchButton.setEnabled(!isbn && @resultsDirty)
             if @results.length > 0
                 isbn ? _packResults : _unpackResults
             end
@@ -125,6 +135,10 @@ module UI
                 @addButton.setEnabled(@results.length > 0 &&
                                       @resultsTableView.selectedRow != -1)
             end
+        end
+
+        def onToggleSearchCriterion(sender)            
+            @resultsDirty = true
         end
         
         # NSTableView delegation
@@ -201,10 +215,7 @@ module UI
         def controlTextDidEndEditing(notification)
             textField = notification.object
             if textField.__ocid__ == @searchTextField.__ocid__
-                if @resultsDirty
-                    _searchForResults
-                    @resultsDirty = false
-                end
+                onSearch(self)
             end
         end
         

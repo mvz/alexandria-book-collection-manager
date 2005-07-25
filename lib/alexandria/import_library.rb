@@ -122,12 +122,14 @@ module Alexandria
             isbn_list = IO.readlines(filename).map do |line|
                 canonicalise_isbn(line.chomp) rescue nil
             end 
-            return nil unless isbn_list.all?
+            isbn_list.compact!
+            return nil if isbn_list.empty?
             max_iterations = isbn_list.length * 2
             current_iteration = 1
             books = []
             isbn_list.each do |isbn|
                 begin
+p 'looking for isbn ' + isbn
                     books << Alexandria::BookProviders.isbn_search(isbn)
                 rescue => e
                     return nil unless
