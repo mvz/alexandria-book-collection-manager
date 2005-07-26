@@ -1,3 +1,9 @@
+2005-07-27  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers/z3950.rb:
+
+	Completed the Z39.50 provider.
+
 2005-07-26  Laurent Sansonetti  <lrz@gnome.org>
 
 	* alexandria.xcodeproj/project.pbxproj,
