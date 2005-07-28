@@ -93,6 +93,8 @@ module UI
                         _syncVariables
                         @close_cb.call(@instance)
                     end
+                else
+                    @close_cb.call(nil)
                 end
             end
         end
@@ -334,9 +336,12 @@ module UI
         
         def addProvider(sender)
             @panel.setTitle(_('New Provider'))
-            @providersPreferencesController.openWindowToAdd do |new_provider|
-                BookProviders.update_priority
-                @providersTableView.reloadData
+            @providersPreferencesController.openWindowToAdd do |newProvider|
+                unless newProvider.nil?
+                    BookProviders.update_priority
+                    @providersTableView.reloadData
+                end
+                _updateTitle
             end
         end
         

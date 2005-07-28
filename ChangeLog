@@ -1,3 +1,13 @@
+2005-07-28  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/PreferencesController.rb,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	- Set the preferences window title back to normal when leaving the
+	  new provider sheet ;
+	- Set the first preferences window tabview item as default.
+
 2005-07-27  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/z3950.rb:
