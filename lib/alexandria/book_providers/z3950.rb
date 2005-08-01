@@ -34,7 +34,7 @@ class BookProviders
             prefs.add("password", _("Password"), "", nil, false)
         end
 
-        $Z3950_DEBUG = true
+        $Z3950_DEBUG = $DEBUG
        
         def search(criterion, type)
             prefs.read
