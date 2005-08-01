@@ -102,13 +102,13 @@ module Alexandria
                           "only one argument (was called with #{args.length})"
                 end
                 puts "#{match[1]} -> #{args.first}"
-                @userDefaults.setObject_forKey(args.first, match[1]) 
+                _sync { @userDefaults.setObject_forKey(args.first, match[1]) }
             else
                 unless args.empty?
                     raise "Get method #{method} should be called " +
                           "without argument (was called with #{args.length})"
                 end
-                _convertToRubyObject(@userDefaults.objectForKey(method))
+                _convertToRubyObject(_sync { @userDefaults.objectForKey(method) })
             end                
         end
         
@@ -119,6 +119,14 @@ module Alexandria
         #######
         private
         #######
+        
+        def _sync(&p)
+            if ExecutionQueue.current != nil
+                ExecutionQueue.current.sync_call(p)
+            else
+                p.call
+            end
+        end
         
         def _convertToRubyObject(object)
             if object.nil?

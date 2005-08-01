@@ -1,3 +1,18 @@
+2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers.rb:
+
+	It is now possible to instantiate abstract providers by subclassing
+	their classes.    
+
+	* lib/alexandria/preferences.rb:
+
+	Execute all calls to NSUserDefaults in the main thread.
+
+	* lib/alexandria/book_providers/z3950.rb:
+
+	Added builtin Library of Congress and British Library providers.
+
 2005-07-28  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/PreferencesController.rb,

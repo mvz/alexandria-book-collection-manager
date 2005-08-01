@@ -24,43 +24,38 @@ class BookProviders
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-        def initialize
-            super("Z3950", "Z39.50")
+        def initialize(name="Z3950", fullname="Z39.50")
+            super
             prefs.add("hostname", _("Hostname"), "")
             prefs.add("port", _("Port"), 7090)
             prefs.add("database", _("Database"), "")
+            prefs.add("record_syntax", _("Record syntax"), "USMARC", ["USMARC", "SUTRS", "UNIMARC"])
             prefs.add("username", _("Username"), "", nil, false)
             prefs.add("password", _("Password"), "", nil, false)
         end
+
+        $Z3950_DEBUG = true
        
         def search(criterion, type)
             prefs.read
 
-            options = {}
-            unless prefs['username'].empty? or prefs['password'].empty?
-                options['user'] = prefs['username']
-                options['password'] = prefs['password']
+            # We only decode MARC at the moment.
+            # SUTRS needs to be decoded separately, because each Z39.50 server has a 
+            # different one.
+            unless marc?
+                raise NoResultsError
             end
-            hostname, port = prefs['hostname'], prefs['port'].to_i
-            conn = ZOOM::Connection.new(options).connect(hostname, port)
-            conn.database_name = prefs['database']
-            conn.preferred_record_syntax = 'USMARC'
-            attr = case type
-                when SEARCH_BY_ISBN     then 7
-                when SEARCH_BY_TITLE    then 4
-                when SEARCH_BY_AUTHORS  then 1003
-                when SEARCH_BY_KEYWORD  then 1016
-            end
-            pqf = "@attr 1=#{attr} '#{criterion.upcase}'"
-            puts "pqf is #{pqf}" if $DEBUG
-            rset = conn.search(pqf)
-            puts "total #{rset.length}" if $DEBUG
-            raise NoResultsError if rset.length == 0
-            results = []
-            rset[0..10].each do |record|
-                marc = MARC::Record.new(record.render)
 
-                if $DEBUG
+            resultset = search_records(criterion, type)
+            puts "total #{resultset.length}" if $Z3950_DEBUG
+            raise NoResultsError if resultset.length == 0
+    
+            results = []
+            resultset[0..9].each do |record|
+                marc_txt = record.render(prefs['record_syntax'], 'USMARC')
+                marc = MARC::Record.new(marc_txt)
+
+                if $Z3950_DEBUG
                     puts "title: #{marc.title}"
                     puts "authors: #{marc.authors.join(', ')}"
                     puts "isbn: #{marc.isbn}"
@@ -76,6 +71,125 @@ class BookProviders
                 results << [book, nil]
             end
             type == SEARCH_BY_ISBN ? results.first : results
+        end
+        
+        def url(book)
+            nil
+        end
+        
+        #######
+        private
+        #######
+        
+        def marc?
+            /MARC$/.match(prefs['record_syntax'])
+        end
+        
+        def search_records(criterion, type)
+            options = {}
+            unless prefs['username'].empty? or prefs['password'].empty?
+                options['user'] = prefs['username']
+                options['password'] = prefs['password']
+            end
+            hostname, port = prefs['hostname'], prefs['port'].to_i
+            puts "hostname #{hostname} port #{port} options #{options}" if $Z3950_DEBUG
+            conn = ZOOM::Connection.new(options).connect(hostname, port)
+            conn.database_name = prefs['database']
+            conn.preferred_record_syntax = prefs['record_syntax']
+            conn.count = 10
+            attr = case type
+                when SEARCH_BY_ISBN     then [7]
+                when SEARCH_BY_TITLE    then [4]
+                when SEARCH_BY_AUTHORS  then [1, 1003]
+                when SEARCH_BY_KEYWORD  then [1016]
+            end
+            pqf = ""
+            attr.each { |attr| pqf += "@attr 1=#{attr} "}
+            pqf += "\"" + criterion.upcase + "\""
+            puts "pqf is #{pqf}, syntax #{prefs['record_syntax']}" if $Z3950_DEBUG
+            conn.search(pqf)
+        end
+    end
+    
+    class LOCProvider < Z3950Provider
+        unabstract
+
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize
+            super("LOC", _("Library of Congress"))
+            prefs.variable_named("hostname").default_value = "z3950.loc.gov"
+            prefs.variable_named("port").default_value = 7090
+            prefs.variable_named("database").default_value = "Voyager"
+            prefs.variable_named("record_syntax").default_value = "USMARC"
+        end
+    end
+    
+    class BLProvider < Z3950Provider
+        unabstract
+
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize
+            super("BL", _("British Library"))
+            prefs.variable_named("hostname").default_value = "z3950cat.bl.uk"
+            prefs.variable_named("port").default_value = 9909
+            prefs.variable_named("database").default_value = "BLAC"
+            prefs.variable_named("record_syntax").default_value = "SUTRS"
+        end
+        
+        def search(criterion, type)
+            return super unless prefs['record_syntax'] == 'SUTRS'
+
+            prefs.read
+            resultset = search_records(criterion, type)
+            puts "total #{resultset.length}" if $Z3950_DEBUG
+            raise NoResultsError if resultset.length == 0
+            
+            results = []
+            resultset[0..9].each do |record|
+                sutrs_text = record.render
+                book = book_from_sutrs(sutrs_text)
+                if book
+                    results << [book, nil]
+                end
+            end
+            type == SEARCH_BY_ISBN ? results.first : results
+        end
+        
+        #######
+        private
+        #######
+        
+        def book_from_sutrs(text)
+            title = isbn = publisher = edition = nil
+            authors = []
+            
+            text.split(/\n/).each do |line|
+                if md = /^Title:\s+(.*)$/.match(line)
+                    title = md[1]
+                elsif md = /^Added Person Name:\s+(.*),[^,]+$/.match(line)
+                    authors << md[1]
+                elsif md = /^ISBN:\s+([\dXx]+)/.match(line)
+                    isbn = md[1]
+                elsif md = /^Imprint:.+\:\s*(.+)\,/.match(line)
+                    publisher = md[1]
+                end
+            end
+
+            if $Z3950_DEBUG
+                puts "title: #{title}"
+                puts "authors: #{authors.join(' and ')}"
+                puts "isbn: #{isbn}"
+                puts "publisher: #{publisher}"
+                puts "edition: #{edition}"
+            end
+
+            if title and !authors.empty?
+                Book.new(title, authors, isbn, (publisher or ""), (edition or ""))
+            end
         end
     end
 end

@@ -100,6 +100,10 @@ module Alexandria
                     @mandatory = mandatory
                 end
 
+                def default_value=(new_value)
+                    self.value = new_value
+                end
+
                 def new_value=(new_value)
                     message = @provider.variable_name(self) + '='
                     Alexandria::Preferences.instance.send(message,
@@ -123,18 +127,22 @@ module Alexandria
             def [](obj)
                 case obj
                     when String
-                        var = self.find { |var| var.name == obj }
+                        var = variable_named(obj)
                         var ? var.value : nil
                     when Integer
                         super(obj)
                 end
+            end
+            
+            def variable_named(name)
+                self.find { |var| var.name == name }
             end
 
             def read
                 self.each do |var|
                     message = @provider.variable_name(var)
                     val = Alexandria::Preferences.instance.send(message)
-                    var.value = val unless val.nil?
+                    var.value = val unless (val.nil? or (val == "" and var.mandatory?))
                 end
             end
         end
@@ -203,14 +211,18 @@ module Alexandria
             def <=>(provider)
                 self.fullname <=> provider.fullname
             end
+            
+            def self.unabstract
+                include Singleton
+                undef_method :reinitialize
+                undef_method :name=
+                undef_method :fullname=
+                undef_method :remove
+            end
         end
 
         class GenericProvider < AbstractProvider
-            include Singleton
-            undef_method :reinitialize
-            undef_method :name=
-            undef_method :fullname=
-            undef_method :remove
+            unabstract
         end
 
         require 'alexandria/book_providers/amazon'
