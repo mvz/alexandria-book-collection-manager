@@ -73,8 +73,12 @@ module UI
             end
         end
     
+        def _filterCriterion
+            @toolbarSearchField.stringValue.UTF8String.strip.downcase
+        end
+
         def _filterBooks(sender)
-            criterion = @toolbarSearchField.stringValue.UTF8String.strip.downcase
+            criterion = _filterCriterion
             unless criterion.empty?
                 filteredLibrary = _selectedLibrary.select do |book|
                     s = case @searchCategory
@@ -432,9 +436,15 @@ module UI
                     modifiedBooks.each do |book|
                         dataSource.flushCachedInfoForBook(book)
                     end
-                    @booksTableView.reloadData
-                    @booksMatrix.reloadData
-                    _updateWindowTitle
+                    unless _filterCriterion.empty?
+                        # The views are filtered, we have to refilter the source again.
+                        _filterBooks(nil)
+                    else
+                        # Just reload the views.
+                        @booksTableView.reloadData
+                        @booksMatrix.reloadData
+                        _updateWindowTitle
+                    end
                 end
             end
         end

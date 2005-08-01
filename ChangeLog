@@ -1,5 +1,10 @@
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/macui/MainController.rb:
+
+	Refilter the model when a book has been modified and when the model is
+	already filtered.
+
 	* lib/alexandria/book_providers.rb:
 
 	It is now possible to instantiate abstract providers by subclassing
