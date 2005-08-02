@@ -1,5 +1,9 @@
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* alexandria.xcodeproj/project.pbxproj:
+
+	Fixed the installation of zoom.bundle and marc.rb.
+
 	* lib/alexandria/book_providers.rb:
 
 	When removing an abstract provider, remove it from the 'providers_priority'
