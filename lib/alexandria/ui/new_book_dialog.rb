@@ -166,7 +166,9 @@ module UI
                 begin
                     @results.each_with_index { |result,i|
                         uri = result[1]
-                        @images[i] = URI.parse(uri).read
+                        if uri
+                            @images[i] = URI.parse(uri).read
+                        end
                     }
                 rescue => e
                     @image_error = e.message

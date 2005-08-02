@@ -16,7 +16,7 @@
 # Boston, MA 02111-1307, USA.
 
 require 'zoom'
-require 'zoom/marc'
+require 'marc'
 
 module Alexandria
 class BookProviders

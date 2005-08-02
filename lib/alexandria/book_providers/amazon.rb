@@ -29,8 +29,16 @@ class BookProviders
             super("Amazon")
             prefs.add("locale", _("Locale"), "us",
                        Amazon::Search::LOCALES.keys)
-            prefs.add("dev_token", _("Development token"), "D23XFCO2UKJY82")
+            prefs.add("dev_token", _("Development token"), "142TF8CHT48WYPPS6J82")
             prefs.add("associate", _("Associate ID"), "calibanorg-20", nil, false)
+            
+            # Backward compatibility hack - the previous developer token has been
+            # revoked.
+            prefs.read
+            token = prefs.variable_named("dev_token")
+            if token and token.value == "D23XFCO2UKJY82"
+                token.new_value = "142TF8CHT48WYPPS6J82"
+            end
         end
 
         def search(criterion, type)

@@ -1,13 +1,23 @@
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Do not download book covers when the URI is nil.
+	
+	* lib/alexandria/book_providers/amazon.rb:
+
+	Added a backward compatibility hack to upgrade the old developer token
+	to a new one.
+
 	* lib/alexandria/utils.rb:
 
 	Removed a debug statement.
 
 	* lib/alexandria/book_providers/z3950.rb:
 
-	SUTRS decoding: remove trailing dots when squeeze whitespaces from the
-	title.
+	- SUTRS decoding: remove trailing dots when squeeze whitespaces from the
+	  title ;
+	- Fix path to the MARC library.
 
 	* lib/alexandria/macui/AddBookController.rb:
 
