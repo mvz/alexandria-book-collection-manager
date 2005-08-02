@@ -1,3 +1,15 @@
+2005-08-03  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/.cvsignore,
+	  lib/alexandria/pre-setup.rb,
+	  lib/alexandria/preferences.rb:
+
+	Automatically generates a default_preferences.rb file at install time,
+	that basically contains a hash with the name and the default value of
+	variables described in the .schema file.  This hash is inspected each time
+	GConf returns nil for a given variable.  This should fix all issues
+	related to the installation of GConf schemas.
+
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* alexandria.xcodeproj/project.pbxproj:

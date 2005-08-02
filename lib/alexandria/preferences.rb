@@ -19,6 +19,7 @@ require 'singleton'
 
 begin
 require 'gconf2'
+require 'alexandria/default_preferences'
 
 module Alexandria
     class Preferences
@@ -43,14 +44,15 @@ module Alexandria
                 if new_value.is_a?(Array) and new_value.empty?
                     remove_preference(variable_name)
                 else
-                    @client[APP_DIR + match[1]] = new_value
+                    @client[APP_DIR + variable_name] = new_value
                 end
             else
                 unless args.empty?
                     raise "Get method #{method} should be called " +
                           "without argument (was called with #{args.length})"
                 end
-                @client[APP_DIR + method]
+
+                (@client[APP_DIR + method] or DEFAULT_VALUES[method])
             end                
         end
 
