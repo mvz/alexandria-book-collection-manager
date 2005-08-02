@@ -34,7 +34,7 @@ class String
     def to_utf8_nsstring
         # This should be writen in ObjC in order to catch the ObjC exception if the
         # string could not be converted to UTF8.
-        (OSX::NSString.stringWithUTF8String(self) or "foo")
+        (OSX::NSString.stringWithUTF8String(self) or self)
     end
 
     def convert(charset_from, charset_to)

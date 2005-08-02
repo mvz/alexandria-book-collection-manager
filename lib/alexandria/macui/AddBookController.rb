@@ -157,7 +157,12 @@ module UI
             book = @results[row].first
             line = "#{book.title.to_utf8_nsstring}"
             if @results.select { |book2, url| book2.title == book.title }.length > 1
-                line << " (%s)" % book.edition.to_utf8_nsstring
+                # Multiple books with the same title, try to display more info.
+                if !book.edition.empty?
+                    line << " (%s)" % book.edition.to_utf8_nsstring
+                elsif book.isbn
+                    line << " (%s)" % book.isbn
+                end
             end
             unless book.authors.empty?
                 line << _(", by %s") % book.authors.join(', ').to_utf8_nsstring

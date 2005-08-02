@@ -1,5 +1,21 @@
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/utils.rb:
+
+	Removed a debug statement.
+
+	* lib/alexandria/book_providers/z3950.rb:
+
+	SUTRS decoding: remove trailing dots when squeeze whitespaces from the
+	title.
+
+	* lib/alexandria/macui/AddBookController.rb:
+
+	When displaying the results of a search and multiple books with the same
+	title, display the ISBN if the edition is not available. 
+
+2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
+
 	* lib/alexandria/macui/MainController.rb:
 
 	Refilter the model when a book has been modified and when the model is
