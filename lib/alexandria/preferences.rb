@@ -36,7 +36,15 @@ module Alexandria
                     raise "Set method #{method} should be called with " +
                           "only one argument (was called with #{args.length})"
                 end
-                @client[APP_DIR + match[1]] = args.first
+
+                variable_name = match[1]
+                new_value = args.first
+                
+                if new_value.is_a?(Array) and new_value.empty?
+                    remove_preference(variable_name)
+                else
+                    @client[APP_DIR + match[1]] = new_value
+                end
             else
                 unless args.empty?
                     raise "Get method #{method} should be called " +
@@ -47,7 +55,7 @@ module Alexandria
         end
 
         def remove_preference(name)
-            # TODO
+            @client.unset(APP_DIR + name)
         end
 
         URL_HANDLERS_DIR = "/desktop/gnome/url-handlers/"

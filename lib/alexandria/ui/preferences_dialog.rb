@@ -15,6 +15,13 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+class Gtk::Entry
+    attr_writer :mandatory
+    def mandatory?
+        @mandatory
+    end
+end
+
 module Alexandria
 module UI
     class ProviderPreferencesBaseDialog < Gtk::Dialog
@@ -24,6 +31,8 @@ module UI
             self.has_separator = false
             self.resizable = false
             self.vbox.border_width = 12
+            
+            @controls = []
         end
 
         def fill_table(table, provider)
@@ -33,6 +42,9 @@ module UI
             table.border_width = 12
             table.row_spacings = 6 
             table.column_spacings = 12
+            
+            @controls.clear
+
             provider.prefs.read.each do |variable|
                 label = Gtk::Label.new("_" + variable.description + ":")
                 label.use_underline = true
@@ -46,23 +58,30 @@ module UI
                     end
                     index = variable.possible_values.index(variable.value)
                     entry.active = index 
-                    entry.signal_connect('changed') do |cb|
-                        value = variable.possible_values[cb.active]
-                        variable.new_value = value
-                    end
                 else
                     entry = Gtk::Entry.new
                     entry.text = variable.value.to_s
-                    entry.signal_connect('changed') do |entry|
-                        variable.new_value = entry.text 
-                    end
+                    entry.mandatory = variable.mandatory?
                 end
                 label.mnemonic_widget = entry
+
+                @controls << [variable, entry]
 
                 table.attach_defaults(entry, 1, 2, i, i + 1)
                 i += 1
             end
             return table
+        end
+
+        def sync_variables
+            @controls.each do |variable, entry|
+                variable.new_value = case entry
+                    when Gtk::ComboBox
+                        variable.possible_values[entry.active]
+                    when Gtk::Entry
+                        entry.text
+                end
+            end
         end
     end
 
@@ -82,7 +101,9 @@ module UI
             table = Gtk::Table.new(0, 0)
             fill_table(table, provider)
             self.vbox.pack_start(table)
-            
+           
+            self.signal_connect('destroy') { sync_variables }
+ 
             show_all
             run
             destroy
@@ -115,6 +136,7 @@ module UI
             @table.attach_defaults(label_name, 0, 1, 0, 1)
             
             entry_name = Gtk::Entry.new
+            entry_name.mandatory = true
             label_name.mnemonic_widget = entry_name
             @table.attach_defaults(entry_name, 1, 2, 0, 1)
             
@@ -143,6 +165,7 @@ module UI
             show_all
             if run == Gtk::Dialog::RESPONSE_ACCEPT
                 @selected_instance.reinitialize(entry_name.text)
+                sync_variables
             else
                 @selected_instance = nil
             end
@@ -163,8 +186,10 @@ module UI
                 entry.signal_connect('changed') do
                     sensitive = true
                     entries.each do |entry2|
-                        sensitive = !entry2.text.strip.empty?
-                        break unless sensitive
+                        if entry2.mandatory?
+                            sensitive = !entry2.text.strip.empty?
+                            break unless sensitive
+                        end
                     end
                     @add_button.sensitive = sensitive
                 end
@@ -194,12 +219,8 @@ module UI
             end           
  
             model = Gtk::ListStore.new(String, String)
-            BookProviders.each do |x| 
-                iter = model.append
-                iter[0] = x.fullname
-                iter[1] = x.name
-            end
             @treeview_providers.model = model
+            reload_providers
             column = Gtk::TreeViewColumn.new("Providers",
                                              Gtk::CellRendererText.new,
                                              :text => 0)
@@ -216,8 +237,7 @@ module UI
         end
 
         def on_provider_setup
-            iter = @treeview_providers.selection.selected
-            provider = BookProviders.find { |x| x.name == iter[1] }
+            provider = selected_provider
             unless provider.prefs.empty?
                 ProviderPreferencesDialog.new(@preferences_dialog, provider)
             end
@@ -250,12 +270,33 @@ module UI
         def on_provider_add
             dialog = NewProviderDialog.new(@preferences_dialog)
             if new_provider = dialog.instance
-                BookProviders << new_provider
+                BookProviders.update_priority
+                reload_providers
             end
         end
 
         def on_provider_remove
-            # TODO
+            provider = selected_provider
+            dialog = AlertDialog.new(@main_app,
+                                     _("Are you sure you want to " +
+                                       "permanently delete the provider " +
+                                       "'%s'?") % provider.fullname, 
+                                     Gtk::Stock::DIALOG_QUESTION,
+                                     [[Gtk::Stock::CANCEL, 
+                                       Gtk::Dialog::RESPONSE_CANCEL],
+                                      [Gtk::Stock::DELETE, 
+                                       Gtk::Dialog::RESPONSE_OK]],
+                                     _("If you continue, the provider and " +
+                                       "all of its preferences will be " + 
+                                       "permanently deleted."))
+            dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
+            dialog.show_all
+            if dialog.run == Gtk::Dialog::RESPONSE_OK
+                provider.remove
+                BookProviders.update_priority
+                reload_providers
+            end
+            dialog.destroy
         end
 
         def on_column_toggled(checkbutton)
@@ -289,16 +330,39 @@ module UI
         #######
         private
         #######
+       
+        def reload_providers
+            model = @treeview_providers.model
+            model.clear
+            BookProviders.each do |x| 
+                iter = model.append
+                iter[0] = x.fullname
+                iter[1] = x.name
+            end
+        end
+
+        def selected_provider
+            iter = @treeview_providers.selection.selected
+            BookProviders.find { |x| x.name == iter[1] }
+        end
 
         def sensitize_providers 
             model = @treeview_providers.model 
             sel_iter = @treeview_providers.selection.selected
-            last_iter = model.get_iter((BookProviders.length - 1).to_s)
-            @button_prov_up.sensitive = sel_iter != model.iter_first
-            @button_prov_down.sensitive = sel_iter != last_iter 
-            provider = BookProviders.find { |x| x.name == sel_iter[1] }
-            @button_prov_setup.sensitive = (not provider.prefs.empty?)
-            @button_prov_remove.sensitive = provider.abstract?
+            if sel_iter.nil?
+                # No selection, we are probably called by ListStore#clear
+                @button_prov_up.sensitive = false
+                @button_prov_down.sensitive = false
+                @button_prov_setup.sensitive = false
+                @button_prov_remove.sensitive = false
+            else 
+                last_iter = model.get_iter((BookProviders.length - 1).to_s)
+                @button_prov_up.sensitive = sel_iter != model.iter_first
+                @button_prov_down.sensitive = sel_iter != last_iter 
+                provider = BookProviders.find { |x| x.name == sel_iter[1] }
+                @button_prov_setup.sensitive = (not provider.prefs.empty?)
+                @button_prov_remove.sensitive = provider.abstract?
+            end
         end
 
         def update_priority

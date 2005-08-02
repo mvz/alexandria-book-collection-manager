@@ -64,7 +64,7 @@ module UI
 
         def self.cover(library, book)
             filename = library.cover(book)
-            File.exists?(filename) ? Gdk::Pixbuf.new(filename) : BOOK
+            File.exists?(filename) ? Gdk::Pixbuf.new(filename) : BOOK_ICON
         end
 
         def self.blank?(filename)

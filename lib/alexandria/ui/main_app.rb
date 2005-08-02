@@ -248,7 +248,8 @@ module UI
         end
 
         ICON_TITLE_MAXLEN = 20   # characters
-        ICON_WIDTH = 48          # pixels
+        ICON_WIDTH = 60
+        ICON_HEIGHT = 90          # pixels
         REDUCE_TITLE_REGEX = /^(.{#{ICON_TITLE_MAXLEN}}).*$/
         def fill_iter_with_book(iter, book)
             iter[Columns::IDENT] = book.ident
@@ -265,8 +266,11 @@ module UI
             icon = Icons.cover(selected_library, book)
             iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
 
-            new_height = icon.height / (icon.width / ICON_WIDTH.to_f)
-            icon = cache_scaled_icon(icon, ICON_WIDTH, new_height)
+            if icon.height > ICON_HEIGHT
+                new_width = icon.width / (icon.height / ICON_HEIGHT.to_f)
+                new_height = [ICON_HEIGHT, icon.height].min
+                icon = cache_scaled_icon(icon, new_width, new_height)
+            end
             if rating == 5
                 icon = icon.tag(Icons::FAVORITE_TAG)
             end

@@ -55,8 +55,8 @@ module UI
 
             libraries_names = libraries.map { |x| x.name }
             if selected_library
-              libraries_names.delete selected_library.name
-              libraries_names.unshift selected_library.name
+                libraries_names.delete selected_library.name
+                libraries_names.unshift selected_library.name
             end
             @combo_libraries.clear
             @combo_libraries.model = Gtk::ListStore.new(Gdk::Pixbuf, String)
@@ -86,11 +86,11 @@ module UI
             col.pack_start(renderer, true)
             col.set_cell_data_func(renderer) do |column, cell, model, iter|
                 pixbuf = iter[2]
-                max_width = 50
+                max_height = 25 
 
-                if pixbuf.width > max_width
-                    pixbuf = pixbuf.scale(max_width,
-                        pixbuf.height * (max_width.to_f / pixbuf.width))
+                if pixbuf.height > max_height
+                    new_width = pixbuf.width * (max_height.to_f / pixbuf.height)
+                    pixbuf = pixbuf.scale(new_width, max_height)
                 end
 
                 cell.pixbuf = pixbuf
@@ -221,7 +221,7 @@ module UI
             @find_thread = Thread.new {
                 begin
                     @results = Alexandria::BookProviders.search(criterion, mode)
-                    puts @results.length
+                    puts "got #{@results.length} results" if $DEBUG
                 rescue => e
                     @find_error = e.message
                 end
@@ -347,7 +347,8 @@ module UI
                 clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
                 if text = clipboard.wait_for_text
                     @entry_isbn.text = text if
-                        Library.valid_isbn?(text) or Library.valid_ean?(text) or Library.valid_upc?(text)
+                        Library.valid_isbn?(text) or Library.valid_ean?(text) or 
+                        Library.valid_upc?(text)
                 end
             end
         end

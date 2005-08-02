@@ -1,9 +1,36 @@
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/book_providers.rb:
+
+	When removing an abstract provider, remove it from the 'providers_priority'
+	list as well (if it is there).
+
+	* lib/alexandria/preferences.rb:
+
+	- When replacing a variable with an empty array, simply unset the
+	variable, as GConf apparently does not support this by throwing an error ;
+	- Implemented the deletion of variables.
+
+	* lib/alexandria/ui/icons.rb:
+
+	Use icon_book.png instead if icon.png as the default book icon.
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Resize all icons to have the same height (and not the same width as
+	before).
+
 	* lib/alexandria/ui/new_book_dialog.rb:
 
-	Do not download book covers when the URI is nil.
-	
+	- Do not download book covers when the URI is nil ;
+	- Make downloaded book covers smaller, and resize them to have the same
+	  height exactly as in the main icon view.
+
+	* lib/alexandria/ui/preferences_dialog.rb:
+
+	Implemented the abstract providers infrastructure (adding, editing and
+	removing new providers).
+
 	* lib/alexandria/book_providers/amazon.rb:
 
 	Added a backward compatibility hack to upgrade the old developer token

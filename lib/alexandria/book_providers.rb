@@ -175,6 +175,10 @@ module Alexandria
                     ary.delete(@name)
                     prefs.abstract_providers = ary
                 end
+                if ary = prefs.providers_priority and ary.include?(@name)
+                    ary.delete(@name)
+                    prefs.providers_priority = ary
+                end
                 self.prefs.each do |variable|
                     name = variable_name(variable)
                     prefs.remove_preference(name)
