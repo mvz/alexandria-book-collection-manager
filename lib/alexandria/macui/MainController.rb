@@ -860,11 +860,15 @@ module UI
             else
                 s = library.name
                 s += ' ('
-                s += n_("%d book", "%d books", library.length) % library.length
                 n_unrated = library.n_unrated
-                if n_unrated > 0
-                    s += ", "
-                    s += n_("%d unrated", "%d unrated", n_unrated) % n_unrated
+                if n_unrated == library.length
+                    s += n_("%d unrated book", "%d unrated books", library.length) % library.length
+                else
+                    s += n_("%d book", "%d books", library.length) % library.length
+                    if n_unrated > 0
+                        s += ", "
+                        s += n_("%d unrated", "%d unrated", n_unrated) % n_unrated
+                    end
                 end
                 s += ")"
                 s
