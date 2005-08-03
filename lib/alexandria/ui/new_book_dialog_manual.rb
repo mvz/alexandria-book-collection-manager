@@ -46,7 +46,7 @@ module UI
             @button_box.set_child_secondary(help_button, true)
            
             self.rating = Book::DEFAULT_RATING
-            self.cover = Icons::BOOK
+            self.cover = Icons::BOOK_ICON
         end
 
         #######
