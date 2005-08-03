@@ -1,5 +1,10 @@
 2005-08-03  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/main_app.rb:
+
+	- Stores the books notes in the model, to make filtering faster ;
+	- Added a 'Match everything' filtering option.
+
 	* lib/alexandria/ui/new_book_dialog_manual.rb:
 
 	Use the new icon as the default cover image.

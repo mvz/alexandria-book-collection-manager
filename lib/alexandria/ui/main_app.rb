@@ -69,7 +69,7 @@ module UI
 
         module Columns
             COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
-                ISBN, PUBLISHER, EDITION, RATING, IDENT = (0..10).to_a
+                ISBN, PUBLISHER, EDITION, RATING, IDENT, NOTES = (0..11).to_a
         end
 
         def initialize
@@ -269,6 +269,7 @@ module UI
             iter[Columns::ISBN] = book.isbn
             iter[Columns::PUBLISHER] = book.publisher
             iter[Columns::EDITION] = book.edition
+            iter[Columns::NOTES] = (book.notes or "")
             rating = (book.rating or Book::DEFAULT_RATING)
             iter[Columns::RATING] = 5 - rating # ascending order is the default
 
@@ -964,9 +965,17 @@ module UI
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
            
             cb = Gtk::ComboBox.new
-            [ _("Title contains"), _("Authors contain"), 
-              _("ISBN contains"), _("Publisher contains"), 
+            cb.set_row_separator_func do |model, iter|
+                iter[0] == '-'
+            end
+            [ _("Match everything"),
+              '-',
+              _("Title contains"), 
+              _("Authors contain"),
+              _("ISBN contains"), 
+              _("Publisher contains"),
               _("Notes contain") ].each do |item|
+                
                 cb.append_text(item)
             end
             cb.active = 0
@@ -1045,7 +1054,7 @@ module UI
             # The active model. 
             @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
                                         String, String, String, String, 
-                                        String, Integer, String)
+                                        String, Integer, String, String)
 
             # Filter books according to the search toolbar widgets. 
             @filtered_model = Gtk::TreeModelFilter.new(@model)
@@ -1056,13 +1065,17 @@ module UI
                     true
                 else
                     data = case @filter_books_mode
-                        when 0 then iter[Columns::TITLE]
-                        when 1 then iter[Columns::AUTHORS]
-                        when 2 then iter[Columns::ISBN]
-                        when 3 then iter[Columns::PUBLISHER]
-                        when 4 then
-                            book = book_from_iter(selected_library, iter)
-                            ((book != nil and book.notes) or "")
+                        when 0 then 
+                            (iter[Columns::TITLE] or "") +
+                            (iter[Columns::AUTHORS] or "") +
+                            (iter[Columns::ISBN] or "") +
+                            (iter[Columns::PUBLISHER] or "") +
+                            (iter[Columns::NOTES] or "")
+                        when 1 then iter[Columns::TITLE]
+                        when 2 then iter[Columns::AUTHORS]
+                        when 3 then iter[Columns::ISBN]
+                        when 4 then iter[Columns::PUBLISHER]
+                        when 5 then iter[Columns::NOTES]
                     end
                     data != nil and data.downcase.include?(filter.downcase)
                 end     
