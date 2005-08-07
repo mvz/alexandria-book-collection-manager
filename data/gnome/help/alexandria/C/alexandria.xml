@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY legal SYSTEM "legal.xml">
-<!ENTITY appversion "0.5.1">
-<!ENTITY manrevision "0.0.6">
+<!ENTITY appversion "0.6">
+<!ENTITY manrevision "0.0.7">
 <!ENTITY date "June 2005">
 <!ENTITY app "<application>Alexandria</application>">
 <!-- Information about the entities
@@ -65,7 +65,7 @@
         <surname>Davison</surname>
         <affiliation>
           <orgname>&app; documentation writing</orgname>
-          <address> web@liamjdavison.info<email>web@liamjdavison.info</email> </address>
+          <address> carnegie@liamjdavison.info<email>carnegie@liamjdavison.info</email> </address>
         </affiliation>
       </author>
 <!-- This is appropriate place for other contributors: translators,
@@ -101,9 +101,9 @@
         <date>&date;</date>
         <revdescription>
           <para role="author">Liam Davison
-	    	<email>web@liamjdavison.info</email>
+	    	<email>carnegie@liamjdavison.info</email>
 	  		</para>
-          <para role="publisher">Alexandria Documentation - inital drafts</para>
+          <para role="publisher">Alexandria Documentation</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -133,14 +133,18 @@
   <para>The &app; application enables you to manage your collection of books. &app; provides the following features:</para>
     <itemizedlist>
       	<listitem><para>retrieves and displays book information (including cover pictures) from online libraries:</para>
-	<itemizedlist>
-		<listitem><para>Amazon (.com, .co.uk, .de, .jp, .fr and .ca)</para></listitem>
-		<listitem><para>Proxis</para></listitem>
-		<listitem><para>Barnes and Noble</para></listitem> 
-		<listitem><para>the Spanish Ministry of Culture</para></listitem>
-		<listitem><para>Amadeus Buch</para></listitem>
-		<listitem><para>Internet Bookshop Italia</para></listitem>
-	</itemizedlist>
+		<itemizedlist>
+			<listitem><para>Amazon (.com, .co.uk, .de and .jp)</para></listitem>
+			<listitem><para>Proxis</para></listitem>
+			<listitem><para>Barnes and Noble</para></listitem> 
+			<listitem><para>the Spanish Ministry of Culture</para></listitem>
+			<listitem><para>Amadeus Buch</para></listitem>
+			<listitem><para>Internet Bookshop Italia</para></listitem>
+			<listitem><para>The British Library and the US Library of Congress</para></listitem>
+		</itemizedlist>
+		</listitem>
+	<listitem>
+		<para>allows you to add new online providers using the Z39.50 protocol</para>
 	</listitem>
 	<listitem>
 		<para>allows books to be added and updated by hand</para>
@@ -172,6 +176,7 @@
       <para>Alexandria is under constant development - new features are being added regularly.</para>
     </note>
   </sect1>
+  
 <!-- =========== Getting Started ============================== -->
 <!-- Use the Getting Started section to describe the steps required
      to start the application and to describe the user interface components
@@ -326,7 +331,7 @@
 	    		    </imageobject>
 		    -->
 	            <textobject>
-	              <phrase>Shows the &app; Add by Search dialog, allowing you to add a book by searching your online information provider for a specific Title, Author or Keyword.</phrase>
+	              <phrase>Shows the &app; Add by Search dialogue, allowing you to add a book by searching your online information provider for a specific Title, Author or Keyword.</phrase>
 	            </textobject>
 	          </mediaobject>
 	        </screenshot>
@@ -365,17 +370,17 @@
 	    		    </imageobject>
 		    -->
 	            <textobject>
-	              <phrase>Shows the &app; Add book manually dialog, allowing type in all the information for the book yourself.</phrase>
+	              <phrase>Shows the &app; Add book manually dialogue, allowing type in all the information for the book yourself.</phrase>
 	            </textobject>
 	          </mediaobject>
 	        </screenshot>
 	     </figure>
-		<para>This dialog is very similar to the <guilabel>Edit Book</guilabel> dialog. There are three tabs to this dialog - <guilabel>General</guilabel>, <guilabel>Loaning</guilabel> and <guilabel>Notes</guilabel>. There is space for you to specify the book title, the ISBN if you know it, the book publisher, the binding (such as Paperback, Hardback, or Audiobook), and the Authors.</para>
+		<para>This dialogue is very similar to the <guilabel>Edit Book</guilabel> dialog. There are three tabs to this dialogue - <guilabel>General</guilabel>, <guilabel>Loaning</guilabel> and <guilabel>Notes</guilabel>. There is space for you to specify the book title, the ISBN if you know it, the book publisher, the binding (such as Paperback, Hardback, or Audiobook), and the Authors.</para>
 		<tip>
 			<para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
 		</tip>
-		<para>To supply a book cover image, click on the <guibutton>Cover</guibutton> button. A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
-		<para>You can rate a book by clicking on the stars. To clear the rating, click on the space imediately to the left of the first star.</para>
+		<para>To supply a book cover image, click on the <guibutton>Cover</guibutton> button. A standard file selection dialogue will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialogue.</para>
+		<para>You can rate a book by clicking on the stars. To clear the rating, click on the space immediately to the left of the first star.</para>
 		<para>When you have filled in all the information, click on the <guibutton>Add</guibutton> button.</para>
 	</sect2>
 
@@ -412,7 +417,7 @@
 <!-- ============= Editing Book Properties Subsection =========== -->
 
   <sect1 id="editing-book-properties">
-	<title>Editing book properties</title>
+	<title>Editing Book Properties</title>
 	<para>You can use &app; to edit and update your book information:
 	<itemizedlist>
 		<listitem><para><xref linkend="editing-info"/></para></listitem>
@@ -445,13 +450,13 @@
 	        </screenshot>
 	     </figure>
 		<para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the new name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
-		<tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space imediately to the left of the first star. Your favourite books - those with five stars - will have a small heart icon in the Icon view of the main window.</para></tip>
+		<tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space immediately to the left of the first star. Your favourite books - those with five stars - will have a small heart icon in the Icon view of the main window.</para></tip>
 	</sect2>
 	
 	<!-- ======== Changing cover images ========= -->
 	<sect2 id="changing-cover-image">
 		<title>Changing cover images</title>
-		<para>To supply a book cover image, click on the existing cover image (or the image of a book if no cover is available). A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
+		<para>To supply a book cover image, click on the existing cover image (or the image of a book if no cover is available). A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
 	</sect2>
 
 	<!-- ======== Loaning books ========= -->
@@ -482,7 +487,7 @@
 	<!-- ========== Adding notes ========== -->
 	<sect2 id="editing-notes">
 		<title>Adding and editing notes</title>
-		<para>&app; allows you to store addition notes about your books - maybe a personal review, or useful page references. To add or edit a note, firstly open the Edit Book dialog as in <xref linkend="editing-info"/>. Then click on the <guilabel>Notes</guilabel> tab. You can type your plain-text notes in this field.</para>
+		<para>&app; allows you to store addition notes about your books - maybe a personal review, or useful page references. To add or edit a note, firstly open the Edit Book dialogue as in <xref linkend="editing-info"/>. Then click on the <guilabel>Notes</guilabel> tab. You can type your plain-text notes in this field.</para>
 	</sect2>
 
   </sect1>
@@ -490,7 +495,7 @@
 <!-- ============= Working with Libraries Subsection ============ -->
 
   <sect1 id="working-with-libraries">
-	<title>Working with libraries</title>
+	<title>Working with Libraries</title>
 	<para>Books stored in &app; can be grouped into different collections, called libraries. For instance, you may have
 one library for all your novels, and other for your programming manuals. &app; allows you to create, edit, and move books
 between libraries.</para>
@@ -628,7 +633,7 @@ between libraries.</para>
 		<title>Finding out more information about your books online</title>
 		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, or Internet Bookshop Italia.</para>
 		<tip>
-			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, .jp, .fr or .ca site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
+			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, or jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
 		</tip>
 		<caution>
 			<para>Not every online information source has a complete list of books and you may have to try several different providers to find the information you want.</para>
@@ -639,7 +644,7 @@ between libraries.</para>
 <!-- ============= Exporting information Subsection ============= -->
 
   <sect1 id="exporting">
-	<title>Exporting information</title>
+	<title>Exporting Information</title>
 	<para>Information in &app; can be exported for use in other applications. Information can be exported in several formats:
 	<itemizedlist>
 		<listitem><para><xref linkend="exporting-as-onix"/></para></listitem>
@@ -658,17 +663,17 @@ between libraries.</para>
 	<sect2 id="exporting-as-Tellico">
 		<title>Exporting as a compressed Tellico file</title>
 		<para>Tellico is a standard file format, based on XML, for storing information about book and other collections. &app; can both import and export information in the Tellico format.</para>
-		<para>To export your library as a compressed (.tc) file, choose <guimenuitem>Archived Tellico XML (.tc)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialog.</para>
+		<para>To export your library as a compressed (.tc) file, choose <guimenuitem>Archived Tellico XML (.tc)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
 	</sect2>
 
 	<sect2 id="exporting-as-plaintext">
 		<title>Exporting a list of ISBNs</title>
-		<para>&app; can export a plain test list of ISBNs - perhaps to transfer to another machine. To export a list of ISBNs, choose <guimenuitem>ISBN list (.txt)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialog.</para>
+		<para>&app; can export a plain test list of ISBNs - perhaps to transfer to another machine. To export a list of ISBNs, choose <guimenuitem>ISBN list (.txt)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
 	</sect2>
 
 	<sect2 id="exporting-as-web-page">
 		<title>Exporting a library as a web page</title>
-		<para>&app; can create a web page from your book library, listing each book complete with cover images. To do this, it creates a directory of images, an XHMTL web page, and a CSS stylesheet. You can choose from different stylesheets to customize the appearance of the web page.</para>
+		<para>&app; can create a web page from your book library, listing each book complete with cover images. To do this, it creates a directory of images, an XHMTL web page, and a CSS stylesheet. You can choose from different stylesheets to customise the appearance of the web page.</para>
 		<para>To export your library as a web page, <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>HTML Web Page (directory)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Choose a style - or theme - for the web page from the <guimenuitem>Theme</guimenuitem> menu.</para>
 		<figure id="export-as-web-page-fig">
 	        <title>Using &app; to create a web page</title>
@@ -697,12 +702,12 @@ between libraries.</para>
   </sect1>	
 
 <!-- ============= Customization ============================= -->
-<!-- Use this section to describe how to customize the application. -->
+<!-- Use this section to describe how to customise the application. -->
   <sect1 id="alexandria-preferences">
     <title>Settings</title>
     <para>To configure &app;, choose 
       <menuchoice><guimenu>Edit</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice>. The 
-      <guilabel>Preferences</guilabel> dialog contains the following tabbed
+      <guilabel>Preferences</guilabel> dialogue contains the following tabbed
       sections:</para>
     <itemizedlist>
       <listitem>
@@ -714,6 +719,10 @@ between libraries.</para>
 	  <xref linkend="myapp-prefs-providers"/></para>
       </listitem>
     </itemizedlist>
+	<para>You can also add new online information providers to &app;:</para>
+	<itemizedlist>
+		<listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
+	</itemizedlist>
 
 	<!-- ======== Visible columns ======= -->
     <sect2 id="alexandria-prefs-display">
@@ -724,7 +733,7 @@ between libraries.</para>
 	<!-- ======== Providers ======== -->
     <sect2 id="myapp-prefs-providers">
       <title>Online information providers</title>
-      <para>Alexandria can download information from a variety of different online sources; some of these sources have aditional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
+      <para>&app; can download information from a variety of different online sources; some of these sources have additional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
 	<itemizedlist>
 		<listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
 		<listitem><para><xref linkend="alexandria-proxis-prefs"/></para></listitem>
@@ -732,6 +741,13 @@ between libraries.</para>
 		<listitem><para>Barnes and Noble</para></listitem>
 		<listitem><para>Amadeus Buch</para></listitem>
 		<listitem><para>Internet Bookshop Italia</para></listitem>
+		<listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
+		<listitem><para><xref linkend="alexandria-uslibcon-prefs"/></para></listitem>
+	</itemizedlist>
+	</para>
+	<para>You can also use the Z39.50 protocol to add and remove new information providers. Two providers have been set up using this protocol for you.
+	<itemizedlist>
+		<listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
 	</itemizedlist>
 	</para>
 
@@ -749,6 +765,42 @@ between libraries.</para>
         <title>Proxis preferences</title>
         <para>&app; can search the Proxis website for books in either English, French or Dutch. To change which language to use, select Proxis from the Provider list, and click on <guibutton>Setup</guibutton>. Then chose either <guilabel>en, fr</guilabel> or <guilabel>nl</guilabel> from the drop-down menu.</para>
       </sect3>
+	  
+	  <sect3 id="alexandria-britlib-prefs">
+	  	<title>British Library preferences</title>
+		<para>If you have an account with the British Library, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>
+	  </sect3>
+	  
+	  <sect3 id="alexandria-uslibcon-prefs">
+	  	<title>US Library of Congress preferences</title>
+		<para>If you have an account with the US Library of Congress, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>
+	  </sect3>
+	  
+	  <sect3 id="alexandria-z3950-prefs">
+	  	<title>Adding Z39.50 providers</title>
+		<para>To add or remove a Z39.50 provider, you must first enable the advanced preferences options by clicking on the <guilabel>Advanced Settings</guilabel> checkbox. Two new buttons will appear: <guibutton>Add</guibutton> and <guibutton>Remove</guibutton>. Clicking Add will open the Z39.50 provider dialogue:</para>
+		<figure id="add-z3950">
+	        <title>Adding a new Z39.50 information provider</title>
+	        <screenshot>
+	          <mediaobject>
+	           <imageobject>
+	              <imagedata fileref="figures/alexandria_add_z3950.png" format="PNG"/>
+	            </imageobject>
+	<!-- EPS versions of the figures are not required at the moment. -->
+	<!-- 
+			    <imageobject>
+	      		<imagedata fileref="figures/image.eps" format="EPS"/>
+	    		    </imageobject>
+		    -->
+	            <textobject>
+	              <phrase>The Z39.50 information provider dialog.</phrase>
+	            </textobject>
+	          </mediaobject>
+	        </screenshot>
+	     </figure>
+		<para>Here you can specify the <guilabel>Name</guilabel> of the provider, the <guilabel>Hostname</guilabel>, the internet <guilabel>Port</guilabel> to connect to, the name of the online <guilabel>Database</guilabel>, the <guilabel>Record Syntax</guilabel> used (&app; currently supports USMARC, UNIMARC and SUTRS formats), and, if relevant, a username and password to connect to the provider.</para>
+		<para>To remove a provider, select its name from the list and click on <guibutton>Remove</guibutton>. You cannot remove any of the default providers provided by &app;.</para>
+	</sect3>
     </sect2>
   </sect1>
 
