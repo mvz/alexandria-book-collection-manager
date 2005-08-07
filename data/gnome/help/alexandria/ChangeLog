@@ -1,3 +1,20 @@
+2005-08-07  Liam Davison		<carnegie@liamjdavison.info>
+
+	* alexandria.xml:
+	
+	- Add instructions for adding Z39.50 data providers
+	- Removed references to amazon.ca and .fr
+	- Misc. spelling and grammar fixes
+	
+	* figures/alexandria_main_window.png, figures/alexandria_add_manually.png
+	figures/alexandria_importing.png, figures/alexandria_edit_info.png
+	figures/alexandria_loaning.png, figures/alexandria_library_pane.png
+	figures/alexandria_list_view.png, figures/alexandria_export_web_page.png
+	figures/alexandria_add_z3950.png, figures/alexandria_add_by_search_1.png
+	
+	- Updated screenshots to better match CVS version of alexandria
+	- Added screenshot for the Z39.50 provider
+
 2005-07-03	Liam Davision		<carnegie@liamjdavison.info>
 
 	* alexandria.xml:
