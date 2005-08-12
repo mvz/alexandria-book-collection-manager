@@ -1,3 +1,9 @@
+2005-08-12  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Fixed the filtering actions.
+
 2005-08-03  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:

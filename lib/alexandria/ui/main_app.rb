@@ -1071,11 +1071,11 @@ module UI
                             (iter[Columns::ISBN] or "") +
                             (iter[Columns::PUBLISHER] or "") +
                             (iter[Columns::NOTES] or "")
-                        when 1 then iter[Columns::TITLE]
-                        when 2 then iter[Columns::AUTHORS]
-                        when 3 then iter[Columns::ISBN]
-                        when 4 then iter[Columns::PUBLISHER]
-                        when 5 then iter[Columns::NOTES]
+                        when 2 then iter[Columns::TITLE]
+                        when 3 then iter[Columns::AUTHORS]
+                        when 4 then iter[Columns::ISBN]
+                        when 5 then iter[Columns::PUBLISHER]
+                        when 6 then iter[Columns::NOTES]
                     end
                     data != nil and data.downcase.include?(filter.downcase)
                 end     
