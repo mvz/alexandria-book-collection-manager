@@ -2,7 +2,9 @@
 
 	* lib/alexandria/ui/main_app.rb:
 
-	Fixed the filtering actions.
+	- Fixed the filtering actions ;
+	- Disable the 'View Online Information' actions if the according providers
+	  do not provide a URL for the selected book.
 
 2005-08-03  Laurent Sansonetti  <lrz@gnome.org>
 

@@ -38,6 +38,12 @@ class Alexandria::Library
     end
 end
 
+class Alexandria::BookProviders::AbstractProvider
+    def action_name
+        "At" + name    
+    end
+end
+
 module Alexandria
 module UI
     class ConflictWhileCopyingDialog < AlertDialog
@@ -152,6 +158,19 @@ module UI
                 @actiongroup["Delete"].sensitive = \
                     @actiongroup["DeselectAll"].sensitive = \
                     @actiongroup["Move"].sensitive = !books.empty?
+                
+                # Sensitize providers URL
+                if books.length == 1
+                    all_url = false
+                    BookProviders.each do |provider|
+                        has_url = provider.url(books.first) != nil
+                        @actiongroup[provider.action_name].sensitive = has_url
+                        all_url = true if has_url and !all_url
+                    end
+                    unless all_url
+                        @actiongroup["OnlineInformation"].sensitive = false
+                    end
+                end
             end
         end
 
@@ -907,7 +926,7 @@ module UI
             ]
 
             providers_actions = BookProviders.map do |provider|
-                ["At" + provider.name, Gtk::Stock::JUMP_TO, 
+                [provider.action_name, Gtk::Stock::JUMP_TO, 
                  _("At _%s") % provider.fullname, nil, nil, 
                  proc { open_web_browser(provider.url(selected_books.first)) }]
             end
@@ -940,7 +959,7 @@ module UI
 
             mid = @uimanager.new_merge_id 
             BookProviders.each do |provider|
-                name = "At" + provider.name    
+                name = provider.action_name    
                 [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
                   "ui/BookPopup/OnlineInformation/",
                   "ui/NoBookPopup/OnlineInformation/" ].each do |path|
