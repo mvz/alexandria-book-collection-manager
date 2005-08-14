@@ -1,3 +1,13 @@
+2005-08-14  Liam Davison		<carnegie@liamjdavison.info>
+
+	* alexandria.xml:
+	
+	- Include link to amazon web services signup page in the amazon preferences section
+
+	* figures/alexandria_add_z3950.png
+
+	- Missing from pervious commit
+
 2005-08-07  Liam Davison		<carnegie@liamjdavison.info>
 
 	* alexandria.xml:
