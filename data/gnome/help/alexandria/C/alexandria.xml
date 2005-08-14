@@ -756,7 +756,7 @@ between libraries.</para>
         <title>Amazon preferences</title>
         <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
 	  	<warning>
-			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. If you don't know what this means, it's best to leave it unchanged.</para>
+			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. You sign for an Amazon Web Services account at <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. If you don't know what this means, then you can leave these values alone.</para>
 		</warning>
       </sect3>
 
