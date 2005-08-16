@@ -1,7 +1,7 @@
 
 POT=./alexandria.pot
 
-RUBY=../bin/alexandria $(shell find ../lib -name '*.rb')
+RUBY=../bin/alexandria $(shell find ../lib -name '*.rb' -and -not -path '*macui*')
 
 GLADE=$(shell find ../data -name '*.glade')
 
@@ -9,7 +9,7 @@ HEADERS=$(shell find .. -name '*.h')
 
 PO=$(wildcard *.po)
 
-$(POT): $(RUBY) $(GLADE) $(HEADERS)
+$(POT): $(RUBY) $(GLADE) ../alexandria.desktop.in.h $(HEADERS)
 	rm -f $(POT)
 	@echo Updating PO template from Ruby files
 	@rgettext --output=$(POT) $(RUBY)
