@@ -585,7 +585,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:157
 msgid "A problem occurred while downloading images"
-msgstr ""
+msgstr "Un problème est survenu lors du téléchargement des images"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:237
 msgid "Unable to find matches for your search"
