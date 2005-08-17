@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-17 00:14+0200\n"
-"PO-Revision-Date: 2005-08-17 20:37+0200\n"
+"PO-Revision-Date: 2005-08-17 20:49+0200\n"
 "Last-Translator: Jiří Pejchal <jiri.pejchal@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,7 @@ msgstr "Nerozpoznán formát zadaného souboru. Zkuste prosím jiný soubor."
 
 #: ../lib/alexandria/ui/main_app.rb:55
 msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
-msgstr "Kniha '%s' již v knihovně '%s' existuje . Chcete ji nahradit?"
+msgstr "Kniha '%s' již v knihovně '%s' existuje. Chcete ji nahradit?"
 
 #: ../lib/alexandria/ui/main_app.rb:58
 msgid "_Skip"
@@ -255,7 +255,7 @@ msgstr[2] "Vybrána knihovna '%s', %d neohodnocených knih"
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "Vybrána knihovna '%s', %d kniha"
-msgstr[1] "Vybrána knihovna '%s' , %d knihy"
+msgstr[1] "Vybrána knihovna '%s', %d knihy"
 msgstr[2] "Vybrána knihovna '%s', %d knih"
 
 #: ../lib/alexandria/ui/main_app.rb:141
