@@ -1,3 +1,9 @@
+2005-08-17  Laurent Sansonetti  <lrz@gnome.org>
+
+	* README:
+
+	Added Ruby/ZOOM in the dependencies list.
+
 2005-08-12  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
