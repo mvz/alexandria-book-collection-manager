@@ -1,3 +1,7 @@
+2005-08-19  Joachim Breitner <mail@joachim-breitner.de>
+
+	* de.po: Fixing strange commeting - I didnt do it
+
 2005-08-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* genpot.sh: Really remove this file.
