@@ -211,7 +211,7 @@ msgstr "Importuj"
 
 #: ../lib/alexandria/ui/import_dialog.rb:82
 msgid "Library _name:"
-msgstr ""
+msgstr "_Nazwa biblioteki"
 
 #: ../lib/alexandria/ui/import_dialog.rb:127
 #: ../lib/alexandria/ui/import_dialog.rb:166
@@ -279,13 +279,14 @@ msgstr[2] "Wybrano %d książek"
 
 #: ../lib/alexandria/ui/main_app.rb:237
 msgid "Unable to launch the web browser"
-msgstr ""
+msgstr "Nie udało się uruchomić przeglądarki internetowej"
 
 #: ../lib/alexandria/ui/main_app.rb:238
 msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
-msgstr ""
+msgstr "Sprawdź czy Twoja przeglądarka internetowa jest poprawnie skonfigurowana w (System -> Preferencje -"
+"> Preferowane Aplikacje) i spróbuj ponownie."
 
 #: ../lib/alexandria/ui/main_app.rb:250
 msgid "Unable to launch the mail reader"
@@ -296,7 +297,7 @@ msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
 msgstr ""
-"Sprawdź czy Twój czytnik poczty jest ustawiony w (System -> Preferencje -"
+"Sprawdź czy Twój czytnik poczty jest poprawnie skonfigurowany w (System -> Preferencje -"
 "> Preferowane Aplikacje) i spróbuj ponownie."
 
 #: ../lib/alexandria/ui/main_app.rb:360
