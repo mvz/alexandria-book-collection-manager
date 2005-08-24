@@ -52,7 +52,8 @@ module Alexandria
                           "without argument (was called with #{args.length})"
                 end
 
-                (@client[APP_DIR + method] or DEFAULT_VALUES[method])
+                value = @client[APP_DIR + method]
+                value == nil ? DEFAULT_VALUES[method] : value
             end                
         end
 

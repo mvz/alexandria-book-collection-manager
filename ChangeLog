@@ -4,6 +4,10 @@
 
 	Fix regression.
 
+	* lib/alexandria/preferences.rb:
+
+	Fix default values handling.
+
 	* README,
 	  NEWS:
 
