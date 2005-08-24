@@ -5,13 +5,15 @@ Alexandria
 
     Alexandria:
 
-      * retrieves and displays book information (including cover pictures) 
+      * retrieves and displays book information (sometimes with cover pictures) 
         from several online libraries, such as Amazon, Proxis, Barnes and 
-        Noble, the Spanish Ministry of Culture and Amadeus Buch ;
+        Noble, the Spanish Ministry of Culture, Amadeus Buch, Internet Bookshop
+		Italia, the US Library of Congress and the British Library ;
       * allows books to be added and updated by hand ; 
-      * enables searches either by EAN/ISBN, title, authors or keyword ; 
+      * enables searches either by EAN/ISBN/UPC, title, authors or keyword ; 
+	  * supports the Z39.50 standard and allow you to manage your own sources ;
       * saves data using the YAML format ;
-      * can import and export data into ONIX, Tellico and EAN/ISBN-list 
+      * can import and export data into ONIX, Tellico and EAN/ISBN/UPC-list 
         formats ;
       * generates from your libraries XHTML web pages themable with CSS ;
       * allows marking your books as loaned, each with the loan-date and the 
@@ -21,7 +23,8 @@ Alexandria
         can be either filtered or sorted ;
       * handles book rating and notes ;
       * supports CueCat (R) barcode readers ;
-      * includes translations for several languages.
+      * includes translations for several languages ;
+	  * is documented in a complete manual (at the moment in English only).
 
 Requirements
 ------------

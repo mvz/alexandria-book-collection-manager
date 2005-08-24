@@ -1,6 +1,7 @@
 2005-08-24  Laurent Sansonetti  <lrz@gnome.org>
 
-	* NEWS:
+	* README,
+	  NEWS:
 
 	Updated for 0.6.0.
 
