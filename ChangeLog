@@ -1,3 +1,5 @@
+=== Alexandria 0.6.0 ===
+
 2005-08-24  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/bn.rb:
