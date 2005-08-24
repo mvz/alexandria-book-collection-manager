@@ -1,4 +1,62 @@
 ================
+Alexandria 0.6.0
+================
+
+New features:
+ * Z39.50 support, with the possibility to manage your own sources ;
+ * New book information providers: Internet Bookshop Italia, US Library of 
+   Congress and British Library ;
+ * Complete manual (in English only), available either from the GNOME help
+   application and Alexandria itself (via Help buttons) ;
+ * Autocompletion is available in all fields of the Add Manually Book and
+   Book Properties dialogs ;
+ * Add a heart emblem to covers of books that have a 5 rating ;
+ * Support for American UPC barcodes ;
+ * Display covers in the search results of the Add Book dialog ;
+ * Added a 'Match everything' filtering option ;
+ * New icons ; 
+ * More ONIX compliance. 
+
+Bugs fixed:
+ * Loading the model is now a bit faster ;
+ * Fixed a Proxis bug that was returning all editions of a book from an ISBN
+   search ;
+ * Labels in alert dialogs are now selectable ;
+ * Improved the wording of the status bar text ;
+ * Ignore CVS directories when looking for themes ;
+ * Ignore whitespace characters when extracting numbers for ISBN/EAN/... ;
+ * In the HTLM export, create the directory if it does not exist yet ;
+ * In the ONIX export, do not write ProductWebsite elements for providers
+   that return nil URLs ;
+ * Handle low-case 'x' when validating ISBN/EAN/... ;
+ * In the ISBN-list text file import, iterate on the progress bar when 
+   downloading covers ;
+ * In the ISBN-list text file import, start importing if there is at least one
+   valid ISBN in the file ;
+ * Added a backward compatibility hack to upgrade the old developer token
+   to a new valid one ;
+ * Resize all icons in the icon view to have the same height (and not the same 
+   width as before) ;
+ * Handle GConf default values by ourself when the GConf client returns nil
+   values, this should fix all issues related to the installation of GConf 
+   schemas ;
+ * Disable the 'View Online Information' actions if the according providers
+   do not provide a URL for the selected book.
+
+Added translations:
+ * Jiri Pejchal <jiri.pejchal@gmail.com> (cs) ;
+ * Ligia Moreira <ligia.moreira@netvisao.pt> (pt) ;
+ * Lucas Rocha <lucasr@im.ufba.br> (pt_BR). 
+ 
+Updated translations:
+ * David Weinehall <tao@debian.org> (sv) ;
+ * Joachim Breitner <mail@joachim-breitner.de> (de) ;
+ * Laurent Sansonetti <lrz@gnome.org> (fr) ;
+ * Masao Mutoh <mutoh@highway.ne.jp> (ja) ;
+ * Miguel Ángel García (es) ;
+ * Mirko Maischberger <mirko@lilik.it> (it). 
+
+================
 Alexandria 0.5.1
 ================
 
