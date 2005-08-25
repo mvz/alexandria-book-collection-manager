@@ -8,10 +8,10 @@ Alexandria
       * retrieves and displays book information (sometimes with cover pictures) 
         from several online libraries, such as Amazon, Proxis, Barnes and 
         Noble, the Spanish Ministry of Culture, Amadeus Buch, Internet Bookshop
-		Italia, the US Library of Congress and the British Library ;
+        Italia, the US Library of Congress and the British Library ;
       * allows books to be added and updated by hand ; 
       * enables searches either by EAN/ISBN/UPC, title, authors or keyword ; 
-	  * supports the Z39.50 standard and allow you to manage your own sources ;
+      * supports the Z39.50 standard and allow you to manage your own sources ;
       * saves data using the YAML format ;
       * can import and export data into ONIX, Tellico and EAN/ISBN/UPC-list 
         formats ;
@@ -24,7 +24,7 @@ Alexandria
       * handles book rating and notes ;
       * supports CueCat (R) barcode readers ;
       * includes translations for several languages ;
-	  * is documented in a complete manual (at the moment in English only).
+      * is documented in a complete manual (at the moment in English only).
 
 Requirements
 ------------
