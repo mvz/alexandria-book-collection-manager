@@ -4,7 +4,7 @@
 
 	- Fixed the indentation of the code introduced by the previous commit ;
 	- Sorted all exporters by their name ;
-	- Changed the BibTex exporter name to 'BibTex' instead of 'BibTex format'.
+	- Changed the BibTex exporter name to 'BibTeX' instead of 'BibTex format'.
 
 2005-08-28  Claudio Belotti  <bel8@lilik.it>
 
