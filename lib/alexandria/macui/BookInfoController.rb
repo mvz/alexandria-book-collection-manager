@@ -31,7 +31,8 @@ module UI
                    :loanedSinceDatePicker, :loanedSwitchButton,
                    :tabView, :ratingField, :addAuthorButton,
                    :removeAuthorButton, :notesTextView,
-                   :buttonsView, :infoButtonsView, :addButtonsView
+                   :buttonsView, :infoButtonsView, :addButtonsView,
+                   :previousButton, :nextButton
         
         def awakeFromNib
             @coverImageView.setImageFrameStyle(NSImageFramePhoto)
@@ -350,6 +351,10 @@ module UI
             @loanedSinceDatePicker.setDateValue(date)
 
             @notesTextView.setString((@book.notes or "").to_utf8_nsstring)
+        
+            canBrowse = @library.length > 1
+            @previousButton.setEnabled(canBrowse)
+            @nextButton.setEnabled(canBrowse)
         end
         
         def _alertRunning?

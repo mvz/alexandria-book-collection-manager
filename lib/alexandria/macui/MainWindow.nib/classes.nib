@@ -65,8 +65,10 @@
                 loanedSinceDatePicker = NSDatePicker; 
                 loanedSwitchButton = NSButton; 
                 loanedToTextField = NSTextField; 
+                nextButton = NSButton; 
                 notesTextView = NSTextView; 
                 panel = NSPanel; 
+                previousButton = NSButton; 
                 publisherTextField = NSTextField; 
                 ratingField = RatingField; 
                 removeAuthorButton = NSButton; 

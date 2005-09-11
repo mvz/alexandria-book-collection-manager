@@ -1,3 +1,13 @@
+2005-09-11  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/macui/BookInfoController.rb,
+	  lib/alexandria/macui/MainWindow.nib/classes.nib,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+	In the books properties window, disable the previous/next buttons if the 
+	given library has only one book.
+
 2005-08-29  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/export_library.rb:
