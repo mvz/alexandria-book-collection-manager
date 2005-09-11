@@ -367,7 +367,16 @@ module UI
                     _focusOnBooksView? and _selectedBooks.length == 1
 
                 when 'viewOnlineInformation:'
-                    _focusOnBooksView? and _selectedBooks.length == 1
+                    books = _selectedBooks
+                    if _focusOnBooksView? and books.length == 1
+                        name = menuItem.representedObject.to_s
+                        unless name.empty?
+                            bookProvider = BookProviders.find { |x| x.name == name }
+                            bookProvider.url(books.first) != nil
+                        else
+                            true
+                        end
+                    end
 
                 when 'arrangeIcons:'
                     menuItem.setState(@arrangeIconsMode == menuItem.tag ? NSOnState : NSOffState)

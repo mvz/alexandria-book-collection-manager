@@ -1,5 +1,10 @@
 2005-09-11  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/macui/MainController.rb:
+
+	Disable view online information menu items for providers that does not
+	provide a URL for the selected book.
+
 	* lib/alexandria/macui/BookInfoController.rb,
 	  lib/alexandria/macui/MainWindow.nib/classes.nib,
 	  lib/alexandria/macui/MainWindow.nib/info.nib,
