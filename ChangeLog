@@ -33,7 +33,10 @@
 	* lib/alexandria/ui/export_dialog.rb,
 	  lib/alexandria/ui/import_dialog.rb:
 
-	Added missing Help buttons.
+	- Added missing Help buttons ;
+	- In the Import dialog, there is no more library name field, the name of
+	  the destination library is now automatically generated based on the
+	  selected file base name.
 
 	* data/alexandria/ui/popups.xml:
 
