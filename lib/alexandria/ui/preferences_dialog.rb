@@ -322,7 +322,7 @@ module UI
         def on_help
             begin
                 Gnome::Help.display('alexandria', 'alexandria-preferences')
-            rescue 
+            rescue => e 
                 ErrorDialog.new(@preferences_dialog, e.message)
             end
         end

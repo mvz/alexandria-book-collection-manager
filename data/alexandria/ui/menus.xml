@@ -27,6 +27,7 @@
       <separator/>
       <menuitem action="Import"/>
       <menuitem action="Export"/>
+      <menuitem action="Acquire"/>
       <separator/>
       <menuitem action="Properties"/>
       <separator/>

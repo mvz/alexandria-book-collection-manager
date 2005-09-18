@@ -715,22 +715,21 @@ module UI
             @main_app.icon = Icons::ALEXANDRIA_SMALL
 
             on_new = proc do
-                i = 1
-                while true do
-                    name = _("Untitled %d") % i
-                    break unless @libraries.find { |x| x.name == name }
-                    i += 1
-                end
+                name = Library.generate_new_name(@libraries)
                 library = Library.load(name)
                 @libraries << library
                 append_library(library, true)
+                setup_move_actions
             end
     
             on_add_book = proc do
                 NewBookDialog.new(@main_app, 
                                   @libraries, 
-                                  selected_library) do |books, library|
-                    if selected_library != library
+                                  selected_library) do |books, library, is_new|
+                    if is_new
+                        append_library(library, true)
+                        setup_move_actions
+                    elsif selected_library != library
                         select_library(library)
                     end
                 end
@@ -746,12 +745,24 @@ module UI
                     @libraries << library
                     append_library(library, true)
                     setup_move_actions
-                    refresh_libraries
                 end
             end
 
             on_export = proc { ExportDialog.new(@main_app, selected_library) }
         
+            on_acquire = proc do
+                AcquireDialog.new(@main_app, 
+                                  @libraries, 
+                                  selected_library) do |books, library, is_new|
+                    if is_new
+                        append_library(library, true)
+                        setup_move_actions
+                    elsif selected_library != library
+                        select_library(library)
+                    end
+                end
+            end 
+
             on_properties = proc do
                 books = selected_books
                 if books.length == 1
@@ -868,6 +879,7 @@ module UI
                 ["AddBookManual", nil, _("Add Book _Manually..."), nil, nil, on_add_book_manual],
                 ["Import", nil, _("_Import..."), "<control>I", nil, on_import],
                 ["Export", nil, _("_Export..."), "<control><shift>E", nil, on_export],
+                ["Acquire", nil, _("_Acquire from Scanner..."), nil, nil, on_acquire],
                 ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, nil, on_properties],
                 ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", nil, on_quit],
                 ["EditMenu", nil, _("_Edit")],

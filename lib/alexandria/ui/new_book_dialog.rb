@@ -53,26 +53,8 @@ module UI
             @block = block
             @libraries = libraries
 
-            libraries_names = libraries.map { |x| x.name }
-            if selected_library
-                libraries_names.delete selected_library.name
-                libraries_names.unshift selected_library.name
-            end
-            @combo_libraries.clear
-            @combo_libraries.model = Gtk::ListStore.new(Gdk::Pixbuf, String)
-            libraries_names.each do |library_name| 
-                iter = @combo_libraries.model.append
-                iter[0] = Icons::LIBRARY_SMALL
-                iter[1] = library_name
-            end
-            renderer = Gtk::CellRendererPixbuf.new
-            @combo_libraries.pack_start(renderer, false)
-            @combo_libraries.set_attributes(renderer, :pixbuf => 0)
-            renderer = Gtk::CellRendererText.new
-            @combo_libraries.pack_start(renderer, true)
-            @combo_libraries.set_attributes(renderer, :text => 1)
-            @combo_libraries.active = 0
-            @combo_libraries.sensitive = libraries.length > 1
+            @combo_libraries.populate_with_libraries(@libraries, 
+                                                     selected_library)
 
             @treeview_results.model = Gtk::ListStore.new(String, String,
                 Gdk::Pixbuf)
@@ -102,13 +84,6 @@ module UI
             @treeview_results.append_column(col)
             @entry_isbn.grab_focus
             @combo_search.active = 0
-
-            if File.exist?(Preferences.instance.cuecat_device)
-                @cuecat_image.pixbuf = Icons::CUECAT
-                create_scanner_input
-            else
-                @cuecat_image.pixbuf = Icons::CUECAT_INACTIVE
-            end
 
             # Re-select the last selected criterion.
             begin
@@ -281,9 +256,8 @@ module UI
             @image_thread.kill if @image_thread
 
             begin
-                library = @libraries.find do |x| 
-                    x.name == @combo_libraries.active_iter[1]
-                end
+                library, new_library = 
+                    @combo_libraries.selection_from_libraries(@libraries)
                 books_to_add = []
 
                 if @isbn_radiobutton.active?
@@ -330,7 +304,9 @@ module UI
                 # Now we can destroy the dialog and go back to the main 
                 # application.
                 @new_book_dialog.destroy
-                @block.call(books_to_add.map { |x| x.first }, library)
+                @block.call(books_to_add.map { |x| x.first }, 
+                            library, 
+                            new_library)
             rescue => e
                 ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
             end
@@ -380,7 +356,7 @@ module UI
         def on_help
             begin
                 Gnome::Help.display('alexandria', 'add-book-by-isbn')
-            rescue 
+            rescue => e 
                 ErrorDialog.new(@preferences_dialog, e.message)
             end
         end
@@ -397,20 +373,6 @@ module UI
                         [ isbn, library.name, book.title ] 
             end
             true
-        end
-
-        def create_scanner_input
-            cuecat = File.open(Preferences.instance.cuecat_device,
-                               File::RDONLY | File::NONBLOCK)
-            Gdk::Input.add(cuecat.to_i, Gdk::Input::Condition::READ) do
-                id, barcode_type, barcode = cuecat.gets.split(/,/)
-                begin
-                    @entry_isbn.text = Library.canonicalise_isbn(barcode)
-                rescue Alexandria::Library::InvalidISBNError
-                    ErrorDialog.new(@parent, 
-                                    _("Couldn't validate the scanner input"))
-                end
-            end
         end
     end
 end

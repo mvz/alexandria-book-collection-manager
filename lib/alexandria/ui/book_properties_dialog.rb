@@ -109,7 +109,7 @@ module UI
         def on_help
             begin
                 Gnome::Help.display('alexandria', 'editing-book-properties')
-            rescue 
+            rescue => e 
                 ErrorDialog.new(@preferences_dialog, e.message)
             end
         end

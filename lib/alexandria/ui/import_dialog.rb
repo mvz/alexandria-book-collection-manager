@@ -59,18 +59,14 @@ module UI
             self.title = _("Import a Library") 
             self.action = Gtk::FileChooser::ACTION_OPEN
             self.transient_for = parent
-            
+           
+            add_button(Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP) 
             add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
             import_button = add_button(_("Import"), 
                                        Gtk::Dialog::RESPONSE_ACCEPT)
             import_button.sensitive = false
                  
             self.signal_connect('destroy') { hide }
-
-            name_entry = Gtk::Entry.new
-            name_entry.signal_connect('changed') do
-                import_button.sensitive = !name_entry.text.strip.empty?
-            end
 
             filters = {}
             FILTERS.each do |filter|
@@ -79,24 +75,10 @@ module UI
                 filters[filefilter] = filter
             end
 
-            name_label = Gtk::Label.new(_("Library _name:"), true)
-            name_label.xalign = 0
-            name_label.mnemonic_widget = name_entry
-
             self.signal_connect('selection_changed') do
-                if self.filename and File.file?(self.filename)
-                    file = File.basename(self.filename, '.*')
-                    name_entry.text = GLib.locale_to_utf8(file)
-                else
-                    name_entry.text = ""
-                end
+                import_button.sensitive = 
+                    self.filename and File.file?(self.filename)
             end
-
-            box = Gtk::HBox.new
-            box.pack_start(name_label)
-            box.pack_start(name_entry)
-            box.show_all
-            self.extra_widget = box
 
             # before adding the (hidden) progress bar, we must re-set the
             # packing of the button box (currently packed at the end), 
@@ -122,55 +104,59 @@ module UI
            
             exec_queue = ExecutionQueue.new
            
-            while run == Gtk::Dialog::RESPONSE_ACCEPT
-                if libraries.find { |x| x.name == name_entry.text.strip }
-                    ErrorDialog.new(parent, _("Couldn't import the library"),
-                                    _("There is already a library named " +
-                                      "'%s'.  Please choose a different " +
-                                      "name.") % name_entry.text.strip)
-                    name_entry.grab_focus
-                else
-                    filter = filters[self.filter]
-                    self.sensitive = false 
-                    
-                    filter.on_iterate do |n, total|
-                        # convert to percents
-                        coeff = total / 100.0
-                        percent = n / coeff
-                        # fraction between 0 and 1
-                        fraction = percent / 100 
-                        exec_queue.call(on_progress, fraction)
+            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
+                if response == Gtk::Dialog::RESPONSE_HELP
+                    begin
+                        Gnome::Help.display('alexandria', 'import-library')
+                    rescue => e 
+                        ErrorDialog.new(self, e.message)
                     end
-
-                    not_cancelled = true 
-                    filter.on_error do |message|
-                        not_cancelled = exec_queue.sync_call(on_error, message)
-                    end
-
-                    library = nil
-                    thread = Thread.start do
-                        library = filter.invoke(name_entry.text, 
-                                                self.filename)
-                    end
-                    
-                    while thread.alive?
-                        exec_queue.iterate
-                        Gtk.main_iteration_do(false) 
-                    end
-                   
-                    if library
-                        on_accept_cb.call(library)
-                        break
-                    elsif not_cancelled
-                        ErrorDialog.new(parent, 
-                                        _("Couldn't import the library"),
-                                        _("The format of the file you " +
-                                          "provided is unknown.  Please " +
-                                          "retry with another file."))
-                    end
-                    pbar.hide
-                    self.sensitive = true
+                    next
                 end
+                file = File.basename(self.filename, '.*')
+                base = GLib.locale_to_utf8(file)
+                new_library_name = Library.generate_new_name(libraries, base)
+
+                filter = filters[self.filter]
+                self.sensitive = false 
+                
+                filter.on_iterate do |n, total|
+                    # convert to percents
+                    coeff = total / 100.0
+                    percent = n / coeff
+                    # fraction between 0 and 1
+                    fraction = percent / 100 
+                    exec_queue.call(on_progress, fraction)
+                end
+
+                not_cancelled = true 
+                filter.on_error do |message|
+                    not_cancelled = exec_queue.sync_call(on_error, message)
+                end
+
+                library = nil
+                thread = Thread.start do
+                    library = filter.invoke(new_library_name, 
+                                            self.filename)
+                end
+                
+                while thread.alive?
+                    exec_queue.iterate
+                    Gtk.main_iteration_do(false) 
+                end
+               
+                if library
+                    on_accept_cb.call(library)
+                    break
+                elsif not_cancelled
+                    ErrorDialog.new(parent, 
+                                    _("Couldn't import the library"),
+                                    _("The format of the file you " +
+                                      "provided is unknown.  Please " +
+                                      "retry with another file."))
+                end
+                pbar.hide
+                self.sensitive = true
             end
             destroy
         end

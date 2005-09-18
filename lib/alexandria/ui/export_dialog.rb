@@ -52,7 +52,8 @@ module UI
             super(_("Export '%s'") % library.name,
                   nil,
                   Gtk::FileChooser::ACTION_SAVE,
-                  backend, 
+                  backend,
+                  [Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP], 
                   [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                   [_("_Export"), Gtk::Dialog::RESPONSE_ACCEPT])
             
@@ -114,12 +115,20 @@ module UI
             internal_table.attach(theme_combo, 1, 2, 3, 4)
             internal_table.attach(preview_image, 2, 3, 0, 4)
             
-            while run == Gtk::Dialog::RESPONSE_ACCEPT
-                begin
-                    break if on_export(FORMATS[types_combo.active], 
-                                       THEMES[theme_combo.active])
-                rescue => e
-                    ErrorDialog.new(self, _("Export failed"), e.message)
+            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
+                if response == Gtk::Dialog::RESPONSE_HELP
+                    begin
+                        Gnome::Help.display('alexandria', 'exporting')
+                    rescue => e 
+                        ErrorDialog.new(self, e.message)
+                    end
+                else
+                    begin
+                        break if on_export(FORMATS[types_combo.active], 
+                                           THEMES[theme_combo.active])
+                    rescue => e
+                        ErrorDialog.new(self, _("Export failed"), e.message)
+                    end
                 end
             end
             destroy

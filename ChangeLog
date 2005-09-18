@@ -1,5 +1,40 @@
 2005-09-18  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/acquire_dialog.glade,
+	  data/alexandria/ui/menus.xml,
+	  lib/alexandria/ui/acquire_dialog.rb,
+	  lib/alexandria/ui.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Initial work on the new acquire barcodes dialog.
+
+	* lib/alexandria/ui/libraries_combo.rb:
+
+	New file that shares code to populate a combo box with libraries.
+	
+	* data/alexandria/glade/new_book_dialog.glade,
+	  lib/alexandria/ui/new_book_dialog.rb:
+
+	- Removed all scanning stuff ;
+	- The libraries popup menu now display a "New Library" item that
+   	  automatically generates a library then adds the books in it ;
+	- Fixed the help error transcient window.
+
+	* lib/alexandria/library.rb:
+
+	Shared the generation of library names.
+	
+	* lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Fixed the help error transcient window.
+	  
+	* lib/alexandria/ui/export_dialog.rb,
+	  lib/alexandria/ui/import_dialog.rb:
+
+	Added missing Help buttons.
+
 	* data/alexandria/ui/popups.xml:
 
 	Added an 'Export' action in the libraries contextual popup menu.

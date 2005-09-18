@@ -92,7 +92,7 @@
 	  <property name="n_columns">2</property>
 	  <property name="homogeneous">False</property>
 	  <property name="row_spacing">6</property>
-	  <property name="column_spacing">20</property>
+	  <property name="column_spacing">12</property>
 
 	  <child>
 	    <widget class="GtkRadioButton" id="isbn_radiobutton">
@@ -269,7 +269,7 @@ by keyword</property>
 	  <child>
 	    <widget class="GtkLabel" id="label3">
 	      <property name="visible">True</property>
-	      <property name="label" translatable="yes">Save in _Library:</property>
+	      <property name="label" translatable="yes">Save _in:</property>
 	      <property name="use_underline">True</property>
 	      <property name="use_markup">False</property>
 	      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -303,47 +303,19 @@ by keyword</property>
 	      <signal name="button_press_event" handler="on_clicked" last_modification_time="Wed, 04 Aug 2004 18:17:48 GMT"/>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox3">
+		<widget class="GtkEntry" id="entry_isbn">
 		  <property name="visible">True</property>
-		  <property name="homogeneous">False</property>
-		  <property name="spacing">6</property>
-
-		  <child>
-		    <widget class="GtkEntry" id="entry_isbn">
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="editable">True</property>
-		      <property name="visibility">True</property>
-		      <property name="max_length">18</property>
-		      <property name="text" translatable="yes"></property>
-		      <property name="has_frame">True</property>
-		      <property name="invisible_char">*</property>
-		      <property name="activates_default">False</property>
-		      <property name="width_chars">13</property>
-		      <signal name="changed" handler="on_changed" last_modification_time="Thu, 18 Mar 2004 23:45:37 GMT"/>
-		      <signal name="activate" handler="on_add" last_modification_time="Sat, 19 Jun 2004 17:33:18 GMT"/>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">True</property>
-		      <property name="fill">True</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkImage" id="cuecat_image">
-		      <property name="visible">True</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xpad">0</property>
-		      <property name="ypad">0</property>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
+		  <property name="can_focus">True</property>
+		  <property name="editable">True</property>
+		  <property name="visibility">True</property>
+		  <property name="max_length">18</property>
+		  <property name="text" translatable="yes"></property>
+		  <property name="has_frame">True</property>
+		  <property name="invisible_char">*</property>
+		  <property name="activates_default">False</property>
+		  <property name="width_chars">13</property>
+		  <signal name="changed" handler="on_changed" last_modification_time="Thu, 18 Mar 2004 23:45:37 GMT"/>
+		  <signal name="activate" handler="on_add" last_modification_time="Sat, 19 Jun 2004 17:33:18 GMT"/>
 		</widget>
 	      </child>
 	    </widget>

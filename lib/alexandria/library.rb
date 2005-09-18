@@ -46,6 +46,18 @@ module Alexandria
             File.join(DIR, @name)
         end
 
+        def self.generate_new_name(existing_libraries, 
+                                   from_base=_("Untitled"))
+            i = 1
+            name = nil
+            while true do
+                name = i == 1 ? from_base : from_base + " #{i}"
+                break unless existing_libraries.find { |x| x.name == name }
+                i += 1
+            end
+            return name
+        end
+
         def self.load(name)
             library = Library.new(name)
             FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
