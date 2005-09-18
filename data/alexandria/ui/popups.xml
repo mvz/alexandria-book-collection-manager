@@ -21,6 +21,7 @@
 <ui>
   <popup name="LibraryPopup">
     <menuitem action="Rename"/>
+    <menuitem action="Export"/>
     <menuitem action="Delete"/>
   </popup>
   <popup name="BookPopup">

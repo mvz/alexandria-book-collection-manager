@@ -1,3 +1,9 @@
+2005-09-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/ui/popups.xml:
+
+	Added an 'Export' action in the libraries contextual popup menu.
+
 2005-09-11  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/macui/MainController.rb:
