@@ -167,7 +167,7 @@ module UI
         end
 
         def loaned_since=(time)
-            @date_loaned_since.time = time
+            @date_loaned_since.time = time.tv_sec
             # XXX 'date_changed' signal not automatically called after #time=.
             on_loaned_date_changed
         end

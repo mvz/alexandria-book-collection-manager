@@ -58,7 +58,7 @@ module UI
             
             if @checkbutton_loaned.active = book.loaned?
                 @entry_loaned_to.text = (book.loaned_to or "")
-                self.loaned_since = (book.loaned_since or Time.now.tv_sec)
+                self.loaned_since = (book.loaned_since or Time.now)
             end
         end
 
@@ -99,7 +99,7 @@ module UI
            
             @book.loaned = @checkbutton_loaned.active?
             @book.loaned_to = @entry_loaned_to.text
-            @book.loaned_since = @date_loaned_since.time
+            @book.loaned_since = Time.at(@date_loaned_since.time)
            
             @library.save(@book) 
             @on_close_cb.call(@book)

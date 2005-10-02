@@ -97,7 +97,7 @@ module UI
                 book.notes = @textview_notes.buffer.text 
                 book.loaned = @checkbutton_loaned.active?
                 book.loaned_to = @entry_loaned_to.text
-                book.loaned_since = @date_loaned_since.time
+                book.loaned_since = Time.at(@date_loaned_since.time)
 
                 @library << book
                 @library.save(book)

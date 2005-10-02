@@ -1,3 +1,14 @@
+2005-10-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb,
+	  lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/book_properties_dialog_base.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb:
+
+	Fix for Ruby 1.8.3 YAML/Bignum bug, we now serialize the loaning date as
+	a Time object and not an Epoch duration anymore.  Backward compatibility
+	should be preserved by the fix.
+
 2005-09-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/acquire_dialog.glade,

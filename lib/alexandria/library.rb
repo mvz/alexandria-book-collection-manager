@@ -63,11 +63,20 @@ module Alexandria
             FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
             Dir.chdir(library.path) do
                 Dir["*" + EXT[:book]].each do |filename|
-                    File.open(filename) do |io|
-                        book = YAML.load(io)
-                        raise "Not a book" unless book.is_a?(Book)
-                        library << book
+                    text = IO.read(filename)
+                    
+                    # Backward compatibility with versions <= 0.6.0, where the 
+                    # loaned_since field was a numeric.
+                    if md = /loaned_since:\s*(\d+)\n/.match(text)
+                        new_yaml = Time.at(md[1].to_i).to_yaml
+                        # Remove the "---" prefix.
+                        new_yaml.sub!(/^\s*\-+\s*/, '')
+                        text.sub!(md[0], "loaned_since: #{new_yaml}\n")
                     end
+ 
+                    book = YAML.load(text)
+                    raise "Not a book" unless book.is_a?(Book)
+                    library << book
                 end
 
                 # Since 0.4.0 the cover files '_small.jpg' and 
