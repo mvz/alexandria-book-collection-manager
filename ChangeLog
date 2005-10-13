@@ -8,9 +8,13 @@
       lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
 
     - Fixed the end of the import action ;
-    - Double click in the libraries table view will edit ;
+    - Double click on a row in the libraries table view will edit ;
     - Added ellipsis after action names in some popup menus ;
     - Set the vertical scrollbar as autohide in the libraries table view ;
+    - Double click outside a row in the libraries table view will create a 
+      new library ;
+    - Double click outside a row in the books table view or a cell in the 
+      books matrix will open the add book sheet ;
     - Some cleaning.
 
 2005-10-02  Laurent Sansonetti  <lrz@gnome.org>

@@ -57,6 +57,11 @@ module UI
             point = self.convertPoint_fromView(event.locationInWindow, nil)
             row = self.rowAtPoint(point)
             col = self.columnAtPoint(point)
+
+            if delegate.respondsToSelector?('tableView:handleMouseEvent:atColumn:row:')
+                return if delegate.tableView_handleMouseEvent_atColumn_row(self, event, col, row)
+            end
+
             if row == -1 or col == -1
                 super_mouseDown(event)
                 return

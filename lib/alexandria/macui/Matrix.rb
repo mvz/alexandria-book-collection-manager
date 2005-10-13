@@ -77,8 +77,16 @@ module UI
 
             cell = (row != -1 and col != -1) ? self.cellAtRow_column(row, col) : nil
             @mouseDownOnCell = (cell != nil and cell.isEnabled?)
+
+            if delegate.respondsToSelector?('matrix:handleMouseEvent:atColumn:row:onCell:')
+                return if delegate.matrix(self, :handleMouseEvent, event,
+                                                :atColumn, col,
+                                                :row, row,
+                                                :onCell, @mouseDownOnCell)
+            end
+
             shiftPressed = event.modifierFlags & NSShiftKeyMask != 0
-            
+
             if @mouseDownOnCell
                 unless self.selectedCells.containsObject?(cell)
                     self.deselectAllCells unless shiftPressed

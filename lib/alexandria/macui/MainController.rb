@@ -238,6 +238,12 @@ module UI
             _popupMenuForBooks
         end
         
+        def matrix_handleMouseEvent_atColumn_row_onCell(matrix, event, col, row, onCell)
+            if event.clickCount == 2 and onCell.boolValue == 0
+                addBook(nil)
+            end
+        end
+
         # NSTableView delegation
         
         def tableViewSelectionDidChange(notification)
@@ -267,6 +273,16 @@ module UI
                 _deleteSelectedLibrary
             elsif tableView.__ocid__ == @booksTableView.__ocid__
                 _deleteSelectedBooks
+            end
+        end
+        
+        def tableView_handleMouseEvent_atColumn_row(tableView, event, column, row)
+            if event.clickCount == 2 and row == -1
+                if tableView.__ocid__ == @librariesTableView.__ocid__
+                    newLibrary(nil)
+                elsif tableView.__ocid__ == @booksTableView.__ocid__
+                    addBook(nil)
+                end
             end
         end
         
