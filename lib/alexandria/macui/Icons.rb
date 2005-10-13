@@ -32,28 +32,14 @@ module UI
             RatingCell.setStarUnsetImage(Icons::STAR_UNSET)
         end
 
-        def self.synchronizedBlank(filename)
-            size = NSImage.alloc.initWithContentsOfFile(filename).size.retain
-            @isBlank = size.width <= 1 and size.height <= 1
-            p 'sync done'
-            
-        end
-
         def self.blank?(filename)
-          #  p 'here...'
             block = proc do |filename|
                 NSImage.isBlank?(filename)
-#                p filename
- #               image = NSImage.alloc.initWithContentsOfFile(filename)
-  #              size = image.size
-   #             size.width <= 1 and size.height <= 1
             end
 
             if ExecutionQueue.current != nil
-             #   p 'through the queue'
                 ExecutionQueue.current.sync_call(block, filename)
             else
-              #  p 'directly'
                 block.call(filename)
             end
         end

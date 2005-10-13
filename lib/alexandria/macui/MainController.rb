@@ -311,7 +311,7 @@ module UI
                 
                 if row != -1
                     menuItem = NSMenuItem.alloc.init
-                    menuItem.setTitle(_('Export'))
+                    menuItem.setTitle(_('Export...'))
                     menuItem.setTarget(self)
                     menuItem.setAction('export:')
                     menu.addItem(menuItem)
@@ -503,10 +503,6 @@ module UI
         def clearSearchResults(sender)
             @toolbarSearchField.setStringValue("")
             _filterBooks(nil)
-        end
-        
-        def doubleClickOnLibraries(sender)
-            # Do nothing.
         end
         
         def doubleClickOnBooks(sender)
@@ -741,8 +737,7 @@ module UI
             librariesColumn = @librariesTableView.tableColumnWithIdentifier(:libraries)
             librariesColumn.setResizingMask(1) # NSTableColumnAutoresizingMask
             librariesColumn.setDataCell(TitledImageCell.alloc.init)
-            @librariesTableView.setDoubleAction(:doubleClickOnLibraries_)
-            @librariesTableView.setTarget(self)
+            @librariesTableView.editWithDoubleClick = true
             pboardTypes = [BooksDataSource::PASTEBOARD_TYPE]
             @librariesTableView.registerForDraggedTypes(pboardTypes)
         end
@@ -980,9 +975,9 @@ module UI
             books = _selectedBooks
             if books.empty?
                 menu.addItem(newItem.call(_('Add Book'), 'addBook:'))
-                menu.addItem(newItem.call(_('Add Book Manually'), 'addBookManually:'))
+                menu.addItem(newItem.call(_('Add Book Manually...'), 'addBookManually:'))
             else
-                menu.addItem(newItem.call(_('Get Info'), 'getInfo:'))
+                menu.addItem(newItem.call(_('Get Info...'), 'getInfo:'))
                 menu.addItem(newItem.call(_('Delete'), 'delete:'))
 
                 submenu = NSMenu.alloc.init

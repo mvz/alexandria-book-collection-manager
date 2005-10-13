@@ -76,13 +76,9 @@ module UI
             end
 
             on_error = proc do |message|
+                # TODO: print a real dialog there...
                 p 'error: ' + message
                 true
-            end
-
-            on_finished = proc do
-                NSApplication.sharedApplication.endSheet_returnCode(progressWindow, 
-                                                                    RESPONSE_DONE)
             end
 
             importFilter.on_iterate do |n, total|
@@ -106,7 +102,7 @@ module UI
                     # we should not be there anyway...
                     p e.message
                 ensure
-                    queue.sync_call(on_finished)
+                    # ...
                 end
             end
 
@@ -115,6 +111,9 @@ module UI
                 NSRunLoop.currentRunLoop.runUntilDate(NSDate.distantPast)
             end            
             queue.stop
+            
+            NSApplication.sharedApplication.endSheet_returnCode(progressWindow, 
+                                                                RESPONSE_DONE)
         end
         
         def stop(sender)
@@ -214,13 +213,6 @@ module UI
             #    x == '*' ? nil : x.delete('*.')
             #end
             #@panel._setEnabledFileTypes(patterns.include?(nil) ? nil : patterns)
-        end
-
-        def panel_userEnteredFilename_confirmed(panel, filename, confirmed)
-            p filename, confirmed
-            return filename unless confirmed
-           
-            return filename 
         end
 
         def panelSelectionDidChange(sender)

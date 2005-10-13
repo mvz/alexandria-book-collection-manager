@@ -23,6 +23,8 @@ module UI
         ns_overrides 'keyDown:', 'mouseDown:', 'menuForEvent:', 
                      'draggedImage_endedAt_operation:'
 
+        attr_accessor :editWithDoubleClick
+
         def keyDown(event)
             chars = event.charactersIgnoringModifiers
             if chars.length > 0 and chars.characterAtIndex(0) == NSDeleteCharacter
@@ -60,8 +62,8 @@ module UI
                 return
             end
 
-            # simple click
-            if event.clickCount == 1
+            # edit row
+            if event.clickCount == 1 or @editWithDoubleClick
                 oldSelectedRow = self.selectedRow
                 @draggingEnded = nil
                 super_mouseDown(event)
@@ -83,7 +85,7 @@ module UI
                 if delegate.respondsToSelector?('tableView:mouseDown:oldSelectedRow:')
                     delegate.tableView_mouseDown_oldSelectedRow(self, event, oldSelectedRow)
                 end
-            # double (or more) click 
+            # launch double action 
             else
                 self.selectRowIndexes_byExtendingSelection(NSIndexSet.indexSetWithIndex(row),
                                                            false)

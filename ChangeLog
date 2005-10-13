@@ -1,3 +1,18 @@
+2005-10-13  Laurent Sansonetti  <lrz@gnome.org>
+
+    * lib/alexandria/macui/Icons.rb,
+      lib/alexandria/macui/ImportController.rb,
+      lib/alexandria/macui/MainController.rb,
+      lib/alexandria/macui/TableView.rb,
+      lib/alexandria/macui/MainWindow.nib/info.nib,
+      lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+
+    - Fixed the end of the import action ;
+    - Double click in the libraries table view will edit ;
+    - Added ellipsis after action names in some popup menus ;
+    - Set the vertical scrollbar as autohide in the libraries table view ;
+    - Some cleaning.
+
 2005-10-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/library.rb,
