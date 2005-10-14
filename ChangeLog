@@ -1,3 +1,20 @@
+2005-10-15  Alexander McCormmach  <alexander@tunicate.org> 
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Giving the filter entry box initial input focus ;
+	- Fixed the reload keyboard shortcut ;
+	- Remember the books table column widths.
+
+	* data/alexandria/glade/main_app.glade:
+
+	Side pane close button shouldn't grab input focus.
+
+	* lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb: 
+
+	Fixed 'pressed' GtkButton events to 'clicked'.
+
 2005-10-13  Laurent Sansonetti  <lrz@gnome.org>
 
     * lib/alexandria/macui/Icons.rb,

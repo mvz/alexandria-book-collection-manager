@@ -27,12 +27,12 @@ module UI
             @on_close_cb = on_close_cb
             
             close_button = Gtk::Button.new(Gtk::Stock::CLOSE)
-            close_button.signal_connect('pressed') { on_close }
+            close_button.signal_connect('clicked') { on_close }
             close_button.show
             @button_box << close_button
            
             help_button = Gtk::Button.new(Gtk::Stock::HELP)
-            help_button.signal_connect('pressed') { on_help }
+            help_button.signal_connect('clicked') { on_help }
             help_button.show
             @button_box << help_button
             @button_box.set_child_secondary(help_button, true)

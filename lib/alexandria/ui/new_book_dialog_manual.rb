@@ -30,17 +30,17 @@ module UI
             FileUtils.rm_f(TMP_COVER_FILE)
             
             cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
-            cancel_button.signal_connect('pressed') { on_cancel }
+            cancel_button.signal_connect('clicked') { on_cancel }
             cancel_button.show
             @button_box << cancel_button
             
             add_button = Gtk::Button.new(Gtk::Stock::ADD)
-            add_button.signal_connect('pressed') { on_add }
+            add_button.signal_connect('clicked') { on_add }
             add_button.show
             @button_box << add_button
             
             help_button = Gtk::Button.new(Gtk::Stock::HELP)
-            help_button.signal_connect('pressed') { on_help }
+            help_button.signal_connect('clicked') { on_help }
             help_button.show
             @button_box << help_button
             @button_box.set_child_secondary(help_button, true)

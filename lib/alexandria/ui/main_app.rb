@@ -78,6 +78,9 @@ module UI
                 ISBN, PUBLISHER, EDITION, RATING, IDENT, NOTES = (0..11).to_a
         end
 
+        # The maximum number of rating stars displayed.
+        MAX_STARS = 5
+
         def initialize
             super("main_app.glade")
             @prefs = Preferences.instance
@@ -85,6 +88,8 @@ module UI
             initialize_ui
             on_books_selection_changed
             restore_preferences
+            # give filter entry the initial keyboard focus
+            @filter_entry.grab_focus
         end
 
         def on_library_button_press_event(widget, event)
@@ -357,7 +362,9 @@ module UI
             # first column
             @listview.model = @listview_model
             renderer = Gtk::CellRendererPixbuf.new
-            column = Gtk::TreeViewColumn.new(_("Title"))
+            title = _("Title")
+            column = Gtk::TreeViewColumn.new(title)
+            column.widget = Gtk::Label.new(title).show
             column.pack_start(renderer, false)
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 iter = @listview_model.convert_iter_to_child_iter(iter)
@@ -404,21 +411,26 @@ module UI
                 renderer = Gtk::CellRendererText.new
                 column = Gtk::TreeViewColumn.new(title, renderer,
                                                  :text => iterid)
+                column.widget = Gtk::Label.new(title).show
                 column.sort_column_id = iterid
                 column.resizable = true
                 @listview.append_column(column)
             end
 
             # final column
-            column = Gtk::TreeViewColumn.new(_("Rating"))
-            5.times do |i|
+            title = _("Rating")
+            column = Gtk::TreeViewColumn.new(title)
+            column.widget = Gtk::Label.new(title).show
+            column.sizing = Gtk::TreeViewColumn::FIXED
+            column.fixed_width = (Icons::STAR_SET.width + 1) * MAX_STARS
+            MAX_STARS.times do |i|
                 renderer = Gtk::CellRendererPixbuf.new
                 column.pack_start(renderer, false)
                 column.set_cell_data_func(renderer) do |column, cell, 
                                                         model, iter|
                     iter = @listview_model.convert_iter_to_child_iter(iter)
                     iter = @filtered_model.convert_iter_to_child_iter(iter)
-                    rating = (iter[Columns::RATING] - 5).abs
+                    rating = (iter[Columns::RATING] - MAX_STARS).abs
                     cell.pixbuf = rating >= i.succ ? 
                         Icons::STAR_SET : Icons::STAR_UNSET
                 end
@@ -445,6 +457,20 @@ module UI
             cols = @listview.columns[1..-1] # skip "Title"
             cols.each_index do |i|
                 cols[i].visible = cols_visibility[i]
+            end
+        end
+
+        # Sets the width of each column based on any respective
+        # preference value stored.
+        def setup_listview_columns_width
+            if @prefs.cols_width
+                cols_width = YAML.load(@prefs.cols_width)
+                @listview.columns.each do |c|
+                    if cols_width.has_key?(c.title)
+                        c.sizing = Gtk::TreeViewColumn::FIXED
+                        c.fixed_width = cols_width[c.title]
+                    end
+                end
             end
         end
  
@@ -672,6 +698,13 @@ module UI
             @prefs.statusbar_visible = @actiongroup["Statusbar"].active?
             @prefs.view_as = @notebook.page
             @prefs.selected_library = selected_library.name
+            cols_width = Hash.new
+            @listview.columns.each do |c|
+                cols_width[c.title] = [c.widget.size_request.first, c.width].max
+            end
+            @prefs.cols_width = '{' + cols_width.to_a.collect do |t, v|
+                '"' + t + '": ' + v.to_s
+            end.join(', ') + '}'
         end 
        
         def setup_move_actions
@@ -893,7 +926,7 @@ module UI
                  on_clear_search_results],
                 ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), nil, nil, on_preferences],
                 ["ViewMenu", nil, _("_View")],
-                ["Refresh", Gtk::Stock::REFRESH, _("_Refresh"), "<control>F", nil, proc { on_refresh }],
+                ["Refresh", Gtk::Stock::REFRESH, _("_Refresh"), "<control>R", nil, proc { on_refresh }],
                 ["ArrangeIcons", nil, _("Arran_ge Icons")],
                 ["OnlineInformation", nil, _("Display Online _Information")],
                 ["HelpMenu", nil, _("_Help")],
@@ -1120,6 +1153,7 @@ module UI
             setup_sidepane
             setup_move_actions
             setup_listview_columns_visibility
+            setup_listview_columns_width
         end
     end
 end

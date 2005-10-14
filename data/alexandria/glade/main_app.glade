@@ -79,9 +79,9 @@
 		      <child>
 			<widget class="GtkButton" id="button18">
 			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
+			  <property name="tooltip">Close</property>
 			  <property name="relief">GTK_RELIEF_NONE</property>
-			  <property name="focus_on_click">True</property>
+			  <property name="focus_on_click">False</property>
 			  <signal name="clicked" handler="on_close_sidepane" last_modification_time="Tue, 18 May 2004 18:24:21 GMT"/>
 
 			  <child>
