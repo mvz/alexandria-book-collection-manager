@@ -1,3 +1,10 @@
+2005-10-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Alexander.
+
 2005-10-15  Alexander McCormmach  <alexander@tunicate.org> 
 
 	* lib/alexandria/ui/main_app.rb:
