@@ -5,13 +5,13 @@ msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-17 00:14+0200\n"
-"PO-Revision-Date: 2005-08-17 20:49+0200\n"
+"PO-Revision-Date: 2005-10-15 17:24+0200\n"
 "Last-Translator: Jiří Pejchal <jiri.pejchal@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 #: ../lib/alexandria/book_providers/mcu.rb:32
 msgid "Spanish Culture Ministry"
@@ -20,7 +20,7 @@ msgstr "Španělské ministerstvo kultury"
 #: ../lib/alexandria/book_providers/amazon.rb:30
 #: ../lib/alexandria/book_providers/proxis.rb:35
 msgid "Locale"
-msgstr ""
+msgstr "Pobočka"
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
 msgid "Development token"
@@ -357,12 +357,9 @@ msgstr "Jste si jisti, že chcete natrvalo odstranit '%s'?"
 
 #: ../lib/alexandria/ui/main_app.rb:820
 msgid "Are you sure you want to permanently delete '%s' which has %d book?"
-msgid_plural ""
 "Are you sure you want to permanently delete '%s' which has %d books?"
-msgstr[0] "Jste si jisti, že chcete natrvalo odstranit '%s', kde je %d kniha?"
-msgstr[1] ""
+msgstr "Jste si jisti, že chcete natrvalo odstranit '%s', kde je %d kniha?"
 "Jste si jisti, že chcete natrvalo odstranit '%s', kde jsou %d knihy?"
-msgstr[2] "Jste si jisti, že chcete natrvalo odstranit '%s', kde je %d knih?"
 
 #: ../lib/alexandria/ui/main_app.rb:835
 msgid "Are you sure you want to permanently delete '%s' from '%s'?"
@@ -466,9 +463,8 @@ msgid "Submit _Bug Report"
 msgstr "Nahlásit chy_bu"
 
 #: ../lib/alexandria/ui/main_app.rb:890
-#, fuzzy
 msgid "Contents"
-msgstr "Poznámky"
+msgstr "Obsah"
 
 #: ../lib/alexandria/ui/main_app.rb:891
 msgid "_About"
@@ -528,7 +524,7 @@ msgstr "V _%s"
 
 #: ../lib/alexandria/ui/main_app.rb:990
 msgid "Match everything"
-msgstr ""
+msgstr "Prohledávat vše"
 
 #: ../lib/alexandria/ui/main_app.rb:992
 msgid "Title contains"
@@ -581,7 +577,7 @@ msgstr "Při stahování obrázků se vyskytl problém"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:237
 msgid "Unable to find matches for your search"
-msgstr "Žádné záznamy nenalezeny."
+msgstr "Nenalezeny žádné záznamy"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:242
 msgid "%s, by %s"
