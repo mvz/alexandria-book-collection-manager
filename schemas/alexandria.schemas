@@ -193,6 +193,20 @@
       </locale>
     </schema>
     <schema>
+      <key>/schemas/apps/alexandria/cols_width</key>
+      <applyto>/apps/alexandria/cols_width</applyto>
+      <owner>alexandria</owner>
+      <type>string</type>
+      <default>{}</default>
+      <locale name="C">
+        <short>Hash of list-view column widths</short>
+        <long>Associates list-view column titles to their widths in
+        the format: {"title1": width1, "title2": width2, "title3":
+        width3, …}. These widths are restored on application
+        startup.</long>
+      </locale>
+    </schema>
+    <schema>
       <key>/schemas/apps/alexandria/providers_priority</key>
       <applyto>/apps/alexandria/providers_priority</applyto>
       <owner>alexandria</owner>

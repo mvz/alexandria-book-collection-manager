@@ -422,7 +422,8 @@ module UI
             column = Gtk::TreeViewColumn.new(title)
             column.widget = Gtk::Label.new(title).show
             column.sizing = Gtk::TreeViewColumn::FIXED
-            column.fixed_width = (Icons::STAR_SET.width + 1) * MAX_STARS
+            column.fixed_width = column.min_width = column.max_width =
+                (Icons::STAR_SET.width + 1) * MAX_STARS
             MAX_STARS.times do |i|
                 renderer = Gtk::CellRendererPixbuf.new
                 column.pack_start(renderer, false)

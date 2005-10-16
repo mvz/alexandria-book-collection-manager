@@ -1,3 +1,14 @@
+2005-10-15  Alexander McCormmach  <alexander@tunicate.org> 
+
+	* lib/alexandria/ui/main_app.rb:
+
+	- Fixed rating column's min and max width to approx. five times
+	  the width of the star pixbuf.
+
+	* schemas/alexandria.schemas:
+
+	- Added schema for cols_width property.
+	
 2005-10-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
