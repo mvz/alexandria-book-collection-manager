@@ -1,3 +1,10 @@
+2005-11-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* AUTHORS,
+	  lib/alexandria.rb:
+
+	Added Mathieu.
+
 2005-11-08  Mathieu Leduc-Hamel  <arrak@arrak.org>
 
 	* lib/alexandria/book_providers.rb,

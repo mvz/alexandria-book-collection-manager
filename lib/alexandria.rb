@@ -30,6 +30,7 @@ module Alexandria
         'Javier Fernandez-Sanguino Pena <jfs@debian.org>',
         'Kevin Schultz <schultkl@ieee.org>',
         'Laurent Sansonetti <lrz@gnome.org>',
+        'Mathieu Leduc-Hamel <arrak@arrak.org>',
         'Owain Evans <o.evans@gmail.com>',
         'Pascal Terjan <pterjan@linuxfr.org>',
         'Rene Samselnig <sandman@sdm-net.org>',
