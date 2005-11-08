@@ -21,6 +21,7 @@
   <property name="focus_on_map">True</property>
   <property name="has_separator">False</property>
   <signal name="focus_in_event" handler="on_focus" last_modification_time="Wed, 16 Jun 2004 18:00:08 GMT"/>
+  <signal name="destroy" handler="on_cancel" last_modification_time="Tue, 08 Nov 2005 15:24:25 GMT"/>
 
   <child internal-child="vbox">
     <widget class="GtkVBox" id="dialog-vbox1">

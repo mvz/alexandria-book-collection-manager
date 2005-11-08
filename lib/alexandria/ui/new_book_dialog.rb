@@ -133,28 +133,28 @@ module UI
                 error)
         end
 
-        def get_images_async()
+        def get_images_async
             @images = {}
             @image_error = nil
 
-            @image_thread = Thread.new {
+            @image_thread = Thread.new do
                 begin
-                    @results.each_with_index { |result,i|
+                    @results.each_with_index do |result, i|
                         uri = result[1]
                         if uri
                             @images[i] = URI.parse(uri).read
                         end
-                    }
+                    end
                 rescue => e
                     @image_error = e.message
                 end
-            }
+            end
 
-            Gtk.timeout_add(100) {
+            Gtk.timeout_add(100) do
                 if @image_error
                     image_error_dialog(@image_error)
                 else
-                    @images.each_pair { |key,value|
+                    @images.each_pair do |key, value|
                         begin
                             loader = Gdk::PixbufLoader.new
                             loader.last_write(value)
@@ -169,12 +169,12 @@ module UI
                         rescue => e
                             image_error_dialog(e.message)
                         end
-                    }
+                    end
                 end
 
                 # Stop if the image download thread has stopped.
-                @image_thread.alive? ? true : false
-            }
+                @image_thread.alive?
+            end
         end
 
         def on_find
@@ -189,28 +189,30 @@ module UI
 
             criterion = @entry_search.text.strip
             @treeview_results.model.clear
-            @button_add.sensitive = false
+            @new_book_dialog.sensitive = false
             @find_error = nil
             @results = nil
 
-            @find_thread = Thread.new {
+            @find_thread.kill if @find_thread
+            @image_thread.kill if @image_thread
+            
+            @find_thread = Thread.new do
                 begin
                     @results = Alexandria::BookProviders.search(criterion, mode)
                     puts "got #{@results.length} results" if $DEBUG
                 rescue => e
                     @find_error = e.message
                 end
-            }
+            end
 
-            Gtk.timeout_add(100) {
+            Gtk.timeout_add(100) do
                 # This block copies results into the tree view, or shows an
                 # error if the search failed.
 
-                if @find_error
-                    ErrorDialog.new(
-                        @parent,
-                        _("Unable to find matches for your search"),
-                        @find_error)
+                continue = if @find_error
+                    ErrorDialog.new(@parent,
+                                    _("Unable to find matches for your search"),
+                                    @find_error)
                     false
                 elsif @results
                     @results.each do |book, cover|
@@ -236,9 +238,15 @@ module UI
                     false
                 else
                     # Stop if the book find thread has stopped.
-                    @find_thread.alive? ? true : false
+                    @find_thread.alive?
                 end
-            }
+
+                unless continue
+                    @new_book_dialog.sensitive = true
+                    @button_add.sensitive = false 
+                end
+                continue
+            end
         end
 
         def on_results_button_press_event(widget, event)
