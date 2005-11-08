@@ -1,3 +1,10 @@
+2005-11-08  Mathieu Leduc-Hamel  <arrak@arrak.org>
+
+	* lib/alexandria/book_providers.rb,
+	  lib/alexandria/book_providers/renaud.rb:
+
+	Added a provider to the Renaud-Bray library (Quebec).
+
 2005-11-08  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/export_dialog.rb,

@@ -236,6 +236,7 @@ module Alexandria
         require 'alexandria/book_providers/amadeus'
         require 'alexandria/book_providers/ibs_it'
         require 'alexandria/book_providers/z3950'
+        require 'alexandria/book_providers/renaud'
 
         attr_reader :abstract_classes
 
