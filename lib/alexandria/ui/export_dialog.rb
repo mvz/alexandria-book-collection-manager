@@ -115,7 +115,9 @@ module UI
             internal_table.attach(theme_combo, 1, 2, 3, 4)
             internal_table.attach(preview_image, 2, 3, 0, 4)
             
-            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
+            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
+                  response != Gtk::Dialog::RESPONSE_DELETE_EVENT
+
                 if response == Gtk::Dialog::RESPONSE_HELP
                     begin
                         Gnome::Help.display('alexandria', 'exporting')

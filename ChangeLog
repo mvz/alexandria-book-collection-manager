@@ -1,3 +1,10 @@
+2005-11-08  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/export_dialog.rb,
+	  lib/alexandria/ui/import_dialog.rb:
+
+	Do not launch the action when the window is destroyed.
+
 2005-10-15  Alexander McCormmach  <alexander@tunicate.org> 
 
 	* lib/alexandria/ui/main_app.rb:

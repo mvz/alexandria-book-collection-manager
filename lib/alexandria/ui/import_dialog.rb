@@ -104,7 +104,9 @@ module UI
            
             exec_queue = ExecutionQueue.new
            
-            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
+            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
+                  response != Gtk::Dialog::RESPONSE_DELETE_EVENT
+
                 if response == Gtk::Dialog::RESPONSE_HELP
                     begin
                         Gnome::Help.display('alexandria', 'import-library')
