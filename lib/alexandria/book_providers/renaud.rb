@@ -71,6 +71,7 @@ module Alexandria
       end
 
       def url(book)
+        return nil unless book.isbn
         "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
       end
 
