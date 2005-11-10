@@ -908,33 +908,52 @@ module UI
 
             standard_actions = [
                 ["LibraryMenu", nil, _("_Library")],
-                ["New", Gtk::Stock::NEW, _("_New"), "<control>L", nil, on_new],
-                ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", nil, on_add_book],
-                ["AddBookManual", nil, _("Add Book _Manually..."), nil, nil, on_add_book_manual],
-                ["Import", nil, _("_Import..."), "<control>I", nil, on_import],
-                ["Export", nil, _("_Export..."), "<control><shift>E", nil, on_export],
-                ["Acquire", nil, _("_Acquire from Scanner..."), nil, nil, on_acquire],
-                ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, nil, on_properties],
-                ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", nil, on_quit],
+                ["New", Gtk::Stock::NEW, _("_New"), "<control>L", 
+                 _("Create a new library"), on_new],
+                ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", 
+                 _("Add a new book from the Internet"), on_add_book],
+                ["AddBookManual", nil, _("Add Book _Manually..."), nil, 
+                 _("Add a new book manually"), on_add_book_manual],
+                ["Import", nil, _("_Import..."), "<control>I", 
+                 _("Import a library"), on_import],
+                ["Export", nil, _("_Export..."), "<control><shift>E", 
+                 _("Export the selected library"), on_export],
+                ["Acquire", nil, _("_Acquire from Scanner..."), nil, 
+                 _("Acquire books from a scanner"), on_acquire],
+                ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, 
+                 _("Edit the properties of the selected book"), on_properties],
+                ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", 
+                 _("Quit the program"), on_quit],
                 ["EditMenu", nil, _("_Edit")],
-                ["SelectAll", nil, _("_Select All"), "<control>A", nil, on_select_all],
-                ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", nil, on_deselect_all],
+                ["SelectAll", nil, _("_Select All"), "<control>A", 
+                 _("Select all visible books"), on_select_all],
+                ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", 
+                 _("Deselect everything"), on_deselect_all],
                 ["Move", nil, _("_Move")],
                 ["Rename", nil, _("_Rename"), nil, nil, on_rename],
-                ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", nil, on_delete],
-                ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", nil, on_search],
-                ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", nil, 
+                ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", 
+                 _("Delete the selected books or library"), on_delete],
+                ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", 
+                 _("Filter books"), on_search],
+                ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), 
+                 "<control><alt>B", _("Clear the search results"), 
                  on_clear_search_results],
-                ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), nil, nil, on_preferences],
+                ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), 
+                 nil, _("Change Alexandria's settings"), on_preferences],
                 ["ViewMenu", nil, _("_View")],
-                ["Refresh", Gtk::Stock::REFRESH, _("_Refresh"), "<control>R", nil, proc { on_refresh }],
+                ["Refresh", Gtk::Stock::REFRESH, _("_Refresh"), "<control>R", 
+                 _("Reload the selected library"), proc { on_refresh }],
                 ["ArrangeIcons", nil, _("Arran_ge Icons")],
                 ["OnlineInformation", nil, _("Display Online _Information")],
                 ["HelpMenu", nil, _("_Help")],
-                ["SubmitBugReport", Gnome::Stock::MAIL_NEW, _("Submit _Bug Report"), nil, nil,
+                ["SubmitBugReport", Gnome::Stock::MAIL_NEW, 
+                 _("Submit _Bug Report"), nil, 
+                 _("Submit a bug report to the developers"),
                  on_submit_bug_report],
-                ["Help", Gtk::Stock::HELP, _("Contents"), "F1", nil, on_help],
-                ["About", Gtk::Stock::ABOUT, _("_About"), nil, nil, on_about],
+                ["Help", Gtk::Stock::HELP, _("Contents"), "F1", 
+                 _("View Alexandria's manual"), on_help],
+                ["About", Gtk::Stock::ABOUT, _("_About"), nil, 
+                 _("Show information about Alexandria"), on_about],
             ]
 
             on_view_sidepane = proc { |ag, a| @paned.child1.visible = a.active? }
@@ -1028,7 +1047,8 @@ module UI
             
             @toolbar = @uimanager.get_widget("/MainToolbar")
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
-           
+            tooltips = Gtk::Tooltips.new 
+    
             cb = Gtk::ComboBox.new
             cb.set_row_separator_func do |model, iter|
                 iter[0] == '-'
@@ -1055,7 +1075,9 @@ module UI
             toolitem.border_width = 5
             toolitem << cb
             @toolbar.insert(-1, toolitem)
-            
+            # TODO: it is not currently possible to set tooltips on combo boxes
+            #toolitem.set_tooltip(Gtk::Tooltips.new, _("Change the filter criterion"))
+
             @filter_entry = Gtk::Entry.new
             @filter_entry.signal_connect('activate') do 
                 @filter_entry.text.strip!
@@ -1066,9 +1088,10 @@ module UI
             toolitem = Gtk::ToolItem.new
             toolitem.expand = true
             toolitem.border_width = 5
+            tooltips.set_tip(@filter_entry, _("Type here the search criterion"), nil)
             toolitem << @filter_entry
             @toolbar.insert(-1, toolitem)
-            
+
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
            
             @toolbar_view_as = Gtk::ComboBox.new
@@ -1087,9 +1110,11 @@ module UI
                 end
             toolitem = Gtk::ToolItem.new
             toolitem.border_width = 5 
+            # TODO: it is not currently possible to set tooltips on combo boxes
+            #toolitem.set_tooltip(Gtk::Tooltips.new, _("Change the way books are displayed"))
             toolitem << @toolbar_view_as
             @toolbar.insert(-1, toolitem)
-            
+
             @toolbar.show_all
             
             @main_app.toolbar = @toolbar

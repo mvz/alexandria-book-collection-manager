@@ -1,3 +1,10 @@
+2005-11-10  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Added actions tooltips.  Combo boxes in the toolbar do not have tooltips
+	yet.
+
 2005-11-09  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/renaud.rb (#url):
