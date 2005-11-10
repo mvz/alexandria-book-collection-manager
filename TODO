@@ -3,9 +3,7 @@ Alexandria's TODO list
 
 For the next release:
 
-[X] Writing help documentation (Liam)
-[X] Auto-completion (Laurent)
-[ ] Z39.50 full support (Laurent)
+[ ] Infinite Undo/Redo
 [ ] Sort providers meaningfully according to the current locale
 [ ] CueCat userland support
 [ ] Threading of all operations

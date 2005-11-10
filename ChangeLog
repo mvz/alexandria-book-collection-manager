@@ -1,5 +1,9 @@
 2005-11-10  Laurent Sansonetti  <lrz@gnome.org>
 
+	* TODO:
+
+	Removed done points, added undo/redo.
+
 	* lib/alexandria/ui/main_app.rb:
 
 	Added actions tooltips.  Combo boxes in the toolbar do not have tooltips
