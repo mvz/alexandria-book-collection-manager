@@ -1,3 +1,11 @@
+2005-11-13	Liam Davison	<carnegie@liamjdavison.info@liamjdavison.>
+
+	* data/gnome/help/alexandria/C/alexandria.xml:
+
+	- Rewrote Acquire from Scanner section to match new functionality;
+	- Added Reynaud-Bray provider;
+	- Added Bibtex export.
+
 2005-08-14  Liam Davison		<carnegie@liamjdavison.info>
 
 	* alexandria.xml:
