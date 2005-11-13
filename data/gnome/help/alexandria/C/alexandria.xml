@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
 <!ENTITY legal SYSTEM "legal.xml">
-<!ENTITY appversion "0.6">
-<!ENTITY manrevision "0.0.7">
-<!ENTITY date "June 2005">
+<!ENTITY appversion "0.6.1">
+<!ENTITY manrevision "0.0.8">
+<!ENTITY date "November 2005">
 <!ENTITY app "<application>Alexandria</application>">
 <!-- Information about the entities
        The legal.xml file contains legal information, there is no need to edit the file. 
@@ -141,6 +141,7 @@
 			<listitem><para>Amadeus Buch</para></listitem>
 			<listitem><para>Internet Bookshop Italia</para></listitem>
 			<listitem><para>The British Library and the US Library of Congress</para></listitem>
+			<listitem><para>Renaud-Bray Bookstore, Canada</para></listitem>
 		</itemizedlist>
 		</listitem>
 	<listitem>
@@ -345,8 +346,7 @@
 	<!-- ======== Adding books by scanning a barcode ====== -->
 	<sect2 id="add-book-by-barcode-scan">
 		<title>To add a book by scanning its barcode</title>
-		<para>&app; supports Cuecard (c) barcode scanners. If you have set up a Cuecard (c) barcode scanner on your computer, &app; will display a small picture of a barcode next to the <guilabel>ISBN</guilabel> field. (If you don't have a scanner, this picture will be greyed out.)</para>
-		<para>Simply scan the barcode on the book and Alexandria will automatically fill in the <guilabel>ISBN</guilabel> field. Then click <guibutton>Add</guibutton> as normal.</para>
+		<para>&app; supports Cuecard (c) barcode scanners. If you have set up a Cuecard (c) barcode scanner on your computer, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Acquire from Scanner</guimenuitem></menuchoice>. Scan each book barcode in turn, and they will be listed in the <guilabel>Acquire from Scanner</guilabel> window. Choose which library you wish to save the books in with the <guilabel>Save in</guilabel> drop-down menu, and click <guibutton>Add</guibutton> to complete the operation.</para>
 	</sect2>
 
 	<!-- ======== Adding a book manually ================= -->
@@ -631,7 +631,7 @@ between libraries.</para>
 	<!-- ========= Finding out more online =========== -->
 	<sect2 id="searching-more-online">
 		<title>Finding out more information about your books online</title>
-		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, or Internet Bookshop Italia.</para>
+		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, Renaud-Bray or Internet Bookshop Italia.</para>
 		<tip>
 			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, or jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
 		</tip>
@@ -649,6 +649,7 @@ between libraries.</para>
 	<itemizedlist>
 		<listitem><para><xref linkend="exporting-as-onix"/></para></listitem>
 		<listitem><para><xref linkend="exporting-as-Tellico"/></para></listitem>
+		<listitem><para><xref linkend="exporting-as-bibtex"/></para></listitem>
 		<listitem><para><xref linkend="exporting-as-plaintext"/></para></listitem>
 		<listitem><para><xref linkend="exporting-as-web-page"/>, using XHTML and CSS stylesheets</para></listitem>
 	</itemizedlist>
@@ -664,6 +665,12 @@ between libraries.</para>
 		<title>Exporting as a compressed Tellico file</title>
 		<para>Tellico is a standard file format, based on XML, for storing information about book and other collections. &app; can both import and export information in the Tellico format.</para>
 		<para>To export your library as a compressed (.tc) file, choose <guimenuitem>Archived Tellico XML (.tc)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
+	</sect2>
+
+	<sect2 id="exporting-as-bibtex">
+		<title>Exporting as a Bibtex file</title>
+		<para>Bibtex is a LaTeX based file format for storing bibliographic information.</para>
+		<para>To export your library as a Bibtex (.bib) file, choose <guimenuitem>Bibtex (.bib)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
 	</sect2>
 
 	<sect2 id="exporting-as-plaintext">
@@ -743,6 +750,7 @@ between libraries.</para>
 		<listitem><para>Internet Bookshop Italia</para></listitem>
 		<listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
 		<listitem><para><xref linkend="alexandria-uslibcon-prefs"/></para></listitem>
+		<listitem><para>Reynaud-Bray</para></listitem>
 	</itemizedlist>
 	</para>
 	<para>You can also use the Z39.50 protocol to add and remove new information providers. Two providers have been set up using this protocol for you.
@@ -756,7 +764,7 @@ between libraries.</para>
         <title>Amazon preferences</title>
         <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
 	  	<warning>
-			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. You sign for an Amazon Web Services account at <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. If you don't know what this means, then you can leave these values alone.</para>
+			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. You sign for an Amazon Web Services account at <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. If you don't know what this means, then you can safely leave these values alone.</para>
 		</warning>
       </sect3>
 
