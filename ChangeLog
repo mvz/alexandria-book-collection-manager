@@ -1,3 +1,11 @@
+2005-11-14  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/book_providers.rb,
+	  lib/alexandria/ui/preferences_dialog.rb:
+
+	Make Ruby/ZOOM dependency optional, and hide the advanced check box in the
+	providers preferences window when there is no abstract provider.
+
 2005-11-10  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO:

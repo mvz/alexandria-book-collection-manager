@@ -235,8 +235,13 @@ module Alexandria
         require 'alexandria/book_providers/mcu'
         require 'alexandria/book_providers/amadeus'
         require 'alexandria/book_providers/ibs_it'
-        require 'alexandria/book_providers/z3950'
         require 'alexandria/book_providers/renaud'
+        
+        # Ruby/ZOOM is optional
+        begin
+            require 'alexandria/book_providers/z3950'
+        rescue LoadError
+        end
 
         attr_reader :abstract_classes
 

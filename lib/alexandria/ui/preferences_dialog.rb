@@ -234,6 +234,10 @@ module UI
             
             @buttonbox_prov.set_child_secondary(@button_prov_add, true)
             @buttonbox_prov.set_child_secondary(@button_prov_remove, true)
+
+            if BookProviders::abstract_classes.empty?
+                @checkbutton_prov_advanced.visible = false
+            end
         end
 
         def on_provider_setup
