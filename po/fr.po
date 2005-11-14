@@ -707,7 +707,7 @@ msgstr "_Auteurs:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:652
 msgid "_Cover:"
-msgstr "_Couverture"
+msgstr "_Couverture:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:717
 msgid "General"
