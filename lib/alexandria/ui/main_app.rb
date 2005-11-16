@@ -1083,7 +1083,7 @@ module UI
             #toolitem.set_tooltip(Gtk::Tooltips.new, _("Change the filter criterion"))
 
             @filter_entry = Gtk::Entry.new
-            @filter_entry.signal_connect('activate') do 
+            @filter_entry.signal_connect('changed') do 
                 @filter_entry.text.strip!
                 @iconview.freeze
                 @filtered_model.refilter
