@@ -22,7 +22,7 @@ module Alexandria
   class BookProviders
     class RENAUDProvider < GenericProvider
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
       BASE_URI = "http://www.renaud-bray.com/"
       ACCENTUATED_CHARS = "áàâäçéèêëíìîïóòôöúùûü"
 
@@ -83,7 +83,7 @@ module Alexandria
         # Make it sure that we are in utf-8
         data = data.convert("UTF-8", "iso-8859-1")
         titles = []
-        data.scan(/"LireHyperlien" href.*><b>([-,'&;\w\s#{ACCENTUATED_CHARS}]*)<\/b><\/a><br>/).each{|md|
+        data.scan(/"LireHyperlien" href.*><b>([-,'\(\)&;\w\s#{ACCENTUATED_CHARS}]*)<\/b><\/a><br>/).each{|md|
           titles << md[0].strip
         }
         raise if titles.empty?
