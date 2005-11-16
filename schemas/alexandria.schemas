@@ -182,6 +182,17 @@
       </locale>
     </schema>
     <schema>        
+      <key>/schemas/apps/alexandria/col_publish_date_visible</key>
+      <applyto>/apps/alexandria/col_publish_date_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Publish date visibility</short>
+        <long>Whether the publish date column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
       <key>/schemas/apps/alexandria/col_rating_visible</key>
       <applyto>/apps/alexandria/col_rating_visible</applyto>
       <owner>alexandria</owner>

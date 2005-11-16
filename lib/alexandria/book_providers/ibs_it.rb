@@ -48,6 +48,7 @@ class BookProviders
             end
             
             req += CGI.escape(criterion)
+            p req if $DEBUG
 	        data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
                 to_book(data) rescue raise NoResultsError
@@ -90,13 +91,19 @@ class BookProviders
 
             raise unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
             edition = CGI.unescape(md[1].strip)
+            
+            publish_year = nil
+            if md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data)
+                publish_year = CGI.unescape(md[1].strip).to_i
+                publish_year = nil if publish_year == 0
+            end
 
             if data =~ /src\=\"http:\/\/giotto.ibs.it\/thumbnails\/(.+\.jpg)\">/
 	    	    small_cover = "http://giotto.ibs.it/thumbnails/" + $1
 	    	    medium_cover = "http://giotto.ibs.it/jackets/" + $1
 	            return [ Book.new(title, authors, isbn, publisher, edition),medium_cover ]
             end
-	        return [ Book.new(title, authors, isbn, publisher, edition)]
+	        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
         end
 
         def each_book_page(data)

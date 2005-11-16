@@ -60,13 +60,16 @@ class BookProviders
                     puts "authors: #{marc.authors.join(', ')}"
                     puts "isbn: #{marc.isbn}"
                     puts "publisher: #{marc.publisher}"
+                    puts "publish year: #{marc.publish_year}"
                     puts "edition: #{marc.edition}"
                 end
 
                 next if marc.title.nil? or marc.authors.empty?
                 
                 book = Book.new(marc.title, marc.authors, marc.isbn, 
-                                (marc.publisher or ""), 
+                                (marc.publisher or ""),
+                                marc.respond_to?(:publish_year) \
+                                    ? marc.publish_year : nil,
                                 (marc.edition or ""))
                 results << [book, nil]
             end

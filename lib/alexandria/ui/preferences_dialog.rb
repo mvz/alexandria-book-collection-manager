@@ -208,11 +208,12 @@ module UI
             @changed_block = changed_block
 
             @cols = {
-                @checkbutton_col_authors   => "col_authors_visible",
-                @checkbutton_col_isbn      => "col_isbn_visible",
-                @checkbutton_col_publisher => "col_publisher_visible",
-                @checkbutton_col_edition   => "col_edition_visible",
-                @checkbutton_col_rating    => "col_rating_visible"
+                @checkbutton_col_authors        => "col_authors_visible",
+                @checkbutton_col_isbn           => "col_isbn_visible",
+                @checkbutton_col_publisher      => "col_publisher_visible",
+                @checkbutton_col_publish_date   => "col_publish_date_visible",
+                @checkbutton_col_edition        => "col_edition_visible",
+                @checkbutton_col_rating         => "col_rating_visible"
             }
             @cols.each_pair do |checkbutton, pref_name|
                 checkbutton.active = Preferences.instance.send(pref_name)

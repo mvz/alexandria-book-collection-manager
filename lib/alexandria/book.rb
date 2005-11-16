@@ -17,12 +17,15 @@
 
 module Alexandria
     class Book
-        attr_accessor :title, :authors, :isbn, :publisher, :edition, :rating, 
-                      :notes, :loaned, :loaned_since, :loaned_to, :saved_ident
+        attr_accessor :title, :authors, :isbn, :publisher, :publishing_year,
+                      :edition, :rating, :notes, :loaned, :loaned_since, 
+                      :loaned_to, :saved_ident
 
         DEFAULT_RATING = 0 
 
-        def initialize(title, authors, isbn, publisher, edition)
+        def initialize(title, authors, isbn, publisher, publishing_year, 
+                       edition)
+
             @title = title
             @authors = authors
             @isbn = isbn
@@ -30,6 +33,7 @@ module Alexandria
             @edition = edition
             @notes = ""
             @saved_ident = ident
+            @publishing_year = publishing_year
         end
 
         def ident

@@ -40,6 +40,24 @@ module UI
             @entry_title.text = @book_properties_dialog.title = book.title
             @entry_isbn.text = book.isbn
             @entry_publisher.text = book.publisher
+            @entry_publish_date.text = (book.publishing_year.to_s \
+                                        rescue "")
+            @entry_publish_date.signal_connect('focus-out-event') do
+                text = @entry_publish_date.text 
+                unless text.empty?
+                    year = text.to_i
+                    if year == 0 or year > (Time.now.year + 10) or year < 10
+                        @entry_publish_date.text = ""
+                        @entry_publish_date.grab_focus
+                        true 
+                    elsif year < 100
+                        @entry_publish_date.text = "19" + year.to_s
+                        false
+                    end
+                else
+                    false
+                end
+            end
             @entry_edition.text = book.edition
             
             book.authors.each do |author|
@@ -91,6 +109,8 @@ module UI
             end
             @book.title = @entry_title.text
             @book.publisher = @entry_publisher.text
+            year = @entry_publish_date.text.to_i
+            @book.publishing_year = year == 0 ? nil : year
             @book.edition = @entry_edition.text
             @book.authors = []
             @treeview_authors.model.each { |m, p, i| @book.authors << i[0] }      

@@ -81,7 +81,9 @@ module UI
                 if (publisher = @entry_publisher.text.strip).empty?
                     raise _("A publisher must be provided.")
                 end
-                
+               
+                publishing_year = @entry_publish_date.text.to_i
+ 
                 if (edition = @entry_edition.text.strip).empty?
                     raise _("A binding must be provided.")
                 end
@@ -92,7 +94,9 @@ module UI
                     raise _("At least one author must be provided.") 
                 end
 
-                book = Book.new(title, authors, isbn, publisher, edition)
+                book = Book.new(title, authors, isbn, publisher, 
+                                publishing_year == 0 ? nil : publishing_year,
+                                edition)
                 book.rating = @current_rating
                 book.notes = @textview_notes.buffer.text 
                 book.loaned = @checkbutton_loaned.active?

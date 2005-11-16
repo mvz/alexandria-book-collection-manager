@@ -107,6 +107,7 @@ class BookProviders
 						                product["authors"],
 									  				product["isbn"],
 														product["publisher"],
+                                                         nil, # TODO - furnish publish year
 														product["edition"])
 						return [ book, product["cover"] ]
         end

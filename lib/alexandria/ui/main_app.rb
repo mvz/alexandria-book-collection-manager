@@ -75,7 +75,8 @@ module UI
 
         module Columns
             COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
-                ISBN, PUBLISHER, EDITION, RATING, IDENT, NOTES = (0..11).to_a
+                ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT, 
+                NOTES = (0..12).to_a
         end
 
         # The maximum number of rating stars displayed.
@@ -292,6 +293,7 @@ module UI
             iter[Columns::AUTHORS] = book.authors.join(', ')
             iter[Columns::ISBN] = book.isbn
             iter[Columns::PUBLISHER] = book.publisher
+            iter[Columns::PUBLISH_DATE] = (book.publishing_year.to_s rescue "")
             iter[Columns::EDITION] = book.edition
             iter[Columns::NOTES] = (book.notes or "")
             rating = (book.rating or Book::DEFAULT_RATING)
@@ -405,6 +407,7 @@ module UI
                 [ _("Authors"), Columns::AUTHORS ],
                 [ _("ISBN"), Columns::ISBN ],
                 [ _("Publisher"), Columns::PUBLISHER ],
+                [ _("Publish Year"), Columns::PUBLISH_DATE ],
                 [ _("Binding"), Columns::EDITION ]
             ]
             names.each do |title, iterid|
@@ -452,6 +455,7 @@ module UI
                 @prefs.col_authors_visible,
                 @prefs.col_isbn_visible,
                 @prefs.col_publisher_visible,
+                @prefs.col_publish_date_visible,
                 @prefs.col_edition_visible,
                 @prefs.col_rating_visible
             ]
@@ -1142,9 +1146,18 @@ module UI
             end
  
             # The active model. 
-            @model = Gtk::ListStore.new(Gdk::Pixbuf, Gdk::Pixbuf, String, 
-                                        String, String, String, String, 
-                                        String, Integer, String, String)
+            @model = Gtk::ListStore.new(Gdk::Pixbuf,    # COVER_LIST 
+                                        Gdk::Pixbuf,    # COVER_ICON
+                                        String,         # TITLE
+                                        String,         # TITLE_REDUCED
+                                        String,         # AUTHORS
+                                        String,         # ISBN
+                                        String,         # PUBLISHER
+                                        String,         # PUBLISH_DATE
+                                        String,         # EDITION
+                                        Integer,        # RATING
+                                        String,         # IDENT
+                                        String)         # NOTES
 
             # Filter books according to the search toolbar widgets. 
             @filtered_model = Gtk::TreeModelFilter.new(@model)

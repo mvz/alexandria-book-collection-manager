@@ -119,7 +119,9 @@ module Alexandria
         
         books = []
         titles.each_with_index{|title, i|
-          books << [Book.new(title, authors[i], isbns[i], publishers[i], editions[i]), 
+          books << [Book.new(title, authors[i], isbns[i], publishers[i], 
+                             nil,   # TODO: furnish publish year 
+                             editions[i]), 
             book_covers[i]]
         }
         raise if books.empty?

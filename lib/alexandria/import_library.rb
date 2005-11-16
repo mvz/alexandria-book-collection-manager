@@ -93,6 +93,9 @@ module Alexandria
                                             { |x| x.text },
                                         elements['isbn'].text,
                                         elements['publisher'].text,
+                                        elements['pub_year'] != nil \
+                                            ? elements['pub_year'].text \
+                                            : nil,
                                         elements['binding'].text)
                         content << [ book, elements['cover'] \
                                                 ? elements['cover'].text \
@@ -129,7 +132,6 @@ module Alexandria
             books = []
             isbn_list.each do |isbn|
                 begin
-p 'looking for isbn ' + isbn
                     books << Alexandria::BookProviders.isbn_search(isbn)
                 rescue => e
                     return nil unless

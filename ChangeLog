@@ -1,3 +1,26 @@
+2005-11-16  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  data/alexandria/glade/preferences_dialog.glade,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/import_library.rb,
+	  lib/alexandria/utils.rb,
+	  lib/alexandria/book_providers/amadeus.rb,
+	  lib/alexandria/book_providers/amazon.rb,
+	  lib/alexandria/book_providers/bn.rb,
+	  lib/alexandria/book_providers/ibs_it.rb,
+	  lib/alexandria/book_providers/mcu.rb,
+	  lib/alexandria/book_providers/proxis.rb,
+	  lib/alexandria/book_providers/renaud.rb,
+	  lib/alexandria/book_providers/z3950.rb,
+	  lib/alexandria/ui/book_properties_dialog.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb,
+	  lib/alexandria/ui/preferences_dialog.rb,
+	  schemas/alexandria.schemas:
+
+	Introduced publish year notion for books.
+
 2005-11-14  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers.rb,

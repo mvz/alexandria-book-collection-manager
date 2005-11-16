@@ -29,11 +29,13 @@ class BookProviders
             super("Amazon")
             prefs.add("locale", _("Locale"), "us",
                        Amazon::Search::LOCALES.keys)
-            prefs.add("dev_token", _("Development token"), "142TF8CHT48WYPPS6J82")
-            prefs.add("associate", _("Associate ID"), "calibanorg-20", nil, false)
+            prefs.add("dev_token", _("Development token"), 
+                      "142TF8CHT48WYPPS6J82")
+            prefs.add("associate", _("Associate ID"), "calibanorg-20", nil, 
+                      false)
             
-            # Backward compatibility hack - the previous developer token has been
-            # revoked.
+            # Backward compatibility hack - the previous developer token has 
+            # been revoked.
             prefs.read
             token = prefs.variable_named("dev_token")
             if token and token.value == "D23XFCO2UKJY82"
@@ -64,8 +66,11 @@ class BookProviders
                 products = []
                 case type
                     when SEARCH_BY_ISBN
-                        req.asin_search(criterion) { |product| products << product }
-                        raise TooManyResultsError if products.length > 1 # shouldn't happen
+                        req.asin_search(criterion) do |product| 
+                            products << product
+                        end
+                        # shouldn't happen
+                        raise TooManyResultsError if products.length > 1 
 
                     when SEARCH_BY_TITLE
                         req.keyword_search(criterion) do |product|
@@ -75,10 +80,14 @@ class BookProviders
                         end
 
                     when SEARCH_BY_AUTHORS
-                        req.author_search(criterion) { |product| products << product }
+                        req.author_search(criterion) do |product| 
+                            products << product
+                        end
 
                     when SEARCH_BY_KEYWORD
-                        req.keyword_search(criterion) { |product| products << product }
+                        req.keyword_search(criterion) do |product|
+                            products << product
+                        end
 
                     else
                         raise InvalidSearchTypeError
@@ -99,11 +108,18 @@ class BookProviders
                 # the garbled titles to UTF-8. This tries to convert back into
                 # valid UTF-8. It does not always work - see isbn 2259196098
                 # (from the mailing list) for an example.
-                title = title.convert('iso-8859-1','utf-8') if req.locale == 'us'
+                if req.locale == 'us'
+                    title = title.convert('iso-8859-1','utf-8') 
+                end
+
                 book = Book.new(title,
-                                (product.authors.map { |x| x.squeeze(' ') } rescue [ _("n/a") ]),
+                                (product.authors.map { |x| x.squeeze(' ') } \
+                                    rescue [ _("n/a") ]),
                                 product.isbn.squeeze(' '),
-                                (product.manufacturer.squeeze(' ') rescue _("n/a")),
+                                (product.manufacturer.squeeze(' ') \
+                                    rescue _("n/a")),
+                                (Time.parse(product.release_date).year \
+                                    rescue nil),
                                 product.media.squeeze(' '))
 
                 results << [ book, product.image_url_medium ]

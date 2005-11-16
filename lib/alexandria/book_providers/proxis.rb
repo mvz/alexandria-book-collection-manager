@@ -109,6 +109,7 @@ class BookProviders
                             (product['authors'].map { |x| conv.call(x) } rescue [ "n/a" ]),
                             conv.call(product['isbn']),
                             conv.call(product['manufacturer']),
+                            nil, # TODO: furnish publish year
                             conv.call(product['media']))
         
             return [ book, product['image_url_medium'] ]

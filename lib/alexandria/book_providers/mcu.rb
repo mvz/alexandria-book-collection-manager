@@ -141,6 +141,7 @@ class BookProviders
 	                    product['authors'],
 			    product['isbn'].delete('-'),
 			    product['manufacturer'],
+                nil, # TODO: furnish publish year
 			    product['media'])
             return [ book ]
         end
