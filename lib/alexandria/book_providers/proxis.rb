@@ -92,6 +92,8 @@ class BookProviders
                     product['name'] = $1.sub(/ +$/,'')
                 elsif line =~ /ISBN<\/TD><TD class="?INFO"?> : ([^<]*)</i 
                     product['isbn'] = $1
+                elsif line =~ /Publication date<\/TD><TD class="?INFO"?> : ..\/..\/([[:digit:]]{4})/i
+                    product['year'] = $1.to_i
                 elsif line =~ /Type<\/TD>/i
                     nextline = "media"
                 elsif line =~ /(Publisher|Editeur|Uitgever)<\/TD><TD CLASS="?INFO"?>: ([^<]*)</i 
@@ -109,7 +111,7 @@ class BookProviders
                             (product['authors'].map { |x| conv.call(x) } rescue [ "n/a" ]),
                             conv.call(product['isbn']),
                             conv.call(product['manufacturer']),
-                            nil, # TODO: furnish publish year
+                            product['year'],
                             conv.call(product['media']))
         
             return [ book, product['image_url_medium'] ]
