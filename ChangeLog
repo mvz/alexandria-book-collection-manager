@@ -2,8 +2,9 @@
 
 	* lib/alexandria/ui/main_app.rb:
 
-	Filter the books views directly when the filter entry has been modified, 
-	not upon validation.
+	- Show tooltips for combo toolbar items ;
+	- Filter the books views directly when the filter entry has been modified, 
+	  not upon validation.
 
 	* data/alexandria/glade/book_properties_dialog.glade,
 	  data/alexandria/glade/preferences_dialog.glade,

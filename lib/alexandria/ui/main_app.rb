@@ -1075,12 +1075,15 @@ module UI
                 @filtered_model.refilter
                 @iconview.unfreeze
             end
+            # Put the combo box in a event box because it is not currently
+            # possible assign a tooltip to a combo box.
+            eb = Gtk::EventBox.new
+            eb << cb
             toolitem = Gtk::ToolItem.new
             toolitem.border_width = 5
-            toolitem << cb
+            toolitem << eb
             @toolbar.insert(-1, toolitem)
-            # TODO: it is not currently possible to set tooltips on combo boxes
-            #toolitem.set_tooltip(Gtk::Tooltips.new, _("Change the filter criterion"))
+            tooltips.set_tip(eb, _("Change the search type"), nil)
 
             @filter_entry = Gtk::Entry.new
             @filter_entry.signal_connect('changed') do 
@@ -1092,7 +1095,8 @@ module UI
             toolitem = Gtk::ToolItem.new
             toolitem.expand = true
             toolitem.border_width = 5
-            tooltips.set_tip(@filter_entry, _("Type here the search criterion"), nil)
+            tooltips.set_tip(@filter_entry, 
+                             _("Type here the search criterion"), nil)
             toolitem << @filter_entry
             @toolbar.insert(-1, toolitem)
 
@@ -1112,12 +1116,15 @@ module UI
                     end
                     action.active = true
                 end
+            # Put the combo box in a event box because it is not currently
+            # possible assign a tooltip to a combo box.
+            eb = Gtk::EventBox.new
+            eb << @toolbar_view_as 
             toolitem = Gtk::ToolItem.new
             toolitem.border_width = 5 
-            # TODO: it is not currently possible to set tooltips on combo boxes
-            #toolitem.set_tooltip(Gtk::Tooltips.new, _("Change the way books are displayed"))
-            toolitem << @toolbar_view_as
+            toolitem << eb
             @toolbar.insert(-1, toolitem)
+            tooltips.set_tip(eb, _("Choose how to show books"), nil)
 
             @toolbar.show_all
             
