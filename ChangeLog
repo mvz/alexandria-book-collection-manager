@@ -1,8 +1,8 @@
 2005-11-16  Pascal Terjan  <pterjan@linuxfr.org>
 
-	* lib/alexandria/book_providers/proxis.rb
+	* lib/alexandria/book_providers/proxis.rb:
 
-	Support publish year for Proxis
+	Support publish year for Proxis.
 
 2005-11-16  Laurent Sansonetti  <lrz@gnome.org>
 
