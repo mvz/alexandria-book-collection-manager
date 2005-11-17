@@ -759,7 +759,13 @@ module UI
                 append_library(library, true)
                 setup_move_actions
             end
-    
+   
+            on_new_smart = proc do
+                NewSmartLibraryDialog.new(@main_app) do |smart_library|
+                    p "new smart library #{smart_library}"
+                end
+            end
+ 
             on_add_book = proc do
                 NewBookDialog.new(@main_app, 
                                   @libraries, 
@@ -912,8 +918,11 @@ module UI
 
             standard_actions = [
                 ["LibraryMenu", nil, _("_Library")],
-                ["New", Gtk::Stock::NEW, _("_New"), "<control>L", 
+                ["New", Gtk::Stock::NEW, _("_New Library"), "<control>L", 
                  _("Create a new library"), on_new],
+                ["NewSmart", Gtk::Stock::NEW, _("New _Smart Library..."), 
+                 "<control><shift>L", _("Create a new smart library"), 
+                 on_new_smart],
                 ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", 
                  _("Add a new book from the Internet"), on_add_book],
                 ["AddBookManual", nil, _("Add Book _Manually..."), nil, 

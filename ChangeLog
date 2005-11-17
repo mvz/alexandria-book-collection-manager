@@ -1,3 +1,15 @@
+2005-11-17  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/ui/menus.xml,
+	  lib/alexandria.rb,
+	  lib/alexandria/smart_library.rb,
+	  lib/alexandria/ui.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_smart_library_dialog.rb,
+	  lib/alexandria/ui/smart_library_properties_dialog_base.rb:
+
+	Some work on smart libraries (in progress).
+
 2005-11-16  Pascal Terjan  <pterjan@linuxfr.org>
 
 	* lib/alexandria/book_providers/proxis.rb:

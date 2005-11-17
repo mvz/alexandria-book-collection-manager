@@ -33,6 +33,8 @@ require 'alexandria/ui/preferences_dialog'
 require 'alexandria/ui/export_dialog'
 require 'alexandria/ui/import_dialog'
 require 'alexandria/ui/acquire_dialog'
+require 'alexandria/ui/smart_library_properties_dialog_base'
+require 'alexandria/ui/new_smart_library_dialog'
 require 'alexandria/ui/main_app'
 
 module Alexandria

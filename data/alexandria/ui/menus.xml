@@ -22,6 +22,8 @@
   <menubar name="MainMenubar">
     <menu action="LibraryMenu">
       <menuitem action="New"/>
+      <menuitem action="NewSmart"/>
+      <separator/>
       <menuitem action="AddBook"/>
       <menuitem action="AddBookManual"/>
       <separator/>

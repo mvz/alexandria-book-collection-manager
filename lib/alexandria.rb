@@ -84,6 +84,7 @@ end
 require 'alexandria/book'
 require 'alexandria/utils'
 require 'alexandria/library'
+require 'alexandria/smart_library'
 require 'alexandria/execution_queue'
 require 'alexandria/import_library'
 require 'alexandria/export_library'
