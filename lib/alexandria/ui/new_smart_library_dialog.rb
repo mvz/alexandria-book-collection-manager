@@ -31,6 +31,7 @@ module UI
             self.default_response = Gtk::Dialog::RESPONSE_CANCEL
 
             insert_new_rule
+            show_all
 
             while (response = run) == Gtk::Dialog::RESPONSE_HELP
                 begin

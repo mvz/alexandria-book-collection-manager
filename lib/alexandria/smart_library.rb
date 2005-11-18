@@ -33,9 +33,13 @@ module Alexandria
                 end
             end
 
-            class Operator < Struct.new(:name, :proc)
+            class Operator < Struct.new(:name, :proc, :proc_args_count)
                 def <=>(x)
                     self.name <=> x.name
+                end
+
+                def proc_args_count
+                    (count = super) == nil ? 1 : count
                 end
             end
 
@@ -60,6 +64,8 @@ module Alexandria
                 extend GetText
                 bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
+                IS_TRUE = Operator.new(_("is set"), proc { |x| x }, 0)
+                IS_NOT_TRUE = Operator.new(_("is not set"), proc { |x| !x }, 0)
                 IS = Operator.new(_("is"), proc { |x, y| x == y })
                 IS_NOT = Operator.new(_("is not"), proc { |x, y| x != y })
                 CONTAINS = Operator.new(_("contains"), 
@@ -85,8 +91,8 @@ module Alexandria
             end
 
             BOOLEAN_OPERATORS = [ 
-                Operators::IS, 
-                Operators::IS_NOT 
+                Operators::IS_TRUE, 
+                Operators::IS_NOT_TRUE
             ].sort
 
             STRING_OPERATORS = [

@@ -5,6 +5,12 @@
 	Added some space between the Add/Remove authors buttons in the book
 	properties dialog.
 
+	* lib/alexandria/smart_library.rb,
+	  lib/alexandria/ui/new_smart_library_dialog.rb,
+	  lib/alexandria/ui/smart_library_properties_dialog_base.rb:
+
+	More work on smart libraries.
+
 2005-11-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/ui/menus.xml,
