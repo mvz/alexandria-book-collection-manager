@@ -1,3 +1,10 @@
+2005-11-18  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/book_properties_dialog.glade:
+
+	Added some space between the Add/Remove authors buttons in the book
+	properties dialog.
+
 2005-11-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/ui/menus.xml,
