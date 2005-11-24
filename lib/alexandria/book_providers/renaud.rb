@@ -102,10 +102,12 @@ module Alexandria
         }
         raise if isbns.empty?
         editions = []
+        publish_years = []
         data.scan(/Date : <br>(\d{4,}-\d{2,}-\d{2,})/).each{|md|
           editions << md[0].strip
+          publish_years << md[0].strip.split(/-/)[0]
         }
-        raise if editions.empty?
+        raise if editions.empty? or publish_years.empty?
         publishers = []
         data.scan(/diteur : ([,'.&;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each{|md|
           publishers << md[0].strip
@@ -119,10 +121,9 @@ module Alexandria
         
         books = []
         titles.each_with_index{|title, i|
-          books << [Book.new(title, authors[i], isbns[i], publishers[i], 
-                             nil,   # TODO: furnish publish year 
-                             editions[i]), 
+          books << [Book.new(title, authors[i], isbns[i], publishers[i], publish_years[i], editions[i]), 
             book_covers[i]]
+          print books
         }
         raise if books.empty?
 
