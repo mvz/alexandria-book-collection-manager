@@ -30,8 +30,8 @@ module UI
             self.title = _('New Smart Library')
             self.default_response = Gtk::Dialog::RESPONSE_CANCEL
 
-            insert_new_rule
             show_all
+            insert_new_rule
 
             while (response = run) == Gtk::Dialog::RESPONSE_HELP
                 begin

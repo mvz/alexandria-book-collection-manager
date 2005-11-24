@@ -27,45 +27,59 @@ module Alexandria
             extend GetText
             bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-            class Operand < Struct.new(:book_selector, :name, :klass)
+            class Operand < Struct.new(:name, :klass)
                 def <=>(x)
                     self.name <=> x.name
                 end
             end
 
-            class Operator < Struct.new(:name, :proc, :proc_args_count)
+            class LeftOperand < Operand
+                attr_accessor :book_selector
+                
+                def initialize(book_selector, *args)
+                    super(*args)
+                    @book_selector = book_selector
+                end 
+            end
+
+            class Operator < Struct.new(:name, :proc)
                 def <=>(x)
                     self.name <=> x.name
                 end
-
-                def proc_args_count
-                    (count = super) == nil ? 1 : count
-                end
             end
 
-            LEFT_OPERANDS = [
-                Operand.new(:title, _("Title"), String),
-                Operand.new(:isbn, _("ISBN"), String),
-                Operand.new(:authors, _("Authors"), String),
-                Operand.new(:publisher, _("Publisher"), String),
-                Operand.new(:publish_year, _("Publish Year"), Integer),
-                Operand.new(:edition, _("Binding"), String),
-                Operand.new(:rating, _("Rating"), Integer),
-                Operand.new(:notes, _("Notes"), String),
-                Operand.new(:loaned, _("Loaning State"), TrueClass),
-                Operand.new(:loaned_since, _("Loaning Date"), Time),
-                Operand.new(:loaned_to, _("Loaning Person"), String)
-            ].sort
+            module Operands
+                include GetText
+                extend GetText
+                bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-            attr_reader :left_operand
+                LEFT = [
+                    LeftOperand.new(:title, _("Title"), String),
+                    LeftOperand.new(:isbn, _("ISBN"), String),
+                    LeftOperand.new(:authors, _("Authors"), String),
+                    LeftOperand.new(:publisher, _("Publisher"), String),
+                    LeftOperand.new(:publish_year, _("Publish Year"), Integer),
+                    LeftOperand.new(:edition, _("Binding"), String),
+                    LeftOperand.new(:rating, _("Rating"), Integer),
+                    LeftOperand.new(:notes, _("Notes"), String),
+                    LeftOperand.new(:loaned, _("Loaning State"), TrueClass),
+                    LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
+                    LeftOperand.new(:loaned_to, _("Loaning Person"), String)
+                ].sort
+
+                STRING = Operand.new(nil, String)
+                INTEGER = Operand.new(nil, Integer)
+                TIME = Operand.new(nil, Time)
+                DAYS = Operand.new(_("days"), Integer)
+            end
 
             module Operators
                 include GetText
                 extend GetText
                 bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-                IS_TRUE = Operator.new(_("is set"), proc { |x| x }, 0)
-                IS_NOT_TRUE = Operator.new(_("is not set"), proc { |x| !x }, 0)
+                IS_TRUE = Operator.new(_("is set"), proc { |x| x })
+                IS_NOT_TRUE = Operator.new(_("is not set"), proc { |x| !x })
                 IS = Operator.new(_("is"), proc { |x, y| x == y })
                 IS_NOT = Operator.new(_("is not"), proc { |x, y| x != y })
                 CONTAINS = Operator.new(_("contains"), 
@@ -91,7 +105,7 @@ module Alexandria
             end
 
             BOOLEAN_OPERATORS = [ 
-                Operators::IS_TRUE, 
+                Operators::IS_TRUE,
                 Operators::IS_NOT_TRUE
             ].sort
 
@@ -120,23 +134,24 @@ module Alexandria
                 Operators::IS_NOT_IN_LAST
             ].sort
  
-            def left_operand=(operand)
-                return if @left_operand != nil and 
-                    @left_operand.book_selector == operand.book_selector
-                
-                @left_operand = operand
-            end
-
-            def self.operators_for_operand(operand)
+            def self.operations_for_operand(operand)
                 case operand.klass.name
                     when 'String'
-                        STRING_OPERATORS
+                        STRING_OPERATORS.map { |x| [x, Operands::STRING] }
                     when 'Integer'
-                        INTEGER_OPERATORS
+                        INTEGER_OPERATORS.map { |x| [x, Operands::INTEGER] }
                     when 'TrueClass'
-                        BOOLEAN_OPERATORS
+                        BOOLEAN_OPERATORS.map { |x| [x, nil] }
                     when 'Time'
-                        TIME_OPERATORS
+                        TIME_OPERATORS.map do |x|
+                            if x == Operators::IS_IN_LAST or
+                               x == Operators::IS_NOT_IN_LAST
+                                
+                                [x, Operands::DAYS]
+                            else
+                                [x, Operands::TIME]
+                            end
+                        end
                     else
                         raise "invalid operand klass #{operand.klass}"
                 end

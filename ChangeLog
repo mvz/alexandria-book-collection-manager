@@ -1,3 +1,11 @@
+2005-11-25  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/smart_library.rb,
+	  lib/alexandria/ui/new_smart_library_dialog.rb,
+	  lib/alexandria/ui/smart_library_properties_dialog_base.rb:
+
+	More work on smart libraries.
+
 2005-11-24  Mathieu Leduc-Hamel <arrak@arrak.org>
 
 	* lib/alexandria/book_providers/renaud.rb:

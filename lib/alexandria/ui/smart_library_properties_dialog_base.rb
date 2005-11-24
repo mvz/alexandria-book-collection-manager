@@ -45,11 +45,12 @@ module UI
  
             @rules_box = Gtk::VBox.new
             @rules_box.spacing = 8 
+            @rules_box.border_width = 8
 
             scrollview = Gtk::ScrolledWindow.new
             scrollview.hscrollbar_policy = Gtk::POLICY_NEVER
             scrollview.vscrollbar_policy = Gtk::POLICY_AUTOMATIC
-            scrollview.set_size_request(-1, 100)
+            scrollview.set_size_request(-1, 125)
             scrollview.add_with_viewport(@rules_box)
 
             main_box.pack_start(@rules_header_box, false, false, 0)
@@ -96,10 +97,17 @@ module UI
             left_operand_combo = Gtk::ComboBox.new
             operator_combo = Gtk::ComboBox.new
             value_entry = Gtk::Entry.new
-            
+            date_entry = Gnome::DateEdit.new(0, false, false)
+            # Really hide the time part of the date entry, as the constructor
+            # does not seem to do it...
+            date_entry.children[2..3].each { |x| date_entry.remove(x) }
+            date_entry.spacing = 8 
+            entry_label = Gtk::Label.new("")
+
             add_button = Gtk::Button.new("")
             add_button.remove(add_button.children.first)
-            add_button << Gtk::Image.new(Gtk::Stock::ADD, Gtk::IconSize::BUTTON)
+            add_button << Gtk::Image.new(Gtk::Stock::ADD, 
+                                         Gtk::IconSize::BUTTON)
         
             add_button.signal_connect('clicked') { insert_new_rule }
 
@@ -119,21 +127,38 @@ module UI
                 end
             end
 
-            operands = SmartLibrary::Rule::LEFT_OPERANDS
+            operands = SmartLibrary::Rule::Operands::LEFT
             operands.each do |operand|
                 left_operand_combo.append_text(operand.name)
             end
             operator_combo.signal_connect('changed') do
                 operand = operands[left_operand_combo.active]
-                operators = SmartLibrary::Rule.operators_for_operand(operand)
-                operator = operators[operator_combo.active]
-                value_entry.visible = operator.proc_args_count != 0 
+                operations = SmartLibrary::Rule.operations_for_operand(operand)
+                operation = operations[operator_combo.active]
+                
+                value_entry.visible = date_entry.visible = 
+                    entry_label.visible = false
+                right_operand = operation.last
+                unless right_operand.nil?
+                    entry = case right_operand.klass.name
+                        when 'Time'
+                            date_entry
+                        else
+                            value_entry
+                    end
+                    entry.visible = true
+                    unless right_operand.name.nil?
+                        entry_label.text = right_operand.name
+                        entry_label.visible = true
+                    end
+                end
             end
             left_operand_combo.signal_connect('changed') do
                 operand = operands[left_operand_combo.active]
                 operator_combo.model.clear
-                operators = SmartLibrary::Rule.operators_for_operand(operand)
-                operators.each do |operator|
+                operations = SmartLibrary::Rule.operations_for_operand(operand)
+                operations.each do |operation|
+                    operator = operation.first
                     operator_combo.append_text(operator.name)
                 end
                 operator_combo.active = 0
@@ -142,14 +167,19 @@ module UI
             rule_box.pack_start(left_operand_combo, false, false, 0)
             rule_box.pack_start(operator_combo, false, false, 0)
             rule_box.pack_start(value_entry)
+            rule_box.pack_start(date_entry)
+            rule_box.pack_start(entry_label, false, false, 0)
             rule_box.pack_start(add_button, false, false, 0)
             rule_box.pack_start(remove_button, false, false, 0)
 
+            rule_box.show_all
+            value_entry.visible = date_entry.visible = entry_label.visible = 
+                false
+
             left_operand_combo.active = 0
             
-            rule_box.show_all
-
             @rules_box.pack_start(rule_box, false, true, 0)
+            @rules_box.check_resize     # force a layout
             update_rules_header_box
             sensitize_remove_rule_buttons
         end
