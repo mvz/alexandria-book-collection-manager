@@ -103,15 +103,9 @@ module UI
         end
         
         def on_books_button_press_event(widget, event)
-            # double left click
-            if event.event_type == Gdk::Event::BUTTON2_PRESS and
-               event.button == 1 
-
-                @actiongroup["Properties"].activate
-
             # right click
-            elsif event.event_type == Gdk::Event::BUTTON_PRESS and
-                  event.button == 3
+            if event.event_type == Gdk::Event::BUTTON_PRESS and
+               event.button == 3
 
                 menu = (selected_books.empty?) ? @nobook_popup : @book_popup
                 menu.popup(nil, nil, event.button, event.time) 
@@ -332,6 +326,64 @@ module UI
             end
         end
 
+        BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
+        BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", 
+                               Gtk::Drag::TARGET_SAME_APP, 
+                               0]]
+        def setup_view_source_dnd(view)
+            view.signal_connect_after('drag-begin') do |widget, drag_context|
+                n_books = selected_books.length
+                if n_books > 1
+                    # Render generic book icon.
+                    pixmap, mask = Icons::BOOK_ICON.render_pixmap_and_mask(255)
+                
+                    # Create number badge.
+                    context = Gdk::Pango.context
+                    layout = Pango::Layout.new(context)
+                    layout.markup = BADGE_MARKUP % n_books 
+                    width, height = layout.pixel_size
+                    x = Icons::BOOK_ICON.width - width - 10
+                    y = Icons::BOOK_ICON.height - height - 10
+            
+                    # Draw a red ellipse where the badge number should be.
+                    red_gc = Gdk::GC.new(pixmap)
+                    red_gc.rgb_fg_color = Gdk::Color.parse('red')
+                    red_gc.rgb_bg_color = Gdk::Color.parse('red')
+                    pixmap.draw_arc(red_gc,
+                                    true,
+                                    x - 5, y - 2, 
+                                    width + 8, height + 4,
+                                    0, 360 * 64)
+            
+                    # Draw the number badge.
+                    pixmap.draw_layout(Gdk::GC.new(pixmap), x, y, layout)
+                    
+                    # And set the drag icon.
+                    Gtk::Drag.set_icon(drag_context, 
+                                       pixmap.colormap, 
+                                       pixmap,
+                                       mask, 
+                                       10, 
+                                       10)
+                end
+            end 
+        
+            view.signal_connect('drag-data-get') do |widget, drag_context,
+                                                     selection_data, info,
+                                                     time, data|
+            
+                idents = selected_books.map { |book| book.ident }
+                unless idents.empty?
+                    selection_data.set(Gdk::Selection::TYPE_STRING,
+                                       idents.join(','))
+                end
+            end
+           
+            view.enable_model_drag_source(Gdk::Window::BUTTON1_MASK, 
+                                          BOOKS_TARGET_TABLE,
+                                          Gdk::DragContext::ACTION_MOVE)
+        end
+
         def setup_books_iconview
             @iconview.model = @iconview_model
             @iconview.selection_mode = Gtk::SELECTION_MULTIPLE
@@ -344,6 +396,15 @@ module UI
          
             @iconview.signal_connect('selection-changed') do 
                 on_books_selection_changed
+            end
+
+            @iconview.signal_connect('item-activated') do 
+                @actiongroup["Properties"].activate
+            end
+
+            # DND support for Gtk::IconView is shipped since GTK+ 2.8.0.
+            if Gtk::VERSION.join.to_i > 280
+                setup_view_source_dnd(@iconview)
             end
         end
 
@@ -447,6 +508,12 @@ module UI
             @listview.selection.signal_connect('changed') do 
                 on_books_selection_changed
             end
+            
+            @listview.signal_connect('row-activated') do 
+                @actiongroup["Properties"].activate
+            end
+
+            setup_view_source_dnd(@listview)
         end
 
         def setup_listview_columns_visibility
@@ -596,7 +663,8 @@ module UI
         def setup_sidepane
             @library_listview.model = Gtk::ListStore.new(Gdk::Pixbuf, 
                                                          String, TrueClass)
-            @libraries.each { |library| append_library(library) } 
+            @libraries.each { |library| append_library(library) }
+ 
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Library"))
             column.pack_start(renderer, false)
@@ -638,9 +706,55 @@ module UI
                 end
             end
             @library_listview.append_column(column)
+
             @library_listview.selection.signal_connect('changed') do 
                 refresh_libraries
                 refresh_books
+            end
+
+            @library_listview.enable_model_drag_dest(
+                BOOKS_TARGET_TABLE,
+                Gdk::DragContext::ACTION_MOVE)
+
+            @library_listview.signal_connect('drag-motion') do 
+                |widget, drag_context, x, y, time, data|
+
+                path, column, cell_x, cell_y = 
+                    @library_listview.get_path_at_pos(x, y)
+ 
+                @library_listview.set_drag_dest_row(
+                    path, 
+                    Gtk::TreeView::DROP_INTO_OR_AFTER)
+                drag_context.drag_status(
+                    path != nil ? drag_context.suggested_action : 0, 
+                    time)
+            end
+ 
+            @library_listview.signal_connect('drag-drop') do 
+                |widget, drag_context, x, y, time, data|
+
+                Gtk::Drag.get_data(widget, 
+                                   drag_context, 
+                                   drag_context.targets.first,
+                                   time)
+                true
+            end
+
+            @library_listview.signal_connect('drag-data-received') do 
+                |widget, drag_context, x, y, selection_data, info, time|
+
+                success = false
+                if selection_data.type == Gdk::Selection::TYPE_STRING
+                    path, position = 
+                        @library_listview.get_dest_row_at_pos(x, y)
+
+                    if path
+                        iter = @library_listview.model.get_iter(path)
+                        library = @libraries.find { |x| x.name == iter[1] }
+                        move_selected_books_to_library(library)
+                    end
+                end
+                Gtk::Drag.finish(drag_context, success, false, time)
             end
         end
 
@@ -711,7 +825,18 @@ module UI
                 '"' + t + '": ' + v.to_s
             end.join(', ') + '}'
         end 
-       
+      
+        def move_selected_books_to_library(library)
+            books = selected_books.select do |book|
+                library.find { |book2| book2.ident == 
+                                       book.ident } == nil or
+                ConflictWhileCopyingDialog.new(@main_app, 
+                                               library,
+                                               book).replace?
+            end
+            Library.move(selected_library, library, *books)
+        end
+
         def setup_move_actions
             @actiongroup.actions.each do |action|
                 next unless /^MoveIn/.match(action.name)
@@ -719,21 +844,10 @@ module UI
             end
             actions = []
             @libraries.each do |library|
-                on_move = proc do
-                    books = selected_books.select do |book|
-                        library.find { |book2| book2.ident == 
-                                               book.ident } == nil or
-                        ConflictWhileCopyingDialog.new(@main_app, 
-                                                       library,
-                                                       book).replace?
-                    end
-                    Library.move(selected_library,
-                                 library, *books)
-                end
                 actions << [ 
                     library.action_name, nil,
                     _("In '_%s'") % library.name, 
-                    nil, nil, on_move 
+                    nil, nil, proc { move_selected_books_to_library(library) }
                 ]
             end
             @actiongroup.add_actions(actions)
@@ -920,7 +1034,7 @@ module UI
                 ["LibraryMenu", nil, _("_Library")],
                 ["New", Gtk::Stock::NEW, _("_New Library"), "<control>L", 
                  _("Create a new library"), on_new],
-                ["NewSmart", Gtk::Stock::NEW, _("New _Smart Library..."), 
+                ["NewSmart", nil, _("New _Smart Library..."), 
                  "<control><shift>L", _("Create a new smart library"), 
                  on_new_smart],
                 ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", 

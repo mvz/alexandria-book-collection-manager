@@ -1,3 +1,21 @@
+2005-12-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/multi_drag_treeview.rb:
+
+	Introduce drag-and-drop from any books view to the library view.
+
+	* README:
+
+	- Mention Ruby/Pango as a new dependency ;
+	- Mention GTK+ 2.8.0 or greater as recommended (but optional) as 
+	  it brings DND for the icon view.
+
+	* TODO:
+
+	One thing less.
+
 2005-11-25  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/smart_library.rb,

@@ -37,10 +37,10 @@ Requirements
     Ruby/ZOOM >= 0.2.0          http://ruby-zoom.rubyforge.org
     Intltool:                   http://freedesktop.org/wiki/Software_2fintltool
 
-    [*]: GTK+ >= 2.6.0 is required though.
+    [*]: GTK+ >= 2.6.0 is required though, and >= 2.8.0 is recommended.
 
-    [**]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2
-                                  and Ruby/GConf2.
+    [**]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2,
+                                  Ruby/Pango and Ruby/GConf2.
 
 Install
 -------
