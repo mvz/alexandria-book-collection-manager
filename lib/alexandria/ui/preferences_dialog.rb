@@ -222,6 +222,7 @@ module UI
             model = Gtk::ListStore.new(String, String)
             @treeview_providers.model = model
             reload_providers
+            model.signal_connect_after('row-changed') { update_priority }
             column = Gtk::TreeViewColumn.new("Providers",
                                              Gtk::CellRendererText.new,
                                              :text => 0)

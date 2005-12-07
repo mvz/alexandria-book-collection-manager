@@ -18,6 +18,7 @@
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
   <property name="focus_on_map">True</property>
+  <property name="urgency_hint">False</property>
   <property name="has_separator">False</property>
 
   <child internal-child="vbox">
@@ -349,7 +350,7 @@
 			  <property name="can_focus">True</property>
 			  <property name="headers_visible">False</property>
 			  <property name="rules_hint">True</property>
-			  <property name="reorderable">False</property>
+			  <property name="reorderable">True</property>
 			  <property name="enable_search">True</property>
 			  <property name="fixed_height_mode">False</property>
 			  <property name="hover_selection">False</property>
