@@ -8,6 +8,10 @@
 	- When right clicking, if the mouse is not on an item, deselect everything
 	  before showing the popup menu.
 
+	* README:
+
+	We now require Ruby-GNOME2 0.14.0 or later.
+
 2005-12-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui.rb,
