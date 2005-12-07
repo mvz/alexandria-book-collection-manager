@@ -32,6 +32,14 @@
     <menuitem action="Properties"/>
     <menu action="OnlineInformation"/>
     <separator/>
+    <menu action="SetRating">
+      <menuitem action="SetRating0"/>
+      <menuitem action="SetRating1"/>
+      <menuitem action="SetRating2"/>
+      <menuitem action="SetRating3"/>
+      <menuitem action="SetRating4"/>
+      <menuitem action="SetRating5"/>
+    </menu>
     <menu action="Move"/>
     <separator/>
     <menuitem action="SelectAll"/>

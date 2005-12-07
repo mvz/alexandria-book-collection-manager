@@ -110,8 +110,13 @@ module UI
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 3
 
-                unless widget.get_path_at_pos(event.x, event.y)
-                    widget.unselect_all
+                widget.unselect_all
+                if path = widget.get_path_at_pos(event.x, event.y)
+                    if widget.is_a?(Gtk::TreeView)
+                        widget.selection.select_path(path.first)
+                    else
+                        widget.select_path(path)
+                    end
                 end
 
                 menu = (selected_books.empty?) ? @nobook_popup : @book_popup
@@ -164,7 +169,8 @@ module UI
                     books.length < library.length
                 @actiongroup["Delete"].sensitive = \
                     @actiongroup["DeselectAll"].sensitive = \
-                    @actiongroup["Move"].sensitive = !books.empty?
+                    @actiongroup["Move"].sensitive = 
+                    @actiongroup["SetRating"].sensitive = !books.empty?
                 
                 # Sensitize providers URL
                 if books.length == 1
@@ -970,7 +976,18 @@ module UI
                         @listview.selection.unselect_all
                 end
             end
-            
+
+            on_set_rating = (0..5).map do |rating|
+                proc do 
+                    books = selected_books
+                    library = selected_library
+                    books.each do |book| 
+                        book.rating = rating
+                        library.save(book)
+                    end
+                end
+            end
+
             on_rename = proc do
                 iter = @library_listview.selection.selected
                 @library_listview.set_cursor(iter.path, 
@@ -1073,6 +1090,13 @@ module UI
                  _("Select all visible books"), on_select_all],
                 ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", 
                  _("Deselect everything"), on_deselect_all],
+                ["SetRating", nil, _("Set _Rating")],
+                ["SetRating0", nil, _("None"), nil, nil, on_set_rating[0]],
+                ["SetRating1", nil, _("1"), nil, nil, on_set_rating[1]],
+                ["SetRating2", nil, _("2"), nil, nil, on_set_rating[2]],
+                ["SetRating3", nil, _("3"), nil, nil, on_set_rating[3]],
+                ["SetRating4", nil, _("4"), nil, nil, on_set_rating[4]],
+                ["SetRating5", nil, _("5"), nil, nil, on_set_rating[5]],
                 ["Move", nil, _("_Move")],
                 ["Rename", nil, _("_Rename"), nil, nil, on_rename],
                 ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", 
@@ -1188,7 +1212,29 @@ module UI
                               Gtk::UIManager::SEPARATOR, false)
             @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh", 
                               Gtk::UIManager::TOOLITEM, false)        
-            
+
+=begin 
+            rating_actions = []
+            (0..5).each do |n|
+                actions << [ 
+                    "SetRatingTo#{n}", nil,
+                    _("In '_%s'") % library.name, 
+                    nil, nil, proc { move_selected_books_to_library(library) }
+                ]
+            end
+            @actiongroup.add_actions(actions)
+            @uimanager.remove_ui(@move_mid) if @move_mid
+            @move_mid = @uimanager.new_merge_id 
+            @libraries.each do |library|
+                name = library.action_name
+                [ "ui/MainMenubar/EditMenu/Move/",
+                  "ui/BookPopup/Move/" ].each do |path|
+                    @uimanager.add_ui(@move_mid, path, name, name,
+                                      Gtk::UIManager::MENUITEM, false)
+                end
+            end
+=end
+
             @toolbar = @uimanager.get_widget("/MainToolbar")
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
             tooltips = Gtk::Tooltips.new 
