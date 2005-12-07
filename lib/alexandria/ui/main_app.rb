@@ -107,8 +107,12 @@ module UI
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 3
 
+                unless widget.get_path_at_pos(event.x, event.y)
+                    widget.unselect_all
+                end
+
                 menu = (selected_books.empty?) ? @nobook_popup : @book_popup
-                menu.popup(nil, nil, event.button, event.time) 
+                menu.popup(nil, nil, event.button, event.time)
             end
         end
 
@@ -370,7 +374,7 @@ module UI
         
             view.signal_connect('drag-data-get') do |widget, drag_context,
                                                      selection_data, info,
-                                                     time, data|
+                                                     time|
             
                 idents = selected_books.map { |book| book.ident }
                 unless idents.empty?
@@ -399,11 +403,16 @@ module UI
             end
 
             @iconview.signal_connect('item-activated') do 
-                @actiongroup["Properties"].activate
+                # Dirty hack to avoid the beginning of a drag within this 
+                # handler. 
+                Gtk.timeout_add(100) do
+                    @actiongroup["Properties"].activate
+                    false
+                end
             end
 
             # DND support for Gtk::IconView is shipped since GTK+ 2.8.0.
-            if Gtk::VERSION.join.to_i > 280
+            if @iconview.respond_to?(:enable_model_drag_source)
                 setup_view_source_dnd(@iconview)
             end
         end
@@ -509,8 +518,13 @@ module UI
                 on_books_selection_changed
             end
             
-            @listview.signal_connect('row-activated') do 
-                @actiongroup["Properties"].activate
+            @listview.signal_connect('row-activated') do
+                # Dirty hack to avoid the beginning of a drag within this 
+                # handler. 
+                Gtk.timeout_add(100) do
+                    @actiongroup["Properties"].activate
+                    false
+                end
             end
 
             setup_view_source_dnd(@listview)
