@@ -19,6 +19,10 @@
 -->
 
 <ui>
+  <popup name="NoLibraryPopup">
+    <menuitem action="New"/>
+    <menuitem action="NewSmart"/>
+  </popup>
   <popup name="LibraryPopup">
     <menuitem action="Rename"/>
     <menuitem action="Export"/>

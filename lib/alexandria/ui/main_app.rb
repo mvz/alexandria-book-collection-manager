@@ -98,7 +98,10 @@ module UI
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 3
 
-                @library_popup.popup(nil, nil, event.button, event.time) 
+                menu = widget.get_path_at_pos(event.x, event.y) == nil \
+                    ?  @nolibrary_popup : @library_popup
+
+                menu.popup(nil, nil, event.button, event.time) 
             end
         end
         
@@ -1268,6 +1271,7 @@ module UI
             @main_app.toolbar = @toolbar
             @main_app.menus = @uimanager.get_widget("/MainMenubar")
             @library_popup = @uimanager.get_widget("/LibraryPopup") 
+            @nolibrary_popup = @uimanager.get_widget("/NoLibraryPopup") 
             @book_popup = @uimanager.get_widget("/BookPopup") 
             @nobook_popup = @uimanager.get_widget("/NoBookPopup") 
             

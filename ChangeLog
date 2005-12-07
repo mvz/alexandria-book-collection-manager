@@ -1,5 +1,11 @@
 2005-12-07  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/ui/popups.xml,
+	  lib/alexandria/ui/main_app.rb:
+
+	When right clicking in the libraries view, if the mouse is not on an item
+	show another popup menu with New Library and New Smart Library actions.
+
 	* data/alexandria/glade/preferences_dialog.glade,
 	  lib/alexandria/ui/preferences_dialog.rb:
 	
