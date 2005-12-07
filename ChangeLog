@@ -1,5 +1,9 @@
 2005-12-07  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/book.rb:
+
+	Simplify the code.
+
 	* data/alexandria/ui/popups.xml,
 	  lib/alexandria/ui/main_app.rb:
 

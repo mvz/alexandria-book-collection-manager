@@ -37,15 +37,11 @@ module Alexandria
         end
 
         def ident
-            if @isbn
-                return @isbn
-            else
-                return @title.hash.to_s
-            end
+            @isbn or @title.hash.to_s
         end
         
         def loaned? 
-            (loaned or false)
+            loaned or false
         end
     end
 end
