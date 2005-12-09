@@ -1,5 +1,9 @@
 2005-12-09  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/book_properties_dialog.rb:
+
+	Make sure we never set the ISBN entry to nil if the book is ISBN-less.
+
 	* lib/alexandria/ui/main_app.rb:
 
 	- Renamed 'Set Rating' to 'My rating' ;
