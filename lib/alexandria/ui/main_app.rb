@@ -1090,13 +1090,18 @@ module UI
                  _("Select all visible books"), on_select_all],
                 ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", 
                  _("Deselect everything"), on_deselect_all],
-                ["SetRating", nil, _("Set _Rating")],
+                ["SetRating", nil, _("My _Rating")],
                 ["SetRating0", nil, _("None"), nil, nil, on_set_rating[0]],
-                ["SetRating1", nil, _("1"), nil, nil, on_set_rating[1]],
-                ["SetRating2", nil, _("2"), nil, nil, on_set_rating[2]],
-                ["SetRating3", nil, _("3"), nil, nil, on_set_rating[3]],
-                ["SetRating4", nil, _("4"), nil, nil, on_set_rating[4]],
-                ["SetRating5", nil, _("5"), nil, nil, on_set_rating[5]],
+                ["SetRating1", nil, _("One Star"), nil, nil, 
+                 on_set_rating[1]],
+                ["SetRating2", nil, _("Two Stars"), nil, nil, 
+                 on_set_rating[2]],
+                ["SetRating3", nil, _("Three Stars"), nil, nil, 
+                 on_set_rating[3]],
+                ["SetRating4", nil, _("Four Stars"), nil, nil, 
+                 on_set_rating[4]],
+                ["SetRating5", nil, _("Five Stars"), nil, nil, 
+                 on_set_rating[5]],
                 ["Move", nil, _("_Move")],
                 ["Rename", nil, _("_Rename"), nil, nil, on_rename],
                 ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", 
@@ -1180,7 +1185,7 @@ module UI
                 @prefs.arrange_icons_mode = current.current_value 
                 setup_books_iconview_sorting
             end
-            
+           
             @uimanager = Gtk::UIManager.new
             @uimanager.insert_action_group(@actiongroup, 0)
             @main_app.add_accel_group(@uimanager.accel_group)
@@ -1212,28 +1217,6 @@ module UI
                               Gtk::UIManager::SEPARATOR, false)
             @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh", 
                               Gtk::UIManager::TOOLITEM, false)        
-
-=begin 
-            rating_actions = []
-            (0..5).each do |n|
-                actions << [ 
-                    "SetRatingTo#{n}", nil,
-                    _("In '_%s'") % library.name, 
-                    nil, nil, proc { move_selected_books_to_library(library) }
-                ]
-            end
-            @actiongroup.add_actions(actions)
-            @uimanager.remove_ui(@move_mid) if @move_mid
-            @move_mid = @uimanager.new_merge_id 
-            @libraries.each do |library|
-                name = library.action_name
-                [ "ui/MainMenubar/EditMenu/Move/",
-                  "ui/BookPopup/Move/" ].each do |path|
-                    @uimanager.add_ui(@move_mid, path, name, name,
-                                      Gtk::UIManager::MENUITEM, false)
-                end
-            end
-=end
 
             @toolbar = @uimanager.get_widget("/MainToolbar")
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
