@@ -50,6 +50,8 @@ module UI
                                           :text => 0, 
                                           :editable => 1)
             @treeview_authors.append_column(col)
+
+            @button_clear_cover.sensitive = File.exist?(@cover_file)
         end
 
         def on_title_changed
@@ -111,11 +113,18 @@ module UI
                     # At this stage the file format is recognized.
                     FileUtils.cp(dialog.filename, @cover_file)
                     self.cover = cover
+                    @button_clear_cover.sensitive = true
                 rescue RuntimeError => e 
                     ErrorDialog.new(@book_properties_dialog, e.message)
                 end
             end
             dialog.destroy
+        end
+
+        def on_clear_cover
+            FileUtils.rm_f(@cover_file)
+            self.cover = Icons::BOOK_ICON
+            @button_clear_cover.sensitive = false 
         end
        
         def on_destroy; end     # no action by default

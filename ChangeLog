@@ -1,5 +1,11 @@
 2005-12-09  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  lib/alexandria/ui/book_properties_dialog_base.rb:
+
+	Added a clear button just before the cover that set the default book
+	icon back.
+
 	* lib/alexandria/ui/book_properties_dialog.rb:
 
 	Make sure we never set the ISBN entry to nil if the book is ISBN-less.
