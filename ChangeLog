@@ -1,3 +1,17 @@
+2005-12-15  Laurent Sansonetti  <lrz@gnome.org>
+
+	* TODO,
+	  data/alexandria/ui/menus.xml,
+	  lib/alexandria.rb,
+	  lib/alexandria/book.rb,
+	  lib/alexandria/library.rb,
+	  lib/alexandria/undo_manager.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb:
+
+	- Introduced Undo/Redo functionality for move and deletion actions ;
+	- Added some various very small improvements.
+
 2005-12-09  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/book_properties_dialog.glade,

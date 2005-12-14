@@ -69,6 +69,47 @@ module UI
         end
     end
 
+    class ReallyDeleteDialog < AlertDialog
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+        
+        def initialize(parent, library, books=nil)
+            # Deleting a library.
+            if books.nil?
+                message = _("Are you sure you want to delete '%s'?") \
+                    % library.name
+                description = if library.empty?; nil; else
+                    n_("If you continue, %d book will be deleted.",
+                       "If you continue, %d books will be deleted.", 
+                       library.size) % library.size
+                end
+            # Deleting books.
+            else
+                message = if books.length == 1
+                    _("Are you sure you want to delete '%s' " +
+                      "from '%s'?") % [ books.first.title, library.name ]
+                else
+                    _("Are you sure you want to delete the " +
+                      "selected books from '%s'?") % library.name
+                end
+                description = nil
+            end
+
+            super(parent, message, Gtk::Stock::DIALOG_QUESTION,
+                  [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+                   [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]],
+                  description)
+
+            self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+            show_all and @response = run
+            destroy
+        end
+
+        def ok?
+            @response == Gtk::Dialog::RESPONSE_OK
+        end
+    end
+
     class MainApp < GladeBase 
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -89,8 +130,6 @@ module UI
             initialize_ui
             on_books_selection_changed
             restore_preferences
-            # give filter entry the initial keyboard focus
-            @filter_entry.grab_focus
         end
 
         def on_library_button_press_event(widget, event)
@@ -110,13 +149,16 @@ module UI
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 3
 
-                widget.unselect_all
                 if path = widget.get_path_at_pos(event.x, event.y)
-                    if widget.is_a?(Gtk::TreeView)
-                        widget.selection.select_path(path.first)
-                    else
-                        widget.select_path(path)
+                    obj = widget.is_a?(Gtk::TreeView) \
+                        ? widget.selection : widget
+                        
+                    unless obj.path_is_selected?(path)
+                        widget.unselect_all
+                        obj.select_path(path)
                     end
+                else
+                    widget.unselect_all
                 end
 
                 menu = (selected_books.empty?) ? @nobook_popup : @book_popup
@@ -214,21 +256,30 @@ module UI
             @actiongroup["Sidepane"].active = false
         end
 
-        def update(library, kind, book)
-            if library == selected_library
-                @iconview.freeze
-                case kind 
-                    when Library::BOOK_ADDED
-                        append_book(book)
-     
-                    when Library::BOOK_UPDATED
-                        iter = iter_from_ident(book.saved_ident)
-                        fill_iter_with_book(iter, book)
-    
-                    when Library::BOOK_REMOVED
-                        @model.remove(iter_from_book(book))
+        def update(*ary)
+            caller = ary.first
+            if caller.is_a?(UndoManager)
+                @actiongroup["Undo"].sensitive = caller.can_undo? 
+                @actiongroup["Redo"].sensitive = caller.can_redo?
+            elsif caller.is_a?(Library)
+                library, kind, book = ary
+                if library == selected_library
+                    @iconview.freeze
+                    case kind 
+                        when Library::BOOK_ADDED
+                            append_book(book)
+         
+                        when Library::BOOK_UPDATED
+                            iter = iter_from_ident(book.saved_ident)
+                            fill_iter_with_book(iter, book)
+        
+                        when Library::BOOK_REMOVED
+                            @model.remove(iter_from_book(book))
+                    end
+                    @iconview.unfreeze
                 end
-                @iconview.unfreeze
+            else
+                raise "unrecognized update event"
             end
         end
 
@@ -711,8 +762,8 @@ module UI
                     elsif new_text.strip.empty?
                         ErrorDialog.new(@main_app, _("The library name " +
                                                      "can not be empty"))
-                    elsif x = @libraries.find { |library| library.name == 
-                                                          new_text.strip } \
+                    elsif x = (@libraries + Library.deleted_libraries).find { 
+                                |library| library.name == new_text.strip } \
                        and x.name != selected_library.name
                         ErrorDialog.new(@main_app, 
                                         _("The library can not be renamed"),
@@ -848,16 +899,20 @@ module UI
                 '"' + t + '": ' + v.to_s
             end.join(', ') + '}'
         end 
-      
+     
+        def undoable_move(source, dest, books)
+            Library.move(source, dest, *books)
+            UndoManager.instance.push { undoable_move(dest, source, books) }
+        end
+ 
         def move_selected_books_to_library(library)
             books = selected_books.select do |book|
-                library.find { |book2| book2.ident == 
-                                       book.ident } == nil or
-                ConflictWhileCopyingDialog.new(@main_app, 
-                                               library,
-                                               book).replace?
+                !library.include?(book) or 
+                    ConflictWhileCopyingDialog.new(@main_app, 
+                                                   library,
+                                                   book).replace?
             end
-            Library.move(selected_library, library, *books)
+            undoable_move(selected_library, library, books)
         end
 
         def setup_move_actions
@@ -886,6 +941,47 @@ module UI
             end
         end
         
+        def undoable_delete(library, books=nil)        
+            # Deleting a library.
+            if books.nil?
+               library.delete
+                previous_selected_library = selected_library
+                if previous_selected_library != library 
+                    select_library(library) 
+                else
+                    previous_selected_library = nil
+                end
+                iter = @library_listview.selection.selected
+                next_iter = @library_listview.selection.selected
+                next_iter.next!
+                @library_listview.model.remove(iter)
+                @library_listview.selection.select_iter(next_iter)
+                @libraries.delete(library)
+                setup_move_actions
+                select_library(previous_selected_library) \
+                    unless previous_selected_library.nil?
+            # Deleting books.
+            else
+               books.each { |book| library.delete(book) }
+            end
+            UndoManager.instance.push { undoable_undelete(library, books) }
+        end
+
+        def undoable_undelete(library, books=nil)
+            # Undeleting a library.
+            if books.nil?
+                library.undelete
+                @libraries << library
+                append_library(library)
+                setup_move_actions
+            # Undeleting books. 
+            else
+                books.each { |book| library.undelete(book) }
+            end
+            select_library(library)
+            UndoManager.instance.push { undoable_delete(library, books) }
+        end
+
         def initialize_ui
             @main_app.icon = Icons::ALEXANDRIA_SMALL
 
@@ -957,8 +1053,15 @@ module UI
             on_quit = proc do
                 save_preferences
                 Gtk.main_quit
+                Library.really_delete_deleted_libraries
+                @libraries.each do |library| 
+                    library.really_delete_deleted_books
+                end
             end
-   
+  
+            on_undo = proc { UndoManager.instance.undo! } 
+            on_redo = proc { UndoManager.instance.redo! } 
+ 
             on_select_all = proc do
                 case @notebook.page
                     when 0
@@ -994,56 +1097,14 @@ module UI
                                              @library_listview.get_column(0), 
                                              true)
             end
-            
+
             on_delete = proc do
                 library = selected_library
-                confirm = lambda do |message|
-                    dialog = AlertDialog.new(@main_app, message,
-                                             Gtk::Stock::DIALOG_QUESTION,
-                                             [[Gtk::Stock::CANCEL, 
-                                               Gtk::Dialog::RESPONSE_CANCEL],
-                                              [Gtk::Stock::DELETE, 
-                                               Gtk::Dialog::RESPONSE_OK]],
-                                             _("If you continue, the selection will be " + 
-                                               "permanently deleted."))
-                    dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
-                    dialog.show_all
-                    res = dialog.run == Gtk::Dialog::RESPONSE_OK
-                    dialog.destroy
-                    res
-                end
-                if @library_listview.focus?
-                    message = case library.length
-                        when 0
-                            _("Are you sure you want to permanently delete '%s'?") % library.name
-                        else
-                            n_("Are you sure you want to permanently delete '%s' " +
-                               "which has %d book?", 
-                               "Are you sure you want to permanently delete '%s' " +
-                               "which has %d books?", library.size) % [ library.name, library.size ]
-                    end
-                    if confirm.call(message)
-                        library.delete
-                        @libraries.delete_if { |lib| lib.name == library.name }
-                        iter = @library_listview.selection.selected
-                        next_iter = @library_listview.selection.selected
-                        next_iter.next!
-                        @library_listview.model.remove(iter)
-                        @library_listview.selection.select_iter(next_iter)
-                        setup_move_actions
-                    end
-                else
-                    books = selected_books
-                    message = if books.length == 1
-                        _("Are you sure you want to permanently delete '%s' " +
-                          "from '%s'?") % [ books.first.title, library.name ]
-                    else
-                        _("Are you sure you want to permanently delete the " +
-                          "selected books from '%s'?") % library.name
-                    end
-                    if confirm.call(message)
-                        books.each { |book| library.delete(book) }
-                    end
+                books = @library_listview.focus? ? nil : selected_books
+                if library.empty? or ReallyDeleteDialog.new(@main_app, 
+                                                            library, 
+                                                            books).ok?
+                    undoable_delete(library, books)
                 end
             end
      
@@ -1086,6 +1147,10 @@ module UI
                 ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", 
                  _("Quit the program"), on_quit],
                 ["EditMenu", nil, _("_Edit")],
+                ["Undo", Gtk::Stock::UNDO, _("_Undo"), "<control>Z", 
+                 _("Undo the last action"), on_undo],
+                ["Redo", Gtk::Stock::REDO, _("_Redo"), "<control><shift>Z", 
+                 _("Redo the undone action"), on_redo],
                 ["SelectAll", nil, _("_Select All"), "<control>A", 
                  _("Select all visible books"), on_select_all],
                 ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", 
@@ -1297,6 +1362,10 @@ module UI
 
             @toolbar.show_all
             
+            @actiongroup["Undo"].sensitive = 
+                @actiongroup["Redo"].sensitive = false
+            UndoManager.instance.add_observer(self)
+            
             @main_app.toolbar = @toolbar
             @main_app.menus = @uimanager.get_widget("/MainMenubar")
             @library_popup = @uimanager.get_widget("/LibraryPopup") 
@@ -1361,6 +1430,9 @@ module UI
                 end     
             end
 
+            # Give filter entry the initial keyboard focus.
+            @filter_entry.grab_focus
+            
             @listview_model = Gtk::TreeModelSort.new(@filtered_model)
             @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
 

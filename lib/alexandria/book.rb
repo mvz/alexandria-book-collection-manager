@@ -43,5 +43,9 @@ module Alexandria
         def loaned? 
             loaned or false
         end
+
+        def ==(obj)
+            obj.is_a?(self.class) and self.ident == obj.ident
+        end
     end
 end

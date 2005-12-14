@@ -90,6 +90,7 @@ require 'alexandria/import_library'
 require 'alexandria/export_library'
 require 'alexandria/book_providers'
 require 'alexandria/preferences'
+require 'alexandria/undo_manager'
 require 'alexandria/web_themes'
 
 require $MACOSX ? 'alexandria/macui' : 'alexandria/ui'

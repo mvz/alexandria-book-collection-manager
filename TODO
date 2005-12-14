@@ -4,7 +4,7 @@ Alexandria's TODO list
 For the next release:
 
 [X] Drag-and-drop books within libraries
-[ ] Infinite Undo/Redo
+[X] Infinite Undo/Redo
 [ ] Sort providers meaningfully according to the current locale
 [ ] CueCat userland support
 [ ] Threading of all operations

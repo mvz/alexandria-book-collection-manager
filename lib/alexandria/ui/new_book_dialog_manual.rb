@@ -57,41 +57,47 @@ module UI
             @book_properties_dialog.destroy
         end
 
+        class AddError < StandardError
+        end
+
         def on_add
             begin
                 if (title = @entry_title.text.strip).empty?
-                    raise _("A title must be provided.")
+                    raise AddError.new(_("A title must be provided."))
                 end
 
                 isbn = nil
                 if @entry_isbn.text != ""
                     ary = @library.select { |book| book.ident == 
                                                    @entry_isbn.text }
-                    raise _("The EAN/ISBN you provided is already used " +
-                            "in this library.") unless ary.empty?
+                    raise AddError.new(_("The EAN/ISBN you provided is " +
+                                         "already used in this library.")) \
+                        unless ary.empty?
                     isbn = begin
                         Library.canonicalise_isbn(@entry_isbn.text)
                     rescue Alexandria::Library::InvalidISBNError
-                        raise _("Couldn't validate the EAN/ISBN you " +
-                                "provided.  Make sure it is written " +
-                                "correcty, and try again.")
+                        raise AddError.new(_("Couldn't validate the " +
+                                             "EAN/ISBN you provided.  Make " +
+                                             "sure it is written correcty, " +
+                                             "and try again."))
                     end
                 end
 
                 if (publisher = @entry_publisher.text.strip).empty?
-                    raise _("A publisher must be provided.")
+                    raise AddError.new(_("A publisher must be provided."))
                 end
                
                 publishing_year = @entry_publish_date.text.to_i
  
                 if (edition = @entry_edition.text.strip).empty?
-                    raise _("A binding must be provided.")
+                    raise AddError.new(_("A binding must be provided."))
                 end
                 
                 authors = []
                 @treeview_authors.model.each { |m, p, i| authors << i[0] }
                 if authors.empty?
-                    raise _("At least one author must be provided.") 
+                    raise AddError.new(_("At least one author must be " +
+                                         "provided.")) 
                 end
 
                 book = Book.new(title, authors, isbn, publisher, 
@@ -111,7 +117,7 @@ module UI
 
                 @on_add_cb.call(book)
                 @book_properties_dialog.destroy
-            rescue => e
+            rescue AddError => e
                 ErrorDialog.new(@parent, _("Couldn't add the book"),
                                 e.message)
             end

@@ -41,7 +41,7 @@ module Alexandria
 
         BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
         include Observable
-    
+
         def path
             File.join(DIR, @name)
         end
@@ -50,9 +50,10 @@ module Alexandria
                                    from_base=_("Untitled"))
             i = 1
             name = nil
+            all_libraries = existing_libraries + @@deleted_libraries
             while true do
                 name = i == 1 ? from_base : from_base + " #{i}"
-                break unless existing_libraries.find { |x| x.name == name }
+                break unless all_libraries.find { |x| x.name == name }
                 i += 1
             end
             return name
@@ -261,13 +262,14 @@ module Alexandria
                 notify_observers(self, BOOK_UPDATED, book)
                 book.saved_ident = book.ident
             end
-            yaml_exists = File.exists?(yaml(book))
+            already_there = (File.exists?(yaml(book)) and 
+                             !@deleted_books.include?(book))
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
             
             # Do not notify twice.
-            if changed? 
+            if changed?
                 notify_observers(self, 
-                                 yaml_exists ? BOOK_UPDATED : BOOK_ADDED, 
+                                 already_there ? BOOK_UPDATED : BOOK_ADDED, 
                                  book)
             end
         end
@@ -294,16 +296,66 @@ module Alexandria
             end
         end
         
+        @@deleted_libraries = []
+
+        def self.deleted_libraries
+            @@deleted_libraries
+        end
+
+        def self.really_delete_deleted_libraries
+            @@deleted_libraries.each do |library| 
+                puts "Deleting library directory (#{library.path})" if $DEBUG
+                FileUtils.rm_rf(library.path)
+            end
+        end
+
+        def really_delete_deleted_books
+            @deleted_books.each do |book|
+                [yaml(book), cover(book)].each do |file|
+                    puts "Deleting book file #{file} " if $DEBUG
+                    FileUtils.rm_f(file)
+                end
+            end
+        end
+ 
         alias_method :old_delete, :delete
         def delete(book=nil)
             if book.nil?
-                # delete the whole library
-                FileUtils.rm_rf(self.path)
+                # Delete the whole library.
+                raise if @@deleted_libraries.include?(self)
+                @@deleted_libraries << self
             else
-                changed
-                FileUtils.rm_f([yaml(book), cover(book)])
-                old_delete(book)
-                notify_observers(self, BOOK_REMOVED, book)
+                raise if @deleted_books.include?(book)
+                @deleted_books << book
+                i = self.index(book)
+                # We check object IDs there because the user could have added
+                # a book with the same identifier as another book he/she
+                # previously deleted and that he/she is trying to redo.
+                if i != nil and self[i].object_id == book.object_id
+                    changed
+                    old_delete(book)
+                    notify_observers(self, BOOK_REMOVED, book)
+                end
+            end
+        end
+
+        def deleted?
+            @@deleted_libraries.include?(self)
+        end
+
+        def undelete(book=nil)
+            if book.nil?
+                # Undelete the whole library.
+                raise unless @@deleted_libraries.include?(self)
+                @@deleted_libraries.delete(self)
+            else
+                raise unless @deleted_books.include?(book)
+                @deleted_books.delete(book)
+                unless self.include?(book)
+                    changed
+                    self << book
+                    notify_observers(self, BOOK_ADDED, book)
+                end
             end
         end
 
@@ -328,7 +380,7 @@ module Alexandria
             File.join(self.path, ident + EXT[:cover])
         end
     
-        def yaml(something)
+        def yaml(something, basedir=self.path)
             ident = case something
                 when Book
                     something.ident
@@ -337,7 +389,7 @@ module Alexandria
                 else
                     raise
             end
-            File.join(self.path, ident + EXT[:book])
+            File.join(basedir, ident + EXT[:book])
         end
         
         def name=(name)
@@ -363,6 +415,7 @@ module Alexandria
 
         def initialize(name)
             @name = name
+            @deleted_books = []
         end
 
         def copy_covers(somewhere)
