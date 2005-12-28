@@ -1,5 +1,9 @@
 2005-12-28  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/new_book_dialog.rb:
+
+	Fixed assertion while packing the pixbuf cell renderer.
+
 	* lib/alexandria/ui/main_app.rb:
 
 	- Added a keyboard shortcut (CTRL+SHIFT+N) for the manual add book 

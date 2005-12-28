@@ -65,7 +65,6 @@ module UI
 
             renderer = Gtk::CellRendererPixbuf.new
             col = Gtk::TreeViewColumn.new("", renderer)
-            col.pack_start(renderer, true)
             col.set_cell_data_func(renderer) do |column, cell, model, iter|
                 pixbuf = iter[2]
                 max_height = 25 
