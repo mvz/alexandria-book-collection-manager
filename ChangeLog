@@ -1,3 +1,11 @@
+2005-12-28  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Make sure we observe libraries that have just been added, and we remove
+	ourself from the observers list when the library has been removed.  This
+	fixes a bug when books added in new libraries were not displayed.
+
 2005-12-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO,

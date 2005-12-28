@@ -944,7 +944,8 @@ module UI
         def undoable_delete(library, books=nil)        
             # Deleting a library.
             if books.nil?
-               library.delete
+                library.delete_observer(self)
+                library.delete
                 previous_selected_library = selected_library
                 if previous_selected_library != library 
                     select_library(library) 
@@ -974,6 +975,7 @@ module UI
                 @libraries << library
                 append_library(library)
                 setup_move_actions
+                library.add_observer(self)
             # Undeleting books. 
             else
                 books.each { |book| library.undelete(book) }
@@ -991,6 +993,7 @@ module UI
                 @libraries << library
                 append_library(library, true)
                 setup_move_actions
+                library.add_observer(self)
             end
    
             on_new_smart = proc do
