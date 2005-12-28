@@ -96,7 +96,8 @@ module UI
         def on_image_no_rating_press
             self.rating = 0
         end
-   
+  
+        @@latest_filechooser_directory = ENV['HOME']
         def on_change_cover
             backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
             dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
@@ -107,6 +108,7 @@ module UI
                                                  Gtk::Dialog::RESPONSE_CANCEL],
                                                 [Gtk::Stock::OPEN, 
                                                  Gtk::Dialog::RESPONSE_ACCEPT])
+            dialog.current_folder = @@latest_filechooser_directory
             if dialog.run == Gtk::Dialog::RESPONSE_ACCEPT
                 begin
                     cover = Gdk::Pixbuf.new(dialog.filename)
@@ -114,6 +116,7 @@ module UI
                     FileUtils.cp(dialog.filename, @cover_file)
                     self.cover = cover
                     @button_clear_cover.sensitive = true
+                    @@latest_filechooser_directory = dialog.current_folder
                 rescue RuntimeError => e 
                     ErrorDialog.new(@book_properties_dialog, e.message)
                 end

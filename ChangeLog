@@ -1,5 +1,10 @@
 2005-12-28  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/book_properties_dialog_base.rb:
+
+	Remembers the latest directory selected by the file chooser, so that we
+	use this directory for the next cover open action.
+
 	* lib/alexandria/ui/new_book_dialog.rb:
 
 	Fixed assertion while packing the pixbuf cell renderer.
