@@ -1,5 +1,7 @@
 2006-01-02  Laurent Sansonetti  <lrz@gnome.org>
 
+	Update copyright to 2006 to all source files.
+	
 	* lib/alexandria/ui/main_app.rb:
 
 	Fixed right click on the books list view and make sure we grab the focus

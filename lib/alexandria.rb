@@ -1,4 +1,4 @@
-# Copyright (C) 2004-2005 Laurent Sansonetti
+# Copyright (C) 2004-2006 Laurent Sansonetti
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -21,7 +21,7 @@ module Alexandria
     extend GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
     DESCRIPTION = _('A program to help you manage your book collection.')
-    COPYRIGHT = 'Copyright (C) 2004-2005 Laurent Sansonetti'
+    COPYRIGHT = 'Copyright (C) 2004-2006 Laurent Sansonetti'
     AUTHORS = [
         'Alexander McCormmach <alexander@tunicate.org>',
         'Claudio Belotti <bel8@lilik.it>',

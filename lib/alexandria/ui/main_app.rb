@@ -1,4 +1,4 @@
-# Copyright (C) 2004-2005 Laurent Sansonetti
+# Copyright (C) 2004-2006 Laurent Sansonetti
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as

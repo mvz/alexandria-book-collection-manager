@@ -1,4 +1,4 @@
-# Copyright (C) 2005 Dafydd Harries
+# Copyright (C) 2005-2006 Dafydd Harries
 
 require 'fileutils'
 

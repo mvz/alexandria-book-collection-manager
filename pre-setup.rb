@@ -1,4 +1,4 @@
-# Copyright (C) 2004-2005 Dafydd Harries
+# Copyright (C) 2004-2006 Dafydd Harries
 #
 # Loosely based on pre-setup.rb from rbbr by Masao Mutoh.
 

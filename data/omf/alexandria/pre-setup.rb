@@ -1,4 +1,4 @@
-# Copyright 2005 Laurent Sansonetti
+# Copyright (C) 2005-2006 Laurent Sansonetti
 
 path = File.join(config('data-dir'), 'gnome', 'help', 'alexandria', 'C', 'alexandria.xml')
 data = IO.read('alexandria-C.omf.in')

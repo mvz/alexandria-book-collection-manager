@@ -1,4 +1,4 @@
-# Copyright (C) 2004-2005 Laurent Sansonetti
+# Copyright (C) 2004-2006 Laurent Sansonetti
 
 # Install GConf2 .schemas files
 

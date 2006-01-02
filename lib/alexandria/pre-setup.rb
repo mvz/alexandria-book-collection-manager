@@ -1,4 +1,4 @@
-# Copyright (C) 2004-2005 Masao Mutoh, Laurent Sansonetti 
+# Copyright (C) 2004-2006 Masao Mutoh, Laurent Sansonetti 
 
 # Generates config.rb.
 File.open('config.rb', 'w') do |file|

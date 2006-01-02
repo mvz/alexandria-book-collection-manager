@@ -1,4 +1,4 @@
-# Copyright 2005 Laurent Sansonetti
+# Copyright (C) 2005-1006 Laurent Sansonetti
 
 unless system("which scrollkeeper-update")
     $stderr.puts "scrollkeeper-update cannot be found, is Scrollkeeper correctly " +

@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-# Copyright (C) 2004-2005 Dafydd Harries
+# Copyright (C) 2004-2006 Dafydd Harries
 
 require 'test/unit'
 require 'gettext'

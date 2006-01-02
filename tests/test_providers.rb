@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2005 Laurent Sansonetti 
+# Copyright (C) 2005-2006 Laurent Sansonetti 
 
 require 'test/unit'
 require 'gettext'
