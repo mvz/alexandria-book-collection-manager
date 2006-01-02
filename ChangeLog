@@ -1,3 +1,10 @@
+2006-01-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Fixed right click on the books list view and make sure we grab the focus
+	on the target widget.
+
 2005-12-28  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/book_properties_dialog_base.rb:

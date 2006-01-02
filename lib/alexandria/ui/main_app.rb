@@ -149,10 +149,12 @@ module UI
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 3
 
+                widget.grab_focus
+
                 if path = widget.get_path_at_pos(event.x, event.y)
-                    obj = widget.is_a?(Gtk::TreeView) \
-                        ? widget.selection : widget
-                        
+                    obj, path = widget.is_a?(Gtk::TreeView) \
+                        ? [widget.selection, path.first] : [widget, path]
+
                     unless obj.path_is_selected?(path)
                         widget.unselect_all
                         obj.select_path(path)
