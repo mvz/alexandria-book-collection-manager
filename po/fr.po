@@ -63,7 +63,7 @@ msgstr "Mot de passe"
 
 #: ../lib/alexandria/book_providers/z3950.rb:121
 msgid "Library of Congress"
-msgstr "Bibliothèque du congrès"
+msgstr "Bibliothèque du Congrès"
 
 #: ../lib/alexandria/book_providers/z3950.rb:136
 msgid "British Library"
