@@ -62,7 +62,7 @@ module UI
            
             add_button(Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP) 
             add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
-            import_button = add_button(_("Import"), 
+            import_button = add_button(_("_Import"), 
                                        Gtk::Dialog::RESPONSE_ACCEPT)
             import_button.sensitive = false
                  

@@ -412,15 +412,6 @@ module Alexandria
             object.is_a?(self.class) && object.name == self.name
         end
         
-        #########
-        protected
-        #########
-
-        def initialize(name)
-            @name = name
-            @deleted_books = []
-        end
-
         def copy_covers(somewhere)
             FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
             FileUtils.mkdir(somewhere)
@@ -431,12 +422,21 @@ module Alexandria
             end
         end
 
-        def jpeg?(file)
+        def self.jpeg?(file)
             'JFIF' == IO.read(file, 10)[6..9]
         end
 
         def final_cover(book)
-            book.ident + (jpeg?(cover(book)) ? '.jpg' : '.gif')
+            book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
+        end
+        
+        #########
+        protected
+        #########
+
+        def initialize(name)
+            @name = name
+            @deleted_books = []
         end
     end
     

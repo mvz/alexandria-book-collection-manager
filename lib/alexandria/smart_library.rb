@@ -17,6 +17,10 @@
 
 module Alexandria
     class SmartLibrary < Array
+        include GetText
+        extend GetText
+        bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
         ALL_RULES, ANY_RULE = 1, 2
         attr_reader :name
         attr_accessor :rules, :predicate_operator_rule
@@ -140,6 +144,27 @@ module Alexandria
        
         def save_cover(book, cover_uri)
             @cache[book].save_cover(book)
+        end
+
+        def cover(book)
+            @cache[book].cover(book)
+        end
+
+        def final_cover(book)
+            @cache[book].final_cover(book)
+        end
+        
+        def copy_covers(somewhere)
+            FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
+            FileUtils.mkdir(somewhere)
+            each do |book|
+                library = @cache[book]
+                next unless File.exists?(library.cover(book))
+                FileUtils.cp(File.join(library.path, 
+                                       book.ident + Library::EXT[:cover]),
+                             File.join(somewhere, 
+                                       library.final_cover(book))) 
+            end
         end
 
         def n_rated

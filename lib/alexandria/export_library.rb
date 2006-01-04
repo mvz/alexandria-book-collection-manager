@@ -159,7 +159,7 @@ module Alexandria
                     # front cover image
                     elem.add_element('MediaFileTypeCode').text = '04'
                     elem.add_element('MediaFileFormatCode').text = 
-                        (jpeg?(cover(book)) ? '03' : '02' )
+                        (Library.jpeg?(cover(book)) ? '03' : '02' )
                     # filename
                     elem.add_element('MediaFileLinkTypeCode').text = '06'
                     elem.add_element('MediaFileLink').text = 
@@ -225,8 +225,9 @@ module Alexandria
                     entry.add_element('cover').text = final_cover(book)
                     image = images.add_element('image')
                     image.add_attribute('id', final_cover(book))
-                    image.add_attribute('format', jpeg?(cover(book)) \
-                                                  ? "JPEG" : "GIF")
+                    image.add_attribute('format', 
+                                        Library.jpeg?(cover(book)) \
+                                            ? "JPEG" : "GIF")
                 end
             end
             return doc

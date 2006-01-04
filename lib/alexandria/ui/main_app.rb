@@ -253,7 +253,9 @@ module UI
                 end
                 @actiongroup["Properties"].sensitive = 
                     selected_library.is_a?(SmartLibrary)
-                @actiongroup["Delete"].sensitive = true
+                @actiongroup["Delete"].sensitive = 
+                    (@libraries.all_regular_libraries.length > 1 or 
+                        selected_library.is_a?(SmartLibrary)) 
             else
                 on_books_selection_changed
             end
@@ -337,7 +339,7 @@ module UI
         def load_libraries
             completion_models = CompletionModels.instance
             if @libraries
-                @libraries.each do |library|
+                @libraries.all_regular_libraries.each do |library|
                     if library.is_a?(Library) 
                         library.delete_observer(self)
                         completion_models.remove_source(library)
@@ -646,11 +648,13 @@ module UI
  
         def refresh_books
             # Clear the views.
+            library = selected_library
             @model.clear
-    
             @iconview.freeze
-            tail = nil
-            selected_library.each { |book| tail = append_book(book, tail) }
+            @model.freeze_notify do
+                tail = nil
+                library.each { |book| tail = append_book(book, tail) }
+            end
             @filtered_model.refilter
             @iconview.unfreeze
             @listview.columns_autosize
@@ -688,7 +692,8 @@ module UI
             @appbar.progress_percentage = 1 
 =end           
 
-            @appbar.children.first.visible = false  # hide the progress bar
+            # Hide the progress bar.
+            @appbar.children.first.visible = false
             
             # Refresh the status bar.
             on_books_selection_changed
@@ -890,7 +895,9 @@ module UI
             smart = library.is_a?(SmartLibrary)
             @actiongroup["AddBook"].sensitive = !smart
             @actiongroup["AddBookManual"].sensitive = !smart
-            @actiongroup["Properties"].sensitive = smart 
+            @actiongroup["Properties"].sensitive = smart
+            @actiongroup["Delete"].sensitive = 
+                (@libraries.all_regular_libraries.length > 1 or smart) 
         end
 
         def restore_preferences
@@ -994,6 +1001,7 @@ module UI
             if books.nil?
                 library.delete_observer(self) if library.is_a?(Library)
                 library.delete
+                @libraries.remove_library(library)
                 previous_selected_library = selected_library
                 if previous_selected_library != library 
                     select_library(library) 
@@ -1005,7 +1013,6 @@ module UI
                 next_iter.next!
                 @library_listview.model.remove(iter)
                 @library_listview.selection.select_iter(next_iter)
-                @libraries.remove_library(library)
                 setup_move_actions
                 select_library(previous_selected_library) \
                     unless previous_selected_library.nil?

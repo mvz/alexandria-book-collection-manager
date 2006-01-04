@@ -47,8 +47,19 @@ module UI
            
             self.rating = Book::DEFAULT_RATING
             self.cover = Icons::BOOK_ICON
+
+            on_title_changed
         end
 
+        def on_title_changed
+            title = @entry_title.text.strip
+            @book_properties_dialog.title = unless title.empty?
+                _("Adding '%s'") % title
+            else
+                _("Adding a Book")
+            end 
+        end
+        
         #######
         private
         #######

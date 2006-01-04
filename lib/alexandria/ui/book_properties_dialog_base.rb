@@ -53,7 +53,12 @@ module UI
         end
 
         def on_title_changed
-            @book_properties_dialog.title = @entry_title.text
+            title = @entry_title.text.strip
+            @book_properties_dialog.title = unless title.empty?
+                _("Properties for '%s'") % title
+            else
+                _("Properties")
+            end 
         end
         
         def on_add_author

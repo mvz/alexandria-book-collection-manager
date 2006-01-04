@@ -1,5 +1,20 @@
 2006-01-04  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/export_library.rb,
+	  lib/alexandria/library.rb,
+	  lib/alexandria/smart_library.rb,
+	  lib/alexandria/ui/book_properties_dialog_base.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog_manual.rb:
+	  lib/alexandria/ui/import_dialog.rb:
+
+	- Make sure smart libraries are exportable ;
+	- Provide a default title for the Add Book Manually / Book Properties
+	  dialogs when the target book title is empty ;
+	- Added a keyboard shortcut for the Import button of the Import dialog ;
+	- Make sure the latest regular library is not deletable ;
+	- Misc fixes.
+
 	* data/alexandria/glade/book_properties_dialog.glade,
 	  lib/alexandria/ui/book_properties_dialog_base.rb:
 
