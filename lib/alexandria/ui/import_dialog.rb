@@ -54,7 +54,7 @@ module UI
     
         FILTERS = Alexandria::ImportFilter.all
 
-        def initialize(parent, libraries, &on_accept_cb)
+        def initialize(parent, &on_accept_cb)
             super()
             self.title = _("Import a Library") 
             self.action = Gtk::FileChooser::ACTION_OPEN
@@ -117,7 +117,9 @@ module UI
                 end
                 file = File.basename(self.filename, '.*')
                 base = GLib.locale_to_utf8(file)
-                new_library_name = Library.generate_new_name(libraries, base)
+                new_library_name = Library.generate_new_name(
+                    Libraries.instance.all_libraries, 
+                    base)
 
                 filter = filters[self.filter]
                 self.sensitive = false 

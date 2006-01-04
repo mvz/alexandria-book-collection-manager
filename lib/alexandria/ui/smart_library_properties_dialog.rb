@@ -17,47 +17,38 @@
 
 module Alexandria
 module UI
-    class NewSmartLibraryDialog < SmartLibraryPropertiesDialogBase
+    class SmartLibraryPropertiesDialog < SmartLibraryPropertiesDialogBase
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
         
-        def initialize(parent, &block)
+        def initialize(parent, smart_library, &block)
             super(parent)
 
             add_buttons([Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL], 
-                        [Gtk::Stock::NEW, Gtk::Dialog::RESPONSE_OK])
+                        [Gtk::Stock::SAVE, Gtk::Dialog::RESPONSE_OK])
  
-            self.title = _('New Smart Library')
+            self.title = _("Properties for '%s'") % smart_library.name
             self.default_response = Gtk::Dialog::RESPONSE_CANCEL
-
+            
             show_all
-            insert_new_rule
-
+            smart_library.rules.each { |x| insert_new_rule(x) } 
+            update_rules_header_box(smart_library.predicate_operator_rule)
+            
             while (response = run) != Gtk::Dialog::RESPONSE_CANCEL 
                 if response == Gtk::Dialog::RESPONSE_HELP
                     begin
                         # TODO: write manual
-                        #Gnome::Help.display('alexandria', 'new-smart-library')
+                        #Gnome::Help.display('alexandria', 'edit-smart-library')
                     rescue => e 
                         ErrorDialog.new(self, e.message)
                     end
                 elsif response == Gtk::Dialog::RESPONSE_OK
                     if user_confirms_possible_weirdnesses_before_saving?
-                        rules = smart_library_rules
-                        basename = if rules.length == 1 and 
-                                      rules.first.value.is_a?(String) and 
-                                      not rules.first.value.strip.empty?
-                            rules.first.value
-                        else
-                            _('Smart Library')
-                        end
-                        name = Library.generate_new_name(
-                            Libraries.instance.all_libraries,
-                            basename)
-                        library = SmartLibrary.new(name, 
-                                                   rules,
-                                                   predicate_operator_rule)
-                        block.call(library)
+                        smart_library.rules = self.smart_library_rules
+                        smart_library.predicate_operator_rule = 
+                            self.predicate_operator_rule 
+                        smart_library.save
+                        block.call(smart_library)
                         break
                     end
                 end

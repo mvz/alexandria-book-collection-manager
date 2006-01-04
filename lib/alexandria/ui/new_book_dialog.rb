@@ -47,14 +47,17 @@ module UI
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-        def initialize(parent, libraries, selected_library=nil, &block)
+        def initialize(parent, selected_library=nil, &block)
             super('new_book_dialog.glade')
             @new_book_dialog.transient_for = @parent = parent
             @block = block
-            @libraries = libraries
 
-            @combo_libraries.populate_with_libraries(@libraries, 
-                                                     selected_library)
+            libraries = Libraries.instance.all_regular_libraries
+            if selected_library.is_a?(SmartLibrary)
+                selected_library = libraries.first
+            end
+            @combo_libraries.populate_with_libraries(libraries,
+                                                     selected_library) 
 
             @treeview_results.model = Gtk::ListStore.new(String, String,
                 Gdk::Pixbuf)
@@ -263,8 +266,9 @@ module UI
             @image_thread.kill if @image_thread
 
             begin
+                libraries = Libraries.instance.all_libraries
                 library, new_library = 
-                    @combo_libraries.selection_from_libraries(@libraries)
+                    @combo_libraries.selection_from_libraries(libraries)
                 books_to_add = []
 
                 if @isbn_radiobutton.active?

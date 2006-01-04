@@ -34,6 +34,7 @@ require 'alexandria/ui/export_dialog'
 require 'alexandria/ui/import_dialog'
 require 'alexandria/ui/acquire_dialog'
 require 'alexandria/ui/smart_library_properties_dialog_base'
+require 'alexandria/ui/smart_library_properties_dialog'
 require 'alexandria/ui/new_smart_library_dialog'
 require 'alexandria/ui/multi_drag_treeview'
 require 'alexandria/ui/main_app'
@@ -41,7 +42,8 @@ require 'alexandria/ui/main_app'
 module Alexandria
 module UI
     def self.main
-        Gnome::Program.new('alexandria', VERSION).app_datadir = Config::MAIN_DATA_DIR 
+        Gnome::Program.new('alexandria', VERSION).app_datadir = 
+            Config::MAIN_DATA_DIR 
         Icons.init
         MainApp.new
         Gtk.main

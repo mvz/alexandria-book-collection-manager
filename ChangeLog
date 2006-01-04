@@ -1,3 +1,24 @@
+2006-01-04  Laurent Sansonetti  <lrz@gnome.org>
+
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  data/alexandria/icons/smart_library.png,
+	  data/alexandria/icons/smart_library_small.png,
+	  data/alexandria/ui/popups.xml,
+	  lib/alexandria/export_library.rb,
+	  lib/alexandria/library.rb,
+	  lib/alexandria/smart_library.rb,
+	  lib/alexandria/ui.rb,
+	  lib/alexandria/ui/acquire_dialog.rb,
+	  lib/alexandria/ui/import_dialog.rb,
+	  lib/alexandria/ui/main_app.rb,
+	  lib/alexandria/ui/new_book_dialog.rb,
+	  lib/alexandria/ui/new_smart_library_dialog.rb,
+	  lib/alexandria/ui/smart_library_properties_dialog.rb,
+	  lib/alexandria/ui/smart_library_properties_dialog_base.rb:
+
+	- More work on the smart libraries (feature is almost complete) ;
+	- Various refactoring changes / enhancements.
+
 2006-01-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	Update copyright to 2006 to all source files.

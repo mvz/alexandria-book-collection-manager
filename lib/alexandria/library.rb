@@ -22,10 +22,11 @@ require 'tempfile'
 require 'etc'
 require 'open-uri'
 require 'observer'
+require 'singleton'
 
 class Array
     def sum
-        self.inject(0) { |a,b| a + b }
+        self.inject(0) { |a, b| a + b }
     end
 end
 
@@ -59,6 +60,8 @@ module Alexandria
             return name
         end
 
+        FIX_BIGNUM_REGEX = 
+            /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
         def self.load(name)
             library = Library.new(name)
             FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
@@ -68,7 +71,7 @@ module Alexandria
                     
                     # Backward compatibility with versions <= 0.6.0, where the 
                     # loaned_since field was a numeric.
-                    if md = /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/.match(text)
+                    if md = FIX_BIGNUM_REGEX.match(text)
                         new_yaml = Time.at(md[2].to_i).to_yaml
                         # Remove the "---" prefix.
                         new_yaml.sub!(/^\s*\-+\s*/, '')
@@ -97,9 +100,9 @@ module Alexandria
             a = []
             begin
                 Dir.entries(DIR).each do |file|
-                    # skip hidden files
+                    # Skip hidden files.
                     next if /^\./.match(file)
-                    # skip non-directory files
+                    # Skip non-directory files.
                     next unless File.stat(File.join(DIR, file)).directory?
     
                     a << self.load(file)       
@@ -107,7 +110,7 @@ module Alexandria
             rescue Errno::ENOENT
                 FileUtils.mkdir_p(DIR)
             end
-            # create the default library if there is no library yet 
+            # Create the default library if there is no library yet.
             if a.empty?
                 a << self.load(_("My Library"))
             end
@@ -146,16 +149,16 @@ module Alexandria
         def self.extract_numbers(isbn)
             raise "Nil ISBN" if isbn == nil
 
-            isbn.delete('- ').upcase.split('').map { |x|
+            isbn.delete('- ').upcase.split('').map do |x|
                 raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
                 x == 'X' ? 10 : x.to_i
-            }
+            end
         end
 
         def self.isbn_checksum(numbers)
-            sum = (0 ... numbers.length).inject(0) { |accumulator,i|
+            sum = (0 ... numbers.length).inject(0) do |accumulator, i|
                 accumulator + numbers[i] * (i + 1)
-            } % 11
+            end % 11
 
             sum == 10 ? 'X' : sum
         end
@@ -171,16 +174,16 @@ module Alexandria
 
         def self.ean_checksum(numbers)
             (10 - ([1, 3, 5, 7, 9, 11].map { |x| numbers[x] }.sum * 3 +
-                  [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum)) % 10
+                   [0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum)) % 10
         end
 
         def self.valid_ean?(ean)
             begin
                 numbers = self.extract_numbers(ean)
-                (numbers.length == 13 and self.ean_checksum(numbers[0 .. 11]) ==
-                    numbers[12]) or
-                (numbers.length == 18 and self.ean_checksum(numbers[0 .. 11]) ==
-                    numbers[12])
+                (numbers.length == 13 and 
+                    self.ean_checksum(numbers[0 .. 11]) == numbers[12]) or
+                (numbers.length == 18 and 
+                    self.ean_checksum(numbers[0 .. 11]) == numbers[12])
             rescue InvalidISBNError
                 false
             end
@@ -188,14 +191,14 @@ module Alexandria
 
         def self.upc_checksum(numbers)
             (10 - ([0, 2, 4, 6, 8, 10].map { |x| numbers[x] }.sum * 3 +
-                  [1, 3, 5, 7, 9].map { |x| numbers[x] }.sum)) % 10
+                   [1, 3, 5, 7, 9].map { |x| numbers[x] }.sum)) % 10
         end
 
         def self.valid_upc?(upc)
             begin
                 numbers = self.extract_numbers(upc)
-                (numbers.length == 17 and self.upc_checksum(numbers[0 .. 10]) ==
-                    numbers[11])
+                (numbers.length == 17 and 
+                    self.upc_checksum(numbers[0 .. 10]) == numbers[11])
             rescue InvalidISBNError
                 false
             end
@@ -214,7 +217,7 @@ module Alexandria
             "072742" => "0441", "076714" => "0671", "076783" => "0553",
             "076814" => "0449", "078021" => "0872", "079808" => "0394",
             "090129" => "0679", "099455" => "0061", "099769" => "0451"
-            }
+        }
 
         def self.upc_convert(upc)
             test_upc = upc.map { |x| x.to_s }.join()
@@ -230,7 +233,7 @@ module Alexandria
                 # the EAN number somehow.
                 numbers[3 .. 11] + [self.isbn_checksum(numbers[3 .. 11])]
             elsif self.valid_upc?(isbn)
-                # Seems to be a valid UPC number
+                # Seems to be a valid UPC number.
                 prefix = self.upc_convert(numbers[0 .. 5])
                 isbn_sans_chcksm = prefix + numbers[(8 + prefix.length) .. 17]
                 isbn_sans_chcksm + [self.isbn_checksum(isbn_sans_chcksm)]
@@ -409,9 +412,9 @@ module Alexandria
             object.is_a?(self.class) && object.name == self.name
         end
         
-        #######
-        private
-        #######
+        #########
+        protected
+        #########
 
         def initialize(name)
             @name = name
@@ -434,6 +437,53 @@ module Alexandria
 
         def final_cover(book)
             book.ident + (jpeg?(cover(book)) ? '.jpg' : '.gif')
+        end
+    end
+    
+    class Libraries
+        attr_reader :all_libraries
+
+        include Observable
+        include Singleton
+
+        def reload
+            @all_libraries.clear 
+            @all_libraries.concat(Library.loadall)
+            @all_libraries.concat(SmartLibrary.loadall)
+        end
+
+        def all_regular_libraries
+            @all_libraries.select { |x| x.is_a?(Library) }
+        end
+
+        LIBRARY_ADDED, LIBRARY_REMOVED = 1, 2
+
+        def add_library(library)
+            @all_libraries << library
+            notify(LIBRARY_ADDED, library)
+        end
+
+        def remove_library(library)
+            @all_libraries.delete(library)
+            notify(LIBRARY_REMOVED, library)
+        end
+
+        def really_delete_deleted_libraries
+            Library.really_delete_deleted_libraries
+            SmartLibrary.really_delete_deleted_libraries
+        end
+        
+        #######
+        private
+        #######
+
+        def initialize
+            @all_libraries = []
+        end
+        
+        def notify(action, library)
+            changed
+            notify_observers(self, action, library)
         end
     end
 end

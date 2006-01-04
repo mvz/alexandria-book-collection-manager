@@ -55,7 +55,7 @@ module Alexandria
         end
     end
 
-    class Library
+    module Exportable
         def export_as_onix_xml_archive(filename)
             File.open(File.join(Dir.tmpdir, "onix.xml"), "w") do |io|
                 to_onix_document.write(io, 0)
@@ -112,7 +112,6 @@ module Alexandria
         #######  
         private
         #######
-
 
         ONIX_DTD_URL = "http://www.editeur.org/onix/2.1/reference/onix-international.dtd"
         def to_onix_document
@@ -341,5 +340,13 @@ EOS
             my_str.gsub!(/\"(.+)\"/, %q/``\1''/)
             return my_str
         end
+    end
+    
+    class Library
+        include Exportable
+    end
+
+    class SmartLibrary
+        include Exportable
     end
 end

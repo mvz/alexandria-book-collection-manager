@@ -22,13 +22,16 @@ module UI
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-        def initialize(parent, libraries, selected_library=nil, &block)
+        def initialize(parent, selected_library=nil, &block)
             super('acquire_dialog.glade')
             @acquire_dialog.transient_for = @parent = parent
             @block = block
-            @libraries = libraries
 
-            @combo_libraries.populate_with_libraries(libraries, 
+            libraries = Libraries.instance.all_regular_libraries
+            if selected_library.is_a?(SmartLibrary)
+                selected_library = libraries.first
+            end
+            @combo_libraries.populate_with_libraries(libraries,
                                                      selected_library) 
 
             @add_button.sensitive = false 

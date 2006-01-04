@@ -23,6 +23,12 @@
     <menuitem action="New"/>
     <menuitem action="NewSmart"/>
   </popup>
+  <popup name="SmartLibraryPopup">
+    <menuitem action="Properties"/>
+    <menuitem action="Rename"/>
+    <menuitem action="Export"/>
+    <menuitem action="Delete"/>
+  </popup>
   <popup name="LibraryPopup">
     <menuitem action="Rename"/>
     <menuitem action="Export"/>

@@ -78,7 +78,10 @@ module UI
             if books.nil?
                 message = _("Are you sure you want to delete '%s'?") \
                     % library.name
-                description = if library.empty?; nil; else
+                description = if library.is_a?(SmartLibrary) \
+                                 or library.empty?
+                    nil
+                else
                     n_("If you continue, %d book will be deleted.",
                        "If you continue, %d books will be deleted.", 
                        library.size) % library.size
@@ -138,7 +141,9 @@ module UI
                event.button == 3
 
                 menu = widget.get_path_at_pos(event.x, event.y) == nil \
-                    ?  @nolibrary_popup : @library_popup
+                    ? @nolibrary_popup \
+                    : selected_library.is_a?(SmartLibrary) \
+                        ? @smart_library_popup : @library_popup
 
                 menu.popup(nil, nil, event.button, event.time) 
             end
@@ -215,7 +220,12 @@ module UI
                     @actiongroup["DeselectAll"].sensitive = \
                     @actiongroup["Move"].sensitive = 
                     @actiongroup["SetRating"].sensitive = !books.empty?
-                
+               
+                if library.is_a?(SmartLibrary)
+                    @actiongroup["Delete"].sensitive = 
+                        @actiongroup["Move"].sensitive = false
+                end
+ 
                 # Sensitize providers URL
                 if books.length == 1
                     all_url = false
@@ -238,10 +248,11 @@ module UI
         
         def on_focus(widget, event_focus)
             if widget == @library_listview
-                %w{Properties OnlineInformation 
-                   SelectAll DeselectAll}.each do |action| 
+                %w{OnlineInformation SelectAll DeselectAll}.each do |action| 
                     @actiongroup[action].sensitive = false
                 end
+                @actiongroup["Properties"].sensitive = 
+                    selected_library.is_a?(SmartLibrary)
                 @actiongroup["Delete"].sensitive = true
             else
                 on_books_selection_changed
@@ -279,7 +290,9 @@ module UI
                             @model.remove(iter_from_book(book))
                     end
                     @iconview.unfreeze
-                end
+                elsif selected_library.is_a?(SmartLibrary)
+                    refresh_books
+                end 
             else
                 raise "unrecognized update event"
             end
@@ -324,13 +337,18 @@ module UI
         def load_libraries
             completion_models = CompletionModels.instance
             if @libraries
-                @libraries.each do |library| 
-                    library.delete_observer(self)
-                    completion_models.remove_source(library)
+                @libraries.each do |library|
+                    if library.is_a?(Library) 
+                        library.delete_observer(self)
+                        completion_models.remove_source(library)
+                    end
                 end
+                @libraries.reload
+            else
+                @libraries = Libraries.instance
+                @libraries.reload
             end
-            @libraries = Library.loadall
-            @libraries.each do |library| 
+            @libraries.all_regular_libraries.each do |library| 
                 library.add_observer(self)
                 completion_models.add_source(library)
             end
@@ -343,7 +361,7 @@ module UI
 
         ICON_TITLE_MAXLEN = 20   # characters
         ICON_WIDTH = 60
-        ICON_HEIGHT = 90          # pixels
+        ICON_HEIGHT = 90         # pixels
         REDUCE_TITLE_REGEX = /^(.{#{ICON_TITLE_MAXLEN}}).*$/
         def fill_iter_with_book(iter, book)
             iter[Columns::IDENT] = book.ident
@@ -380,8 +398,10 @@ module UI
         end
 
         def append_library(library, autoselect=false)
+            is_smart = library.is_a?(SmartLibrary)
             iter = @library_listview.model.append
-            iter[0] = Icons::LIBRARY_SMALL
+            iter[0] = is_smart \
+                        ? Icons::SMART_LIBRARY_SMALL : Icons::LIBRARY_SMALL
             iter[1] = library.name
             iter[2] = true  #editable?
             if autoselect
@@ -408,8 +428,8 @@ module UI
                     layout = Pango::Layout.new(context)
                     layout.markup = BADGE_MARKUP % n_books 
                     width, height = layout.pixel_size
-                    x = Icons::BOOK_ICON.width - width - 10
-                    y = Icons::BOOK_ICON.height - height - 10
+                    x = Icons::BOOK_ICON.width - width - 11
+                    y = Icons::BOOK_ICON.height - height - 11
             
                     # Draw a red ellipse where the badge number should be.
                     red_gc = Gdk::GC.new(pixmap)
@@ -418,7 +438,7 @@ module UI
                     pixmap.draw_arc(red_gc,
                                     true,
                                     x - 5, y - 2, 
-                                    width + 8, height + 4,
+                                    width + 9, height + 4,
                                     0, 360 * 64)
             
                     # Draw the number badge.
@@ -674,9 +694,9 @@ module UI
         
         def selected_library
             if iter = @library_listview.selection.selected
-                @libraries.find { |x| x.name == iter[1] }
+                @libraries.all_libraries.find { |x| x.name == iter[1] }
             else
-                @libraries.first
+                @libraries.all_libraries.first
             end
         end
    
@@ -739,7 +759,7 @@ module UI
         def setup_sidepane
             @library_listview.model = Gtk::ListStore.new(Gdk::Pixbuf, 
                                                          String, TrueClass)
-            @libraries.each { |library| append_library(library) }
+            @libraries.all_libraries.each { |library| append_library(library) }
  
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Library"))
@@ -764,7 +784,8 @@ module UI
                     elsif new_text.strip.empty?
                         ErrorDialog.new(@main_app, _("The library name " +
                                                      "can not be empty"))
-                    elsif x = (@libraries + Library.deleted_libraries).find { 
+                    elsif x = (@libraries.all_libraries + 
+                               Library.deleted_libraries).find { 
                                 |library| library.name == new_text.strip } \
                        and x.name != selected_library.name
                         ErrorDialog.new(@main_app, 
@@ -797,10 +818,24 @@ module UI
 
                 path, column, cell_x, cell_y = 
                     @library_listview.get_path_at_pos(x, y)
- 
+
+                if path 
+                    # Refuse drags from/to smart libraries.
+                    if selected_library.is_a?(SmartLibrary)
+                        path = nil
+                    else
+                        iter = @library_listview.model.get_iter(path)
+                        library = @libraries.all_libraries.find do |x| 
+                            x.name == iter[1]
+                        end
+                        path = nil if library.is_a?(SmartLibrary)
+                    end
+                end
+
                 @library_listview.set_drag_dest_row(
                     path, 
                     Gtk::TreeView::DROP_INTO_OR_AFTER)
+
                 drag_context.drag_status(
                     path != nil ? drag_context.suggested_action : 0, 
                     time)
@@ -826,7 +861,9 @@ module UI
 
                     if path
                         iter = @library_listview.model.get_iter(path)
-                        library = @libraries.find { |x| x.name == iter[1] }
+                        library = @libraries.all_libraries.find do |x| 
+                            x.name == iter[1]
+                        end
                         move_selected_books_to_library(library)
                     end
                 end
@@ -841,10 +878,16 @@ module UI
             @main_app.title = library.name + " - " + TITLE
            
             # Disable the selected library in the move libraries actions.
-            @libraries.each do |i_library|
+            @libraries.all_regular_libraries.each do |i_library|
                 action = @actiongroup[i_library.action_name]
                 action.sensitive = i_library != library if action
             end
+
+            # Disable some actions if we selected a smart library.
+            smart = library.is_a?(SmartLibrary)
+            @actiongroup["AddBook"].sensitive = !smart
+            @actiongroup["AddBookManual"].sensitive = !smart
+            @actiongroup["Properties"].sensitive = smart 
         end
 
         def restore_preferences
@@ -870,7 +913,7 @@ module UI
             action.activate
             library = nil
             unless @prefs.selected_library.nil?
-                library = @libraries.find do |x|
+                library = @libraries.all_libraries.find do |x|
                     x.name == @prefs.selected_library
                 end
             end
@@ -923,7 +966,7 @@ module UI
                 @actiongroup.remove_action(action)
             end
             actions = []
-            @libraries.each do |library|
+            @libraries.all_regular_libraries.each do |library|
                 actions << [ 
                     library.action_name, nil,
                     _("In '_%s'") % library.name, 
@@ -933,7 +976,7 @@ module UI
             @actiongroup.add_actions(actions)
             @uimanager.remove_ui(@move_mid) if @move_mid
             @move_mid = @uimanager.new_merge_id 
-            @libraries.each do |library|
+            @libraries.all_regular_libraries.each do |library|
                 name = library.action_name
                 [ "ui/MainMenubar/EditMenu/Move/",
                   "ui/BookPopup/Move/" ].each do |path|
@@ -946,7 +989,7 @@ module UI
         def undoable_delete(library, books=nil)        
             # Deleting a library.
             if books.nil?
-                library.delete_observer(self)
+                library.delete_observer(self) if library.is_a?(Library)
                 library.delete
                 previous_selected_library = selected_library
                 if previous_selected_library != library 
@@ -959,7 +1002,7 @@ module UI
                 next_iter.next!
                 @library_listview.model.remove(iter)
                 @library_listview.selection.select_iter(next_iter)
-                @libraries.delete(library)
+                @libraries.remove_library(library)
                 setup_move_actions
                 select_library(previous_selected_library) \
                     unless previous_selected_library.nil?
@@ -974,10 +1017,10 @@ module UI
             # Undeleting a library.
             if books.nil?
                 library.undelete
-                @libraries << library
+                @libraries.add_library(library)
                 append_library(library)
                 setup_move_actions
-                library.add_observer(self)
+                library.add_observer(self) if library.is_a?(Library)
             # Undeleting books. 
             else
                 books.each { |book| library.undelete(book) }
@@ -990,9 +1033,9 @@ module UI
             @main_app.icon = Icons::ALEXANDRIA_SMALL
 
             on_new = proc do
-                name = Library.generate_new_name(@libraries)
+                name = Library.generate_new_name(@libraries.all_libraries)
                 library = Library.load(name)
-                @libraries << library
+                @libraries.add_library(library)
                 append_library(library, true)
                 setup_move_actions
                 library.add_observer(self)
@@ -1000,13 +1043,15 @@ module UI
    
             on_new_smart = proc do
                 NewSmartLibraryDialog.new(@main_app) do |smart_library|
-                    p "new smart library #{smart_library}"
+                    smart_library.refilter
+                    @libraries.add_library(smart_library)
+                    append_library(smart_library, true)
+                    smart_library.save
                 end
             end
  
             on_add_book = proc do
                 NewBookDialog.new(@main_app, 
-                                  @libraries, 
                                   selected_library) do |books, library, is_new|
                     if is_new
                         append_library(library, true)
@@ -1023,8 +1068,8 @@ module UI
             end
             
             on_import = proc do 
-                ImportDialog.new(@main_app, @libraries) do |library|
-                    @libraries << library
+                ImportDialog.new(@main_app) do |library|
+                    @libraries.add_library(library)
                     append_library(library, true)
                     setup_move_actions
                 end
@@ -1034,7 +1079,6 @@ module UI
         
             on_acquire = proc do
                 AcquireDialog.new(@main_app, 
-                                  @libraries, 
                                   selected_library) do |books, library, is_new|
                     if is_new
                         append_library(library, true)
@@ -1046,20 +1090,31 @@ module UI
             end 
 
             on_properties = proc do
-                books = selected_books
-                if books.length == 1
-                    book = books.first
-                    BookPropertiesDialog.new(@main_app,
-                                             selected_library, 
-                                             book) { |modified_book| }
+                if @library_listview.focus?
+                    library = selected_library
+                    if library.is_a?(SmartLibrary)
+                        SmartLibraryPropertiesDialog.new(@main_app,
+                                                         library) do
+                            library.refilter
+                            refresh_books
+                        end 
+                    end
+                else
+                    books = selected_books
+                    if books.length == 1
+                        book = books.first
+                        BookPropertiesDialog.new(@main_app,
+                                                 selected_library, 
+                                                 book) { |modified_book| }
+                    end
                 end
             end
 
             on_quit = proc do
                 save_preferences
                 Gtk.main_quit
-                Library.really_delete_deleted_libraries
-                @libraries.each do |library| 
+                @libraries.really_delete_deleted_libraries
+                @libraries.all_regular_libraries.each do |library|
                     library.really_delete_deleted_books
                 end
             end
@@ -1200,9 +1255,17 @@ module UI
                  _("Show information about Alexandria"), on_about],
             ]
 
-            on_view_sidepane = proc { |ag, a| @paned.child1.visible = a.active? }
-            on_view_toolbar = proc { |ag, a| @toolbar.parent.visible = a.active? }
-            on_view_statusbar = proc { |ag, a| @appbar.visible = a.active? }
+            on_view_sidepane = proc do |actiongroup, action| 
+                @paned.child1.visible = action.active? 
+            end
+
+            on_view_toolbar = proc do |actiongroup, action|
+                @toolbar.parent.visible = action.active?
+            end
+
+            on_view_statusbar = proc do |actiongroup, action|
+                @appbar.visible = action.active?
+            end
             
             on_reverse_order = proc do |actiongroup, action|
                 Preferences.instance.reverse_icons = action.active? 
@@ -1375,6 +1438,7 @@ module UI
             @main_app.toolbar = @toolbar
             @main_app.menus = @uimanager.get_widget("/MainMenubar")
             @library_popup = @uimanager.get_widget("/LibraryPopup") 
+            @smart_library_popup = @uimanager.get_widget("/SmartLibraryPopup") 
             @nolibrary_popup = @uimanager.get_widget("/NoLibraryPopup") 
             @book_popup = @uimanager.get_widget("/BookPopup") 
             @nobook_popup = @uimanager.get_widget("/NoBookPopup") 
