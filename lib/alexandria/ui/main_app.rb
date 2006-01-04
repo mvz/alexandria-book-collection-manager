@@ -526,6 +526,7 @@ module UI
                 cell.pixbuf = iter[Columns::COVER_LIST]
             end        
             renderer = Gtk::CellRendererText.new
+            renderer.ellipsize = Pango::ELLIPSIZE_END
 =begin
             # Editable tree views are behaving strangely
             renderer.signal_connect('editing_started') do |cell, entry, 
@@ -564,6 +565,7 @@ module UI
             ]
             names.each do |title, iterid|
                 renderer = Gtk::CellRendererText.new
+                renderer.ellipsize = Pango::ELLIPSIZE_END
                 column = Gtk::TreeViewColumn.new(title, renderer,
                                                  :text => iterid)
                 column.widget = Gtk::Label.new(title).show
@@ -768,6 +770,7 @@ module UI
                 cell.pixbuf = iter[0]
             end        
             renderer = Gtk::CellRendererText.new
+            renderer.ellipsize = Pango::ELLIPSIZE_END
             column.pack_start(renderer, true) 
             column.set_cell_data_func(renderer) do |column, cell, model, iter|
                 cell.text, cell.editable = iter[1], iter[2]

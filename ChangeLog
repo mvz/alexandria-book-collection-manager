@@ -1,5 +1,10 @@
 2006-01-04  Laurent Sansonetti  <lrz@gnome.org>
 
+	* lib/alexandria/ui/main_app.rb:
+
+	Make sure all tree view columns (in both libraries and books views)
+	are ellipsize at their end.
+
 	* data/alexandria/glade/book_properties_dialog.glade,
 	  data/alexandria/icons/smart_library.png,
 	  data/alexandria/icons/smart_library_small.png,
