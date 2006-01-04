@@ -50,8 +50,6 @@ module UI
                                           :text => 0, 
                                           :editable => 1)
             @treeview_authors.append_column(col)
-
-            @button_clear_cover.sensitive = File.exist?(@cover_file)
         end
 
         def on_title_changed
@@ -103,33 +101,32 @@ module UI
             dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
                                                 @book_properties_dialog,
                                                 Gtk::FileChooser::ACTION_OPEN,
-                                                backend, 
+                                                backend,
+                                                [_("No Cover"),
+                                                 Gtk::Dialog::RESPONSE_REJECT], 
                                                 [Gtk::Stock::CANCEL, 
                                                  Gtk::Dialog::RESPONSE_CANCEL],
                                                 [Gtk::Stock::OPEN, 
                                                  Gtk::Dialog::RESPONSE_ACCEPT])
             dialog.current_folder = @@latest_filechooser_directory
-            if dialog.run == Gtk::Dialog::RESPONSE_ACCEPT
+            response = dialog.run
+            if response == Gtk::Dialog::RESPONSE_ACCEPT
                 begin
                     cover = Gdk::Pixbuf.new(dialog.filename)
                     # At this stage the file format is recognized.
                     FileUtils.cp(dialog.filename, @cover_file)
                     self.cover = cover
-                    @button_clear_cover.sensitive = true
                     @@latest_filechooser_directory = dialog.current_folder
                 rescue RuntimeError => e 
                     ErrorDialog.new(@book_properties_dialog, e.message)
                 end
+            elsif response == Gtk::Dialog::RESPONSE_REJECT
+                FileUtils.rm_f(@cover_file)
+                self.cover = Icons::BOOK_ICON
             end
             dialog.destroy
         end
 
-        def on_clear_cover
-            FileUtils.rm_f(@cover_file)
-            self.cover = Icons::BOOK_ICON
-            @button_clear_cover.sensitive = false 
-        end
-       
         def on_destroy; end     # no action by default
 
         def on_loaned

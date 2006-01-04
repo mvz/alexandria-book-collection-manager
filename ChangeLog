@@ -1,9 +1,16 @@
 2006-01-04  Laurent Sansonetti  <lrz@gnome.org>
 
+	* data/alexandria/glade/book_properties_dialog.glade,
+	  lib/alexandria/ui/book_properties_dialog_base.rb:
+
+	Removed the clear cover button in the books properties dialog and added
+	a button to the cover file chooser dialog instead that does the same
+	thing.
+
 	* lib/alexandria/ui/main_app.rb:
 
 	Make sure all tree view columns (in both libraries and books views)
-	are ellipsize at their end.
+	are ellipsizable at their end.
 
 	* data/alexandria/glade/book_properties_dialog.glade,
 	  data/alexandria/icons/smart_library.png,
