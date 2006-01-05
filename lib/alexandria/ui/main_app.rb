@@ -400,18 +400,42 @@ module UI
         end
 
         def append_library(library, autoselect=false)
+            model = @library_listview.model
             is_smart = library.is_a?(SmartLibrary)
-            iter = @library_listview.model.append
+            if is_smart 
+                if @library_separator_iter.nil?
+                    @library_separator_iter = append_library_separator
+                end
+                iter = model.append
+            else
+                iter = if @library_separator_iter.nil?
+                    model.append
+                else
+                    model.insert_before(@library_separator_iter) 
+                end
+            end
+
             iter[0] = is_smart \
                         ? Icons::SMART_LIBRARY_SMALL : Icons::LIBRARY_SMALL
             iter[1] = library.name
-            iter[2] = true  #editable?
+            iter[2] = true      # editable?
+            iter[3] = false     # separator?
             if autoselect
                 @library_listview.set_cursor(iter.path, 
                                              @library_listview.get_column(0), 
                                              true)
                 @actiongroup["Sidepane"].active = true
             end
+            return iter
+        end
+        
+        def append_library_separator
+            iter = @library_listview.model.append
+            iter[0] = nil
+            iter[1] = nil
+            iter[2] = false     # editable?
+            iter[3] = true      # separator?
+            return iter
         end
 
         BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
@@ -765,9 +789,13 @@ module UI
 
         def setup_sidepane
             @library_listview.model = Gtk::ListStore.new(Gdk::Pixbuf, 
-                                                         String, TrueClass)
-            @libraries.all_libraries.each { |library| append_library(library) }
- 
+                                                         String, 
+                                                         TrueClass,
+                                                         TrueClass)
+            @library_separator_iter = nil
+            @libraries.all_regular_libraries.each { |x| append_library(x) }
+            @libraries.all_smart_libraries.each { |x| append_library(x) }
+
             renderer = Gtk::CellRendererPixbuf.new
             column = Gtk::TreeViewColumn.new(_("Library"))
             column.pack_start(renderer, false)
@@ -812,6 +840,8 @@ module UI
             end
             @library_listview.append_column(column)
 
+            @library_listview.set_row_separator_func { |model, iter| iter[3] }
+
             @library_listview.selection.signal_connect('changed') do 
                 refresh_libraries
                 refresh_books
@@ -833,10 +863,14 @@ module UI
                         path = nil
                     else
                         iter = @library_listview.model.get_iter(path)
-                        library = @libraries.all_libraries.find do |x| 
-                            x.name == iter[1]
+                        if iter[3]  # separator?
+                            path = nil
+                        else
+                            library = @libraries.all_libraries.find do |x| 
+                                x.name == iter[1]
+                            end
+                            path = nil if library.is_a?(SmartLibrary)
                         end
-                        path = nil if library.is_a?(SmartLibrary)
                     end
                 end
 
@@ -1002,6 +1036,12 @@ module UI
                 library.delete_observer(self) if library.is_a?(Library)
                 library.delete
                 @libraries.remove_library(library)
+                if @library_separator_iter != nil and 
+                   @libraries.all_smart_libraries.empty?
+               
+                    @library_listview.model.remove(@library_separator_iter)
+                    @library_separator_iter = nil
+                end
                 previous_selected_library = selected_library
                 if previous_selected_library != library 
                     select_library(library) 
@@ -1363,6 +1403,7 @@ module UI
                               Gtk::UIManager::TOOLITEM, false)        
 
             @toolbar = @uimanager.get_widget("/MainToolbar")
+            @toolbar.show_arrow = true
             @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
             tooltips = Gtk::Tooltips.new 
     

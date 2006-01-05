@@ -5,13 +5,13 @@ For the next release:
 
 [X] Drag-and-drop books within libraries
 [X] Infinite Undo/Redo
-[ ] Sort providers meaningfully according to the current locale
+[ ] Smart libraries
 [ ] CueCat userland support
 [ ] Threading of all operations
-[ ] Smart libraries
 
 Future releases:
 
+[ ] Sort providers meaningfully according to the current locale
 [ ] ONIX import 
 [ ] Import/export via GNOME-DB
 [ ] Zoom in the current view, giving more or less details

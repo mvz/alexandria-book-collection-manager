@@ -456,6 +456,10 @@ module Alexandria
             @all_libraries.select { |x| x.is_a?(Library) }
         end
 
+        def all_smart_libraries
+            @all_libraries.select { |x| x.is_a?(SmartLibrary) }
+        end
+        
         LIBRARY_ADDED, LIBRARY_REMOVED = 1, 2
 
         def add_library(library)

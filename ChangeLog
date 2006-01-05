@@ -1,3 +1,11 @@
+2006-01-05  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/library.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Separate regular libraries from smart ones in the sidepane using a 
+	separator.
+
 2006-01-04  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/export_library.rb,
