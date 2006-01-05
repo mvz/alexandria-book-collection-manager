@@ -1,5 +1,9 @@
 2006-01-05  Laurent Sansonetti  <lrz@gnome.org>
 
+	* TODO:
+
+	Smart libraries feature is complete.
+
 	* lib/alexandria/library.rb,
 	  lib/alexandria/ui/main_app.rb:
 
