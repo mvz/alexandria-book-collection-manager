@@ -42,24 +42,53 @@ module Alexandria
 
         def self.loadall
             a = []
-            FileUtils.mkdir_p(DIR)
-            Dir.chdir(DIR) do
-                Dir["*" + EXT].each do |filename|
-                    # Skip non-regular files.
-                    next unless File.stat(filename).file?
-                    
-                    text = IO.read(filename)
-                    hash = YAML.load(text)
-                    begin
-                        smart_library = self.from_hash(hash)
-                        smart_library.refilter
-                        a << smart_library
-                    rescue => e
-                        puts "Cannot load serialized smart library: #{e}"
-                        puts e.backtrace
+            begin
+                # Deserialize smart libraries.
+                Dir.chdir(DIR) do
+                    Dir["*" + EXT].each do |filename|
+                        # Skip non-regular files.
+                        next unless File.stat(filename).file?
+                        
+                        text = IO.read(filename)
+                        hash = YAML.load(text)
+                        begin
+                            smart_library = self.from_hash(hash)
+                            a << smart_library
+                        rescue => e
+                            puts "Cannot load serialized smart library: #{e}"
+                            puts e.backtrace
+                        end
                     end
                 end
+            rescue Errno::ENOENT
+                # First run and no smart libraries yet? Provide some default 
+                # ones.
+                self.sample_smart_libraries.each do |smart_library|
+                    smart_library.save
+                    a << smart_library
+                end
             end
+            a.each { |x| x.refilter }
+            return a
+        end
+
+        def self.sample_smart_libraries
+            a = []
+
+            operands = Rule::Operands::LEFT
+
+            # Favorite books.
+            rule = Rule.new(operands.find { |x| x.book_selector == :rating },
+                            Rule::Operators::IS,
+                            "5")
+            a << self.new(_("Favorite"), [rule], ALL_RULES)
+
+            # Loaned books.
+            rule = Rule.new(operands.find { |x| x.book_selector == :loaned },
+                            Rule::Operators::IS_TRUE,
+                            nil)
+            a << self.new(_("Loaned"), [rule], ALL_RULES)
+
             return a
         end
 

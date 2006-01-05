@@ -4,6 +4,12 @@
 
 	Smart libraries feature is complete.
 
+	* lib/alexandria/smart_library.rb:
+
+	When running for the first time (e.g. the ~/alexandria/.smart_libraries
+	directory does not exist) provide some default smart libraries (all
+	favorite and loaned books).
+
 	* lib/alexandria/library.rb,
 	  lib/alexandria/ui/main_app.rb:
 
