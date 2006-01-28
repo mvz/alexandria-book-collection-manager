@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-17 00:14+0200\n"
-"PO-Revision-Date: 2006-01-26 09:55+0100\n"
+"PO-Revision-Date: 2006-01-28 01:20+0100\n"
 "Last-Translator: Miguel Ángel García <magmax9@yahoo.es>\n"
 "Language-Team: Miguel Ángel García <magmax9@yahoo.es>\n"
 "MIME-Version: 1.0\n"
@@ -738,7 +738,7 @@ msgstr "_Autores"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:150
 msgid "_Binding"
-msgstr "Encuadernación(_b)"
+msgstr "E_ncuadernación"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:173
 msgid "_Rating"
