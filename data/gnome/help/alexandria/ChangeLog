@@ -1,3 +1,19 @@
+2006-02-27	Aymeric Nys	<aymeric@nnx.com>
+
+	* data/gnome/help/alexandria/fr/alexandria.xml
+        * fr/figures/alexandria_main_window.png, 
+	fr/figures/alexandria_add_manually.png
+	fr/figures/alexandria_importing.png, 
+	fr/figures/alexandria_edit_info.png
+        fr/figures/alexandria_loaning.png, 
+	fr/figures/alexandria_library_pane.png
+        fr/figures/alexandria_list_view.png, 
+	fr/figures/alexandria_export_web_page.png
+	fr/figures/alexandria_add_z3950.png, 
+	fr/figures/alexandria_add_by_search_1.png
+
+	- First Commit
+
 2005-11-13	Liam Davison	<carnegie@liamjdavison.info@liamjdavison.>
 
 	* data/gnome/help/alexandria/C/alexandria.xml:
