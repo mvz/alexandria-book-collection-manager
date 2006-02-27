@@ -30,6 +30,7 @@ module Alexandria
             self.new(_("Archived Tellico XML"), "tc",
                      :export_as_tellico_xml_archive),
             self.new(_("BibTeX"), "bib", :export_as_bibtex),
+	    self.new(_("CSV list"), "txt", :export_as_csv_list),
             self.new(_("ISBN List"), "txt", :export_as_isbn_list),
             self.new(_("HTML Web Page"), nil, :export_as_html, true)
         ]
@@ -108,6 +109,15 @@ module Alexandria
                 io << to_bibtex
             end
         end
+
+	def export_as_csv_list(filename)
+	    File.open(filename, 'w') do |io|
+		each do |book|
+		    io.puts book.title + ';' + book.authors.join(', ') + ';' + book.publisher + ';' + book.edition + ';' + book.isbn
+		end
+	    end
+	end
+
       
         #######  
         private

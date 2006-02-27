@@ -1,3 +1,9 @@
+2006-02-27  Aymeric Nys	<aymeric@nnx.com>
+
+    * lib/alexandria/export_library.rb
+
+    - Add CVS export:
+
 2006-02-27  Laurent Sansonetti  <lrz@gnome.org>
 
     * AUTHORS,
