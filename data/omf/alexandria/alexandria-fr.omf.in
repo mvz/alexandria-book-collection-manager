@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE omf PUBLIC "-//OMF//DTD Scrollkeeper OMF Variant V1.0//EN" "http://scrollkeeper.sourceforge.net/dtds/scrollkeeper-omf-1.0/scrollkeeper-omf.dtd">
+<omf>
+  <resource>
+    <creator>
+      aymeric AT nnx DOT com (Aymeric Nys)	  
+    </creator>
+    <title>
+	Manuel d&#8217;Alexandria
+    </title>
+    <date>
+      2006-01-06
+    </date>
+    <version identifier="0.6.1-fr.1.0" date="2006-01-06" description="Manuel d&#8217;Alexandria" />
+    <subject category="GNOME|Applications"/>
+    <description>
+	    Alexandria a pour but de vous aider dans la gestion de votre bibliothèque personnelle.
+	    Ce manuel décrit toutes les fonctionnalités du logiciel pour une prise en main rapide.
+    </description>
+    <type>
+      user's guide
+    </type>
+    <format mime="text/xml" dtd="-//OASIS//DTD DocBook XML V4.4//EN"/>
+    <identifier url="PATH_TO_DOC_FILE"/>
+    <language code="fr"/>
+    <relation seriesid="7591aee4-92d9-11d9-88aa-939bacdd01aa"/>
+    <rights type="GNU FDL" holder="Aymeric Nys"/>
+  </resource>
+</omf>
+
