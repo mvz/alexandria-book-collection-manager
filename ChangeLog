@@ -1,5 +1,9 @@
 2006-02-27  Laurent Sansonetti  <lrz@gnome.org>
 
+	README:
+
+	Mention that Ruby/ZOOM is optional.
+
 	* lib/alexandria/ui.rb,
 	  lib/alexandria/ui/main_app.rb:
 
