@@ -1,0 +1,2292 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd" [
+<!ENTITY legal SYSTEM "legal.xml">
+<!ENTITY appversion "0.6">
+<!ENTITY manrevision "0.0.7">
+<!ENTITY date "Juin 2005">
+<!ENTITY app "<application>Alexandria</application>">
+<!-- Information about the entities
+       The legal.xml file contains legal information, there is no need to edit the file. 
+       Use the appversion entity to specify the version of the application.
+       Use the manrevision entity to specify the revision number of this manual.
+       Use the date entity to specify the release date of this manual.
+       Use the app entity to specify the name of the application. -->]>
+
+<!--
+Traduction française du manuel d&#8217;Alexandria
+Auteur: Aymeric Nys
+Date : 30 décembre 2005
+-->
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="fr">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+    <title>Manuel de l&#8217;utilisateur d&#8217;&app;<!--&app; Manual--></title>
+    <copyright>
+      <year>2005</year>
+      <holder>Liam Davison</holder>
+    </copyright>
+    <copyright>
+   	<year>2005</year>
+   	<holder>Aymeric Nys (pour la française)</holder>
+    </copyright>
+
+<!-- An address can be added to the publisher information.  If a role is
+     not specified, the publisher/author is the same for all versions of the
+     document.  -->
+    <publisher>
+      <publishername> Projet GNOME </publishername>
+    </publisher>
+    
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+<!-- <publisher><publishername> GNOME Documentation Project </publishername></publisher>&legal;   -->
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+        other legal stuff such as "NO WARRANTY" statement. Please do not change 
+	any of this. -->
+    <authorgroup>
+      <author>
+        <firstname>Liam</firstname>
+        <surname>Davison</surname>
+        <affiliation>
+          <orgname>Écriture de la documentation de &app;</orgname>
+          <address><email>carnegie@liamjdavison.info</email></address>
+        </affiliation>
+      </author>
+<!-- This is appropriate place for other contributors: translators,
+     maintainers,  etc. Commented out by default.
+-->
+      <othercredit class="translator">
+		<firstname>Aymeric</firstname> 
+		<surname>Nys</surname> 
+        	<affiliation>
+         	<orgname>Traduction de la documentation d&#8217;&app;</orgname>
+         	<address><email>aymeric CHEZ nnx POINT com</email></address>
+        	</affiliation>
+		<contrib>Traduction française</contrib>
+      </othercredit>
+      <othercredit class="translator">
+		<firstname>Christophe</firstname> 
+		<surname>Bliard</surname> 
+		<contrib>Relecture de la traduction française</contrib>
+      </othercredit>
+
+    </authorgroup>
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifying/reusing someone else&#8217;s document.  If not, you can omit it. -->
+<!-- Remember to remove the &manrevision; entity from the revision entries other
+-->
+<!-- than the current revision. -->
+<!-- The revision numbering system for GNOME manuals is as follows: -->
+<!-- * the revision number consists of two components -->
+<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
+<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
+<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
+<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
+<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
+<!-- to V3.0, and so on. -->
+    <revhistory>
+      <revision>
+        <revnumber>Manuel d'Alexandria V&manrevision;</revnumber>
+        <date>&date;</date>
+        <revdescription>
+          <para role="author">Liam Davison
+	    	<email>carnegie@liamjdavison.info</email>
+	  </para>
+          <para role="publisher">Documentation d'Alexandria</para>
+        </revdescription>
+      </revision>
+      <revision>
+      	<revnumber>Manuel d&#8217;&app; V&manrevision;.fr.1.0</revnumber>
+      	<date>2005-12-30</date>
+   	<authorinitials>AN</authorinitials>
+	<revremark>Première traduction française.</revremark>
+      </revision>
+      <revision>
+      	<revnumber>Manuel d&#8217;&app; V&manrevision;.fr.1.0.1</revnumber>
+      	<date>2006-01-04</date>
+   	<authorinitials>AN, CB</authorinitials>
+	<revremark>Diverses corrections orthographiques et améliorations syntaxiques.</revremark>
+      </revision>
+    </revhistory>
+    
+    <releaseinfo>
+    Ce manuel documente la version &appversion; de &app;.
+    <!--This manual describes version &appversion; of Alexandria-->
+    </releaseinfo>
+
+    <abstract>
+	    <para>
+		    &app; vous permet de gérer votre bibliothèque.
+	    </para>
+    </abstract>
+
+    <legalnotice>
+      <title>Votre avis</title>
+		<para>Pour signaler un problème ou émettre une suggestion concernant ce
+			programme ou ce manuel, procédez comme indiqué à la <ulink 
+			url="ghelp:gnome-feedback" type="help">Page de réactions sur GNOME</ulink>.
+      </para>
+      <!-- Translators may also add here feedback address for translations -->
+    </legalnotice>
+
+  </articleinfo>
+  
+  <indexterm zone="index">
+    <primary>Alexandria</primary>
+  </indexterm>
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+	<sect1 id="myapp-introduction">
+		<title>Introduction</title>
+		<para>
+			  &app; vous permet de gérer votre collection de livres.
+			  Les fonctionnalités d&#8217;&app; vous permettent&nbsp;:
+				<!--  The &app; application enables you to manage your collection of books.
+			   &app; provides the following features:-->
+		</para>
+		<itemizedlist>
+      	<listitem>
+      		<para>de récupérer et d&#8217;afficher les informations de livres 
+      			(incluant une  image de la couverture) à partir de 
+      			bibliothèques en ligne&nbsp;:
+      		<!--retrieves and displays book information (including cover pictures) from online libraries:-->
+      		</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							<orgname>Amazon</orgname> (.com, .co.uk, .de et .jp)&nbsp;;
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<orgname>Proxis</orgname>&nbsp;;
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<orgname>Barnes and Noble</orgname>&nbsp;;
+						</para>
+					</listitem> 
+					<listitem>
+						<para>
+							<orgname>Ministère de la Culture espagnole</orgname>&nbsp;;
+							<!--the Spanish Ministry of Culture-->
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<orgname>Amadeus Buch</orgname>&nbsp;;
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<orgname>Internet Bookshop Italia</orgname>&nbsp;;
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							La <orgname>Bibliothèque Britannique</orgname>&nbsp;;
+							<!--The British Library and the US Library of Congress-->
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							La <orgname>Bibliothèque du Congrès</orgname> des États-Unis d&#8217;Amérique&nbsp;;
+							<!--The British Library and the US Library of Congress-->
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>
+					d&#8217;ajouter de nouveaux fournisseurs en ligne utilisant
+				 	le protocole Z39.50&nbsp;;
+				<!--allows you to add new online providers using the Z39.50 protocol-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					d&#8217;ajouter des livres et de les mettre à jour 
+					manuellement&nbsp;;
+					<!--allows books to be added and updated by hand-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					de rechercher par <acronym>EAN</acronym>/<acronym>ISBN</acronym>, titre,
+					auteurs, ou mots-clés&nbsp;;
+				<!--enables searches either by EAN/ISBN, title, authors or keyword-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					de montrer les livres sous différentes vues 
+					(liste standard ou 
+					liste d&#8217;icônes) qui peuvent être filtrées ou triées&nbsp;;
+				<!--shows books in different views (standard list or icons list), that
+				can be filtered and/or sorted-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					d&#8217;enregistrer les livres empruntés, chaque livre avec sa date
+					d&#8217;emprunt, et le nom de l&#8217;emprunteur&nbsp;;
+				<!--allows marking your books as loaned, each with the loan-date 
+				and the name of the person who has borrowed them-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					de gérer la notation des livres, les livres préférés 
+					et des notes additionnelles&nbsp;;
+				<!--handles book rating, favourite books, and additional notes-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					d&#8217;importer et d&#8217;exporter les données aux formats 
+					<acronym>ONIX</acronym>,
+					Tellico et sous forme de liste de 
+					<acronym>EAN</acronym>/<acronym>ISBN</acronym>&nbsp;;
+				<!--can import and export data into ONIX, Tellico and 
+				EAN/ISBN-list formats-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					de générer des pages web <acronym>XHTML</acronym> stylisées avec 
+					<acronym>CSS</acronym> à partir de vos bibliothèques&nbsp;;
+				<!--generate XHTML web pages theme-able with CSS from your libraries-->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					le support des lecteurs de code-barres Cuecat©.
+				<!--supports Cuecat (c) barcode readers-->
+				</para>
+			</listitem>
+    </itemizedlist>
+
+    <note>
+      <para>
+      	&app; est continuellement en développement. De nouvelles fonctionnalités sont
+      	régulièrement ajoutées.
+      	<!--Alexandria is under constant development - new features are being added 
+      	regularly.-->
+      </para>
+    </note>
+  </sect1>
+  
+<!-- =========== Getting Started ============================== -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+  <sect1 id="myapp-getting-started">
+    <title>Initiation<!--Getting Started--></title>
+    <sect2 id="myapp-start">
+      <title>
+      	Lancement d&#8217;&app;
+      	<!--To Start &app;-->
+      </title>
+      <para>
+      	Vous pouvez lancer &app; comme suit&nbsp;:
+      	<!--You can start <application>&app;</application> in the following ways:-->
+    	</para>
+      <variablelist>
+<!--        
+			<varlistentry>
+         	<term>Menu <guimenu>Applications</guimenu></term>
+          	<listitem>
+            	<para>Choisissez
+    					<menuchoice>
+    						<guisubmenu>Office</guisubmenu>
+    						<guimenuitem>Alexandria</guimenuitem>
+    					</menuchoice>.
+    				</para>
+          	</listitem>
+        </varlistentry>
+-->
+        <varlistentry>
+          <term>
+          <guimenu>Ligne de commande</guimenu>
+          <!--<guimenu>Command line</guimenu>--></term>
+          <listitem>
+            <para>
+            	Pour lancer &app; à partir de la ligne de commande, saisissez 
+            	la commande suivante puis appuyez sur la touche
+            	<keycap>Entrée</keycap>&nbsp;:
+            	<!--To start <application>&app;</application> from a command line, 
+            	type the following command, 
+		    		then press <keycap>Return</keycap>:-->
+		    	</para>
+            <para> 
+					<command>alexandria</command> 		
+    			</para>
+            <para>
+	            &app; ouvre la dernière bibliothèque utilisée.
+	            <!--&app; will open the most recently accessed library.-->
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+
+    <sect2 id="myapp-when-start">
+      <title>
+      	Au lancement d&#8217;&app;
+      	<!--When You Start &app;-->
+      </title>
+      <para>
+	      Lorsque vous lancez &app;, la fenêtre suivante est affichée.
+	      <!--When you start <application>&app;</application>, the following window is
+	       displayed.-->
+      </para>
+<!-- ==== Figure ==== -->
+      <figure id="mainwindow-fig">
+      	<title>
+        		Fenêtre principale d&#8217;&app;.
+        		<!--&app; Start Up Window-->
+        	</title>
+        	<screenshot>
+         	<mediaobject>
+            	<imageobject>
+            		<imagedata fileref="figures/alexandria_main_window.png" format="PNG"/>
+            	</imageobject>
+            	<textobject>
+              		<phrase>
+              			Montre la fenêtre principale d&#8217;&app;. Contient la barre de titre,
+              			la barre de menus, la barre d&#8217;outils, la liste des bibliothèques et 
+              			la zone d&#8217;affichage des livres. 
+              			La barre de menus contient les menus Bibliothèque, Édition,
+              			Affichage et Aide.
+              			<!--Shows &app; main window. Contains titlebar, menubar, toolbar, 
+              			library list and book display area. Menubar contains Library,
+               		Edit, View and Help menus.-->
+              		</phrase>
+            	</textobject>
+          	</mediaobject>
+        	</screenshot>
+      </figure>
+<!-- ==== End of Figure ==== -->
+<!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
+<!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+      <para>
+      La fenêtre d&#8217;&app; contient les éléments suivants&nbsp;:
+      <!--The &app; window contains the following elements:-->
+    	</para>
+      <variablelist>
+        <varlistentry>
+          <term>Barre de menus<!--Menubar:--></term>
+          <listitem>
+            <para>
+            La barre de menus contient toutes les commandes
+            dont vous avez besoin pour travailler sur des bibliothèques et
+            des livres dans &app;.
+            <!--The menus on the menubar contain all of the commands you need to work
+             with libraries and books in <application>&app;</application>.-->
+				</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Barre d&#8217;outils<!--Toolbar:--></term>
+          <listitem>
+            <para>
+            La barre d&#8217;outils contient les boutons pour ajouter rapidement
+            de nouveaux livres et de nouvelles bibliothèques à &app;.
+            Elle contient aussi un outil de recherche pour filtrer
+            les livres affichés
+            dans la zone d&#8217;affichage principale.
+            <!--The toolbar contains buttons to quickly add new books and libraries
+            to <application>&app;</application>,
+	    		plus a search tool to filter books displayed in the main display area.-->
+	    		</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Liste des bibliothèques<!--Library List:--></term>
+          <listitem>
+            <para>
+            Le panneau listant les bibliothèques sur le côté gauche de la fenêtre
+            affiche les différentes bibliothèques créées dans &app;.
+            <!--The library list pane at the left edge of the window displays the
+            different libraries which
+				have been set up in <application>&app;</application>.-->
+				</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Affichage de livres<!--Book display:--></term>
+          <listitem>
+            <para>
+            La partie principale de l&#8217;affichage liste tous les livres de la
+            bibliothèque sélectionnée.
+            &app; peut afficher les livres dans une liste ou les afficher 
+            sous forme d&#8217;icônes. La vue sous forme de liste, identique
+            à celle utilisée par le gestionnaire de fichiers 
+            <application>Nautilus</application>, affiche des informations
+            détaillées pour chaque livre sur une ligne.
+            <!--The main part of the display lists all the books in the current library. 
+            <application>&app;</application> can
+				display your books either in an Icon or List view - the List View, 
+				similar to that used in the <application>Nautilus</application>
+				file manager, displays detailed information about each book on
+				 separate lines.-->
+				</para>
+	    		<para>
+	    		Dans la vue en icônes, vos livres préférés &mdash; notés avec 5 étoiles 
+	    		&mdash; seront affichés avec un cœur dans le coin supérieur droit.
+	    		<!--In the icon view, your favourite books - rated with five stars -
+	    		 will be shown with a heart icon in the top corner.-->
+	    		</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>La barre d&#8217;état<!--Statusbar:--></term>
+          <listitem>
+            <para>
+            La barre d&#8217;état indique la bibliothèque sélectionnée
+            et affiche le nombre de livres et le nombre de livres
+            sans note de cette bibliothèque.
+            <!--The statusbar displays information about the current library in
+             <application>&app;</application>, including the number of books,
+              and the number of books which have not been rated.-->
+            </para>
+            <para>
+            	Si un livre est sélectionné, la barre d&#8217;état affiche le titre de
+            	ce livre.
+            </para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+    </sect2>
+  </sect1>
+<!-- ================ Adding Books ================================ -->
+<!-- Use this section to describe how to use the application to perform the tasks for 
+  which the application is designed. -->
+  <sect1 id="alexandria-adding">
+    <title>
+    	Ajout de livres
+    	<!--Adding Books-->
+    </title>
+    <para>
+    	Vous pouvez ajouter des livres dans &app; de 
+    	plusieurs manières&nbsp;:
+    	<!--You can add books to &app; in several different ways:-->
+      <itemizedlist>
+      	<listitem>
+      		<para><xref linkend="add-book-by-isbn"/></para>
+      	</listitem>
+      	<listitem>
+      		<para><xref linkend="add-book-by-search"/></para>
+      	</listitem>
+      	<listitem>
+      		<para><xref linkend="add-book-by-barcode-scan"/></para>
+      	</listitem>
+      	<listitem>
+      		<para><xref linkend="add-book-manually"/></para>
+      	</listitem>
+      </itemizedlist> 
+    </para>
+	<para>
+		Vous pouvez également importer une liste de livres dans &app;&nbsp;:
+		<!--You can also import a list of books into &app;:-->
+		<itemizedlist>
+			<listitem>
+				<para><xref linkend="import-library"/></para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		&app; garde en mémoire votre méthode préférée et sélectionne automatiquement
+		la dernière méthode utilisée. Par exemple, si le dernier ajout de livre
+		a été réalisé par l&#8217;intermédiaire d&#8217;une recherche sur 
+		l&#8217;auteur, &app; ouvre la fenêtre 
+		<guilabel>Ajout d&#8217;un livre</guilabel>
+		avec le champ <guilabel>par auteurs</guilabel> sélectionné.
+		<!--&app; will remember which method you prefer, and will automatically
+		select the most recently used method. For instance, if you last added
+		a book by searching for an author, &app; will open the 
+		<guilabel>Add Book...</guilabel> dialog with the 
+		<guilabel>Add book by author</guilabel> field selected.-->
+	</para>
+
+<!-- ================ Adding Books Subsection ================================ -->
+
+	<sect2 id="add-book-by-isbn">
+		<title>
+			Ajout d&#8217;un livre en fournissant l&#8217;<acronym>ISBN</acronym>
+			<!--To add a book by supplying an ISBN-->
+		</title>
+		<para>
+			Si vous connaissez l&#8217;<acronym>ISBN</acronym> d&#8217;un livre à ajouter
+			à la bibliothèque, choisissez
+			<menuchoice>
+				<shortcut><keycombo><keycap>Ctrl</keycap><keycap>N</keycap></keycombo></shortcut>
+				<guimenu><accel>B</accel>ibliothèque</guimenu>
+				<guimenuitem><accel>A</accel>jouter un livre&hellip;</guimenuitem>
+			</menuchoice>, 
+			ou cliquez sur le bouton 
+			<guibutton><inlinegraphic fileref="figures/add-button.png"/>Ajouter un livre&hellip;</guibutton>
+			de la barre d&#8217;outils.
+			La fenêtre <guilabel>Ajout d&#8217;un livre</guilabel> est affichée.
+			Saisissez l&#8217;<acronym>ISBN</acronym> du livre à ajouter puis cliquez sur
+			le bouton
+			<guibutton>A<accel>j</accel>outer</guibutton> pour l&#8217;intégrer 
+			à la bibliothèque sélectionnée. Pour ajouter le livre dans une 
+			bibliothèque différente, sélectionnez le nom de cette bibliothèque
+			dans le menu déroulant 
+			<guilabel><accel>B</accel>ibliothèque</guilabel>.
+
+			<!--If you know the ISBN of the book you wish to add to a library, choose 
+			<menuchoice>
+			<guimenu>Library</guimenu>
+			<guimenuitem>Add Book...</guimenuitem>
+			</menuchoice>, 
+			or click on the <guibutton>Add</guibutton> button on the toolbar.
+			The <guilabel>Adding a Book</guilabel> dialog is displayed.
+			Type in the ISBN of the book you wish to add, then click
+			<guibutton>Add</guibutton>. The book will be added to the currently
+			selected library. To add the book to a different library, select
+			the library name from the <guilabel>Save in Library</guilabel>
+			drop-down menu.-->
+		</para>
+
+		<caution>
+        <para>
+        &app; valide l&#8217;<acronym>ISBN</acronym> fourni et vous avertit si le
+        numéro saisi n&#8217;est pas un <acronym>ISBN</acronym> valide.
+        <!--&app; will validate the ISBN supplied and will warn you if the number 
+        entered is not a valid ISBN.-->
+        </para>
+      </caution>
+      
+	  	<para>
+	  		&app; récupère automatiquement les informations au sujet d&#8217;un livre
+	  		à partir de la source d&#8217;informations en ligne sélectionnée dans 
+	  		les préférences de l&#8217;application.
+	  		<!--&app; will automatically fetch the information about the book from
+	  		the online information source selected in the application preferences.-->
+	  	</para>
+	  	
+      <figure id="add-by-isbn-fig">
+      	<title>
+        		Ajout d&#8217;un livre par l&#8217;<acronym>ISBN</acronym>.
+        	</title>
+        	<screenshot>
+         	<mediaobject>
+            	<imageobject>
+            		<imagedata fileref="figures/alexandria_add_by_isbn_1.png" format="PNG"/>
+            	</imageobject>
+            	<textobject>
+              		<phrase>
+              			Fenêtre montrant l&#8217;ajout d&#8217;un livre 
+              			par l&#8217;<acronym>ISBN</acronym>.
+              		</phrase>
+            	</textobject>
+          	</mediaobject>
+        	</screenshot>
+      </figure>
+
+	  	
+	</sect2>
+	
+	<!-- ========== Adding books by searching ====== -->
+	<sect2 id="add-book-by-search">
+		<title>
+			Recherche d&#8217;un livre dont l&#8217;<acronym>ISBN</acronym> est inconnu
+			<!--To search for a book whose ISBN you do not know-->
+		</title>
+		<para>
+			Si vous ne connaissez pas l&#8217;<acronym>ISBN</acronym> d&#8217;un livre à 
+			ajouter, vous pouvez rechercher par le titre, 
+			les auteurs ou des mots clés.
+			&app; recherche les livres qui correspondent aux critères définis
+			à partir de fournisseurs d&#8217;informations en ligne tel 
+			qu&#8217;<ulink url="http://www.amazon.fr">Amazon</ulink>.
+			Vous pouvez ensuite sélectionner le livre désiré à partir de la liste
+			affichée et cliquer sur le bouton 
+			<guibutton>A<accel>j</accel>outer</guibutton> pour
+			l&#8217;intégrer à votre bibliothèque.
+			<!--If you do not know the ISBN of the book you wish to add, you can specify
+			either the Title, the Authors or the Keywords, and &app; will search
+			your online information provider, such as Amazon, for books that match.
+			You can then select the desired book from the displayed list and
+			click <guibutton>Add</guibutton> to the book to the selected library.-->
+		</para>
+		<para>
+			Avec la fenêtre <guilabel>Ajout d&#8217;un livre</guilabel> ouverte,
+			cliquez sur le bouton radio <guilabel><accel>R</accel>echercher</guilabel>
+			puis choisissez dans le menu déroulant
+			<guilabel>par titre</guilabel>,
+			<guilabel>par auteurs</guilabel> ou
+			<guilabel>par mot clef</guilabel>.
+			Saisissez les informations relatives au livre recherché puis 
+			cliquez sur le bouton 
+			<guibutton><accel>R</accel>echercher</guibutton>.
+			<!--With the <guilabel>Adding a Book</guilabel> dialog open, click on the
+			<guilabel>Search</guilabel> checkbox then choose either
+			<guilabel>by title, by authors</guilabel> or 
+			<guilabel>by keyword</guilabel> from the drop-down menu.
+			Type in the details of the book you are looking for, then click on
+			<guibutton>Find</guibutton>.-->
+		</para>
+		<figure id="add-by-search-fig">
+	   	<title>
+	   		Fenêtre <guilabel>Ajout d&#8217;un livre</guilabel> d&#8217;&app; 
+	   		utilisant une recherche.
+	      	<!--&app; Adding a book by searching-->
+	      </title>
+	      <screenshot>
+	      	<mediaobject>
+	         	<imageobject>
+	            	<imagedata fileref="figures/alexandria_add_by_search_1.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	            	<phrase>
+	            		Montre la fenêtre <guilabel>Ajout d&#8217;un livre</guilabel>
+	            		d&#8217;&app;, permettant d&#8217;ajouter un livre par une recherche
+	            		du titre, des auteurs ou de mots clés
+	            		chez un fournisseur d&#8217;informations en ligne.
+	              		<!--Shows the &app; Add by Search dialogue, allowing you
+	              		to add a book by searching your online information
+	              		provider for a specific Title, Author or Keyword.-->
+	              	</phrase>
+	            </textobject>
+	          </mediaobject>
+	        </screenshot>
+	     </figure>
+		
+		<para>
+			<!-- "image réduite de la couverture" traduction pour thumbnail ??? 
+			dans le context devrait être correct
+			-->
+			Lorsque c&#8217;est possible, &app; montre une image réduite de la couverture
+			des livres qu&#8217;il trouve,
+			facilitant le choix du livre ou de l&#8217;édition qui convient.
+			Sélectionnez l'ouvrage désiré dans la liste puis cliquez sur le 
+			bouton <guibutton>A<accel>j</accel>outer</guibutton>.
+			<!--Where possible, &app; will show thumbnails of the books it finds,
+			making it easier to choose the right book or edition of a book.
+			Select the book you want from the list, and click
+			<guibutton>Add</guibutton>.-->
+		</para>
+
+		<tip>
+			<para>
+				Vous devrez probablement essayer différents termes 
+				de recherche pour trouver le livre convoité.
+				<!--You may have to try several different search terms to find
+				the book you want.-->
+			</para>
+		</tip>
+	</sect2>
+
+	<!-- ======== Adding books by scanning a barcode ====== -->
+	<sect2 id="add-book-by-barcode-scan">
+		<title>
+			Ajout d&#8217;un livre en numérisant son code-barres
+			<!--To add a book by scanning its barcode-->
+		</title>
+		<para>
+			&app; prend en charge les scanners de code-barres Cuecard©. Si vous 
+			avez installé un scanner de code-barres Cuecard©, &app; 
+			affiche une petite image d&#8217;un code-barres à la droite de la boîte 
+			de texte <guilabel><accel>I</accel>SBN</guilabel>. 
+			Si vous n&#8217;avez pas de scanner, cette image sera grisée.
+			<!--&app; supports Cuecard (c) barcode scanners. If you have set up
+			a Cuecard (c) barcode scanner on your computer, &app; will display
+			a small picture of a barcode next to the
+			<guilabel>ISBN</guilabel> field.
+			(If you don&#8217;t have a scanner, this picture will be greyed out.)-->
+		</para>
+		
+		<para>
+			Pour ajouter un livre, il suffit de numériser son code-barres 
+			et &app; remplit automatiquement la boîte de texte 
+			<guilabel><accel>I</accel>SBN</guilabel>. Ensuite, cliquez sur le bouton
+			<guibutton>A<accel>j</accel>outer</guibutton>.
+			<!--Simply scan the barcode on the book and Alexandria will
+			automatically fill in the <guilabel>ISBN</guilabel> field.
+			Then click <guibutton>Add</guibutton> as normal.-->
+		</para>
+	</sect2>
+
+	<!-- ======== Adding a book manually ================= -->
+	<sect2 id="add-book-manually">
+		<title>
+			Ajout manuel d&#8217;un livre
+			<!--To manually add a book--></title>
+		<para>
+			Parfois vous ne pourrez pas rechercher un livre en ligne.
+			Le livre peut ne pas avoir 
+			d&#8217;<acronym>ISBN</acronym> (Les numéros 
+			<acronym>ISBN</acronym>  sont devenus standard pendant les 
+			années 1970).
+			Peut être que le livre est trop récent, et aucune information
+			n&#8217;est disponible en ligne. Ou peut-être, tout simplement, vous
+			n&#8217;avez pas de connexion à l&#8217;Internet.
+			&app; vous permet de saisir par vous-même tous les détails 
+			d&#8217;un livre&nbsp;: le titre, les auteurs, 
+			l&#8217;image de couverture, etc.
+			<!--Sometimes you will not be able to search for a book online.
+			The book may not not have an ISBN (ISBN numbers only became
+			standard in the 1970s). Perhaps the book is too new, and no
+			information is available online. Or perhaps you simply don&#8217;t have
+			an internet connection. &app; allows you to specify all the details
+			of a book - the Title, Authors, cover image and so forth - 
+			by supplying them yourself.-->
+		</para>
+
+		<para>
+			Pour ajouter manuellement un livre à une bibliothèque,
+			choisissez 
+			<menuchoice>
+			<guimenu><accel>B</accel>ibliothèque</guimenu>
+			<guimenuitem>Ajouter <accel>m</accel>anuellement un livre&hellip;</guimenuitem>
+			</menuchoice>.
+			La fenêtre suivante apparaît alors&nbsp;:
+			<!--To manually add a book to a library, choose 
+			<menuchoice><guimenu>Library</guimenu>
+			<guimenuitem>Add Book Manually</guimenuitem></menuchoice>.
+			The following dialog will appear:-->
+		</para>
+		<figure id="add-manually-fig">
+	   	<title>
+	   		Ajout manuel d&#8217;un livre dans &app;.
+	        	<!--&app; adding a book manually--></title>
+	      <screenshot>
+	      	<mediaobject>
+	         	<imageobject>
+	            	<imagedata fileref="figures/alexandria_add_manually.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	            	<phrase>
+	            		Montre la fenêtre Ajout manuel d&#8217;un livre d&#8217;&app;
+	            		vous permettant de saisir vous-même les informations
+	            		d&#8217;un livre.
+	            		<!--Shows the &app; Add book manually dialogue,
+	            		allowing type in all the information for the
+	            		book yourself.-->
+	            	</phrase>
+	            </textobject>
+	         </mediaobject>
+	      </screenshot>
+	 	</figure>
+
+		<para>
+			Cette fenêtre est identique à la fenêtre 
+			<guilabel>Édition d&#8217;un livre</guilabel>.
+			Il y a trois onglets dans cette fenêtre &mdash; 
+			<guilabel>Général</guilabel>, 
+			<guilabel>Prêt</guilabel> et
+			<guilabel>Notes</guilabel>.
+			Les champs disponibles vous permettent de saisir
+			le titre du livre, les auteurs,
+			l&#8217;<acronym>ISBN</acronym> si vous le connaissez,
+			l&#8217;éditeur, le type de reliure 
+			(tel que Broché, Cartonné, Poche, livre audio) et de noter le livre.
+			
+			<!-- This dialogue is very similar to the 
+			<guilabel>Edit Book</guilabel> dialog. There are three tabs
+			to this dialogue - <guilabel>General</guilabel>,
+			<guilabel>Loaning</guilabel> and <guilabel>Notes</guilabel>.
+			There is space for you to specify the book title, the ISBN
+			if you know it, the book publisher, the binding
+			(such as Paperback, Hardback, or Audiobook), and the Authors.-->
+		</para>
+		
+		<tip>
+			<para>
+				Pour ajouter un auteur, cliquez sur le bouton 
+				<guibutton>
+					<inlinemediaobject>
+						<imageobject>
+							<imagedata fileref="figures/alexandria_add_button.png" format="PNG"/>
+						</imageobject>
+						<textobject>
+							<phrase>
+								+
+							</phrase>
+						</textobject>
+					</inlinemediaobject>
+				</guibutton>, à droite de la liste des auteurs
+				puis saisissez le nom. Pour retirer un auteur,
+				sélectionnez le nom et cliquez sur 
+				<guibutton>
+					<inlinemediaobject>
+						<imageobject>
+							<imagedata fileref="figures/alexandria_remove_button.png" format="PNG"/>
+						</imageobject>
+						<textobject>
+							<phrase>
+								-
+							</phrase>
+						</textobject>
+					</inlinemediaobject>
+				</guibutton>.
+				Pour modifier un nom, cliquez deux fois dessus.
+				<!--To add a author, click on the <guibutton>+</guibutton>
+				next to the author list, then type the name.
+				To remove an author, select the name and click
+				<guibutton>-</guibutton>. To edit a name, click twice on
+				the name.-->
+			</para>
+		</tip>
+		
+		<para>
+			Pour fournir une image représentant la couverture,
+			cliquez sur le bouton 
+			<guibutton><accel>C</accel>ouverture</guibutton>.
+			Une fenêtre standard de sélection de fichiers s&#8217;ouvre.
+			Sélectionnez l&#8217;image sur votre système puis cliquez sur 
+			<guibutton><accel>O</accel>uvrir</guibutton>. L&#8217;image
+			sera mise à l&#8217;échelle pour tenir dans l&#8217;espace
+			alloué. Les formats autorisés pour les images sont 
+			<acronym>JPEG</acronym> et <acronym>GIF</acronym>.
+			<!--To supply a book cover image, click on the <guibutton>Cover</guibutton>
+			button. A standard file selection dialogue will open. Navigate to
+			the cover image file on your system - which can be in JPEG or GIF format -
+			and click <guibutton>Open</guibutton>. The image will be scaled
+			to fit into the <guilabel>Edit Book</guilabel> dialogue.-->
+		</para>
+		
+		<para>
+			Vous pouvez noter un livre en cliquant sur les étoiles.
+			Pour annuler la notation, cliquez sur l&#8217;espace situé 
+			à gauche de la première étoile.
+			<!--You can rate a book by clicking on the stars. To clear the rating,
+			click on the space immediately to the left of the first star.-->
+		</para>
+		
+		<para>
+			Lorsque toutes les informations ont été saisies, cliquez sur
+			le bouton <guibutton>A<accel>j</accel>outer</guibutton>.
+			<!--When you have filled in all the information, click on the
+			<guibutton>Add</guibutton> button.-->
+		</para>
+	</sect2>
+
+	<!-- =========== Importing a list of books ========== -->
+    <sect2 id="import-library">
+		<title>
+			Importation d&#8217;une liste de livres
+			<!--To import a list of books-->
+		</title>
+		<para>
+			&app; peut importer des fichiers Tellico utilisés par d&#8217;autres 
+			applications comme <application>Bookcase</application>.
+			Il peut aussi importer une simple liste d&#8217;<acronym>ISBN</acronym>,
+			récupérant les informations de chaque livre, 
+			l&#8217;un à la suite de l&#8217;autre.
+			Pour importer ces fichiers, choisissez 
+			<menuchoice>
+			<shortcut><keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo></shortcut>
+			<guimenu><accel>B</accel>ibliothèque</guimenu>
+			<guimenuitem><accel>I</accel>mporter</guimenuitem>
+			</menuchoice>.
+			Sélectionnez le fichier approprié puis cliquez sur
+			<guibutton>Importer</guibutton>.
+			&app; détecte automatiquement le type de fichier importé, mais 
+			vous pouvez aussi le sélectionner dans le menu déroulant. Les
+			options disponibles sont&nbsp;:
+			<guilabel>Détection automatique</guilabel>, 
+			<guilabel>Archive Tellico XML (*.bc,*.tc)</guilabel> et
+			<guilabel>Liste d&#8217;ISBN (*.txt)</guilabel>.
+			
+			<!--&app; can import Tellico files, used by applications such as 
+			<application>Bookcase</application>. It can also import a simple list
+			of ISBNs, fetching the details for each book in turn. To import
+			either a Tellico file or a flat ISBN list, choose 
+			<menuchoice>
+			<guimenu>Library</guimenu>
+			<guimenuitem>Import...</guimenuitem>
+			</menuchoice>. 
+			Navigate to the appropriate file, and click 
+			<guibutton>Import</guibutton>. &app; can automatically determine what
+			type of file is being imported; you can, of course, specify the file
+			format by choosing either <guimenuitem>Archived Tellico</guimenuitem>
+			or <guimenuitem>ISBN List</guimenuitem> from the
+			<guilabel>Autodetect</guilabel> drop-down menu.-->
+		</para>
+
+		<figure id="importing-fig">
+	   	<title>
+	   		&app; important une liste d&#8217;<acronym>ISBN</acronym>.
+	   		<!--&app; importing a list of ISBNs-->
+	   	</title>
+	      <screenshot>
+	      	<mediaobject>
+	         	<imageobject>
+	            	<imagedata fileref="figures/alexandria_importing.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	              	<phrase>
+	              		Montre la fenêtre d&#8217;&app; important une liste 
+	              		d&#8217;<acronym>ISBN</acronym>.
+	              		<!--Shows &app; importing a list of ISBNs.-->
+	              	</phrase>
+	            </textobject>
+	       	</mediaobject>
+	      </screenshot>
+	   </figure>
+
+		<tip>
+		 	<para>
+		 		&app; crée une nouvelle bibliothèque à l&#8217;importation 
+		 		d&#8217;un fichier. Son nom est identique à celui du fichier.
+		 		Il est possible de donner un nom à la bibliothèque 
+		 		au moment de l&#8217;importation en le saisissant dans la 
+		 		boîte de texte 
+		 		<guilabel><accel>N</accel>om de bibliothèque</guilabel>.
+		 		La bibliothèque créée sera automatiquement sélectionnée et
+		 		mise en surbrillance dans la liste des bibliothèques. 
+		 		Il est possible de renommer la bibliothèque en saisissant
+		 		un nouveau nom, ou d&#8217;accepter celui proposé en cliquant 
+		 		dans la fenêtre avec le bouton 
+		 		<mousebutton>gauche</mousebutton> de la souris.
+		 		<!--&app; will create a new Library when importing a library -
+		 		its name will be the same as the filename you imported.
+		 		&app; will automatically select and highlight this library in
+		 		the library pane - you can immediately rename this by typing a
+		 		new name, or accept the default by clicking the left mouse
+		 	 	button.-->
+		 	</para>
+		</tip>
+	</sect2>
+</sect1>
+
+
+<!-- ============= Editing Book Properties Subsection =========== -->
+
+  <sect1 id="editing-book-properties">
+	<title>
+		Édition des propriétés d&#8217;un livre
+		<!--Editing Book Properties-->
+	</title>
+	<para>
+		&app; peut être utilisé pour éditer et mettre à jour les informations
+		de vos livres&nbsp;:
+		<!--You can use &app; to edit and update your book information:-->
+	<itemizedlist>
+		<listitem><para><xref linkend="editing-info"/></para></listitem>
+		<listitem><para><xref linkend="changing-cover-image"/></para></listitem>
+		<listitem><para><xref linkend="loaning-books"/></para></listitem>
+		<listitem><para><xref linkend="editing-notes"/></para></listitem>
+	</itemizedlist></para>
+
+	<!-- ======== Editing information ========= -->
+	<sect2 id="editing-info">
+		<title>
+			Modification des informations
+			<!--Editing basic information-->
+		</title>
+		<para>
+			Pour modifier un livre, double cliquez sur l&#8217;image du livre
+			dans la fenêtre principale, ou choisissez&nbsp;:
+			<menuchoice>
+			<guimenu><accel>B</accel>ibliothèque</guimenu>
+			<guimenuitem><accel>P</accel>ropriétés</guimenuitem>
+			</menuchoice>.
+			La fenêtre qui apparaît vous permet de modifier le titre du livre,
+			l&#8217;<acronym>ISBN</acronym>, les auteurs, l&#8217;éditeur, l&#8217;édition et
+			la notation.
+			<!--To edit a book, simply double-click on the book image in the
+			main window, or choose 
+			<menuchoice>
+			<guimenu>Library</guimenu>
+			<guimenuitem>Properties</guimenuitem>
+			</menuchoice>. 
+			The following window will appear, where you can change the 
+			books&#8217; Title, ISBN, Authors, Publisher, Binding and Rating.-->
+		</para>
+		
+		<figure id="editing-info-fig">
+			<title>
+				Modification d&#8217;un livre avec &app;.
+				<!--Editing a book with &app;-->
+			</title>
+			<screenshot>
+				<mediaobject>
+					<imageobject>
+	            	<imagedata fileref="figures/alexandria_edit_info.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	            	<phrase>
+	              		Montre &app; modifiant les informations d&#8217;un livre
+		            	<!--Shows &app; editing a book.-->
+		         	</phrase>
+	            </textobject>
+	         </mediaobject>
+	      </screenshot>
+		</figure>
+	
+		<para>
+			Pour ajouter un auteur, cliquez sur le bouton 
+			<guibutton>
+				<inlinemediaobject>
+					<imageobject>
+						<imagedata fileref="figures/alexandria_add_button.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase>
+							+
+						</phrase>
+					</textobject>
+				</inlinemediaobject>
+			</guibutton>, à droite de la liste des auteurs
+			puis saisissez le nom. Pour retirer un auteur,
+			sélectionnez le nom et cliquez sur 
+			<guibutton>
+				<inlinemediaobject>
+					<imageobject>
+						<imagedata fileref="figures/alexandria_remove_button.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase>
+							-
+						</phrase>
+					</textobject>
+				</inlinemediaobject>			
+			</guibutton>.
+			Pour modifier un nom, cliquez deux fois dessus.
+			<!--To add a author, click on the 
+			<guibutton>+</guibutton> next to the author list, then type
+			the new name. To remove an author, select the name and click 
+			<guibutton>-</guibutton>. To edit a name, click twice on 
+			the name.-->
+		</para>
+		
+		<tip>
+			<para>
+				Vous pouvez noter un livre en cliquant sur les étoiles.
+				Pour annuler la notation, cliquez sur l&#8217;espace situé 
+				à gauche de la première étoile.
+				Les icônes de vos livres préférés, notés cinq étoiles, 
+				sont marqués d&#8217;un cœur dans la vue en tant qu&#8217;icône.
+				<!--You can rate a book by clicking on the stars. To clear
+				the rating, click on the space immediately to the left of
+				the first star. Your favourite books - those with five 
+				stars - will have a small heart icon in the Icon view
+				of the main window.-->
+			</para>
+		</tip>
+	</sect2>
+	
+	<!-- ======== Changing cover images ========= -->
+	<sect2 id="changing-cover-image">
+		<title>
+			Changement de l&#8217;image de couverture
+			<!--Changing cover images-->
+		</title>
+		<para>
+			Pour fournir une image représentant la couverture d&#8217;un livre,
+			cliquez sur l&#8217;image existante (ou l&#8217;image de livre si 
+			aucune couverture n&#8217;est disponible).
+			Une fenêtre standard de sélection de fichiers s&#8217;ouvre.
+			Sélectionnez une image sur votre système et cliquez sur 
+			<guibutton><accel>O</accel>uvrir</guibutton>.
+			L&#8217;image est redimensionnée pour tenir dans l'espace alloué.
+			Les formats autorisés pour les images sont  
+			<acronym>JPEG</acronym> et <acronym>GIF</acronym>.
+			<!--To supply a book cover image, click on the existing cover
+			image (or the image of a book if no cover is available). 
+			A standard file selection dialog will open. Navigate to the 
+			cover image file on your system - which can be in JPEG or GIF
+			format - and click <guibutton>Open</guibutton>. The image will
+			be scaled to fit into the <guilabel>Edit Book</guilabel> 
+			dialog.-->
+		</para>
+	</sect2>
+
+	<!-- ======== Loaning books ========= -->
+	<sect2 id="loaning-books">
+		<title>
+			Prêt de livres
+			<!--Loaning books-->
+		</title>
+		<para>
+			Pour indiquer qu&#8217;un livre est prêté, ouvrez la fenêtre
+			de modification d&#8217;un livre (voir  
+			<xref linkend="editing-info"/>).
+			Ensuite cliquez sur l&#8217;onglet <guilabel>Prêt</guilabel>,
+			puis sur la case à cocher 
+			<guilabel>Ce livre est <accel>p</accel>rêté</guilabel>.
+			Dans le champ <guilabel><accel>À</accel></guilabel> indiquez 
+			nom de l&#8217;emprunteur et dans le menu déroulant
+			<guilabel><accel>D</accel>epuis</guilabel>, indiquez la date
+			de l&#8217;emprunt.
+			
+			<!--To mark a book as loaned, firstly open the Edit Book dialog
+			as in <xref linkend="editing-info"/>. Then click on the
+			<guilabel>Loaning</guilabel> tab. Click on the
+			<guilabel>This book is loaned</guilabel> checkbox to mark
+		 	the book as loaned. You can fill in the 
+		 	<guilabel>To</guilabel> field to specify who the book is 
+		 	loaned to. And click on the <guilabel>Since</guilabel> 
+		 	drop-down menu to specify the date the book was loaned on.-->
+		</para>
+
+		<figure id="loaning-fig">
+	   	<title>
+	   		Prêt d&#8217;un livre dans &app;.
+	   		<!--Loaning a book in &app;-->
+	   	</title>
+	      <screenshot>
+	      	<mediaobject>
+	          	<imageobject>
+	              	<imagedata fileref="figures/alexandria_loaning.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	              	<phrase>
+	              		Montre le prêt de livre d&#8217;&app;
+	              		<!--Shows &app; loaning a book.-->
+	              	</phrase>
+	            </textobject>
+	          </mediaobject>
+	        </screenshot>
+		</figure>
+	</sect2>
+
+	<!-- ========== Adding notes ========== -->
+	<sect2 id="editing-notes">
+		<title>
+			Ajout et modification de notes
+			<!--Adding and editing notes-->
+		</title>
+		<para>
+			&app; vous permet de garder des notes additionnelles au sujet 
+			de vos livres, peut-être un compte-rendu personnel ou
+			des références de page.
+			Pour ajouter ou modifier une note, ouvrez la fenêtre de modification
+			d&#8217;un livre (voir <xref linkend="editing-info"/>),
+			puis cliquez sur l&#8217;onglet <guilabel>Notes</guilabel>.
+			Vous pouvez entrer votre note texte dans ce champ.
+			<!--&app; allows you to store addition notes about your books
+			 - maybe a personal review, or useful page references.
+			 To add or edit a note, firstly open the Edit Book dialogue
+			 as in <xref linkend="editing-info"/>. Then click on the 
+			 <guilabel>Notes</guilabel> tab. You can type your plain-text
+			 notes in this field.-->
+		</para>
+	</sect2>
+
+  </sect1>
+
+<!-- ============= Working with Libraries Subsection ============ -->
+
+  <sect1 id="working-with-libraries">
+	<title>
+		Gestion de vos bibliothèques
+		<!--Working with Libraries-->
+	</title>
+	<para>
+		Les livres enregistrés dans &app; peuvent être groupés dans
+		différentes collections, appelées bibliothèques.
+		Par exemple, vous pouvez avoir une bibliothèque pour
+		vos romans et une autre pour les livres d&#8217;informatique.
+		&app; vous permet de créer, de modifier et de déplacer les livres
+		entre bibliothèques.
+		<!--Books stored in &app; can be grouped into different collections, 
+		called libraries. For instance, you may have
+		one library for all your novels, and other for your programming manuals.
+		&app; allows you to create, edit, and move books
+		between libraries.-->
+	</para>
+	
+	<para>
+		Les bibliothèques sont listées dans le panneau 
+		<guilabel><accel>B</accel>ibliothèques</guilabel> à la gauche
+		de la fenêtre principale d&#8217;&app;. Si vous ne pouvez voir 
+		le panneau, ouvrez le avec 
+		<menuchoice>
+		<shortcut><keycap>F9</keycap></shortcut>
+		<guimenu><accel>A</accel>ffichage</guimenu>
+		<guimenuitem><accel>P</accel>anneau latéral</guimenuitem>
+		</menuchoice>.
+		Vous pouvez le fermer avec la même option ou en cliquant sur
+		le bouton 
+		<guibutton>
+			<inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="figures/alexandria_close_button.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Fermer
+					</phrase>
+				</textobject>
+			</inlinemediaobject>
+		</guibutton> 
+		en haut à droite du panneau.
+		<!--Available libraries are listed in the <guilabel>Library pane</guilabel>
+		at the left of the main &app; window. If you cannot see the library pane,
+		open it with 
+		<menuchoice>
+		<guimenu>View</guimenu>
+		<guimenuitem>Side Pane</guimenuitem>
+		</menuchoice>.
+		You can close it again with the same menu option, or by clicking
+		the <guibutton>Close</guibutton> icon in the top right of the 
+		library pane.-->
+	</para>
+	
+	<figure id="library-pane-fig">
+		<title>
+			Liste de bibliothèques dans &app;
+			<!--An &app; list of libraries-->
+		</title>
+		<screenshot>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="figures/alexandria_library_pane.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Liste de bibliothèques dans &app;
+						<!--The &app; list of libraries.-->
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</screenshot>
+	</figure>
+	
+	<para>
+		<itemizedlist>
+			<listitem><para><xref linkend="create-new-library"/></para></listitem>
+			<listitem><para><xref linkend="renaming-libraries"/></para></listitem>
+			<listitem><para><xref linkend="delete-library"/></para></listitem>
+			<listitem><para><xref linkend="moving-between-libraries"/></para></listitem>
+		</itemizedlist>
+	</para>
+
+	<!-- ======= Creating libraries ===== -->
+	<sect2 id="create-new-library">
+		<title>
+			Création d&#8217;une bibliothèque
+			<!--Creating a new library-->
+		</title>
+		<para>
+			Pour créer une nouvelle bibliothèque, cliquez sur le bouton
+			<guibutton>Nouveau</guibutton> de la barre d&#8217;outils,
+			ou choisissez 
+			<menuchoice>
+			<shortcut><keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo></shortcut>
+			<guimenu><accel>B</accel>ibliothèque</guimenu>
+			<guimenuitem><accel>N</accel>ouveau</guimenuitem>
+			</menuchoice>.
+			Une nouvelle bibliothèque est automatiquement créée lorsque 
+			vous importez une liste de livres à partir d&#8217;une autre source.
+			<!--To create a new library, click on the <guibutton>New</guibutton> 
+			button on the toolbar, or choose 
+			<menuchoice>
+			<guimenu>Library</guimenu>
+			<guimenuitem>New</guimenuitem>
+			</menuchoice> 
+			from the main menu. A new library will also be automatically
+			created when you import a list of books from another source.-->
+		</para>
+	</sect2>
+
+	<!-- ======= Renaming libraries ===== -->
+	<sect2 id="renaming-libraries">
+		<title>
+			Renommer une bibliothèque
+			<!--Renaming a library-->
+		</title>
+		<para>
+			Pour renommer une bibliothèque, cliquez sur son nom
+			dans la liste des bibliothèques et saisissez le nouveau
+			nom. Vous pouvez aussi cliquer avec le 
+			bouton <mousebutton>droit</mousebutton> de la souris 
+			sur le nom de la bibliothèque et sélectionner
+			<guilabel><accel>R</accel>enommer</guilabel> à partir
+			du menu contextuel.
+			<!--To rename a library, simply click on its name in the 
+			Library pane, and type in the new name. You can also 
+			right-click on the library name, and select 
+			<guimenuitem>Rename</guimenuitem> from the pop-up menu.-->
+		</para>
+	</sect2>
+
+	<!-- ======= Deleting libraries ===== -->
+	<sect2 id="delete-library">
+		<title>
+			Suppression d&#8217;une bibliothèque
+			<!--Deleting a library-->
+		</title>
+		<para>
+			Pour supprimer une bibliothèque, sélectionnez d'abord la bibliothèque
+			dans la liste des bibliothèques. Vous pouvez alors soit cliquer
+			avec le bouton <mousebutton>droit</mousebutton> de la souris 
+			sur le nom et choisir 
+			<guimenuitem><accel>S</accel>upprimer</guimenuitem> dans le
+			menu contextuel, soit choisir
+			<menuchoice>
+			<guimenu><accel>É</accel>dition</guimenu>
+			<guimenuitem><accel>S</accel>upprimer</guimenuitem>
+			</menuchoice>, 
+			soit presser la touche <keycap>Suppr</keycap> de votre clavier.
+			&app; demande une confirmation avant de supprimer une
+			bibliothèque.
+			<!--To delete a library, select the library in the library pane,
+			either right-click and select <guimenuitem>Delete</guimenuitem>, 
+			choose 
+			<menuchoice>
+			<guimenu>Edit</guimenu>
+			<guimenuitem>Delete</guimenuitem>
+			</menuchoice> 
+			from the main menu, or press the 
+			<keycap>Delete</keycap> key on your keyboard. &app; will ask
+			for confirmation before deleting the library.-->
+		</para>
+		
+		<warning>
+			<para>
+				Supprimer une bibliothèque supprime tous les livres
+				qu&#8217;elle contient. 
+				Il n&#8217;est pas possible d&#8217;annuler cette action&nbsp;!
+				<!--Deleting a library deletes all the books it contains,
+				and cannot be undone!-->
+			</para>
+		</warning>
+	</sect2>
+
+	<!-- ====== Moving between libraries == -->
+	<sect2 id="moving-between-libraries">
+		<title>
+			Déplacement de livres entre bibliothèques
+			<!--Moving books between libraries-->
+		</title>
+		<para>
+			Vous pouvez déplacer des livres entre des bibliothèques
+			en sélectionnant les livres à déplacer, cliquez 
+			avec le bouton <mousebutton>droit</mousebutton> de la souris
+			et choisissez
+			<menuchoice>
+			<guimenu><accel>D</accel>éplacer</guimenu>
+			</menuchoice>
+			puis choisissez la bibliothèque de destination.
+			En passant par le menu, utilisez
+			<menuchoice>
+			<guimenu><accel>É</accel>dition</guimenu>
+			<guimenuitem><accel>D</accel>éplacer</guimenuitem>
+			</menuchoice> 
+			puis choisissez la bibliothèque de destination.
+			
+			<!--You can move books between libraries by selecting the book
+			or books you wish to move, right-clicking and choosing 
+			<menuchoice>
+			<guimenu>Move</guimenu>
+			<guimenuitem>In Library Name</guimenuitem>
+			</menuchoice> or choosing 
+			<menuchoice>
+			<guimenu>Edit</guimenu>
+			<guimenuitem>Move</guimenuitem>
+			<guimenuitem>In Library Name</guimenuitem>
+			</menuchoice> 
+			from the main menu.-->
+		</para>
+	</sect2>
+  </sect1>
+
+<!-- ============= Searching and views subsection =============== -->
+
+  <sect1 id="searching">
+	<title>
+		Recherche, filtrage et vues
+		<!--Searching, Filtering and Views-->
+	</title>
+	<para>
+		&app; inclut des outils puissants de recherche, de filtrage 
+		et d&#8217;affichage des livres. Vous utilisez ces outils pour afficher
+		les livres de certains auteurs ou éditeurs, ceux qui ont
+		une note élevée ou ceux qui ont une note attachée.
+		&app; possède une vue sous forme de liste ou sous forme d&#8217;icônes,
+		et peut se connecter à des fournisseurs d&#8217;informations en ligne
+		pour collecter les informations des livres.
+		<!--&app; includes powerful tools for searching and filtering and 
+		books display. You can use these tools to display only books by 
+		a certain author or publisher, only those you rate highly or 
+		those with additional notes. &app; also contains both Icon and 
+		List views, and can directly link to online information providers 
+		to display more detailed information.-->
+
+		<itemizedlist>
+			<listitem><para><xref linkend="searching-views"/></para></listitem>
+			<listitem><para><xref linkend="searching-filtering"/></para></listitem>
+			<listitem><para><xref linkend="searching-more-online"/></para></listitem>
+		</itemizedlist>
+	</para>
+
+
+	<!-- ========= Icon and List views =========== -->
+	<sect2 id="searching-views">
+		<title>
+			Vue en tant qu&#8217;icônes ou liste
+			<!--Icon and List Views-->
+		</title>
+		<para>
+			Comme le gestionnaire de fichiers 
+			<application>Nautilus</application>, &app; possède les 
+			vues sous forme d&#8217;icônes ou de liste. La vue en tant qu&#8217;icônes
+			montre la couverture et le titre pour chaque livre de votre
+			bibliothèque, tandis que la vue en tant que liste montre
+			plus de détails avec un livre par ligne (niveau de détail 
+			défini dans les préférences,
+			voir <xref linkend="alexandria-prefs-display"/>).
+			<!--Like the <application>Nautilus</application> file manager, 
+			&app; has both Icon and List views. The Icon view shows the 
+			cover and title for every book in your library, while the 
+			List view shows more detailed information (as defined in the 
+			<xref linkend="alexandria-prefs-display"/> preferences), with 
+			one book per line.-->
+		</para>
+		
+		<tip>
+			<para>
+				Pour basculer d&#8217;une vue à l&#8217;autre,
+				utilisez le menu déroulant en haut à droite de la fenêtre 
+				principale <guibutton>Voir en tant que&hellip;</guibutton> ou
+				utilisez le menu 
+				<menuchoice>
+				<guimenu><accel>A</accel>ffichage</guimenu>
+				<guimenuitem>Voir en tant qu&#8217;<accel>i</accel>cônes</guimenuitem>
+				</menuchoice> 
+				ou
+				<menuchoice>
+				<guimenu><accel>A</accel>ffichage</guimenu>
+				<guimenuitem>Voir en tant que <accel>l</accel>iste</guimenuitem>
+				</menuchoice>.
+				Il est aussi possible de cliquer avec le bouton 
+				<mousebutton>droit</mousebutton> de la 
+				souris dans la fenêtre principale et de choisir
+				l'une des deux entrées citées précédemment.
+				<!--To switch between Icon and List views, either use the
+				<guibutton>View as...</guibutton> button in the top right 
+				of the main window, or 
+				<menuchoice>
+				<guimenu>View</guimenu>
+				<guimenuitem>View As List / View as Icons</guimenuitem>
+				</menuchoice> 
+				in the main menu and right-click menu.-->
+			</para>
+		</tip>
+		
+		<para>
+			Les icônes peuvent être rangées en ordre de titre, auteur,
+			éditeur, édition et notation et vous pouvez inverser l&#8217;ordre.
+			Pour changer l&#8217;ordre des livres dans la vue en tant qu&#8217;icônes,
+			choisissez 
+			<menuchoice>
+			<guimenu><accel>A</accel>ffichage</guimenu>
+			<guimenuitem><accel>R</accel>anger les icônes</guimenuitem>
+			</menuchoice> 
+			ou <guimenuitem><accel>R</accel>anger les icônes</guimenuitem>
+			dans le menu contextuel de la fenêtre principale.
+			<!--The icons can be arranged in order of Title, Author, Publishing, 
+			Binding or Rating, and you can reverse this order. To change 
+			the order of the books in the Icon view, choose 
+			<menuchoice>
+			<guimenu>View</guimenu>
+			<guimenuitem>Arrange Icons</guimenuitem>
+			</menuchoice> from the main menu or 
+			<guimenuitem>Arrange Icons</guimenuitem> from the right-click menu.-->
+		</para>
+		<para>
+			Pour changer l&#8217;ordre de tri des livres dans la 
+			vue en tant que liste,
+			cliquez sur le titre de la colonne à laquelle appliquer le tri.
+			<!--To change the order of the books in the List view, click on the 
+			appropriate column header.-->
+		</para>
+		
+		<figure id="listview-fig">
+	   	<title>
+	   		Vue en tant que liste montrant les livres triés en ordre 
+	   		inverse du nom d&#8217;auteur.
+	   		<!--The list view, showing books sorted in reverse by author name-->
+	   	</title>
+	      <screenshot>
+	      	<mediaobject>
+	         	<imageobject>
+	              <imagedata fileref="figures/alexandria_list_view.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	            	<phrase>
+				   		Vue en tant que liste montrant les livres triés en ordre 
+				   		inverse du nom d&#8217;auteur.	            			
+	              		<!--The list view, showing books sorted by author name-->
+	            	</phrase>
+	            </textobject>
+	         </mediaobject>
+	      </screenshot>
+	   </figure>
+
+	</sect2>
+
+	<!-- ========== Searching/filtering ======== -->
+	<sect2 id="searching-filtering">
+		<title>
+			Recherche et filtrage de l&#8217;affichage
+			<!--Searching or filtering the view-->
+		</title>
+		<para>
+			Il est très facile de chercher un livre en particulier, ou de 
+			limiter le nombre de livres affichés. Pour chercher un titre
+			spécifique, entrez le terme dans la boîte de texte sur la 
+			barre d&#8217;outils. Utilisez le menu déroulant 
+			<guilabel>Filtre tout</guilabel> pour choisir le 
+			champ d&#8217;information dans lequel la recherche sera effectuée. 
+			La recherche peut s&#8217;effectuer sur une partie des titres, 
+			des auteurs,
+			des <acronym>ISBN</acronym>, des éditeurs ou des notes.
+			<!--It is very easy to search for a particular book, or to limit 
+			the number of books displayed. To search for a specific 
+			title, just enter its name in the entry field on the toolbar. 
+			Use the <guilabel>Title contains</guilabel> drop-down menu 
+			to choose between searching for Titles, Authors, ISBNs, 
+			Publishers or Notes.-->
+		</para>
+  		
+  		<figure id="listview-search-fig">
+	   	<title>
+	   		Vue sous forme de liste, affichant les livres contenant 
+	   		le nom «&nbsp;Hamme&nbsp;».
+	      	<!--The list view, showing books only those books whose
+	        	author name contains &#8217;banks&#8217;-->
+	      </title>
+	      <screenshot>
+	      	<mediaobject>
+	         	<imageobject>
+	            	<imagedata fileref="figures/alexandria_list_view_search.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	            	<phrase>
+				   		Vue sous forme de liste, affichant les livres contenant 
+				   		le nom «&nbsp;Hamme&nbsp;».
+	            		<!--The list view, searching for books by &#8217;banks&#8217;-->
+	            	</phrase>
+	            </textobject>
+	         </mediaobject>
+	      </screenshot>
+	   </figure>
+		
+		<tip>
+			<para>
+				À partir du clavier, vous pouvez placer le curseur
+				dans le champ de recherche en pressant les touches
+				<keycombo><keycap>Ctrl</keycap><keycap>F</keycap></keycombo>.
+				Vous pouvez effacer les résultats de la recherche en pressant les touches
+				<keycombo><keycap>Ctrl</keycap><keycap>Alt</keycap><keycap>B</keycap></keycombo>.
+				<!--From the keyboard, you can move to the search field by 
+				pressing Ctrl-F. You can clear the search by pressing 
+				Ctrl-Alt-B.-->
+			</para>
+		</tip>
+	</sect2>
+
+	<!-- ========= Finding out more online =========== -->
+	<sect2 id="searching-more-online">
+		<title>
+			Recherche d&#8217;informations en ligne
+			<!--Finding out more information about your books online-->
+		</title>
+		<para>
+			Pour trouver plus d&#8217;informations au sujet de vos livres, vous
+			pouvez utiliser &app; pour ouvrir une page web sur 
+			<orgname>Amazon</orgname>, <orgname>Barnes and Noble</orgname>
+			ou chez l&#8217;un des autres fournisseurs d&#8217;informations en ligne
+			et être dirigé directement à la page du livre concerné.
+			Pour cela, sélectionnez le livre, cliquez dessus avec le bouton 
+			<mousebutton>droit</mousebutton> de la souris,
+			et à partir du menu contextuel choisissez
+			<guimenu>Afficher les <accel>i</accel>nformations en ligne</guimenu>
+			puis sélectionnez le fournisseur dans la liste présentée.
+			<!--If you want to find out more information about your book, you 
+			can use &app; to open the web page of Amazon, Barnes and Noble, 
+			or one of the other online information providers and be 
+			taken directly to the relevant book. Simply select the book you 
+			wish to know more about, right-click on it, and from the menu 
+			<guimenuitem>Display Online Information</guimenuitem>, choose 
+			from either Amazon, Barnes and Nobel, Proxis, 
+			Spanish Culture Ministry, Amadeus Buch, or 
+			Internet Bookshop Italia.-->
+		</para>
+		<tip>
+			<para>
+				Le menu
+				<menuchoice>
+				<guimenu>Afficher les <accel>i</accel>nformations en ligne</guimenu>
+				<guimenuitem>Sur <accel>A</accel>mazon</guimenuitem>
+				</menuchoice>
+				vous envoie sur le site d&#8217;<orgname>Amazon</orgname> .com, 
+				.ca, .co.uk, .de, .fr, ou .jp en fonction de votre 
+				configuration pour ce fournisseur (voir 
+				<xref linkend="alexandria-amazon-prefs"/>).
+				<!--The 
+				<menuchoice>
+				<guimenu>Display Online Information</guimenu>
+				<guimenuitem>At Amazon</guimenuitem>
+				</menuchoice> 
+				choice will take you to the Amazon .com, .co.uk, .de, or jp 
+				site, as set up in the 
+				<xref linkend="alexandria-amazon-prefs"/>.-->
+			</para>
+		</tip>
+		<caution>
+			<para>
+				Les sources d&#8217;informations en ligne n&#8217;ont pas une liste
+				complète de livres et il est possible que vous deviez
+				essayer plusieurs fournisseurs pour trouver
+				l&#8217;information recherchée.
+				<!--Not every online information source has a complete list of 
+				books and you may have to try several different providers 
+				to find the information you want.-->
+			</para>
+		</caution>
+	</sect2>
+  </sect1>
+
+<!-- ============= Exporting information Subsection ============= -->
+
+	<sect1 id="exporting">
+		<title>
+			Exportation d&#8217;informations
+			<!--Exporting Information-->
+		</title>
+		<para>
+			Les informations dans &app; peuvent être exportées pour être
+			utilisées dans d&#8217;autres logiciels.
+			Les formats d&#8217;exportation disponibles sont&nbsp;:
+			<!--Information in &app; can be exported for use in other applications. 
+			Information can be exported in several formats:-->
+			<itemizedlist>
+				<listitem>
+					<para><xref linkend="exporting-as-onix"/>&nbsp;;</para>
+				</listitem>
+				<listitem>
+					<para><xref linkend="exporting-as-Tellico"/>&nbsp;;</para>
+				</listitem>
+				<listitem>
+					<para><xref linkend="exporting-as-plaintext"/>&nbsp;;</para>
+				</listitem>
+				<listitem>
+					<para>
+						<xref linkend="exporting-as-web-page"/>, 
+						utilisant <acronym>XHTML</acronym> et 
+						les feuilles de styles <acronym>CSS</acronym>.
+						<!--<xref linkend="exporting-as-web-page"/>, 
+						using XHTML and CSS stylesheets-->
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+
+	<sect2 id="exporting-as-onix">
+		<title>
+			Exportation en archive <acronym>ONIX</acronym> compressée
+			<!--Exporting as a compressed ONIX archive-->
+		</title>
+		<para>
+			<acronym>ONIX</acronym> est un standard international utilisé
+			par des éditeurs ou détaillants pour définir les informations
+			de livres telles que le titre, prix, collaborateurs, 
+			critiques, etc. Pour plus d&#8217;informations au sujet 
+			d&#8217;<acronym>ONIX</acronym> et de ses utilisations, 
+			visitez le site 
+			<ulink url="http://www.editeur.org">http://www.editeur.org/</ulink>.
+			<!--ONIX is an international standard used by publishers and 
+			retailers to define information - title, price, contributors, 
+			reviews and many others - about books. For more information 
+			about ONIX and its uses, see http://www.editeur.org/.-->
+		</para>
+		<para>
+			&app; collecte l&#8217;information sur tous vos livres et l&#8217;exporte
+			sous forme d&#8217;une collection archivée 
+			(<filename class="extension">.tbz2</filename>) de fichiers
+			<acronym>ONIX</acronym> (appelés messages <acronym>ONIX</acronym>).
+			Pour exporter votre bibliothèque comme archive 
+			<acronym>ONIX</acronym> choisissez
+			<menuchoice>
+			<shortcut><keycombo><keycap>Shift</keycap><keycap>Ctrl</keycap><keycap>E</keycap></keycombo></shortcut>
+			<guimenu><accel>B</accel>ibliothèque</guimenu>
+			<guimenuitem><accel>E</accel>xporter&hellip;</guimenuitem>
+			</menuchoice> 
+			puis dans le menu déroulant
+			<guilabel>For<accel>m</accel>at d&#8217;export</guilabel>
+			choisissez l&#8217;option 
+			<guilabel>Archive ONIX XML (.onix.tbz2)</guilabel>.
+			Saisissez un nom de fichier et sélectionnez un dossier
+			pour enregistrer l&#8217;archive et cliquez sur 
+			<guibutton><accel>E</accel>xporter</guibutton>.
+			<!--&app; can gather up all your book information and export it 
+			as an archived (.tar.bz2) collection of ONIX files 
+			(called ONIX messages). To export your library as an ONIX archive, 
+			choose 
+			<menuchoice>
+			<guimenu>Library</guimenu>
+			<guimenuitem>Export</guimenuitem>
+			</menuchoice> 
+			from the main menu, then choose 
+			<guimenuitem>Archived ONIX XML (.onix.tbz2)</guimenuitem> 
+			from the <guilabel>Export format</guilabel> menu. 
+			Specify a file name and a location to save the archive, and press 
+			<guibutton>Export</guibutton>.-->
+		</para>
+	</sect2>
+
+	<sect2 id="exporting-as-Tellico">
+		<title>
+			Exportation en fichier Tellico compressé
+			<!--Exporting as a compressed Tellico file-->
+		</title>
+		<para>
+			Tellico est un format de fichier standard, basé sur
+			<acronym>XML</acronym>, pour stocker les informations
+			concernant des livres ou d&#8217;autres collections.
+			&app; peut importer et exporter dans ce format.
+			<!--Tellico is a standard file format, based on XML, for storing 
+			information about book and other collections. &app; can both 
+			import and export information in the Tellico format.-->
+		</para>
+		<para>
+			Pour exporter votre bibliothèque dans un fichier compressé
+			(<filename class="extension">.tc</filename>), choisissez
+			<guilabel>Archive Tellico XML (*.tc)</guilabel> dans le 
+			menu déroulant <guilabel>For<accel>m</accel>at d&#8217;export</guilabel>
+			de la fenêtre <guilabel>Exporter</guilabel>.
+			<!--To export your library as a compressed (.tc) file, choose
+			<guimenuitem>Archived Tellico XML (.tc)</guimenuitem> from the 
+			<guilabel>Export format</guilabel> menu in the Export dialogue.-->
+		</para>
+	</sect2>
+
+	<sect2 id="exporting-as-plaintext">
+		<title>
+			Exportation d&#8217;une liste d&#8217;<acronym>ISBN</acronym>
+			<!--Exporting a list of ISBNs-->
+		</title>
+		<para>
+			&app; peut exporter une liste d&#8217;<acronym>ISBN</acronym>
+			au format texte, peut-être pour transférer une bibliothèque
+			sur une autre machine. Pour cela, choisissez 
+			<guilabel>Liste d&#8217;ISBN (*.txt)</guilabel> dans le 
+			menu déroulant <guilabel>For<accel>m</accel>at d&#8217;export</guilabel>
+			de la fenêtre <guilabel>Exporter</guilabel>.
+			<!--&app; can export a plain test list of ISBNs - perhaps to 
+			transfer to another machine. To export a list of ISBNs, choose 
+			<guimenuitem>ISBN list (.txt)</guimenuitem> from the 
+			<guilabel>Export format</guilabel> menu in the Export dialogue.-->
+		</para>
+	</sect2>
+
+	<sect2 id="exporting-as-web-page">
+		<title>
+			Exportation en page web
+			<!--Exporting a library as a web page-->
+		</title>
+		<para>
+			&app; peut créer une page web à partir de votre bibliothèque,
+			listant chaque livre au complet avec l&#8217;image de la couverture.
+			Pour cela, &app; crée un dossier avec les images, une page
+			web au format <acronym>XHTML</acronym> et une feuille de style
+			<acronym>CSS</acronym>.
+			Vous pouvez choisir différentes feuilles de styles pour 
+			personnaliser l&#8217;apparence des pages.
+			<!--&app; can create a web page from your book library, listing 
+			each book complete with cover images. To do this, it creates a 
+			directory of images, an XHMTL web page, and a CSS stylesheet. 
+			You can choose from different stylesheets to customise the 
+			appearance of the web page.-->
+		</para>
+		<para>
+			Pour exporter votre bibliothèque en page web, allez à
+			<menuchoice>
+			<guimenu><accel>B</accel>ibliothèque</guimenu>
+			<guimenuitem><accel>E</accel>xporter</guimenuitem>
+			</menuchoice> 
+			puis choisissez
+			<guilabel>Page Web HTML (répertoire)</guilabel> dans le 
+			menu déroulant <guilabel>For<accel>m</accel>at d&#8217;export</guilabel>
+			de la fenêtre <guilabel>Exporter</guilabel>.
+			Vous pouvez choisir le style &mdash; ou thème &mdash; 
+			dans le menu déroulant <guilabel><accel>T</accel>hème</guilabel>.
+			<!--To export your library as a web page, 
+			<menuchoice>
+			<guimenu>Library</guimenu>
+			<guimenuitem>Export</guimenuitem>
+			</menuchoice> 
+			from the main menu, then choose 
+			<guimenuitem>HTML Web Page (directory)</guimenuitem> from the 
+			<guilabel>Export format</guilabel> menu. Choose a style 
+			- or theme - for the web page from the 
+			<guimenuitem>Theme</guimenuitem> menu.-->
+		</para>
+		
+		<figure id="export-as-web-page-fig">
+	   	<title>
+	   		Utilisation d&#8217;&app; pour créer une page web.
+	   		<!--Using &app; to create a web page-->
+	   	</title>
+	      <screenshot>
+	      	<mediaobject>
+	         	<imageobject>
+	            	<imagedata fileref="figures/alexandria_export_web_page.png" format="PNG"/>
+	            </imageobject>
+	            <textobject>
+	            	<phrase>
+	            		Montre &app; exportant une bibliothèque 
+	            		en page web.
+	            		<!--Shows &app; exporting a library as a web page.-->
+	            	</phrase>
+	            </textobject>
+	         </mediaobject>
+	      </screenshot>
+	   </figure>
+	   
+		<para>
+			Sélectionnez le dossier dans lequel la page web sera enregistrée
+			puis cliquez sur <guibutton><accel>E</accel>xporter</guibutton>
+			pour enregistrer les fichiers.
+			<!--Type in a name for the directory the web page will be saved in, 
+			and press the <guibutton>Export</guibutton> to save the files.-->
+		</para>
+		<tip>
+			<para>
+				Un seul thème est disponible pour l&#8217;instant&nbsp;: Clean.
+				<!--Only one theme, called Clean, is available at present.-->
+			</para>
+		</tip>
+	</sect2>
+  </sect1>	
+
+<!-- ============= Customization ============================= -->
+<!-- Use this section to describe how to customise the application. -->
+	<sect1 id="alexandria-preferences">
+  		<title>
+  			Configuration
+    		<!--Settings-->
+    	</title>
+    	<para>
+    		Pour configurer &app;, choisissez 
+      	<menuchoice>
+      	<guimenu><accel>É</accel>dition</guimenu>
+      	<guimenuitem><accel>P</accel>références</guimenuitem>
+      	</menuchoice>. 
+			La fenêtre <guilabel>Préférences</guilabel> contient les onglets
+			suivants&nbsp;:
+    		<!--To configure &app;, choose 
+      	<menuchoice>
+      	<guimenu>Edit</guimenu>
+      	<guimenuitem>Preferences</guimenuitem>
+      	</menuchoice>. 
+      	The 
+      	<guilabel>Preferences</guilabel> dialogue contains the following 
+      	tabbed sections:-->
+      </para>
+    	<itemizedlist>
+      	<listitem>
+      	  <para> 
+	  				<xref linkend="alexandria-prefs-display"/>
+	  			</para>
+      	</listitem>
+      	<listitem>
+        		<para> 
+	  				<xref linkend="myapp-prefs-providers"/>
+	  			</para>
+	      </listitem>
+   	</itemizedlist>
+	
+		<para>
+			Vous pouvez ajouter de nouveaux fournisseurs d&#8217;informations
+			en ligne à &app;&nbsp;:
+			<!--You can also add new online information providers to &app;:-->
+		</para>
+	
+		<itemizedlist>
+			<listitem>
+				<para>
+					<xref linkend="alexandria-z3950-prefs"/>
+				</para>
+			</listitem>
+		</itemizedlist>
+
+	<!-- ======== Visible columns ======= -->
+   <sect2 id="alexandria-prefs-display">
+    	<title>
+    		Vue en tant que liste
+    		<!--List View-->
+    	</title>
+      <para>
+      	Vous pouvez choisir les colonnes de la liste à afficher en
+      	cochant ou décochant les cases.
+      	Les colonnes disponibles sont&nbsp;:
+      	<guilabel><accel>A</accel>uteurs</guilabel>,
+      	<guilabel><accel>I</accel>SBN</guilabel>,
+      	<guilabel><accel>É</accel>diteur</guilabel>,
+      	<guilabel>É<accel>d</accel>ition</guilabel>,
+      	<guilabel><accel>N</accel>otation</guilabel>.
+      	<!--You can choose which columns are displayed in the List view by 
+      	selecting or deselecting the checkboxes. Possible columns 
+      	are Authors, ISBN, Publisher, Binding and Rating.-->
+      </para>
+    </sect2>
+
+	<!-- ======== Providers ======== -->
+   <sect2 id="myapp-prefs-providers">
+      <title>
+      	Fournisseurs d&#8217;informations en ligne
+      	<!--Online information providers-->
+      </title>
+      <para>
+      	&app; peut télécharger des informations de différentes sources
+      	en ligne. Certains fournisseurs peuvent être 
+      	configurés afin d&#8217;obtenir de meilleurs résultats.
+      	&app; cherche chacune de ces sources à tour de rôle, dans 
+      	l&#8217;ordre affiché par la liste. Vous pouvez changer cet ordre
+      	en déplaçant chaque source en utilisant
+      	les boutons <guibutton><accel>V</accel>ers le haut</guibutton>
+      	ou <guibutton><accel>V</accel>ers le bas</guibutton>.
+      	<!--&app; can download information from a variety of different 
+      	online sources; some of these sources have additional options 
+      	to control how the information is downloaded. &app; will 
+      	search each of the sources in turn, in the order displayed in 
+      	the list. You can change the order in which the sources are 
+      	searched by moving each source up or down using the 
+      	<guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.-->
+			<itemizedlist>
+				<listitem>
+					<para>
+						<xref linkend="alexandria-amazon-prefs"/>&nbsp;;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<xref linkend="alexandria-proxis-prefs"/>&nbsp;;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Ministère de la Culture espagnol&nbsp;;
+						<!--The Spanish Culture Ministry-->
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Barnes and Noble&nbsp;;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Amadeus Buch&nbsp;;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Internet Bookshop Italia&nbsp;;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<xref linkend="alexandria-britlib-prefs"/>&nbsp;;
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<xref linkend="alexandria-uslibcon-prefs"/>&nbsp;;
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+		<para>
+			Vous pouvez aussi ajouter ou supprimer des fournisseurs
+			d&#8217;informations qui utilisent le protocole Z39.50. 
+			Deux fournisseurs utilisant ce protocole ont été configurés
+			pour vous.
+			<!-- Note du traducteur : La première phrase suivante ne reflète
+			pas le logiciel.-->
+			<!--You can also use the Z39.50 protocol to add and remove new 
+			information providers. Two providers have been set up using 
+			this protocol for you.-->
+			<itemizedlist>
+				<listitem>
+					<para>
+						<xref linkend="alexandria-z3950-prefs"/>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+
+
+      <sect3 id="alexandria-amazon-prefs">
+        	<title>
+        		Préférences pour <orgname>Amazon</orgname>
+        		<!-- Amazon preferences-->
+        	</title>
+        	<para>
+        		&app; peut télécharger les informations d&#8217;un livre à partir
+        		de différents sites web d&#8217;<orgname>Amazon</orgname>. 
+        		Les sites actuellement supportés sont&nbsp;:
+        		amazon.com (us), .ca, .co.uk (uk), .de, .fr et .jp.
+        		Pour changer le site utilisé, sélectionnez 
+        		<guilabel>Amazon</guilabel> à partir de la liste des 
+        		fournisseurs et cliquez sur 
+        		<guibutton><accel>C</accel>onfigurer</guibutton>.
+        		Ensuite choisissez dans le menu déroulant 
+        		<guilabel><accel>L</accel>angue</guilabel> le site 
+        		qui vous convient.
+        		<!--&app; can download book information from different amazon 
+        		websites - currently, amazon.com, .co.uk, .de and .jp. 
+        		To change which site to use, select Amazon from the 
+        		Provider list, and click on <guibutton>Setup</guibutton>. 
+        		Then choose either <guilabel>UK, DE, JP</guilabel> or 
+        		<guilabel>US</guilabel> from the drop-down menu.-->
+        	</para>
+	  	
+	  		<warning>
+				<para>
+					<guilabel><accel>J</accel>eton de développeur</guilabel>
+					et <guilabel><accel>I</accel>dentifiant d&#8217;associé</guilabel>
+					peuvent être changés si vous avez un compte de service web
+					d&#8217;<orgname>Amazon</orgname>. Vous pouvez obtenir
+					un compte à l&#8217;adresse 
+					<ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>.
+					Si vous ne savez pas ce que cela signifie, alors vous pouvez 
+					laisser ces champs tels quels.
+					<!--The <guilabel>Development token</guilabel> and 
+					<guilabel>Associate ID</guilabel> can be changed if you 
+					have an amazon web services account. You sign for an 
+					Amazon Web Services account at 
+					<ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. 
+					If you don&#8217;t know what this means, then you can leave 
+					these values alone.-->
+				</para>
+			</warning>
+      </sect3>
+
+
+      <sect3 id="alexandria-proxis-prefs">
+        	<title>
+        		Préférences <orgname>Proxis</orgname>
+        		<!--Proxis preferences-->
+        	</title>
+        	<para>
+        		&app; peut chercher dans le site web de 
+        		<orgname>Proxis</orgname> pour des livres en 
+        		anglais (en), français (fr) ou néerlandais (nl). Pour changer
+        		la langue utilisée, sélectionnez <guilabel>Proxis</guilabel>
+        		dans la liste 
+        		<guilabel><accel>F</accel>ournisseurs</guilabel> et cliquez
+        		sur <guibutton><accel>C</accel>onfigurer</guibutton>.
+        		Ensuite, sélectionnez la langue dans le menu déroulant
+        		<guilabel><accel>L</accel>angue</guilabel>.
+        		<!--&app; can search the Proxis website for books in either 
+        		English, French or Dutch. To change which language to use, 
+        		select Proxis from the Provider list, and click on 
+        		<guibutton>Setup</guibutton>. Then chose either 
+        		<guilabel>en, fr</guilabel> or <guilabel>nl</guilabel> from 
+        		the drop-down menu.-->
+        	</para>
+      </sect3>
+	  
+	  <sect3 id="alexandria-britlib-prefs">
+		  	<title>
+		  		Préférences <orgname>Bibliothèque Britannique</orgname>
+		  		<!--British Library preferences-->
+		  	</title>
+			<para>
+				Si vous avez un compte avec la 
+				<orgname>Bibliothèque Britannique</orgname>,
+				vous pouvez utiliser cette fenêtre pour configurer la connexion
+				au service Z39.50,
+				en fournissant votre nom d&#8217;utilisateur et votre mot de passe.
+				Vous pouvez également choisir la base de données sur 
+				laquelle se connecter.
+				<!--If you have an account with the British Library, you can use 
+				this dialogue to specify your username and password for the 
+				z39.50 service. You can also choose which database to connect to.-->
+			</para>
+	  </sect3>
+	  
+	  <sect3 id="alexandria-uslibcon-prefs">
+		  	<title>
+		  		Préférences Bibliothèque du Congrès
+		  		<!--US Library of Congress preferences-->
+		  	</title>
+			<para>
+				Si vous avez un compte avec la 
+				<orgname>Bibliothèque du Congrès des États-Unis d&#8217;Amérique</orgname>,
+				vous pouvez utiliser cette fenêtre pour configurer la connexion
+				au service Z39.50,
+				en fournissant votre nom d&#8217;utilisateur et votre mot de passe.
+				Vous pouvez également choisir la base de données sur 
+				laquelle se connecter.
+				<!--If you have an account with the US Library of Congress, you can 
+				use this dialogue to specify your username and password for 
+				the z39.50 service. You can also choose which database 
+				to connect to.-->
+			</para>
+	  </sect3>
+	  
+	  <sect3 id="alexandria-z3950-prefs">
+		  	<title>
+		  		Ajout de fournisseurs Z39.50
+		  		<!--Adding Z39.50 providers-->
+		  	</title>
+			<para>
+				Pour ajouter ou supprimer des fournisseurs Z39.50, vous
+				devez préalablement rendre disponible les préférences 
+				avancées en cliquant sur la case à cocher
+				<guilabel>Paramètres <accel>a</accel>vancés</guilabel>.
+				Deux boutons apparaissent&nbsp;:
+				<guibutton>A<accel>j</accel>outer</guibutton> et 
+				<guibutton><accel>E</accel>nlever</guibutton>.
+				Cliquer sur <guibutton>A<accel>j</accel>outer</guibutton>
+				ouvre la fenêtre de fournisseur Z39.50 suivante&nbsp;:
+				<!--To add or remove a Z39.50 provider, you must first enable
+				the advanced preferences options by clicking on the 
+				<guilabel>Advanced Settings</guilabel> checkbox. Two new 
+				buttons will appear: <guibutton>Add</guibutton> and 
+				<guibutton>Remove</guibutton>. Clicking Add will open the 
+				Z39.50 provider dialogue:-->
+			</para>
+			<figure id="add-z3950">
+		   	<title>
+		   		Ajout d&#8217;un fournisseur d&#8217;informations utilisant 
+		   		le protocole Z39.50.
+		   		<!--Adding a new Z39.50 information provider-->
+		   	</title>
+		      <screenshot>
+		      	<mediaobject>
+		         	<imageobject>
+		            	<imagedata fileref="figures/alexandria_add_z3950.png" format="PNG"/>
+		            </imageobject>
+		            <textobject>
+		            	<phrase>
+					   		Fenêtre pour ajouter un fournisseur 
+					   		d&#8217;informations utilisant 
+					   		le protocole Z39.50.
+		            		<!--The Z39.50 information provider dialog.-->
+		            	</phrase>
+		            </textobject>
+		         </mediaobject>
+		    	</screenshot>
+		    </figure>
+
+			<para>
+				Dans cette fenêtre vous pouvez indiquer le 
+				<guilabel><accel>N</accel>om</guilabel> du fournisseur,
+				le <guilabel><accel>N</accel>om d&#8217;hôte</guilabel>,
+				le <guilabel><accel>P</accel>ort</guilabel> Internet auquel
+				se connecter, 
+				le nom de la <guilabel><accel>B</accel>ase de données</guilabel>,
+				le <guilabel><accel>F</accel>ormat</guilabel> des données
+				utilisées (&app; supporte actuellement les formats 
+				<acronym>USMARC</acronym>, <acronym>UNIMARC</acronym> et 
+				<acronym>SUTRS</acronym>) et si nécessaire
+				le nom d&#8217;utilisateur et le mot de passe pour se connecter au service.
+				
+				<!--Here you can specify the <guilabel>Name</guilabel> of the 
+				provider, the <guilabel>Hostname</guilabel>, the internet 
+				<guilabel>Port</guilabel> to connect to, the name of the 
+				online <guilabel>Database</guilabel>, the 
+				<guilabel>Record Syntax</guilabel> used (&app; currently 
+				supports USMARC, UNIMARC and SUTRS formats), and, if 
+				relevant, a username and password to connect to the provider.-->
+			</para>
+			
+			<para>
+				Pour supprimer un fournisseur, sélectionnez son nom dans
+				la liste et cliquez sur 
+				<guibutton><accel>E</accel>nlever</guibutton>.
+				Vous ne pouvez pas supprimer les fournisseurs fournis 
+				par &app;.
+				<!--To remove a provider, select its name from the list and 
+				click on <guibutton>Remove</guibutton>. You cannot remove 
+				any of the default providers provided by &app;.-->
+			</para>
+		</sect3>
+    </sect2>
+  </sect1>
+
+<!-- ============= Bugs ================================== -->
+<!-- This section is optional and is commented out by default. 
+     You can use it to describe known bugs and limitations of the 
+	  program if there are any - please be frank and list all
+     problems you know of. 
+  
+  <sect1 id="mayapp-bugs">
+  <title>Known Bugs and Limitations</title>
+  <para> </para>
+ </sect1>
+-->
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+      author&#8217;s name(s), web page, license, feedback address. This
+      section is optional: primary place for this info is "About.." box of
+      the program. However, if you do wish to include this info in the
+      manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
+  <sect1 id="myapp-about">
+		<title>À propos d&#8217;&app;<!--About &app;--></title>
+    	<para>
+			&app; est écrit par 
+			<personname>
+				<firstname>Laurent</firstname><surname>Sansonetti</surname>
+			</personname>
+			(<email>lrz@gnome.org</email>).
+		</para>
+		<para>
+			Si vous cherchez plus d&#8217;informations sur &app;, veuillez visiter
+			<ulink url="http://alexandria.rubyforge.org/" type="http">
+				la page web d&#8217;&app;
+			</ulink>.
+    		<!--&app; was written by Laurent Sansonetti
+      	(<email>lrz@gnome.org</email>). To find more information about
+      	&app;, please visit the 
+      	<ulink url="http://alexandria.rubyforge.org/" type="http">&app; Web
+			page</ulink>.-->
+		</para>
+    	<para>
+     		<!-- traduction reprise du manuel de GRAMPS -->
+    		Si vous désirez signaler une erreur du programme, ou faire
+    		une suggestion à propos du programme ou du manuel,
+    		utilisez le menu d&#8217;aide d&#8217;&app; ou procédez comme
+    		indiqué à la   
+    		<ulink url="ghelp:gnome-feedback" type="help">Page de réactions sur GNOME</ulink>.
+      	<!--To report a bug or make a suggestion regarding this application or
+      	this manual, follow the directions in this 
+      	<ulink url="ghelp:gnome-feedback" type="help">document</ulink>.-->
+    	</para>
+    	<para> 
+	Ce programme est distribué selon les termes de la licence publique
+	générale GNU telle qu&#8217;elle a été publiée par la Free Software Foundation,
+	selon la version 2 de la licence, ou (à votre choix) n&#8217;importe quelle
+	version ultérieure. Vous pouvez trouver une copie de cette licence en
+	suivant ce <ulink url="ghelp:gpl" type="help">lien</ulink>, ou 
+	dans le fichier COPYING distribué avec le code source de ce programme.
+    	<!--	This program is distributed under the terms of the GNU
+      	General Public license as published by the Free Software
+      	Foundation; either version 2 of the License, or (at your option)
+      	any later version. A copy of this license can be found at this
+      	<ulink url="ghelp:gpl" type="help">link</ulink>, or in the file
+      	COPYING included with the source code of this program. -->
+      </para>
+  </sect1>
+</article>
