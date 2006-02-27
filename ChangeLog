@@ -1,3 +1,11 @@
+2006-02-27  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui.rb,
+	  lib/alexandria/ui/main_app.rb:
+
+	Check at runtime if Ruby/Pango has ellipzise support, and use it
+	accordingly.
+
 2006-01-05  Laurent Sansonetti  <lrz@gnome.org>
 
 	* TODO:

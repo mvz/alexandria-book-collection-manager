@@ -39,6 +39,12 @@ require 'alexandria/ui/new_smart_library_dialog'
 require 'alexandria/ui/multi_drag_treeview'
 require 'alexandria/ui/main_app'
 
+module Pango
+    def self.ellipsizable?
+        @ellipsizable ||= Pango.constants.include?('ELLIPSIZE_END')
+    end
+end
+
 module Alexandria
 module UI
     def self.main
