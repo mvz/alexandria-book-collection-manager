@@ -24,6 +24,7 @@ module Alexandria
     COPYRIGHT = 'Copyright (C) 2004-2006 Laurent Sansonetti'
     AUTHORS = [
         'Alexander McCormmach <alexander@tunicate.org>',
+        'Aymeric Nys <aymeric@nnx.com>',
         'Claudio Belotti <bel8@lilik.it>',
         'Constantine Evans <cevans@costinet.org>',
         'Dafydd Harries <daf@muse.19inch.net>',

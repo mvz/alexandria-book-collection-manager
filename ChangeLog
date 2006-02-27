@@ -1,6 +1,11 @@
 2006-02-27  Laurent Sansonetti  <lrz@gnome.org>
 
-	README:
+    * AUTHORS,
+      lib/alexandria.rb:
+
+    Added Aymeric.
+
+	* README:
 
 	- Mention that Ruby/ZOOM is optional ;
 	- Mention that Revolution is optional.
