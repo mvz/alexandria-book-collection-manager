@@ -2,7 +2,14 @@
 
 	README:
 
-	Mention that Ruby/ZOOM is optional.
+	- Mention that Ruby/ZOOM is optional ;
+	- Mention that Revolution is optional.
+
+	* lib/alexandria/ui/completion_models.rb:
+
+	Use the Evolution contacts database to furnish borrowers 
+	auto-completion, via the Revolution library. If this library is
+	not present on the system this feature is disabled.
 
 	* lib/alexandria/ui.rb,
 	  lib/alexandria/ui/main_app.rb:

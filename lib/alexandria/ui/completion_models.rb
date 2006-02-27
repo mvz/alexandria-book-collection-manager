@@ -49,6 +49,30 @@ class Gtk::Entry
     end
 end
 
+begin
+    require 'revolution'
+    
+    EVOLUTION_CONTACTS = 
+        Revolution::Revolution.new.get_all_contacts.map do |contact|
+        
+        first, last = contact.first_name, contact.last_name
+        
+        if first
+            first.strip!
+            first = nil if first.empty?
+        end
+
+        if last
+            last.strip!
+            last = nil if last.empty?
+        end
+
+        first and last ? first + ' ' + last : first ? first : last
+    end
+rescue LoadError
+    EVOLUTION_CONTACTS = []
+end
+
 module Alexandria
 module UI
     class CompletionModels
@@ -132,6 +156,10 @@ module UI
                     borrowers << book.loaned_to
                 end
             end
+
+            borrowers.concat(EVOLUTION_CONTACTS)
+            borrowers.uniq!
+
             fill_model(@models[TITLE], titles)
             fill_model(@models[AUTHOR], authors)
             fill_model(@models[EDITION], editions)
