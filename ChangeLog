@@ -1,3 +1,9 @@
+2006-03-02  Laurent Sansonetti  <lrz@gnome.org>
+
+	* lib/alexandria/ui/new_smart_library_dialog.rb:
+
+	Close the dialog when destroyed.	
+
 2006-02-27  Aymeric Nys	<aymeric@nnx.com>
 
 	* lib/alexandria/export_library.rb

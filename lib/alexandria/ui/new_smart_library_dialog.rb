@@ -33,7 +33,9 @@ module UI
             show_all
             insert_new_rule
 
-            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL 
+            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
+                  response != Gtk::Dialog::RESPONSE_DELETE_EVENT
+
                 if response == Gtk::Dialog::RESPONSE_HELP
                     begin
                         # TODO: write manual
