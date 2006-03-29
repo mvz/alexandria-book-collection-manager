@@ -144,7 +144,13 @@ module UI
                     @results.each_with_index do |result, i|
                         uri = result[1]
                         if uri
-                            @images[i] = URI.parse(uri).read
+                            if URI.parse(uri).scheme.nil?
+                                File.open(uri, "r") do |io|
+                                    @images[i] = io.read
+                                end
+                            else                                                    
+                                @images[i] = URI.parse(uri).read
+                            end
                         end
                     end
                 rescue => e

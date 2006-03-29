@@ -1,3 +1,12 @@
+2006-03-29 Claudio Belotti <bel8@lili.it>
+    
+    * lib/alexandria/book_providers/ibs_it.rb
+    - Download covers to .ibs_it.cache using referer
+    - Cleanup the cache at exit   
+    
+    * lib/alexandria/ui/new_book_dialog.rb
+    - In tree view handle cover as files (and not only as urls) 
+
 2006-03-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/new_smart_library_dialog.rb:

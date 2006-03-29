@@ -15,16 +15,22 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'fileutils'
 require 'net/http'
+require 'open-uri'
 #require 'cgi'
 
 module Alexandria
 class BookProviders
     class IBS_itProvider < GenericProvider
         BASE_URI = "http://www.internetbookshop.it"
+        CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
+        REFERER = "http://www.internetbookshop.it"
         def initialize
             super("IBS_it", "Internet Bookshop Italia")
+            FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
             # no preferences for the moment
+            at_exit { clean_cache }
         end
         
         def search(criterion, type)
@@ -97,17 +103,37 @@ class BookProviders
                 publish_year = CGI.unescape(md[1].strip).to_i
                 publish_year = nil if publish_year == 0
             end
-
-            if data =~ /src\=\"http:\/\/giotto.ibs.it\/thumbnails\/(.+\.jpg)\">/
-	    	    small_cover = "http://giotto.ibs.it/thumbnails/" + $1
-	    	    medium_cover = "http://giotto.ibs.it/jackets/" + $1
-	            return [ Book.new(title, authors, isbn, publisher, edition),medium_cover ]
+          
+            cover_url = "http://www.ibs.it/cop/coplibri.asp?e=" + isbn
+            cover_filename = isbn + ".tmp"
+            Dir.chdir(CACHE_DIR) do
+                File.open(cover_filename, "w") do |file|
+                    file.write open(cover_url, "Referer" => REFERER ).read
+                end                    
             end
-	        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+
+            medium_cover = CACHE_DIR + "/" + cover_filename
+            if File.size(medium_cover) > 0
+                puts medium_cover + " has non-0 size" if $DEBUG
+                return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+            end
+            puts medium_cover + " has 0 size, removing ..." if $DEBUG
+            File.delete(medium_cover)
+            return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
         end
 
         def each_book_page(data)
-	        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;c=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
+            raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;c=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
+        end
+    
+        def clean_cache
+            #FIXME begin ... rescue ... end?
+            Dir.chdir(CACHE_DIR) do
+                Dir.glob("*.tmp") do |file|
+                    puts "removing " + file if $DEBUG
+                    File.delete(file)    
+                end
+            end
         end
     end
 end
