@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.5.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-17 00:14+0200\n"
+"POT-Creation-Date: 2006-06-17 13:53+0200\n"
 "PO-Revision-Date: 2005-08-21 18:27+0200\n"
 "Last-Translator: Mirko Maischberger <mirko@lilik.it>\n"
 "Language-Team: Alexandria\n"
@@ -15,10 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n>1;\n"
-
-#: ../lib/alexandria/book_providers/mcu.rb:32
-msgid "Spanish Culture Ministry"
-msgstr "Ministero della Cultura spagnolo"
 
 #: ../lib/alexandria/book_providers/amazon.rb:30
 #: ../lib/alexandria/book_providers/proxis.rb:35
@@ -29,14 +25,18 @@ msgstr "Locale"
 msgid "Development token"
 msgstr "Token di sviluppo"
 
-#: ../lib/alexandria/book_providers/amazon.rb:33
+#: ../lib/alexandria/book_providers/amazon.rb:34
 msgid "Associate ID"
 msgstr "ID associato"
 
-#: ../lib/alexandria/book_providers/amazon.rb:104
-#: ../lib/alexandria/book_providers/amazon.rb:106
+#: ../lib/alexandria/book_providers/amazon.rb:117
+#: ../lib/alexandria/book_providers/amazon.rb:120
 msgid "n/a"
 msgstr "n.d."
+
+#: ../lib/alexandria/book_providers/mcu.rb:32
+msgid "Spanish Culture Ministry"
+msgstr "Ministero della Cultura spagnolo"
 
 #: ../lib/alexandria/book_providers/z3950.rb:29
 msgid "Hostname"
@@ -62,588 +62,13 @@ msgstr "Nome utente"
 msgid "Password"
 msgstr "Password"
 
-#: ../lib/alexandria/book_providers/z3950.rb:121
+#: ../lib/alexandria/book_providers/z3950.rb:124
 msgid "Library of Congress"
 msgstr "Library of Congress"
 
-#: ../lib/alexandria/book_providers/z3950.rb:136
+#: ../lib/alexandria/book_providers/z3950.rb:139
 msgid "British Library"
 msgstr "British Library"
-
-#: ../lib/alexandria/export_library.rb:28
-msgid "Archived ONIX XML"
-msgstr "Archivio ONIX XML"
-
-#: ../lib/alexandria/export_library.rb:30
-msgid "Archived Tellico XML"
-msgstr "Archivio Tellico XML"
-
-#: ../lib/alexandria/export_library.rb:32
-msgid "ISBN List"
-msgstr "Elenco di ISBN"
-
-#: ../lib/alexandria/export_library.rb:33
-msgid "HTML Web Page"
-msgstr "Pagina Web HTML"
-
-#: ../lib/alexandria/export_library.rb:190
-#: ../lib/alexandria/ui/main_app.rb:413
-msgid "Rating"
-msgstr "Valutazione"
-
-#: ../lib/alexandria/import_library.rb:28
-msgid "Autodetect"
-msgstr "Rileva automaticamente"
-
-#: ../lib/alexandria/import_library.rb:29
-msgid "Archived Tellico XML (*.bc, *.tc)"
-msgstr "Archivio XML Tellico (*.bc, *.tc)"
-
-#: ../lib/alexandria/import_library.rb:31
-msgid "ISBN List (*.txt)"
-msgstr "Elenco di ISBN (*.txt)"
-
-#: ../lib/alexandria/library.rb:90
-msgid "My Library"
-msgstr "Biblioteca personale"
-
-#: ../lib/alexandria/ui/export_dialog.rb:25
-msgid "File already exists"
-msgstr "Il file esiste già"
-
-#: ../lib/alexandria/ui/export_dialog.rb:28
-#: ../lib/alexandria/ui/main_app.rb:59
-msgid "_Replace"
-msgstr "_Rimpiazza"
-
-#: ../lib/alexandria/ui/export_dialog.rb:29
-msgid ""
-"A file named '%s' already exists.  Do you want to replace it with the one "
-"you are generating?"
-msgstr ""
-"Un file dal nome '%s' esiste già. Si desidera rimpiazzarlo con il nuovo file "
-"generato?"
-
-#: ../lib/alexandria/ui/export_dialog.rb:52
-msgid "Export '%s'"
-msgstr "Esporta '%s'"
-
-#: ../lib/alexandria/ui/export_dialog.rb:57
-msgid "_Export"
-msgstr "_Esporta"
-
-#: ../lib/alexandria/ui/export_dialog.rb:76
-msgid "_Theme:"
-msgstr "_Tema:"
-
-#: ../lib/alexandria/ui/export_dialog.rb:86
-msgid "directory"
-msgstr "cartella"
-
-#: ../lib/alexandria/ui/export_dialog.rb:99
-msgid "Export for_mat:"
-msgstr "For_mato di esportazione:"
-
-#: ../lib/alexandria/ui/export_dialog.rb:122
-msgid "Export failed"
-msgstr "Esportazione fallita"
-
-#: ../lib/alexandria/ui/export_dialog.rb:148
-msgid ""
-"The target, named '%s', is a regular file.  A directory is needed for this "
-"operation.  Please select a directory and try again."
-msgstr ""
-"La destinazione, chiamata '%s', è un file. Per questa operazione è "
-"necessario specificare una cartella. Selezionare una cartella e riprovare. "
-
-#: ../lib/alexandria/ui/export_dialog.rb:152
-msgid "Not a directory"
-msgstr "Non si tratta di una cartella"
-
-#: ../lib/alexandria/ui/book_properties_dialog.rb:76
-#: ../lib/alexandria/ui/book_properties_dialog.rb:85
-msgid "Couldn't modify the book"
-msgstr "Impossibile modificare il libro"
-
-#: ../lib/alexandria/ui/book_properties_dialog.rb:77
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:70
-msgid "The EAN/ISBN you provided is already used in this library."
-msgstr "Il codice EAN/ISBN fornito è già in uso in questa biblioteca."
-
-#: ../lib/alexandria/ui/book_properties_dialog.rb:86
-#: ../lib/alexandria/ui/new_book_dialog.rb:294
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:75
-msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correcty, and try again."
-msgstr ""
-"Impossibile convalidare il codice EAN/ISBN fornito. Assicurarsi di averlo "
-"scritto correttamente e riprovare."
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:61
-msgid "Author"
-msgstr "Autore"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:100
-msgid "Select a cover image"
-msgstr "Seleziona un'immagine di copertina"
-
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:134
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] "%d giorno"
-msgstr[1] "%d giorni"
-
-#: ../lib/alexandria/ui/import_dialog.rb:36
-msgid "Error while importing"
-msgstr "Errore durante l'importazione"
-
-#: ../lib/alexandria/ui/import_dialog.rb:39
-msgid "_Continue"
-msgstr "_Continua"
-
-#: ../lib/alexandria/ui/import_dialog.rb:59
-msgid "Import a Library"
-msgstr "Importa una Biblioteca"
-
-#: ../lib/alexandria/ui/import_dialog.rb:64
-msgid "Import"
-msgstr "Importa"
-
-#: ../lib/alexandria/ui/import_dialog.rb:82
-msgid "Library _name:"
-msgstr "_Nome della biblioteca:"
-
-#: ../lib/alexandria/ui/import_dialog.rb:127
-#: ../lib/alexandria/ui/import_dialog.rb:166
-msgid "Couldn't import the library"
-msgstr "Impossibile importare la biblioteca"
-
-#: ../lib/alexandria/ui/import_dialog.rb:128
-#: ../lib/alexandria/ui/main_app.rb:597
-msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr "C'è già una bibloteca chiamata '%s'. Scegliere un nome diverso."
-
-#: ../lib/alexandria/ui/import_dialog.rb:167
-msgid ""
-"The format of the file you provided is unknown.  Please retry with another "
-"file."
-msgstr ""
-"Il formato del file selezionato è sconosciuto. Si prega di provare con un "
-"altro file."
-
-#: ../lib/alexandria/ui/main_app.rb:55
-msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
-msgstr "Il libro '%s' esiste già in '%s'. Si desidera rimpiazzarlo?"
-
-#: ../lib/alexandria/ui/main_app.rb:58
-msgid "_Skip"
-msgstr "_Salta"
-
-#: ../lib/alexandria/ui/main_app.rb:60
-msgid "If you replace the existing book, its contents will be overwritten."
-msgstr ""
-"Rimpiazzando il libro esistente i suoi contenuti verranno sovrascritti."
-
-#: ../lib/alexandria/ui/main_app.rb:122
-msgid "Library '%s' selected"
-msgstr "Biblioteca '%s' selezionata"
-
-#: ../lib/alexandria/ui/main_app.rb:129
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "Selezionata la biblioteca '%s', %d libro non valutato"
-msgstr[1] "Selezionata la biblioteca '%s', %d libri non valutati"
-
-#: ../lib/alexandria/ui/main_app.rb:134
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "Selezionata la biblioteca '%s', %d libro"
-msgstr[1] "Selezionata la biblioteca '%s', %d libri"
-
-#: ../lib/alexandria/ui/main_app.rb:141
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Selezionata la biblioteca '%s', %d libro, %d non valutato"
-msgstr[1] "Selezionata la biblioteca '%s', %d libri, %d non valutati"
-
-#: ../lib/alexandria/ui/main_app.rb:147
-msgid "'%s' selected"
-msgstr "'%s' selezionato"
-
-#: ../lib/alexandria/ui/main_app.rb:150
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] "%d libro selezionato"
-msgstr[1] "%d libri selezionati"
-
-#: ../lib/alexandria/ui/main_app.rb:237
-msgid "Unable to launch the web browser"
-msgstr "Impossibile avviare il navigatore web"
-
-#: ../lib/alexandria/ui/main_app.rb:238
-msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Assicurarsi che un navigatore web sia configurato come predefinito "
-"(Preferenze del Desktop -> Avanzate -> Applicazioni preferite) e riprovare."
-
-#: ../lib/alexandria/ui/main_app.rb:250
-msgid "Unable to launch the mail reader"
-msgstr "Impossibile avviare il programma di posta"
-
-#: ../lib/alexandria/ui/main_app.rb:251
-msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Assicurarsi che un programma di posta sia configurato come predefinito "
-"(Preferenze del Desktop -> Avanzate -> Applicazioni preferite) e riprovare."
-
-#: ../lib/alexandria/ui/main_app.rb:360
-msgid "Title"
-msgstr "Titolo"
-
-#: ../lib/alexandria/ui/main_app.rb:398
-msgid "Authors"
-msgstr "Autori"
-
-#: ../lib/alexandria/ui/main_app.rb:399
-msgid "ISBN"
-msgstr "ISBN"
-
-#: ../lib/alexandria/ui/main_app.rb:400
-msgid "Publisher"
-msgstr "Editore"
-
-#: ../lib/alexandria/ui/main_app.rb:401
-msgid "Binding"
-msgstr "Rilegatura"
-
-#: ../lib/alexandria/ui/main_app.rb:570
-msgid "Library"
-msgstr "Biblioteca"
-
-#: ../lib/alexandria/ui/main_app.rb:584
-msgid "Invalid library name '%s'"
-msgstr "Nome della biblioteca '%s' non valido"
-
-#: ../lib/alexandria/ui/main_app.rb:586
-msgid "The name provided contains the illegal character '<i>%s</i>'."
-msgstr "Il nome fornito contiene il carattere non legale '<i>%s</i>'."
-
-#: ../lib/alexandria/ui/main_app.rb:590
-msgid "The library name can not be empty"
-msgstr "Il nome della biblioteca non può essere vuoto"
-
-#: ../lib/alexandria/ui/main_app.rb:596
-msgid "The library can not be renamed"
-msgstr "La bibliteca non può essere rinominata"
-
-#: ../lib/alexandria/ui/main_app.rb:697
-msgid "In '_%s'"
-msgstr "In '_%s'"
-
-#: ../lib/alexandria/ui/main_app.rb:720
-msgid "Untitled %d"
-msgstr "Senza titolo %d"
-
-#: ../lib/alexandria/ui/main_app.rb:804
-msgid "If you continue, the selection will be permanently deleted."
-msgstr "La selezione verrà cancellata definitivamente."
-
-#: ../lib/alexandria/ui/main_app.rb:815
-msgid "Are you sure you want to permanently delete '%s'?"
-msgstr "Si è sicuri di voler cancellare definitivamente '%s'?"
-
-#: ../lib/alexandria/ui/main_app.rb:820
-msgid "Are you sure you want to permanently delete '%s' which has %d book?"
-msgid_plural ""
-"Are you sure you want to permanently delete '%s' which has %d books?"
-msgstr[0] ""
-"Si è sicuri di voler cancellare definitivamente '%s' che contiene %d libro?"
-msgstr[1] ""
-"Si è sicuri di voler cancellare definitivamente '%s' che contiene %d libri?"
-
-#: ../lib/alexandria/ui/main_app.rb:835
-msgid "Are you sure you want to permanently delete '%s' from '%s'?"
-msgstr "Si è sicuri di voler cancellare definitivamente '%s' da '%s'?"
-
-#: ../lib/alexandria/ui/main_app.rb:838
-msgid ""
-"Are you sure you want to permanently delete the selected books from '%s'?"
-msgstr ""
-"Si è sicuri di voler cancellare definitivamente i libri selezionati da '%s'?"
-
-#: ../lib/alexandria/ui/main_app.rb:865
-msgid "_Library"
-msgstr "Bib_lioteca"
-
-#: ../lib/alexandria/ui/main_app.rb:866
-msgid "_New"
-msgstr "_Nuovo"
-
-#: ../lib/alexandria/ui/main_app.rb:867
-msgid "_Add Book..."
-msgstr "_Aggiungi un Libro..."
-
-#: ../lib/alexandria/ui/main_app.rb:868
-msgid "Add Book _Manually..."
-msgstr "Aggiungi un Libro _Manualmente"
-
-#: ../lib/alexandria/ui/main_app.rb:869
-msgid "_Import..."
-msgstr "_Importa..."
-
-#: ../lib/alexandria/ui/main_app.rb:870
-msgid "_Export..."
-msgstr "_Esporta..."
-
-#: ../lib/alexandria/ui/main_app.rb:871
-msgid "_Properties"
-msgstr "_Proprietà"
-
-#: ../lib/alexandria/ui/main_app.rb:872
-msgid "_Quit"
-msgstr "_Esci"
-
-#: ../lib/alexandria/ui/main_app.rb:873
-msgid "_Edit"
-msgstr "_Modifica"
-
-#: ../lib/alexandria/ui/main_app.rb:874
-msgid "_Select All"
-msgstr "_Seleziona tutto"
-
-#: ../lib/alexandria/ui/main_app.rb:875
-msgid "Dese_lect All"
-msgstr "Dese_leziona tutto"
-
-#: ../lib/alexandria/ui/main_app.rb:876
-msgid "_Move"
-msgstr "S_posta"
-
-#: ../lib/alexandria/ui/main_app.rb:877
-msgid "_Rename"
-msgstr "_Rinomina"
-
-#: ../lib/alexandria/ui/main_app.rb:878
-msgid "_Delete"
-msgstr "Ca_ncella"
-
-#: ../lib/alexandria/ui/main_app.rb:879
-msgid "_Search"
-msgstr "_Cerca"
-
-#: ../lib/alexandria/ui/main_app.rb:880
-msgid "_Clear Results"
-msgstr "_Pulisci risultati"
-
-#: ../lib/alexandria/ui/main_app.rb:882
-msgid "_Preferences"
-msgstr "_Preferenze"
-
-#: ../lib/alexandria/ui/main_app.rb:883
-msgid "_View"
-msgstr "_Visualizza"
-
-#: ../lib/alexandria/ui/main_app.rb:884
-msgid "_Refresh"
-msgstr "_Aggiorna"
-
-#: ../lib/alexandria/ui/main_app.rb:885
-msgid "Arran_ge Icons"
-msgstr "_Disponi icone"
-
-#: ../lib/alexandria/ui/main_app.rb:886
-msgid "Display Online _Information"
-msgstr "Mostra le _Informazioni Online"
-
-#: ../lib/alexandria/ui/main_app.rb:887
-msgid "_Help"
-msgstr "_Aiuto"
-
-#: ../lib/alexandria/ui/main_app.rb:888
-msgid "Submit _Bug Report"
-msgstr "Segnala un _Bug"
-
-#: ../lib/alexandria/ui/main_app.rb:890
-msgid "Contents"
-msgstr "Contenuti"
-
-#: ../lib/alexandria/ui/main_app.rb:891
-msgid "_About"
-msgstr "_Informazioni"
-
-#: ../lib/alexandria/ui/main_app.rb:904
-msgid "Side _Pane"
-msgstr "_Pannello Laterale"
-
-#: ../lib/alexandria/ui/main_app.rb:906
-msgid "_Toolbar"
-msgstr "Barra degli S_trumenti"
-
-#: ../lib/alexandria/ui/main_app.rb:908
-msgid "_Statusbar"
-msgstr "Barra di _Stato"
-
-#: ../lib/alexandria/ui/main_app.rb:910
-msgid "Re_versed Order"
-msgstr "Ordine In_verso"
-
-#: ../lib/alexandria/ui/main_app.rb:915
-msgid "View as _Icons"
-msgstr "Vedi come _Icone"
-
-#: ../lib/alexandria/ui/main_app.rb:916
-msgid "View as _List"
-msgstr "Vedi come _Lista"
-
-#: ../lib/alexandria/ui/main_app.rb:920
-msgid "By _Title"
-msgstr "Per _Titolo"
-
-#: ../lib/alexandria/ui/main_app.rb:921
-msgid "By _Authors"
-msgstr "Per _Autore"
-
-#: ../lib/alexandria/ui/main_app.rb:922
-msgid "By _ISBN"
-msgstr "Per _ISBN"
-
-#: ../lib/alexandria/ui/main_app.rb:923
-msgid "By _Publisher"
-msgstr "Per _Editore"
-
-#: ../lib/alexandria/ui/main_app.rb:924
-msgid "By _Binding"
-msgstr "Per _Rilegatura"
-
-#: ../lib/alexandria/ui/main_app.rb:925
-msgid "By _Rating"
-msgstr "Per _Valutazione"
-
-#: ../lib/alexandria/ui/main_app.rb:930
-msgid "At _%s"
-msgstr "A _%s"
-
-#: ../lib/alexandria/ui/main_app.rb:990
-msgid "Match everything"
-msgstr "Trova tutto"
-
-#: ../lib/alexandria/ui/main_app.rb:992
-msgid "Title contains"
-msgstr "Il Titolo contiene"
-
-#: ../lib/alexandria/ui/main_app.rb:993
-msgid "Authors contain"
-msgstr "L'Autore contiene"
-
-#: ../lib/alexandria/ui/main_app.rb:994
-msgid "ISBN contains"
-msgstr "L'ISBN contiene"
-
-#: ../lib/alexandria/ui/main_app.rb:995
-msgid "Publisher contains"
-msgstr "L'Editore contiene"
-
-#: ../lib/alexandria/ui/main_app.rb:996
-msgid "Notes contain"
-msgstr "Le Note contengono"
-
-#: ../lib/alexandria/ui/main_app.rb:1029
-msgid "View as Icons"
-msgstr "Vedi come Icone"
-
-#: ../lib/alexandria/ui/main_app.rb:1030
-msgid "View as List"
-msgstr "Vedi come Lista"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:27
-msgid "Invalid ISBN '%s'"
-msgstr "Codice ISBN '%s' non valido"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:30
-msgid "_Keep"
-msgstr "_Conserva"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:31
-msgid ""
-"The book titled '%s' has an invalid ISBN, but still exists in the providers "
-"libraries.  Do you want to keep the book but change the ISBN or cancel the "
-"add?"
-msgstr ""
-"Il libro dal titolo '%s' ha un codice ISBN non valido, ma esiste ancora "
-"nella biblioteca del provider. Si desidera mantenere il libro, ma cambiare "
-"il codice ISBN o cancellare l'operazione di aggiunta?"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:157
-msgid "A problem occurred while downloading images"
-msgstr "Ci sono stati problemi durante lo scaricamento delle immagini"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:237
-msgid "Unable to find matches for your search"
-msgstr "Impossibile trovare una corrispondenza per la ricerca"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:242
-msgid "%s, by %s"
-msgstr "%s, di %s"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:335
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:111
-msgid "Couldn't add the book"
-msgstr "Impossibile aggiungere il libro"
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:396
-msgid "'%s' already exists in '%s' (titled '%s')."
-msgstr "'%s' esiste già in '%s' (con il titolo '%s')."
-
-#: ../lib/alexandria/ui/new_book_dialog.rb:411
-msgid "Couldn't validate the scanner input"
-msgstr "Impossibile validare l'input dello scanner"
-
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:63
-msgid "A title must be provided."
-msgstr "È obbligatorio fornire un titolo."
-
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:82
-msgid "A publisher must be provided."
-msgstr "È obbligatorio fornire un editore."
-
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:86
-msgid "A binding must be provided."
-msgstr "È obbligatorio specificare il tipo di rilegatura."
-
-#: ../lib/alexandria/ui/new_book_dialog_manual.rb:92
-msgid "At least one author must be provided."
-msgstr "È obbligatorio fornire almeno un autore."
-
-#: ../lib/alexandria/ui/preferences_dialog.rb:93
-msgid "Preferences for %s"
-msgstr "Preferenze per %s"
-
-#: ../lib/alexandria/ui/preferences_dialog.rb:118
-msgid "New Provider"
-msgstr "Nuovo Provider"
-
-#: ../lib/alexandria/ui/preferences_dialog.rb:133
-msgid "_Name:"
-msgstr "_Nome:"
-
-#: ../lib/alexandria/ui/preferences_dialog.rb:145
-msgid "_Type:"
-msgstr "_Tipo:"
-
-#: ../lib/alexandria/ui/preferences_dialog.rb:281
-msgid "Are you sure you want to permanently delete the provider '%s'?"
-msgstr "Si è sicuri di voler cancellare definitivamente il provider '%s'?"
-
-#: ../lib/alexandria/ui/preferences_dialog.rb:289
-msgid ""
-"If you continue, the provider and all of its preferences will be permanently "
-"deleted."
-msgstr "Il provider e tutte le sue preferenze verranno cancellati definitivamente."
 
 #: ../lib/alexandria/book_providers.rb:50
 msgid "Couldn't reach the provider '%s': timeout expired."
@@ -669,72 +94,994 @@ msgstr "Troppi risultati per questa ricerca."
 msgid "Invalid search type."
 msgstr "Tipo di ricerca non valido."
 
-#: ../lib/alexandria.rb:23
-msgid "A program to help you manage your book collection."
-msgstr "Un programma per gestire la vostra collezione di libri."
+#: ../lib/alexandria/export_library.rb:28
+msgid "Archived ONIX XML"
+msgstr "Archivio ONIX XML"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:73
-msgid "_Title:"
-msgstr "_Titolo:"
+#: ../lib/alexandria/export_library.rb:30
+msgid "Archived Tellico XML"
+msgstr "Archivio Tellico XML"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:102
-msgid "_Publisher:"
-msgstr "_Editore:"
+#: ../lib/alexandria/export_library.rb:32
+msgid "BibTeX"
+msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:131
-msgid "_Binding:"
-msgstr "_Rilegatura:"
+#: ../lib/alexandria/export_library.rb:33
+msgid "CSV list"
+msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:160
-msgid "Rating:"
-msgstr "Valutazione:"
+#: ../lib/alexandria/export_library.rb:34
+msgid "ISBN List"
+msgstr "Elenco di ISBN"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:437
-#: ../data/alexandria/glade/new_book_dialog.glade:101
-msgid "_ISBN:"
-msgstr "_ISBN:"
+#: ../lib/alexandria/export_library.rb:35
+msgid "HTML Web Page"
+msgstr "Pagina Web HTML"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:599
-msgid "_Authors:"
-msgstr "_Autori:"
+#: ../lib/alexandria/export_library.rb:206
+#: ../lib/alexandria/smart_library.rb:317 ../lib/alexandria/ui/main_app.rb:604
+msgid "Rating"
+msgstr "Valutazione"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:652
-msgid "_Cover:"
-msgstr "_Copertina:"
+#: ../lib/alexandria/import_library.rb:28
+msgid "Autodetect"
+msgstr "Rileva automaticamente"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:717
-msgid "General"
-msgstr "Generale"
+#: ../lib/alexandria/import_library.rb:29
+msgid "Archived Tellico XML (*.bc, *.tc)"
+msgstr "Archivio XML Tellico (*.bc, *.tc)"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:748
-msgid "This book is _loaned"
-msgstr "Questo libro è in prestito"
+#: ../lib/alexandria/import_library.rb:31
+msgid "ISBN List (*.txt)"
+msgstr "Elenco di ISBN (*.txt)"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:826
-msgid "_To:"
-msgstr "_A:"
+#: ../lib/alexandria/library.rb:51
+#, fuzzy
+msgid "Untitled"
+msgstr "Senza titolo %d"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:856
-msgid "_Since:"
-msgstr "_Dal:"
+#: ../lib/alexandria/library.rb:115
+msgid "My Library"
+msgstr "Biblioteca personale"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:916
-msgid "Loaning"
-msgstr "Prestito"
+#: ../lib/alexandria/smart_library.rb:84
+msgid "Favorite"
+msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:975
+#: ../lib/alexandria/smart_library.rb:90
+#, fuzzy
+msgid "Loaned"
+msgstr "Locale"
+
+#: ../lib/alexandria/smart_library.rb:311 ../lib/alexandria/ui/main_app.rb:545
+msgid "Title"
+msgstr "Titolo"
+
+#: ../lib/alexandria/smart_library.rb:312 ../lib/alexandria/ui/main_app.rb:587
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ../lib/alexandria/smart_library.rb:313 ../lib/alexandria/ui/main_app.rb:586
+msgid "Authors"
+msgstr "Autori"
+
+#: ../lib/alexandria/smart_library.rb:314 ../lib/alexandria/ui/main_app.rb:588
+msgid "Publisher"
+msgstr "Editore"
+
+#: ../lib/alexandria/smart_library.rb:315 ../lib/alexandria/ui/main_app.rb:589
+#, fuzzy
+msgid "Publish Year"
+msgstr "Editore"
+
+#: ../lib/alexandria/smart_library.rb:316 ../lib/alexandria/ui/main_app.rb:590
+msgid "Binding"
+msgstr "Rilegatura"
+
+#: ../lib/alexandria/smart_library.rb:318
+#: ../data/alexandria/glade/book_properties_dialog.glade:1034
 msgid "Notes"
 msgstr "Note"
 
+#: ../lib/alexandria/smart_library.rb:319
+#, fuzzy
+msgid "Loaning State"
+msgstr "Prestito"
+
+#: ../lib/alexandria/smart_library.rb:320
+#, fuzzy
+msgid "Loaning Date"
+msgstr "Prestito"
+
+#: ../lib/alexandria/smart_library.rb:321
+#, fuzzy
+msgid "Loaning Person"
+msgstr "Prestito"
+
+#: ../lib/alexandria/smart_library.rb:327
+#, fuzzy
+msgid "days"
+msgstr "%d giorno"
+
+#: ../lib/alexandria/smart_library.rb:337
+msgid "is set"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:341
+msgid "is not set"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:345
+msgid "is"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:349
+msgid "is not"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:353
+#, fuzzy
+msgid "contains"
+msgstr "L'ISBN contiene"
+
+#: ../lib/alexandria/smart_library.rb:357
+#, fuzzy
+msgid "does not contain"
+msgstr "Le Note contengono"
+
+#: ../lib/alexandria/smart_library.rb:361
+msgid "starts with"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:365
+msgid "ends with"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:369
+msgid "is greater than"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:373
+msgid "is less than"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:377
+msgid "is after"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:381
+msgid "is before"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:385
+msgid "is in last"
+msgstr ""
+
+#: ../lib/alexandria/smart_library.rb:389
+msgid "is not in last"
+msgstr ""
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:94
+#: ../lib/alexandria/ui/book_properties_dialog.rb:103
+msgid "Couldn't modify the book"
+msgstr "Impossibile modificare il libro"
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:95
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:84
+msgid "The EAN/ISBN you provided is already used in this library."
+msgstr "Il codice EAN/ISBN fornito è già in uso in questa biblioteca."
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:104
+#: ../lib/alexandria/ui/new_book_dialog.rb:285
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:90
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"Impossibile convalidare il codice EAN/ISBN fornito. Assicurarsi di averlo "
+"scritto correttamente e riprovare."
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:58
+#: ../lib/alexandria/ui/smart_library_properties_dialog.rb:30
+#, fuzzy
+msgid "Properties for '%s'"
+msgstr "Preferenze per %s"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:60
+#, fuzzy
+msgid "Properties"
+msgstr "_Proprietà"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:66
+msgid "Author"
+msgstr "Autore"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:106
+msgid "Select a cover image"
+msgstr "Seleziona un'immagine di copertina"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:110
+#, fuzzy
+msgid "No Cover"
+msgstr "_Copertina:"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:148
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d giorno"
+msgstr[1] "%d giorni"
+
+#: ../lib/alexandria/ui/export_dialog.rb:25
+msgid "File already exists"
+msgstr "Il file esiste già"
+
+#: ../lib/alexandria/ui/export_dialog.rb:28
+#: ../lib/alexandria/ui/main_app.rb:59
+msgid "_Replace"
+msgstr "_Rimpiazza"
+
+#: ../lib/alexandria/ui/export_dialog.rb:29
+msgid ""
+"A file named '%s' already exists.  Do you want to replace it with the one "
+"you are generating?"
+msgstr ""
+"Un file dal nome '%s' esiste già. Si desidera rimpiazzarlo con il nuovo file "
+"generato?"
+
+#: ../lib/alexandria/ui/export_dialog.rb:52
+msgid "Export '%s'"
+msgstr "Esporta '%s'"
+
+#: ../lib/alexandria/ui/export_dialog.rb:58
+msgid "_Export"
+msgstr "_Esporta"
+
+#: ../lib/alexandria/ui/export_dialog.rb:77
+msgid "_Theme:"
+msgstr "_Tema:"
+
+#: ../lib/alexandria/ui/export_dialog.rb:87
+msgid "directory"
+msgstr "cartella"
+
+#: ../lib/alexandria/ui/export_dialog.rb:100
+msgid "Export for_mat:"
+msgstr "For_mato di esportazione:"
+
+#: ../lib/alexandria/ui/export_dialog.rb:132
+msgid "Export failed"
+msgstr "Esportazione fallita"
+
+#: ../lib/alexandria/ui/export_dialog.rb:159
+msgid ""
+"The target, named '%s', is a regular file.  A directory is needed for this "
+"operation.  Please select a directory and try again."
+msgstr ""
+"La destinazione, chiamata '%s', è un file. Per questa operazione è "
+"necessario specificare una cartella. Selezionare una cartella e riprovare. "
+
+#: ../lib/alexandria/ui/export_dialog.rb:163
+msgid "Not a directory"
+msgstr "Non si tratta di una cartella"
+
+#: ../lib/alexandria/ui/import_dialog.rb:36
+msgid "Error while importing"
+msgstr "Errore durante l'importazione"
+
+#: ../lib/alexandria/ui/import_dialog.rb:39
+msgid "_Continue"
+msgstr "_Continua"
+
+#: ../lib/alexandria/ui/import_dialog.rb:59
+msgid "Import a Library"
+msgstr "Importa una Biblioteca"
+
+#: ../lib/alexandria/ui/import_dialog.rb:65
+#, fuzzy
+msgid "_Import"
+msgstr "Importa"
+
+#: ../lib/alexandria/ui/import_dialog.rb:157
+msgid "Couldn't import the library"
+msgstr "Impossibile importare la biblioteca"
+
+#: ../lib/alexandria/ui/import_dialog.rb:158
+msgid ""
+"The format of the file you provided is unknown.  Please retry with another "
+"file."
+msgstr ""
+"Il formato del file selezionato è sconosciuto. Si prega di provare con un "
+"altro file."
+
+#: ../lib/alexandria/ui/libraries_combo.rb:44
+#, fuzzy
+msgid "New Library"
+msgstr "Biblioteca"
+
+#: ../lib/alexandria/ui/main_app.rb:55
+msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
+msgstr "Il libro '%s' esiste già in '%s'. Si desidera rimpiazzarlo?"
+
+#: ../lib/alexandria/ui/main_app.rb:58
+msgid "_Skip"
+msgstr "_Salta"
+
+#: ../lib/alexandria/ui/main_app.rb:60
+msgid "If you replace the existing book, its contents will be overwritten."
+msgstr ""
+"Rimpiazzando il libro esistente i suoi contenuti verranno sovrascritti."
+
+#: ../lib/alexandria/ui/main_app.rb:79
+#, fuzzy
+msgid "Are you sure you want to delete '%s'?"
+msgstr "Si è sicuri di voler cancellare definitivamente '%s'?"
+
+#: ../lib/alexandria/ui/main_app.rb:87
+#, fuzzy
+msgid "If you continue, %d book will be deleted."
+msgid_plural "If you continue, %d books will be deleted."
+msgstr[0] "La selezione verrà cancellata definitivamente."
+msgstr[1] "La selezione verrà cancellata definitivamente."
+
+#: ../lib/alexandria/ui/main_app.rb:92
+#, fuzzy
+msgid "Are you sure you want to delete '%s' from '%s'?"
+msgstr "Si è sicuri di voler cancellare definitivamente '%s' da '%s'?"
+
+#: ../lib/alexandria/ui/main_app.rb:95
+#, fuzzy
+msgid "Are you sure you want to delete the selected books from '%s'?"
+msgstr ""
+"Si è sicuri di voler cancellare definitivamente i libri selezionati da '%s'?"
+
+#: ../lib/alexandria/ui/main_app.rb:183
+msgid "Library '%s' selected"
+msgstr "Biblioteca '%s' selezionata"
+
+#: ../lib/alexandria/ui/main_app.rb:190
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "Selezionata la biblioteca '%s', %d libro non valutato"
+msgstr[1] "Selezionata la biblioteca '%s', %d libri non valutati"
+
+#: ../lib/alexandria/ui/main_app.rb:195
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "Selezionata la biblioteca '%s', %d libro"
+msgstr[1] "Selezionata la biblioteca '%s', %d libri"
+
+#: ../lib/alexandria/ui/main_app.rb:202
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] "Selezionata la biblioteca '%s', %d libro, %d non valutato"
+msgstr[1] "Selezionata la biblioteca '%s', %d libri, %d non valutati"
+
+#: ../lib/alexandria/ui/main_app.rb:208
+msgid "'%s' selected"
+msgstr "'%s' selezionato"
+
+#: ../lib/alexandria/ui/main_app.rb:211
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "%d libro selezionato"
+msgstr[1] "%d libri selezionati"
+
+#: ../lib/alexandria/ui/main_app.rb:318
+msgid "Unable to launch the web browser"
+msgstr "Impossibile avviare il navigatore web"
+
+#: ../lib/alexandria/ui/main_app.rb:319
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Assicurarsi che un navigatore web sia configurato come predefinito "
+"(Preferenze del Desktop -> Avanzate -> Applicazioni preferite) e riprovare."
+
+#: ../lib/alexandria/ui/main_app.rb:331
+msgid "Unable to launch the mail reader"
+msgstr "Impossibile avviare il programma di posta"
+
+#: ../lib/alexandria/ui/main_app.rb:332
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Assicurarsi che un programma di posta sia configurato come predefinito "
+"(Preferenze del Desktop -> Avanzate -> Applicazioni preferite) e riprovare."
+
+#: ../lib/alexandria/ui/main_app.rb:800
+msgid "Library"
+msgstr "Biblioteca"
+
+#: ../lib/alexandria/ui/main_app.rb:815
+msgid "Invalid library name '%s'"
+msgstr "Nome della biblioteca '%s' non valido"
+
+#: ../lib/alexandria/ui/main_app.rb:817
+msgid "The name provided contains the illegal character '<i>%s</i>'."
+msgstr "Il nome fornito contiene il carattere non legale '<i>%s</i>'."
+
+#: ../lib/alexandria/ui/main_app.rb:821
+msgid "The library name can not be empty"
+msgstr "Il nome della biblioteca non può essere vuoto"
+
+#: ../lib/alexandria/ui/main_app.rb:828
+msgid "The library can not be renamed"
+msgstr "La bibliteca non può essere rinominata"
+
+#: ../lib/alexandria/ui/main_app.rb:829
+msgid "There is already a library named '%s'.  Please choose a different name."
+msgstr "C'è già una bibloteca chiamata '%s'. Scegliere un nome diverso."
+
+#: ../lib/alexandria/ui/main_app.rb:1016
+msgid "In '_%s'"
+msgstr "In '_%s'"
+
+#: ../lib/alexandria/ui/main_app.rb:1239
+msgid "_Library"
+msgstr "Bib_lioteca"
+
+#: ../lib/alexandria/ui/main_app.rb:1240
+#, fuzzy
+msgid "_New Library"
+msgstr "Bib_lioteca"
+
+#: ../lib/alexandria/ui/main_app.rb:1241
+#, fuzzy
+msgid "Create a new library"
+msgstr "Importa una Biblioteca"
+
+#: ../lib/alexandria/ui/main_app.rb:1242
+msgid "New _Smart Library..."
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1243
+msgid "Create a new smart library"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1245
+msgid "_Add Book..."
+msgstr "_Aggiungi un Libro..."
+
+#: ../lib/alexandria/ui/main_app.rb:1246
+msgid "Add a new book from the Internet"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1247
+msgid "Add Book _Manually..."
+msgstr "Aggiungi un Libro _Manualmente"
+
+#: ../lib/alexandria/ui/main_app.rb:1248
+#, fuzzy
+msgid "Add a new book manually"
+msgstr "Aggiungi un Libro _Manualmente"
+
+#: ../lib/alexandria/ui/main_app.rb:1250
+msgid "_Import..."
+msgstr "_Importa..."
+
+#: ../lib/alexandria/ui/main_app.rb:1251
+#, fuzzy
+msgid "Import a library"
+msgstr "Importa una Biblioteca"
+
+#: ../lib/alexandria/ui/main_app.rb:1252
+msgid "_Export..."
+msgstr "_Esporta..."
+
+#: ../lib/alexandria/ui/main_app.rb:1253
+msgid "Export the selected library"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1254
+msgid "_Acquire from Scanner..."
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1255
+msgid "Acquire books from a scanner"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1256
+msgid "_Properties"
+msgstr "_Proprietà"
+
+#: ../lib/alexandria/ui/main_app.rb:1257
+msgid "Edit the properties of the selected book"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1258
+msgid "_Quit"
+msgstr "_Esci"
+
+#: ../lib/alexandria/ui/main_app.rb:1259
+msgid "Quit the program"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1260
+msgid "_Edit"
+msgstr "_Modifica"
+
+#: ../lib/alexandria/ui/main_app.rb:1261
+msgid "_Undo"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1262
+msgid "Undo the last action"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1263
+msgid "_Redo"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1264
+msgid "Redo the undone action"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1265
+msgid "_Select All"
+msgstr "_Seleziona tutto"
+
+#: ../lib/alexandria/ui/main_app.rb:1266
+msgid "Select all visible books"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1267
+msgid "Dese_lect All"
+msgstr "Dese_leziona tutto"
+
+#: ../lib/alexandria/ui/main_app.rb:1268
+#, fuzzy
+msgid "Deselect everything"
+msgstr "Trova tutto"
+
+#: ../lib/alexandria/ui/main_app.rb:1269
+#, fuzzy
+msgid "My _Rating"
+msgstr "Per _Valutazione"
+
+#: ../lib/alexandria/ui/main_app.rb:1270
+#, fuzzy
+msgid "None"
+msgstr "Note"
+
+#: ../lib/alexandria/ui/main_app.rb:1271
+msgid "One Star"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1273
+msgid "Two Stars"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1275
+msgid "Three Stars"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1277
+msgid "Four Stars"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1279
+msgid "Five Stars"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1281
+msgid "_Move"
+msgstr "S_posta"
+
+#: ../lib/alexandria/ui/main_app.rb:1282
+msgid "_Rename"
+msgstr "_Rinomina"
+
+#: ../lib/alexandria/ui/main_app.rb:1283
+msgid "_Delete"
+msgstr "Ca_ncella"
+
+#: ../lib/alexandria/ui/main_app.rb:1284
+msgid "Delete the selected books or library"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1285
+msgid "_Search"
+msgstr "_Cerca"
+
+#: ../lib/alexandria/ui/main_app.rb:1286
+msgid "Filter books"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1287
+msgid "_Clear Results"
+msgstr "_Pulisci risultati"
+
+#: ../lib/alexandria/ui/main_app.rb:1288
+#, fuzzy
+msgid "Clear the search results"
+msgstr "_Pulisci risultati"
+
+#: ../lib/alexandria/ui/main_app.rb:1290
+msgid "_Preferences"
+msgstr "_Preferenze"
+
+#: ../lib/alexandria/ui/main_app.rb:1291
+msgid "Change Alexandria's settings"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1292
+msgid "_View"
+msgstr "_Visualizza"
+
+#: ../lib/alexandria/ui/main_app.rb:1293
+msgid "_Refresh"
+msgstr "_Aggiorna"
+
+#: ../lib/alexandria/ui/main_app.rb:1294
+msgid "Reload the selected library"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1295
+msgid "Arran_ge Icons"
+msgstr "_Disponi icone"
+
+#: ../lib/alexandria/ui/main_app.rb:1296
+msgid "Display Online _Information"
+msgstr "Mostra le _Informazioni Online"
+
+#: ../lib/alexandria/ui/main_app.rb:1297
+msgid "_Help"
+msgstr "_Aiuto"
+
+#: ../lib/alexandria/ui/main_app.rb:1299
+msgid "Submit _Bug Report"
+msgstr "Segnala un _Bug"
+
+#: ../lib/alexandria/ui/main_app.rb:1300
+msgid "Submit a bug report to the developers"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1302
+msgid "Contents"
+msgstr "Contenuti"
+
+#: ../lib/alexandria/ui/main_app.rb:1303
+msgid "View Alexandria's manual"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1304
+msgid "_About"
+msgstr "_Informazioni"
+
+#: ../lib/alexandria/ui/main_app.rb:1305
+msgid "Show information about Alexandria"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1326
+msgid "Side _Pane"
+msgstr "_Pannello Laterale"
+
+#: ../lib/alexandria/ui/main_app.rb:1328
+msgid "_Toolbar"
+msgstr "Barra degli S_trumenti"
+
+#: ../lib/alexandria/ui/main_app.rb:1330
+msgid "_Statusbar"
+msgstr "Barra di _Stato"
+
+#: ../lib/alexandria/ui/main_app.rb:1332
+msgid "Re_versed Order"
+msgstr "Ordine In_verso"
+
+#: ../lib/alexandria/ui/main_app.rb:1337
+msgid "View as _Icons"
+msgstr "Vedi come _Icone"
+
+#: ../lib/alexandria/ui/main_app.rb:1338
+msgid "View as _List"
+msgstr "Vedi come _Lista"
+
+#: ../lib/alexandria/ui/main_app.rb:1342
+msgid "By _Title"
+msgstr "Per _Titolo"
+
+#: ../lib/alexandria/ui/main_app.rb:1343
+msgid "By _Authors"
+msgstr "Per _Autore"
+
+#: ../lib/alexandria/ui/main_app.rb:1344
+msgid "By _ISBN"
+msgstr "Per _ISBN"
+
+#: ../lib/alexandria/ui/main_app.rb:1345
+msgid "By _Publisher"
+msgstr "Per _Editore"
+
+#: ../lib/alexandria/ui/main_app.rb:1346
+msgid "By _Binding"
+msgstr "Per _Rilegatura"
+
+#: ../lib/alexandria/ui/main_app.rb:1347
+msgid "By _Rating"
+msgstr "Per _Valutazione"
+
+#: ../lib/alexandria/ui/main_app.rb:1352
+msgid "At _%s"
+msgstr "A _%s"
+
+#: ../lib/alexandria/ui/main_app.rb:1414
+msgid "Match everything"
+msgstr "Trova tutto"
+
+#: ../lib/alexandria/ui/main_app.rb:1416
+msgid "Title contains"
+msgstr "Il Titolo contiene"
+
+#: ../lib/alexandria/ui/main_app.rb:1417
+msgid "Authors contain"
+msgstr "L'Autore contiene"
+
+#: ../lib/alexandria/ui/main_app.rb:1418
+msgid "ISBN contains"
+msgstr "L'ISBN contiene"
+
+#: ../lib/alexandria/ui/main_app.rb:1419
+msgid "Publisher contains"
+msgstr "L'Editore contiene"
+
+#: ../lib/alexandria/ui/main_app.rb:1420
+msgid "Notes contain"
+msgstr "Le Note contengono"
+
+#: ../lib/alexandria/ui/main_app.rb:1440
+#, fuzzy
+msgid "Change the search type"
+msgstr "Tipo di ricerca non valido."
+
+#: ../lib/alexandria/ui/main_app.rb:1453
+msgid "Type here the search criterion"
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:1460
+msgid "View as Icons"
+msgstr "Vedi come Icone"
+
+#: ../lib/alexandria/ui/main_app.rb:1461
+msgid "View as List"
+msgstr "Vedi come Lista"
+
+#: ../lib/alexandria/ui/main_app.rb:1481
+msgid "Choose how to show books"
+msgstr ""
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:27
+msgid "Invalid ISBN '%s'"
+msgstr "Codice ISBN '%s' non valido"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:30
+msgid "_Keep"
+msgstr "_Conserva"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:31
+msgid ""
+"The book titled '%s' has an invalid ISBN, but still exists in the providers "
+"libraries.  Do you want to keep the book but change the ISBN or cancel the "
+"add?"
+msgstr ""
+"Il libro dal titolo '%s' ha un codice ISBN non valido, ma esiste ancora "
+"nella biblioteca del provider. Si desidera mantenere il libro, ma cambiare "
+"il codice ISBN o cancellare l'operazione di aggiunta?"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:134
+msgid "A problem occurred while downloading images"
+msgstr "Ci sono stati problemi durante lo scaricamento delle immagini"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:222
+msgid "Unable to find matches for your search"
+msgstr "Impossibile trovare una corrispondenza per la ricerca"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:227
+msgid "%s, by %s"
+msgstr "%s, di %s"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:328
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:132
+msgid "Couldn't add the book"
+msgstr "Impossibile aggiungere il libro"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:389
+msgid "'%s' already exists in '%s' (titled '%s')."
+msgstr "'%s' esiste già in '%s' (con il titolo '%s')."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:57
+#, fuzzy
+msgid "Adding '%s'"
+msgstr "In '_%s'"
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:59
 #: ../data/alexandria/glade/new_book_dialog.glade:10
 msgid "Adding a Book"
 msgstr "Aggiungere un Libro"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:124
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:77
+msgid "A title must be provided."
+msgstr "È obbligatorio fornire un titolo."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:98
+msgid "A publisher must be provided."
+msgstr "È obbligatorio fornire un editore."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:104
+msgid "A binding must be provided."
+msgstr "È obbligatorio specificare il tipo di rilegatura."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:110
+msgid "At least one author must be provided."
+msgstr "È obbligatorio fornire almeno un autore."
+
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:30
+#, fuzzy
+msgid "New Smart Library"
+msgstr "Importa una Biblioteca"
+
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:54
+#, fuzzy
+msgid "Smart Library"
+msgstr "Importa una Biblioteca"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:93
+msgid "Preferences for %s"
+msgstr "Preferenze per %s"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:118
+msgid "New Provider"
+msgstr "Nuovo Provider"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:133
+msgid "_Name:"
+msgstr "_Nome:"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:145
+msgid "_Type:"
+msgstr "_Tipo:"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:287
+msgid "Are you sure you want to permanently delete the provider '%s'?"
+msgstr "Si è sicuri di voler cancellare definitivamente il provider '%s'?"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:295
+msgid ""
+"If you continue, the provider and all of its preferences will be permanently "
+"deleted."
+msgstr ""
+"Il provider e tutte le sue preferenze verranno cancellati definitivamente."
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:82
+msgid "Empty or conflictive condition"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:85
+msgid "_Save However"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:86
+msgid ""
+"This smart library contains one or more conditions which are empty or "
+"conflict with each other. This is likely to result in never matching a book. "
+"Are you sure you want to save this library?"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:105
+msgid "Match"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:108
+msgid "all"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:108
+msgid "any"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:118
+msgid "of the following rules:"
+msgstr ""
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:126
+msgid "Match the following rule:"
+msgstr ""
+
+#: ../lib/alexandria.rb:23
+msgid "A program to help you manage your book collection."
+msgstr "Un programma per gestire la vostra collezione di libri."
+
+#: ../data/alexandria/glade/acquire_dialog.glade:9
+msgid "Acquire from Scanner"
+msgstr ""
+
+#: ../data/alexandria/glade/acquire_dialog.glade:132
+#: ../data/alexandria/glade/new_book_dialog.glade:273
+#, fuzzy
+msgid "Save _in:"
+msgstr "Salva nella Bib_lioteca:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:74
+msgid "_Title:"
+msgstr "_Titolo:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:103
+msgid "_Publisher:"
+msgstr "_Editore:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:175
+#: ../data/alexandria/glade/new_book_dialog.glade:102
+msgid "_ISBN:"
+msgstr "_ISBN:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:267
+#, fuzzy
+msgid "Add an author"
+msgstr "Autore"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:295
+msgid "Remove an author"
+msgstr ""
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:339
+msgid "_Authors:"
+msgstr "_Autori:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:368
+msgid "_Binding:"
+msgstr "_Rilegatura:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:418
+#, fuzzy
+msgid "Publish _year:"
+msgstr "_Editore:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:492
+msgid "_Cover:"
+msgstr "_Copertina:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:518
+msgid "Click to pick a cover"
+msgstr ""
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:544
+msgid "Click on the stars to rate the book"
+msgstr ""
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:736
+msgid "Rating:"
+msgstr "Valutazione:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:776
+msgid "General"
+msgstr "Generale"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:807
+msgid "This book is _loaned"
+msgstr "Questo libro è in prestito"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:885
+msgid "_To:"
+msgstr "_A:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:915
+msgid "_Since:"
+msgstr "_Dal:"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:975
+msgid "Loaning"
+msgstr "Prestito"
+
+#: ../data/alexandria/glade/main_app.glade:60
+msgid "_Libraries:"
+msgstr "Bib_lioteche:"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:125
 msgid "_Search:"
 msgstr "Cerca:"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:193
+#: ../data/alexandria/glade/new_book_dialog.glade:194
 msgid ""
 "by title\n"
 "by authors\n"
@@ -744,51 +1091,52 @@ msgstr ""
 "per autore\n"
 "per parola chiave"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:272
-msgid "Save in _Library:"
-msgstr "Salva nella Bib_lioteca:"
-
 #: ../data/alexandria/glade/preferences_dialog.glade:9
 msgid "Preferences"
 msgstr "Preferenze"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:91
+#: ../data/alexandria/glade/preferences_dialog.glade:92
 msgid "<b>Visible Columns</b>"
 msgstr "<b>Colonne Visibili</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:127
+#: ../data/alexandria/glade/preferences_dialog.glade:128
 msgid "_Authors"
 msgstr "_Autori"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:150
-msgid "_Binding"
-msgstr "_Rilegatura"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:173
-msgid "_Rating"
-msgstr "_Valutazione"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:196
+#: ../data/alexandria/glade/preferences_dialog.glade:151
 msgid "_ISBN"
 msgstr "_ISBN"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:219
+#: ../data/alexandria/glade/preferences_dialog.glade:174
 msgid "_Publisher"
 msgstr "_Editore"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:254
+#: ../data/alexandria/glade/preferences_dialog.glade:197
+msgid "_Rating"
+msgstr "_Valutazione"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:220
+msgid "_Binding"
+msgstr "_Rilegatura"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:243
+#, fuzzy
+msgid "Publish _year"
+msgstr "Editore"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:278
 msgid "List View"
 msgstr "Vista Elenco"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:284
+#: ../data/alexandria/glade/preferences_dialog.glade:308
 msgid "<b>_Providers</b>"
 msgstr "<b>_Provider</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:398
+#: ../data/alexandria/glade/preferences_dialog.glade:422
 msgid "_Setup"
 msgstr "_Configurazione"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:493
+#: ../data/alexandria/glade/preferences_dialog.glade:517
 msgid ""
 "Providers are libraries that supply information about books.  Some of them "
 "can be configured to get better results.  You can also customize the order "
@@ -798,17 +1146,13 @@ msgstr ""
 "libri. Alcuni possono essere configurati per ottenere risultati migliori. È "
 "anche possibile personalizzare l'ordine in cui vengono interrogati."
 
-#: ../data/alexandria/glade/preferences_dialog.glade:519
+#: ../data/alexandria/glade/preferences_dialog.glade:543
 msgid "_Advanced Settings"
 msgstr "Impostazioni _avanzate"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:544
+#: ../data/alexandria/glade/preferences_dialog.glade:568
 msgid "Providers"
 msgstr "Provider"
-
-#: ../data/alexandria/glade/main_app.glade:60
-msgid "_Libraries:"
-msgstr "Bib_lioteche:"
 
 #: ../alexandria.desktop.in.h:1
 msgid "Alexandria Book Collection Manager"
@@ -822,3 +1166,21 @@ msgstr "Gestore biblioteca"
 msgid "Manage your book collection"
 msgstr "Gestisce la vostra biblioteca"
 
+#~ msgid "Library _name:"
+#~ msgstr "_Nome della biblioteca:"
+
+#~ msgid "Are you sure you want to permanently delete '%s' which has %d book?"
+#~ msgid_plural ""
+#~ "Are you sure you want to permanently delete '%s' which has %d books?"
+#~ msgstr[0] ""
+#~ "Si è sicuri di voler cancellare definitivamente '%s' che contiene %d "
+#~ "libro?"
+#~ msgstr[1] ""
+#~ "Si è sicuri di voler cancellare definitivamente '%s' che contiene %d "
+#~ "libri?"
+
+#~ msgid "_New"
+#~ msgstr "_Nuovo"
+
+#~ msgid "Couldn't validate the scanner input"
+#~ msgstr "Impossibile validare l'input dello scanner"
