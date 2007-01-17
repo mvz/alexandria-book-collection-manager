@@ -1,11 +1,17 @@
+2007-01-17  Pascal Terjan  <pterjan@linuxfr.org>
+
+	* lib/alexandria/ui/main_app.rb:
+
+	Fix bug [#5911] Can't close About Dialog with Close button
+
 2006-03-29 Claudio Belotti <bel8@lili.it>
-    
-    * lib/alexandria/book_providers/ibs_it.rb
-    - Download covers to .ibs_it.cache using referer
-    - Cleanup the cache at exit   
-    
-    * lib/alexandria/ui/new_book_dialog.rb
-    - In tree view handle cover as files (and not only as urls) 
+
+	* lib/alexandria/book_providers/ibs_it.rb
+	- Download covers to .ibs_it.cache using referer
+	- Cleanup the cache at exit   
+
+	* lib/alexandria/ui/new_book_dialog.rb
+	- In tree view handle cover as files (and not only as urls) 
 
 2006-03-02  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -17,14 +23,14 @@
 
 	* lib/alexandria/export_library.rb
 
-    - Add CVS export:
+	- Add CVS export:
 
 2006-02-27  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
 	  lib/alexandria.rb:
 
-    Added Aymeric.
+	Added Aymeric.
 
 	* README:
 

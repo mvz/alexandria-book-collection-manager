@@ -1233,7 +1233,11 @@ module UI
             end
             on_submit_bug_report = proc { open_web_browser(BUGREPORT_URL) }
             on_help = proc { display_help }
-            on_about = proc { AboutDialog.new(@main_app).show }
+            on_about = proc do
+                ad = AboutDialog.new(@main_app)
+                ad.signal_connect('response'){ ad.destroy }
+                ad.show
+            end
 
             standard_actions = [
                 ["LibraryMenu", nil, _("_Library")],
