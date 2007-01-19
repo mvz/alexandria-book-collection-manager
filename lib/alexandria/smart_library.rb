@@ -34,6 +34,7 @@ module Alexandria
             @name = name
             @rules = rules
             @predicate_operator_rule = predicate_operator_rule
+            save
             libraries = Libraries.instance
             libraries.add_observer(self)
             self.libraries = libraries.all_regular_libraries
@@ -60,6 +61,7 @@ module Alexandria
                         end
                     end
                 end
+
             rescue Errno::ENOENT
                 # First run and no smart libraries yet? Provide some default 
                 # ones.
@@ -67,7 +69,7 @@ module Alexandria
                     smart_library.save
                     a << smart_library
                 end
-            end
+             end
             a.each { |x| x.refilter }
             return a
         end
@@ -88,6 +90,28 @@ module Alexandria
                             Rule::Operators::IS_TRUE,
                             nil)
             a << self.new(_("Loaned"), [rule], ALL_RULES)
+            
+            #Redd books.
+            rule = Rule.new(operands.find { |x| x.book_selector == :redd },
+                            Rule::Operators::IS_TRUE,
+                            nil)
+            a << self.new(_("Read"), [rule], ALL_RULES)
+
+            #Own books.
+            rule = Rule.new(operands.find { |x| x.book_selector == :own },
+                            Rule::Operators::IS_TRUE,
+                            nil)
+            a << self.new(_("Owned"), [rule], ALL_RULES)
+
+            #Want books.
+            rule = Rule.new(operands.find { |x| x.book_selector == :want },
+                            Rule::Operators::IS_TRUE,
+                            nil)
+            rule2 = Rule.new(operands.find { |x| x.book_selector == :own },
+                            Rule::Operators::IS_NOT_TRUE,
+                            nil)
+            a << self.new(_("Wishlist"), [rule, rule2], ALL_RULES)
+
 
             return a
         end
@@ -318,7 +342,10 @@ module Alexandria
                     LeftOperand.new(:notes, _("Notes"), String),
                     LeftOperand.new(:loaned, _("Loaning State"), TrueClass),
                     LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
-                    LeftOperand.new(:loaned_to, _("Loaning Person"), String)
+                    LeftOperand.new(:loaned_to, _("Loaning Person"), String),
+                    LeftOperand.new(:redd, _("Read"), TrueClass),
+                    LeftOperand.new(:own, _("Own"), TrueClass),
+                    LeftOperand.new(:want, _("Want"), TrueClass),
                 ].sort
 
                 STRING = Operand.new(nil, String)
@@ -449,7 +476,11 @@ module Alexandria
 
             def filter_proc
                 proc do |book|
+                	begin 
                     left_value = book.send(@operand.book_selector)
+                    rescue => e
+                    	puts e.message
+                    end
                     right_value = @value
                     if right_value.is_a?(String)
                         left_value = left_value.to_s.downcase

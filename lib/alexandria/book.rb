@@ -19,7 +19,7 @@ module Alexandria
     class Book
         attr_accessor :title, :authors, :isbn, :publisher, :publishing_year,
                       :edition, :rating, :notes, :loaned, :loaned_since, 
-                      :loaned_to, :saved_ident
+                      :loaned_to, :saved_ident, :redd, :own, :want, :tags
 
         DEFAULT_RATING = 0 
 
@@ -34,8 +34,12 @@ module Alexandria
             @notes = ""
             @saved_ident = ident
             @publishing_year = publishing_year
+            @redd = false
+            @own = true
+            @want = true
+            @tags = []
         end
-
+        
         def ident
             @isbn or @title.hash.to_s
         end
@@ -43,6 +47,19 @@ module Alexandria
         def loaned? 
             loaned or false
         end
+        
+        def redd?
+        	redd or false
+        end
+        
+        def want?
+        	want or false
+        end
+        
+        def own?
+        	own or false
+        end
+        
 
         def ==(obj)
             obj.is_a?(self.class) and self.ident == obj.ident

@@ -46,6 +46,19 @@ end
 
 module Alexandria
 module UI
+
+	class CellRendererToggle < Gtk::CellRendererToggle
+		attr_accessor :text
+		type_register
+        install_property(GLib::Param::String.new(
+                        "text",
+                        "text",
+                        "Some damn value",
+                        "",
+                        GLib::Param::READABLE|GLib::Param::WRITABLE))
+		
+	end
+	
     class ConflictWhileCopyingDialog < AlertDialog
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -120,7 +133,7 @@ module UI
         module Columns
             COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
                 ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT, 
-                NOTES = (0..12).to_a
+                NOTES, REDD, OWN, WANT = (0..15).to_a
         end
 
         # The maximum number of rating stars displayed.
@@ -377,6 +390,9 @@ module UI
             iter[Columns::EDITION] = book.edition
             iter[Columns::NOTES] = (book.notes or "")
             rating = (book.rating or Book::DEFAULT_RATING)
+            iter[Columns::OWN] = book.own?
+            iter[Columns::REDD] = book.redd?
+            iter[Columns::WANT] = book.want?
             iter[Columns::RATING] = 5 - rating # ascending order is the default
 
             icon = Icons.cover(selected_library, book)
@@ -527,7 +543,7 @@ module UI
 
         ICONS_SORTS = [
             Columns::TITLE, Columns::AUTHORS, Columns::ISBN, 
-            Columns::PUBLISHER, Columns::EDITION, Columns::RATING
+            Columns::PUBLISHER, Columns::EDITION, Columns::RATING, Columns::REDD, Columns::OWN, Columns::WANT
         ]
         def setup_books_iconview_sorting
             mode = ICONS_SORTS[@prefs.arrange_icons_mode]
@@ -587,8 +603,14 @@ module UI
                 [ _("ISBN"), Columns::ISBN ],
                 [ _("Publisher"), Columns::PUBLISHER ],
                 [ _("Publish Year"), Columns::PUBLISH_DATE ],
-                [ _("Binding"), Columns::EDITION ]
-            ]
+                [ _("Binding"), Columns::EDITION ]]
+                
+            check_names= [
+            	[ _("Read"), Columns::REDD],
+                [ _("Own"), Columns::OWN],
+                [ _("Want"), Columns::WANT]]
+                
+            
             names.each do |title, iterid|
                 renderer = Gtk::CellRendererText.new
                 renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
@@ -598,6 +620,36 @@ module UI
                 column.sort_column_id = iterid
                 column.resizable = true
                 @listview.append_column(column)
+            end
+            
+            check_names.each do |title, iterid|
+            	renderer= CellRendererToggle.new
+            	column = Gtk::TreeViewColumn.new(title, renderer,
+            									:text => iterid)
+            	column.widget = Gtk::Label.new(title).show
+            	column.sort_column_id = iterid
+            	column.resizable = true
+            	column.pack_start(renderer, false)
+                column.set_cell_data_func(renderer) do |column, cell, 
+                                                        model, iter|
+               		case iterid
+               			when 12
+               				state = iter[Columns::REDD]
+               				cell.set_active(state) 
+               		
+               			when 13
+               				state = iter[Columns::OWN]
+               				cell.set_active(state) 
+               			
+               			when 14
+               				state = iter[Columns::WANT]
+               				own_state = iter[Columns::OWN]
+               				cell.inconsistent = own_state
+               				cell.set_active(state)
+               			
+               		end
+                end
+            	@listview.append_column(column)
             end
 
             # final column
@@ -648,7 +700,10 @@ module UI
                 @prefs.col_publisher_visible,
                 @prefs.col_publish_date_visible,
                 @prefs.col_edition_visible,
-                @prefs.col_rating_visible
+                @prefs.col_rating_visible,
+                @prefs.col_redd_visible,
+                @prefs.col_want_visible,
+                @prefs.col_own_visible
             ]
             cols = @listview.columns[1..-1] # skip "Title"
             cols.each_index do |i|
@@ -1528,7 +1583,11 @@ module UI
                                         String,         # EDITION
                                         Integer,        # RATING
                                         String,         # IDENT
-                                        String)         # NOTES
+                                        String,			# NOTES
+                                        TrueClass,		#REDD
+                                        TrueClass,		#OWN
+                                       	TrueClass		#WANT
+                                       )         
 
             # Filter books according to the search toolbar widgets. 
             @filtered_model = Gtk::TreeModelFilter.new(@model)

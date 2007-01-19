@@ -56,9 +56,12 @@ module UI
                     end
                 else
                     false
-                end
+                end              
             end
             @entry_edition.text = book.edition
+            if book.tags
+            	@entry_tags.text = book.tags.join(" ")
+            end
             
             book.authors.each do |author|
                 iter = @treeview_authors.model.append
@@ -78,6 +81,17 @@ module UI
                 @entry_loaned_to.text = (book.loaned_to or "")
                 self.loaned_since = (book.loaned_since or Time.now)
             end
+            
+            @checkbutton_own.active = book.own?
+            @checkbutton_redd.active = book.redd?
+            @checkbutton_want.active = book.want?
+            
+            if @checkbutton_own.active = book.own?
+            	@checkbutton_want.inconsistent = true
+            end
+            
+             
+            
         end
 
         #######
@@ -121,6 +135,10 @@ module UI
             @book.loaned_to = @entry_loaned_to.text
             @book.loaned_since = Time.at(@date_loaned_since.time)
            
+           	@book.redd = @checkbutton_redd.active?
+           	@book.own = @checkbutton_own.active?
+            @book.want = @checkbutton_want.active?
+            @book.tags = @entry_tags.text.split
             @library.save(@book) 
             @on_close_cb.call(@book)
             @book_properties_dialog.destroy

@@ -79,7 +79,11 @@ module Alexandria
                     end
  
                     book = YAML.load(text)
-                    raise "Not a book" unless book.is_a?(Book)
+                	begin 
+                    raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
+                    rescue => e
+                    	puts e.message
+                    end
                     library << book
                 end
 
@@ -292,7 +296,7 @@ module Alexandria
                     end
                 end
             
-                # Remove the file if it's blank.
+                # Remove the file if its blank.
                 if Alexandria::UI::Icons.blank?(cover_file)
                     File.delete(cover_file)
                 end

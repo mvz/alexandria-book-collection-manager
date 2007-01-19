@@ -52,7 +52,7 @@ EOL
             self.website = Alexandria::WEBSITE_URL
             self.license = GPL
             self.transient_for = parent
-            signal_connect('destroy') { hide }
+            self.signal_connect('response') { self.destroy }
         end
     end
 end

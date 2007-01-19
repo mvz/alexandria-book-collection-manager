@@ -99,6 +99,20 @@ module UI
         def on_image_no_rating_press
             self.rating = 0
         end
+        
+        def redd_toggled
+        end
+        
+        def own_toggled
+        	if @checkbutton_own.active?
+        		@checkbutton_want.inconsistent = true
+        	else
+        		@checkbutton_want.inconsistent = false
+        	end
+        end
+        
+        def want_toggled
+        end
   
         @@latest_filechooser_directory = ENV['HOME']
         def on_change_cover

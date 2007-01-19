@@ -18,6 +18,11 @@
 require 'gdk_pixbuf2'
 
 module Alexandria
+
+class DuplicateBookException < NameError
+
+end
+
 module UI
     class KeepBadISBNDialog < AlertDialog
         include GetText
@@ -138,13 +143,12 @@ module UI
         def get_images_async
             @images = {}
             @image_error = nil
-
             @image_thread = Thread.new do
                 begin
-                    @results.each_with_index do |result, i|
+                	@results.each_with_index do |result, i|
                         uri = result[1]
                         if uri
-                            if URI.parse(uri).scheme.nil?
+                        	if URI.parse(uri).scheme.nil?
                                 File.open(uri, "r") do |io|
                                     @images[i] = io.read
                                 end
@@ -207,7 +211,7 @@ module UI
             @find_thread = Thread.new do
                 begin
                     @results = Alexandria::BookProviders.search(criterion, mode)
-                    puts "got #{@results.length} results" if $DEBUG
+                    puts "got #{@results.length} results" if true
                 rescue => e
                     @find_error = e.message
                 end
@@ -226,15 +230,13 @@ module UI
                     @results.each do |book, cover|
                         s = _("%s, by %s") % [ book.title,
                                                book.authors.join(', ') ]
-
-                        if @results.find { |book2, cover2|
+						if @results.find { |book2, cover2|
                                             book.title == book2.title and
                                             book.authors == book2.authors
                                          }.length > 1
                             s += " (#{book.edition}, #{book.publisher})"
                         end
-
-                        iter = @treeview_results.model.append
+						iter = @treeview_results.model.append
                         iter[0] = s
                         iter[1] = book.isbn
                         iter[2] = Icons::BOOK
@@ -276,7 +278,6 @@ module UI
                 library, new_library = 
                     @combo_libraries.selection_from_libraries(libraries)
                 books_to_add = []
-
                 if @isbn_radiobutton.active?
                     # Perform the ISBN search via the providers.
                     isbn = begin
@@ -289,8 +290,8 @@ module UI
                     assert_not_exist(library, @entry_isbn.text)
                     books_to_add << Alexandria::BookProviders.isbn_search(isbn)
                 else
-                    @treeview_results.selection.selected_each do |model, path, 
-                                                                  iter| 
+                    @treeview_results.selection.selected_each do |model, path,  
+                                                                 iter| 
                         @results.each do |book, cover|
                             next unless book.isbn == iter[1]
                             begin
@@ -386,8 +387,8 @@ module UI
             # Check that the book doesn't already exist in the library.
             canonical = Library.canonicalise_isbn(isbn)
             if book = library.find { |book| book.isbn == canonical }
-                raise _("'%s' already exists in '%s' (titled '%s').") % \
-                        [ isbn, library.name, book.title ] 
+                raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
+                        [ isbn, library.name, book.title.sub("&", "&amp;") ]
             end
             true
         end
