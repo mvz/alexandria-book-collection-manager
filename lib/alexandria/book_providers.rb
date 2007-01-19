@@ -236,6 +236,8 @@ module Alexandria
         require 'alexandria/book_providers/amadeus'
         require 'alexandria/book_providers/ibs_it'
         require 'alexandria/book_providers/renaud'
+        require 'alexandria/book_providers/adlibris'
+        require 'alexandria/book_providers/ls'
         
         # Ruby/ZOOM is optional
         begin

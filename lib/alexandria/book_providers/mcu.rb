@@ -95,17 +95,13 @@ class BookProviders
 		    # Only add authors of appropiate length
        	       		    product['authors'] << author
 			    print "Authors are #{product['authors']}\n" if $DEBUG # for DEBUGing
+		    robotstate = 0
 		    end
-                elsif robotstate == 10 and line =~ /^([^<]+)/
-		    if product['name'].nil?  then
-	                    product['name'] = $1.strip
-	            else
-	                    product['name'] += $1.strip
-		    end
+                elsif robotstate == 2 and line =~ /^(.*)$/ # The title es the next line to title declaration and has not tags on web src code
+	            product['name'] = $1.strip
 		    print "Name is #{product['name']}\n" if $DEBUG # for DEBUGing
-                elsif robotstate == 2 and line =/^<td class="tex1"/
-		    robotstate = 10
-                elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9X]+)/ 
+                    robotstate = 0
+		elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9X]).*/ 
                     product['isbn'] = $1
 		    print "ISBN is #{product['isbn']}\n" if $DEBUG # for DEBUGing
 		    robotstate = 0
@@ -117,15 +113,15 @@ class BookProviders
                     product['media'] = $1.strip
 		    print "Media is #{product['media']}\n" if $DEBUG # for DEBUGing
 		    robotstate = 0 
-                elsif line =~ /^Autor:/
+                elsif line =~ /^.*>Autor:\s*</
 		    robotstate = 1
-                elsif line =~ /^T.tulo:/
+                elsif line =~ /^.*>T.tulo:\s*</
 		    robotstate = 2
-                elsif line =~ /^ISBN:/
+                elsif line =~ /^.*>ISBN:\s*</
 		    robotstate = 3
-                elsif line =~ /^Publicaci.n:/
+                elsif line =~ /^.*>Publicaci.n:\s*</
 		    robotstate = 4
-                elsif line =~ /^Encuadernaci.n:/
+                elsif line =~ /^.*>Encuadernaci.n:\s*</
 		    robotstate = 5 
                 end
             end

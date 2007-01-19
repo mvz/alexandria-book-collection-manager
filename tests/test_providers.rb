@@ -55,4 +55,14 @@ class TestProviders < Test::Unit::TestCase
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
                         '8851520666') 
     end
+    
+    def test_adlibris
+        __test_provider(Alexandria::BookProviders::AdlibrisProvider,
+                        '9100109339') 
+    end
+    
+    def test_siciliano
+        __test_provider(Alexandria::BookProviders::SicilianoProvider,
+                        '8599170384') 
+    end
 end
