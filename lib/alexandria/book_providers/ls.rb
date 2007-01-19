@@ -65,7 +65,7 @@ class BookProviders
         end
 
         def url(book)
-	    "http://www.siciliano.com.br/livro.asp?tipo=10&pesquisa=5&id=" + book.isdn
+	    "http://www.siciliano.com.br/livro.asp?tipo=10&pesquisa=5&id=" + book.isbn
         end
 
         #######

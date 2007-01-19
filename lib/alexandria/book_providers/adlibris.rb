@@ -81,7 +81,7 @@ class BookProviders
         end
 
         def url(book)
-			puts "debug: url(book)"
+			#puts "debug: url(book)"
             BASE_URI + "shop/product.asp?isbn=" + book.isbn
         end
 
