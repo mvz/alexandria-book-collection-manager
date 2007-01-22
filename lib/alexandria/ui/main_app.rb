@@ -44,6 +44,8 @@ class Alexandria::BookProviders::AbstractProvider
     end
 end
 
+require 'logger'
+
 module Alexandria
 module UI
 
@@ -56,7 +58,6 @@ module UI
                         "Some damn value",
                         "",
                         GLib::Param::READABLE|GLib::Param::WRITABLE))
-		
 	end
 	
     class ConflictWhileCopyingDialog < AlertDialog
@@ -140,11 +141,16 @@ module UI
         MAX_STARS = 5
 
         def initialize
+        	@log = Logger.new(STDOUT)
             super("main_app.glade")
             @prefs = Preferences.instance
+            @log.info("Loading Libraries...")
             load_libraries
+            @log.info("Initializing UI...")
             initialize_ui
+            @log.info("Initializing books_selection choice...")
             on_books_selection_changed
+            @log.info("Restoring preferences...")
             restore_preferences
         end
 
@@ -459,6 +465,7 @@ module UI
                                Gtk::Drag::TARGET_SAME_APP, 
                                0]]
         def setup_view_source_dnd(view)
+        	@log.info("setup_view_source_dnd for %s" % view)
             view.signal_connect_after('drag-begin') do |widget, drag_context|
                 n_books = selected_books.length
                 if n_books > 1
@@ -556,9 +563,11 @@ module UI
 
         def setup_books_listview
             # first column
+            @log.info("setup_books_listview")
             @listview.model = @listview_model
             renderer = Gtk::CellRendererPixbuf.new
             title = _("Title")
+            @log.info("Create listview column for %s" % title)
             column = Gtk::TreeViewColumn.new(title)
             column.widget = Gtk::Label.new(title).show
             column.pack_start(renderer, false)
@@ -612,6 +621,7 @@ module UI
                 
             
             names.each do |title, iterid|
+            	@log.info("Create listview column for %s..." % title)
                 renderer = Gtk::CellRendererText.new
                 renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
                 column = Gtk::TreeViewColumn.new(title, renderer,
@@ -624,12 +634,13 @@ module UI
             
             check_names.each do |title, iterid|
             	renderer= CellRendererToggle.new
-            	column = Gtk::TreeViewColumn.new(title, renderer,
-            									:text => iterid)
+            	column = Gtk::TreeViewColumn.new(title, renderer)
             	column.widget = Gtk::Label.new(title).show
             	column.sort_column_id = iterid
             	column.resizable = true
-            	column.pack_start(renderer, false)
+            	#column.pack_start(renderer, false)
+            	column.add_attribute(renderer, 'text', iterid)
+            	@log.info("Create listview column for %s..." % title)
                 column.set_cell_data_func(renderer) do |column, cell, 
                                                         model, iter|
                		case iterid
@@ -654,6 +665,8 @@ module UI
 
             # final column
             title = _("Rating")
+            @log.info("Create listview column for %s..." % title)
+            
             column = Gtk::TreeViewColumn.new(title)
             column.widget = Gtk::Label.new(title).show
             column.sizing = Gtk::TreeViewColumn::FIXED
@@ -1136,7 +1149,8 @@ module UI
 
         def initialize_ui
             @main_app.icon = Icons::ALEXANDRIA_SMALL
-
+			@log.info("Initializing UI elements...")
+            
             on_new = proc do
                 name = Library.generate_new_name(@libraries.all_libraries)
                 library = Library.load(name)
@@ -1145,8 +1159,8 @@ module UI
                 setup_move_actions
                 library.add_observer(self)
             end
-   
-            on_new_smart = proc do
+   			
+   			on_new_smart = proc do
                 NewSmartLibraryDialog.new(@main_app) do |smart_library|
                     smart_library.refilter
                     @libraries.add_library(smart_library)
@@ -1154,8 +1168,8 @@ module UI
                     smart_library.save
                 end
             end
- 
-            on_add_book = proc do
+ 			
+ 			on_add_book = proc do
                 NewBookDialog.new(@main_app, 
                                   selected_library) do |books, library, is_new|
                     if is_new
@@ -1166,8 +1180,8 @@ module UI
                     end
                 end
             end
-     
-            on_add_book_manual = proc do
+     		
+     		on_add_book_manual = proc do
                 library = selected_library
                 NewBookDialogManual.new(@main_app, library) { |book| }
             end
@@ -1179,10 +1193,10 @@ module UI
                     setup_move_actions
                 end
             end
-
-            on_export = proc { ExportDialog.new(@main_app, selected_library) }
-        
-            on_acquire = proc do
+			
+			on_export = proc { ExportDialog.new(@main_app, selected_library) }
+        	
+        	on_acquire = proc do
                 AcquireDialog.new(@main_app, 
                                   selected_library) do |books, library, is_new|
                     if is_new
@@ -1193,8 +1207,8 @@ module UI
                     end
                 end
             end 
-
-            on_properties = proc do
+			
+			on_properties = proc do
                 if @library_listview.focus?
                     library = selected_library
                     if library.is_a?(SmartLibrary)
@@ -1214,7 +1228,6 @@ module UI
                     end
                 end
             end
-
             on_quit = proc do
                 save_preferences
                 Gtk.main_quit
@@ -1412,6 +1425,8 @@ module UI
                  proc { open_web_browser(provider.url(selected_books.first)) }]
             end
             
+            @log.info("Adding actions to @actiongroup")
+            
             @actiongroup = Gtk::ActionGroup.new("actions")
             @actiongroup.add_actions(standard_actions)
             @actiongroup.add_actions(providers_actions)
@@ -1429,6 +1444,8 @@ module UI
                 setup_books_iconview_sorting
             end
            
+            @log.info("Adding actiongroup to uimanager")
+            
             @uimanager = Gtk::UIManager.new
             @uimanager.insert_action_group(@actiongroup, 0)
             @main_app.add_accel_group(@uimanager.accel_group)
@@ -1545,6 +1562,8 @@ module UI
                 @actiongroup["Redo"].sensitive = false
             UndoManager.instance.add_observer(self)
             
+            @log.info("Connect ui elements to mainapp.")
+            
             @main_app.toolbar = @toolbar
             @main_app.menus = @uimanager.get_widget("/MainMenubar")
             @library_popup = @uimanager.get_widget("/LibraryPopup") 
@@ -1571,7 +1590,9 @@ module UI
                 open_email_client("mailto:" + link)
             end
  
-            # The active model. 
+            # The active model.
+            @log.info("Initialize active model")
+             
             @model = Gtk::ListStore.new(Gdk::Pixbuf,    # COVER_LIST 
                                         Gdk::Pixbuf,    # COVER_ICON
                                         String,         # TITLE
@@ -1616,6 +1637,8 @@ module UI
 
             # Give filter entry the initial keyboard focus.
             @filter_entry.grab_focus
+            
+            @log.info("Create @listview_model and @iconview_model...")
             
             @listview_model = Gtk::TreeModelSort.new(@filtered_model)
             @iconview_model = Gtk::TreeModelSort.new(@filtered_model)

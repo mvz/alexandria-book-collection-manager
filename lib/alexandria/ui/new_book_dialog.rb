@@ -54,6 +54,8 @@ module UI
 
         def initialize(parent, selected_library=nil, &block)
             super('new_book_dialog.glade')
+            @log = Logger.new(STDOUT)
+            @log.info("New Book Dialog")
             @new_book_dialog.transient_for = @parent = parent
             @block = block
 
@@ -141,9 +143,11 @@ module UI
         end
 
         def get_images_async
+        	@log.debug("get_images_async")
             @images = {}
             @image_error = nil
             @image_thread = Thread.new do
+            	@log.debug("New @image_thread #{Thread.current}")
                 begin
                 	@results.each_with_index do |result, i|
                         uri = result[1]
@@ -174,7 +178,10 @@ module UI
 
                             if pixbuf.width > 1
                                 iter = @treeview_results.model.get_iter(key.to_s)
-                                iter[2] = pixbuf
+                                unless @treeview_results.model.iter_is_valid?(iter) 
+                                	raise "Iter is invalid! %s" % iter
+                                end
+                                iter[2] = pixbuf #I bet you this is it!
                             end
 
                             @images.delete(key)
@@ -185,11 +192,18 @@ module UI
                 end
 
                 # Stop if the image download thread has stopped.
-                @image_thread.alive?
+                if @image_thread.alive?
+                	@log.debug("@image_thread (#{@image_thread}) still alive.")
+                	true
+                else
+                	@log.debug("@image_thread (#{@image_thread}) asleep now.")
+                	false                	
+                end
             end
         end
 
         def on_find
+        	@log.debug("on_find")
             mode = case @combo_search.active
                 when 0
                     BookProviders::SEARCH_BY_TITLE
@@ -201,6 +215,8 @@ module UI
 
             criterion = @entry_search.text.strip
             @treeview_results.model.clear
+            @log.debug("TreeStore Model: %s columns; ref_counts: %s" % 
+            [@treeview_results.model.n_columns, @treeview_results.model.ref_count])
             @new_book_dialog.sensitive = false
             @find_error = nil
             @results = nil
@@ -209,9 +225,10 @@ module UI
             @image_thread.kill if @image_thread
             
             @find_thread = Thread.new do
+            	@log.debug("New @find_thread #{Thread.current}")
                 begin
                     @results = Alexandria::BookProviders.search(criterion, mode)
-                    puts "got #{@results.length} results" if true
+                    puts "got #{@results.length} results"
                 rescue => e
                     @find_error = e.message
                 end
@@ -220,13 +237,14 @@ module UI
             Gtk.timeout_add(100) do
                 # This block copies results into the tree view, or shows an
                 # error if the search failed.
-
+				#@log.debug("Copying results into tree view")
                 continue = if @find_error
                     ErrorDialog.new(@parent,
                                     _("Unable to find matches for your search"),
                                     @find_error)
                     false
                 elsif @results
+                	@log.debug("Got results: #{@results[0]}...")
                     @results.each do |book, cover|
                         s = _("%s, by %s") % [ book.title,
                                                book.authors.join(', ') ]
@@ -236,6 +254,7 @@ module UI
                                          }.length > 1
                             s += " (#{book.edition}, #{book.publisher})"
                         end
+                        @log.debug("Copying %s into tree view." % book.title)
 						iter = @treeview_results.model.append
                         iter[0] = s
                         iter[1] = book.isbn
@@ -243,9 +262,15 @@ module UI
                     end
 
                     # Kick off the image download thread.
-                    get_images_async
-
-                    false
+					if @find_thread.alive?
+						@log.debug("@find_thread (#{@find_thread}) still alive.")
+                    	true
+                    else
+                    	@log.debug("@find_thread (#{@find_thread}) asleep now.")
+                    	#Not really async now.
+                    	get_images_async
+                    	false
+                    end
                 else
                     # Stop if the book find thread has stopped.
                     @find_thread.alive?

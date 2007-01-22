@@ -15,6 +15,9 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'gettext'
+require 'logger'
+
 module Alexandria 
     TITLE = 'Alexandria'
     TEXTDOMAIN = 'alexandria'
@@ -61,9 +64,11 @@ module Alexandria
     BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
     WEBSITE_URL = 'http://alexandria.rubyforge.org'
     DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=lrz%40rubymonks%2eorg&item_name=Alexandria&no_shipping=0&no_note=1&currency_code=EUR'
-
+    
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?
+		log = Logger.new(STDOUT)
+		log.info("Initializing Alexandria...")
         ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
                                 and URI.parse(ENV['http_proxy']).userinfo.nil?
         Alexandria::UI.main

@@ -49,7 +49,8 @@ class BookProviders
             req += CGI.escape(criterion)
             data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-                to_book(data) rescue raise NoResultsError
+                book = to_book(data)            
+            
             #else
             #    begin
             #        results = [] 
@@ -60,8 +61,8 @@ class BookProviders
             #    rescue
             #        raise NoResultsError
             #    end
-
             end
+            book
         end
 
         def url(book)
@@ -73,17 +74,17 @@ class BookProviders
         #######
    
         def to_book(data)
-            raise unless md = /'><strong>([^<]+)<\/strong><\/a><br\/>/.match(data)
+            raise "No Title" unless md = /'><strong>([^<]+)<\/strong><\/a><br\/>/.match(data)
             title = md[1].strip
             authors = []
-            raise unless md =/<\/strong><\/a><br\/><strong class="azulescuro">[^<]+<br\/><br\/>/.match(data)
+            raise "No Author" unless md =/<\/strong><\/a><br\/><strong class="azulescuro">.*<\/strong><br\/><br\/>/.match(data)
             authors = md[1].strip
-            raise unless md = /<img src=\"capas\/([^<]+)p.gif" alt="">/.match(data)
+            raise "No Image" unless md = /<img src=\"capas\/([^<]+)p.gif" alt="">/.match(data)
             isbn = md[1].strip
             edition = ""
-            raise unless md = /<br\/>Editora: ([^<]+)<br>/.match(data)
+            raise "No Publisher" unless md = /<br\/>Editora: ([^<]+)<br>/.match(data)
             publisher = md[1].strip
-            raise unless md = /<img src=\"capas\/(.+\/(\d+).gif)" alt="">/.match(data)
+            raise "No Big Image" unless md = /<img src=\"capas\/(.+\/(\d+).gif)" alt="">/.match(data)
             medium_cover = md[1]
             small_cover = md[1]
             return [ Book.new(title, authors, isbn, publisher, edition), 

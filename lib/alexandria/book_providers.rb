@@ -254,6 +254,11 @@ module Alexandria
         end
 
         def update_priority
+        
+        	# This is weird code that sorts through the list of classes brought
+        	# in by requires and sorts through whether they are 'Abstract' or not,
+        	# adding their names to @prefs.
+        	
             @abstract_classes.clear
             providers = {}
             self.class.constants.each do |constant|
@@ -294,7 +299,7 @@ module Alexandria
             rest.sort.each { |pname| self << providers[pname] }
             self.compact!
         end
-
+        
         def self.method_missing(id, *args, &block)
             self.instance.method(id).call(*args, &block)
         end
