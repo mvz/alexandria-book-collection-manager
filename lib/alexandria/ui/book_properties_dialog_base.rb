@@ -26,6 +26,7 @@ module UI
 
         def initialize(parent, cover_file)
             super('book_properties_dialog.glade')
+            @log = Logger.new(STDOUT)
             @book_properties_dialog.transient_for = parent
             @parent, @cover_file = parent, cover_file
 

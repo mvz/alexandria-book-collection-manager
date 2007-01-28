@@ -1224,7 +1224,7 @@ module UI
                         book = books.first
                         BookPropertiesDialog.new(@main_app,
                                                  selected_library, 
-                                                 book) { |modified_book| }
+                                                 book) #{ |modified_book| }
                     end
                 end
             end

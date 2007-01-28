@@ -166,7 +166,7 @@ module Alexandria
  
             @libraries.each do |library|
                 filtered_library = library.select do |book|
-                    filters.send(selector) { |filter| filter.call(book) }
+                    filters.send(selector) { |filter| filter.call(book) } #Problem here.
                 end
                 filtered_library.each { |x| @cache[x] = library }
                 self.concat(filtered_library)

@@ -21,11 +21,11 @@ module UI
         include GetText
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-
-        def initialize(parent, library, book, &on_close_cb)
+#		def initialize(parent, library, book, &on_close_cb)
+        def initialize(parent, library, book)
             super(parent, library.cover(book))
-            @on_close_cb = on_close_cb
-            
+            @log.info("Initializing Book Properties Dialog...")
+            #@on_close_cb = on_close_cb Not really hooked up to anything... (JCM)
             close_button = Gtk::Button.new(Gtk::Stock::CLOSE)
             close_button.signal_connect('clicked') { on_close }
             close_button.show
@@ -140,7 +140,7 @@ module UI
             @book.want = @checkbutton_want.active?
             @book.tags = @entry_tags.text.split
             @library.save(@book) 
-            @on_close_cb.call(@book)
+            #@on_close_cb.call(@book)
             @book_properties_dialog.destroy
         end
 
