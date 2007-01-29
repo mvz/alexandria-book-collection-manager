@@ -67,7 +67,7 @@ class TestProviders < Test::Unit::TestCase
                         '8599170384') 
     end
 
-    def test_siciliano
+    def test_dea
         __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
                         '8599170384') 
     end

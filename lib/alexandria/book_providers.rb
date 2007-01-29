@@ -35,7 +35,7 @@ module Alexandria
             factory_n = 0
             begin
                 factory = self.instance[factory_n]
-                puts factory.fullname + " lookup" if $DEBUG
+                puts factory.fullname + " lookup"# if $DEBUG
                 results = factory.search(criterion, type)
 
                 if results.length == 0

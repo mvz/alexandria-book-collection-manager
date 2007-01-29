@@ -18,6 +18,7 @@
 
 require 'net/http'
 #require 'cgi'
+require 'mechanize'
 
 module Alexandria
 class BookProviders
@@ -50,21 +51,26 @@ class BookProviders
             end
             
             req += CGI.escape(criterion)
-puts URI.parse(req)
-	        data = transport.get(URI.parse(req))
-puts data
+			puts URI.parse(req)
+			agent = WWW::Mechanize.new
+			agent.user_agent_alias = 'Mac Safari'
+	        #data = transport.get(URI.parse(req))
+	        data = agent.get(URI.parse(req))
+			#puts data
             if type == SEARCH_BY_ISBN
-req += "&cookie%5Ftest=1"
-puts URI.parse(req)
-data = transport.get(URI.parse(req))
-puts data
+				req += "&cookie%5Ftest=1"
+				puts URI.parse(req)
+				#data = transport.get(URI.parse(req))
+				data = agent.get(URI.parse(req))
+				#puts data
 
-                to_book(data) rescue raise NoResultsError
+                to_book(data) #rescue NoResultsError
             else
                 begin
                     results = [] 
                     each_book_page(data) do |code, title|
-                        results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?c=" + code)))
+                        #results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?c=" + code)))
+                        results << to_book(agent.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?c=" + code)))
                     end
                     return results 
                 rescue
@@ -83,22 +89,25 @@ puts data
         #######
     
         def to_book(data)
-puts "started to_book"
-            raise unless md = /0F238C"><strong>([^<]+)/.match(data)
+			puts "started to_book"
+			data = data.content
+			puts data
+			
+            raise "No title." unless md = /color="#0F238C"><strong>([^<])+<\//.match(data)
             title = CGI.unescape(md[1].strip)
             authors = []
 	    
 	        md = /<strong>by<\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>:<\/strong><\/font> <font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>\ ([^<]+)/.match(data)
             md[1].split('; ').each { |a| authors << CGI.unescape(a.strip) }
-            raise if authors.empty?
+            raise "Authors are empty" if authors.empty?
 
-            raise unless md = /<strong>ISBN: <\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>([^<]+)/.match(data)
+            raise "No ISBN" unless md = /<strong>ISBN: <\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>([^<]+)/.match(data)
             isbn = md[1].strip
 
-            raise unless md = /<strong>Publisher<\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>:<\/strong><\/font> <font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" style="font-size:8pt" color="#000000"><strong>([^<]+)/.match(data)
+            raise "No Publisher" unless md = /<strong>Publisher<\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>:<\/strong><\/font> <font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" style="font-size:8pt" color="#000000"><strong>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
-            raise unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
+            raise "No Edition" unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
             edition = CGI.unescape(md[1].strip)
 
             if data =~ /Ingrandire immagine/

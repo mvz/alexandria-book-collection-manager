@@ -108,9 +108,9 @@ class BookProviders
                 # the garbled titles to UTF-8. This tries to convert back into
                 # valid UTF-8. It does not always work - see isbn 2259196098
                 # (from the mailing list) for an example.
-                if req.locale == 'us'
-                    title = title.convert('iso-8859-1','utf-8') 
-                end
+                #if req.locale == 'us'
+                #    title = title.convert('iso-8859-1','utf-8') 
+                #end
 
                 book = Book.new(title,
                                 (product.authors.map { |x| x.squeeze(' ') } \
