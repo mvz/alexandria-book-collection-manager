@@ -59,14 +59,15 @@ module UI
             self.title = _("Import a Library") 
             self.action = Gtk::FileChooser::ACTION_OPEN
             self.transient_for = parent
-           
+            self.deletable = false
+            running = false
             add_button(Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP) 
             add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
             import_button = add_button(_("_Import"), 
                                        Gtk::Dialog::RESPONSE_ACCEPT)
             import_button.sensitive = false
                  
-            self.signal_connect('destroy') { hide }
+            self.signal_connect('destroy') { self.destroy unless running }
 
             filters = {}
             FILTERS.each do |filter|
@@ -145,6 +146,7 @@ module UI
                 end
                 
                 while thread.alive?
+                	running = true
                     exec_queue.iterate
                     Gtk.main_iteration_do(false) 
                 end
