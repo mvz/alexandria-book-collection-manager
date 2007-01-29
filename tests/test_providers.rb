@@ -21,7 +21,8 @@ class TestProviders < Test::Unit::TestCase
             assert_kind_of(String, results.last)
         end
         assert_kind_of(Alexandria::Book, results.first)
-        assert(results.first.isbn == isbn)	
+        assert(results.first.isbn == isbn)
+        
     end
     
     def test_amazon
@@ -65,4 +66,10 @@ class TestProviders < Test::Unit::TestCase
         __test_provider(Alexandria::BookProviders::SicilianoProvider,
                         '8599170384') 
     end
+
+    def test_siciliano
+        __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
+                        '8599170384') 
+    end
+
 end

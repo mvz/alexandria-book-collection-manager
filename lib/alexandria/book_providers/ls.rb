@@ -49,7 +49,7 @@ class BookProviders
             req += CGI.escape(criterion)
             data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-                book = to_book(data)            
+                book = to_book(data, req)            
             
             #else
             #    begin
@@ -73,21 +73,24 @@ class BookProviders
         private
         #######
    
-        def to_book(data)
+        def to_book(data, req)
             raise "No Title" unless md = /'><strong>([^<]+)<\/strong><\/a><br\/>/.match(data)
             title = md[1].strip
             authors = []
-            raise "No Author" unless md =/<\/strong><\/a><br\/><strong class="azulescuro">.*<\/strong><br\/><br\/>/.match(data)
-            authors = md[1].strip
-            raise "No Image" unless md = /<img src=\"capas\/([^<]+)p.gif" alt="">/.match(data)
+            raise "No Author" unless md =/<strong class="azulescuro">(.*)<\/strong><br\/><br\/>/.match(data)
+            authors = md[1].strip 
+            raise "No ISBN from Image" unless md = /<img src="capas\/([^<])+p\.jpg" alt=""\/>/.match(data)
             isbn = md[1].strip
             edition = ""
+            publish_year = ""
             raise "No Publisher" unless md = /<br\/>Editora: ([^<]+)<br>/.match(data)
             publisher = md[1].strip
-            raise "No Big Image" unless md = /<img src=\"capas\/(.+\/(\d+).gif)" alt="">/.match(data)
-            medium_cover = md[1]
-            small_cover = md[1]
-            return [ Book.new(title, authors, isbn, publisher, edition), 
+            puts isbn
+            raise "No Big Image" unless medium_cover = transport.get(URI.parse(req+'/capas/'+ isbn + 'p.jpg'))
+            #raise "No Big Image" unless md = /<img src="capas\/(.+\/(\d+)p\.gif)" alt=""\/>/.match(data)
+            #medium_cover = md[1]
+            #small_cover = md[1]
+            return [ Book.new(title, authors, isbn, publisher, publish_year, edition), 
                      medium_cover ]
         end
     
