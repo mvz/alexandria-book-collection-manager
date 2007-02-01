@@ -79,13 +79,12 @@ class BookProviders
             authors = []
             raise "No Author" unless md =/<strong class="azulescuro">(.*)<\/strong><br\/><br\/>/.match(data)
             authors = md[1].strip 
-            raise "No ISBN from Image" unless md = /<img src="capas\/([^<])+p\.jpg" alt=""\/>/.match(data)
+            raise "No ISBN from Image" unless md = /<img src="capas\/([^<]+)p\.jpg" alt=""\/>/.match(data)
             isbn = md[1].strip
             edition = ""
             publish_year = ""
             raise "No Publisher" unless md = /<br\/>Editora: ([^<]+)<br>/.match(data)
             publisher = md[1].strip
-            puts isbn
             raise "No Big Image" unless medium_cover = transport.get(URI.parse(req+'/capas/'+ isbn + 'p.jpg'))
             #raise "No Big Image" unless md = /<img src="capas\/(.+\/(\d+)p\.gif)" alt=""\/>/.match(data)
             #medium_cover = md[1]

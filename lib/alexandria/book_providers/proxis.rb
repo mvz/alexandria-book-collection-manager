@@ -60,13 +60,14 @@ class BookProviders
             products = {}
             results_page = "http://oas2000.proxis.be/gate/jabba.search.submit_search?#{req}&p_item=#{LANGUAGES[prefs['lang']]}&p_order=1&p_operator=K&p_filter=1"
             transport.get(URI.parse(results_page)).each do |line|
-                if (line =~ /BR>.*DETAILS&mi=([^&]*)&si=/) and (!products[$1]) and (book = parseBook($1)) then
+                if line =~ /BR>.*DETAILS&mi=([^&]*)&si=/ #and (!products[$1]) and (book = parseBook($1)) then
+                    book = parseBook($1)
                     products[$1] = book
                 end
             end
-
+            
 	    # Workaround Proxis returning all editions of a book when searching on ISBN
-	    if type == SEARCH_BY_ISBN
+	    if type == SEARCH_BY_ISBN 
 		    products.delete_if {|n, p| p.first.isbn != criterion}
 	    end
 	    
@@ -104,7 +105,7 @@ class BookProviders
             end
 
             %w{name isbn media manufacturer}.each do |field|
-                return nil if product[field].nil?
+                product[field] = "" if product[field].nil?
             end 
             
             book = Book.new(conv.call(product['name']),

@@ -230,9 +230,9 @@ module Alexandria
         end
 
         require 'alexandria/book_providers/amazon'
-        require 'alexandria/book_providers/bn'
+        #require 'alexandria/book_providers/bn'
         require 'alexandria/book_providers/proxis'
-        require 'alexandria/book_providers/mcu'
+        #require 'alexandria/book_providers/mcu'
         require 'alexandria/book_providers/amadeus'
         require 'alexandria/book_providers/ibs_it'
         require 'alexandria/book_providers/renaud'

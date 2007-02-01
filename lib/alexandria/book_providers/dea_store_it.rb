@@ -34,7 +34,7 @@ class BookProviders
             req += case type
                 when SEARCH_BY_ISBN
 #                    "product.asp?cookie%5Ftest=1&isbn="
-                    "product.asp?isbn="
+                     "product.asp?isbn="
 
                 when SEARCH_BY_TITLE
                     "ricerche.asp?quick_search=ok&order_by=relevance&query_field=allbooks&query_string="
@@ -51,18 +51,14 @@ class BookProviders
             end
             
             req += CGI.escape(criterion)
-			puts URI.parse(req)
 			agent = WWW::Mechanize.new
 			agent.user_agent_alias = 'Mac Safari'
 	        #data = transport.get(URI.parse(req))
 	        data = agent.get(URI.parse(req))
-			#puts data
             if type == SEARCH_BY_ISBN
-				req += "&cookie%5Ftest=1"
-				puts URI.parse(req)
+				#req += "&cookie%5Ftest=1"
 				#data = transport.get(URI.parse(req))
-				data = agent.get(URI.parse(req))
-				#puts data
+				data = agent.get(URI.parse(req)) rescue data = agent.get(URI.parse(req)) #try again
 
                 to_book(data) #rescue NoResultsError
             else
@@ -89,34 +85,35 @@ class BookProviders
         #######
     
         def to_book(data)
-			puts "started to_book"
 			data = data.content
-			puts data
 			
             raise "No title." unless md = /color="#0F238C"><strong>([^<])+<\//.match(data)
             title = CGI.unescape(md[1].strip)
             authors = []
 	    
-	        md = /<strong>by<\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>:<\/strong><\/font> <font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>\ ([^<]+)/.match(data)
-            md[1].split('; ').each { |a| authors << CGI.unescape(a.strip) }
+	        raise "Authors not found" unless md = /<font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>([^<]+)/.match(data)
+            md[1].strip.split('; ').each { |a| authors << CGI.unescape(a.strip) }
             raise "Authors are empty" if authors.empty?
 
             raise "No ISBN" unless md = /<strong>ISBN: <\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>([^<]+)/.match(data)
-            isbn = md[1].strip
+            isbn = md[1].strip.gsub!("-","")
 
-            raise "No Publisher" unless md = /<strong>Publisher<\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>:<\/strong><\/font> <font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" style="font-size:8pt" color="#000000"><strong>([^<]+)/.match(data)
+            raise "No Publisher" unless md = /<font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" style="font-size:8pt" color="#000000"><strong>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
-            raise "No Edition" unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
-            edition = CGI.unescape(md[1].strip)
-
+            unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
+            	edition = ""
+            else
+            	edition = CGI.unescape(md[1].strip)
+            end
+			publish_year = 0
             if data =~ /Ingrandire immagine/
 	    	    small_cover = "http://www.deastore.com/covers/ie_cd1/batch1/" + isbn + ".jpg"
 	    	    medium_cover = "http://www.deastore.com/covers/ie_cd1/batch2/" + isbn + ".jpg"
 	    	    # big_cover = "http://www.deastore.com/covers/ie_cd1/batch3/" + isbn + ".jpg"
 	            return [ Book.new(title, authors, isbn, publisher, edition),medium_cover ]
             end
-	        return [ Book.new(title, authors, isbn, publisher, edition)]
+	        return [ Book.new(title, authors, isbn, publisher, publish_year, edition)]
         end
 
         def each_book_page(data)

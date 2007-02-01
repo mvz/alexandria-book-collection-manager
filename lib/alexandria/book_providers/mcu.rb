@@ -61,6 +61,7 @@ class BookProviders
 	    	print "Reading line: #{line}" if $DEBUG # for DEBUGing
                 if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1,$2)) then
                     products[$1] = book
+                    puts $1
                 end
             end
 
@@ -129,7 +130,7 @@ class BookProviders
 	    # TODO: This provider does not include picture for books
             %w{name isbn media manufacturer}.each do |field|
 	        print "Checking #{field} for nil\n" if $DEBUG # for DEBUGing
-                return nil if product[field].nil?
+                product[field]="" if product[field].nil?
             end 
             
 	    print "Creating new book\n" if $DEBUG # for DEBUGing

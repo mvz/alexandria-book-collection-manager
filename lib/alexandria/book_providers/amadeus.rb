@@ -22,7 +22,7 @@ module Alexandria
 class BookProviders
     class AmadeusProvider < GenericProvider
     
-        BASE_URI = "http://www.amadeusbuch.at/"
+        BASE_URI = "http://www.thalia.at/"
         def initialize
             super("Amadeus", "Amadeus Buch")
             # no preferences for the moment
@@ -55,7 +55,7 @@ class BookProviders
             req += CGI.escape(criterion)
             data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-                to_book(data) rescue raise NoResultsError
+                to_book(data) #rescue raise NoResultsError
             else
                 begin
                     results = [] 
@@ -82,7 +82,7 @@ class BookProviders
 						puts data if $DEBUG
 						product = {}
 						# title
-            raise unless md = /<h3><img src="\/buch-resources\/base\/img.badges\/icon.small.BU.gif" alt="" height="30" width="30" border="0">\n([^\n]+)\n\n/.match(data)
+            raise "No Title" unless md = /<span id="_artikel_titel">(.+)<\/span><span class="foobar">/.match(data)
             product["title"] = md[1].strip.unpack("C*").pack("U*")
 						# authors
 						product["authors"] = []
@@ -92,7 +92,7 @@ class BookProviders
             end
             #raise if product["authors"].empty?
 						# isbn
-            raise unless md = /<b>ISBN:<\/b> ([^\n]+)\n/.match(data)
+            raise "No isbn" unless md = /<strong>ISBN-10:<\/strong>(.+)<\/li>/.match(data)
             product["isbn"] = md[1].strip.gsub(/-/, "")
 						# edition
             md = /<b>Einband:<\/b> ([^,]+),/.match(data)
@@ -101,7 +101,7 @@ class BookProviders
             md = /<b>Erschienen +bei:<\/b> ([^\n]+)\n/.match(data)
             product["publisher"] = md[1].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
 						# cover
-            md = /<img src="(http:\/\/images.amadeusbuch.at\/[^\.]+\.jpg)" alt="#{product["title"]}" border="0"><\/a>/.match(data)
+            raise "No cover image" unless md = /<img id="_artikel_mediumthumbnail" src="http:\/\/images\.thalia\...([^\.]+)\.jpg".+alt="W&#246;rtlich" border="0"><\/a>/.match(data)
             product["cover"] = md[1] if md != nil
             book = Book.new(product["title"],
 						                product["authors"],

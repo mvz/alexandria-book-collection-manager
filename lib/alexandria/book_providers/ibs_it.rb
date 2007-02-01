@@ -57,7 +57,7 @@ class BookProviders
             p req if $DEBUG
 	        data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-                to_book(data) rescue raise NoResultsError
+                to_book(data) #rescue raise NoResultsError
             else
                 begin
                     results = [] 
@@ -81,21 +81,23 @@ class BookProviders
         #######
     
         def to_book(data)
-            raise unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
+            raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
             authors = []
 	    
-	        md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
+	        raise "No Author" unless md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
             md[1].split(';').each { |a| authors << CGI.unescape(a.strip) }
-            raise if authors.empty?
+            raise "Authors empty" if authors.empty?
 
-            raise unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
+            raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
+            #It was getting the isbn with a number tacked onto the front? Try removing first three digits.
             isbn = md[1].strip
-
-            raise unless md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
+            isbn = isbn[3...isbn.length] #A place where Python has a much better idiom.
+         
+            raise "No publisher" unless md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
-            raise unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
+            raise "No date?"unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
             edition = CGI.unescape(md[1].strip)
             
             publish_year = nil

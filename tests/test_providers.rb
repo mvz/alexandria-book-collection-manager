@@ -11,17 +11,18 @@ class TestProviders < Test::Unit::TestCase
     def __test_provider(provider, isbn)
         search_type = Alexandria::BookProviders::SEARCH_BY_ISBN
         results = nil
-        assert_nothing_raised do    
+        assert_nothing_raised("Something wrong here.") do    
             results = provider.instance.search(isbn, search_type)
         end
-        assert_kind_of(Array, results)
-        assert(!results.empty?)
-        assert(results.length <= 2)
+        #puts results.inspect
+        assert_kind_of(Array, results, "Results are not an array")
+        assert(!results.empty?, "Results are empty")
+        assert(results.length <= 2, "Results are greater than 2")
         if results.length == 2
-            assert_kind_of(String, results.last)
+            assert_kind_of(String, results.last, "Result is not a String")
         end
-        assert_kind_of(Alexandria::Book, results.first)
-        assert(results.first.isbn == isbn)
+        assert_kind_of(Alexandria::Book, results.first, "Result is not a Book")
+        assert(results.first.isbn == isbn, "Result's isbn #{results.first.isbn} is not the same as requested isbn #{isbn}")
         
     end
     
@@ -30,31 +31,31 @@ class TestProviders < Test::Unit::TestCase
                         '0385504209')
     end
 
-    def test_bn
-        __test_provider(Alexandria::BookProviders::BNProvider,
-                        '0961328916')   # see #1433  
-    end
+#     def test_bn
+#         __test_provider(Alexandria::BookProviders::BNProvider,
+#                         '0961328916')   # see #1433  
+#     end
 
-    def test_mcu
-        __test_provider(Alexandria::BookProviders::MCUProvider,
-                        '8420636665') 
-    end
+#     def test_mcu
+#         __test_provider(Alexandria::BookProviders::MCUProvider,
+#                         '8420636665') 
+#     end
 
     def test_proxis
         __test_provider(Alexandria::BookProviders::ProxisProvider,
                         '9026965745')
-	__test_provider(Alexandria::BookProviders::ProxisProvider,
+		__test_provider(Alexandria::BookProviders::ProxisProvider,
 			'0586071407')
     end
 
     def test_amadeus
         __test_provider(Alexandria::BookProviders::AmadeusProvider,
-                        '3453864662') 
+                        '3896673300') 
     end
 
     def test_ibs_it
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
-                        '8851520666') 
+                        '8851520663') 
     end
     
     def test_adlibris
@@ -69,7 +70,7 @@ class TestProviders < Test::Unit::TestCase
 
     def test_dea
         __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
-                        '8599170384') 
+                        '881701298X') 
     end
 
 end

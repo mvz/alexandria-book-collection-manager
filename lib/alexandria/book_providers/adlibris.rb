@@ -34,11 +34,11 @@ class BookProviders
         def search(criterion, type)
             req = BASE_URI
             if type == SEARCH_BY_ISBN
-                req += "shop/product.asp?isbn="+criterion
+                req += "product.aspx?isbn="+criterion+"&checked=1"
             else
 				search_criterions = {}
 				search_criterions[type] = CGI.escape(criterion)
-				req = "http://www.adlibris.se/shop/search_result.asp?additem=&page=search%5Fresult%2Easp&search=advanced&format=&status=&ebook=&quickvalue=&quicktype=&isbn=&titleorauthor=&title="+search_criterions[SEARCH_BY_TITLE].to_s()+"&authorlast=&authorfirst=&keyword="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&publisher=&category=&language=&inventory1=1&inventory2=2&inventory4=4&inventory8=&get=&type=&sortorder=1&author="+search_criterions[SEARCH_BY_AUTHORS].to_s()
+				req = "http://www.adlibris.se/shop/search_result.asp?additem=&page=search%5Fresult%2Easp&search=advanced&format=&status=&ebook=&quickvalue=&quicktype=&isbn="+ search_criterions[SEARCH_BY_ISBN] + "&titleorauthor=&title="+search_criterions[SEARCH_BY_TITLE].to_s()+"&authorlast=&authorfirst=&keyword="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&publisher=&category=&language=&inventory1=1&inventory2=2&inventory4=4&inventory8=&get=&type=&sortorder=1&author="+search_criterions[SEARCH_BY_AUTHORS].to_s()+"&checked=1"
 			end
 
 
@@ -46,18 +46,20 @@ class BookProviders
 			
             if type == SEARCH_BY_ISBN
 				data = transport.get(URI.parse(req))
-				puts "if type == SEARCH_BY_ISBN"
-				return to_book_isbn(data, criterion) rescue raise NoResultsError
+				#puts URI.parse(req)
+				#puts "if type == SEARCH_BY_ISBN"
+				return to_book_isbn(data, criterion) #rescue raise NoResultsError
             else
                 begin
 					data = transport.get(URI.parse(req+"&row=1"))
 					
 					regx = /shop\/product\.asp\?isbn=([^&]+?)&[^>]+>([^<]+?)<\/a>([^>]*?>){10}([^<]+?)<\/b>[^\)]+?\);\"\)>[\s]+?([^<\s]+?)<\/a>/
 					
-					
+					begin
 					data.scan(regx) do |md| next unless md[0] != md[1]
-						isbn = md[0].to_s()
 						
+						isbn = md[0].to_s()
+
 						imageAddr = nil
  						imgAddrMatch = data.scan(isbn+'.jpg')
 						if imgAddrMatch.length() == 2
@@ -70,7 +72,9 @@ class BookProviders
 							"", # Publisher
 							translate_stuff_stuff(md[4].to_s())), # Edition
 							imageAddr]
-						
+					end
+					rescue => e
+						puts e.message
 					end
 					
 					return results
@@ -122,19 +126,15 @@ class BookProviders
 
 		
 		def to_book_isbn(data, isbn)
+			#puts data
 			product = {}			
 			if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
 				raise NoResultsError
 			end
 
 
-			regxp = /^<b>(.+)<\/b>/
-			md = regxp.match(data)
-			if md == nil
-				#puts "Title string not found, but no \"book not found\" string found\n"
-				# TODO: Raise something more accurate
-				raise NoResultsError
-			end
+			raise "Title not found" unless md = /<a id="ctl00_main_frame_ctrlproduct_linkProductTitle" class="header15">(.+)<\/a>/.match(data)
+			
 			product["title"] = CGI.unescape(md[1])
 
 
@@ -143,40 +143,28 @@ class BookProviders
 			data.scan(regx) do |md| next unless md[0] != md[1]
     			product["authors"] << translate_html_stuff(CGI.unescape(md[0]))
 			end
-
-
-			regxp = /^<tr><td colspan="2" class="Text">Förlag: (.+)<\/td><\/tr>/
-			md = regxp.match(data)
-			if md == nil
-				puts "Publisher string not found, but no \"book not found\" string found\n"
-				# TODO: Raise something more accurate
-				raise NoResultsError
-			end
+			
+			raise "Publisher string not found, but no \"book not found\" string found\n" unless md = /<span id="ctl00_main_frame_ctrlproduct_lblPublisherName">(.+)<\/span>/.match(data)
+			
 			product["publisher"] = md[1]
 
 
-			regxp = /^<tr><td colspan="2" class="Text">Bandtyp: <a style="font-weight: lighter" href="javascript:popWindow\([^\)]*\);"\)>([^<]*)<\/a>/
-			md = regxp.match(data)
-			if md == nil
-				#puts "Binding string not found, but no \"book not found\" string found\n"
-				# TODO: Raise something more accurate
-				raise NoResultsError
-			end
-			product["edition"] = md[1]
+			raise "No edition" unless md = /<span id="ctl00_main_frame_ctrlproduct_lblEditionAndWeight">([^<]*)i gram: .+<\/span>/.match(data)
+			
+			product["edition"] = md[1] or ""
 
 
-			img_url = "shop/images/" + isbn + "\.jpg"
-			puts img_url
-			md = data.match(img_url)
-			if md != nil
-				product["cover"] = BASE_URI + img_url
-			end
+			img_url = "covers/.+" + isbn + "\.jpg"
+			#puts img_url
+			raise "No image found" unless md = data.match(img_url)
+			product["cover"] = BASE_URI + img_url
 						
 			book = Book.new(
 				translate_html_stuff(product["title"]),
 				product["authors"],
 				isbn,
 				translate_html_stuff(product["publisher"]),
+				publish_year = 0,
 				translate_html_stuff(product["edition"]))
 			return [ book, product["cover"] ]
 		end
