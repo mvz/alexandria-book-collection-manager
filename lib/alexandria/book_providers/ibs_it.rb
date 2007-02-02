@@ -84,9 +84,8 @@ class BookProviders
             raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
             authors = []
-	    
-	        raise "No Author" unless md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
-            md[1].split(';').each { |a| authors << CGI.unescape(a.strip) }
+            raise "No Author" unless md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
+            md[0].gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
             raise "Authors empty" if authors.empty?
 
             raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
@@ -105,8 +104,8 @@ class BookProviders
                 publish_year = CGI.unescape(md[1].strip).to_i
                 publish_year = nil if publish_year == 0
             end
-          
-            cover_url = "http://www.ibs.it/cop/coplibri.asp?e=" + isbn
+            md = /<a href="javascript:Jackopen\('(.+)'\)\">/.match(data)
+            cover_url = md[1]
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
                 File.open(cover_filename, "w") do |file|
