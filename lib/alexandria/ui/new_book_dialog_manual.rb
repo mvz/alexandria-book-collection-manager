@@ -53,10 +53,14 @@ module UI
 
         def on_title_changed
             title = @entry_title.text.strip
+            begin 
             @book_properties_dialog.title = unless title.empty?
                 _("Adding '%s'") % title
             else
                 _("Adding a Book")
+            end
+            rescue
+            	raise "There's a problem with a book somewhere" 
             end 
         end
         
