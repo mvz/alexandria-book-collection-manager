@@ -55,7 +55,7 @@ class TestProviders < Test::Unit::TestCase
 
     def test_ibs_it
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
-                        '8851520663') 
+                        '9788851520663') 
     end
     
     def test_adlibris

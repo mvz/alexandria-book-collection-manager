@@ -89,9 +89,7 @@ class BookProviders
             raise "Authors empty" if authors.empty?
 
             raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
-            #It was getting the isbn with a number tacked onto the front? Try removing first three digits.
             isbn = md[1].strip
-            isbn = isbn[3...isbn.length] #A place where Python has a much better idiom.
          
             raise "No publisher" unless md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
