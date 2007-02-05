@@ -59,7 +59,6 @@ class BookProviders
 				#req += "&cookie%5Ftest=1"
 				#data = transport.get(URI.parse(req))
 				data = agent.get(URI.parse(req)) rescue data = agent.get(URI.parse(req)) #try again
-
                 to_book(data) #rescue NoResultsError
             else
                 begin
@@ -86,19 +85,18 @@ class BookProviders
     
         def to_book(data)
 			data = data.content
-			
-            raise "No title." unless md = /color="#0F238C"><strong>([^<])+<\//.match(data)
+            raise "No title." unless md = /<span class="BDtitoloLibro"> (.+)<\/span>/.match(data)
             title = CGI.unescape(md[1].strip)
             authors = []
 	    
-	        raise "Authors not found" unless md = /<font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>([^<]+)/.match(data)
+	        raise "Authors not found" unless md = /<span class="BDauthLibro">by:(.+)<\/span><span class="BDformatoLibro">/.match(data)
             md[1].strip.split('; ').each { |a| authors << CGI.unescape(a.strip) }
             raise "Authors are empty" if authors.empty?
 
-            raise "No ISBN" unless md = /<strong>ISBN: <\/strong><\/font><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" color="#000000" style="font-size:8pt"><strong>([^<]+)/.match(data)
+            raise "No ISBN" unless md = /<span class="isbn">(.+)<\/span><br \/>/.match(data)
             isbn = md[1].strip.gsub!("-","")
 
-            raise "No Publisher" unless md = /<font face="Verdana, Geneva, Arial, Helvetica, sans-serif" size="1" style="font-size:8pt" color="#000000"><strong>([^<]+)/.match(data)
+            raise "No Publisher" unless md = /<span class="BDEticLibro">Publisher &amp; Imprint<\/span>(.+)<\/p>/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
             unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
