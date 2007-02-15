@@ -80,6 +80,7 @@ class BookProviders
     
         def to_book(data)
 						puts data if $DEBUG
+						data = data.convert("UTF-8", "iso-8859-15")
 						product = {}
 						# title
             raise "No Title" unless md = /<span id="_artikel_titel">(.+)<\/span><span class="foobar">/.match(data)
@@ -101,7 +102,7 @@ class BookProviders
             md = /<b>Erschienen +bei:<\/b> ([^\n]+)\n/.match(data)
             product["publisher"] = md[1].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
 						# cover
-            raise "No cover image" unless md = /<img id="_artikel_mediumthumbnail" src="http:\/\/images\.thalia\...([^\.]+)\.jpg".+alt="W&#246;rtlich" border="0"><\/a>/.match(data)
+            raise "No cover image" unless md = /<img id="_artikel_mediumthumbnail" src="([^"]+)/.match(data)
             product["cover"] = md[1] if md != nil
             book = Book.new(product["title"],
 						                product["authors"],
