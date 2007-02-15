@@ -31,10 +31,10 @@ class TestProviders < Test::Unit::TestCase
                         '0385504209')
     end
 
-#     def test_bn
-#         __test_provider(Alexandria::BookProviders::BNProvider,
-#                         '0961328916')   # see #1433  
-#     end
+     def test_bn
+         __test_provider(Alexandria::BookProviders::BNProvider,
+                         '9780961328917')   # see #1433  
+     end
 
 #     def test_mcu
 #         __test_provider(Alexandria::BookProviders::MCUProvider,
@@ -83,7 +83,7 @@ class TestProviders < Test::Unit::TestCase
                         '9788817012980') 
     end
 
-    def test_bol
+    def test_renaud
         __test_provider(Alexandria::BookProviders::RENAUDProvider,
                         '9782894723388') 
     end

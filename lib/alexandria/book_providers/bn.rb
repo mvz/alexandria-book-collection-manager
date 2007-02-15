@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2007 Laurent Sansonetti and Marco Costantini
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -75,31 +76,41 @@ class BookProviders
         #######
     
         def to_book(data)
-            raise unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - ([^<]+)/.match(data)
+            data = data.convert("UTF-8", "iso-8859-1")
+
+            raise unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - Books: ([^<]+)/.match(data)
             title = md[1].strip
+
             authors = []
+# search for something like <h2 id="contributor">by <a href="/booksearch/results.asp?ATH=Jane+Smiley&amp;z=y">Jane Smiley</a></h2>
             data.scan(/<SPAN ID=\"CNT[0-9]+\">[^&]+&ath=([^\"]+)\">([^<]+)/) do |md|
                 md[1].gsub!('&nbsp;',' ')
                 next unless CGI.unescape(md[0]) == md[1]
                 authors << md[1]
             end
-            raise if authors.empty?
-            raise unless md = /ISBN:.+CLASS=\"prodDetailsGen\" STYLE=\"text-decoration:none\">([^<]+)/.match(data)
-            isbn = md[1].strip
-            raise unless md = /Format:[^=]+=\"ItemFormat\">([^<]+)/.match(data)
-            edition = md[1].strip
-            raise unless md = /Publisher:[^=]+=\"prodDetailsGen\">([^<]+)/.match(data)
-            publisher = md[1].strip
+
+            raise unless md = /ISBN-13:(\s+)<a style="text-decoration:none">([^<]+)/.match(data)
+            isbn = md[2].strip
+
+            raise unless md = /<li class="format">Format:(\s+)([^<]+)/.match(data)
+            edition = md[2].strip
+
+            raise unless md = /<li class="publisher">Publisher:(\s+)([^<]+)/.match(data)
+            publisher = md[2].strip
+
             publish_year = nil
-            if md = /<TD>Pub\. Date:.*(\d\d\d\d)<\/TD>/.match(data)
-                publish_year = md[1].to_i
+            if md = /<li class="pubDate">Pub. Date:(\s+).*(\d\d\d\d)</.match(data)
+                publish_year = md[2].to_i
                 publish_year = nil if publish_year == 0
             end
-            raise unless md = /<IMG SRC="(.+\/(\d+|ImageNA_product).gif)" ALT=("Book Cover"|"Image Not Available") WIDTH="\d+" HEIGHT="\d+" BORDER="0">/.match(data)
+
+          if md = /<IMG SRC="(.+\/(\d+|ImageNA_product).gif)" ALT=("Book Cover"|"Image Not Available") WIDTH="\d+" HEIGHT="\d+" BORDER="0">/.match(data)
             medium_cover = md[1]
             small_cover = medium_cover.sub(/#{md[2]}/, (md[2].to_i - 1).to_s)
             return [ Book.new(title, authors, isbn, publisher, publish_year, 
                      edition), medium_cover ]
+          else return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+          end
         end
     
         def each_book_page(data)
