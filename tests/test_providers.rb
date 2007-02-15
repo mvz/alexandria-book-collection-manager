@@ -73,4 +73,9 @@ class TestProviders < Test::Unit::TestCase
                         '881701298X') 
     end
 
+    def test_bol
+        __test_provider(Alexandria::BookProviders::BOL_itProvider,
+                        '881701298X') 
+    end
+
 end

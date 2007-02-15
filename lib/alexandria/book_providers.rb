@@ -238,6 +238,8 @@ module Alexandria
         require 'alexandria/book_providers/renaud'
         require 'alexandria/book_providers/adlibris'
         require 'alexandria/book_providers/ls'
+        require 'alexandria/book_providers/bol_it'
+
         
         # mechanize is optional
         begin

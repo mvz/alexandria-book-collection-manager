@@ -26,7 +26,8 @@ class BookProviders
     class BOL_itProvider < GenericProvider
         BASE_URI = "http://www.bol.it"
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.bol_it_cache')
-        REFERER = "http://www.bol.it"
+        REFERER = BASE_URI
+        LOCALE = "libri" # possible locales are: "libri", "inglesi", "video", "musica", "choco"
         def initialize
             super("BOL_it", "BOL Italia")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
@@ -35,7 +36,7 @@ class BookProviders
         end
         
         def search(criterion, type)
-            req = BASE_URI + "/libri/"
+            req = BASE_URI + "/" + LOCALE + "/"
             req += case type
                 when SEARCH_BY_ISBN
                     "scheda/"
@@ -56,7 +57,7 @@ class BookProviders
             
 if type == SEARCH_BY_ISBN
 ## warning: this provider uses pages like http://www.bol.it/libri/scheda/ea978888584104 with 12 numbers, without the checksum
-            req += "ea978" + Library.canonicalise_isbn(criterion)[0 .. 8] + ".html"
+            req += "ea978" + Library.canonicalise_isbn(criterion)[0 .. -2] + ".html"
 else
             req += CGI.escape(criterion)
 end
@@ -68,7 +69,7 @@ end
                 begin
                     results = [] 
                     each_book_page(data) do |code, title|
-                        results << to_book(transport.get(URI.parse("http://www.bol.it/libri/scheda/ea978" + code)))
+                        results << to_book(transport.get(URI.parse(BASE_URI + "/#{LOCALE}/scheda/ea" + code)))
                     end
                     return results 
                 rescue
@@ -79,7 +80,7 @@ end
 
         def url(book)
             return nil unless book.isbn
-            "http://www.bol.it/libri/scheda/ea978" + Library.canonicalise_isbn(book.isbn)[0 .. 8] + ".html"
+            BASE_URI + "/#{LOCALE}/scheda/ea978" + Library.canonicalise_isbn(book.isbn)[0 .. -2] + ".html"
         end
 
         #######
@@ -89,8 +90,8 @@ end
         def to_book(data)
             raise unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
             title = CGI.unescape(md[1].strip)
+
             authors = []
-	    
 	  if md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data)
             md[1].split(', ').each { |a| authors << CGI.unescape(a.strip) }
           end
@@ -98,14 +99,20 @@ end
             raise unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
             isbn = md[1].strip
             isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
+            isbn = Library.canonicalise_isbn(isbn)
 
             raise unless md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
             raise unless md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
             edition = CGI.unescape(md[1].strip)
-            if md = /\&nbsp\;\|\&nbsp\;([^&]+)\&nbsp\;\|\&nbsp\;/.match(data) and md[1] != "0"
-                edition = CGI.unescape(md[1].strip) + " p., " + edition
+            if md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data)
+                nr_pages = CGI.unescape(md[1].strip)
+            elsif md = / (\d+) pagine \| /.match(data)
+                nr_pages = CGI.unescape(md[1].strip)
+            end
+            if nr_pages != "0" and  nr_pages != nil
+                edition = nr_pages + " p., " + edition
             end
 
             publish_year = nil
@@ -114,7 +121,7 @@ end
                 publish_year = nil if publish_year == 0
             end
           
-            cover_url = "http://www.bol.it/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=" + isbn[0 .. 11] + "&tipoOggetto=PIB&cdSito=BL" 
+            cover_url = BASE_URI + "/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=" + isbn[0 .. 11] + "&tipoOggetto=PIB&cdSito=BL" # use "FRB" instead of "PIB" for smaller images
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
                 File.open(cover_filename, "w") do |file|
@@ -123,7 +130,7 @@ end
             end
 
             medium_cover = CACHE_DIR + "/" + cover_filename
-            if File.size(medium_cover) > 0
+            if File.size(medium_cover) > 43
                 puts medium_cover + " has non-0 size" if $DEBUG
                 return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
             end
@@ -133,7 +140,7 @@ end
         end
 
         def each_book_page(data)
-	        raise if data.scan(/<a href="\/libri\/scheda\/ea978([\d]+).html">/) { |a| yield a}.empty?
+	        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=([^"]+)">(\s*)Scheda completa(\s*)<\/a>/) { |a| yield a}.empty?
         end
     
         def clean_cache
@@ -148,4 +155,3 @@ end
     end
 end
 end
-
