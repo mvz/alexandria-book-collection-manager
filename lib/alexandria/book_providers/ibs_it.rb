@@ -104,8 +104,8 @@ class BookProviders
                 publish_year = nil if publish_year == 0
             end
 
-          if md = /<a href="javascript:Jackopen\('(.+)'\)\">/.match(data)
-            cover_url = md[1]
+          if md = /src="http:\/\/giotto.ibs.it\/cop\/copt13.asp\?f=(\d+)">/.match(data)
+            cover_url = "http://giotto.ibs.it/cop/copt13.asp?f=" + md[1] # use copa13.asp, copt13.asp, copj13.asp, for small, medium, big image
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
                 File.open(cover_filename, "w") do |file|
@@ -114,7 +114,7 @@ class BookProviders
             end
 
             medium_cover = CACHE_DIR + "/" + cover_filename
-            if File.size(medium_cover) > 0
+            if File.size(medium_cover) > 0 and File.size(medium_cover) != 1822 # 1823 is the size of the fake image "copertina non disponibile"
                 puts medium_cover + " has non-0 size" if $DEBUG
                 return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
             end

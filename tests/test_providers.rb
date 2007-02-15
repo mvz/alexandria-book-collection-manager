@@ -53,12 +53,12 @@ class TestProviders < Test::Unit::TestCase
                         '3896673300') 
     end
 
-    def test_ibs_it # this tests a book without image but with author
+    def test_ibs_it_1 # this tests a book without image but with author
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
                         '9788886973816') 
     end
     
-    def test_ibs_it # this tests a book with image but without author
+    def test_ibs_it_2 # this tests a book with image but without author
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
                         '8807710145') 
     end
