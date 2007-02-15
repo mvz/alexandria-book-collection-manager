@@ -25,7 +25,7 @@ class BookProviders
     class IBS_itProvider < GenericProvider
         BASE_URI = "http://www.internetbookshop.it"
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
-        REFERER = "http://www.internetbookshop.it"
+        REFERER = BASE_URI
         def initialize
             super("IBS_it", "Internet Bookshop Italia")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
@@ -83,10 +83,11 @@ class BookProviders
         def to_book(data)
             raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
+
             authors = []
-            raise "No Author" unless md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
-            md[0].gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
-            raise "Authors empty" if authors.empty?
+            if md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
+                md[0].gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
+            end
 
             raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
             isbn = md[1].strip
@@ -94,7 +95,7 @@ class BookProviders
             raise "No publisher" unless md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
-            raise "No date?"unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
+            raise "No edition" unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
             edition = CGI.unescape(md[1].strip)
             
             publish_year = nil
@@ -102,7 +103,8 @@ class BookProviders
                 publish_year = CGI.unescape(md[1].strip).to_i
                 publish_year = nil if publish_year == 0
             end
-            md = /<a href="javascript:Jackopen\('(.+)'\)\">/.match(data)
+
+          if md = /<a href="javascript:Jackopen\('(.+)'\)\">/.match(data)
             cover_url = md[1]
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
@@ -118,6 +120,7 @@ class BookProviders
             end
             puts medium_cover + " has 0 size, removing ..." if $DEBUG
             File.delete(medium_cover)
+          end
             return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
         end
 
