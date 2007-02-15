@@ -33,7 +33,6 @@ class BookProviders
             req = BASE_URI + "/"
             req += case type
                 when SEARCH_BY_ISBN
-#                    "product.asp?cookie%5Ftest=1&isbn="
                      "product.asp?isbn="
 
                 when SEARCH_BY_TITLE
@@ -56,7 +55,6 @@ class BookProviders
 	        #data = transport.get(URI.parse(req))
 	        data = agent.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-				#req += "&cookie%5Ftest=1"
 				#data = transport.get(URI.parse(req))
 				data = agent.get(URI.parse(req)) rescue data = agent.get(URI.parse(req)) #try again
                 to_book(data) #rescue NoResultsError
@@ -76,7 +74,7 @@ class BookProviders
 
         def url(book)
             return nil unless book.isbn
-            "http://www.deastore.com/product.asp?cookie%5Ftest=1&isbn=" + book.isbn
+            "http://www.deastore.com/product.asp?isbn=" + book.isbn
         end
 
         #######

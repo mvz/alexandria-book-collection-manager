@@ -238,7 +238,12 @@ module Alexandria
         require 'alexandria/book_providers/renaud'
         require 'alexandria/book_providers/adlibris'
         require 'alexandria/book_providers/ls'
-		require 'alexandria/book_providers/dea_store_it'
+        
+        # mechanize is optional
+        begin
+            require 'alexandria/book_providers/dea_store_it'
+        rescue LoadError
+        end
         
         # Ruby/ZOOM is optional
         begin
