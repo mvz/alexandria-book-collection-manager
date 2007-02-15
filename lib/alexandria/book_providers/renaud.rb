@@ -83,12 +83,12 @@ module Alexandria
         # Make it sure that we are in utf-8
         data = data.convert("UTF-8", "iso-8859-1")
         titles = []
-        data.scan(/"LireHyperlien" href.*><b>([-,'\(\)&;\w\s#{ACCENTUATED_CHARS}]*)<\/b><\/a><br>/).each{|md|
+        data.scan(/"LireHyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each{|md|
           titles << md[0].strip
         }
         raise if titles.empty?
         authors = []
-        data.scan(/Nom_Auteur.*><i>([,'.&;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each{|md|
+        data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each{|md|
           authors2 = []
           for author in md[0].split('  ')
             authors2 << author.strip
@@ -97,7 +97,7 @@ module Alexandria
         }
         raise if authors.empty?
         isbns = []
-        data.scan(/ISBN :([\dX]*)/).each{|md|
+        data.scan(/ISBN :<\/td><td>(\d+)/).each{|md|
           isbns << md[0].strip
         }
         raise if isbns.empty?
@@ -109,7 +109,7 @@ module Alexandria
         }
         raise if editions.empty? or publish_years.empty?
         publishers = []
-        data.scan(/diteur : ([,'.&;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each{|md|
+        data.scan(/diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each{|md|
           publishers << md[0].strip
         }
         raise if publishers.empty?
