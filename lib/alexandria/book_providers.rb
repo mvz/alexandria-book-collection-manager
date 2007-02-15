@@ -230,7 +230,7 @@ module Alexandria
         end
 
         require 'alexandria/book_providers/amazon'
-        #require 'alexandria/book_providers/bn'
+        require 'alexandria/book_providers/bn'
         require 'alexandria/book_providers/proxis'
         #require 'alexandria/book_providers/mcu'
         require 'alexandria/book_providers/amadeus'
@@ -239,6 +239,7 @@ module Alexandria
         require 'alexandria/book_providers/adlibris'
         require 'alexandria/book_providers/ls'
         require 'alexandria/book_providers/bol_it'
+        require 'alexandria/book_providers/webster_it'
 
         
         # mechanize is optional

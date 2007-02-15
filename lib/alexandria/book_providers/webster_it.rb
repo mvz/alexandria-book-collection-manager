@@ -27,6 +27,7 @@ class BookProviders
         BASE_URI = "http://www.libreriauniversitaria.it" # also "http://www.webster.it"
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.webster_it_cache')
         REFERER = BASE_URI
+        LOCALE = "BIT" # possible locales are: with isbn: "BIT", "BUS", "BUK", with ean: "BDE", "MIT"
         def initialize
             super("Webster_it", "Webster Italia")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
@@ -38,16 +39,16 @@ class BookProviders
             req = BASE_URI + "/"
             req += case type
                 when SEARCH_BY_ISBN
-                    "BIT/"
+                    "#{LOCALE}/"
 
                 when SEARCH_BY_TITLE
-                    "c_search.php?noinput=1&shelf=BIT&title_query="
+                    "c_search.php?noinput=1&shelf=#{LOCALE}&title_query="
 
                 when SEARCH_BY_AUTHORS
-                    "c_search.php?noinput=1&shelf=BIT&author_query="
+                    "c_search.php?noinput=1&shelf=#{LOCALE}&author_query="
 
                 when SEARCH_BY_KEYWORD
-                    "c_search.php?noinput=1&shelf=BIT&subject_query="
+                    "c_search.php?noinput=1&shelf=#{LOCALE}&subject_query="
 
                 else
                     raise InvalidSearchTypeError
@@ -62,12 +63,12 @@ end
             p req if $DEBUG
 	        data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-                to_book(data) rescue raise NoResultsError
+                to_book(data) #rescue raise NoResultsError
             else
                 begin
                     results = [] 
                     each_book_page(data) do |code, title|
-                        results << to_book(transport.get(URI.parse(BASE_URI + "/BIT/" + code)))
+                        results << to_book(transport.get(URI.parse(BASE_URI + "/#{LOCALE}/" + code)))
                     end
                     return results 
                 rescue
@@ -78,7 +79,7 @@ end
 
         def url(book)
             return nil unless book.isbn
-            BASE_URI + "/BIT/" + Library.canonicalise_isbn(book.isbn)
+            BASE_URI + "/#{LOCALE}/" + Library.canonicalise_isbn(book.isbn)
         end
 
         #######
@@ -86,17 +87,19 @@ end
         #######
     
         def to_book(data)
+        data = data.convert("UTF-8", "iso-8859-15")
+
             raise unless md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
             if md = /<span class="product_heading_volume">([^<]+)/.match(data)
                 title += " " + CGI.unescape(md[1].strip)
             end
+
             authors = []
-	    
-	  if   md = /<li><span class="product_label">Autor([ei]):<\/span> <span class="product_text"><a href="([^>]+)>([^<]+)/.match(data)
+	    if md = /<li><span class="product_label">Autor([ei]):<\/span> <span class="product_text"><a href="([^>]+)>([^<]+)/.match(data)
                  authors = [CGI.unescape(md[3].strip)]
-#            md[1].split(', ').each { |a| authors << CGI.unescape(a.strip) }
-          end
+#                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
+            end
 
             raise unless md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
             isbn = "978" + md[1].strip[0..8]
@@ -106,20 +109,20 @@ end
 	        publisher = CGI.unescape(md[2].strip)
 
            if md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
-             edition = "p. " + CGI.unescape(md[1].strip)
+             edition = CGI.unescape(md[1].strip) + "p. "
            else
              edition = nil
            end
 
             publish_year = nil
-            if md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^"]+)/.match(data)
-                publish_year = CGI.unescape(md[1].strip).to_i
+            if md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data)
+                publish_year = CGI.unescape(md[1].strip)[-4 .. -1].to_i
                 publish_year = nil if publish_year == 0
             end
 
   if data =~ /javascript:popImage/
 
-            cover_url = BASE_URI + "/data/images/BIT/" + isbn[9 .. 11] + "/" + isbn + "p.jpg" # use "g" instead of "p" for bigger image
+            cover_url = BASE_URI + "/data/images/#{LOCALE}/" + isbn[9 .. 11] + "/" + isbn + "p.jpg" # use "g" instead of "p" for bigger image
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
                 File.open(cover_filename, "w") do |file|
@@ -139,7 +142,7 @@ end
         end
 
         def each_book_page(data)
-	        raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="BIT\/([^\/]+)/) { |a| yield a}.empty?
+            raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/) { |a| yield a}.empty?
         end
     
         def clean_cache
@@ -154,4 +157,3 @@ end
     end
 end
 end
-

@@ -83,6 +83,11 @@ class TestProviders < Test::Unit::TestCase
                         '9788817012980') 
     end
 
+    def test_webster
+        __test_provider(Alexandria::BookProviders::Webster_itProvider,
+                        '9788817012980') 
+    end
+
     def test_renaud
         __test_provider(Alexandria::BookProviders::RENAUDProvider,
                         '9782894723388') 
