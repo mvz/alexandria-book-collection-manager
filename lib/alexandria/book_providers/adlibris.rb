@@ -127,6 +127,8 @@ class BookProviders
 		
 		def to_book_isbn(data, isbn)
 			#puts data
+			data = data.convert("UTF-8", "iso-8859-15")
+
 			product = {}			
 			if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
 				raise NoResultsError
@@ -151,10 +153,10 @@ class BookProviders
 
 			raise "No edition" unless md = /<span id="ctl00_main_frame_ctrlproduct_lblEditionAndWeight">([^<]*)i gram: .+<\/span>/.match(data)
 			
-			product["edition"] = md[1] or ""
+			product["edition"] = md[1] or nil
 
 
-			img_url = "covers/.+" + isbn + "\.jpg"
+			img_url = "covers/" + isbn[0 .. 0] + "/" + isbn[1 .. 2] + "/" + isbn + ".jpg"
 			#puts img_url
 			raise "No image found" unless md = data.match(img_url)
 			product["cover"] = BASE_URI + img_url
