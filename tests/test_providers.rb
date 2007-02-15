@@ -80,7 +80,7 @@ class TestProviders < Test::Unit::TestCase
 
     def test_bol
         __test_provider(Alexandria::BookProviders::BOL_itProvider,
-                        '881701298X') 
+                        '9788817012980') 
     end
 
 end

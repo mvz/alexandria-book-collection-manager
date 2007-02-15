@@ -64,7 +64,7 @@ end
             p req if $DEBUG
 	        data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
-                to_book(data) rescue raise NoResultsError
+                to_book(data) #rescue raise NoResultsError
             else
                 begin
                     results = [] 
@@ -88,18 +88,19 @@ end
         #######
     
         def to_book(data)
+        data = data.convert("UTF-8", "iso-8859-1")
+
             raise unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
             title = CGI.unescape(md[1].strip)
 
             authors = []
-	  if md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data)
-            md[1].split(', ').each { |a| authors << CGI.unescape(a.strip) }
-          end
+	    if md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data)
+                md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
+            end
 
             raise unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
             isbn = md[1].strip
             isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
-            isbn = Library.canonicalise_isbn(isbn)
 
             raise unless md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
@@ -120,7 +121,7 @@ end
                 publish_year = CGI.unescape(md[1].strip).to_i
                 publish_year = nil if publish_year == 0
             end
-          
+
             cover_url = BASE_URI + "/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=" + isbn[0 .. 11] + "&tipoOggetto=PIB&cdSito=BL" # use "FRB" instead of "PIB" for smaller images
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
@@ -140,7 +141,7 @@ end
         end
 
         def each_book_page(data)
-	        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=([^"]+)">(\s*)Scheda completa(\s*)<\/a>/) { |a| yield a}.empty?
+            raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=([^"]+)">(\s*)Scheda completa(\s*)<\/a>/) { |a| yield a}.empty?
         end
     
         def clean_cache

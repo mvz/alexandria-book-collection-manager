@@ -50,14 +50,14 @@ class BookProviders
             end
             
             req += CGI.escape(criterion)
+            p req if $DEBUG
 			agent = WWW::Mechanize.new
 			agent.user_agent_alias = 'Mac Safari'
 	        #data = transport.get(URI.parse(req))
 	        data = agent.get(URI.parse(req))
+		data = agent.get(URI.parse(req)) rescue data = agent.get(URI.parse(req)) #try again
             if type == SEARCH_BY_ISBN
-				#data = transport.get(URI.parse(req))
-				data = agent.get(URI.parse(req)) rescue data = agent.get(URI.parse(req)) #try again
-                to_book(data) #rescue NoResultsError
+                to_book(data) #rescue raise NoResultsError
             else
                 begin
                     results = [] 
@@ -74,7 +74,7 @@ class BookProviders
 
         def url(book)
             return nil unless book.isbn
-            "http://www.deastore.com/product.asp?isbn=" + book.isbn
+            BASE_URI + "/product.asp?isbn=" + book.isbn
         end
 
         #######
@@ -83,13 +83,15 @@ class BookProviders
     
         def to_book(data)
 			data = data.content
+        data = data.convert("UTF-8", "windows-1252")
+
             raise "No title." unless md = /<span class="BDtitoloLibro"> (.+)<\/span>/.match(data)
             title = CGI.unescape(md[1].strip)
+
             authors = []
-	    
-	        raise "Authors not found" unless md = /<span class="BDauthLibro">by:(.+)<\/span><span class="BDformatoLibro">/.match(data)
-            md[1].strip.split('; ').each { |a| authors << CGI.unescape(a.strip) }
-            raise "Authors are empty" if authors.empty?
+            if md = /<span class="BDauthLibro">by:(.+)<\/span><span class="BDformatoLibro">/.match(data)
+                md[1].strip.split('; ').each { |a| authors << CGI.unescape(a.strip) }
+            end
 
             raise "No ISBN" unless md = /<span class="isbn">(.+)<\/span><br \/>/.match(data)
             isbn = md[1].strip.gsub!("-","")
@@ -98,10 +100,11 @@ class BookProviders
 	        publisher = CGI.unescape(md[1].strip)
 
             unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
-            	edition = ""
+            	edition = nil
             else
             	edition = CGI.unescape(md[1].strip)
             end
+
 			publish_year = 0
             if data =~ /Ingrandire immagine/
 	    	    small_cover = "http://www.deastore.com/covers/ie_cd1/batch1/" + isbn + ".jpg"
@@ -118,4 +121,3 @@ class BookProviders
     end
 end
 end
-

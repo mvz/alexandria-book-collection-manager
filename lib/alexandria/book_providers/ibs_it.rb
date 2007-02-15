@@ -81,30 +81,32 @@ class BookProviders
         #######
     
         def to_book(data)
+        data = data.convert("UTF-8", "iso-8859-1")
+
             raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
 
             authors = []
             if md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
-                md[0].gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
+                md[0].strip.gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
             end
 
             raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
             isbn = md[1].strip
-         
+
             raise "No publisher" unless md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
             raise "No edition" unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
             edition = CGI.unescape(md[1].strip)
-            
+
             publish_year = nil
             if md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data)
                 publish_year = CGI.unescape(md[1].strip).to_i
                 publish_year = nil if publish_year == 0
             end
 
-          if md = /src="http:\/\/giotto.ibs.it\/cop\/copt13.asp\?f=(\d+)">/.match(data)
+            md = /src="http:\/\/giotto.ibs.it\/cop\/copt13.asp\?f=(\d+)">/.match(data)
             cover_url = "http://giotto.ibs.it/cop/copt13.asp?f=" + md[1] # use copa13.asp, copt13.asp, copj13.asp, for small, medium, big image
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
@@ -114,13 +116,12 @@ class BookProviders
             end
 
             medium_cover = CACHE_DIR + "/" + cover_filename
-            if File.size(medium_cover) > 0 and File.size(medium_cover) != 1822 # 1823 is the size of the fake image "copertina non disponibile"
+            if File.size(medium_cover) > 0 and File.size(medium_cover) != 1822 # 1822 is the size of the fake image "copertina non disponibile"
                 puts medium_cover + " has non-0 size" if $DEBUG
                 return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
             end
             puts medium_cover + " has 0 size, removing ..." if $DEBUG
             File.delete(medium_cover)
-          end
             return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
         end
 
