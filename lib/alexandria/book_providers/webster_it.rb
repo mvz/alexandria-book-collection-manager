@@ -27,7 +27,7 @@ class BookProviders
         BASE_URI = "http://www.libreriauniversitaria.it" # also "http://www.webster.it"
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.webster_it_cache')
         REFERER = BASE_URI
-        LOCALE = "BIT" # possible locales are: with isbn: "BIT", "BUS", "BUK", with ean: "BDE", "MIT"
+        LOCALE = "BIT" # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
         def initialize
             super("Webster_it", "Webster Italia")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
@@ -39,7 +39,7 @@ class BookProviders
             req = BASE_URI + "/"
             req += case type
                 when SEARCH_BY_ISBN
-                    "#{LOCALE}/"
+                    "isbn/" # "#{LOCALE}/"
 
                 when SEARCH_BY_TITLE
                     "c_search.php?noinput=1&shelf=#{LOCALE}&title_query="
@@ -79,7 +79,7 @@ end
 
         def url(book)
             return nil unless book.isbn
-            BASE_URI + "/#{LOCALE}/" + Library.canonicalise_isbn(book.isbn)
+            BASE_URI + "/isbn/" + Library.canonicalise_isbn(book.isbn)
         end
 
         #######
@@ -87,7 +87,7 @@ end
         #######
     
         def to_book(data)
-        data = data.convert("UTF-8", "iso-8859-15")
+            data = data.convert("UTF-8", "iso-8859-15")
 
             raise unless md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
@@ -120,9 +120,13 @@ end
                 publish_year = nil if publish_year == 0
             end
 
-  if data =~ /javascript:popImage/
+  if data =~ /javascript:popImage/ and  md = /<img border="0" alt="([^"]+)" src="([^"]+)/.match(data)
+            cover_url = BASE_URI + md[2].strip
+            # use "p" instead of "g" for smaller image
+            if cover_url[-5] == 104  
+                cover_url[-5] = 112 
+            end
 
-            cover_url = BASE_URI + "/data/images/#{LOCALE}/" + isbn[9 .. 11] + "/" + isbn + "p.jpg" # use "g" instead of "p" for bigger image
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
                 File.open(cover_filename, "w") do |file|

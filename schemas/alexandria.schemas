@@ -223,7 +223,7 @@
       <owner>alexandria</owner>
       <type>list</type>
       <list_type>string</list_type>
-      <default>[Amazon, BN, MCU, Proxis, Amadeus, IBS_it]</default>
+      <default>[Amazon, Proxis, Amadeus, IBS_it, Webster_it, BN, MCU]</default>
       <locale name="C">
         <short>Providers priority</short>
         <long>A list of provider names sorted by priority.  They will be queried in that order.</long>
