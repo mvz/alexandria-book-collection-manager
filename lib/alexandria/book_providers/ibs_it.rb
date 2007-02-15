@@ -62,7 +62,7 @@ class BookProviders
                 begin
                     results = [] 
                     each_book_page(data) do |code, title|
-                        results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?c=" + code)))
+                        results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?cc=" + code)))
                     end
                     return results 
                 rescue
@@ -125,7 +125,7 @@ class BookProviders
         end
 
         def each_book_page(data)
-            raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;c=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
+            raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
         end
     
         def clean_cache
