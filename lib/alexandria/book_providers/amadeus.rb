@@ -80,7 +80,7 @@ class BookProviders
     
         def to_book(data)
 						puts data if $DEBUG
-						data = data.convert("UTF-8", "iso-8859-15")
+						data = data.convert("UTF-8", "iso-8859-1")
 						product = {}
 						# title
             raise "No Title" unless md = /<span id="_artikel_titel">(.+)<\/span><span class="foobar">/.match(data)

@@ -127,7 +127,7 @@ class BookProviders
 		
 		def to_book_isbn(data, isbn)
 			#puts data
-			data = data.convert("UTF-8", "iso-8859-15")
+			data = data.convert("UTF-8", "iso-8859-1")
 
 			product = {}			
 			if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil

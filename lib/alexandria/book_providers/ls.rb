@@ -24,14 +24,14 @@ module Alexandria
 class BookProviders
     class SicilianoProvider < GenericProvider
     
-        BASE_URI = "http://www.siciliano.com.br/livro.asp?tipo=10&"
+        BASE_URI = "http://www.siciliano.com.br"
         def initialize
             super("LS", "Livraria Siliciano")
             # no preferences for the moment
         end
         
         def search(criterion, type)
-            req = BASE_URI + "pesquisa=" 
+            req = BASE_URI + "/livro.asp?tipo=10&pesquisa=" 
             req += case type
                 when SEARCH_BY_ISBN
                     "5&id="
@@ -66,7 +66,7 @@ class BookProviders
         end
 
         def url(book)
-	    "http://www.siciliano.com.br/livro.asp?tipo=10&pesquisa=5&id=" + (book.isbn or "")
+	    "http://www.siciliano.com.br/livro.asp?tipo=10&pesquisa=5&id=" +  Library.canonicalise_isbn(book.isbn)
         end
 
         #######
@@ -74,18 +74,23 @@ class BookProviders
         #######
    
         def to_book(data, req)
+            data = data.convert("UTF-8", "iso-8859-1")
             raise "No Title" unless md = /'><strong>([^<]+)<\/strong><\/a><br\/>/.match(data)
             title = md[1].strip
             authors = []
             raise "No Author" unless md =/<strong class="azulescuro">(.*)<\/strong><br\/><br\/>/.match(data)
-            authors = md[1].strip 
+            md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
             raise "No ISBN from Image" unless md = /<img src="capas\/([^<]+)p\.jpg" alt=""\/>/.match(data)
             isbn = md[1].strip
-            edition = ""
-            publish_year = ""
-            raise "No Publisher" unless md = /<br\/>Editora: ([^<]+)<br>/.match(data)
-            publisher = md[1].strip
-            raise "No Big Image" unless medium_cover = transport.get(URI.parse(req+'/capas/'+ isbn + 'p.jpg'))
+            edition = nil
+            publish_year = nil
+            if md = /<br\/>Editora: ([^<]+)<br>/.match(data)
+                publisher = md[1].strip
+            else
+                publisher = nil
+            end
+            medium_cover = BASE_URI+'/capas/'+ isbn + '.jpg'
+            #raise "No Big Image" unless medium_cover = transport.get(URI.parse(BASE_URI+'/capas/'+ isbn + '.jpg'))
             #raise "No Big Image" unless md = /<img src="capas\/(.+\/(\d+)p\.gif)" alt=""\/>/.match(data)
             #medium_cover = md[1]
             #small_cover = md[1]
