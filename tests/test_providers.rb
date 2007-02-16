@@ -70,12 +70,11 @@ class TestProviders < Test::Unit::TestCase
                         '3896673300') 
     end
 
-    def test_ibs_it_1 # this tests a book without image but with author
+    def test_ibs_it
+        # this tests a book without image but with author
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
                         '9788886973816') 
-    end
-    
-    def test_ibs_it_2 # this tests a book with image but without author
+        # this tests a book with image but without author
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
                         '9788807710148') 
     end
@@ -92,7 +91,9 @@ class TestProviders < Test::Unit::TestCase
 
     def test_dea
         __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
-                        '881701298X') 
+                        '9788817012980') 
+        __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
+                        '9788806134747') 
     end
 
     def test_bol
@@ -101,8 +102,18 @@ class TestProviders < Test::Unit::TestCase
     end
 
     def test_webster
+        # BIT
         __test_provider(Alexandria::BookProviders::Webster_itProvider,
                         '9788817012980') 
+        # BUK
+        __test_provider(Alexandria::BookProviders::Webster_itProvider,
+                        '9781853260803') 
+        # BUS
+        __test_provider(Alexandria::BookProviders::Webster_itProvider,
+                        '9780307237699') 
+        # BDE
+        __test_provider(Alexandria::BookProviders::Webster_itProvider,
+                        '9783442460878') 
     end
 
     def test_renaud

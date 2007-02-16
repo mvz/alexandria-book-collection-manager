@@ -16,17 +16,21 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'fileutils'
 require 'net/http'
-#require 'cgi'
 require 'mechanize'
+#require 'cgi'
 
 module Alexandria
 class BookProviders
     class DeaStore_itProvider < GenericProvider
         BASE_URI = "http://www.deastore.com"
+        CACHE_DIR = File.join(Alexandria::Library::DIR, '.deastore_it_cache')
         def initialize
             super("DeaStore_it", "DeaStore Italia")
+            FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
             # no preferences for the moment
+            at_exit { clean_cache }
         end
         
         def search(criterion, type)
@@ -49,21 +53,27 @@ class BookProviders
 
             end
             
+if type == SEARCH_BY_ISBN
+            req += Library.canonicalise_isbn(criterion)
+else
             req += CGI.escape(criterion)
+end
             p req if $DEBUG
-			agent = WWW::Mechanize.new
-			agent.user_agent_alias = 'Mac Safari'
-	        #data = transport.get(URI.parse(req))
-	        data = agent.get(URI.parse(req))
-		data = agent.get(URI.parse(req)) rescue data = agent.get(URI.parse(req)) #try again
+
+            agent = WWW::Mechanize.new
+            agent.user_agent_alias = 'Mac Safari'
+            #data = transport.get(URI.parse(req))
+            data = agent.get(URI.parse(req)).content
+
             if type == SEARCH_BY_ISBN
                 to_book(data) #rescue raise NoResultsError
             else
                 begin
                     results = [] 
                     each_book_page(data) do |code, title|
-                        #results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?c=" + code)))
-                        results << to_book(agent.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?c=" + code)))
+                        agent = WWW::Mechanize.new
+                        agent.user_agent_alias = 'Mac Safari'
+                        results << to_book(agent.get(URI.parse(BASE_URI + "/" + code)).content)
                     end
                     return results 
                 rescue
@@ -74,7 +84,7 @@ class BookProviders
 
         def url(book)
             return nil unless book.isbn
-            BASE_URI + "/product.asp?isbn=" + book.isbn
+            BASE_URI + "/product.asp?isbn=" + Library.canonicalise_isbn(book.isbn)
         end
 
         #######
@@ -82,41 +92,69 @@ class BookProviders
         #######
     
         def to_book(data)
-			data = data.content
-        data = data.convert("UTF-8", "windows-1252")
+            data = data.convert("UTF-8", "windows-1252")
 
-            raise "No title." unless md = /<span class="BDtitoloLibro"> (.+)<\/span>/.match(data)
+            raise "No title." unless md = /<span class="BDtitoloLibro">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
 
             authors = []
-            if md = /<span class="BDauthLibro">by:(.+)<\/span><span class="BDformatoLibro">/.match(data)
-                md[1].strip.split('; ').each { |a| authors << CGI.unescape(a.strip) }
+	    if md = /<span class="BDauthLibro">by:([^<]+)/.match(data)
+                md[1].strip.split('- ').each { |a| authors << CGI.unescape(a.strip) }
             end
 
-            raise "No ISBN" unless md = /<span class="isbn">(.+)<\/span><br \/>/.match(data)
+            raise "No ISBN" unless md = /<span class="BDEticLibro">ISBN 13: <\/span><span class="isbn">([^<]+)/.match(data)
             isbn = md[1].strip.gsub!("-","")
 
-            raise "No Publisher" unless md = /<span class="BDEticLibro">Publisher &amp; Imprint<\/span>(.+)<\/p>/.match(data)
+            raise "No Publisher" unless md = /<span class="BDeditoreLibro">([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)
 
-            unless md = /<strong>More info<\/strong><\/font><br><font face="Verdana, Geneva, Arial, Helvetica, sans-serif" style="font-size : 7.5pt;" size="1">([^<]+)/.match(data)
+            unless md = /<span class="BDEticLibro">More info<\/span><br \/>([^<]+)/.match(data)
             	edition = nil
             else
             	edition = CGI.unescape(md[1].strip)
             end
 
-			publish_year = 0
-            if data =~ /Ingrandire immagine/
-	    	    small_cover = "http://www.deastore.com/covers/ie_cd1/batch1/" + isbn + ".jpg"
-	    	    medium_cover = "http://www.deastore.com/covers/ie_cd1/batch2/" + isbn + ".jpg"
-	    	    # big_cover = "http://www.deastore.com/covers/ie_cd1/batch3/" + isbn + ".jpg"
-	            return [ Book.new(title, authors, isbn, publisher, edition),medium_cover ]
+            publish_year = nil
+            if md = /<span class="BDdataPubbLibro">([^<]+)/.match(data)
+                publish_year = CGI.unescape(md[1].strip)[-4 .. -1].to_i
+                publish_year = nil if publish_year == 0 or publish_year == 1900
             end
-	        return [ Book.new(title, authors, isbn, publisher, publish_year, edition)]
+
+  if md = /<div class="imageLg"><a href="javascript:void\(''\);" onclick="popUpCover\('\/covers\/([^\/]+)/.match(data)
+            cover_url = BASE_URI + "/covers/" + md[1].strip + "/batch1/" + Library.canonicalise_isbn(isbn) + ".jpg" # use batch2 or batch3 for bigger images
+
+            cover_filename = isbn + ".tmp"
+            Dir.chdir(CACHE_DIR) do
+                File.open(cover_filename, "w") do |file|
+                    agent = WWW::Mechanize.new
+                    agent.user_agent_alias = 'Mac Safari'
+                    file.write agent.get(URI.parse(cover_url)).content
+                end                    
+            end
+
+            medium_cover = CACHE_DIR + "/" + cover_filename
+            if File.size(medium_cover) > 0
+                puts medium_cover + " has non-0 size" if $DEBUG
+                return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+            end
+            puts medium_cover + " has 0 size, removing ..." if $DEBUG
+            File.delete(medium_cover)
+  end
+            return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
         end
 
         def each_book_page(data)
-	        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;c=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
+	        raise if data.scan(/<span class="BDtitoloLibro"><a href="([^"]+)/) { |a| yield a}.empty?
+        end
+    
+        def clean_cache
+            #FIXME begin ... rescue ... end?
+            Dir.chdir(CACHE_DIR) do
+                Dir.glob("*.tmp") do |file|
+                    puts "removing " + file if $DEBUG
+                    File.delete(file)    
+                end
+            end
         end
     end
 end
