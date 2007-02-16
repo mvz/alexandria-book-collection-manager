@@ -48,11 +48,12 @@ class TestAlexandriaApplication < Test::Unit::TestCase
         	Gtk.main
         end
         
-        sleep(2)
+        #sleep(1)
         
         assert(@thread1.alive?)
         
 		@main_app_window = @main_app.main_app
+		#@main_app_window.hide_all
 		
 	end
 	
@@ -70,5 +71,16 @@ class TestAlexandriaApplication < Test::Unit::TestCase
 		
 		__test_teardown_application
 	end
-
+	
+	def test_import_isbns
+		__test_application
+		#puts @main_app.pretty_print_instance_variables
+		@actiongroup = @main_app.actiongroup
+		@appbar = @main_app.appbar
+		#puts @actiongroup.pretty_print_instance_variables
+		#puts @appbar.pretty_print_instance_variables
+		puts @actiongroup.methods
+		puts @appbar.methods
+		__test_teardown_application
+	end
 end

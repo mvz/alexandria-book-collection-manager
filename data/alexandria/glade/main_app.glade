@@ -1,280 +1,204 @@
-<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
-<!DOCTYPE glade-interface SYSTEM "http://glade.gnome.org/glade-2.0.dtd">
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--*- mode: xml -*-->
 <glade-interface>
-<requires lib="gnome"/>
-<requires lib="bonobo"/>
-
-<widget class="GnomeApp" id="main_app">
-  <property name="width_request">320</property>
-  <property name="height_request">200</property>
-  <property name="visible">True</property>
-  <property name="title" translatable="no">Alexandria</property>
-  <property name="type">GTK_WINDOW_TOPLEVEL</property>
-  <property name="window_position">GTK_WIN_POS_CENTER</property>
-  <property name="modal">False</property>
-  <property name="default_width">640</property>
-  <property name="default_height">480</property>
-  <property name="resizable">True</property>
-  <property name="destroy_with_parent">False</property>
-  <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">False</property>
-  <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
-  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
-  <property name="enable_layout_config">True</property>
-
-  <child internal-child="dock">
-    <widget class="BonoboDock" id="bonobodock1">
-      <property name="visible">True</property>
-      <property name="allow_floating">True</property>
-
-      <child>
-	<widget class="GtkHPaned" id="paned">
-	  <property name="visible">True</property>
-	  <property name="can_focus">True</property>
-	  <property name="position">140</property>
-
-	  <child>
-	    <widget class="GtkVBox" id="vbox1">
-	      <property name="visible">True</property>
-	      <property name="homogeneous">False</property>
-	      <property name="spacing">0</property>
-
-	      <child>
-		<widget class="GtkFrame" id="frame1">
-		  <property name="visible">True</property>
-		  <property name="label_xalign">0</property>
-		  <property name="label_yalign">0.5</property>
-		  <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-
-		  <child>
-		    <widget class="GtkHBox" id="hbox2">
-		      <property name="visible">True</property>
-		      <property name="homogeneous">False</property>
-		      <property name="spacing">0</property>
-
-		      <child>
-			<widget class="GtkLabel" id="label1">
-			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">_Libraries:</property>
-			  <property name="use_underline">True</property>
-			  <property name="use_markup">False</property>
-			  <property name="justify">GTK_JUSTIFY_LEFT</property>
-			  <property name="wrap">False</property>
-			  <property name="selectable">False</property>
-			  <property name="xalign">0</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">10</property>
-			  <property name="ypad">0</property>
-			  <property name="mnemonic_widget">library_listview</property>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">True</property>
-			  <property name="fill">True</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkButton" id="button18">
-			  <property name="visible">True</property>
-			  <property name="tooltip">Close</property>
-			  <property name="relief">GTK_RELIEF_NONE</property>
-			  <property name="focus_on_click">False</property>
-			  <signal name="clicked" handler="on_close_sidepane" last_modification_time="Tue, 18 May 2004 18:24:21 GMT"/>
-
-			  <child>
-			    <widget class="GtkImage" id="image425">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-close</property>
-			      <property name="icon_size">4</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			  </child>
-			</widget>
-			<packing>
-			  <property name="padding">0</property>
-			  <property name="expand">False</property>
-			  <property name="fill">False</property>
-			</packing>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">False</property>
-		  <property name="fill">False</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkScrolledWindow" id="scrolledwindow3">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		  <property name="shadow_type">GTK_SHADOW_NONE</property>
-		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
-
-		  <child>
-		    <widget class="GtkTreeView" id="library_listview">
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="headers_visible">False</property>
-		      <property name="rules_hint">True</property>
-		      <property name="reorderable">False</property>
-		      <property name="enable_search">False</property>
-		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:13:21 GMT"/>
-		      <signal name="button_press_event" handler="on_library_button_press_event" last_modification_time="Thu, 17 Feb 2005 10:13:21 GMT"/>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="padding">0</property>
-		  <property name="expand">True</property>
-		  <property name="fill">True</property>
-		</packing>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="shrink">True</property>
-	      <property name="resize">False</property>
-	    </packing>
-	  </child>
-
-	  <child>
-	    <widget class="GtkNotebook" id="notebook">
-	      <property name="visible">True</property>
-	      <property name="show_tabs">False</property>
-	      <property name="show_border">True</property>
-	      <property name="tab_pos">GTK_POS_TOP</property>
-	      <property name="scrollable">False</property>
-	      <property name="enable_popup">False</property>
-	      <signal name="switch_page" handler="on_switch_page" after="yes" last_modification_time="Tue, 07 Sep 2004 19:03:32 GMT"/>
-
-	      <child>
-		<widget class="GtkScrolledWindow" id="scrolledwindow5">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		  <property name="shadow_type">GTK_SHADOW_NONE</property>
-		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
-
-		  <child>
-		    <widget class="GtkIconView" id="iconview">
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="has_focus">True</property>
-		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:21 GMT"/>
-		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:13:58 GMT"/>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="tab_expand">False</property>
-		  <property name="tab_fill">True</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="label2">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes"></property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="type">tab</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkScrolledWindow" id="scrolledwindow4">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		  <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-		  <property name="shadow_type">GTK_SHADOW_NONE</property>
-		  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
-
-		  <child>
-		    <widget class="GtkTreeView" id="listview">
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="headers_visible">True</property>
-		      <property name="rules_hint">True</property>
-		      <property name="reorderable">False</property>
-		      <property name="enable_search">True</property>
-		      <signal name="button_press_event" handler="on_books_button_press_event" last_modification_time="Sat, 03 Apr 2004 14:34:38 GMT"/>
-		      <signal name="focus_in_event" handler="on_focus" last_modification_time="Thu, 08 Apr 2004 21:14:09 GMT"/>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="tab_expand">False</property>
-		  <property name="tab_fill">True</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="label3">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes"></property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0.5</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="type">tab</property>
-		</packing>
-	      </child>
-	    </widget>
-	    <packing>
-	      <property name="shrink">True</property>
-	      <property name="resize">True</property>
-	    </packing>
-	  </child>
-	</widget>
-      </child>
-    </widget>
-    <packing>
-      <property name="padding">0</property>
-      <property name="expand">True</property>
-      <property name="fill">True</property>
-    </packing>
-  </child>
-
-  <child internal-child="appbar">
-    <widget class="GnomeAppBar" id="appbar">
-      <property name="visible">True</property>
-      <property name="has_progress">True</property>
-      <property name="has_status">True</property>
-    </widget>
-    <packing>
-      <property name="padding">0</property>
-      <property name="expand">True</property>
-      <property name="fill">True</property>
-    </packing>
-  </child>
-</widget>
-
+  <requires lib="bonobo"/>
+  <requires lib="gnome"/>
+  <widget class="GnomeApp" id="main_app">
+    <property name="width_request">320</property>
+    <property name="height_request">200</property>
+    <property name="visible">True</property>
+    <property name="title">Alexandria</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="default_width">640</property>
+    <property name="default_height">480</property>
+    <property name="enable_layout_config">True</property>
+    <accessibility>
+      <atkproperty name="AtkObject::accessible_name" translatable="yes">Main Window</atkproperty>
+    </accessibility>
+    <child internal-child="dock">
+      <widget class="BonoboDock" id="bonobodock1">
+        <property name="visible">True</property>
+        <property name="allow_floating">True</property>
+        <child>
+          <widget class="GtkHPaned" id="paned">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="position">140</property>
+            <child>
+              <widget class="GtkVBox" id="vbox1">
+                <property name="visible">True</property>
+                <accessibility>
+                  <atkproperty name="AtkObject::accessible_name" translatable="yes">Libraries listing.</atkproperty>
+                </accessibility>
+                <child>
+                  <widget class="GtkFrame" id="frame1">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <child>
+                      <widget class="GtkHBox" id="hbox2">
+                        <property name="visible">True</property>
+                        <child>
+                          <widget class="GtkLabel" id="label1">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="xpad">10</property>
+                            <property name="label" translatable="yes">_Libraries:</property>
+                            <property name="use_underline">True</property>
+                            <property name="mnemonic_widget">library_listview</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkButton" id="button18">
+                            <property name="visible">True</property>
+                            <property name="tooltip">Close</property>
+                            <property name="relief">GTK_RELIEF_NONE</property>
+                            <property name="focus_on_click">False</property>
+                            <signal name="clicked" handler="on_close_sidepane"/>
+                            <child>
+                              <widget class="GtkImage" id="image425">
+                                <property name="visible">True</property>
+                                <property name="stock">gtk-close</property>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkScrolledWindow" id="scrolledwindow3">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <child>
+                      <widget class="GtkTreeView" id="library_listview">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="headers_visible">False</property>
+                        <property name="rules_hint">True</property>
+                        <property name="enable_search">False</property>
+                        <signal name="button_press_event" handler="on_library_button_press_event"/>
+                        <signal name="focus_in_event" handler="on_focus"/>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="resize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkNotebook" id="notebook">
+                <property name="visible">True</property>
+                <property name="show_tabs">False</property>
+                <accessibility>
+                  <atkproperty name="AtkObject::accessible_name" translatable="yes">Book listing.</atkproperty>
+                </accessibility>
+                <signal name="switch_page" handler="on_switch_page" after="yes"/>
+                <child>
+                  <widget class="GtkScrolledWindow" id="scrolledwindow5">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <child>
+                      <widget class="GtkIconView" id="iconview">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="has_focus">True</property>
+                        <signal name="button_press_event" handler="on_books_button_press_event"/>
+                        <signal name="focus_in_event" handler="on_focus"/>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="tab_expand">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label2">
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                    <property name="tab_expand">False</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkScrolledWindow" id="scrolledwindow4">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <child>
+                      <widget class="GtkTreeView" id="listview">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="rules_hint">True</property>
+                        <signal name="button_press_event" handler="on_books_button_press_event"/>
+                        <signal name="focus_in_event" handler="on_focus"/>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                    <property name="tab_expand">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                    <property name="position">1</property>
+                    <property name="tab_expand">False</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+            </child>
+          </widget>
+        </child>
+      </widget>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+    <child internal-child="appbar">
+      <widget class="GnomeAppBar" id="appbar">
+        <property name="visible">True</property>
+        <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK | GDK_ENTER_NOTIFY_MASK</property>
+        <property name="spacing">4</property>
+        <property name="has_progress">True</property>
+        <property name="has_status">True</property>
+        <accessibility>
+          <atkproperty name="AtkObject::accessible_name" translatable="yes">Status messages.</atkproperty>
+        </accessibility>
+      </widget>
+      <packing>
+        <property name="position">1</property>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+      </packing>
+    </child>
+  </widget>
 </glade-interface>

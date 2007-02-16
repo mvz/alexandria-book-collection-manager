@@ -123,7 +123,7 @@ module Alexandria
         titles.each_with_index{|title, i|
           books << [Book.new(title, authors[i], isbns[i], publishers[i], publish_years[i], editions[i]), 
             book_covers[i]]
-          print books
+          #print books
         }
         raise if books.empty?
 

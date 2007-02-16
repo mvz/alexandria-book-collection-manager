@@ -128,7 +128,7 @@ module UI
     end
 
     class MainApp < GladeBase 
-    	attr_accessor :main_app
+    	attr_accessor :main_app, :actiongroup, :appbar
         include GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 

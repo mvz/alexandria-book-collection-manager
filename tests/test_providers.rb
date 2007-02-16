@@ -8,33 +8,50 @@ require 'alexandria'
 $KCODE = "U"
 
 class TestProviders < Test::Unit::TestCase
-    def __test_provider(provider, isbn)
-        search_type = Alexandria::BookProviders::SEARCH_BY_ISBN
+    def __test_provider(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
         results = nil
         assert_nothing_raised("Something wrong here.") do    
-            results = provider.instance.search(isbn, search_type)
+            results = provider.instance.search(query, search_type)
         end
         #puts results.inspect
         assert_kind_of(Array, results, "Results are not an array")
         assert(!results.empty?, "Results are empty")
-        assert(results.length <= 2, "Results are greater than 2")
-        if results.length == 2
-            assert_kind_of(String, results.last, "Result is not a String")
-        end
-        assert_kind_of(Alexandria::Book, results.first, "Result is not a Book")
-        assert(results.first.isbn == isbn, "Result's isbn #{results.first.isbn} is not the same as requested isbn #{isbn}")
-        
+        if search_type == Alexandria::BookProviders::SEARCH_BY_ISBN
+        	assert(results.length <= 2, "Results are greater than 2")
+        	if results.length == 2
+        	    assert_kind_of(String, results.last, "Result is not a String")
+        	end
+        	assert(results.first.isbn == query, "Result's isbn #{results.first.isbn} is not the same as requested isbn #{query}")
+        	 assert_kind_of(Alexandria::Book, results.first, "Result is not a Book")
+       	else
+       		 assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book")
+        end   
     end
     
-    def test_amazon
+    def test_amazon_isbn
         __test_provider(Alexandria::BookProviders::AmazonProvider,
                         '0385504209')
     end
-
-     def test_bn
-         __test_provider(Alexandria::BookProviders::BNProvider,
+    
+    def test_amazon_title
+    	__test_provider(Alexandria::BookProviders::AmazonProvider,
+                        'A Confederacy of Dunces', Alexandria::BookProviders::SEARCH_BY_TITLE)
+    end
+    
+    def test_amazon_author
+    	__test_provider(Alexandria::BookProviders::AmazonProvider,
+                        'John Kennedy Toole', Alexandria::BookProviders::SEARCH_BY_AUTHORS)
+    end
+    
+    def test_amazon_keyword
+    	__test_provider(Alexandria::BookProviders::AmazonProvider,
+                        'Confederacy Dunces', Alexandria::BookProviders::SEARCH_BY_KEYWORD)
+    end
+    
+    def test_bn
+        __test_provider(Alexandria::BookProviders::BNProvider,
                          '9780961328917')   # see #1433  
-     end
+    end
 
 #     def test_mcu
 #         __test_provider(Alexandria::BookProviders::MCUProvider,
@@ -60,7 +77,7 @@ class TestProviders < Test::Unit::TestCase
     
     def test_ibs_it_2 # this tests a book with image but without author
         __test_provider(Alexandria::BookProviders::IBS_itProvider,
-                        '8807710145') 
+                        '9788807710148') 
     end
     
     def test_adlibris
