@@ -229,7 +229,6 @@ module Alexandria
             unabstract
         end
 
-        require 'alexandria/book_providers/amazon'
         require 'alexandria/book_providers/bn'
         require 'alexandria/book_providers/proxis'
         #require 'alexandria/book_providers/mcu'
@@ -241,6 +240,11 @@ module Alexandria
         require 'alexandria/book_providers/bol_it'
         require 'alexandria/book_providers/webster_it'
 
+        # Ruby/Amazon is optional
+        begin
+            require 'alexandria/book_providers/amazon'
+        rescue LoadError
+        end
         
         # mechanize is optional
         begin
