@@ -76,7 +76,7 @@ class BookProviders
         end
         
         def parseBook(product_id)
-            conv = proc { |str| str.convert("utf-8", "windows-1252") }
+            conv = proc { |str| str.convert("utf-8", "windows-1252") if str != nil }
             detailspage='http://oas2000.proxis.be/gate/jabba.coreii.g_p?bi=4&sp=DETAILS&mi='+product_id
             product = {}
             product['authors'] = []
@@ -104,12 +104,12 @@ class BookProviders
                 end
             end
 
-            %w{name isbn media manufacturer}.each do |field|
-                product[field] = "" if product[field].nil?
-            end 
+#            %w{name isbn media manufacturer}.each do |field|
+#                product[field] = "" if product[field].nil?
+#            end 
             
             book = Book.new(conv.call(product['name']),
-                            (product['authors'].map { |x| conv.call(x) } rescue [ "n/a" ]),
+                            (product['authors'].map { |x| conv.call(x) } rescue [  ]),
                             conv.call(product['isbn']),
                             conv.call(product['manufacturer']),
                             product['year'],

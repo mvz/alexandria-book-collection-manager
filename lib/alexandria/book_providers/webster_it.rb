@@ -109,7 +109,7 @@ end
 	        publisher = CGI.unescape(md[2].strip)
 
            if md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
-             edition = CGI.unescape(md[1].strip) + "p. "
+             edition = CGI.unescape(md[1].strip) + " p."
            else
              edition = nil
            end
@@ -123,8 +123,8 @@ end
   if data =~ /javascript:popImage/ and  md = /<img border="0" alt="([^"]+)" src="([^"]+)/.match(data)
             cover_url = BASE_URI + md[2].strip
             # use "p" instead of "g" for smaller image
-            if cover_url[-5] == 104  
-                cover_url[-5] = 112 
+            if cover_url[-5] == 103
+                cover_url[-5] = 112
             end
 
             cover_filename = isbn + ".tmp"

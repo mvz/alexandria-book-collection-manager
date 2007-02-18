@@ -69,7 +69,7 @@ class BookProviders
 						results << [Book.new(md[1].to_s(), # Title
 							[md[3].to_s()], # Authors
 							isbn,
-							"", # Publisher
+							nil, # Publisher
 							translate_stuff_stuff(md[4].to_s())), # Edition
 							imageAddr]
 					end
@@ -86,7 +86,8 @@ class BookProviders
 
         def url(book)
 			#puts "debug: url(book)"
-            BASE_URI + "shop/product.asp?isbn=" + (book.isbn or "")
+            return nil unless book.isbn
+            BASE_URI + "product.aspx?isbn=" + book.isbn
         end
 
         #######

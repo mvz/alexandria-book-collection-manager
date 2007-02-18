@@ -128,10 +128,10 @@ class BookProviders
             end
 
 	    # TODO: This provider does not include picture for books
-            %w{name isbn media manufacturer}.each do |field|
-	        print "Checking #{field} for nil\n" if $DEBUG # for DEBUGing
-                product[field]="" if product[field].nil?
-            end 
+#            %w{name isbn media manufacturer}.each do |field|
+#	        print "Checking #{field} for nil\n" if $DEBUG # for DEBUGing
+#                product[field]="" if product[field].nil?
+#            end 
             
 	    print "Creating new book\n" if $DEBUG # for DEBUGing
 	    book = Book.new(product['name'],

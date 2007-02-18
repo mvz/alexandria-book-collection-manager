@@ -59,7 +59,7 @@ module UI
             self.title = _("Import a Library") 
             self.action = Gtk::FileChooser::ACTION_OPEN
             self.transient_for = parent
-            self.deletable = false
+#            self.deletable = false
             running = false
             add_button(Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP) 
             add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)

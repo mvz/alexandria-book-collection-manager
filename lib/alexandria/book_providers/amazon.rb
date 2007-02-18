@@ -112,15 +112,18 @@ class BookProviders
                 #    title = title.convert('iso-8859-1','utf-8') 
                 #end
 
+                media = product.media.squeeze(' ')
+                media = nil if media == 'Unknown Binding'
+
                 book = Book.new(title,
                                 (product.authors.map { |x| x.squeeze(' ') } \
-                                    rescue [ _("n/a") ]),
+                                    rescue [  ]),
                                 product.isbn.squeeze(' '),
                                 (product.manufacturer.squeeze(' ') \
-                                    rescue _("n/a")),
+                                    rescue nil),
                                 (Time.parse(product.release_date).year \
                                     rescue nil),
-                                product.media.squeeze(' '))
+                                media)
 
                 results << [ book, product.image_url_medium ]
             end
