@@ -15,16 +15,19 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# http://de.wikipedia.org/wiki/Thalia_%28Buchhandel%29
+# Thalia.de bought the Austrian book trade chain Amadeus
+
 require 'net/http'
 require 'cgi'
 
 module Alexandria
 class BookProviders
-    class AmadeusProvider < GenericProvider
+    class ThaliaProvider < GenericProvider
     
-        BASE_URI = "http://www.thalia.at/"
+        BASE_URI = "http://www.thalia.de/"
         def initialize
-            super("Amadeus", "Amadeus Buch")
+            super("Thalia", "Thalia (Germany)")
             # no preferences for the moment
         end
         
@@ -96,10 +99,10 @@ class BookProviders
             raise "No isbn" unless md = /<strong>ISBN-10:<\/strong>(.+)<\/li>/.match(data)
             product["isbn"] = md[1].strip.gsub(/-/, "")
 						# edition
-            md = /<b>Einband:<\/b> ([^,]+),/.match(data)
+            md = /<strong>Einband:<\/strong> ([^,]<)/.match(data)
             product["edition"] = md[1].strip.unpack("C*").pack("U*") if md != nil
 						# publisher
-            md = /<b>Erschienen +bei:<\/b> ([^\n]+)\n/.match(data)
+            md = /<strong>Erschienen +bei:<\/strong> ([^<]+)/.match(data)
             product["publisher"] = md[1].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
 						# cover
             raise "No cover image" unless md = /<img id="_artikel_mediumthumbnail" src="([^"]+)/.match(data)
@@ -114,7 +117,7 @@ class BookProviders
         end
 
 				def each_book_page(data)
-				    raise if data.scan(/<a href="http:\/\/www.amadeusbuch.at\/(shop\/bde_bu_hg_startseite\/artikeldetails\/[^\.]+\.html)\;jsessionid=[^"]+" title="Details zu diesem Produkt sehen..."><img class="left" width="40" height="60" src="[^"]+" alt="([^"]+)" border="0">/) { |a| yield a }.empty?
+				    raise if data.scan(/<a href="#{BASE_URI}(shop\/bde_bu_hg_startseite\/artikeldetails\/[^\.]+\.html)\;jsessionid=[^"]+" title="Details zu diesem Produkt sehen..."><img class="left" width="40" height="60" src="[^"]+" alt="([^"]+)" border="0">/) { |a| yield a }.empty?
 				end
     end
 end

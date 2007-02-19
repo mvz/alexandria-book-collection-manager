@@ -232,7 +232,7 @@ module Alexandria
         require 'alexandria/book_providers/bn'
         require 'alexandria/book_providers/proxis'
         #require 'alexandria/book_providers/mcu'
-        require 'alexandria/book_providers/amadeus'
+        require 'alexandria/book_providers/thalia'
         require 'alexandria/book_providers/ibs_it'
         require 'alexandria/book_providers/renaud'
         require 'alexandria/book_providers/adlibris'

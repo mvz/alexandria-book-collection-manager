@@ -65,8 +65,8 @@ class TestProviders < Test::Unit::TestCase
 			'0586071407')
     end
 
-    def test_amadeus
-        __test_provider(Alexandria::BookProviders::AmadeusProvider,
+    def test_thalia
+        __test_provider(Alexandria::BookProviders::ThaliaProvider,
                         '3896673300') 
     end
 
