@@ -239,6 +239,7 @@ module Alexandria
         require 'alexandria/book_providers/ls'
         require 'alexandria/book_providers/bol_it'
         require 'alexandria/book_providers/webster_it'
+        require 'alexandria/book_providers/worldcat'
 
         # Ruby/Amazon is optional
         begin

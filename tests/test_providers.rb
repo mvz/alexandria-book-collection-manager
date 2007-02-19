@@ -121,4 +121,12 @@ class TestProviders < Test::Unit::TestCase
                         '9782894723388') 
     end
 
+    def test_worldcat
+        __test_provider(Alexandria::BookProviders::WorldcatProvider,
+                        '9780521247108') 
+        # this one is with <div class=vernacular lang="[^"]+">)
+        __test_provider(Alexandria::BookProviders::WorldcatProvider,
+                        '9785941454136') 
+    end
+
 end
