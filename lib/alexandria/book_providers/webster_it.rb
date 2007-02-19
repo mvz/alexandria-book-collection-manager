@@ -96,8 +96,12 @@ end
             end
 
             authors = []
-	    if md = /<li><span class="product_label">Autor([ei]):<\/span> <span class="product_text"><a href="([^>]+)>([^<]+)/.match(data)
-                 authors = [CGI.unescape(md[3].strip)]
+	    if md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data) 
+	    	this = CGI.unescape(md[0].strip)
+	    	authors = this.scan(/<a href="[^>]+">([^<]+)<\/a>,?/)
+	    	authors = authors.collect {|author| author[0]}
+	    	#puts this
+	    	
 #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
             end
 

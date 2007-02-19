@@ -23,6 +23,7 @@ class TestProviders < Test::Unit::TestCase
         	end
         	assert(results.first.isbn == query, "Result's isbn #{results.first.isbn} is not the same as requested isbn #{query}")
         	 assert_kind_of(Alexandria::Book, results.first, "Result is not a Book")
+        	 results.first
        	else
        		 assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book")
         end   
@@ -115,6 +116,14 @@ class TestProviders < Test::Unit::TestCase
         __test_provider(Alexandria::BookProviders::Webster_itProvider,
                         '9783442460878') 
     end
+    
+    def test_webster_multiple_authors
+    	this_book = __test_provider(Alexandria::BookProviders::Webster_itProvider,
+                        '9788804559016')
+        assert_kind_of(Array, this_book.authors, "Not an array!")
+        #puts this_book.authors
+        assert(this_book.authors.length == 3, "Wrong number of authors for this book!")
+    end
 
     def test_renaud
         __test_provider(Alexandria::BookProviders::RENAUDProvider,
@@ -128,5 +137,13 @@ class TestProviders < Test::Unit::TestCase
         __test_provider(Alexandria::BookProviders::WorldcatProvider,
                         '9785941454136') 
     end
-
+    
+    def test_worldcat_multiple_authors
+		this_book = __test_provider(Alexandria::BookProviders::WorldcatProvider,
+                        '9785941454136')
+        assert_kind_of(Array, this_book.authors, "Not an array!")
+        #puts this_book.authors
+        assert(this_book.authors.length == 2, "Wrong number of authors for this book!")
+	
+	end
 end

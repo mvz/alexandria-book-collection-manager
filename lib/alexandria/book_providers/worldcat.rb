@@ -90,11 +90,15 @@ class BookProviders
             raise unless md = /<h1 class="title"> (<div class=vernacular lang="[^"]+">)?([^<]+)/.match(data)
             title = CGI.unescape(md[2].strip)
 
-	    authors = []
-            if md = /title="Search for more by this author">([^<]+)/.match(data)
-                 authors = [CGI.unescape(md[1].strip)]
+	    	authors = []
+	    	md = data.scan(/title="Search for more by this author">([^<]+)/)
+            raise "No authors" unless md.length > 0
+            md = md.collect {|match| match[0]} 
+            md.each {|match|
+            		CGI.unescape(match.strip)
+            		authors << match		  
+            		 }
 #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
-            end
 
             raise unless md = /<strong>ISBN: <\/strong>\w+\W+(\d+)\D/.match(data)
             isbn = md[1].strip
