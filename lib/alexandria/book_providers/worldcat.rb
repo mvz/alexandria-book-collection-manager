@@ -56,11 +56,10 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
-            
-            # this provider supports both isbn-10 and isbn-13
+
             req += CGI.escape(criterion)
             p req if $DEBUG
-	        data = transport.get(URI.parse(req))
+	    data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
                 to_book(data) #rescue raise NoResultsError
             else
@@ -77,7 +76,6 @@ class BookProviders
         end
 
         def url(book)
-            return nil unless book.isbn
             BASE_URI + "/isbn/" + book.isbn
         end
 

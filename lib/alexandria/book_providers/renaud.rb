@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# http://en.wikipedia.org/wiki/Renaud-Bray
+
 require 'net/http'
 require 'cgi'
 
@@ -27,10 +29,11 @@ module Alexandria
       ACCENTUATED_CHARS = "áàâäçéèêëíìîïóòôöúùûü"
 
       def initialize
-        super("RENAUD", "Renaud-Bray")
+        super("RENAUD", "Renaud-Bray (Canada)")
       end
 
       def search(criterion, type)
+        criterion = criterion.convert("iso-8859-1", "utf-8")
         req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
         req += case type
                when SEARCH_BY_ISBN
@@ -45,7 +48,9 @@ module Alexandria
                  raise InvalidSearchTypeError
                end
         req += "&Phrase="
+
         req += CGI.escape(criterion)
+        p req if $DEBUG
         data = transport.get(URI.parse(req))
         begin
           if type == SEARCH_BY_ISBN
@@ -71,7 +76,6 @@ module Alexandria
       end
 
       def url(book)
-        return nil unless book.isbn
         "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
       end
 
@@ -80,7 +84,7 @@ module Alexandria
       #######
       
       def to_books(data)
-        # Make it sure that we are in utf-8
+        data = CGI::unescapeHTML(data)
         data = data.convert("UTF-8", "iso-8859-1")
         titles = []
         data.scan(/"LireHyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each{|md|

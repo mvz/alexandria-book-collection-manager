@@ -27,13 +27,14 @@ class BookProviders
         BASE_URI = "http://www.deastore.com"
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.deastore_it_cache')
         def initialize
-            super("DeaStore_it", "DeaStore Italia")
+            super("DeaStore_it", "DeaStore (Italy)")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
             # no preferences for the moment
             at_exit { clean_cache }
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("windows-1252", "utf-8")
             req = BASE_URI + "/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -52,12 +53,9 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
-            
-if type == SEARCH_BY_ISBN
-            req += Library.canonicalise_isbn(criterion)
-else
+
+            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
-end
             p req if $DEBUG
 
             agent = WWW::Mechanize.new
@@ -83,7 +81,6 @@ end
         end
 
         def url(book)
-            return nil unless book.isbn
             BASE_URI + "/product.asp?isbn=" + Library.canonicalise_isbn(book.isbn)
         end
 

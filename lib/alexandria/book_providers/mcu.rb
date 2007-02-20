@@ -9,6 +9,7 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
+#
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -69,6 +70,14 @@ class BookProviders
             type == SEARCH_BY_ISBN ? products.values.first : products.values
         end
         
+        def url(book)
+            "http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+        end
+
+        #######
+        private
+        #######
+
         def parseBook(docn,ndoc)
             detailspage='http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
 	    print "Looking at detailspage: #{detailspage}\n" if $DEBUG # for DEBUGing
@@ -143,10 +152,6 @@ class BookProviders
             return [ book ]
         end
 
-        def url(book)
-            return nil unless book.isbn
-            "http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
-        end
     end
 end
 end

@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# http://en.wikipedia.org/wiki/Amazon
+
 require 'amazon/search'
 
 module Alexandria
@@ -26,7 +28,7 @@ class BookProviders
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
         
         def initialize
-            super("Amazon")
+            super("Amazon", "Amazon (USA)")
             prefs.add("locale", _("Locale"), "us",
                        Amazon::Search::LOCALES.keys)
             prefs.add("dev_token", _("Development token"), 
@@ -66,6 +68,7 @@ class BookProviders
                 products = []
                 case type
                     when SEARCH_BY_ISBN
+                        criterion = Library.canonicalise_isbn(criterion)
                         req.asin_search(criterion) do |product| 
                             products << product
                         end
@@ -131,7 +134,6 @@ class BookProviders
         end
 
         def url(book)
-            return nil unless book.isbn
             url = case prefs["locale"]
                 when "fr"
                     "http://www.amazon.fr/exec/obidos/ASIN/%s"
@@ -146,7 +148,7 @@ class BookProviders
                 when "us"
                     "http://www.amazon.com/exec/obidos/ASIN/%s"
             end
-            url % book.isbn
+            url % Library.canonicalise_isbn(book.isbn)
         end
     end
 end

@@ -27,13 +27,14 @@ class BookProviders
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
         REFERER = BASE_URI
         def initialize
-            super("IBS_it", "Internet Bookshop Italia")
+            super("IBS_it", "Internet Bookshop (Italy)")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
             # no preferences for the moment
             at_exit { clean_cache }
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-1", "utf-8")
             req = BASE_URI + "/ser/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -52,10 +53,10 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
-            
+
             req += CGI.escape(criterion)
             p req if $DEBUG
-	        data = transport.get(URI.parse(req))
+	    data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
                 to_book(data) #rescue raise NoResultsError
             else
@@ -72,7 +73,6 @@ class BookProviders
         end
 
         def url(book)
-            return nil unless book.isbn
             "http://www.internetbookshop.it/ser/serdsp.asp?isbn=" + book.isbn
         end
 
@@ -81,7 +81,7 @@ class BookProviders
         #######
     
         def to_book(data)
-        data = data.convert("UTF-8", "iso-8859-1")
+            data = data.convert("UTF-8", "iso-8859-1")
 
             raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)

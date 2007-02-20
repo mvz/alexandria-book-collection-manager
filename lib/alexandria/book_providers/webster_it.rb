@@ -29,13 +29,14 @@ class BookProviders
         REFERER = BASE_URI
         LOCALE = "BIT" # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
         def initialize
-            super("Webster_it", "Webster Italia")
+            super("Webster_it", "Webster (Italy)")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
             # no preferences for the moment
             at_exit { clean_cache }
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-15", "utf-8")
             req = BASE_URI + "/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -54,14 +55,11 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
-            
-if type == SEARCH_BY_ISBN
-            req += Library.canonicalise_isbn(criterion)
-else
+
+            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
-end
             p req if $DEBUG
-	        data = transport.get(URI.parse(req))
+	    data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
                 to_book(data) #rescue raise NoResultsError
             else
@@ -78,7 +76,6 @@ end
         end
 
         def url(book)
-            return nil unless book.isbn
             BASE_URI + "/isbn/" + Library.canonicalise_isbn(book.isbn)
         end
 
@@ -109,8 +106,8 @@ end
             isbn = "978" + md[1].strip[0..8]
             isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
 
-            raise unless md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="([^>]+)>([^<]+)/.match(data)
-	        publisher = CGI.unescape(md[2].strip)
+            raise unless md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
+	        publisher = CGI.unescape(md[1].strip)
 
            if md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
              edition = CGI.unescape(md[1].strip) + " p."
@@ -124,8 +121,8 @@ end
                 publish_year = nil if publish_year == 0
             end
 
-  if data =~ /javascript:popImage/ and  md = /<img border="0" alt="([^"]+)" src="([^"]+)/.match(data)
-            cover_url = BASE_URI + md[2].strip
+  if data =~ /javascript:popImage/ and  md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data)
+            cover_url = BASE_URI + md[1].strip
             # use "p" instead of "g" for smaller image
             if cover_url[-5] == 103
                 cover_url[-5] = 112

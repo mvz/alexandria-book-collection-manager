@@ -26,11 +26,12 @@ class BookProviders
     
         BASE_URI = "http://www.siciliano.com.br"
         def initialize
-            super("LS", "Livraria Siliciano")
+            super("LS", "Livraria Siliciano (Brasil)")
             # no preferences for the moment
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-1", "utf-8")
             req = BASE_URI + "/livro.asp?tipo=10&pesquisa=" 
             req += case type
                 when SEARCH_BY_ISBN
@@ -46,11 +47,14 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
+
+            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
+            p req if $DEBUG
             data = transport.get(URI.parse(req))
+
             if type == SEARCH_BY_ISBN
                 book = to_book(data, req)            
-            
             #else
             #    begin
             #        results = [] 
@@ -82,13 +86,13 @@ class BookProviders
             md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
             raise "No ISBN from Image" unless md = /<img src="capas\/([^<]+)p\.jpg" alt=""\/>/.match(data)
             isbn = md[1].strip
-            edition = nil
-            publish_year = nil
             if md = /<br\/>Editora: ([^<]+)<br>/.match(data)
                 publisher = md[1].strip
             else
                 publisher = nil
             end
+            edition = nil
+            publish_year = nil
             medium_cover = BASE_URI+'/capas/'+ isbn + '.jpg'
             #raise "No Big Image" unless medium_cover = transport.get(URI.parse(BASE_URI+'/capas/'+ isbn + '.jpg'))
             #raise "No Big Image" unless md = /<img src="capas\/(.+\/(\d+)p\.gif)" alt=""\/>/.match(data)

@@ -32,6 +32,7 @@ class BookProviders
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-1", "utf-8")
             req = BASE_URI + "shop/bde_bu_hg_startseite/schnellsuche/buch/?"
             #if type == SEARCH_BY_ISBN
             #    req += ""
@@ -55,7 +56,9 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
+
             req += CGI.escape(criterion)
+            p req if $DEBUG
             data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
                 to_book(data) #rescue raise NoResultsError
@@ -73,7 +76,6 @@ class BookProviders
         end
 
         def url(book)
-            return nil unless book.isbn
             BASE_URI + "shop/bde_bu_hg_startseite/schnellsuche/buch/?fqbi=" + book.isbn
         end
 
@@ -83,7 +85,8 @@ class BookProviders
     
         def to_book(data)
 						puts data if $DEBUG
-						data = data.convert("UTF-8", "iso-8859-1")
+#						data = data.convert("UTF-8", "iso-8859-1")
+						data = CGI::unescapeHTML(data)
 						product = {}
 						# title
             raise "No Title" unless md = /<span id="_artikel_titel">(.+)<\/span><span class="foobar">/.match(data)
@@ -96,7 +99,7 @@ class BookProviders
             end
             #raise if product["authors"].empty?
 						# isbn
-            raise "No isbn" unless md = /<strong>ISBN-10:<\/strong>(.+)<\/li>/.match(data)
+            raise "No isbn" unless md = /<strong>ISBN-13:<\/strong>(.+)<\/li>/.match(data)
             product["isbn"] = md[1].strip.gsub(/-/, "")
 						# edition
             md = /<strong>Einband:<\/strong> ([^,]<)/.match(data)

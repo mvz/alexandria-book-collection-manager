@@ -27,11 +27,12 @@ class BookProviders
     class AdlibrisProvider < GenericProvider
         BASE_URI = "http://www.adlibris.se/"
         def initialize
-            super("Adlibris", "Adlibris")
+            super("Adlibris", "Adlibris (Sweden)")
             # no preferences for the moment
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-1", "utf-8")
             req = BASE_URI
             if type == SEARCH_BY_ISBN
                 req += "product.aspx?isbn="+criterion+"&checked=1"
@@ -86,7 +87,6 @@ class BookProviders
 
         def url(book)
 			#puts "debug: url(book)"
-            return nil unless book.isbn
             BASE_URI + "product.aspx?isbn=" + book.isbn
         end
 

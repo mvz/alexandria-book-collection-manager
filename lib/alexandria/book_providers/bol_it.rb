@@ -29,13 +29,14 @@ class BookProviders
         REFERER = BASE_URI
         LOCALE = "libri" # possible locales are: "libri", "inglesi", "video", "musica", "choco"
         def initialize
-            super("BOL_it", "BOL Italia")
+            super("BOL_it", "BOL (Italy)")
             FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)            
             # no preferences for the moment
             at_exit { clean_cache }
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-1", "utf-8")
             req = BASE_URI + "/" + LOCALE + "/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -55,14 +56,11 @@ class BookProviders
 
             end
             
-if type == SEARCH_BY_ISBN
 ## warning: this provider uses pages like http://www.bol.it/libri/scheda/ea978888584104 with 12 numbers, without the checksum
-            req += "ea978" + Library.canonicalise_isbn(criterion)[0 .. -2] + ".html"
-else
+            criterion = "ea978" + Library.canonicalise_isbn(criterion)[0 .. -2] + ".html" if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
-end
             p req if $DEBUG
-	        data = transport.get(URI.parse(req))
+	    data = transport.get(URI.parse(req))
             if type == SEARCH_BY_ISBN
                 to_book(data) #rescue raise NoResultsError
             else
@@ -79,7 +77,6 @@ end
         end
 
         def url(book)
-            return nil unless book.isbn
             BASE_URI + "/#{LOCALE}/scheda/ea978" + Library.canonicalise_isbn(book.isbn)[0 .. -2] + ".html"
         end
 
@@ -88,7 +85,7 @@ end
         #######
     
         def to_book(data)
-        data = data.convert("UTF-8", "iso-8859-1")
+            data = data.convert("UTF-8", "iso-8859-1")
 
             raise unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
             title = CGI.unescape(md[1].strip)
@@ -141,7 +138,7 @@ end
         end
 
         def each_book_page(data)
-            raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=([^"]+)">(\s*)Scheda completa(\s*)<\/a>/) { |a| yield a}.empty?
+            raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/) { |a| yield a}.empty?
         end
     
         def clean_cache

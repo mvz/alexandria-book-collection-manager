@@ -31,7 +31,7 @@ class BookProviders
         }
 
         def initialize
-            super("Proxis")
+            super("Proxis", "Proxis (Belgium)")
             prefs.add("lang", _("Locale"), "fr",
                       LANGUAGES.keys)
         end
@@ -55,6 +55,7 @@ class BookProviders
           
                 else
                     raise InvalidSearchTypeError
+
             end
           
             products = {}
@@ -74,7 +75,15 @@ class BookProviders
             raise NoResultsError if products.values.empty?
             type == SEARCH_BY_ISBN ? products.values.first : products.values
         end
-        
+
+        def url(book)
+            "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + book.isbn + "&p_item=1"
+        end
+
+        #######
+        private
+        #######
+
         def parseBook(product_id)
             conv = proc { |str| str.convert("utf-8", "windows-1252") if str != nil }
             detailspage='http://oas2000.proxis.be/gate/jabba.coreii.g_p?bi=4&sp=DETAILS&mi='+product_id
@@ -82,14 +91,15 @@ class BookProviders
             product['authors'] = []
             nextline = nil
             transport.get(URI.parse(detailspage)).each do |line|
-                if line =~ /SPAN CLASS="?AUTHOR"?>([^<]*)</i
+                if line =~ /span class="?AUTHOR"?>([^<]*)&nbsp; &nbsp;/i
                     author = $1.gsub('&nbsp;',' ').sub(/ +$/,'')
                     product['authors'] << author
                 elsif line =~ /SRC="(http:\/\/www.proxis.be\/IMG.\/.*)M\.jpg"/i 
                     product['image_url_small'] = $1+'S.jpg'
                     product['image_url_medium'] = $1+'M.jpg'
                     product['image_url_large'] = $1+'L.jpg'
-                elsif line =~ /class="?TITLECOLOR"?>([^<]*)</i 
+#                elsif line =~ /class="?TITLECOLOR"?>([^<]*)</i 
+                elsif line =~ /<tr width="?100%"?><td valign="?middle"? width="?100%"? class="?verd_13_b"?>([^<]*)</i 
                     product['name'] = $1.sub(/ +$/,'')
                 elsif line =~ /ISBN<\/TD><TD class="?INFO"?> : ([^<]*)</i 
                     product['isbn'] = $1
@@ -116,11 +126,6 @@ class BookProviders
                             conv.call(product['media']))
         
             return [ book, product['image_url_medium'] ]
-        end
-
-        def url(book)
-            return nil unless book.isbn
-            "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + book.isbn + "&p_item=1"
         end
     end
 end

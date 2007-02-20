@@ -16,6 +16,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+# http://en.wikipedia.org/wiki/Barnes_&_Noble
+
 require 'net/http'
 require 'cgi'
 
@@ -25,11 +27,12 @@ class BookProviders
     
         BASE_URI = "http://search.barnesandnoble.com/"
         def initialize
-            super("BN", "Barnes and Noble")
+            super("BN", "Barnes and Noble (Usa)")
             # no preferences for the moment
         end
         
         def search(criterion, type)
+            criterion = criterion.convert("iso-8859-1", "utf-8")
             req = BASE_URI + "booksearch/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -48,6 +51,7 @@ class BookProviders
                     raise InvalidSearchTypeError
 
             end
+
             req += CGI.escape(criterion)
             puts req if $DEBUG
             data = transport.get(URI.parse(req))
@@ -67,7 +71,6 @@ class BookProviders
         end
 
         def url(book)
-            return nil unless book.isbn
             "http://search.barnesandnoble.com/booksearch/isbninquiry.asp?ISBN=" + book.isbn
         end
 
@@ -89,18 +92,18 @@ class BookProviders
                 authors << md[1]
             end
 
-            raise unless md = /ISBN-13:(\s+)<a style="text-decoration:none">([^<]+)/.match(data)
-            isbn = md[2].strip
+            raise unless md = /ISBN-13:\s+<a style="text-decoration:none">([^<]+)/.match(data)
+            isbn = md[1].strip
 
-            raise unless md = /<li class="format">Format:(\s+)([^<]+)/.match(data)
-            edition = md[2].strip
+            raise unless md = /<li class="publisher">Publisher:\s+([^<]+)/.match(data)
+            publisher = md[1].strip
 
-            raise unless md = /<li class="publisher">Publisher:(\s+)([^<]+)/.match(data)
-            publisher = md[2].strip
+            raise unless md = /<li class="format">Format:\s+([^<]+)/.match(data)
+            edition = md[1].strip
 
             publish_year = nil
-            if md = /<li class="pubDate">Pub. Date:(\s+).*(\d\d\d\d)</.match(data)
-                publish_year = md[2].to_i
+            if md = /<li class="pubDate">Pub. Date:[^<]+(\d\d\d\d)</.match(data)
+                publish_year = md[1].to_i
                 publish_year = nil if publish_year == 0
             end
 

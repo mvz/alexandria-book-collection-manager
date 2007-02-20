@@ -115,6 +115,7 @@ class BookProviders
     end
     
     class LOCProvider < Z3950Provider
+        # http://en.wikipedia.org/wiki/Library_of_Congress
         unabstract
 
         include GetText
@@ -130,6 +131,7 @@ class BookProviders
     end
     
     class BLProvider < Z3950Provider
+        # http://en.wikipedia.org/wiki/British_Library
         unabstract
 
         include GetText
