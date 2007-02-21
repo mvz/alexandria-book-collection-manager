@@ -1,3 +1,13 @@
+# This provider has switched from method "get" to method "post".
+# It would be nice to fix it. WWW:mechanize can be used, this is already done with provider deastore.
+# http://mechanize.rubyforge.org/
+# http://www.ntecs.de/blog-old/Blog/WWW-Mechanize.rdoc
+# http://rubyforge.org/projects/mechanize/
+# See also
+# http://www.mcu.es/libro/CE/AgenciaISBN/BBDDLibros/Sobre.html
+# https://rubyforge.org/tracker/index.php?func=detail&aid=2518&group_id=205&atid=863
+# https://rubyforge.org/tracker/index.php?func=detail&aid=2533&group_id=205&atid=863
+
 # Copyright (C) 2004 Javier Fernandez-Sanguino
 #
 # Alexandria is free software; you can redistribute it and/or
