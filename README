@@ -26,16 +26,13 @@ Alexandria
       * includes translations for several languages ;
       * is documented in a complete manual (at the moment in English only).
 
-Requirements
+Mandatory requirements
 ------------
 
     Ruby >= 1.8.0:              http://www.ruby-lang.org
     GNOME >= 2.6 [1]:           http://www.gnome.org
-    Ruby/Amazon >= 0.8.3:       http://www.caliban.org/ruby/ruby-amazon.shtml
     Ruby-GetText >= 0.6.1:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
     Ruby-GNOME2 >= 0.14.0 [2]:  http://ruby-gnome2.sourceforge.jp
-    Ruby/ZOOM >= 0.2.0 [3]:     http://ruby-zoom.rubyforge.org
-    Revolution [4]:             http://revolution.rubyforge.org/
     Intltool:                   http://freedesktop.org/wiki/Software_2fintltool
 
     [1]: GTK+ >= 2.6.0 is required though, and >= 2.8.0 is recommended.
@@ -43,11 +40,27 @@ Requirements
     [2]: Required libraries are: Ruby/Libglade2, Ruby/Gnome2, Ruby/GdkPixbuf2,
                                  Ruby/Pango and Ruby/GConf2.
 
-    [3]: Ruby/ZOOM is optional, if not found the Z39.50 support won't be
+Optional requirements
+------------
+
+    Ruby/Amazon >= 0.8.3 [3]:   http://www.caliban.org/ruby/ruby-amazon.shtml
+    Ruby/ZOOM >= 0.2.0 [4]:     http://ruby-zoom.rubyforge.org
+    Mechanize [5]:              http://mechanize.rubyforge.org/
+    Revolution [6]:             http://revolution.rubyforge.org/
+
+    [3]: Ruby/Amazon is optional, if not found the provider Amazon won't be
          available.
 
-    [4]: Revolution is optional, if not found the Evolution contacts database
+    [4]: Ruby/ZOOM is optional, if not found the Z39.50 support, and 
+         the providers US Library of Congress and British Library won't 
+         be available.
+
+    [5]: Mechanize  is optional, if not found the provider Deastore won't be
+         available.
+
+    [6]: Revolution is optional, if not found the Evolution contacts database
          won't be used for loaners auto-completion.
+
 
 Install
 -------

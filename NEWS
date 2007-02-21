@@ -1,4 +1,25 @@
 ================
+Alexandria
+================
+
+New features:
+ * New providers: webster.it, deastore.com, worldcat.org, bol.it.
+ * provider amadeus renamed to thalia (Amadeus was bought by Thalia)
+ * added the country of the provider after the name
+ * the requirement Ruby/Amazon is now optional
+
+Bugs fixed:
+ * several fixes and updates for various providers
+ * converted the encoding from utf-8, when searching by title/author/keyword
+ * converted the output from the provider to utf-8
+ * used CGI::unescapeHTML for renaud and thalia
+ * now nul is returned instead of "", "n/a", or "Unknown Binding", when the provider doesn't return a value
+
+Added translation:
+
+Updated translations:
+
+================
 Alexandria 0.6.0
 ================
 

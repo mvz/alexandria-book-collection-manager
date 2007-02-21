@@ -1,3 +1,27 @@
+2007-02-20 Marco Costantini
+
+	* New providers: webster.it, deastore.com, worldcat.org, 
+	bol.it.
+	* several fixes and updates for various providers
+	* added info about the Wikipedia page for each provder (if any)
+	* added the country of the provider after the name
+	* converted the encoding from utf-8, when searching by 
+	title/author/keyword
+	* converted the output from the provider to utf-8
+	* used CGI::unescapeHTML for renaud and thalia
+	* now most providers return EAN instead of ISBN-10
+	* added Library.canonicalise_isbn for the providers that don't 
+	yet use EAN, so that now EAN can be used with every provider 
+	file
+	* for the function url, the check that the book has the ISBN 
+	has been moved to only one place in the ui library
+	* provider amadeus renamed to thalia (Amadeus was bought by 
+	Thalia)
+	* the requirement Ruby/Amazon is now optional
+	* now nul is returned instead of "", "n/a", or "Unknown 
+	Binding", when the provider doesn't return a value
+	* other minor and cosmetic changes
+
 2007-01-20 Joseph Method  <tristil@gmail.com>
 
 	* Switched from cvs to svn, and inaugurated alexandria-commits
