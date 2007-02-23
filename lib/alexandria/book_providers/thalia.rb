@@ -85,35 +85,47 @@ class BookProviders
     
         def to_book(data)
 						puts data if $DEBUG
+            if /Leider f&uuml;hrte Ihre Suche zu keinen Ergebnissen./.match(data) != nil
+                raise NoResultsError
+            end
 #						data = data.convert("UTF-8", "iso-8859-1")
 						data = CGI::unescapeHTML(data)
 						product = {}
 						# title
-            raise "No Title" unless md = /<span id="_artikel_titel">(.+)<\/span><span class="foobar">/.match(data)
-            product["title"] = md[1].strip.unpack("C*").pack("U*")
+            if md = /<span id="_artikel_titel">(.+)<\/span>/.match(data)
+                product["title"] = md[1].strip.unpack("C*").pack("U*")
+            else
+                product["title"] = ""
+            end
 						# authors
 						product["authors"] = []
-						data.scan(/\/fqba\/([^"]+)" title="Mehr von..."><u class="_artikel_authors">([^<]+)<\/u>/) do |md|
+						data.scan(/\/fq..\/([^"]+)" title="Mehr von\.\.\."><u[^>]*>([^<]+)<\/u>/) do |md|
 #                next unless CGI.unescape(md[0]) == md[1]
                 product["authors"] << md[1].unpack("C*").pack("U*")
             end
             #raise if product["authors"].empty?
 						# isbn
-            raise "No isbn" unless md = /<strong>ISBN-13:<\/strong>(.+)<\/li>/.match(data)
-            product["isbn"] = md[1].strip.gsub(/-/, "")
+            raise "No isbn" unless md = /<strong>(ISBN-13|EAN):<\/strong>(.+)<\/li>/.match(data)
+            product["isbn"] = md[2].strip.gsub(/-/, "")
 						# edition
             md = /<strong>Einband:<\/strong> ([^<]+)/.match(data)
             product["edition"] = md[1].strip.unpack("C*").pack("U*") if md != nil
 						# publisher
-            md = /<strong>Erschienen +bei:<\/strong>\&nbsp;([^<]+)/.match(data)
-            product["publisher"] = md[1].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
+            md = /<strong>Ersch(ienen|eint) +bei:<\/strong>\&nbsp;([^<]+)/.match(data)
+            product["publisher"] = md[2].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
 						# publish_year
             md = /<strong>Erschienen:<\/strong> ([^<]+)/.match(data)
             product["publish_year"] = md[1].strip.unpack("C*").pack("U*")[-4 .. -1].to_i if md != nil
             product["publish_year"] = nil if product["publish_year"] == 0
 						# cover
-            raise "No cover image" unless md = /<img id="_artikel_mediumthumbnail" src="([^"]+)/.match(data)
-            product["cover"] = md[1] if md != nil
+            if md = /<img id="_artikel_mediumthumbnail" src="([^"]+)/.match(data)
+                product["cover"] = md[1]
+            elsif md = /target="_blank"><img src="http:\/\/images.thalia.de\/([^"]+)/.match(data)
+                product["cover"] = "http://images.thalia.de/" + md[1]
+            else
+                product["cover"] = nil
+            end
+
             book = Book.new(product["title"],
 						                product["authors"],
 									  				product["isbn"],
