@@ -28,7 +28,7 @@ class BookProviders
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
         
         def initialize
-            super("Amazon", "Amazon (USA)")
+            super("Amazon", "Amazon (Usa)")
             prefs.add("locale", _("Locale"), "us",
                        Amazon::Search::LOCALES.keys)
             prefs.add("dev_token", _("Development token"), 
@@ -118,10 +118,17 @@ class BookProviders
                 media = product.media.squeeze(' ')
                 media = nil if media == 'Unknown Binding'
 
+                isbn = product.isbn.squeeze(' ')
+                if Library.valid_isbn?(isbn)
+                    isbn = Library.canonicalise_ean(isbn)
+                else
+                    isbn = nil # it may be an ASIN which is not an ISBN
+                end
+
                 book = Book.new(title,
                                 (product.authors.map { |x| x.squeeze(' ') } \
                                     rescue [  ]),
-                                product.isbn.squeeze(' '),
+                                isbn,
                                 (product.manufacturer.squeeze(' ') \
                                     rescue nil),
                                 (Time.parse(product.release_date).year \

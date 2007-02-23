@@ -57,7 +57,7 @@ class BookProviders
             end
             
 ## warning: this provider uses pages like http://www.bol.it/libri/scheda/ea978888584104 with 12 numbers, without the checksum
-            criterion = "ea978" + Library.canonicalise_isbn(criterion)[0 .. -2] + ".html" if type == SEARCH_BY_ISBN
+            criterion = "ea" + Library.canonicalise_ean(criterion)[0 .. -2] + ".html" if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
             p req if $DEBUG
 	    data = transport.get(URI.parse(req))
@@ -77,7 +77,7 @@ class BookProviders
         end
 
         def url(book)
-            BASE_URI + "/#{LOCALE}/scheda/ea978" + Library.canonicalise_isbn(book.isbn)[0 .. -2] + ".html"
+            BASE_URI + "/#{LOCALE}/scheda/ea" + Library.canonicalise_ean(book.isbn)[0 .. -2] + ".html"
         end
 
         #######

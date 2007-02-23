@@ -31,7 +31,7 @@ class TestProviders < Test::Unit::TestCase
     
     def test_amazon_isbn
         __test_provider(Alexandria::BookProviders::AmazonProvider,
-                        '0385504209')
+                        '9780385504201')
     end
     
     def test_amazon_title
@@ -54,10 +54,10 @@ class TestProviders < Test::Unit::TestCase
                          '9780961328917')   # see #1433  
     end
 
-#     def test_mcu
-#         __test_provider(Alexandria::BookProviders::MCUProvider,
-#                         '8420636665') 
-#     end
+    def test_mcu
+        __test_provider(Alexandria::BookProviders::MCUProvider,
+                        '9788420636665') 
+    end
 
     def test_proxis
         __test_provider(Alexandria::BookProviders::ProxisProvider,
@@ -82,12 +82,12 @@ class TestProviders < Test::Unit::TestCase
     
     def test_adlibris
         __test_provider(Alexandria::BookProviders::AdlibrisProvider,
-                        '9100109339') 
+                        '9789100109332') 
     end
      
     def test_siciliano
         __test_provider(Alexandria::BookProviders::SicilianoProvider,
-                        '8599170384') 
+                        '9788599170380') 
     end
 
     def test_dea

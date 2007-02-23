@@ -1,14 +1,5 @@
-# This provider has switched from method "get" to method "post".
-# It would be nice to fix it. WWW:mechanize can be used, this is already done with provider deastore.
-# http://mechanize.rubyforge.org/
-# http://www.ntecs.de/blog-old/Blog/WWW-Mechanize.rdoc
-# http://rubyforge.org/projects/mechanize/
-# See also
-# http://www.mcu.es/libro/CE/AgenciaISBN/BBDDLibros/Sobre.html
-# https://rubyforge.org/tracker/index.php?func=detail&aid=2518&group_id=205&atid=863
-# https://rubyforge.org/tracker/index.php?func=detail&aid=2533&group_id=205&atid=863
-
 # Copyright (C) 2004 Javier Fernandez-Sanguino
+# Copyright (C) 2007 Javier Fernandez-Sanguino and Marco Costantini
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -28,6 +19,9 @@
 require 'cgi'
 require 'net/http'
 
+# http://www.mcu.es/libro/CE/AgenciaISBN/BBDDLibros/Sobre.html
+# http://www.mcu.es/comun/bases/isbn/ISBN.html
+
 module Alexandria
 class BookProviders
     class MCUProvider < GenericProvider
@@ -38,7 +32,8 @@ class BookProviders
             'es' => '1'
         }
 
-        BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
+#        BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
+        BASE_URI = "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?"
         def initialize
             super("MCU", _("Spanish Culture Ministry"))
 	    # No preferences
@@ -46,21 +41,21 @@ class BookProviders
         
         def search(criterion, type)
             prefs.read
-	    criterion = criterion.convert("WINDOWS-1252", "UTF-8")
+	    criterion = criterion.convert("iso-8859-1", "UTF-8")
 	    print "Doing search with MCU #{criterion}, type: #{type}\n" if $DEBUG # for DEBUGing
-            req = BASE_URI + "CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
+            req = BASE_URI + "CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
             req += case type
                 when SEARCH_BY_ISBN
-                    "WGEN-C=&WISB-C=#{CGI::escape(criterion)}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+                    "WGEN-C=&WISB-C=#{CGI::escape(criterion)}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                 when SEARCH_BY_TITLE
-		    "WGEN-C=&WISB-C=&WAUT-C=&WTIT-C=#{CGI::escape(criterion)}&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+		    "WGEN-C=&WISB-C=&WAUT-C=&WTIT-C=#{CGI::escape(criterion)}&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                 when SEARCH_BY_AUTHORS
-		      "WGEN-C=&WISB-C=&WAUT-C=#{CGI::escape(criterion)}&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+		      "WGEN-C=&WISB-C=&WAUT-C=#{CGI::escape(criterion)}&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                 when SEARCH_BY_KEYWORD
-			"WGEN-C=#{CGI::escape(criterion)}&WISB-C=&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+			"WGEN-C=#{CGI::escape(criterion)}&WISB-C=&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                 else
                     raise InvalidSearchTypeError
@@ -72,7 +67,7 @@ class BookProviders
 	    	print "Reading line: #{line}" if $DEBUG # for DEBUGing
                 if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1,$2)) then
                     products[$1] = book
-                    puts $1
+                    puts $1 if $DEBUG # for DEBUGing
                 end
             end
 
@@ -81,7 +76,7 @@ class BookProviders
         end
         
         def url(book)
-            "http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERLST&BASE=ISBN&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=DISPONIBLE&WLEN-C=&WCLA-C=&WSOP-C="
+            "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
         end
 
         #######
@@ -89,7 +84,7 @@ class BookProviders
         #######
 
         def parseBook(docn,ndoc)
-            detailspage='http://www.mcu.es/cgi-bin/BRSCGI3701?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
+            detailspage='http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
 	    print "Looking at detailspage: #{detailspage}\n" if $DEBUG # for DEBUGing
             product = {}
             product['authors'] = []
@@ -121,7 +116,7 @@ class BookProviders
 	            product['name'] = $1.strip
 		    print "Name is #{product['name']}\n" if $DEBUG # for DEBUGing
                     robotstate = 0
-		elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9X]).*/ 
+		elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]).*/ 
                     product['isbn'] = $1
 		    print "ISBN is #{product['isbn']}\n" if $DEBUG # for DEBUGing
 		    robotstate = 0
@@ -129,19 +124,20 @@ class BookProviders
                     product['manufacturer'] = $1.strip
 		    print "Manufacturer is #{product['manufacturer']}\n" if $DEBUG # for DEBUGing
 		    robotstate = 0 
-                elsif robotstate == 5 and line =~ /^([^<]+)</
+#                elsif robotstate == 5 and line =~ /^([^<]+)</
+                elsif robotstate == 5 and line =~ /<span>([^<]+)</
                     product['media'] = $1.strip
 		    print "Media is #{product['media']}\n" if $DEBUG # for DEBUGing
 		    robotstate = 0 
                 elsif line =~ /^.*>Autor:\s*</
 		    robotstate = 1
-                elsif line =~ /^.*>T.tulo:\s*</
+                elsif line =~ /^.*>T(.|&iacute;)tulo:\s*</
 		    robotstate = 2
-                elsif line =~ /^.*>ISBN:\s*</
+                elsif line =~ /^.*>ISBN \(13\):\s*</
 		    robotstate = 3
-                elsif line =~ /^.*>Publicaci.n:\s*</
+                elsif line =~ /^.*>Publicaci(.|&oacute;)n:\s*</
 		    robotstate = 4
-                elsif line =~ /^.*>Encuadernaci.n:\s*</
+                elsif line =~ /^.*>Encuadernaci(.|&oacute;)n:\s*</
 		    robotstate = 5 
                 end
             end

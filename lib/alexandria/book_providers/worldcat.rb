@@ -90,7 +90,7 @@ class BookProviders
 
 	    	authors = []
 	    	md = data.scan(/title="Search for more by this author">([^<]+)/)
-            raise "No authors" unless md.length > 0
+#            raise "No authors" unless md.length > 0
             md = md.collect {|match| match[0]} 
             md.each {|match|
             		CGI.unescape(match.strip)

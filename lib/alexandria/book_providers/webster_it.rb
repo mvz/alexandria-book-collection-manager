@@ -98,13 +98,11 @@ class BookProviders
 	    	authors = this.scan(/<a href="[^>]+">([^<]+)<\/a>,?/)
 	    	authors = authors.collect {|author| author[0]}
 	    	#puts this
-	    	
 #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
             end
 
             raise unless md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
-            isbn = "978" + md[1].strip[0..8]
-            isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
+            isbn = Library.canonicalise_ean( md[1].strip )
 
             raise unless md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
 	        publisher = CGI.unescape(md[1].strip)

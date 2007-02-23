@@ -141,7 +141,8 @@ class BookProviders
 			product["title"] = CGI.unescape(md[1])
 
 
-			regx = /<tr><td colspan="2" class="text">F&#246;rfattare:&nbsp;<b>([^<]*)<\/b><\/td><\/tr>/
+#			regx = /<tr><td colspan="2" class="text">F&#246;rfattare:&nbsp;<b>([^<]*)<\/b><\/td><\/tr>/
+			regx = /<tr><td colspan="2" class="text">F.rfattare:&nbsp;<b>([^<]*)<\/b><\/td><\/tr>/
 			product["authors"] = []
 			data.scan(regx) do |md| next unless md[0] != md[1]
     			product["authors"] << translate_html_stuff(CGI.unescape(md[0]))
@@ -156,8 +157,8 @@ class BookProviders
 			
 			product["edition"] = md[1] or nil
 
-
-			img_url = "covers/" + isbn[0 .. 0] + "/" + isbn[1 .. 2] + "/" + isbn + ".jpg"
+			isbn10 = Library.canonicalise_isbn(isbn)
+			img_url = "covers/" + isbn10[0 .. 0] + "/" + isbn10[1 .. 2] + "/" + isbn10 + ".jpg"
 			#puts img_url
 			raise "No image found" unless md = data.match(img_url)
 			product["cover"] = BASE_URI + img_url
@@ -165,7 +166,7 @@ class BookProviders
 			book = Book.new(
 				translate_html_stuff(product["title"]),
 				product["authors"],
-				isbn,
+				Library.canonicalise_ean(isbn),
 				translate_html_stuff(product["publisher"]),
 				publish_year = 0,
 				translate_html_stuff(product["edition"]))

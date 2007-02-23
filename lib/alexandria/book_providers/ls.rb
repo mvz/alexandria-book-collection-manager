@@ -91,7 +91,7 @@ class BookProviders
             end
 
             raise "No ISBN from Image" unless md = /<img src="capas\/([\dX]+)p?\.jpg" alt="" ?\/>/.match(data)
-            isbn = md[1].strip
+            isbn = Library.canonicalise_ean(md[1].strip)
 
             if md = /<br[^>]*>Editora: ([^<]+)<br>/.match(data)
                 publisher = md[1].strip

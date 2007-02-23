@@ -228,9 +228,24 @@ module Alexandria
             self.extract_numbers(AMERICAN_UPC_LOOKUP[test_upc])
         end
 
+        def self.canonicalise_ean(code)
+            if self.valid_ean?(code)
+                return code
+            elsif self.valid_isbn?(code)
+                code = "978" + code[0..8]
+                return code + String( self.ean_checksum( self.extract_numbers( code ) ) )
+            elsif self.valid_upc?(code)
+                raise "fix function Alexandria::Library.canonicalise_ean"
+            else
+                raise InvalidISBNError.new(code)
+            end
+        end
+
         def self.canonicalise_isbn(isbn)
             numbers = self.extract_numbers(isbn)
-
+if self.valid_ean?(isbn)  and numbers[0 .. 2] != [9,7,8]
+    return isbn
+end
             canonical = if self.valid_ean?(isbn)
                 # Looks like an EAN number -- extract the intersting part and
                 # calculate a checksum. It would be nice if we could validate
