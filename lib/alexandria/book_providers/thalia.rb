@@ -93,8 +93,8 @@ class BookProviders
             product["title"] = md[1].strip.unpack("C*").pack("U*")
 						# authors
 						product["authors"] = []
-						data.scan(/\?fqba=([^"]+)" title="Mehr von..."><u>([^<]+)<\/u>/) do |md|
-                next unless CGI.unescape(md[0]) == md[1]
+						data.scan(/\/fqba\/([^"]+)" title="Mehr von..."><u class="_artikel_authors">([^<]+)<\/u>/) do |md|
+#                next unless CGI.unescape(md[0]) == md[1]
                 product["authors"] << md[1].unpack("C*").pack("U*")
             end
             #raise if product["authors"].empty?
@@ -102,11 +102,15 @@ class BookProviders
             raise "No isbn" unless md = /<strong>ISBN-13:<\/strong>(.+)<\/li>/.match(data)
             product["isbn"] = md[1].strip.gsub(/-/, "")
 						# edition
-            md = /<strong>Einband:<\/strong> ([^,]<)/.match(data)
+            md = /<strong>Einband:<\/strong> ([^<]+)/.match(data)
             product["edition"] = md[1].strip.unpack("C*").pack("U*") if md != nil
 						# publisher
-            md = /<strong>Erschienen +bei:<\/strong> ([^<]+)/.match(data)
+            md = /<strong>Erschienen +bei:<\/strong>\&nbsp;([^<]+)/.match(data)
             product["publisher"] = md[1].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
+						# publish_year
+            md = /<strong>Erschienen:<\/strong> ([^<]+)/.match(data)
+            product["publish_year"] = md[1].strip.unpack("C*").pack("U*")[-4 .. -1].to_i if md != nil
+            product["publish_year"] = nil if product["publish_year"] == 0
 						# cover
             raise "No cover image" unless md = /<img id="_artikel_mediumthumbnail" src="([^"]+)/.match(data)
             product["cover"] = md[1] if md != nil
@@ -114,7 +118,7 @@ class BookProviders
 						                product["authors"],
 									  				product["isbn"],
 														product["publisher"],
-                                                         nil, # TODO - furnish publish year
+                                                         product["publish_year"],
 														product["edition"])
 						return [ book, product["cover"] ]
         end
