@@ -1,4 +1,5 @@
 # Copyright (C) 2004 Laurent Sansonetti
+# Copyright (C) 2007 Laurent Sansonetti and Marco Costantini
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -37,12 +38,15 @@ class BookProviders
                 when SEARCH_BY_ISBN
                     "5&id="
 
-               # when SEARCH_BY_TITLE
-               #     "1&id="
-               #
-               # when SEARCH_BY_AUTHORS
-               #     "3&id="
-               #
+                when SEARCH_BY_TITLE
+                    "1&id="
+
+                when SEARCH_BY_AUTHORS
+                    "3&id="
+
+                when SEARCH_BY_KEYWORD
+                    "&id=" # does the site provide this?
+
                 else
                     raise InvalidSearchTypeError
 
@@ -54,19 +58,18 @@ class BookProviders
             data = transport.get(URI.parse(req))
 
             if type == SEARCH_BY_ISBN
-                book = to_book(data, req)            
-            #else
-            #    begin
-            #        results = [] 
-            #        each_book_page(data) do |page, title|
-            #            results << to_book(transport.get(URI.parse(BASE_URI + page)))
-            #        end
-            #        return results 
-            #    rescue
-            #        raise NoResultsError
-            #    end
+                book = to_book(data)
+            else
+                begin
+                    results = [] 
+                    each_book_page(data) do |code, title|
+                        results << to_book(transport.get(URI.parse(BASE_URI + "/livro.asp?orn=LSE&Tipo=2&ID=" + code)))
+                    end
+                    return results 
+                rescue
+                    raise NoResultsError
+                end
             end
-            book
         end
 
         def url(book)
@@ -76,24 +79,39 @@ class BookProviders
         #######
         private
         #######
-   
-        def to_book(data, req)
+    
+        def to_book(data)
             data = data.convert("UTF-8", "iso-8859-1")
-            raise "No Title" unless md = /'><strong>([^<]+)<\/strong><\/a><br\/>/.match(data)
-            title = md[1].strip
+            raise "No Title" unless md = /><strong(\s+class="titulodetalhes")?>([^<]+)<\/strong>(<\/a>)?<br ?\/>/.match(data)
+            title = md[2].strip
+
             authors = []
-            raise "No Author" unless md =/<strong class="azulescuro">(.*)<\/strong><br\/><br\/>/.match(data)
-            md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
-            raise "No ISBN from Image" unless md = /<img src="capas\/([^<]+)p\.jpg" alt=""\/>/.match(data)
+            if md =/<strong class="(azulescuro|autordetalhes)">(.*)<\/strong><br ?\/><br ?\/>/.match(data)
+                md[2].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
+            end
+
+            raise "No ISBN from Image" unless md = /<img src="capas\/([\dX]+)p?\.jpg" alt="" ?\/>/.match(data)
             isbn = md[1].strip
-            if md = /<br\/>Editora: ([^<]+)<br>/.match(data)
+
+            if md = /<br[^>]*>Editora: ([^<]+)<br>/.match(data)
                 publisher = md[1].strip
             else
                 publisher = nil
             end
-            edition = nil
-            publish_year = nil
-            medium_cover = BASE_URI+'/capas/'+ isbn + '.jpg'
+
+            if md = /<br[^>]*>Encadernação: ([^<]+)<br>/.match(data)
+                edition = md[1].strip
+            else
+                edition = nil
+            end
+
+            if md = /<br[^>]*>Edição: ([^<]+)<br>/.match(data)
+                publish_year = md[1].strip
+            else
+                publish_year = nil
+            end
+
+            medium_cover = BASE_URI+'/capas/'+ isbn + '.jpg' # use + 'p.jpg' for smaller images
             #raise "No Big Image" unless medium_cover = transport.get(URI.parse(BASE_URI+'/capas/'+ isbn + '.jpg'))
             #raise "No Big Image" unless md = /<img src="capas\/(.+\/(\d+)p\.gif)" alt=""\/>/.match(data)
             #medium_cover = md[1]
@@ -102,9 +120,9 @@ class BookProviders
                      medium_cover ]
         end
     
-        # def each_book_page(data)
-        #     raise if data.scan(/<A href="(\/booksearch\/isbnInquiry.asp\?userid=[\w\d]+&isbn=[^"]+)">([^<]+)<\/A>/) { |a| yield a }.empty?
-        # end
+        def each_book_page(data)
+            raise if data.scan(/<a href='livro.asp\?orn=LSE&Tipo=2&ID=(\d+)'><strong>/) { |a| yield a }.empty?
+        end
     end
 end
 end

@@ -61,7 +61,7 @@ class BookProviders
             products = {}
             results_page = "http://oas2000.proxis.be/gate/jabba.search.submit_search?#{req}&p_item=#{LANGUAGES[prefs['lang']]}&p_order=1&p_operator=K&p_filter=1"
             transport.get(URI.parse(results_page)).each do |line|
-                if line =~ /BR>.*DETAILS&mi=([^&]*)&si=/ #and (!products[$1]) and (book = parseBook($1)) then
+                if line =~ /br>.*DETAILS&mi=([^&]*)&si=/ #and (!products[$1]) and (book = parseBook($1)) then
                     book = parseBook($1)
                     products[$1] = book
                 end
