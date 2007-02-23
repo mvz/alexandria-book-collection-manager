@@ -1,10 +1,11 @@
 Maintainer:
-Laurent Sansonetti <lrz@gnome.org>
+Joseph Method <tristil@gmail.com>
 
 Contributors:
 Alexander McCormmach <alexander@tunicate.org>
 Aymeric Nys <aymeric@nnx.com>
 Claudio Belotti <bel8@lilik.it>
+Marco Costantini <costanti@science.unitn.it>
 Constantine Evans <cevans@costinet.org>
 Dafydd Harries <daf@muse.19inch.net>
 Javier Fernández-Sanguino Peña <jfs@debian.org>
@@ -13,6 +14,7 @@ Marco Costantini <costanti@science.unitn.it>
 Mathieu Leduc-Hamel <arrak@arrak.org>
 Owain Evans <o.evans@gmail.com>
 Pascal Terjan <pterjan@linuxfr.org>
+Laurent Sansonetti <lrz@gnome.org>
 Rene Samselnig <sandman@sdm-net.org>
 Robby Stephenson <robby@periapsis.org>
 Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>

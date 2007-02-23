@@ -148,19 +148,21 @@ class BookProviders
     			product["authors"] << translate_html_stuff(CGI.unescape(md[0]))
 			end
 			
-			raise "Publisher string not found, but no \"book not found\" string found\n" unless md = /<span id="ctl00_main_frame_ctrlproduct_lblPublisherName">(.+)<\/span>/.match(data)
+			#raise "Publisher string not found, but no \"book not found\" string found\n" unless 
+			md = /<span id="ctl00_main_frame_ctrlproduct_lblPublisherName">(.+)<\/span>/.match(data)
 			
-			product["publisher"] = md[1]
+			product["publisher"] = md[1] or md #i.e., or nil
 
 
-			raise "No edition" unless md = /<span id="ctl00_main_frame_ctrlproduct_lblEditionAndWeight">([^<]*)i gram: .+<\/span>/.match(data)
+			#raise "No edition" unless 
+			md = /<span id="ctl00_main_frame_ctrlproduct_lblEditionAndWeight">([^<]*)i gram: .+<\/span>/.match(data)
 			
-			product["edition"] = md[1] or nil
+			product["edition"] = md[1] or md
 
 			isbn10 = Library.canonicalise_isbn(isbn)
 			img_url = "covers/" + isbn10[0 .. 0] + "/" + isbn10[1 .. 2] + "/" + isbn10 + ".jpg"
 			#puts img_url
-			raise "No image found" unless md = data.match(img_url)
+			#raise "No image found" unless md = data.match(img_url)
 			product["cover"] = BASE_URI + img_url
 						
 			book = Book.new(

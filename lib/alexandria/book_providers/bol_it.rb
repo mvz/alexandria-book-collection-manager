@@ -87,7 +87,7 @@ class BookProviders
         def to_book(data)
             data = data.convert("UTF-8", "iso-8859-1")
 
-            raise unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
+            raise "No title" unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
             title = CGI.unescape(md[1].strip)
 
             authors = []
@@ -95,15 +95,18 @@ class BookProviders
                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
             end
 
-            raise unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
+            raise "No ISBN" unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
             isbn = md[1].strip
             isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
 
-            raise unless md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
-	        publisher = CGI.unescape(md[1].strip)
+            #raise unless 
+            md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
+	        publisher = CGI.unescape(md[1].strip) or md
 
-            raise unless md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
-            edition = CGI.unescape(md[1].strip)
+            #raise unless 
+            md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
+            edition = CGI.unescape(md[1].strip) or md
+            
             if md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data)
                 nr_pages = CGI.unescape(md[1].strip)
             elsif md = / (\d+) pagine \| /.match(data)

@@ -24,6 +24,8 @@ require 'open-uri'
 require 'observer'
 require 'singleton'
 
+#require 'logger'
+
 class Array
     def sum
         self.inject(0) { |a, b| a + b }
@@ -454,6 +456,8 @@ end
         #########
 
         def initialize(name)
+        	#@logger = Logger.new(STDOUT)
+      		#@logger.debug("Initializing library #{self.object_id}")
             @name = name
             @deleted_books = []
         end
@@ -499,7 +503,7 @@ end
         #######
         private
         #######
-
+        
         def initialize
             @all_libraries = []
         end

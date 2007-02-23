@@ -16,4 +16,4 @@ need to stick to in order to get your patch accepted:
     - always provide patches in unified form (`cvs diff -u') and with
       a ChangeLog entry. 
 
-Please do not commit without my permission (lrz@gnome.org).
+Be bold.

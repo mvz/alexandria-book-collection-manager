@@ -102,8 +102,9 @@ class BookProviders
             raise "No ISBN" unless md = /<span class="BDEticLibro">ISBN 13: <\/span><span class="isbn">([^<]+)/.match(data)
             isbn = md[1].strip.gsub!("-","")
 
-            raise "No Publisher" unless md = /<span class="BDeditoreLibro">([^<]+)/.match(data)
-	        publisher = CGI.unescape(md[1].strip)
+            #raise "No Publisher" unless 
+            md = /<span class="BDeditoreLibro">([^<]+)/.match(data)
+	        publisher = CGI.unescape(md[1].strip) or md
 
             unless md = /<span class="BDEticLibro">More info<\/span><br \/>([^<]+)/.match(data)
             	edition = nil

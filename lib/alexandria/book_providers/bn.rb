@@ -81,7 +81,7 @@ class BookProviders
         def to_book(data)
             data = data.convert("UTF-8", "iso-8859-1")
 
-            raise unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - Books: ([^<]+)/.match(data)
+            raise "No title" unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - Books: ([^<]+)/.match(data)
             title = md[1].strip
 
             authors = []
@@ -92,14 +92,16 @@ class BookProviders
                 authors << md[1]
             end
 
-            raise unless md = /ISBN-13:\s+<a style="text-decoration:none">([^<]+)/.match(data)
+            raise "No ISBN" unless md = /ISBN-13:\s+<a style="text-decoration:none">([^<]+)/.match(data)
             isbn = md[1].strip
 
-            raise unless md = /<li class="publisher">Publisher:\s+([^<]+)/.match(data)
-            publisher = md[1].strip
+            #raise unless 
+            md = /<li class="publisher">Publisher:\s+([^<]+)/.match(data)
+            publisher = md[1].strip or md
 
-            raise unless md = /<li class="format">Format:\s+([^<]+)/.match(data)
-            edition = md[1].strip
+            #raise unless 
+            md = /<li class="format">Format:\s+([^<]+)/.match(data)
+            edition = md[1].strip or md
 
             publish_year = nil
             if md = /<li class="pubDate">Pub. Date:[^<]+(\d\d\d\d)</.match(data)

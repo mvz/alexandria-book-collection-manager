@@ -94,11 +94,13 @@ class BookProviders
             raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
             isbn = md[1].strip
 
-            raise "No publisher" unless md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
-	        publisher = CGI.unescape(md[1].strip)
+            #raise "No publisher" unless 
+            md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
+	        publisher = CGI.unescape(md[1].strip) or md
 
-            raise "No edition" unless md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
-            edition = CGI.unescape(md[1].strip)
+            #raise "No edition" unless 
+            md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
+            edition = CGI.unescape(md[1].strip) or md
 
             publish_year = nil
             if md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data)

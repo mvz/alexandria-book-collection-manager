@@ -104,8 +104,9 @@ class BookProviders
             raise unless md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
             isbn = Library.canonicalise_ean( md[1].strip )
 
-            raise unless md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
-	        publisher = CGI.unescape(md[1].strip)
+            #raise unless 
+            md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
+	        publisher = CGI.unescape(md[1].strip) or md
 
            if md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
              edition = CGI.unescape(md[1].strip) + " p."

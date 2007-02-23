@@ -14,6 +14,7 @@
 # License along with Alexandria; see the file COPYING.  If not,
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
+require 'gettext'
 
 module Alexandria
     class ImportFilter
@@ -42,6 +43,7 @@ module Alexandria
         end
    
         def invoke(library_name, filename)
+        	puts "Selected: #{@message} -- #{library_name} -- #{filename}"
             Library.send(@message, library_name, filename,
                          @on_iterate_cb, @on_error_cb)
         end
@@ -59,11 +61,18 @@ module Alexandria
 
     class Library
         def self.import_autodetect(*args)
-            import_as_isbn_list(*args) or import_as_tellico_xml_archive(*args)
+        	puts "Beginning import: #{args[0]}, #{args[1]}"
+        	begin
+            	self.import_as_isbn_list(*args)
+            rescue => e
+            	puts e.message
+            	self.import_as_tellico_xml_archive(*args)
+            end
         end
         
         def self.import_as_tellico_xml_archive(name, filename,
                                                on_iterate_cb, on_error_cb)
+            puts "Starting import_as_tellico_xml_archive... "
             return nil unless system("unzip -qqt \"#{filename}\"")
             tmpdir = File.join(Dir.tmpdir, "tellico_export")
             FileUtils.rm_rf(tmpdir) if File.exists?(tmpdir)
@@ -122,18 +131,33 @@ module Alexandria
         
         def self.import_as_isbn_list(name, filename, on_iterate_cb, 
                                      on_error_cb)
+            puts "Starting import_as_isbn_list... "
             isbn_list = IO.readlines(filename).map do |line|
-                canonicalise_isbn(line.chomp) rescue nil
+            	puts "Trying line #{line}"
+            	# Let's preserve the failing isbns so we can report them later.
+            	begin
+                	[line.chomp, canonicalise_isbn(line.chomp)] 
+                rescue => e
+                	puts e.message 
+                	[line.chomp, nil]
+                end
             end 
+            puts "Isbn list: #{isbn_list.inspect}"
             isbn_list.compact!
             return nil if isbn_list.empty?
             max_iterations = isbn_list.length * 2
             current_iteration = 1
             books = []
+            bad_isbns = []
             isbn_list.each do |isbn|
                 begin
-                    books << Alexandria::BookProviders.isbn_search(isbn)
+                	unless isbn[1]
+                		bad_isbns << isbn[0]
+                	else
+                    	books << Alexandria::BookProviders.isbn_search(isbn[1])
+                    end
                 rescue => e
+                	puts e.message
                     return nil unless
                         (on_error_cb and on_error_cb.call(e.message))
                 end
@@ -141,16 +165,19 @@ module Alexandria
                 on_iterate_cb.call(current_iteration += 1, 
                                    max_iterations) if on_iterate_cb
             end
+            puts "Bad Isbn list: #{bad_isbns.inspect}" if bad_isbns
             library = load(name)
+            puts "Going with these #{books.length} books: #{books.inspect}"
             books.each do |book, cover_uri|
+            	puts "Saving #{book.isbn} cover..."
                 library.save_cover(book, cover_uri) if cover_uri != nil
+                puts "Saving #{book.isbn}..."
                 library << book
                 library.save(book)
-
                 on_iterate_cb.call(current_iteration += 1, 
                                    max_iterations) if on_iterate_cb
             end
-            return library
+            return [library, bad_isbns]
         end
     end
 end
