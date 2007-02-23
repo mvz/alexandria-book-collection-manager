@@ -92,7 +92,7 @@ class BookProviders
 						data = CGI::unescapeHTML(data)
 						product = {}
 						# title
-            if md = /<span id="_artikel_titel">(.+)<\/span>/.match(data)
+            if md = /<span id="_artikel_titel">([^<]+)<\/span>/.match(data)
                 product["title"] = md[1].strip.unpack("C*").pack("U*")
             else
                 product["title"] = ""
