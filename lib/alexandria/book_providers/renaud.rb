@@ -34,7 +34,8 @@ module Alexandria
 
       def search(criterion, type)
         criterion = criterion.convert("iso-8859-1", "utf-8")
-        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
+        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri="
+#        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
         req += case type
                when SEARCH_BY_ISBN
                  "ISBN"
@@ -76,7 +77,8 @@ module Alexandria
       end
 
       def url(book)
-        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
+#        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
+        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
       end
 
       #######
@@ -87,8 +89,8 @@ module Alexandria
         data = CGI::unescapeHTML(data)
         data = data.convert("UTF-8", "iso-8859-1")
         titles = []
-        data.scan(/"LireHyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each{|md|
-          titles << md[0].strip
+        data.scan(/"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each{|md|
+          titles << md[1].strip
         }
         raise if titles.empty?
         authors = []
@@ -101,13 +103,13 @@ module Alexandria
         }
         raise if authors.empty?
         isbns = []
-        data.scan(/ISBN :<\/td><td>(\d+)/).each{|md|
+        data.scan(/ISBN : ?<\/td><td>(\d+)/).each{|md|
           isbns << md[0].strip
         }
         raise if isbns.empty?
         editions = []
         publish_years = []
-        data.scan(/Date : <br>(\d{4,}-\d{2,}-\d{2,})/).each{|md|
+        data.scan(/Parution : <br>(\d{4,}-\d{2,}-\d{2,})/).each{|md|
           editions << md[0].strip
           publish_years << md[0].strip.split(/-/)[0]
         }

@@ -126,8 +126,12 @@ class TestProviders < Test::Unit::TestCase
     end
 
     def test_renaud
+        # adultes 
         __test_provider(Alexandria::BookProviders::RENAUDProvider,
-                        '9782894723388') 
+                        '9782894723388')
+        # jeunesse
+        __test_provider(Alexandria::BookProviders::RENAUDProvider,
+                        '9782764605059')
     end
 
     def test_worldcat
