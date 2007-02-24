@@ -1,4 +1,5 @@
 # Copyright (C) 2005-2006 Rene Samselnig
+# Copyright (C) 2007 Rene Samselnig and Marco Costantini
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -94,34 +95,34 @@ class BookProviders
 						# title
             if md = /<span id="_artikel_titel">([^<]+)<\/span>/.match(data)
                 product["title"] = md[1].strip.unpack("C*").pack("U*")
+            elsif md = /<div class="standard">\n<h3>\s*(<a title=".+"><\/a>\s+)?([^<]+)<span/.match(data)
+                product["title"] = md[2].strip.unpack("C*").pack("U*")
             else
                 product["title"] = ""
             end
 						# authors
 						product["authors"] = []
-						data.scan(/\/fq..\/([^"]+)" title="Mehr von\.\.\."><u[^>]*>([^<]+)<\/u>/) do |md|
+						data.scan(/\/fq\w+\/([^"]+)" title="Mehr von\.\.\."><u[^>]*>([^<]+)<\/u>/) do |md|
 #                next unless CGI.unescape(md[0]) == md[1]
                 product["authors"] << md[1].unpack("C*").pack("U*")
             end
             #raise if product["authors"].empty?
 						# isbn
-            raise "No isbn" unless md = /<strong>(ISBN-13|EAN):<\/strong>(.+)<\/li>/.match(data)
+            raise "No isbn" unless md = /<strong>(ISBN-13|EAN|ISBN-13\/EAN):<\/strong>(.+)<\/li>/.match(data)
             product["isbn"] = md[2].strip.gsub(/-/, "")
 						# edition
             md = /<strong>Einband:<\/strong> ([^<]+)/.match(data)
             product["edition"] = md[1].strip.unpack("C*").pack("U*") if md != nil
 						# publisher
-            md = /<strong>Ersch(ienen|eint) +bei:<\/strong>\&nbsp;([^<]+)/.match(data)
-            product["publisher"] = md[2].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
+            md = /<strong>Ersch(ienen|eint) +bei:<\/strong>(\&nbsp;| )(<[^>]+>)?([^<]+)/.match(data)
+            product["publisher"] = md[4].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
 						# publish_year
-            md = /<strong>Erschienen:<\/strong> ([^<]+)/.match(data)
-            product["publish_year"] = md[1].strip.unpack("C*").pack("U*")[-4 .. -1].to_i if md != nil
+            md = /<strong>Ersch(ienen|eint)( voraussichtlich)?:<\/strong> ([^<]+)/.match(data)
+            product["publish_year"] = md[3].strip.unpack("C*").pack("U*")[-4 .. -1].to_i if md != nil
             product["publish_year"] = nil if product["publish_year"] == 0
 						# cover
-            if md = /<img id="_artikel_mediumthumbnail" src="([^"]+)/.match(data)
-                product["cover"] = md[1]
-            elsif md = /target="_blank"><img src="http:\/\/images.thalia.de\/([^"]+)/.match(data)
-                product["cover"] = "http://images.thalia.de/" + md[1]
+            if md = /<td valign="top"( nowrap)?>\n<div align="center">\n(<a href="[^>]+>)?<img (id="_artikel_mediumthumbnail" )?src="http:\/\/images\.thalia([^"]+)jpg/.match(data)
+                product["cover"] = "http://images.thalia" + md[4] + "jpg"
             else
                 product["cover"] = nil
             end
