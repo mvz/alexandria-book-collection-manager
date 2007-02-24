@@ -61,12 +61,21 @@ module Alexandria
 
     class Library
         def self.import_autodetect(*args)
+        	puts args.inspect
+        	filename = args[1]
+        	puts "Filename is #{filename} and ext is #{filename[-4..-1]}"
         	puts "Beginning import: #{args[0]}, #{args[1]}"
-        	begin
+        	if filename[-4..-1] == ".txt"
             	self.import_as_isbn_list(*args)
-            rescue => e
-            	puts e.message
+            elsif [".tc",".bc"].include? filename[-3..-1]
+            	begin 
             	self.import_as_tellico_xml_archive(*args)
+            	rescue => e
+            		puts e.message
+            	end
+            else
+            	puts "Bailing on this import!"
+            	raise "Not supported type"
             end
         end
         
@@ -97,18 +106,16 @@ module Alexandria
                     (total = entries.size).times do |n|
                         entry = entries[n]
                         elements = entry.elements
+                        elements.each {|e| puts e.inspect}
+                        #Feed an array in here, tomorrow.
                         book = Book.new(elements['title'].text,
                                         elements['authors'].elements.to_a.map \
                                             { |x| x.text },
                                         elements['isbn'].text,
                                         elements['publisher'].text,
-                                        elements['pub_year'] != nil \
-                                            ? elements['pub_year'].text \
-                                            : nil,
+                                        elements['pub_year'].text,
                                         elements['binding'].text)
-                        content << [ book, elements['cover'] \
-                                                ? elements['cover'].text \
-                                                : nil ]
+                        content << [ book, elements['cover'].text]
                         on_iterate_cb.call(n+1, total) if on_iterate_cb
                     end
 
@@ -122,9 +129,10 @@ module Alexandria
                         library << book
                         library.save(book)
                     end
-                    break library
-                rescue
-                    break nil
+                    return [library, nil]
+                rescue => e
+                	puts e.message
+                    return nil
                 end
             end
         end
