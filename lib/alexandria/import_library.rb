@@ -106,16 +106,28 @@ module Alexandria
                     (total = entries.size).times do |n|
                         entry = entries[n]
                         elements = entry.elements
-                        elements.each {|e| puts e.inspect}
                         #Feed an array in here, tomorrow.
-                        book = Book.new(elements['title'].text,
-                                        elements['authors'].elements.to_a.map \
-                                            { |x| x.text },
-                                        elements['isbn'].text,
-                                        elements['publisher'].text,
-                                        elements['pub_year'].text,
-                                        elements['binding'].text)
-                        content << [ book, elements['cover'].text]
+                        keys = ['isbn', 'publisher', 'pub_year', 'binding']
+                        
+                        book_elements = [elements['title'].text,
+                                       elements['authors'].elements.to_a.map \
+                                            { |x| x.text }]
+                        book_elements += keys.map {|key| 
+                        					unless elements[key]
+                        						nil
+                        					else
+                        						elements[key].text
+                        					end
+                        					}
+                     	puts book_elements.inspect
+                     	if elements['cover']
+                       		cover = elements['cover'].text
+                       	else
+                       		cover = nil
+                       	end
+                       	puts cover 
+                        book = Book.new(*book_elements)
+                        content << [ book, cover]
                         on_iterate_cb.call(n+1, total) if on_iterate_cb
                     end
 
@@ -129,7 +141,7 @@ module Alexandria
                         library << book
                         library.save(book)
                     end
-                    return [library, nil]
+                    return [library, []]
                 rescue => e
                 	puts e.message
                     return nil
