@@ -245,18 +245,21 @@ module Alexandria
         begin
             require 'alexandria/book_providers/amazon'
         rescue LoadError
+            puts "can't load Ruby/Amazon: provider Amazon not available"
         end
         
         # mechanize is optional
         begin
             require 'alexandria/book_providers/dea_store_it'
         rescue LoadError
+            puts "can't load mechanize: provider Deastore not available"
         end
         
         # Ruby/ZOOM is optional
         begin
             require 'alexandria/book_providers/z3950'
         rescue LoadError
+            puts "can't load Ruby/ZOOM: Z39.50 and providers Library of Congress, British Library not available"
         end
 
         attr_reader :abstract_classes
