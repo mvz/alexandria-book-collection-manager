@@ -18,6 +18,11 @@
 
 require 'fileutils'
 require 'net/http'
+begin
+    # rubygems may be required or not by hpricot (used by mechanize), and may be installed or not
+    require 'rubygems'
+rescue LoadError
+end
 require 'mechanize'
 #require 'cgi'
 
@@ -54,7 +59,6 @@ class BookProviders
 
             end
 
-            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
             p req if $DEBUG
 
@@ -81,7 +85,7 @@ class BookProviders
         end
 
         def url(book)
-            BASE_URI + "/product.asp?isbn=" + Library.canonicalise_isbn(book.isbn)
+            BASE_URI + "/product.asp?isbn=" + book.isbn
         end
 
         #######
@@ -118,8 +122,8 @@ class BookProviders
                 publish_year = nil if publish_year == 0 or publish_year == 1900
             end
 
-  if md = /<div class="imageLg"><a href="javascript:void\(''\);" onclick="popUpCover\('\/covers\/([^\/]+)/.match(data)
-            cover_url = BASE_URI + "/covers/" + md[1].strip + "/batch1/" + Library.canonicalise_isbn(isbn) + ".jpg" # use batch2 or batch3 for bigger images
+  if md = /<div class="imageLg"><a href="javascript:void\(''\);" onclick="popUpCover\('\/covers_13\/([0-9\/]+)batch/.match(data)
+            cover_url = BASE_URI + "/covers_13/" + md[1].strip + "/batch1/" + isbn + ".jpg" # use batch2 or batch3 for bigger images
 
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
