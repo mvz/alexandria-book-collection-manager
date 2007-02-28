@@ -55,8 +55,12 @@ class TestProviders < Test::Unit::TestCase
     end
 
     def test_mcu
+        # this book is without binding information, see bug [#2533]
         __test_provider(Alexandria::BookProviders::MCUProvider,
-                        '9788420636665') 
+                        '9788487982033') 
+        # this book is "agotado" (out of print), see bug [#2518]
+        __test_provider(Alexandria::BookProviders::MCUProvider,
+                        '9788496075856') 
     end
 
     def test_proxis
