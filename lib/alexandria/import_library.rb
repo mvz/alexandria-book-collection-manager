@@ -156,7 +156,7 @@ module Alexandria
             	puts "Trying line #{line}"
             	# Let's preserve the failing isbns so we can report them later.
             	begin
-                	[line.chomp, canonicalise_isbn(line.chomp)] 
+                	[line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
                 rescue => e
                 	puts e.message 
                 	[line.chomp, nil]
