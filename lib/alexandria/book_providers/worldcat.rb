@@ -105,9 +105,9 @@ class BookProviders
 # City : Publisher[ ; City2 : Publisher2], *year? [&copy;year]
 # currently the match is not good in case of City2 : Publisher2 and in case of &copy;year
 
-            if md = /<li class="publisher"><strong>Publisher: <\/strong>[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/li>/.match(data)
-	        publisher = CGI.unescape(md[1].strip)
-                publish_year = CGI.unescape(md[2].strip)[-4 .. -1].to_i
+            if md = /<li class="publisher"><strong>Publisher: <\/strong>(<span class=vernacular lang="[^<]+<\/span>)?[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/li>/.match(data)
+	        publisher = CGI.unescape(md[2].strip)
+                publish_year = CGI.unescape(md[3].strip)[-4 .. -1].to_i
                 publish_year = nil if publish_year == 0
             else
                 publisher = nil
