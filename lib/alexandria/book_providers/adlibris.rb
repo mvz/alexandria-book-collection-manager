@@ -46,9 +46,9 @@ class BookProviders
 			results = []
 			
             if type == SEARCH_BY_ISBN
-				data = transport.get(URI.parse(req))
-				#puts URI.parse(req)
 				#puts "if type == SEARCH_BY_ISBN"
+				#puts URI.parse(req)
+				data = transport.get(URI.parse(req))
 				return to_book_isbn(data, criterion) #rescue raise NoResultsError
             else
                 begin
@@ -142,7 +142,7 @@ class BookProviders
 
 
 #			regx = /<tr><td colspan="2" class="text">F&#246;rfattare:&nbsp;<b>([^<]*)<\/b><\/td><\/tr>/
-			regx = /<tr><td colspan="2" class="text">F.rfattare:&nbsp;<b>([^<]*)<\/b><\/td><\/tr>/
+			regx = /<span id="ctl00_main_frame_ctrlproduct_rptAuthor_ctl0\d+_Label2">F.rfattare<\/span>:&nbsp;<a [^>]+>([^<]+)<\/a>/
 			product["authors"] = []
 			data.scan(regx) do |md| next unless md[0] != md[1]
     			product["authors"] << translate_html_stuff(CGI.unescape(md[0]))
@@ -159,6 +159,12 @@ class BookProviders
 			
 			product["edition"] = md[1] or md
 
+
+			md = /Utgiven: (\d\d\d\d)/.match(data)
+
+			product["publish_year"] = md[1] or md
+
+
 			isbn10 = Library.canonicalise_isbn(isbn)
 			img_url = "covers/" + isbn10[0 .. 0] + "/" + isbn10[1 .. 2] + "/" + isbn10 + ".jpg"
 			#puts img_url
@@ -170,7 +176,7 @@ class BookProviders
 				product["authors"],
 				Library.canonicalise_ean(isbn),
 				translate_html_stuff(product["publisher"]),
-				publish_year = 0,
+				product["publish_year"],
 				translate_html_stuff(product["edition"]))
 			return [ book, product["cover"] ]
 		end
