@@ -89,9 +89,6 @@ module UI
                 elsif @book.edition.empty?
                     _alert(_("Couldn't add the book"),
                            _("A binding must be provided."))
-                elsif @book.authors.empty?
-                    _alert(_("Couldn't add the book"),
-                           _("At least one author must be provided."))
                 else
                     @book.saved_ident = @book.ident
                     @library.save_cover(@book, @coverFilename) if @coverFilename

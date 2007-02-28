@@ -25,8 +25,14 @@ module UI
         def initialize(parent, library, book)
             super(parent, library.cover(book))
             @log.info("Initializing Book Properties Dialog...")
+
+            cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
+            cancel_button.signal_connect('clicked') { on_cancel }
+            cancel_button.show
+            @button_box << cancel_button
+
             #@on_close_cb = on_close_cb Not really hooked up to anything... (JCM)
-            close_button = Gtk::Button.new(Gtk::Stock::CLOSE)
+            close_button = Gtk::Button.new(Gtk::Stock::SAVE)
             close_button.signal_connect('clicked') { on_close }
             close_button.show
             @button_box << close_button
@@ -141,6 +147,10 @@ module UI
             @book.tags = @entry_tags.text.split
             @library.save(@book) 
             #@on_close_cb.call(@book)
+            @book_properties_dialog.destroy
+        end
+
+        def on_cancel
             @book_properties_dialog.destroy
         end
 
