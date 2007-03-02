@@ -1,0 +1,350 @@
+Copyright (C) 2007 Marco Costantini
+
+########################################################################
+
+Question: I have a ( Bug | Support Request | Patch | Feature Request ).
+
+Answer: You are welcome to report it. Please use the tracker at
+http://rubyforge.org/tracker/?group_id=205
+
+It may be helpful to read the text "How to Report Bugs Effectively", at
+http://www.chiark.greenend.org.uk/~sgtatham/bugs.html
+
+Please, one bug per report, and one report per bug.
+
+Please use a meaningful and specific summary.
+
+In order to let us investigate the bug and fix it for you, we need a clear
+and specific information about how to replicate it. For instance: report
+the ISBN of the book for which the bug happens; report the book provider
+used if relevant; copy and paste the error message. You may also start
+Alexandria in terminal window, and copy and paste the output on that
+window.
+
+In the past we got the bug report [#6767] saying:
+"Entering a valid ISBN number (many different) is rejected by the
+program. Stating to be an invalid ISBN."
+This user didn't report any single non-working ISBN; and didn't explain
+"rejected" enough. Hence, even if further work has been done on this
+topic, we can't know whether this bug was a real one, and whether it has
+been already solved or not.
+
+If you report only the backtrace without saying how to replicate the 
+bug, it is usually impossible to understand and fix the bug.
+
+Please have a look at the already reported bugs or feature request:
+it is useless to report again an already reported one. 
+If you have more information, please add it at the already reported bug,
+instead of opening a new one.
+
+Your bug could be a bug already solved in the development version of
+Alexandria. You can get the development version at
+http://rubyforge.org/scm/?group_id=205
+
+
+########################################################################
+
+
+Question: Where are the Z39.50 stuff, the providers US Library of 
+Congress and British Library, the advanced options, and the window for 
+adding new providers?
+
+Answer: All these things require that the library Ruby/ZOOM,
+version >= 0.2.0 is installed and working. You can get it at
+http://ruby-zoom.rubyforge.org/ Install it according to its
+documentation.
+
+Ruby/ZOOM requires YAZ, http://www.indexdata.dk/yaz/ , compiled with 
+passing the --enable-shared option to the configure script:
+
+./configure --enable-shared
+
+before building YAZ with make.
+
+
+########################################################################
+
+
+Question: A provider is not working, or only partial information it 
+retrieved from it, or there are books on the providers for which 
+Alexandria fails to retrieve information.
+
+Answer: Yes, the provider may have changed the structure of its
+web pages, and hence it is necessary to update the file for that
+provider; this file is in the directory
+/<something>/alexandria/book_providers/
+
+It is also possible that the file handles only the "simple" cases, and the 
+case of your book is a "complex" one.
+
+Try to get the development version at http://rubyforge.org/scm/?group_id=205 
+because the problem could be already fixed there. 
+
+Try to fix by yourself, and thereafter send us a patch. 
+Otherwise, report the bug, saying for which ISBN this problem happens.
+
+
+########################################################################
+
+
+Question: I know another book provider
+
+Answer: There are many other providers, see 
+http://en.wikipedia.org/wiki/Wikipedia:Book_sources
+That page contains also links to the pages for book providers in other
+languages.
+If you now other providers, please add them to that lists.
+
+
+########################################################################
+
+
+Question: Please add a new provider
+
+Answer: First, choose wisely which provider(s) to ask. Do a 
+search on Internet of the various existing providers for your language 
+(see also, but not only, the previous question). 
+
+You may prefer providers that list also out-of-prints, instead of 
+providers that list only available books. It is also preferable a 
+provider that lists not only the books of your country, but also the 
+books of the neighbor countries.
+
+It is useful if you choose a provider that allows to specify the ISBN in 
+the address, such as 
+http://www.internetbookshop.it/ame/ser/serdsp.asp?e=0060748222&shop=1
+or
+http://www.deastore.com/product.asp?isbn=9780060748227
+
+It is necessary that the HTML page of each provider is easily parsable, 
+that is, that the computer can easily find title, author(s), ISBN, 
+publisher, year of publication, binding.
+For instance, the following piece of HTML page is easily parsable.
+
+<span class="BDtitoloLibro">The Krusty Book</span>
+<span class="BDauthLibro">by: Matt 
+Groening </span><span class="BDformatoLibro"><span 
+class="BDEticLibro">Format: </span>paperback</span><span 
+class="BDEticLibro">Publication date: </span><span 
+class="BDdataPubbLibro">10/23/2006</span><span 
+class="BDEticLibro">Publisher: </span><span 
+class="BDeditoreLibro">HarperCollins Publishers (Australia) Pty 
+Ltd</span><br /><span class="BDEticLibro">ISBN: </span><span 
+class="isbn">0-06-074822-2</span><br /><span class="BDEticLibro">ISBN 
+13: </span><span class="isbn">978-0-06-074822-7</span></div>
+
+It is not necessary that the provider reports for each book all the
+information: title, author(s), ISBN, publisher, year of publication,
+binding. In case that one of these is missing, Alexandria will not get 
+it.
+
+It is easier, if the provider doesn't use cookies (however, provider
+Deastore uses cookies and has been implemented).
+
+After the choice of the provider, try by yourself to modify the file for 
+an already implemented provider. Probably it may be only required that 
+you modify some regular expressions. Please send us the patch.
+If you can program already, learning Ruby may require 20 minutes, see 
+http://www.ruby-lang.org/en/documentation/quickstart/
+
+If you can't implement the new provider by yourself, write a 'feature 
+request' at http://rubyforge.org/tracker/?group_id=205
+Please report some ISBNs of books that your provider knows and no other 
+provider implemented by Alexandria knows. Report also how are the words 
+title, author(s), ISBN, publisher, year of publication, binding in the 
+language used by the site. Report any other relevant information.
+
+
+########################################################################
+
+
+Question: What are the ISBN, the ISBN-13, and the EAN? 
+
+Answer: For more information about ISBN, ISBN-13, EAN, see 
+http://en.wikipedia.org/wiki/International_Standard_Book_Number
+
+
+########################################################################
+
+
+Question: Does Alexandria support the ISBN-13? Do I need to enter the 
+ISBN with or without dashes?
+
+Answer: Alexandria support both the 10-digit and 13-digit ISBN, and the 
+dashes entered with the ISBN are ignored. Hence you can enter the book 
+in any of these equivalent forms:
+
+88-06-14930-X
+880614930X
+88-06-14930-x
+880614930x
+978-88-06-14930-7
+9788806149307
+
+
+########################################################################
+
+
+Question: I entered the ISBN exactly as it shows on the book, and 
+Alexandria says that it is invalid.
+
+Answer: You can check whether an ISBN is valid with
+http://www.isbn-check.com/ 
+Sometimes the ISBN reported on the book is wrong. Try to use the
+13-digit one, or to use the ISBN reported on the back of the title page,
+or to search by title/author on a book provider, in order to find the
+correct ISBN.
+
+
+########################################################################
+
+
+Question: Where is stored the data about the books?
+
+Answer: In the files ~/.alexandria/<library_name>/<ISBN>.yaml
+These files are in YAML ( http://www.yaml.org/ ) format, and you can 
+edit them manually. The covers are in the files 
+~/.alexandria/<library_name>/<ISBN>.cover
+These files persist if you install or deinstall Alexandria.
+
+
+########################################################################
+
+
+Question: I was enjoying Alexandria a lot and now it doesn't work any 
+more, I can't enter other books, or crashes when it starts.
+
+Answer: This usually happens when there is some invalid data in one of 
+the .yaml files (see the question above). For one or more of the 
+latest books that you have entered, a bug happened, and now the data 
+stored is invalid and causes trouble. Try to find which book it was, 
+(please send also a bug report), and to delete or to move to another 
+directory that .yaml file or the whole ~/.alexandria directory.
+
+This kind of problem may show only with the manual entered books, and 
+not with the books searched by ISBN.
+
+
+########################################################################
+
+
+Question: I can't install mechanize
+
+Answer: The following works for me with Ubuntu
+
+sudo apt-get -y install ruby1.8-dev make gcc libc6-dev rdoc ragel libopenssl-ruby
+
+wget http://rubyforge.org/frs/download.php/17190/rubygems-0.9.2.tgz
+tar xfz rubygems-0.9.2.tgz
+cd rubygems-0.9.2/
+sudo ruby setup.rb
+cd
+
+sudo gem install rake
+sudo gem install rake
+
+## either
+sudo gem install hpricot --source http://code.whytheluckystiff.net
+## or
+svn co https://code.whytheluckystiff.net/svn/hpricot/trunk hpricot
+cd hpricot
+rake
+sudo rake install
+sudo rake install
+cd
+## 
+
+wget http://rubyforge.org/frs/download.php/17883/mechanize-0.6.5.tgz
+tar xfz mechanize-0.6.5.tgz
+cd mechanize-0.6.5/
+sudo ruby setup.rb
+cd
+
+
+########################################################################
+
+
+Question: can I catalog other objects?
+
+Answer: Yes. Some kinds of object, such as illustrated calendars, or 
+geographical maps, have the ISBN, and can be treated as books.
+
+For other objects, insert the EAN or bar-code number as ISBN. Provider 
+Thalia knows about music CDs, video DVDs, games and software, and can be 
+used to retrieve information about them. Other providers may be added in 
+future (possibly by you). Otherwise, the other objects may be added 
+manually.
+
+
+########################################################################
+
+
+Question: I prefer to have the field "Author" as "Surname, Name" instead of
+"Name Surname".
+
+Answer: Alexandria relies on what the providers say: some providers report
+"Surname, Name", and some other "Name Surname". 
+
+If Alexandria reports "Name Surname" with one provider, and in the HTML 
+page of that provider there is also (in a parsable way) "Surname, Name", 
+then this is a bug to be reported.
+
+Otherwise, there is no algorithm that can decide, given the Author as a
+string, which part of the string is the name and which part is the surname.
+For instance, the name or the surname can be composed by more than one
+word, or the author may be a collective author, or be a title or a
+pseudonym, or in the author's country they may use that the surname is the
+first word and the name is the second, or there may be the patronymic, and 
+so on.
+
+For one provider, for books with more that one author, it's non-trivial 
+even to split the string of all the authors into strings "Name Surname" for 
+each author.
+
+The only possibility to convert "Name Surname" to "Surname, Name" is to do
+that by hand.
+
+If you still believe that it is possible for a software to convert "Name 
+Surname" into "Surname, Name" in a reliable way, here are some cases of 
+real authors for you to try. (Some accented letters have been replaced by 
+the non accented ones.)
+
+"Agente Italiano"
+"Albert Sydney Hornby"
+"Alexandre Dumas fils"
+"Antoine de Saint-Exupery"
+"Boston Women's Health Book Collective"
+"Camilla"
+"Central Intelligence Agency"
+"Christiane F."
+"Dario De Toffoli"
+"Elaine St. James"
+"Ernesto Che Guevara"
+"Francois-Marie Arouet de Voltaire"
+"Gaius Caesar Octavianus Augustus"
+"Geographers A-Z Map Company"
+"Gian Antonio Stella"
+"H G Wells"
+"John Paul II" (the surname is "Wojtyla")
+"Jose Ortega y Gasset"
+"Joseph K. von Eichendorff"
+"Leonardo da Vinci" (he had no surname, "da Vinci" means "from the village
+'Vinci'")
+"Leone Stella" (this only is fictional, from a comic movie, whose main
+characters are some "Leone Stella" and a "Stella Leone"
+"Levi Strauss"
+"Lorenzo il Magnifico"
+"Lucio Lombado Radice"
+"Luigi Luca Cavalli-Sforza"
+"Malcolm X"
+"Mao Zedong"
+"Martin Luther"
+"Martin Luther King Jr."
+"Mihail Sergeevic Gorbacev"
+"Robert Van der Plas"
+"Saint Augustine"
+"Scuola di Barbiana"
+"Subcomandante Insurgente Marcos"
+"Vladimir Lenin" (the surname is "Ulyanov")
+
+########################################################################
