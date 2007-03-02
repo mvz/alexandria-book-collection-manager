@@ -99,7 +99,13 @@ class BookProviders
             title = CGI.unescape(md[1].strip)
 
             authors = []
-	    if md = /<span class="BDauthLibro">by:([^<]+)/.match(data)
+            # this returns "Name Surname"
+	    # if md = /<span class="BDauthLibro">by:([^<]+)/.match(data) 
+            # this returns "Surname, Name"
+	    if md = /<span class="BDEticLibro">Authorship<\/span><br \/>by:([^<]+)/.match(data)
+                if md2 = /(.+)Translator:.+/.match(md[1])
+                    md=md2
+                end
                 md[1].strip.split('- ').each { |a| authors << CGI.unescape(a.strip) }
             end
 
