@@ -29,10 +29,10 @@ Alexandria
 Mandatory requirements
 ------------
 
-    Ruby >= 1.8.0:              http://www.ruby-lang.org
-    GNOME >= 2.6 [1]:           http://www.gnome.org
+    Ruby >= 1.8.0:              http://www.ruby-lang.org/
+    GNOME >= 2.6 [1]:           http://www.gnome.org/
     Ruby-GetText >= 0.6.1:      http://ponx.s5.xrea.com/hiki/ruby-gettext.html
-    Ruby-GNOME2 >= 0.16.0 [2]:  http://ruby-gnome2.sourceforge.jp
+    Ruby-GNOME2 >= 0.16.0 [2]:  http://ruby-gnome2.sourceforge.jp/
     Intltool:                   http://freedesktop.org/wiki/Software_2fintltool
 
     [1]: GTK+ >= 2.6.0 is required though, and >= 2.8.0 is recommended.
@@ -44,7 +44,7 @@ Optional requirements
 ------------
 
     Ruby/Amazon >= 0.8.3 [3]:   http://www.caliban.org/ruby/ruby-amazon.shtml
-    Ruby/ZOOM >= 0.2.0 [4]:     http://ruby-zoom.rubyforge.org
+    Ruby/ZOOM >= 0.2.0 [4]:     http://ruby-zoom.rubyforge.org/
     Mechanize [5]:              http://mechanize.rubyforge.org/
     Revolution [6]:             http://revolution.rubyforge.org/
 

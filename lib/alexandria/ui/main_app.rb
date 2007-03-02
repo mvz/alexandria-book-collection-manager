@@ -1205,7 +1205,7 @@ module UI
             on_import = proc do 
                 ImportDialog.new(@main_app) do |library, bad_isbns|
                 	unless bad_isbns.empty?
-                		message = "The following lines are not valid ISBNs and were not imported:"
+                		message = _("The following lines are not valid ISBNs and were not imported:")
                 		bad_isbns.each {|bi| message += "\n#{bi}"}
                 		bad_isbn_warn = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL, Gtk::MessageDialog::WARNING,  Gtk::MessageDialog::BUTTONS_CLOSE, message ).show
                 		bad_isbn_warn.signal_connect('response') { bad_isbn_warn.destroy }
