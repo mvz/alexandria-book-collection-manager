@@ -279,23 +279,30 @@ manually.
 ########################################################################
 
 
-Question: I prefer to have the field "Author" as "Surname, Name" instead of
-"Name Surname".
+Question: I prefer to have the field "Author" as "Surname, Name" instead 
+of "Name Surname".
 
-Answer: Alexandria relies on what the providers say: some providers report
-"Surname, Name", and some other "Name Surname". 
+Answer: Alexandria relies on what the providers say: 
+some providers report "Surname, Name": Deastore, Renaud, Mcu,
+some "Surname Name": Webster.it, Ibs.it,
+some "Name Surname": Bn, Thalia, Bol.it, Adlibris, L Siciliano, Worldcat,
+and some without any rule: Amazon, Proxis.
+You can change, in the preferences, the order in which the providers are 
+queried.
 
 If Alexandria reports "Name Surname" with one provider, and in the HTML 
 page of that provider there is also (in a parsable way) "Surname, Name", 
-then this is a bug to be reported.
+then this is a bug to be reported. In some of these cases, it would be 
+possible to get "Surname, Name", but the code would be complicated and 
+unreliable. 
 
-Otherwise, there is no algorithm that can decide, given the Author as a
-string, which part of the string is the name and which part is the surname.
-For instance, the name or the surname can be composed by more than one
-word, or the author may be a collective author, or be a title or a
-pseudonym, or in the author's country they may use that the surname is the
-first word and the name is the second, or there may be the patronymic, and 
-so on.
+There is no algorithm that can decide, given the Author as a string, 
+which part of the string is the name and which part is the surname.
+For instance, the name or the surname can be composed by more than one 
+word, or the author may be a collective author, or be a title or a 
+pseudonym, or in the author's country they may use that the surname is 
+the first word and the name is the second, or there may be the 
+patronymic, and so on.
 
 For one provider, for books with more that one author, it's non-trivial 
 even to split the string of all the authors into strings "Name Surname" for 
