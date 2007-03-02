@@ -111,7 +111,7 @@ class BookProviders
                 publish_year = nil
             end
 
-            medium_cover = BASE_URI+'/capas/'+ isbn + '.jpg' # use + 'p.jpg' for smaller images
+            medium_cover = BASE_URI+'/capas/'+ Library.canonicalise_isbn(isbn) + 'p.jpg' # use + '.jpg' for bigger images
             #raise "No Big Image" unless medium_cover = transport.get(URI.parse(BASE_URI+'/capas/'+ isbn + '.jpg'))
             #raise "No Big Image" unless md = /<img src="capas\/(.+\/(\d+)p\.gif)" alt=""\/>/.match(data)
             #medium_cover = md[1]
