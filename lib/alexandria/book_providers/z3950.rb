@@ -64,9 +64,10 @@ class BookProviders
                     puts "edition: #{marc.edition}"
                 end
 
-                next if marc.title.nil? or marc.authors.empty?
+                next if marc.title.nil? # or marc.authors.empty?
                 
-                book = Book.new(marc.title, marc.authors, marc.isbn, 
+                book = Book.new(marc.title, marc.authors, 
+                                 Library.canonicalise_ean(marc.isbn), 
                                 (marc.publisher or ""),
                                 marc.respond_to?(:publish_year) \
                                     ? marc.publish_year : nil,
@@ -108,6 +109,7 @@ class BookProviders
             end
             pqf = ""
             attr.each { |attr| pqf += "@attr 1=#{attr} "}
+            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             pqf += "\"" + criterion.upcase + "\""
             puts "pqf is #{pqf}, syntax #{prefs['record_syntax']}" if $Z3950_DEBUG
             conn.search(pqf)
@@ -169,7 +171,7 @@ class BookProviders
         #######
         
         def book_from_sutrs(text)
-            title = isbn = publisher = edition = nil
+            title = isbn = publisher = publish_year = edition = nil
             authors = []
             
             text.split(/\n/).each do |line|
@@ -178,7 +180,7 @@ class BookProviders
                 elsif md = /^Added Person Name:\s+(.*),[^,]+$/.match(line)
                     authors << md[1]
                 elsif md = /^ISBN:\s+([\dXx]+)/.match(line)
-                    isbn = md[1]
+                    isbn = Library.canonicalise_ean( md[1] )
                 elsif md = /^Imprint:.+\:\s*(.+)\,/.match(line)
                     publisher = md[1]
                 end
@@ -192,8 +194,8 @@ class BookProviders
                 puts "edition: #{edition}"
             end
 
-            if title and !authors.empty?
-                Book.new(title, authors, isbn, (publisher or ""), (edition or ""))
+            if title # and !authors.empty?
+                return Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
             end
         end
     end
