@@ -99,8 +99,15 @@ class BookProviders
             		 }
 #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
 
-            raise unless md = /<strong>ISBN: <\/strong>\w+\W+(\d+)\D/.match(data)
-            isbn = md[1].strip
+# FIXME: The provider returns the first ISBN found. When searching by 
+# ISBN, it should instead return the ISBN searched
+# Example: http://worldcat.org/isbn/9780805335576
+
+            if md = /<strong>ISBN: <\/strong>\w+\W+(\d+)\D/.match(data)
+                isbn = md[1].strip
+            else
+                isbn = nil
+            end
 
 # The provider returns
 # City : Publisher[ ; City2 : Publisher2], *year? [&copy;year]
