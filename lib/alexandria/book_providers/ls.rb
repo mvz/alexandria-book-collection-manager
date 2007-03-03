@@ -27,7 +27,7 @@ class BookProviders
     
         BASE_URI = "http://www.siciliano.com.br"
         def initialize
-            super("LS", "Livraria Siliciano (Brasil)")
+            super("LS", "Livraria Siciliano (Brasil)")
             # no preferences for the moment
         end
         
