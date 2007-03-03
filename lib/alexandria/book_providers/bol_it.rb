@@ -85,6 +85,7 @@ class BookProviders
         #######
     
         def to_book(data)
+            raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data) != nil
             data = data.convert("UTF-8", "iso-8859-1")
 
             raise "No title" unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)

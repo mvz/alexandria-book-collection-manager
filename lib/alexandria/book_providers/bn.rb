@@ -79,6 +79,7 @@ class BookProviders
         #######
     
         def to_book(data)
+            raise NoResultsError if /<body><h1>Object Moved<\/h1>This object may be found <a HREF="http:\/\/www.barnesandnoble.com\/booksearch\/noresults.asp/.match(data) != nil
             data = data.convert("UTF-8", "iso-8859-1")
 
             raise "No title" unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - Books: ([^<]+)/.match(data)

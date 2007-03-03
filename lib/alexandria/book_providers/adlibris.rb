@@ -128,12 +128,10 @@ class BookProviders
 		
 		def to_book_isbn(data, isbn)
 			#puts data
+			raise NoResultsError if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
 			data = data.convert("UTF-8", "iso-8859-1")
 
 			product = {}			
-			if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
-				raise NoResultsError
-			end
 
 
 			raise "Title not found" unless md = /<a id="ctl00_main_frame_ctrlproduct_linkProductTitle" class="header15">(.+)<\/a>/.match(data)
@@ -161,6 +159,9 @@ class BookProviders
 
 
 			md = /Utgiven: (\d\d\d\d)/.match(data)
+# FIXME
+#                publish_year = either CGI.unescape(md[1].strip).to_i or md[1].to_i
+#                publish_year = nil if publish_year == 0
 
 			product["publish_year"] = md[1] or md
 

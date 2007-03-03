@@ -88,6 +88,8 @@ module Alexandria
       def to_books(data)
         data = CGI::unescapeHTML(data)
         data = data.convert("UTF-8", "iso-8859-1")
+        raise NoResultsError if /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.match(data) != nil
+
         titles = []
         data.scan(/"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each{|md|
           titles << md[1].strip

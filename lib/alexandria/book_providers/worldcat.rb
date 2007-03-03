@@ -84,6 +84,7 @@ class BookProviders
         #######
     
         def to_book(data)
+            raise NoResultsError if /<br><p>The page you tried was not found\./.match(data) != nil
 
             raise unless md = /<h1 class="title"> (<div class=vernacular lang="[^"]+">)?([^<]+)/.match(data)
             title = CGI.unescape(md[2].strip)

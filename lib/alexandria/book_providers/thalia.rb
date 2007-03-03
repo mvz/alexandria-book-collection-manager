@@ -86,9 +86,7 @@ class BookProviders
     
         def to_book(data)
 						puts data if $DEBUG
-            if /Leider f&uuml;hrte Ihre Suche zu keinen Ergebnissen./.match(data) != nil
-                raise NoResultsError
-            end
+						raise NoResultsError if /Leider f&uuml;hrte Ihre Suche zu keinen Ergebnissen\./.match(data) != nil
 #						data = data.convert("UTF-8", "iso-8859-1")
 						data = CGI::unescapeHTML(data)
 						product = {}

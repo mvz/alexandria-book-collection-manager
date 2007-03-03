@@ -81,6 +81,7 @@ class BookProviders
         #######
     
         def to_book(data)
+            raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data) != nil
             data = data.convert("UTF-8", "iso-8859-1")
 
             raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)

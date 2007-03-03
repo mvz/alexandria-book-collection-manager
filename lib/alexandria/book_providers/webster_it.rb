@@ -84,6 +84,7 @@ class BookProviders
         #######
     
         def to_book(data)
+            raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data) != nil
             data = data.convert("UTF-8", "iso-8859-15")
 
             raise unless md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)

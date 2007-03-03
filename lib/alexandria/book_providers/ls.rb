@@ -82,6 +82,8 @@ class BookProviders
     
         def to_book(data)
             data = data.convert("UTF-8", "iso-8859-1")
+            raise NoResultsError if /<strong>Nenhum t.tulo foi encontrado\.<BR>/.match(data) != nil
+
             raise "No Title" unless md = /><strong(\s+class="titulodetalhes")?>([^<]+)<\/strong>(<\/a>)?<br ?\/>/.match(data)
             title = md[2].strip
 
