@@ -72,7 +72,7 @@ class BookProviders
                                 marc.respond_to?(:publish_year) \
                                     ? marc.publish_year : nil,
                                 (marc.edition or ""))
-                results << [book, nil]
+                results << [book]
             end
             type == SEARCH_BY_ISBN ? results.first : results
         end
@@ -160,7 +160,7 @@ class BookProviders
                 sutrs_text = record.render
                 book = book_from_sutrs(sutrs_text)
                 if book
-                    results << [book, nil]
+                    results << [book]
                 end
             end
             type == SEARCH_BY_ISBN ? results.first : results

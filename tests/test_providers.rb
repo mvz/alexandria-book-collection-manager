@@ -29,6 +29,8 @@ class TestProviders < Test::Unit::TestCase
         end   
     end
     
+    #  providers depending on optional libraries
+
     def test_amazon_isbn
         __test_provider(Alexandria::BookProviders::AmazonProvider,
                         '9780385504201')
@@ -49,6 +51,25 @@ class TestProviders < Test::Unit::TestCase
                         'Confederacy Dunces', Alexandria::BookProviders::SEARCH_BY_KEYWORD)
     end
     
+    def test_dea
+        __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
+                        '9788817012980') 
+        __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
+                        '9788806134747') 
+    end
+
+    def test_LOC
+        __test_provider(Alexandria::BookProviders::LOCProvider,
+                        '9780805335583')
+    end
+
+    def test_BL
+        __test_provider(Alexandria::BookProviders::BLProvider,
+                        '9781853260803')
+    end
+
+    # providers supposed to be always working
+
     def test_bn
         __test_provider(Alexandria::BookProviders::BNProvider,
                          '9780961328917')   # see #1433  
@@ -92,13 +113,6 @@ class TestProviders < Test::Unit::TestCase
     def test_siciliano
         __test_provider(Alexandria::BookProviders::SicilianoProvider,
                         '9788599170380') 
-    end
-
-    def test_dea
-        __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
-                        '9788817012980') 
-        __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
-                        '9788806134747') 
     end
 
     def test_bol
