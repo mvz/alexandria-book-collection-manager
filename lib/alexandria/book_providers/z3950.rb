@@ -56,11 +56,12 @@ class BookProviders
                 marc = MARC::Record.new(marc_txt)
 
                 if $Z3950_DEBUG
+                    puts "MARC"
                     puts "title: #{marc.title}"
                     puts "authors: #{marc.authors.join(', ')}"
                     puts "isbn: #{marc.isbn}"
                     puts "publisher: #{marc.publisher}"
-                    puts "publish year: #{marc.publish_year}"
+                    # puts "publish year: #{marc.publish_year}"
                     puts "edition: #{marc.edition}"
                 end
 
@@ -187,6 +188,7 @@ class BookProviders
             end
 
             if $Z3950_DEBUG
+                puts "SUTRS"
                 puts "title: #{title}"
                 puts "authors: #{authors.join(' and ')}"
                 puts "isbn: #{isbn}"

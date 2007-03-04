@@ -231,6 +231,7 @@ module Alexandria
         end
 
         def self.canonicalise_ean(code)
+            code = code.delete('- ')
             if self.valid_ean?(code)
                 return code
             elsif self.valid_isbn?(code)
