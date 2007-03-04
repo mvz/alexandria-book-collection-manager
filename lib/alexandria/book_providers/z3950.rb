@@ -66,9 +66,14 @@ class BookProviders
                 end
 
                 next if marc.title.nil? # or marc.authors.empty?
+                if marc.isbn == nil
+                    isbn = nil
+                else
+                    isbn = Library.canonicalise_ean(marc.isbn)
+                end
                 
                 book = Book.new(marc.title, marc.authors, 
-                                 Library.canonicalise_ean(marc.isbn), 
+                                 isbn, 
                                 (marc.publisher or ""),
                                 marc.respond_to?(:publish_year) \
                                     ? marc.publish_year : nil,
