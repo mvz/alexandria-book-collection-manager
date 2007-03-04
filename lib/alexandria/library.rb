@@ -24,8 +24,6 @@ require 'open-uri'
 require 'observer'
 require 'singleton'
 
-#require 'logger'
-
 class Array
     def sum
         self.inject(0) { |a, b| a + b }
@@ -71,6 +69,16 @@ module Alexandria
                 Dir["*" + EXT[:book]].each do |filename|
                     text = IO.read(filename)
                     
+                    #Code to remove the mystery string in books imported from Amazon
+                    # (In the past, still?) To allow ruby-amazon to be removed.
+                    
+                    if /!str:Amazon::Search::Response/.match(text)
+                    	puts text
+                    	text.gsub!("!str:Amazon::Search::Response", "")
+                    	puts "got one!"
+                    	puts text
+                    end
+                    
                     # Backward compatibility with versions <= 0.6.0, where the 
                     # loaned_since field was a numeric.
                     if md = FIX_BIGNUM_REGEX.match(text)
@@ -79,7 +87,6 @@ module Alexandria
                         new_yaml.sub!(/^\s*\-+\s*/, '')
                         text.sub!(md[0], "loaned_since: #{new_yaml}\n")
                     end
- 
                     book = YAML.load(text)
                 	begin 
                     raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
@@ -272,9 +279,13 @@ end
         def save(book)
             changed
             
+            puts "Saving book #{book.title}..." if $DEBUG
+            
             # Let's initialize the saved identifier if not already
             # (backward compatibility from 0.4.0).
             book.saved_ident ||= book.ident
+            
+            puts "#{book.title}'s saved_ident is #{book.saved_ident}" if $DEBUG
 
             if book.ident != book.saved_ident
                 FileUtils.rm(yaml(book.saved_ident))
@@ -289,6 +300,7 @@ end
             end
             already_there = (File.exists?(yaml(book)) and 
                              !@deleted_books.include?(book))
+            puts "Doing the saving deed: #{book.title} -- #{book.isbn}" if $DEBUG
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
             
             # Do not notify twice.
@@ -402,7 +414,7 @@ end
                 else
                     raise
             end
-            File.join(self.path, ident + EXT[:cover])
+            File.join(self.path, ident.to_s + EXT[:cover])
         end
     
         def yaml(something, basedir=self.path)
@@ -414,7 +426,7 @@ end
                 else
                     raise
             end
-            File.join(basedir, ident + EXT[:book])
+            File.join(basedir, ident.to_s + EXT[:book])
         end
         
         def name=(name)
@@ -457,8 +469,6 @@ end
         #########
 
         def initialize(name)
-        	#@logger = Logger.new(STDOUT)
-      		#@logger.debug("Initializing library #{self.object_id}")
             @name = name
             @deleted_books = []
         end

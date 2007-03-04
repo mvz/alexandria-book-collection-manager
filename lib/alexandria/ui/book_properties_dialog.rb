@@ -24,7 +24,7 @@ module UI
 #		def initialize(parent, library, book, &on_close_cb)
         def initialize(parent, library, book)
             super(parent, library.cover(book))
-            @log.info("Initializing Book Properties Dialog...")
+            puts "Initializing Book Properties Dialog..." if $DEBUG
 
             cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
             cancel_button.signal_connect('clicked') { on_cancel }

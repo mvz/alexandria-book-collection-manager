@@ -16,7 +16,6 @@
 # Boston, MA 02111-1307, USA.
 
 require 'thread'
-require 'logger'
 
 class Alexandria::ImportFilter
     def to_filefilter
@@ -34,13 +33,12 @@ module UI
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
         
         def initialize(parent, message)
-        	@logger = Logger.new(STDOUT)
             super(parent, _("Error while importing"),
                   Gtk::Stock::DIALOG_QUESTION,
                   [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                    [_("_Continue"), Gtk::Dialog::RESPONSE_OK]], 
                   message)
-            @logger.info("Opened SkipEntryDialog #{self.inspect}")
+            puts "Opened SkipEntryDialog #{self.inspect}" if $DEBUG
             self.default_response = Gtk::Dialog::RESPONSE_CANCEL
             show_all and @response = run
             destroy
@@ -59,8 +57,7 @@ module UI
 
         def initialize(parent, &on_accept_cb)
             super()
-            @logger = Logger.new(STDOUT)
-            @logger.info("ImportDialog opened.")
+            puts "ImportDialog opened." if $DEBUG
             self.title = _("Import a Library") 
             self.action = Gtk::FileChooser::ACTION_OPEN
             self.transient_for = parent
@@ -78,7 +75,7 @@ module UI
             FILTERS.each do |filter|
                 filefilter = filter.to_filefilter
                 self.add_filter(filefilter)
-                @logger.debug("Added ImportFilter #{filefilter} -- #{filefilter.name}")
+                puts "Added ImportFilter #{filefilter} -- #{filefilter.name}" if $DEBUG
                 filters[filefilter] = filter
             end
 
@@ -129,7 +126,7 @@ module UI
                     base)
 
                 filter = filters[self.filter]
-                puts "Going forward with filter: #{filter.name}"
+                puts "Going forward with filter: #{filter.name}" if $DEBUG
                 self.sensitive = false 
                 
                 filter.on_iterate do |n, total|
@@ -138,14 +135,14 @@ module UI
                     percent = n / coeff
                     # fraction between 0 and 1
                     fraction = percent / 100 
-                    @logger.debug("#{self.inspect} Percentage: #{fraction}")
+                    puts "#{self.inspect} Percentage: #{fraction}" if $DEBUG
                     exec_queue.call(on_progress, fraction)
                 end
 
                 not_cancelled = true 
                 filter.on_error do |message|
                     not_cancelled = exec_queue.sync_call(on_error, message)
-                    @logger.debug("#{self.inspect} cancel state: #{not_cancelled}")
+                    puts "#{self.inspect} cancel state: #{not_cancelled}" if $DEBUG
                 end
 
                 library = nil
@@ -166,7 +163,7 @@ module UI
                     on_accept_cb.call(library, @bad_isbns)
                     break
                 elsif not_cancelled
-                	@logger.debug("Raising ErrorDialog because not_cancelled is #{not_cancelled}")
+                	puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
                     ErrorDialog.new(parent, 
                                     _("Couldn't import the library"),
                                     _("The format of the file you " +

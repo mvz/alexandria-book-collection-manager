@@ -38,7 +38,6 @@ require 'alexandria/ui/smart_library_properties_dialog'
 require 'alexandria/ui/new_smart_library_dialog'
 require 'alexandria/ui/multi_drag_treeview'
 require 'alexandria/ui/main_app'
-require 'logger'
 
 module Pango
     def self.ellipsizable?
@@ -49,15 +48,14 @@ end
 module Alexandria
 module UI
     def self.main
-    	log = Logger.new(STDOUT)
-    	log.info("Initializing app_datadir...")
+    	puts "Initializing app_datadir..." if $DEBUG
         Gnome::Program.new('alexandria', VERSION).app_datadir = 
             Config::MAIN_DATA_DIR
-      	log.info("Initializing Icons...")
+      	puts "Initializing Icons..." if $DEBUG
         Icons.init
-        log.info("Starting MainApp...")
+        puts "Starting MainApp..." if $DEBUG
         MainApp.new
-        log.info("Starting Gtk.main...")
+        puts "Starting Gtk.main..." if $DEBUG
         Gtk.main
     end
 end

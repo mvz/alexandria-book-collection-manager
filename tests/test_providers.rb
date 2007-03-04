@@ -29,6 +29,7 @@ class TestProviders < Test::Unit::TestCase
         end   
     end
     
+
     #  providers depending on optional libraries
 
     def test_amazon_isbn

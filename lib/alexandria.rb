@@ -16,7 +16,6 @@
 # Boston, MA 02111-1307, USA.
 
 require 'gettext'
-require 'logger'
 
 module Alexandria 
     TITLE = 'Alexandria'
@@ -68,8 +67,9 @@ module Alexandria
     
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?
-		log = Logger.new(STDOUT)
-		log.info("Initializing Alexandria...")
+        $DEBUG = true if ARGV.include? "--debug" 
+		puts "Initializing Alexandria..." if $DEBUG
+		
         ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
                                 and URI.parse(ENV['http_proxy']).userinfo.nil?
         Alexandria::UI.main

@@ -51,14 +51,13 @@ module UI
         include GetText
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-
+        
         def initialize(parent, selected_library=nil, &block)
             super('new_book_dialog.glade')
-            @log = Logger.new(STDOUT)
-            @log.info("New Book Dialog")
+            puts "New Book Dialog" if $DEBUG
             @new_book_dialog.transient_for = @parent = parent
             @block = block
-
+			@destroyed = false
             libraries = Libraries.instance.all_regular_libraries
             if selected_library.is_a?(SmartLibrary)
                 selected_library = libraries.first
@@ -103,6 +102,10 @@ module UI
 
             @find_thread = nil
             @image_thread = nil
+            
+            @new_book_dialog.signal_connect("destroy") { @new_book_dialog.destroy
+            											 @destroyed = true	
+            											 }
         end
 
         def on_criterion_toggled(item)
@@ -143,11 +146,11 @@ module UI
         end
 
         def get_images_async
-        	@log.debug("get_images_async")
+        	puts "get_images_async" if $DEBUG
             @images = {}
             @image_error = nil
             @image_thread = Thread.new do
-            	@log.debug("New @image_thread #{Thread.current}")
+            	puts "New @image_thread #{Thread.current}" if $DEBUG
                 begin
                 	@results.each_with_index do |result, i|
                         uri = result[1]
@@ -193,17 +196,17 @@ module UI
 
                 # Stop if the image download thread has stopped.
                 if @image_thread.alive?
-                	@log.debug("@image_thread (#{@image_thread}) still alive.")
+                	puts "@image_thread (#{@image_thread}) still alive." if $DEBUG
                 	true
                 else
-                	@log.debug("@image_thread (#{@image_thread}) asleep now.")
+                	puts "@image_thread (#{@image_thread}) asleep now." if $DEBUG
                 	false                	
                 end
             end
         end
 
         def on_find
-        	@log.debug("on_find")
+        	puts "on_find" if $DEBUG
             mode = case @combo_search.active
                 when 0
                     BookProviders::SEARCH_BY_TITLE
@@ -215,8 +218,8 @@ module UI
 
             criterion = @entry_search.text.strip
             @treeview_results.model.clear
-            @log.debug("TreeStore Model: %s columns; ref_counts: %s" % 
-            [@treeview_results.model.n_columns, @treeview_results.model.ref_count])
+            puts "TreeStore Model: %s columns; ref_counts: %s" % 
+            [@treeview_results.model.n_columns, @treeview_results.model.ref_count] if $DEBUG
             @new_book_dialog.sensitive = false
             @find_error = nil
             @results = nil
@@ -225,10 +228,10 @@ module UI
             @image_thread.kill if @image_thread
             
             @find_thread = Thread.new do
-            	@log.debug("New @find_thread #{Thread.current}")
+            	puts "New @find_thread #{Thread.current}" if $DEBUG
                 begin
                     @results = Alexandria::BookProviders.search(criterion, mode)
-                    puts "got #{@results.length} results"
+                    puts "got #{@results.length} results" if $DEBUG
                 rescue => e
                     @find_error = e.message
                 end
@@ -237,14 +240,15 @@ module UI
             Gtk.timeout_add(100) do
                 # This block copies results into the tree view, or shows an
                 # error if the search failed.
-				#@log.debug("Copying results into tree view")
+                
+                # Err... continue == false if @find_error
                 continue = if @find_error
                     ErrorDialog.new(@parent,
                                     _("Unable to find matches for your search"),
                                     @find_error)
                     false
                 elsif @results
-                	@log.debug("Got results: #{@results[0]}...")
+                	puts "Got results: #{@results[0]}..." if $DEBUG
                     @results.each do |book, cover|
                         s = _("%s, by %s") % [ book.title,
                                                book.authors.join(', ') ]
@@ -254,7 +258,7 @@ module UI
                                          }.length > 1
                             s += " (#{book.edition}, #{book.publisher})"
                         end
-                        @log.debug("Copying %s into tree view." % book.title)
+                        puts "Copying %s into tree view." % book.title if $DEBUG
 						iter = @treeview_results.model.append
                         iter[0] = s
                         iter[1] = book.isbn
@@ -263,24 +267,32 @@ module UI
 
                     # Kick off the image download thread.
 					if @find_thread.alive?
-						@log.debug("@find_thread (#{@find_thread}) still alive.")
+						puts "@find_thread (#{@find_thread}) still alive." if $DEBUG
                     	true
                     else
-                    	@log.debug("@find_thread (#{@find_thread}) asleep now.")
+                    	puts "@find_thread (#{@find_thread}) asleep now." if $DEBUG
                     	#Not really async now.
                     	get_images_async
-                    	false
+                    	false #continue == false if you get to here. Stop timeout_add.
                     end
                 else
                     # Stop if the book find thread has stopped.
                     @find_thread.alive?
                 end
-
+                # continue == false if @find_error OR if results are returned 
+                # @new_book_dialog.sensitive is a bad call if window has been destroyed
+                # timeout_add ends if continue is false!
+                
                 unless continue
-                    @new_book_dialog.sensitive = true
-                    @button_add.sensitive = false 
+                	unless @find_thread.alive? #This happens after find_thread is done
+                		unless @destroyed
+                			@new_book_dialog.sensitive = true
+                			@button_add.sensitive = false
+                		end
+                	end
                 end
-                continue
+                
+                continue #timeout_add loop condition
             end
         end
 

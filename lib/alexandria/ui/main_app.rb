@@ -59,7 +59,6 @@ class Alexandria::BookProviders::AbstractProvider
     end
 end
 
-require 'logger'
 
 module Alexandria
 module UI
@@ -157,16 +156,15 @@ module UI
         MAX_STARS = 5
 
         def initialize
-        	@log = Logger.new(STDOUT)
             super("main_app.glade")
             @prefs = Preferences.instance
-            @log.info("Loading Libraries...")
+            puts "Loading Libraries..." if $DEBUG
             load_libraries
-            @log.info("Initializing UI...")
+            puts "Initializing UI..." if $DEBUG
             initialize_ui
-            @log.info("Initializing books_selection choice...")
+            puts "Initializing books_selection choice..." if $DEBUG
             on_books_selection_changed
-            @log.info("Restoring preferences...")
+            puts "Restoring preferences..." if $DEBUG
             restore_preferences
         end
 
@@ -174,7 +172,20 @@ module UI
             # right click
             if event.event_type == Gdk::Event::BUTTON_PRESS and
                event.button == 3
+               
+			# This works, but the library loading is too slow!
+#                if path = widget.get_path_at_pos(event.x, event.y)
+#                     obj, path = widget.is_a?(Gtk::TreeView) \
+#                         ? [widget.selection, path.first] : [widget, path]
 
+#                     unless obj.path_is_selected?(path)
+#                         widget.unselect_all
+#                         obj.select_path(path)
+#                     end
+#                 else
+#                     widget.unselect_all
+#                 end
+				#This kind of thing seems too clever.
                 menu = widget.get_path_at_pos(event.x, event.y) == nil \
                     ? @nolibrary_popup \
                     : selected_library.is_a?(SmartLibrary) \
@@ -401,12 +412,12 @@ module UI
         ICON_HEIGHT = 90         # pixels
         REDUCE_TITLE_REGEX = /^(.{#{ICON_TITLE_MAXLEN}}).*$/
         def fill_iter_with_book(iter, book)
-            iter[Columns::IDENT] = book.ident
+            iter[Columns::IDENT] = book.ident.to_s
             iter[Columns::TITLE] = book.title
             title = book.title.sub(REDUCE_TITLE_REGEX, '\1...')
             iter[Columns::TITLE_REDUCED] = title
             iter[Columns::AUTHORS] = book.authors.join(', ')
-            iter[Columns::ISBN] = book.isbn
+            iter[Columns::ISBN] = book.isbn.to_s
             iter[Columns::PUBLISHER] = book.publisher
             iter[Columns::PUBLISH_DATE] = (book.publishing_year.to_s rescue "")
             iter[Columns::EDITION] = book.edition
@@ -481,7 +492,7 @@ module UI
                                Gtk::Drag::TARGET_SAME_APP, 
                                0]]
         def setup_view_source_dnd(view)
-        	@log.info("setup_view_source_dnd for %s" % view)
+        	puts "setup_view_source_dnd for %s" % view if $DEBUG
             view.signal_connect_after('drag-begin') do |widget, drag_context|
                 n_books = selected_books.length
                 if n_books > 1
@@ -579,11 +590,11 @@ module UI
 
         def setup_books_listview
             # first column
-            @log.info("setup_books_listview")
+            puts "setup_books_listview" if $DEBUG
             @listview.model = @listview_model
             renderer = Gtk::CellRendererPixbuf.new
             title = _("Title")
-            @log.info("Create listview column for %s" % title)
+            puts "Create listview column for %s" % title if $DEBUG
             column = Gtk::TreeViewColumn.new(title)
             column.widget = Gtk::Label.new(title).show
             column.pack_start(renderer, false)
@@ -637,7 +648,7 @@ module UI
                 
             
             names.each do |title, iterid|
-            	@log.info("Create listview column for %s..." % title)
+            	puts "Create listview column for %s..." % title if $DEBUG
                 renderer = Gtk::CellRendererText.new
                 renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
                 column = Gtk::TreeViewColumn.new(title, renderer,
@@ -656,7 +667,7 @@ module UI
             	column.resizable = true
             	#column.pack_start(renderer, false)
             	column.add_attribute(renderer, 'text', iterid)
-            	@log.info("Create listview column for %s..." % title)
+            	puts "Create listview column for %s..." % title if $DEBUG
                 column.set_cell_data_func(renderer) do |column, cell, 
                                                         model, iter|
                		case iterid
@@ -681,7 +692,7 @@ module UI
 
             # final column
             title = _("Rating")
-            @log.info("Create listview column for %s..." % title)
+            puts "Create listview column for %s..." % title if $DEBUG
             
             column = Gtk::TreeViewColumn.new(title)
             column.widget = Gtk::Label.new(title).show
@@ -1165,7 +1176,7 @@ module UI
 
         def initialize_ui
             @main_app.icon = Icons::ALEXANDRIA_SMALL
-			@log.info("Initializing UI elements...")
+			puts "Initializing UI elements..." if $DEBUG
             
             on_new = proc do
                 name = Library.generate_new_name(@libraries.all_libraries)
@@ -1448,7 +1459,7 @@ module UI
                  proc { open_web_browser(provider.url(selected_books.first)) }]
             end
             
-            @log.info("Adding actions to @actiongroup")
+            puts "Adding actions to @actiongroup" if $DEBUG
             
             @actiongroup = Gtk::ActionGroup.new("actions")
             @actiongroup.add_actions(standard_actions)
@@ -1467,7 +1478,7 @@ module UI
                 setup_books_iconview_sorting
             end
            
-            @log.info("Adding actiongroup to uimanager")
+            puts "Adding actiongroup to uimanager" if $DEBUG
             
             @uimanager = Gtk::UIManager.new
             @uimanager.insert_action_group(@actiongroup, 0)
@@ -1585,7 +1596,7 @@ module UI
                 @actiongroup["Redo"].sensitive = false
             UndoManager.instance.add_observer(self)
             
-            @log.info("Connect ui elements to mainapp.")
+            puts "Connect ui elements to mainapp." if $DEBUG
             
             @main_app.toolbar = @toolbar
             @main_app.menus = @uimanager.get_widget("/MainMenubar")
@@ -1614,7 +1625,7 @@ module UI
             end
  
             # The active model.
-            @log.info("Initialize active model")
+            puts "Initialize active model" if $DEBUG
              
             @model = Gtk::ListStore.new(Gdk::Pixbuf,    # COVER_LIST 
                                         Gdk::Pixbuf,    # COVER_ICON
@@ -1661,7 +1672,7 @@ module UI
             # Give filter entry the initial keyboard focus.
             @filter_entry.grab_focus
             
-            @log.info("Create @listview_model and @iconview_model...")
+            puts "Create @listview_model and @iconview_model..." if $DEBUG
             
             @listview_model = Gtk::TreeModelSort.new(@filtered_model)
             @iconview_model = Gtk::TreeModelSort.new(@filtered_model)

@@ -35,7 +35,7 @@ module Alexandria
             factory_n = 0
             begin
                 factory = self.instance[factory_n]
-                puts factory.fullname + " lookup"# if $DEBUG
+                puts factory.fullname + " lookup" if $DEBUG
                 results = factory.search(criterion, type)
 
                 if results.length == 0
@@ -241,7 +241,6 @@ module Alexandria
         require 'alexandria/book_providers/webster_it'
         require 'alexandria/book_providers/worldcat'
 
-        # Ruby/Amazon is optional
         begin
             require 'alexandria/book_providers/amazon'
         rescue LoadError
