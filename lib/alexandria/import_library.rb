@@ -153,7 +153,7 @@ module Alexandria
                                      on_error_cb)
             puts "Starting import_as_isbn_list... "
             isbn_list = IO.readlines(filename).map do |line|
-            	puts "Trying line #{line}"
+            	puts "Trying line #{line}" if $DEBUG
             	# Let's preserve the failing isbns so we can report them later.
             	begin
                 	[line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
@@ -187,11 +187,11 @@ module Alexandria
             end
             puts "Bad Isbn list: #{bad_isbns.inspect}" if bad_isbns
             library = load(name)
-            puts "Going with these #{books.length} books: #{books.inspect}"
+            puts "Going with these #{books.length} books: #{books.inspect}" if $DEBUG
             books.each do |book, cover_uri|
-            	puts "Saving #{book.isbn} cover..."
+            	puts "Saving #{book.isbn} cover..." if $DEBUG
                 library.save_cover(book, cover_uri) if cover_uri != nil
-                puts "Saving #{book.isbn}..."
+                puts "Saving #{book.isbn}..." if $DEBUG
                 library << book
                 library.save(book)
                 on_iterate_cb.call(current_iteration += 1, 
