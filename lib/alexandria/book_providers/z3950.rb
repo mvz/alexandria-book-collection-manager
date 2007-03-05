@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+$Z3950_DEBUG = $DEBUG
+
 require 'zoom'
 require 'marc'
 
@@ -34,8 +36,6 @@ class BookProviders
             prefs.add("password", _("Password"), "", nil, false)
         end
 
-        $Z3950_DEBUG = $DEBUG
-       
         def search(criterion, type)
             prefs.read
 
@@ -61,7 +61,7 @@ class BookProviders
                     puts "authors: #{marc.authors.join(', ')}"
                     puts "isbn: #{marc.isbn}"
                     puts "publisher: #{marc.publisher}"
-                    # puts "publish year: #{marc.publish_year}"
+                    puts "publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
                     puts "edition: #{marc.edition}"
                 end
 
@@ -130,16 +130,24 @@ class BookProviders
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         def initialize
-            super("LOC", _("Library of Congress"))
+            super("LOC", _("Library of Congress (Usa)"))
             prefs.variable_named("hostname").default_value = "z3950.loc.gov"
             prefs.variable_named("port").default_value = 7090
             prefs.variable_named("database").default_value = "Voyager"
             prefs.variable_named("record_syntax").default_value = "USMARC"
         end
+
+        def url(book)
+            "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+" + Library.canonicalise_isbn(book.isbn)
+        end
     end
     
     class BLProvider < Z3950Provider
+        # http://en.wikipedia.org/wiki/Copac
         # http://en.wikipedia.org/wiki/British_Library
+# FIXME: switch from BL to Copac, which incudes the BL itself and many more libraries: http://copac.ac.uk/libraries/
+# Details: http://copac.ac.uk/interfaces/z39.50/
+# The SUTRS format used by Copac is different from the one used by BL
         unabstract
 
         include GetText
@@ -170,6 +178,10 @@ class BookProviders
                 end
             end
             type == SEARCH_BY_ISBN ? results.first : results
+        end
+
+        def url(book)
+            "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
         end
         
         #######
