@@ -46,7 +46,8 @@ class BookProviders
                 raise NoResultsError
             end
 
-            resultset = search_records(criterion, type)
+            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
+            resultset = search_records(criterion, type, 10)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
             results = books_from_marc(resultset)
@@ -102,7 +103,7 @@ class BookProviders
             /MARC$/.match(prefs['record_syntax'])
         end
         
-        def search_records(criterion, type)
+        def search_records(criterion, type, conn_count)
             options = {}
             unless prefs['username'].empty? or prefs['password'].empty?
                 options['user'] = prefs['username']
@@ -113,7 +114,7 @@ class BookProviders
             conn = ZOOM::Connection.new(options).connect(hostname, port)
             conn.database_name = prefs['database']
             conn.preferred_record_syntax = prefs['record_syntax']
-            conn.count = 10
+            conn.count = conn_count
             attr = case type
                 when SEARCH_BY_ISBN     then [7]
                 when SEARCH_BY_TITLE    then [4]
@@ -122,7 +123,6 @@ class BookProviders
             end
             pqf = ""
             attr.each { |attr| pqf += "@attr 1=#{attr} "}
-            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             pqf += "\"" + criterion.upcase + "\""
             puts "pqf is #{pqf}, syntax #{prefs['record_syntax']}" if $Z3950_DEBUG
             conn.search(pqf)
@@ -174,7 +174,8 @@ class BookProviders
             return super unless prefs['record_syntax'] == 'SUTRS'
 
             prefs.read
-            resultset = search_records(criterion, type)
+            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
+            resultset = search_records(criterion, type, 10)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
             results = books_from_sutrs(resultset)
@@ -229,5 +230,94 @@ class BookProviders
 
         end
     end
+
+
+    class SBNProvider < Z3950Provider
+        # http://sbnonline.sbn.it/
+        # http://it.wikipedia.org/wiki/ICCU
+        unabstract
+
+        include GetText
+        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+
+        def initialize
+            super("SBN", "Servizio Bibliotecario Nazionale (Italy)")
+            prefs.variable_named("hostname").default_value = "opac.sbn.it"
+            prefs.variable_named("port").default_value = 3950
+            prefs.variable_named("database").default_value = "nopac"
+            # supported 'USMARC', 'UNIMARC' , 'SUTRS'
+            prefs.variable_named("record_syntax").default_value = "USMARC"
+        end
+
+        def search(criterion, type)
+            prefs.read
+
+            criterion = canonicalise_isbn_with_dashes(criterion)
+            resultset = search_records(criterion, type, 0)
+            puts "total #{resultset.length}" if $Z3950_DEBUG
+            raise NoResultsError if resultset.length == 0
+            results = books_from_marc(resultset)
+            type == SEARCH_BY_ISBN ? results.first : results
+        end
+
+        #######
+        private
+        #######
+        
+        def canonicalise_isbn_with_dashes(isbn)
+            # The reference for the position of the dashes is
+            # http://www.isbn-international.org/converter/ranges.htm
+
+            isbn = Alexandria::Library.canonicalise_isbn(isbn)
+
+            if isbn[0..1] == "88"
+                # Italian speaking area
+                if isbn > "8895000" and isbn <="8899999996"
+                    return isbn[0..1] + "-" + isbn[2..6] + "-" + isbn[7..8] + "-" + isbn[9..9]
+                elsif isbn > "88900000"
+                    return isbn[0..1] + "-" + isbn[2..7] + "-" + isbn[8..8] + "-" + isbn[9..9]
+                elsif isbn > "8885000"
+                    return isbn[0..1] + "-" + isbn[2..6] + "-" + isbn[7..8] + "-" + isbn[9..9]
+                elsif isbn > "886000"
+                    return isbn[0..1] + "-" + isbn[2..5] + "-" + isbn[6..8] + "-" + isbn[9..9]
+                elsif isbn > "88200"
+                    return isbn[0..1] + "-" + isbn[2..4] + "-" + isbn[5..8] + "-" + isbn[9..9]
+                elsif isbn > "8800"
+                    return isbn[0..1] + "-" + isbn[2..3] + "-" + isbn[4..8] + "-" + isbn[9..9]
+                else
+                    raise "Invalid ISBN"
+                end
+
+            else
+                return isbn
+            end
+        end
+=begin
+
+Remarks about SBN
+
+Problem:
+- The code gets only the brief records, without ISBN, I don't knon how to get the full record.
+- This provider requires that value of conn.count is 0. conn.count is not documented in Ruby/zoom.
+
+Dashes:
+this database requires that Italian books are searched with dashes :(
+However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
+
+References:
+http://sbnonline.sbn.it/zgw/homeit.html
+http://www.iccu.sbn.it/genera.jsp?id=124
+with link at http://www.iccu.sbn.it/upload/documenti/cartecsbn.pdf
+which at page 5 or 6, it says
+• Element-set-names: Full, R (the same as Full (because not detailed holding infos):
+  according to Profile ONE-2), Brief (default, if client does not specify)
+http://copac.ac.uk/interfaces/z39.50/zed-support/#esn
+http://www.loc.gov/cgi-bin/zgstart?ACTION=INIT&FORM_HOST_PORT=/prod/www/data/z3950/iccu.html,opac.sbn.it,2100
+
+http://gwz.cilea.it/cgi-bin/reportOpac.cgi
+
+=end
+    end
+
 end
 end
