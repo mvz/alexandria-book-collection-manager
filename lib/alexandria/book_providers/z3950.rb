@@ -31,7 +31,7 @@ class BookProviders
             prefs.add("hostname", _("Hostname"), "")
             prefs.add("port", _("Port"), 7090)
             prefs.add("database", _("Database"), "")
-            prefs.add("record_syntax", _("Record syntax"), "USMARC", ["USMARC", "SUTRS", "UNIMARC"])
+            prefs.add("record_syntax", _("Record syntax"), "USMARC", ["USMARC", "UNIMARC", "SUTRS"])
             prefs.add("username", _("Username"), "", nil, false)
             prefs.add("password", _("Password"), "", nil, false)
         end
@@ -49,14 +49,29 @@ class BookProviders
             resultset = search_records(criterion, type)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
-    
+            results = books_from_marc(resultset)
+            type == SEARCH_BY_ISBN ? results.first : results
+        end
+
+        def url(book)
+            nil
+        end
+        
+        #######
+        private
+        #######
+        
+
+        def books_from_marc(resultset)
+
             results = []
             resultset[0..9].each do |record|
                 marc_txt = record.render(prefs['record_syntax'], 'USMARC')
+                puts marc_txt  if $Z3950_DEBUG
                 marc = MARC::Record.new(marc_txt)
 
                 if $Z3950_DEBUG
-                    puts "MARC"
+                    puts "Parsing MARC"
                     puts "title: #{marc.title}"
                     puts "authors: #{marc.authors.join(', ')}"
                     puts "isbn: #{marc.isbn}"
@@ -80,16 +95,8 @@ class BookProviders
                                 (marc.edition or ""))
                 results << [book]
             end
-            type == SEARCH_BY_ISBN ? results.first : results
+            return results
         end
-        
-        def url(book)
-            nil
-        end
-        
-        #######
-        private
-        #######
         
         def marc?
             /MARC$/.match(prefs['record_syntax'])
@@ -122,6 +129,7 @@ class BookProviders
         end
     end
     
+
     class LOCProvider < Z3950Provider
         # http://en.wikipedia.org/wiki/Library_of_Congress
         unabstract
@@ -142,6 +150,7 @@ class BookProviders
         end
     end
     
+
     class BLProvider < Z3950Provider
         # http://en.wikipedia.org/wiki/Copac
         # http://en.wikipedia.org/wiki/British_Library
@@ -168,15 +177,7 @@ class BookProviders
             resultset = search_records(criterion, type)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
-            
-            results = []
-            resultset[0..9].each do |record|
-                sutrs_text = record.render
-                book = book_from_sutrs(sutrs_text)
-                if book
-                    results << [book]
-                end
-            end
+            results = books_from_sutrs(resultset)
             type == SEARCH_BY_ISBN ? results.first : results
         end
 
@@ -188,7 +189,12 @@ class BookProviders
         private
         #######
         
-        def book_from_sutrs(text)
+        def books_from_sutrs(resultset)
+          results = []
+          resultset[0..9].each do |record|
+            text = record.render
+            puts text if $Z3950_DEBUG
+
             title = isbn = publisher = publish_year = edition = nil
             authors = []
             
@@ -205,7 +211,7 @@ class BookProviders
             end
 
             if $Z3950_DEBUG
-                puts "SUTRS"
+                puts "Parsing SUTRS"
                 puts "title: #{title}"
                 puts "authors: #{authors.join(' and ')}"
                 puts "isbn: #{isbn}"
@@ -214,8 +220,13 @@ class BookProviders
             end
 
             if title # and !authors.empty?
-                return Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
+                book = Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
+                results << [book]
             end
+
+          end
+          return results
+
         end
     end
 end
