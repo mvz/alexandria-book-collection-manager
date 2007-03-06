@@ -41,6 +41,7 @@ module Alexandria
                 if results.length == 0
                     raise NoResultsError
                 else
+                    puts "found at " + factory.fullname
                     return results
                 end
             rescue Exception => boom
