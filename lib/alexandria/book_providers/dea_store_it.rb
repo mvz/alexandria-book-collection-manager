@@ -93,7 +93,7 @@ class BookProviders
         #######
     
         def to_book(data)
-            raise NoResultsError if /<span class="EtichetteForms">No results\. Type new data in the previous page and try again\.<br \/> /.match(data) != nil
+            raise NoResultsError if /<span class="EtichetteForms">No results\. Type new data in the previous page and try again\.<br \/>/.match(data) != nil
             data = data.convert("UTF-8", "windows-1252")
 
             raise "No title." unless md = /<span class="BDtitoloLibro">([^<]+)/.match(data)
@@ -103,7 +103,7 @@ class BookProviders
             # this returns "Name Surname"
 	    # if md = /<span class="BDauthLibro">by:([^<]+)/.match(data) 
             # this returns "Surname, Name"
-	    if md = /<span class="BDEticLibro">Authorship<\/span><br \/>by:([^<]+)/.match(data)
+	    if md = /<span class="BDEticLibro">Authorship<\/span><br \/>by:.([^<]+)/.match(data)
                 if md2 = /(.+)Translator:.+/.match(md[1])
                     md=md2
                 end
