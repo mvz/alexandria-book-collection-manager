@@ -393,8 +393,46 @@ module UI
                 end
                 @libraries.reload
             else
-                @libraries = Libraries.instance
+            	#On start
+ 
+                @libraries = Libraries.instance 
                 @libraries.reload
+                unless @libraries.ruined_books.empty?
+                	message = _("These books do not conform to the ISBN-13 standard. We will attempt to replace them from the book providers. Otherwise, we will turn them into manual entries.\n" )
+                	@libraries.ruined_books.each {|bi| message += "\n#{bi[1] or bi[1].inspect}"}
+                	bad_isbn_warn = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL, Gtk::MessageDialog::WARNING,  Gtk::MessageDialog::BUTTONS_CLOSE, message ).show
+                	bad_isbn_warn.signal_connect('response') { bad_isbn_warn.destroy }
+                	books_to_add = []
+                	
+                	#This is the restoration thread. We can come up with strategies for restoring 'bad' books here.
+                	
+                	Thread.new do
+                		#Needs a progress indicator.
+                		@libraries.ruined_books.each {|book, isbn, library|
+                								  	  begin 
+                								  	  books_to_add << [Alexandria::BookProviders.isbn_search(isbn.to_s), library].flatten
+                								  	  puts book.title
+                								 	  rescue
+                								 	  
+                								 	  books_to_add << [book, nil, library]
+                								  	  puts "#{book.title} didn't make it."
+                								  	  end
+                								 	}
+                		# Will crash here when it gets to it.
+                		books_to_add.each do |book, cover_uri, library|
+                		
+                    		unless cover_uri.nil?
+                        		library.save_cover(book, cover_uri)
+                    		end
+                    		
+                    		library << book
+                    		library.save(book)
+                    		
+                		end
+                	
+                	end
+             		puts books_to_add if $DEBUG
+                end
             end
             @libraries.all_regular_libraries.each do |library| 
                 library.add_observer(self)
@@ -411,7 +449,9 @@ module UI
         ICON_WIDTH = 60
         ICON_HEIGHT = 90         # pixels
         REDUCE_TITLE_REGEX = /^(.{#{ICON_TITLE_MAXLEN}}).*$/
+        
         def fill_iter_with_book(iter, book)
+        	
             iter[Columns::IDENT] = book.ident.to_s
             iter[Columns::TITLE] = book.title
             title = book.title.sub(REDUCE_TITLE_REGEX, '\1...')
@@ -443,7 +483,9 @@ module UI
         end
 
         def append_book(book, tail=nil)
+        	#puts "Blah: #{@model.inspect}" if $DEBUG
             iter = tail ? @model.insert_after(tail) : @model.append
+            #puts iter
             fill_iter_with_book(iter, book)
             return iter
         end
@@ -1265,6 +1307,7 @@ module UI
             on_quit = proc do
                 save_preferences
                 Gtk.main_quit
+                @libraries.really_save_all_books
                 @libraries.really_delete_deleted_libraries
                 @libraries.all_regular_libraries.each do |library|
                     library.really_delete_deleted_books

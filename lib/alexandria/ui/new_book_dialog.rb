@@ -322,7 +322,7 @@ module UI
                     rescue
                         raise _("Couldn't validate the EAN/ISBN you " +
                                 "provided.  Make sure it is written " +
-                                "correcty, and try again.")
+                                "correctly, and try again.")
                     end
                     assert_not_exist(library, @entry_isbn.text)
                     books_to_add << Alexandria::BookProviders.isbn_search(isbn)

@@ -33,6 +33,7 @@ end
 module Alexandria
     class Library < Array
         attr_reader :name
+        attr_accessor :ruined_books
         DIR = File.join(ENV['HOME'], '.alexandria')
         EXT = { :book => '.yaml', :cover => '.cover' }
         
@@ -62,7 +63,9 @@ module Alexandria
 
         FIX_BIGNUM_REGEX = 
             /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
+        
         def self.load(name)
+        	ruined_books = []
             library = Library.new(name)
             FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
             Dir.chdir(library.path) do
@@ -72,11 +75,13 @@ module Alexandria
                     #Code to remove the mystery string in books imported from Amazon
                     # (In the past, still?) To allow ruby-amazon to be removed.
                     
+                    # The string is removed on load, but can't make it stick, maybe has to do with cache
+                    
                     if /!str:Amazon::Search::Response/.match(text)
-                    	puts text
+                    	puts text if $DEBUG
                     	text.gsub!("!str:Amazon::Search::Response", "")
-                    	puts "got one!"
-                    	puts text
+                    	puts "got one!" if $DEBUG
+                    	puts text if $DEBUG
                     end
                     
                     # Backward compatibility with versions <= 0.6.0, where the 
@@ -88,24 +93,47 @@ module Alexandria
                         text.sub!(md[0], "loaned_since: #{new_yaml}\n")
                     end
                     book = YAML.load(text)
-                	begin 
+                    old_isbn = book.isbn
+                	begin
+                	book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
+     
                     raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
-                    rescue => e
-                    	puts e.message
-                    end
+                    rescue InvalidISBNError => e
+                    	# ruined_books << [book, book.isbn, library]
+                    	puts e.message if $DEBUG
+                    	book.isbn = old_isbn
+ 					end
+ 				
                     library << book
                 end
-
+                
                 # Since 0.4.0 the cover files '_small.jpg' and 
                 # '_medium.jpg' have been deprecated for a single medium
                 # cover file named '.cover'.
+                
                 Dir["*" + '_medium.jpg'].each do |medium_cover|
                     FileUtils.mv(medium_cover, 
                                  medium_cover.sub(/_medium\.jpg$/,
                                                   EXT[:cover]))
                 end
+                
+                
+                
+                Dir["*" + EXT[:cover]].each do |cover|
+                	md = /(.+)\.cover/.match(cover)
+                	begin
+                		ean = self.canonicalise_ean(md[1])
+                	rescue
+                		ean = md[1]
+                	end
+                		FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
+                end
+                
                 FileUtils.rm_f(Dir['*_small.jpg'])
             end
+            #puts ruined_books.inspect
+            library.ruined_books = ruined_books
+
             library
         end
        
@@ -119,14 +147,17 @@ module Alexandria
                     next unless File.stat(File.join(DIR, file)).directory?
     
                     a << self.load(file)       
-                end
+            	end
+             
             rescue Errno::ENOENT
                 FileUtils.mkdir_p(DIR)
             end
             # Create the default library if there is no library yet.
+            
             if a.empty?
                 a << self.load(_("My Library"))
             end
+            
             return a
         end
 
@@ -238,7 +269,7 @@ module Alexandria
         end
 
         def self.canonicalise_ean(code)
-            code = code.delete('- ')
+            code = code.to_s.delete('- ')
             if self.valid_ean?(code)
                 return code
             elsif self.valid_isbn?(code)
@@ -276,8 +307,8 @@ end
             canonical.map { |x| x.to_s }.join()
         end
 
-        def save(book)
-            changed
+        def save(book, final=false)
+            changed unless final
             
             puts "Saving book #{book.title}..." if $DEBUG
             
@@ -295,11 +326,12 @@ end
     
                 # Notify before updating the saved identifier, so the views
                 # can still use the old one to update their models.
-                notify_observers(self, BOOK_UPDATED, book)
+                notify_observers(self, BOOK_UPDATED, book) unless final
                 book.saved_ident = book.ident
             end
             already_there = (File.exists?(yaml(book)) and 
                              !@deleted_books.include?(book))
+            
             puts "Doing the saving deed: #{book.title} -- #{book.isbn}" if $DEBUG
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
             
@@ -354,7 +386,7 @@ end
                 end
             end
         end
- 
+
         alias_method :old_delete, :delete
         def delete(book=nil)
             if book.nil?
@@ -475,7 +507,7 @@ end
     end
     
     class Libraries
-        attr_reader :all_libraries
+        attr_reader :all_libraries, :ruined_books
 
         include Observable
         include Singleton
@@ -484,6 +516,13 @@ end
             @all_libraries.clear 
             @all_libraries.concat(Library.loadall)
             @all_libraries.concat(SmartLibrary.loadall)
+           	ruined = [] 
+           	last = []
+           	all_regular_libraries.each {|library|
+           								ruined += library.ruined_books 
+           								}	
+           	#puts ruined.inspect
+           	@ruined_books = ruined
         end
 
         def all_regular_libraries
@@ -509,6 +548,12 @@ end
         def really_delete_deleted_libraries
             Library.really_delete_deleted_libraries
             SmartLibrary.really_delete_deleted_libraries
+        end
+        
+        def really_save_all_books
+        	all_regular_libraries.each do |library|
+        		library.each {|book| library.save(book, true)}	
+        	end
         end
         
         #######
