@@ -69,6 +69,11 @@ class TestProviders < Test::Unit::TestCase
                         '9781853260803')
     end
 
+    def test_SBN
+        __test_provider(Alexandria::BookProviders::SBNProvider,
+                        '9788835926436')
+    end
+
     # providers supposed to be always working
 
     def test_bn

@@ -46,11 +46,12 @@ class BookProviders
                 raise NoResultsError
             end
 
+            isbn = type == SEARCH_BY_ISBN ? criterion : nil
             criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             resultset = search_records(criterion, type, 10)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
-            results = books_from_marc(resultset)
+            results = books_from_marc(resultset, isbn)
             type == SEARCH_BY_ISBN ? results.first : results
         end
 
@@ -63,7 +64,7 @@ class BookProviders
         #######
         
 
-        def books_from_marc(resultset)
+        def books_from_marc(resultset, isbn)
 
             results = []
             resultset[0..9].each do |record|
@@ -75,18 +76,16 @@ class BookProviders
                     puts "Parsing MARC"
                     puts "title: #{marc.title}"
                     puts "authors: #{marc.authors.join(', ')}"
-                    puts "isbn: #{marc.isbn}"
+                    puts "isbn: #{marc.isbn}, #{isbn}"
                     puts "publisher: #{marc.publisher}"
                     puts "publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
                     puts "edition: #{marc.edition}"
                 end
 
                 next if marc.title.nil? # or marc.authors.empty?
-                if marc.isbn == nil
-                    isbn = nil
-                else
-                    isbn = Library.canonicalise_ean(marc.isbn)
-                end
+
+                isbn = isbn or marc.isbn
+                isbn = Library.canonicalise_ean(isbn)
                 
                 book = Book.new(marc.title, marc.authors, 
                                  isbn, 
@@ -255,11 +254,12 @@ class BookProviders
         def search(criterion, type)
             prefs.read
 
+            isbn = type == SEARCH_BY_ISBN ? criterion : nil
             criterion = canonicalise_isbn_with_dashes(criterion)
             resultset = search_records(criterion, type, 0)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
-            results = books_from_marc(resultset)
+            results = books_from_marc(resultset, isbn)
             type == SEARCH_BY_ISBN ? results.first : results
         end
 
