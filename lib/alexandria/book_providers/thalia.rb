@@ -106,7 +106,7 @@ class BookProviders
             end
             #raise if product["authors"].empty?
 						# isbn
-            raise "No isbn" unless md = /<strong>(ISBN-13|EAN|ISBN-13\/EAN):<\/strong>(.+)<\/li>/.match(data)
+            raise "No isbn" unless md = /<strong>(ISBN-13|EAN|ISBN-13\/EAN):<\/strong>\D*(\d+)<\/li>/.match(data)
             product["isbn"] = md[2].strip.gsub(/-/, "")
 						# edition
             md = /<strong>Einband:<\/strong> ([^<]+)/.match(data)

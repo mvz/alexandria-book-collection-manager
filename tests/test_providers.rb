@@ -13,7 +13,7 @@ class TestProviders < Test::Unit::TestCase
         assert_nothing_raised("Something wrong here.") do    
             results = provider.instance.search(query, search_type)
         end
-        #puts results.inspect
+        puts results.inspect if $DEBUG
         assert_kind_of(Array, results, "Results are not an array")
         assert(!results.empty?, "Results are empty")
         if search_type == Alexandria::BookProviders::SEARCH_BY_ISBN
@@ -98,8 +98,18 @@ class TestProviders < Test::Unit::TestCase
     end
 
     def test_thalia
+        # german book
         __test_provider(Alexandria::BookProviders::ThaliaProvider,
                         '9783896673305') 
+        # international book
+        __test_provider(Alexandria::BookProviders::ThaliaProvider,
+                        '9780440241904')
+        # movie dvd
+        __test_provider(Alexandria::BookProviders::ThaliaProvider,
+                        '4010232037824')
+        # music cd
+        __test_provider(Alexandria::BookProviders::ThaliaProvider,
+                        '0094638203520')
     end
 
     def test_ibs_it
