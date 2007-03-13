@@ -114,6 +114,7 @@ class BookProviders
             conn = ZOOM::Connection.new(options).connect(hostname, port)
             conn.database_name = prefs['database']
             conn.preferred_record_syntax = prefs['record_syntax']
+            conn.element_set_name = 'F'
             conn.count = conn_count
             attr = case type
                 when SEARCH_BY_ISBN     then [7]
@@ -154,6 +155,8 @@ class BookProviders
     class BLProvider < Z3950Provider
         # http://en.wikipedia.org/wiki/Copac
         # http://en.wikipedia.org/wiki/British_Library
+        # http://www.bl.uk/catalogues/z3950fullaccess.html
+        # http://www.bl.uk/catalogues/z3950copacaccess.html
 # FIXME: switch from BL to Copac, which incudes the BL itself and many more libraries: http://copac.ac.uk/libraries/
 # Details: http://copac.ac.uk/interfaces/z39.50/
 # The SUTRS format used by Copac is different from the one used by BL
@@ -305,24 +308,21 @@ class BookProviders
 
 Remarks about SBN
 
-Problem:
-- The code gets only the brief records, without ISBN, I don't knon how to get the full record.
-- This provider requires that value of conn.count is 0. conn.count is not documented in Ruby/zoom.
+This provider requires that value of conn.count is 0. It's a Yaz option "Number of records to be retrieved".
+This provider requires to specify the value of conn.element_set_name = 'F'. It's a Yaz option "Element-Set name of records".
+See http://www.indexdata.dk/yaz/doc/zoom.resultsets.tkl
 
 Dashes:
 this database requires that Italian books are searched with dashes :(
 However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
 
 References:
+http://opac.internetculturale.it/cgi-bin/main.cgi?type=field
+http://www.internetculturale.it/
 http://sbnonline.sbn.it/zgw/homeit.html
 http://www.iccu.sbn.it/genera.jsp?id=124
 with link at http://www.iccu.sbn.it/upload/documenti/cartecsbn.pdf
-which at page 5 or 6, it says
-• Element-set-names: Full, R (the same as Full (because not detailed holding infos):
-  according to Profile ONE-2), Brief (default, if client does not specify)
-http://copac.ac.uk/interfaces/z39.50/zed-support/#esn
 http://www.loc.gov/cgi-bin/zgstart?ACTION=INIT&FORM_HOST_PORT=/prod/www/data/z3950/iccu.html,opac.sbn.it,2100
-
 http://gwz.cilea.it/cgi-bin/reportOpac.cgi
 
 =end
