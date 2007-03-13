@@ -86,8 +86,7 @@ class BookProviders
             title = md[1].strip
 
             authors = []
-# search for something like <h2 id="contributor">by <a href="/booksearch/results.asp?ATH=Jane+Smiley&amp;z=y">Jane Smiley</a></h2>
-            data.scan(/<SPAN ID=\"CNT[0-9]+\">[^&]+&ath=([^\"]+)\">([^<]+)/) do |md|
+            data.scan(/<a href="\/booksearch\/results.asp\?ATH\=([^"]+)\&amp;z=y">\s*([^<]+)/) do |md|
                 md[1].gsub!('&nbsp;',' ')
                 next unless CGI.unescape(md[0]) == md[1]
                 authors << md[1]
