@@ -1,4 +1,5 @@
 # Copyright (C) 2005-2006 Laurent Sansonetti
+# Copyright (C) 2007 Laurent Sansonetti and Marco Costantini
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -34,10 +35,12 @@ class BookProviders
             prefs.add("record_syntax", _("Record syntax"), "USMARC", ["USMARC", "UNIMARC", "SUTRS"])
             prefs.add("username", _("Username"), "", nil, false)
             prefs.add("password", _("Password"), "", nil, false)
+            prefs.add("charset", _("Charset encoding"), "utf-8")
         end
 
         def search(criterion, type)
             prefs.read
+            criterion = criterion.convert(prefs['charset'], "utf-8")
 
             # We only decode MARC at the moment.
             # SUTRS needs to be decoded separately, because each Z39.50 server has a 
@@ -70,6 +73,7 @@ class BookProviders
             resultset[0..9].each do |record|
                 marc_txt = record.render(prefs['record_syntax'], 'USMARC')
                 puts marc_txt  if $Z3950_DEBUG
+                marc_txt = marc_txt.convert("utf-8", prefs['charset'])
                 marc = MARC::Record.new(marc_txt)
 
                 if $Z3950_DEBUG
@@ -143,6 +147,7 @@ class BookProviders
             prefs.variable_named("port").default_value = 7090
             prefs.variable_named("database").default_value = "Voyager"
             prefs.variable_named("record_syntax").default_value = "USMARC"
+            prefs.variable_named("charset").default_value = "iso-8859-1"
         end
 
         def url(book)
@@ -170,6 +175,7 @@ class BookProviders
             prefs.variable_named("port").default_value = 9909
             prefs.variable_named("database").default_value = "BLAC"
             prefs.variable_named("record_syntax").default_value = "SUTRS"
+            prefs.variable_named("charset").default_value = "iso-8859-1"
         end
         
         def search(criterion, type)
@@ -197,6 +203,7 @@ class BookProviders
           resultset[0..9].each do |record|
             text = record.render
             puts text if $Z3950_DEBUG
+            text = text.convert("utf-8", prefs['charset'])
 
             title = isbn = publisher = publish_year = edition = nil
             authors = []
@@ -205,6 +212,8 @@ class BookProviders
                 if md = /^Title:\s+(.*)$/.match(line)
                     title = md[1].sub(/\.$/, '').squeeze(' ')
                 elsif md = /^Added Person Name:\s+(.*),[^,]+$/.match(line)
+                    authors << md[1]
+                elsif md = /^ME-Personal Name:\s+(.*),[^,]+$/.match(line)
                     authors << md[1]
                 elsif md = /^ISBN:\s+([\dXx]+)/.match(line)
                     isbn = Library.canonicalise_ean( md[1] )
@@ -249,6 +258,7 @@ class BookProviders
             prefs.variable_named("database").default_value = "nopac"
             # supported 'USMARC', 'UNIMARC' , 'SUTRS'
             prefs.variable_named("record_syntax").default_value = "USMARC"
+            prefs.variable_named("charset").default_value = "iso-8859-1"
         end
 
         def search(criterion, type)
