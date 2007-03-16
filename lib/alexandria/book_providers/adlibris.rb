@@ -32,7 +32,7 @@ class BookProviders
         end
         
         def search(criterion, type)
-            criterion = criterion.convert("iso-8859-1", "utf-8")
+            criterion = criterion.convert("ISO-8859-1", "UTF-8")
             req = BASE_URI
             if type == SEARCH_BY_ISBN
                 req += "product.aspx?isbn="+criterion+"&checked=1"
@@ -129,7 +129,7 @@ class BookProviders
 		def to_book_isbn(data, isbn)
 			#puts data
 			raise NoResultsError if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
-			data = data.convert("UTF-8", "iso-8859-1")
+			data = data.convert("UTF-8", "ISO-8859-1")
 
 			product = {}			
 

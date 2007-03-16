@@ -13,9 +13,9 @@
 	* several fixes and updates for various providers
 	* added info about the Wikipedia page for each provder (if any)
 	* added the country of the provider after the name
-	* converted the encoding from utf-8, when searching by 
+	* converted the encoding from UTF-8, when searching by 
 	title/author/keyword
-	* converted the output from the provider to utf-8
+	* converted the output from the provider to UTF-8
 	* used CGI::unescapeHTML for renaud and thalia
 	* now most providers return EAN instead of ISBN-10
 	* added Library.canonicalise_isbn for the providers that don't 

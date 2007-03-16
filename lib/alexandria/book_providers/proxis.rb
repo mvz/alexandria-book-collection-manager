@@ -39,7 +39,7 @@ class BookProviders
         def search(criterion, type)
             prefs.read
 
-            criterion = criterion.convert("windows-1252", "utf-8")
+            criterion = criterion.convert("windows-1252", "UTF-8")
             req = case type
                 when SEARCH_BY_ISBN
                     "p_isbn=#{CGI::escape(criterion)}&p_title=&p_author="
@@ -85,7 +85,7 @@ class BookProviders
         #######
 
         def parseBook(product_id)
-            conv = proc { |str| str.convert("utf-8", "windows-1252") if str != nil }
+            conv = proc { |str| str.convert("UTF-8", "windows-1252") if str != nil }
             detailspage='http://oas2000.proxis.be/gate/jabba.coreii.g_p?bi=4&sp=DETAILS&mi='+product_id
             product = {}
             product['authors'] = []

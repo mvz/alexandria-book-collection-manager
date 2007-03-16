@@ -112,7 +112,7 @@ class BookProviders
                 # valid UTF-8. It does not always work - see isbn 2259196098
                 # (from the mailing list) for an example.
                 #if req.locale == 'us'
-                #    title = title.convert('iso-8859-1','utf-8') 
+                #    title = title.convert('ISO-8859-1','UTF-8') 
                 #end
 
                 media = product.media.squeeze(' ')

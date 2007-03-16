@@ -32,7 +32,7 @@ class BookProviders
         end
         
         def search(criterion, type)
-            criterion = criterion.convert("iso-8859-1", "utf-8")
+            criterion = criterion.convert("ISO-8859-1", "UTF-8")
             req = BASE_URI + "booksearch/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -80,7 +80,7 @@ class BookProviders
     
         def to_book(data)
             raise NoResultsError if /<body><h1>Object Moved<\/h1>This object may be found <a HREF="http:\/\/www.barnesandnoble.com\/booksearch\/noresults.asp/.match(data) != nil
-            data = data.convert("UTF-8", "iso-8859-1")
+            data = data.convert("UTF-8", "ISO-8859-1")
 
             raise "No title" unless md = /Barnes&nbsp;&amp;&nbsp;Noble.com - Books: ([^<]+)/.match(data)
             title = md[1].strip

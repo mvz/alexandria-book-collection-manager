@@ -39,7 +39,7 @@ class BookProviders
         end
         
         def search(criterion, type)
-            criterion = criterion.convert("windows-1252", "utf-8")
+            criterion = criterion.convert("windows-1252", "UTF-8")
             req = BASE_URI + "/"
             req += case type
                 when SEARCH_BY_ISBN

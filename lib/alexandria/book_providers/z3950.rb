@@ -35,12 +35,12 @@ class BookProviders
             prefs.add("record_syntax", _("Record syntax"), "USMARC", ["USMARC", "UNIMARC", "SUTRS"])
             prefs.add("username", _("Username"), "", nil, false)
             prefs.add("password", _("Password"), "", nil, false)
-            prefs.add("charset", _("Charset encoding"), "utf-8")
+            prefs.add("charset", _("Charset encoding"), "ISO-8859-1")
         end
 
         def search(criterion, type)
             prefs.read
-            criterion = criterion.convert(prefs['charset'], "utf-8")
+            criterion = criterion.convert(prefs['charset'], "UTF-8")
 
             # We only decode MARC at the moment.
             # SUTRS needs to be decoded separately, because each Z39.50 server has a 
@@ -73,7 +73,7 @@ class BookProviders
             resultset[0..9].each do |record|
                 marc_txt = record.render(prefs['record_syntax'], 'USMARC')
                 puts marc_txt  if $Z3950_DEBUG
-                marc_txt = marc_txt.convert("utf-8", prefs['charset'])
+                marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
                 marc = MARC::Record.new(marc_txt)
 
                 if $Z3950_DEBUG
@@ -147,7 +147,7 @@ class BookProviders
             prefs.variable_named("port").default_value = 7090
             prefs.variable_named("database").default_value = "Voyager"
             prefs.variable_named("record_syntax").default_value = "USMARC"
-            prefs.variable_named("charset").default_value = "iso-8859-1"
+            prefs.variable_named("charset").default_value = "ISO_6937"
         end
 
         def url(book)
@@ -175,7 +175,7 @@ class BookProviders
             prefs.variable_named("port").default_value = 9909
             prefs.variable_named("database").default_value = "BLAC"
             prefs.variable_named("record_syntax").default_value = "SUTRS"
-            prefs.variable_named("charset").default_value = "iso-8859-1"
+            prefs.variable_named("charset").default_value = "ISO-8859-1"
         end
         
         def search(criterion, type)
@@ -203,7 +203,7 @@ class BookProviders
           resultset[0..9].each do |record|
             text = record.render
             puts text if $Z3950_DEBUG
-            text = text.convert("utf-8", prefs['charset'])
+            text = text.convert("UTF-8", prefs['charset'])
 
             title = isbn = publisher = publish_year = edition = nil
             authors = []
@@ -258,7 +258,7 @@ class BookProviders
             prefs.variable_named("database").default_value = "nopac"
             # supported 'USMARC', 'UNIMARC' , 'SUTRS'
             prefs.variable_named("record_syntax").default_value = "USMARC"
-            prefs.variable_named("charset").default_value = "iso-8859-1"
+            prefs.variable_named("charset").default_value = "ISO-8859-1"
         end
 
         def search(criterion, type)

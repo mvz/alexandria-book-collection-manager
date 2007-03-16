@@ -251,7 +251,7 @@ module Alexandria
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="generator" content="#{generator}"/>
   <title>#{name}</title>
   <link rel="stylesheet" href="#{css}" type="text/css"/>

@@ -32,7 +32,7 @@ class BookProviders
         end
         
         def search(criterion, type)
-            criterion = criterion.convert("iso-8859-1", "utf-8")
+            criterion = criterion.convert("ISO-8859-1", "UTF-8")
             req = BASE_URI + "/livro.asp?tipo=10&pesquisa=" 
             req += case type
                 when SEARCH_BY_ISBN
@@ -81,7 +81,7 @@ class BookProviders
         #######
     
         def to_book(data)
-            data = data.convert("UTF-8", "iso-8859-1")
+            data = data.convert("UTF-8", "ISO-8859-1")
             raise NoResultsError if /<strong>Nenhum t.tulo foi encontrado\.<BR>/.match(data) != nil
 
             raise "No Title" unless md = /><strong(\s+class="titulodetalhes")?>([^<]+)<\/strong>(<\/a>)?<br ?\/>/.match(data)

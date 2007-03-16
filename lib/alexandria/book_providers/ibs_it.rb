@@ -34,7 +34,7 @@ class BookProviders
         end
         
         def search(criterion, type)
-            criterion = criterion.convert("iso-8859-1", "utf-8")
+            criterion = criterion.convert("ISO-8859-1", "UTF-8")
             req = BASE_URI + "/ser/"
             req += case type
                 when SEARCH_BY_ISBN
@@ -82,7 +82,7 @@ class BookProviders
     
         def to_book(data)
             raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data) != nil
-            data = data.convert("UTF-8", "iso-8859-1")
+            data = data.convert("UTF-8", "ISO-8859-1")
 
             raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)

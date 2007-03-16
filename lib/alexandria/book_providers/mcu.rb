@@ -41,7 +41,7 @@ class BookProviders
         
         def search(criterion, type)
             prefs.read
-	    criterion = criterion.convert("iso-8859-1", "UTF-8")
+	    criterion = criterion.convert("ISO-8859-1", "UTF-8")
 	    print "Doing search with MCU #{criterion}, type: #{type}\n" if $DEBUG # for DEBUGing
             req = BASE_URI + "CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
             req += case type
