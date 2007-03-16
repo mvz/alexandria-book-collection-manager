@@ -15,6 +15,8 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+require 'cgi'
+
 module Alexandria
     class ExportFormat
         attr_reader :name, :ext, :message
@@ -146,22 +148,22 @@ module Alexandria
                 prod.add_element('NotificationType').text = "03"  # confirmed
                 prod.add_element('ProductForm').text = 'BA'       # book
                 prod.add_element('ISBN').text = book.isbn
-                prod.add_element('DistinctiveTitle').text = book.title
+                prod.add_element('DistinctiveTitle').text = CGI.escapeHTML(book.title)
                 unless book.authors.empty?
                     book.authors.each do |author|
                         elem = prod.add_element('Contributor')
                         # author
                         elem.add_element('ContributorRole').text = 'A01'
-                        elem.add_element('PersonName').text = author
+                        elem.add_element('PersonName').text = CGI.escapeHTML(author)
                     end
                 end
-                prod.add_element('PublisherName').text = book.publisher
+                prod.add_element('PublisherName').text = CGI.escapeHTML(book.publisher)
                 if book.notes and not book.notes.empty?
                     elem = prod.add_element('OtherText')
                     # reader description
                     elem.add_element('TextTypeCode').text = '12' 
                     elem.add_element('TextFormat').text = '00'  # ASCII
-                    elem.add_element('Text').text = book.notes 
+                    elem.add_element('Text').text = CGI.escapeHTML(book.notes)
                 end
                 if File.exists?(cover(book))
                     elem = prod.add_element('MediaFile')
@@ -276,20 +278,20 @@ EOS
 EOS
                 end
                 xhtml << <<EOS
-<p class="book_title">#{book.title}</p>
+<p class="book_title">#{CGI.escapeHTML(book.title)}</p>
 EOS
                 unless book.authors.empty?
                     xhtml << "<ul class=\"book_authors\">"
                     book.authors.each do |author|
                         xhtml << <<EOS
-<li class="book_author">#{author}</li>
+<li class="book_author">#{CGI.escapeHTML(author)}</li>
 EOS
                     end
                     xhtml << "</ul>"
                 end
                 xhtml << <<EOS
-<p class="book_binding">#{book.edition}</p>
-<p class="book_publisher">#{book.publisher}</p>
+<p class="book_binding">#{CGI.escapeHTML(book.edition)}</p>
+<p class="book_publisher">#{CGI.escapeHTML(book.publisher)}</p>
 </div>
 EOS
             end
