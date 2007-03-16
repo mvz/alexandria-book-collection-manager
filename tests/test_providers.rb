@@ -62,6 +62,9 @@ class TestProviders < Test::Unit::TestCase
     def test_LOC
         __test_provider(Alexandria::BookProviders::LOCProvider,
                         '9780805335583')
+        # this book has non-ASCII letters
+        __test_provider(Alexandria::BookProviders::LOCProvider,
+                        '9782070379248')
     end
 
     def test_BL
