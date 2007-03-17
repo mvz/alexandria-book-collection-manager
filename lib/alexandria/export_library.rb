@@ -148,7 +148,7 @@ module Alexandria
                 prod.add_element('NotificationType').text = "03"  # confirmed
                 prod.add_element('ProductForm').text = 'BA'       # book
                 prod.add_element('ISBN').text = book.isbn
-                prod.add_element('DistinctiveTitle').text = CGI.escapeHTML(book.title)
+                prod.add_element('DistinctiveTitle').text = CGI.escapeHTML(book.title) unless book.title == nil
                 unless book.authors.empty?
                     book.authors.each do |author|
                         elem = prod.add_element('Contributor')
@@ -157,13 +157,13 @@ module Alexandria
                         elem.add_element('PersonName').text = CGI.escapeHTML(author)
                     end
                 end
-                prod.add_element('PublisherName').text = CGI.escapeHTML(book.publisher)
+                prod.add_element('PublisherName').text = CGI.escapeHTML(book.publisher) unless book.publisher == nil
                 if book.notes and not book.notes.empty?
                     elem = prod.add_element('OtherText')
                     # reader description
                     elem.add_element('TextTypeCode').text = '12' 
                     elem.add_element('TextFormat').text = '00'  # ASCII
-                    elem.add_element('Text').text = CGI.escapeHTML(book.notes)
+                    elem.add_element('Text').text = CGI.escapeHTML(book.notes) unless book.notes == nil
                 end
                 if File.exists?(cover(book))
                     elem = prod.add_element('MediaFile')
@@ -177,7 +177,7 @@ module Alexandria
                         File.join('images', final_cover(book))
                 end
                 BookProviders.each do |provider|
-                    elem = prod.add_element('ProductWebSite')
+                    elem = prod.add_element('ProductWebsite')
                     elem.add_element('ProductWebsiteDescription').text = 
                         provider.fullname
                     elem.add_element('ProductWebsiteLink').text = 
@@ -261,11 +261,13 @@ module Alexandria
 <body>
 <h1 class="library_name">#{name}</h1>
 EOS
+
             each do |book|
                 xhtml << <<EOS
 <div class="book">
   <p class="book_isbn">#{book.isbn}</p>
 EOS
+
                 if File.exists?(cover(book))
                     xhtml << <<EOS
   <img class="book_cover"
@@ -277,21 +279,36 @@ EOS
 <div class="no_book_cover"></div>
 EOS
                 end
-                xhtml << <<EOS
-<p class="book_title">#{CGI.escapeHTML(book.title)}</p>
+
+                unless book.title == nil
+                    xhtml << <<EOS
+<p class="book_title">#{book.title}</p>
 EOS
+                end
+
                 unless book.authors.empty?
                     xhtml << "<ul class=\"book_authors\">"
                     book.authors.each do |author|
                         xhtml << <<EOS
-<li class="book_author">#{CGI.escapeHTML(author)}</li>
+<li class="book_author">#{author}</li>
 EOS
                     end
                     xhtml << "</ul>"
                 end
-                xhtml << <<EOS
+
+                unless book.edition == nil
+                    xhtml << <<EOS
 <p class="book_binding">#{CGI.escapeHTML(book.edition)}</p>
+EOS
+                end
+
+                unless book.publisher == nil
+                    xhtml << <<EOS
 <p class="book_publisher">#{CGI.escapeHTML(book.publisher)}</p>
+EOS
+                end
+
+                xhtml << <<EOS
 </div>
 EOS
             end
