@@ -134,20 +134,20 @@ module Alexandria
             header = msg.add_element('Header')
             header.add_element('FromCompany').text = "Alexandria"
             header.add_element('FromPerson').text = Etc.getlogin
-            header.add_element('MessageNote').text = name
-			now = Time.now
+            now = Time.now
             header.add_element('SentDate').text = "%.4d%.2d%.2d%.2d%.2d" % [ 
                 now.year, now.month, now.day, now.hour, now.min 
             ]
+            header.add_element('MessageNote').text = name
             each_with_index do |book, idx|
                 # fields that are missing: edition and rating.
                 prod = msg.add_element('Product')
-                prod.add_element('RecordSourceName').text = 
-                    "Alexandria " + VERSION
                 prod.add_element('RecordReference').text = idx.to_s
                 prod.add_element('NotificationType').text = "03"  # confirmed
-                prod.add_element('ProductForm').text = 'BA'       # book
+                prod.add_element('RecordSourceName').text = 
+                    "Alexandria " + VERSION
                 prod.add_element('ISBN').text = book.isbn
+                prod.add_element('ProductForm').text = 'BA'       # book
                 prod.add_element('DistinctiveTitle').text = CGI.escapeHTML(book.title) unless book.title == nil
                 unless book.authors.empty?
                     book.authors.each do |author|
@@ -157,7 +157,6 @@ module Alexandria
                         elem.add_element('PersonName').text = CGI.escapeHTML(author)
                     end
                 end
-                prod.add_element('PublisherName').text = CGI.escapeHTML(book.publisher) unless book.publisher == nil
                 if book.notes and not book.notes.empty?
                     elem = prod.add_element('OtherText')
                     # reader description
@@ -183,6 +182,8 @@ module Alexandria
                     elem.add_element('ProductWebsiteLink').text = 
                         provider.url(book)
                 end
+                publisher = book.publisher or "" # required field in ONIX
+                prod.add_element('PublisherName').text = CGI.escapeHTML(publisher)
             end
             return doc
         end
@@ -190,11 +191,11 @@ module Alexandria
         def to_tellico_document
             doc = REXML::Document.new
             doc << REXML::XMLDecl.new
-            doc << REXML::DocType.new('bookcase', "SYSTEM \"bookcase.dtd\"")
-            bookcase = doc.add_element('bookcase')
-            bookcase.add_namespace('http://periapsis.org/bookcase/')
-            bookcase.add_attribute('syntaxVersion', "5")
-            collection = bookcase.add_element('collection')
+            doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V8.0//EN\" \"http://periapsis.org/tellico/dtd/v8/tellico.dtd\"")
+            tellico = doc.add_element('tellico')
+            tellico.add_namespace('http://periapsis.org/tellico/')
+            tellico.add_attribute('syntaxVersion', "8")
+            collection = tellico.add_element('collection')
             collection.add_attribute('title', self.name)
             collection.add_attribute('type', "2")
             fields = collection.add_element('fields')
@@ -204,6 +205,7 @@ module Alexandria
             field1.add_attribute('name', "_default")
             # make the rating field just have numbers
             field2 = fields.add_element('field')
+            field2.add_attribute('i18n', "true")
             field2.add_attribute('name', "rating")
             field2.add_attribute('title', _("Rating"))
             field2.add_attribute('flags', "2")
@@ -214,10 +216,11 @@ module Alexandria
             images = collection.add_element('images')
             each_with_index do |book, idx|
                 entry = collection.add_element('entry')
+                entry.add_attribute('id', idx.to_s)
                 # translate the binding
-                entry.add_attribute('i18n', "true")
                 entry.add_element('title').text = book.title
                 entry.add_element('isbn').text = book.isbn
+                entry.add_element('pub_year').text = book.publishing_year
                 entry.add_element('binding').text = book.edition
                 entry.add_element('publisher').text = book.publisher
                 unless book.authors.empty?
@@ -226,7 +229,7 @@ module Alexandria
                         authors.add_element('author').text = author
                     end
                 end
-                if not book.rating = Book::DEFAULT_RATING
+                if not book.rating == Book::DEFAULT_RATING
                     entry.add_element('rating').text = book.rating
                 end
                 if book.notes and not book.notes.empty?
