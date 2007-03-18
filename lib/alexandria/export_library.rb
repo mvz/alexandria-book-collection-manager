@@ -183,7 +183,8 @@ module Alexandria
                         provider.url(book)
                 end
                 publisher = book.publisher or "" # required field in ONIX
-                prod.add_element('PublisherName').text = CGI.escapeHTML(publisher)
+                prod.add_element('Publisher').add_element('PublisherName').text = CGI.escapeHTML(publisher)
+                prod.add_element('PublicationDate').text = book.publishing_year
             end
             return doc
         end
