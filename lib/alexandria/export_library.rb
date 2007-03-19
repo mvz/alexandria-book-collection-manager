@@ -17,6 +17,14 @@
 
 require 'cgi'
 
+begin        # image_size is optional
+    $IMAGE_SIZE_LOADED = true
+    require 'image_size' 
+rescue LoadError
+    $IMAGE_SIZE_LOADED = false
+    puts "Can't load image_size, hence exported libraries are not optimized"
+end
+
 module Alexandria
     class ExportFormat
         attr_reader :name, :ext, :message
@@ -183,7 +191,9 @@ module Alexandria
                         provider.url(book)
                 end
                 publisher = book.publisher or "" # required field in ONIX
-                prod.add_element('Publisher').add_element('PublisherName').text = CGI.escapeHTML(publisher)
+                elem = prod.add_element('Publisher')
+                elem.add_element('PublishingRole').text = '01'
+                elem.add_element('PublisherName').text = CGI.escapeHTML(publisher)
                 prod.add_element('PublicationDate').text = book.publishing_year
             end
             return doc
@@ -240,9 +250,16 @@ module Alexandria
                     entry.add_element('cover').text = final_cover(book)
                     image = images.add_element('image')
                     image.add_attribute('id', final_cover(book))
-                    image.add_attribute('format', 
+                    if $IMAGE_SIZE_LOADED
+                        image_s = ImageSize.new(IO.read(cover(book)))
+                        image.add_attribute('height', image_s.get_height)
+                        image.add_attribute('width', image_s.get_width)
+                        image.add_attribute('format', image_s.get_type)
+                    else
+                        image.add_attribute('format', 
                                         Library.jpeg?(cover(book)) \
                                             ? "JPEG" : "GIF")
+                    end
                 end
             end
             return doc
@@ -253,8 +270,8 @@ module Alexandria
             xhtml = ""
             xhtml << <<EOS
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -276,7 +293,16 @@ EOS
                     xhtml << <<EOS
   <img class="book_cover"
        src="#{File.join("pixmaps", final_cover(book))}" 
-       alt="Cover file for '#{book.title}'"/>
+       alt="Cover file for '#{book.title}'"
+EOS
+                    if $IMAGE_SIZE_LOADED
+                        image_s = ImageSize.new(IO.read(cover(book)))
+                        xhtml << <<EOS
+       height="#{image_s.get_height}" width="#{image_s.get_width}"
+EOS
+                    end
+                    xhtml << <<EOS
+  />
 EOS
                 else
                     xhtml << <<EOS

@@ -47,6 +47,7 @@ Optional requirements
     Ruby/ZOOM >= 0.2.0 [4]:     http://ruby-zoom.rubyforge.org/
     Mechanize [5]:              http://mechanize.rubyforge.org/
     Revolution [6]:             http://revolution.rubyforge.org/
+    ImageSize [7]:              http://rubycgi.org/archive/
 
     [3]: Ruby/Amazon is optional, if not found the provider Amazon won't be
          available.
@@ -60,6 +61,10 @@ Optional requirements
 
     [6]: Revolution is optional, if not found the Evolution contacts database
          won't be used for loaners auto-completion.
+
+    [7]: ImageSize is optional, if not found the exported libraries will not
+         contain data about image size, and will be a bit slower to read.
+         In Ubuntu, it is the package libimage-size-ruby1.8
 
 
 Install
