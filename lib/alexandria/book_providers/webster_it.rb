@@ -131,7 +131,7 @@ class BookProviders
             cover_filename = isbn + ".tmp"
             Dir.chdir(CACHE_DIR) do
                 File.open(cover_filename, "w") do |file|
-                    file.write open(cover_url, "Referer" => REFERER ).read
+                    file.write open(cover_url, "Referer" => REFERER ).read rescue nil
                 end                    
             end
 
