@@ -117,7 +117,7 @@ module UI
                     return
                 end                   
                 @book.isbn = begin
-                    Library.canonicalise_isbn(@entry_isbn.text)
+                    Library.canonicalise_ean(@entry_isbn.text)
                 rescue Alexandria::Library::InvalidISBNError
                     ErrorDialog.new(@parent, 
                                     _("Couldn't modify the book"), 
