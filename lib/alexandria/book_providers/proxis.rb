@@ -42,7 +42,7 @@ class BookProviders
             criterion = criterion.convert("windows-1252", "UTF-8")
             req = case type
                 when SEARCH_BY_ISBN
-                    "p_isbn=#{CGI::escape(criterion)}&p_title=&p_author="
+                    "p_isbn=#{Library.canonicalise_isbn(criterion)}&p_title=&p_author="
           
                 when SEARCH_BY_TITLE
                     "p_isbn=&p_title=#{CGI::escape(criterion)}&p_author="
@@ -69,7 +69,7 @@ class BookProviders
             
 	    # Workaround Proxis returning all editions of a book when searching on ISBN
 	    if type == SEARCH_BY_ISBN 
-		    products.delete_if {|n, p| p.first.isbn != criterion}
+		    products.delete_if {|n, p| p.first.isbn != Library.canonicalise_ean(criterion)}
 	    end
 	    
             raise NoResultsError if products.values.empty?
@@ -101,7 +101,7 @@ class BookProviders
 #                elsif line =~ /class="?TITLECOLOR"?>([^<]*)</i 
                 elsif line =~ /<tr width="?100%"?><td valign="?middle"? width="?100%"? class="?verd_13_b"?>([^<]*)</i 
                     product['name'] = $1.sub(/ +$/,'')
-                elsif line =~ /ISBN<\/TD><TD class="?INFO"?> : ([^<]*)</i 
+                elsif line =~ /Barcode \(EAN\)<\/TD><TD class="?INFO"?> : ([^<]*)</i 
                     product['isbn'] = $1
                 elsif line =~ /Publication date<\/TD><TD class="?INFO"?> : ..\/..\/([[:digit:]]{4})/i
                     product['year'] = $1.to_i

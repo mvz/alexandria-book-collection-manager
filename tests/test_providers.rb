@@ -95,9 +95,9 @@ class TestProviders < Test::Unit::TestCase
 
     def test_proxis
         __test_provider(Alexandria::BookProviders::ProxisProvider,
-                        '9026965745')
+                        '9789026965746')
         __test_provider(Alexandria::BookProviders::ProxisProvider,
-			'0586071407')
+			'9780586071403')
     end
 
     def test_thalia
