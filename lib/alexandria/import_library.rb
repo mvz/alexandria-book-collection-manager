@@ -109,9 +109,13 @@ module Alexandria
                         #Feed an array in here, tomorrow.
                         keys = ['isbn', 'publisher', 'pub_year', 'binding']
                         
-                        book_elements = [elements['title'].text,
-                                       elements['authors'].elements.to_a.map \
+                        book_elements = [elements['title'].text]
+                        if elements['authors'] != nil
+                            book_elements += [elements['authors'].elements.to_a.map \
                                             { |x| x.text }]
+                        else
+                            book_elements += [[]]
+                        end
                         book_elements += keys.map {|key| 
                         					unless elements[key]
                         						nil
