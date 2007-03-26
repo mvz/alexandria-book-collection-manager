@@ -96,6 +96,7 @@ module Alexandria
                     old_isbn = book.isbn
                 	begin
                 	book.isbn = self.canonicalise_ean(book.isbn) unless book.isbn == nil
+                        book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
      
                     raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
                     rescue InvalidISBNError => e

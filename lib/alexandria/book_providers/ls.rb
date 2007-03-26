@@ -108,7 +108,7 @@ class BookProviders
             end
 
             if md = /<br[^>]*>Edição: ([^<]+)<br>/.match(data)
-                publish_year = md[1].strip
+                publish_year = md[1].strip.to_i
             else
                 publish_year = nil
             end

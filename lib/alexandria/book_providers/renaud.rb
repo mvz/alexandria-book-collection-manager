@@ -113,7 +113,7 @@ module Alexandria
         publish_years = []
         data.scan(/Parution : <br>(\d{4,}-\d{2,}-\d{2,})/).each{|md|
           editions << md[0].strip
-          publish_years << md[0].strip.split(/-/)[0]
+          publish_years << md[0].strip.split(/-/)[0].to_i
         }
         raise if editions.empty? or publish_years.empty?
         publishers = []
