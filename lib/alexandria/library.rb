@@ -95,7 +95,7 @@ module Alexandria
                     book = YAML.load(text)
                     old_isbn = book.isbn
                 	begin
-                	book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
+                	book.isbn = self.canonicalise_ean(book.isbn) unless book.isbn == nil
      
                     raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
                     rescue InvalidISBNError => e
