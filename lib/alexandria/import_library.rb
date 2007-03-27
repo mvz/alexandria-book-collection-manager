@@ -133,7 +133,9 @@ module Alexandria
                        	end
                        	puts cover 
                         book = Book.new(*book_elements)
-                        book.rating = elements['rating'].text.to_i if elements['rating']
+                        if elements['rating'] and [1,2,3,4,5].member? elements['rating'].text.to_i 
+                            book.rating = elements['rating'].text.to_i
+                        end
                         content << [ book, cover]
                         on_iterate_cb.call(n+1, total) if on_iterate_cb
                     end

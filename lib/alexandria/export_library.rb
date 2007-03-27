@@ -200,12 +200,14 @@ module Alexandria
         end
 
         def to_tellico_document
+            # For the Tellico format, see
+            # http://periapsis.org/tellico/doc/hacking.html
             doc = REXML::Document.new
             doc << REXML::XMLDecl.new
-            doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V8.0//EN\" \"http://periapsis.org/tellico/dtd/v8/tellico.dtd\"")
+            doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V9.0//EN\" \"http://periapsis.org/tellico/dtd/v9/tellico.dtd\"")
             tellico = doc.add_element('tellico')
+            tellico.add_attribute('syntaxVersion', "9")
             tellico.add_namespace('http://periapsis.org/tellico/')
-            tellico.add_attribute('syntaxVersion', "8")
             collection = tellico.add_element('collection')
             collection.add_attribute('title', self.name)
             collection.add_attribute('type', "2")
@@ -214,20 +216,10 @@ module Alexandria
             # a field named _default implies adding all default book 
             # collection fields
             field1.add_attribute('name', "_default")
-            # make the rating field just have numbers
-            field2 = fields.add_element('field')
-            field2.add_attribute('i18n', "true")
-            field2.add_attribute('name', "rating")
-            field2.add_attribute('title', _("Rating"))
-            field2.add_attribute('flags', "2")
-            field2.add_attribute('category', "Personal")
-            field2.add_attribute('format', "0")
-            field2.add_attribute('type', "3")
-            field2.add_attribute('allowed', "5;4;3;2;1")
             images = collection.add_element('images')
             each_with_index do |book, idx|
                 entry = collection.add_element('entry')
-                entry.add_attribute('id', idx.to_s)
+                entry.add_attribute('id', idx+1)
                 # translate the binding
                 entry.add_element('title').text = book.title
                 entry.add_element('isbn').text = book.isbn
