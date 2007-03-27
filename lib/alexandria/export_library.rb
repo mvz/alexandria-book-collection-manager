@@ -204,9 +204,9 @@ module Alexandria
             # http://periapsis.org/tellico/doc/hacking.html
             doc = REXML::Document.new
             doc << REXML::XMLDecl.new
-            doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V9.0//EN\" \"http://periapsis.org/tellico/dtd/v9/tellico.dtd\"")
+            doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V7.0//EN\" \"http://periapsis.org/tellico/dtd/v7/tellico.dtd\"")
             tellico = doc.add_element('tellico')
-            tellico.add_attribute('syntaxVersion', "9")
+            tellico.add_attribute('syntaxVersion', "7")
             tellico.add_namespace('http://periapsis.org/tellico/')
             collection = tellico.add_element('collection')
             collection.add_attribute('title', self.name)
