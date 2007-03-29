@@ -133,7 +133,7 @@ module Alexandria
                        	end
                        	puts cover 
                         book = Book.new(*book_elements)
-                        if elements['rating'] and [1,2,3,4,5].member? elements['rating'].text.to_i 
+                        if elements['rating'] and (0..UI::MainApp::MAX_RATING_STARS).map.member? elements['rating'].text.to_i 
                             book.rating = elements['rating'].text.to_i
                         end
                         content << [ book, cover]

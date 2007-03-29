@@ -153,7 +153,7 @@ module UI
         end
 
         # The maximum number of rating stars displayed.
-        MAX_STARS = 5
+        MAX_RATING_STARS = 5
 
         def initialize
             super("main_app.glade")
@@ -463,10 +463,10 @@ module UI
             iter[Columns::EDITION] = book.edition
             iter[Columns::NOTES] = (book.notes or "")
             rating = (book.rating or Book::DEFAULT_RATING)
+            iter[Columns::RATING] = MAX_RATING_STARS - rating # ascending order is the default
             iter[Columns::OWN] = book.own?
             iter[Columns::REDD] = book.redd?
             iter[Columns::WANT] = book.want?
-            iter[Columns::RATING] = 5 - rating # ascending order is the default
 
             icon = Icons.cover(selected_library, book)
             iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
@@ -476,7 +476,7 @@ module UI
                 new_height = [ICON_HEIGHT, icon.height].min
                 icon = cache_scaled_icon(icon, new_width, new_height)
             end
-            if rating == 5
+            if rating == MAX_RATING_STARS
                 icon = icon.tag(Icons::FAVORITE_TAG)
             end
             iter[Columns::COVER_ICON] = icon
@@ -740,15 +740,15 @@ module UI
             column.widget = Gtk::Label.new(title).show
             column.sizing = Gtk::TreeViewColumn::FIXED
             column.fixed_width = column.min_width = column.max_width =
-                (Icons::STAR_SET.width + 1) * MAX_STARS
-            MAX_STARS.times do |i|
+                (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
+            MAX_RATING_STARS.times do |i|
                 renderer = Gtk::CellRendererPixbuf.new
                 column.pack_start(renderer, false)
                 column.set_cell_data_func(renderer) do |column, cell, 
                                                         model, iter|
                     iter = @listview_model.convert_iter_to_child_iter(iter)
                     iter = @filtered_model.convert_iter_to_child_iter(iter)
-                    rating = (iter[Columns::RATING] - MAX_STARS).abs
+                    rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
                     cell.pixbuf = rating >= i.succ ? 
                         Icons::STAR_SET : Icons::STAR_UNSET
                 end
@@ -1335,7 +1335,7 @@ module UI
                 end
             end
 
-            on_set_rating = (0..5).map do |rating|
+            on_set_rating = (0..MAX_RATING_STARS).map do |rating|
                 proc do 
                     books = selected_books
                     library = selected_library

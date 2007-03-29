@@ -82,7 +82,7 @@ module Alexandria
             # Favorite books.
             rule = Rule.new(operands.find { |x| x.book_selector == :rating },
                             Rule::Operators::IS,
-                            "5")
+                            UI::MainApp::MAX_RATING_STARS.to_s)
             a << self.new(_("Favorite"), [rule], ALL_RULES)
 
             # Loaned books.
