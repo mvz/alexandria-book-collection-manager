@@ -72,12 +72,35 @@ make
 sudo make install
 
 
+
+List of Z39.50 server are at
+http://www.webclarity.info/registry/browse
+http://targettest.indexdata.com/
+
+
 When adding new Z39.50 providers, you must choose the record syntax.
 Currently (March 2007), these are offered: "USMARC", "SUTRS", "UNIMARC".
 
 "USMARC" works, "UNIMARC" works very limited, "SUTRS" doesn't work. 
 Choose a provider that supports "USMARC", or if none is available, one 
 that supports "UNIMARC".
+MARC21 is the same as USMARC (at least for Alexandria).
+
+You must choose also the charset encoding. Some are 
+
+UTF-8
+ISO-8859-1 (also known as Latin-1, Western Europe)
+ISO-8859-15
+ISO_6937-2 (also known as Ala, Ansel)
+
+The list of all possible charset encoding could be at
+/usr/lib/gconv/gconv-modules
+
+
+There is a plan to replace in future the provider British Library with 
+Copac, which includes British Library and others; see
+http://copac.ac.uk/libraries/
+http://en.wikipedia.org/wiki/Copac
 
 
 ########################################################################
