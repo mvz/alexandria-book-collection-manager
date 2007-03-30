@@ -84,7 +84,7 @@ class BookProviders
             raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data) != nil
             data = data.convert("UTF-8", "ISO-8859-1")
 
-            raise "No title" unless md = /<b>Titolo<\/b><\/td><td valign="top"><span class="lbarrasup">([^<]+)/.match(data)
+            raise "No title" unless md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
             title = CGI.unescape(md[1].strip)
 
             authors = []
