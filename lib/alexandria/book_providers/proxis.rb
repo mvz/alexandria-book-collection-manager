@@ -32,7 +32,7 @@ class BookProviders
 
         def initialize
             super("Proxis", "Proxis (Belgium)")
-            prefs.add("lang", _("Locale"), "fr",
+            prefs.add("lang", _("Language"), "fr",
                       LANGUAGES.keys)
         end
         
