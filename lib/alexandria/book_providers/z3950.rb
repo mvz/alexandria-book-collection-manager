@@ -51,7 +51,8 @@ class BookProviders
 
             isbn = type == SEARCH_BY_ISBN ? criterion : nil
             criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
-            resultset = search_records(criterion, type, 10)
+            conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
+            resultset = search_records(criterion, type, conn_count)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
             results = books_from_marc(resultset, isbn)
@@ -95,7 +96,7 @@ class BookProviders
                                  isbn, 
                                 (marc.publisher or ""),
                                 marc.respond_to?(:publish_year) \
-                                    ? marc.publish_year : nil,
+                                    ? marc.publish_year.to_i : nil,
                                 (marc.edition or ""))
                 results << [book]
             end
@@ -183,7 +184,8 @@ class BookProviders
 
             prefs.read
             criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
-            resultset = search_records(criterion, type, 10)
+            conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
+            resultset = search_records(criterion, type, conn_count)
             puts "total #{resultset.length}" if $Z3950_DEBUG
             raise NoResultsError if resultset.length == 0
             results = books_from_sutrs(resultset)
