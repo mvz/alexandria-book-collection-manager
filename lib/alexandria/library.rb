@@ -344,6 +344,11 @@ end
             end
         end
 
+        def transport
+                config = Alexandria::Preferences.instance.http_proxy_config
+                config ? Net::HTTP.Proxy(*config) : Net::HTTP
+        end
+
         def save_cover(book, cover_uri)
             Dir.chdir(self.path) do
                 # Fetch the cover picture.
@@ -355,7 +360,7 @@ end
                         File.open(cover_uri) { |io2| io.puts io2.read }
                     else
                         # Try open-uri.
-                        io.puts uri.read
+                        io.puts transport.get(uri)
                     end
                 end
             
