@@ -46,6 +46,7 @@ module Alexandria
                 end
             rescue Exception => boom
                 if self.last == factory
+                    puts "Error while searching #{criterion}"
                     raise case boom
                         when Timeout::Error
                             _("Couldn't reach the provider '%s': timeout " +
