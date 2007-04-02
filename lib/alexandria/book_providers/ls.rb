@@ -26,6 +26,7 @@ class BookProviders
     class SicilianoProvider < GenericProvider
     
         BASE_URI = "http://www.siciliano.com.br"
+        LOCALE = "livro" # possible locales are: "livro", "importado"
         def initialize
             super("LS", "Livraria Siciliano (Brasil)")
             # no preferences for the moment
@@ -33,7 +34,7 @@ class BookProviders
         
         def search(criterion, type)
             criterion = criterion.convert("ISO-8859-1", "UTF-8")
-            req = BASE_URI + "/livro.asp?tipo=10&pesquisa=" 
+            req = BASE_URI + "/#{LOCALE}.asp?tipo=10&pesquisa=" 
             req += case type
                 when SEARCH_BY_ISBN
                     "5&id="
@@ -63,7 +64,7 @@ class BookProviders
                 begin
                     results = [] 
                     each_book_page(data) do |code, title|
-                        results << to_book(transport.get(URI.parse(BASE_URI + "/livro.asp?orn=LSE&Tipo=2&ID=" + code)))
+                        results << to_book(transport.get(URI.parse(BASE_URI + "/#{LOCALE}.asp?orn=LSE&Tipo=2&ID=" + code)))
                     end
                     return results 
                 rescue
@@ -73,7 +74,7 @@ class BookProviders
         end
 
         def url(book)
-	    "http://www.siciliano.com.br/livro.asp?tipo=10&pesquisa=5&id=" +  Library.canonicalise_isbn(book.isbn)
+	    "http://www.siciliano.com.br/#{LOCALE}.asp?tipo=10&pesquisa=5&id=" +  Library.canonicalise_isbn(book.isbn)
         end
 
         #######
@@ -101,13 +102,13 @@ class BookProviders
                 publisher = nil
             end
 
-            if md = /<br[^>]*>Encadernação: ([^<]+)<br>/.match(data)
+            if md = /<br[^>]*>Encaderna..o: ([^<]+)<br>/.match(data)
                 edition = md[1].strip
             else
                 edition = nil
             end
 
-            if md = /<br[^>]*>Edição: ([^<]+)<br>/.match(data)
+            if md = /<br[^>]*>Edi..o: ([^<]+)<br>/.match(data)
                 publish_year = md[1].strip.to_i
             else
                 publish_year = nil
@@ -123,7 +124,7 @@ class BookProviders
         end
     
         def each_book_page(data)
-            raise if data.scan(/<a href='livro.asp\?orn=LSE&Tipo=2&ID=(\d+)'><strong>/) { |a| yield a }.empty?
+            raise if data.scan(/<a href='#{LOCALE}.asp\?orn=LSE&Tipo=2&ID=(\d+)'><strong>/) { |a| yield a }.empty?
         end
     end
 end
