@@ -56,7 +56,6 @@ class BookProviders
 
             end
 
-            criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
             req += CGI.escape(criterion)
             p req if $DEBUG
 	    data = transport.get(URI.parse(req))
@@ -76,7 +75,7 @@ class BookProviders
         end
 
         def url(book)
-            BASE_URI + "/isbn/" + Library.canonicalise_isbn(book.isbn)
+            BASE_URI + "/isbn/" + book.isbn
         end
 
         #######

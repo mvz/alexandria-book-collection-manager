@@ -77,7 +77,7 @@ class BookProviders
         end
 
         def url(book)
-            "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + book.isbn + "&p_item=1"
+            "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + Library.canonicalise_isbn(book.isbn) + "&p_item=1"
         end
 
         #######
