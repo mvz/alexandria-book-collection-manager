@@ -1307,7 +1307,7 @@ module UI
             on_quit = proc do
                 save_preferences
                 Gtk.main_quit
-                @libraries.really_save_all_books
+                #@libraries.really_save_all_books
                 @libraries.really_delete_deleted_libraries
                 @libraries.all_regular_libraries.each do |library|
                     library.really_delete_deleted_books

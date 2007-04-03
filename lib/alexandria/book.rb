@@ -38,6 +38,8 @@ module Alexandria
             @own = true
             @want = true
             @tags = []
+            # Need to implement bulk save function to update this
+            @version = VERSION
         end
         
         def ident
