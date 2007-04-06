@@ -40,7 +40,7 @@ module Alexandria
             self.new(_("Archived Tellico XML"), "tc",
                      :export_as_tellico_xml_archive),
             self.new(_("BibTeX"), "bib", :export_as_bibtex),
-            self.new(_("CSV list"), "txt", :export_as_csv_list),
+            self.new(_("CSV list"), "csv", :export_as_csv_list),
             self.new(_("ISBN List"), "txt", :export_as_isbn_list),
             self.new(_("HTML Web Page"), nil, :export_as_html, true)
         ]
@@ -123,7 +123,7 @@ module Alexandria
         def export_as_csv_list(filename)
             File.open(filename, 'w') do |io|
                 each do |book|
-                    io.puts book.title + ';' + book.authors.join(', ') + ';' + book.publisher + ';' + book.edition + ';' + book.isbn
+                    io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or "") + ';' + (book.edition or "") + ';' + (book.isbn or "") + ';' + (book.publishing_year.to_s or "")
                 end
             end
         end
@@ -150,19 +150,19 @@ module Alexandria
             each_with_index do |book, idx|
                 # fields that are missing: edition and rating.
                 prod = msg.add_element('Product')
-                prod.add_element('RecordReference').text = idx.to_s
+                prod.add_element('RecordReference').text = idx
                 prod.add_element('NotificationType').text = "03"  # confirmed
                 prod.add_element('RecordSourceName').text = 
                     "Alexandria " + VERSION
                 prod.add_element('ISBN').text = book.isbn
                 prod.add_element('ProductForm').text = 'BA'       # book
-                prod.add_element('DistinctiveTitle').text = CGI.escapeHTML(book.title) unless book.title == nil
+                prod.add_element('DistinctiveTitle').text = book.title
                 unless book.authors.empty?
                     book.authors.each do |author|
                         elem = prod.add_element('Contributor')
                         # author
                         elem.add_element('ContributorRole').text = 'A01'
-                        elem.add_element('PersonName').text = CGI.escapeHTML(author)
+                        elem.add_element('PersonName').text = author
                     end
                 end
                 if book.notes and not book.notes.empty?
@@ -170,7 +170,7 @@ module Alexandria
                     # reader description
                     elem.add_element('TextTypeCode').text = '12' 
                     elem.add_element('TextFormat').text = '00'  # ASCII
-                    elem.add_element('Text').text = CGI.escapeHTML(book.notes) unless book.notes == nil
+                    elem.add_element('Text').text = book.notes
                 end
                 if File.exists?(cover(book))
                     elem = prod.add_element('MediaFile')
@@ -183,17 +183,18 @@ module Alexandria
                     elem.add_element('MediaFileLink').text = 
                         File.join('images', final_cover(book))
                 end
-                BookProviders.each do |provider|
-                    elem = prod.add_element('ProductWebsite')
-                    elem.add_element('ProductWebsiteDescription').text = 
-                        provider.fullname
-                    elem.add_element('ProductWebsiteLink').text = 
-                        provider.url(book)
+                if book.isbn
+                    BookProviders.each do |provider|
+                        elem = prod.add_element('ProductWebsite')
+                        elem.add_element('ProductWebsiteDescription').text = 
+                            provider.fullname
+                        elem.add_element('ProductWebsiteLink').text = 
+                            provider.url(book)
+                    end
                 end
-                publisher = book.publisher or "" # required field in ONIX
                 elem = prod.add_element('Publisher')
                 elem.add_element('PublishingRole').text = '01'
-                elem.add_element('PublisherName').text = CGI.escapeHTML(publisher)
+                elem.add_element('PublisherName').text = book.publisher
                 prod.add_element('PublicationDate').text = book.publishing_year
             end
             return doc
@@ -232,6 +233,8 @@ module Alexandria
                         authors.add_element('author').text = author
                     end
                 end
+                entry.add_element('read').text = book.redd.to_s if book.redd
+                entry.add_element('loaned').text = book.loaned.to_s if book.loaned
                 if not book.rating == Book::DEFAULT_RATING
                     entry.add_element('rating').text = book.rating
                 end
@@ -267,7 +270,10 @@ module Alexandria
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="generator" content="#{generator}"/>
+  <meta name="Author" content="#{Etc.getlogin}"/>
+  <meta name="Description" content="List of books"/>
+  <meta name="Keywords" content="books"/>
+  <meta name="Generator" content="#{generator}"/>
   <title>#{name}</title>
   <link rel="stylesheet" href="#{css}" type="text/css"/>
 </head>
@@ -352,7 +358,7 @@ EOS
           
             auths = Hash.new(0)
             each do |book|
-                k = book.authors[0].split[0]
+                k = (book.authors[0] or "Anonymous").split[0]
                 if auths.has_key?(k)
                     auths[k] += 1
                 else
@@ -361,9 +367,11 @@ EOS
                 cite_key = k + auths[k].to_s
                 bibtex << "@BOOK{#{cite_key},\n"
                 bibtex << "author = \""
-                bibtex << book.authors[0]
-                book.authors[1..-1].each do |author|
-                    bibtex << " and #{latex_escape(author)}"
+                if book.authors != []
+                    bibtex << book.authors[0]
+                    book.authors[1..-1].each do |author|
+                        bibtex << " and #{latex_escape(author)}"
+                    end
                 end
                 bibtex << "\",\n"
                 bibtex << "title = \"#{latex_escape(book.title)}\",\n"
@@ -372,13 +380,14 @@ EOS
                     bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
                 end
                 #year is a required field in bibtex @BOOK
-                bibtex << "year = \"n/a\"\n"
+                bibtex << "year = " + (book.publishing_year or "\"n/a\"").to_s + "\n"
                 bibtex << "}\n\n"
             end
             return bibtex
         end
 
         def latex_escape(str)
+            return "" if str == nil
             my_str = str.dup
             my_str.gsub!(/%/,"\\%")
             my_str.gsub!(/~/,"\\textasciitilde")

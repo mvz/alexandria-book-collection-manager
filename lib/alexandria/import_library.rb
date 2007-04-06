@@ -136,6 +136,7 @@ module Alexandria
                         if elements['rating'] and (0..UI::MainApp::MAX_RATING_STARS).map.member? elements['rating'].text.to_i 
                             book.rating = elements['rating'].text.to_i
                         end
+                        book.notes = elements['comments'].text if elements['comments']
                         content << [ book, cover]
                         on_iterate_cb.call(n+1, total) if on_iterate_cb
                     end

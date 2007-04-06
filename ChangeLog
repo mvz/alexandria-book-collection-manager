@@ -1,3 +1,23 @@
+2007-04-06 Marco Costantini <costanti@science.unitn.it>
+
+	* CSV list export:
+	  - the file has extension "csv"
+	  - fixed in case that authors is [] or elements are missing
+	* ONIX export:
+	  - removed an unnecessary .to_s
+	  - removed use of CGI.escapeHTML, whch is unnecessary
+	  - fixed in case that ISBN is missing
+	* BibTeX export:
+	  - fixed in case that authors is [] or elements are missing
+	  - exported also book.publishing_year
+	* HTML export:
+	  - added meta "Author", "Description", "Keywords"
+	* Tellico export:
+	  - added info on wether the book has been read or loaned
+	* Tellico import:
+	  - imported notes
+
+
 2007-02-24 to 2007-04-02 Marco Costantini <costanti@science.unitn.it>
 
 	* added new Z39.50 provider "Servizio Bibliotecario Nazionale (Italy)"

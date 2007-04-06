@@ -17,7 +17,7 @@ New features:
    "close" button to "save"
  * added date when exporting to HTML or BibTeX
  * added image size when exporting to HTML or Tellico
- * improved export to ONIX or Tellico
+ * improved export to ONIX, Tellico, CSV, HTML, BibTeX
  * improved import from Tellico or ISBN list
  * improved and refactored the code for Z39.50 providers
 
