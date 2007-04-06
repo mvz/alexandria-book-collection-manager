@@ -17,7 +17,8 @@ Future releases:
 [ ] Zoom in the current view, giving more or less details
 [ ] PDA support
 [ ] Win32 MinGW port
-[ ] Show more details about books, like the publication date for example
+[ ] Show more details about books, like number of pages, price, topic, a 
+    user defined field
 [ ] Printing
 [ ] Editable views; for icons, renaming their title, for list, editing each
     field

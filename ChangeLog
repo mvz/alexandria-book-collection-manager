@@ -1,17 +1,146 @@
-2007-02-23 Marco Costantini
+2007-02-24 to 2007-04-02 Marco Costantini <costanti@science.unitn.it>
+
+	* added new Z39.50 provider "Servizio Bibliotecario Nazionale (Italy)"
+	* added the FAQ
+	* added hotkey "<control>O" for preferences
+	* allowed manual entry of books without author (for instance 
+	  9788841574195 has no author)
+	* in the "Book Properties Dialog", added "cancel" button, and 
+	  renamed "close" button to "save"
+	* improved error messages
+	* ignored empty lines when importing a list of ISBNs
+	* added info in case that Alexandria can't load optional libraries
+	* book_providers.rb: added debug message in case that a book is 
+	  not found
+	* book_properties_dialog.rb: keeps ISBN-13 instead to convert to ISBN
+	* publishing_year is converted to integer when quitting, 
+	  importing a Tellico library, or with some providers
+	* clean.css: added foreground color, see 
+	  http://www.w3.org/QA/Tips/color for the reason
+	* import_library.rb smart_library.rb main_app.rb: changed 
+	  variable name from MAX_STARS to MAX_RATING_STARS, and replaced 
+	  some occurrences of '5' with MAX_RATING_STARS
+	* library.rb: canonicalise_ean now removes dashes and spaces
+	* added debug info about which provider the book has been found at
+	* export_library.rb: 
+	- export_library.rb: changed from "Generated" to "Generated on 
+	  #{Date.today()}", when exporting to BibTex or HTML web page
+	- Added optional requirement "image_size", in order to provide 
+	  data for the images like
+	  height='143' width='95'
+	  when exporting to HTML web page or to Tellico
+	** HTML export:
+	- Changed type from Transitional to Strict when exporting to 
+	  HTML web page
+	- used CGI.escapeHTML when exporting HTML web page (for the 
+	  moment, CGI.escapeHTML is not used for title and authors, 
+	  because they may contain HTML entities (bug to be fixed on the 
+	  providers site))
+	**  ONIX export: 
+	- exported publishing_year, and modified PublisherName to fit 
+	  more strict requirements
+	- reordered elements, in order to make it valid XML
+	- Added element Publisher/PublishingRole = '01' when exporting to ONIX
+	- fixed "ProductWebSite" -> "ProductWebsite" when exporting ONIX
+	** Tellico export:
+	- removed description of the field "rating", which is already 
+	  present in recent Tellico versions
+	- renamed things from "bookcase" to "tellico"
+	- changed doctype and syntaxVersion to version 7 (the earliest 
+	  version for which there is still a DTD) in order to allow the 
+	  library to be imported also by older versions of Tellico.
+	- added attribute "id", required by tellico.dtd
+	- added export of publishing_year
+
+	* import_library.rb: 
+	- now some messages are displayed only if $DEBUG
+	** Tellico import
+	- added rating
+	- checked that "rating" is in [1,2,3,4,5]. If not, "rating" is ignored.
+	- canonicalise_ean is used (because Tellico returns EAN with dashes)
+	- fixed import, even if "authors" is empty
+
+	* test_providers.rb 
+	- improved test of thalia.rb: added foreign book, DVD, CD
+	- added test for provider LOC and a book with non-ASCII letters
+	- test of provider MCU: added test that bugs [#2533] and [#2518] 
+	  are fixed
+	- added test of SBN, LOC and BL, and grouped together tests of 
+          providers depending on optional libraries
+
+	* z3950.rb: 
+	- refactored
+	- the user must specify charset, when adding new providers. default 
+	  charset is ISO-8859-1
+	- now, when searching by ISBN, the ISBN of the returned book is 
+	  the ISBN used in the search. This because ruby/zoom has a bug, 
+	  and may return a cutted ISBN, or because the z39.50 server may 
+	  return more than one ISBN.
+	- when searching by ISBN, only one record is asked from the provider
+	- added element_set_name = 'F', in order to return the 'full' 
+	  set of data (SBN default is 'brief')
+	- added support for books without ISBN
+	- fixed bug, publish_year can be unbound
+	- added function url(book) for LOC and BL
+	- added info about Copac
+	- returns output even if author is empty
+	- uses Library.canonicalise_isbn on input and 
+	  Library.canonicalise_ean on output
+	- fixed bug about publish_year for BL
+	- publisher and edition are nil instead of ""
+	- now returns [Book.new(...)] instead of [Book.new(...), nil] 
+	  (where nil is the image). This is required to pass the test.
+	- other minor changes
+
+	* various fixes and updates for the providers:
+	- adlibris.rb bn.rb bol_it.rb dea_store_it.rb ibs_it.rb ls.rb 
+	  renaud.rb thalia.rb webster_it.rb worldcat.rb :
+	  added to the function to_book of each provider code like
+	  raise NoResultsError if /not found/.match(data) != nil
+	- worldcat.rb improved
+	- worldcat.rb: allowed to return nul as ISBN (this provider 
+	  lists also old books without ISBN)
+	- ls.rb fixed the typo Siliciano -> Siciliano
+	- ls.rb: added code for imported books, and replaced non-ASCII 
+	  chars with dots
+	- webster_it.rb: updated, site now supports ISBN-13
+	- webster_it.rb improved for handling books like 9788830417588 
+	  with wrong image
+	- adlibris.rb: fixed authors and publish_year
+	- proxis.rb:
+	-- now returns the ISBN-13
+	-- fixed 'url',which requires ISBN-10
+	-- in the user preferences, changed "Locale" to "Language", 
+	  which is more meaningful, corresponds closer to the code, and 
+	  is for a different topic of "Locale" used by Amazon
+	- ibs_it.rb: partially updated, to make it work again. It is 
+	  still necessary to fix authors, edition, publish_year
+	- BL fixed "authors"
+	- thalia.rb: updated
+	- dea_store_it.rb:
+	-- minor improvements
+	-- updated (the site has switched to ISBN-13)
+	-- added optional load of rubygems (rubygems may be required or 
+	  not by hpricot (used by mechanize), and may be installed or not)
+	-- modified to return "Surname, Name"
+	- renaud.rb: now supports also books in the section for youngs
+
+	* various minor changes
+
+2007-02-23 Marco Costantini <costanti@science.unitn.it>
 
 	* repaired mcu.rb
-	* Now thalia suppors also music, dvd, software, games
+	* Now thalia supports also music, DVD, software, games
 	* ls: added search by title/author
 	* now all the providers (except proxis) return EAN
 	* minor fixed changes
 
-2007-02-20 Marco Costantini
+2007-02-20 Marco Costantini <costanti@science.unitn.it
 
 	* New providers: webster.it, deastore.com, worldcat.org, 
 	bol.it.
 	* several fixes and updates for various providers
-	* added info about the Wikipedia page for each provder (if any)
+	* added info about the Wikipedia page for each provider (if any)
 	* added the country of the provider after the name
 	* converted the encoding from UTF-8, when searching by 
 	title/author/keyword

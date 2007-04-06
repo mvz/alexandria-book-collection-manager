@@ -3,17 +3,33 @@ Alexandria
 ================
 
 New features:
- * New providers: webster.it, deastore.com, worldcat.org, bol.it.
+ * added the FAQ
+ * Now EAN/ISBN-13 is used
+ * New providers: webster.it, deastore.com, worldcat.org, bol.it. 
+   "Servizio Bibliotecario Nazionale (Italy)"
  * provider amadeus renamed to thalia (Amadeus was bought by Thalia)
+ * Now thalia supports also music, DVD, software, games
  * added the country of the provider after the name
  * the requirement Ruby/Amazon is now optional
+ * added info in case that Alexandria can't load optional libraries
+ * added hotkey "<control>O" for preferences
+ * in the "Book Properties Dialog", added "cancel" button, and renamed 
+   "close" button to "save"
+ * added date when exporting to HTML or BibTeX
+ * added image size when exporting to HTML or Tellico
+ * improved export to ONIX or Tellico
+ * improved import from Tellico or ISBN list
+ * improved and refactored the code for Z39.50 providers
 
 Bugs fixed:
  * several fixes and updates for various providers
  * converted the encoding from UTF-8, when searching by title/author/keyword
  * converted the output from the provider to UTF-8
  * used CGI::unescapeHTML for renaud and thalia
- * now nul is returned instead of "", "n/a", or "Unknown Binding", when the provider doesn't return a value
+ * now nul is returned instead of "", "n/a", or "Unknown Binding", when 
+   the provider doesn't return a value
+ * allowed manual entry of books without author
+ * improved error and debug messages
 
 Added translation:
 
@@ -46,7 +62,7 @@ Bugs fixed:
  * Improved the wording of the status bar text ;
  * Ignore CVS directories when looking for themes ;
  * Ignore whitespace characters when extracting numbers for ISBN/EAN/... ;
- * In the HTLM export, create the directory if it does not exist yet ;
+ * In the HTML export, create the directory if it does not exist yet ;
  * In the ONIX export, do not write ProductWebsite elements for providers
    that return nil URLs ;
  * Handle low-case 'x' when validating ISBN/EAN/... ;
@@ -146,7 +162,7 @@ Bugs fixed:
  * In the providers preferences dialog, disable the Setup button if the 
    selected provider does not have any preferences to setup, instead of 
    displaying a dialog ;
- * Catchs the SocketError exception when calling providers, and returns an 
+ * Catches the SocketError exception when calling providers, and returns an 
    appropriate message ;
  * When deleting more than one books, display a single alert dialog instead
    of an alert dialog for each book ;
@@ -189,7 +205,7 @@ New features:
  * display online information (amazon, proxis, bn) for a book ;
  * improved the usability of the Add Book dialog (the ISBN text entry grabs the
    focus at the beginning, the criterion is automatically selected upon clicks
-   on insensitive widgets, the edition and publisher are appened in the search
+   on insensitive widgets, the edition and publisher are appended in the search
    result list for books that have the same title and authors) ;
  * migration to the new GTK UI manager and file selector widgets. 
 
