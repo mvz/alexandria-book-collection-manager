@@ -65,79 +65,108 @@ module Alexandria
             /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
         
         def self.load(name)
-        	ruined_books = []
-            library = Library.new(name)
-            FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
-            Dir.chdir(library.path) do
-                Dir["*" + EXT[:book]].each do |filename|
-                    text = IO.read(filename)
-                    
-                    #Code to remove the mystery string in books imported from Amazon
-                    # (In the past, still?) To allow ruby-amazon to be removed.
-                    
-                    # The string is removed on load, but can't make it stick, maybe has to do with cache
-                    
-                    if /!str:Amazon::Search::Response/.match(text)
-                    	puts text if $DEBUG
-                    	text.gsub!("!str:Amazon::Search::Response", "")
-                    	puts "got one!" if $DEBUG
-                    	puts text if $DEBUG
-                    end
-                    
-                    # Backward compatibility with versions <= 0.6.0, where the 
-                    # loaned_since field was a numeric.
-                    if md = FIX_BIGNUM_REGEX.match(text)
-                        new_yaml = Time.at(md[2].to_i).to_yaml
-                        # Remove the "---" prefix.
-                        new_yaml.sub!(/^\s*\-+\s*/, '')
-                        text.sub!(md[0], "loaned_since: #{new_yaml}\n")
-                    end
-                    book = YAML.load(text)
-                    old_isbn = book.isbn
-                	begin
-                	book.isbn = self.canonicalise_ean(book.isbn) unless book.isbn == nil
-                        book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
-     
-                    raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
-                    rescue InvalidISBNError => e
-                    	# ruined_books << [book, book.isbn, library]
-                    	puts e.message if $DEBUG
-                    	book.isbn = old_isbn
- 					end
- 				
-                    library << book
-                end
-                
-                # Since 0.4.0 the cover files '_small.jpg' and 
-                # '_medium.jpg' have been deprecated for a single medium
-                # cover file named '.cover'.
-                
-                Dir["*" + '_medium.jpg'].each do |medium_cover|
-                    FileUtils.mv(medium_cover, 
-                                 medium_cover.sub(/_medium\.jpg$/,
-                                                  EXT[:cover]))
-                end
-                
-                
-                
-                Dir["*" + EXT[:cover]].each do |cover|
-                	md = /(.+)\.cover/.match(cover)
-                	begin
-                		ean = self.canonicalise_ean(md[1])
-                	rescue
-                		ean = md[1]
-                	end
-                		FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
-                end
-                
-                FileUtils.rm_f(Dir['*_small.jpg'])
+        	test = [0,nil]
+					ruined_books = []
+					library = Library.new(name)
+					FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
+					Dir.chdir(library.path) do
+            Dir["*" + EXT[:book]].each do |filename|
+            	puts "back from the future of #{test[1]}:" if test[0] == 1
+            	puts "Regularizing book :#{filename}" if $DEBUG
+            	book = self.regularize_book_from_yaml(filename)
+            	puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
+            	test = 0
+            	old_isbn = book.isbn
+              old_pub_year = book.publishing_year
+            	begin
+            		puts "Entering resave-test block for #{filename}" if $DEBUG
+              	begin
+              		book.isbn = self.canonicalise_ean(book.isbn) unless book.isbn == nil
+              		raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
+								rescue InvalidISBNError => e
+              		puts e.message if $DEBUG
+              	  book.isbn = old_isbn
+ 								end
+ 								book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
+ 								# Or if isbn has changed
+              	raise "#{filename} isbn is not okay" unless book.isbn == old_isbn
+								# Re-save book if VERSION changes
+              	raise "#{filename} version is not okay" unless book.version == VERSION
+              	# Or if publishing year has changed 
+              	raise "#{filename} pub year is not okay" unless book.publishing_year == old_pub_year	
+              	# ruined_books << [book, book.isbn, library]
+								library << book
+							rescue => e
+								puts "I'm reformatting #{filename} because #{e.message}"
+								book.version = VERSION
+        				library.simple_save(book)
+        				test = [1,filename]
+        				retry
+        			end
             end
-            #puts ruined_books.inspect
-            library.ruined_books = ruined_books
+                
+            # Since 0.4.0 the cover files '_small.jpg' and 
+            # '_medium.jpg' have been deprecated for a single medium
+           	# cover file named '.cover'.
+                
+            Dir["*" + '_medium.jpg'].each do |medium_cover|
+            	begin
+            		FileUtils.mv(medium_cover, 
+            							medium_cover.sub(/_medium\.jpg$/,
+           								EXT[:cover]))
+           		rescue
+           		end
+            end
+                
+                
+                
+           	Dir["*" + EXT[:cover]].each do |cover|
+           		md = /(.+)\.cover/.match(cover)
+           		begin
+           			ean = self.canonicalise_ean(md[1])
+           		rescue
+           		  ean = md[1]
+           		end
+           		begin
+            		FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
+         			rescue
+         			end
+         		end
+                
+         	  FileUtils.rm_f(Dir['*_small.jpg'])
+         	end
+         	#puts ruined_books.inspect
+					library.ruined_books = ruined_books
 
-            library
+        	library 
         end
-       
+				
+				def self.regularize_book_from_yaml(name)
+					text = IO.read(name)
+              	      
+         	#Code to remove the mystery string in books imported from Amazon
+          # (In the past, still?) To allow ruby-amazon to be removed.
+              	      
+          # The string is removed on load, but can't make it stick, maybe has to do with cache
+                    
+          if /!str:Amazon::Search::Response/.match(text)
+          	puts text if $DEBUG
+          	text.gsub!("!str:Amazon::Search::Response", "")
+          	puts "got one!" if $DEBUG
+           	puts text if $DEBUG
+          end
+                    
+          # Backward compatibility with versions <= 0.6.0, where the 
+          # loaned_since field was a numeric.
+          if md = FIX_BIGNUM_REGEX.match(text)
+            new_yaml = Time.at(md[2].to_i).to_yaml
+            # Remove the "---" prefix.
+            new_yaml.sub!(/^\s*\-+\s*/, '')
+            text.sub!(md[0], "loaned_since: #{new_yaml}\n")
+          end
+          book = YAML.load(text)
+				end
+       	
         def self.loadall
             a = []
             begin
@@ -285,9 +314,9 @@ module Alexandria
 
         def self.canonicalise_isbn(isbn)
             numbers = self.extract_numbers(isbn)
-if self.valid_ean?(isbn)  and numbers[0 .. 2] != [9,7,8]
-    return isbn
-end
+						if self.valid_ean?(isbn)  and numbers[0 .. 2] != [9,7,8]
+    					return isbn
+						end
             canonical = if self.valid_ean?(isbn)
                 # Looks like an EAN number -- extract the intersting part and
                 # calculate a checksum. It would be nice if we could validate
@@ -307,7 +336,27 @@ end
 
             canonical.map { |x| x.to_s }.join()
         end
-
+				
+				def simple_save(book)
+						# Let's initialize the saved identifier if not already
+          	# (backward compatibility from 0.4.0)
+          	book.saved_ident ||= book.ident
+						if book.ident != book.saved_ident
+							puts "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" if $DEBUG
+          		FileUtils.rm(yaml(book.saved_ident))
+          	end
+          	if File.exists?(cover(book.saved_ident))
+          		begin
+          			puts "Moving cover #{cover(book.saved_ident)} to #{cover(book.ident)}" if $DEBUG
+          			FileUtils.mv(cover(book.saved_ident), cover(book.ident))
+          		rescue
+          		end
+          	end
+          	book.saved_ident = book.ident
+          	File.open(book.saved_ident.to_s + ".yaml", "w") { |io| io.puts book.to_yaml }
+          	puts File.open(book.saved_ident.to_s + ".yaml", "r").read
+       	end
+				
         def save(book, final=false)
             changed unless final
             
@@ -343,7 +392,7 @@ end
                                  book)
             end
         end
-
+				
         def transport
                 config = Alexandria::Preferences.instance.http_proxy_config
                 config ? Net::HTTP.Proxy(*config) : Net::HTTP
@@ -449,8 +498,12 @@ end
                     something.ident
                 when String
                     something
+                when Bignum
+                		something
+                when Fixnum
+                		something
                 else
-                    raise
+                    raise "#{something} is a #{something.class}"
             end
             File.join(self.path, ident.to_s + EXT[:cover])
         end
@@ -461,8 +514,10 @@ end
                     something.ident
                 when String
                     something
+                when Bignum
+                		something
                 else
-                    raise
+                    raise "#{something} is #{something.class}"
             end
             File.join(basedir, ident.to_s + EXT[:book])
         end

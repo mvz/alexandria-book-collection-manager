@@ -19,7 +19,7 @@ module Alexandria
     class Book
         attr_accessor :title, :authors, :isbn, :publisher, :publishing_year,
                       :edition, :rating, :notes, :loaned, :loaned_since, 
-                      :loaned_to, :saved_ident, :redd, :own, :want, :tags
+                      :loaned_to, :saved_ident, :redd, :own, :want, :tags, :version
 
         DEFAULT_RATING = 0 
 
