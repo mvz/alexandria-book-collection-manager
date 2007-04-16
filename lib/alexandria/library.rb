@@ -81,7 +81,7 @@ module Alexandria
             	begin
             		puts "Entering resave-test block for #{filename}" if $DEBUG
               	begin
-              		book.isbn = self.canonicalise_ean(book.isbn) unless book.isbn == nil
+              		book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
               		raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
 								rescue InvalidISBNError => e
               		puts e.message if $DEBUG
@@ -165,6 +165,12 @@ module Alexandria
             text.sub!(md[0], "loaned_since: #{new_yaml}\n")
           end
           book = YAML.load(text)
+          unless book.isbn.class == String
+          	string_isbn = /isbn: (.+)/.match(text)[1].strip
+          	book.isbn = string_isbn
+          	puts "Reset to string value #{string_isbn}"
+          end
+          book
 				end
        	
         def self.loadall
@@ -515,6 +521,8 @@ module Alexandria
                 when String
                     something
                 when Bignum
+                		something
+                when Fixnum
                 		something
                 else
                     raise "#{something} is #{something.class}"
