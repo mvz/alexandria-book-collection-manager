@@ -86,7 +86,7 @@ class BookProviders
         def to_book(data)
             raise NoResultsError if /<br><p>The page you tried was not found\./.match(data) != nil
 
-            raise unless md = /<h1 class="title"> (<div class=vernacular lang="[^"]+">)?([^<]+)/.match(data)
+            raise unless md = /<h1 class="item-title"> ?(<div class=vernacular lang="[^"]+">)?([^<]+)/.match(data)
             title = CGI.unescape(md[2].strip)
 
 	    	authors = []
@@ -113,7 +113,9 @@ class BookProviders
 # City : Publisher[ ; City2 : Publisher2], *year? [&copy;year]
 # currently the match is not good in case of City2 : Publisher2 and in case of &copy;year
 
-            if md = /<li class="publisher"><strong>Publisher: <\/strong>(<span class=vernacular lang="[^<]+<\/span>)?[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/li>/.match(data)
+# FIXME: if the field 'Publisher' contains "| Other Editions ..." (as for 9788441000469), then this regexp doesn't match;
+# if not (as for 9785941454136), it is OK.
+            if md = /<div class="item-publisher"><strong>Publisher: <\/strong>(<span class=vernacular lang="[^<]+<\/span>)?[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/div>/.match(data)
 	        publisher = CGI.unescape(md[2].strip)
                 publish_year = CGI.unescape(md[3].strip)[-4 .. -1].to_i
                 publish_year = nil if publish_year == 0
