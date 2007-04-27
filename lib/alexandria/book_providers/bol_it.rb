@@ -132,7 +132,7 @@ class BookProviders
             end
 
             medium_cover = CACHE_DIR + "/" + cover_filename
-            if File.size(medium_cover) > 43
+            if File.size(medium_cover) > 43 and File.size(medium_cover) != 2382 # 2382 is the size of the fake image "copertina non disponibile"
                 puts medium_cover + " has non-0 size" if $DEBUG
                 return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
             end
