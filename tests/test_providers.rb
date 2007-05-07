@@ -59,21 +59,40 @@ class TestProviders < Test::Unit::TestCase
                         '9788806134747') 
     end
 
+    # Right? Don't test if dependency isn't present. 
+
     def test_LOC
-        __test_provider(Alexandria::BookProviders::LOCProvider,
+      begin
+        require 'zoom'
+      rescue LoadError
+        return true
+      end
+      __test_provider(Alexandria::BookProviders::LOCProvider,
                         '9780805335583')
-        # this book has non-ASCII letters
-        __test_provider(Alexandria::BookProviders::LOCProvider,
+      # this book has non-ASCII letters
+      __test_provider(Alexandria::BookProviders::LOCProvider,
                         '9782070379248')
     end
 
     def test_BL
+      begin
+        require 'zoom'
+      rescue LoadError
+        return true
+      end
+
         __test_provider(Alexandria::BookProviders::BLProvider,
                         '9781853260803')
     end
 
     def test_SBN
-        __test_provider(Alexandria::BookProviders::SBNProvider,
+      begin
+        require 'zoom'
+      rescue LoadError
+        return true
+      end
+
+      __test_provider(Alexandria::BookProviders::SBNProvider,
                         '9788835926436')
     end
 
