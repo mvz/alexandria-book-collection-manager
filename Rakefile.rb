@@ -1,69 +1,30 @@
 require 'fileutils'
 include FileUtils
 require 'rake/clean'
+require 'pallet'
 
-PREFIX = "/usr/local/"
-SITE_RUBY = PREFIX + 'lib/site_ruby/1.8'
-LIBS = FileList['lib/*'] 
-DATA = FileList['data/*']
-PO = FileList['po/*']
-BIN = FileList['bin/*']
-SCHEMA = FileList['schemas/*']
-
-# CLEAN.include? 
-
-task :default => [:test]
-
-desc "Install Alexandria"
-task :install => [:presetup, :move_files, :postinstall] do
-end
-
-task :move_files do 
-  #Install libs
-  LIBS.each do |lib|
-    cp_r lib, SITE_RUBY
+Pallet.new('alexandria', Pallet::VERSION) do |p|
+  p.author = 'Joseph Method'
+  p.email  = 'tristil@gmail.com'
+  p.summary = 'A book library manager for Gnome'
+  p.version = '0.6.2'
+  p.description = <<-DESC.margin
+    |Alexandria is a book library manager for gnome, written in Ruby.
+    DESC
+  p.packages << Pallet::Deb.new(p => :doc) do |deb|
+    deb.architecture = 'all'
+    deb.changelog = 'ChangeLog' 
+    deb.depends     = %w{ruby-gnome2(>=0.15) libwww-mechanize-ruby libimage-size-ruby1.8}
+    deb.recommends = %w{fakeroot}
+    deb.prerequisites = [:presetup]
+    deb.section     = 'misc'
+    deb.copyright = 'COPYING'
+    deb.files       = [ Installer.new('lib',   '/usr/lib/ruby/1.8'),
+                        Installer.new('data', '/usr/share/alexandria'),
+                        Installer.new('bin',   '/usr/bin') { FileList["alexandria"]},
+                      ]
+    #deb.docs        = [ Installer.new('doc', 'html'), ]
   end
-  #Install data 
-  begin
-    mkdir PREFIX + 'share/alexandria'
-  rescue Errno::EEXIST
-  end
-  DATA.each do |datum|
-    cp_r datum, PREFIX + 'share/alexandria' 
-  end
-  #Install bin
-    cp_r 'bin/alexandria', PREFIX + 'bin'
-    chmod 0755, PREFIX + 'bin/alexandria'
-  #Install docs
-  #Not done yet
-end
-
-desc "Install Alexandria and clobber old system files"
-task :install_clean => [:systemclean, :presetup, :move_files, :postinstall] do
-  puts "Installing Alexandria..."
-end
-
-task :test do
-  puts "Testing Alexandria..."
-  cd 'tests'
-  require 'test'
-end
-
-task :systemclean do
-  puts "Killing old files..."
-  # Kill lib files
-  rm_rf SITE_RUBY + 'alexandria' 
-  rm_rf SITE_RUBY + 'alexandria.rb'
-  # Kill bin files
-  rm PREFIX + 'bin/alexandria'
-  # Kill data files
-  rm_rf PREFIX + 'share/alexandria'
-  # Kill schema files
-  rm_rf PREFIX + 'share/doc/alexandria'
-end
-
-task :print do
-  [LIBS, DATA, PO, BIN, SCHEMA].each {|i| puts i }
 end
 
 task :presetup do
