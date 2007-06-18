@@ -1,3 +1,11 @@
+2007-06-18 Marco Costantini <costanti@science.unitn.it>
+
+	* Added anonymous patch
+	[#11170] cuecat userland support
+	http://rubyforge.org/tracker/index.php?func=detail&aid=11170&group_id=205&atid=865
+	I don't have a cuecat, and I don't know whether this patch is OK.
+
+
 2007-04-27 Marco Costantini <costanti@science.unitn.it>
 
         * Updated providers Worldcat and bol.it

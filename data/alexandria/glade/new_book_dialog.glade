@@ -47,7 +47,7 @@
                   <widget class="GtkEntry" id="entry_isbn">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="max_length">18</property>
+                    <property name="max_length">70</property>
                     <property name="invisible_char">*</property>
                     <property name="width_chars">13</property>
                     <signal name="changed" handler="on_changed"/>

@@ -135,6 +135,7 @@ module UI
 
         def on_changed(entry)
             ok = !entry.text.strip.empty?
+            decode_cuecat?(@entry_isbn) if entry == @entry_isbn
             (entry == @entry_isbn ? @button_add : @button_find).sensitive = ok
         end
 
@@ -294,6 +295,18 @@ module UI
                 
                 continue #timeout_add loop condition
             end
+        end
+
+        def decode_cuecat?(entry)
+            if entry.text=~/^\..*?\..*?\.(.*?)\.$/
+               tmp = $1.tr('a-zA-Z0-9+-', ' -_')
+               tmp = ((32 + tmp.length * 3/4).to_i.chr << tmp).unpack('u')[0]
+               tmp.chomp!("\000")
+               entry.text = tmp.gsub!(/./) {|c| (c[0] ^ 67).chr }
+               if entry.text.count('^ -~') > 0
+                   entry.text = 'Bad scan result'
+               end
+           end
         end
 
         def on_results_button_press_event(widget, event)
