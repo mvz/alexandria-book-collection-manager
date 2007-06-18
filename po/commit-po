@@ -58,7 +58,7 @@ fi
 
 set -e
 
-cvs update ChangeLog
+svn update ChangeLog
 ( echo "$(date +%Y-%m-%d)  $name"
   echo 
   echo "	* $po: $message"
@@ -67,6 +67,6 @@ cvs update ChangeLog
 ) > ChangeLogX
 mv ChangeLogX ChangeLog
 
-cvs ci -m "$po: $message" "$po" ChangeLog
+svn ci -m "$po: $message" "$po" ChangeLog
 
 echo Successfully commite new Versions of $po and ChangeLog
