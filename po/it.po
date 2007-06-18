@@ -2,6 +2,7 @@
 # Copyright (C) 2005 Mirko Maischberger, All rights reserved
 # This file is distributed under the same license as the Alexandria package.
 # Mirko Maischberger <mirko@lilik.it>, 2005.
+# Revision by Marco Costantini <costanti@science.unitn.it>, 2007-06-18
 #
 msgid ""
 msgstr ""
@@ -104,11 +105,11 @@ msgstr "Archivio Tellico XML"
 
 #: ../lib/alexandria/export_library.rb:32
 msgid "BibTeX"
-msgstr ""
+msgstr "BibTeX"
 
 #: ../lib/alexandria/export_library.rb:33
 msgid "CSV list"
-msgstr ""
+msgstr "Lista CSV"
 
 #: ../lib/alexandria/export_library.rb:34
 msgid "ISBN List"
@@ -146,12 +147,12 @@ msgstr "Biblioteca personale"
 
 #: ../lib/alexandria/smart_library.rb:84
 msgid "Favorite"
-msgstr ""
+msgstr "Preferiti"
 
 #: ../lib/alexandria/smart_library.rb:90
 #, fuzzy
 msgid "Loaned"
-msgstr "Locale"
+msgstr "In prestito"
 
 #: ../lib/alexandria/smart_library.rb:311 ../lib/alexandria/ui/main_app.rb:545
 msgid "Title"
@@ -172,7 +173,7 @@ msgstr "Editore"
 #: ../lib/alexandria/smart_library.rb:315 ../lib/alexandria/ui/main_app.rb:589
 #, fuzzy
 msgid "Publish Year"
-msgstr "Editore"
+msgstr "Anno di pubblicazione"
 
 #: ../lib/alexandria/smart_library.rb:316 ../lib/alexandria/ui/main_app.rb:590
 msgid "Binding"
@@ -290,7 +291,7 @@ msgstr "Preferenze per %s"
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:60
 #, fuzzy
 msgid "Properties"
-msgstr "_Proprietà"
+msgstr "Proprietà"
 
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:66
 msgid "Author"
@@ -303,7 +304,7 @@ msgstr "Seleziona un'immagine di copertina"
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:110
 #, fuzzy
 msgid "No Cover"
-msgstr "_Copertina:"
+msgstr "Nessuna Copertina"
 
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:148
 msgid "%d day"
@@ -362,7 +363,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/export_dialog.rb:163
 msgid "Not a directory"
-msgstr "Non si tratta di una cartella"
+msgstr "Non è una cartella"
 
 #: ../lib/alexandria/ui/import_dialog.rb:36
 msgid "Error while importing"
@@ -525,7 +526,7 @@ msgstr "Bib_lioteca"
 #: ../lib/alexandria/ui/main_app.rb:1240
 #, fuzzy
 msgid "_New Library"
-msgstr "Bib_lioteca"
+msgstr "Nuova Bib_lioteca"
 
 #: ../lib/alexandria/ui/main_app.rb:1241
 #, fuzzy
@@ -604,19 +605,19 @@ msgstr "_Modifica"
 
 #: ../lib/alexandria/ui/main_app.rb:1261
 msgid "_Undo"
-msgstr ""
+msgstr "_Annulla"
 
 #: ../lib/alexandria/ui/main_app.rb:1262
 msgid "Undo the last action"
-msgstr ""
+msgstr "Annulla l'ultima azione"
 
 #: ../lib/alexandria/ui/main_app.rb:1263
 msgid "_Redo"
-msgstr ""
+msgstr "_Rifai"
 
 #: ../lib/alexandria/ui/main_app.rb:1264
 msgid "Redo the undone action"
-msgstr ""
+msgstr "Rifai l'azione annullata"
 
 #: ../lib/alexandria/ui/main_app.rb:1265
 msgid "_Select All"
@@ -624,7 +625,7 @@ msgstr "_Seleziona tutto"
 
 #: ../lib/alexandria/ui/main_app.rb:1266
 msgid "Select all visible books"
-msgstr ""
+msgstr "Seleziona tutti i libri visibili"
 
 #: ../lib/alexandria/ui/main_app.rb:1267
 msgid "Dese_lect All"
@@ -633,7 +634,7 @@ msgstr "Dese_leziona tutto"
 #: ../lib/alexandria/ui/main_app.rb:1268
 #, fuzzy
 msgid "Deselect everything"
-msgstr "Trova tutto"
+msgstr "Deseleziona tutto"
 
 #: ../lib/alexandria/ui/main_app.rb:1269
 #, fuzzy
@@ -643,27 +644,27 @@ msgstr "Per _Valutazione"
 #: ../lib/alexandria/ui/main_app.rb:1270
 #, fuzzy
 msgid "None"
-msgstr "Note"
+msgstr "No"
 
 #: ../lib/alexandria/ui/main_app.rb:1271
 msgid "One Star"
-msgstr ""
+msgstr "Una Stella"
 
 #: ../lib/alexandria/ui/main_app.rb:1273
 msgid "Two Stars"
-msgstr ""
+msgstr "Due Stelle"
 
 #: ../lib/alexandria/ui/main_app.rb:1275
 msgid "Three Stars"
-msgstr ""
+msgstr "Tre Stelle"
 
 #: ../lib/alexandria/ui/main_app.rb:1277
 msgid "Four Stars"
-msgstr ""
+msgstr "Quattro Stelle"
 
 #: ../lib/alexandria/ui/main_app.rb:1279
 msgid "Five Stars"
-msgstr ""
+msgstr "Cinque Stelle"
 
 #: ../lib/alexandria/ui/main_app.rb:1281
 msgid "_Move"
@@ -679,7 +680,7 @@ msgstr "Ca_ncella"
 
 #: ../lib/alexandria/ui/main_app.rb:1284
 msgid "Delete the selected books or library"
-msgstr ""
+msgstr "Cancella i libri o la biblioteca selezionati"
 
 #: ../lib/alexandria/ui/main_app.rb:1285
 msgid "_Search"
@@ -687,7 +688,7 @@ msgstr "_Cerca"
 
 #: ../lib/alexandria/ui/main_app.rb:1286
 msgid "Filter books"
-msgstr ""
+msgstr "Filtra i libri"
 
 #: ../lib/alexandria/ui/main_app.rb:1287
 msgid "_Clear Results"
@@ -744,7 +745,7 @@ msgstr "Contenuti"
 
 #: ../lib/alexandria/ui/main_app.rb:1303
 msgid "View Alexandria's manual"
-msgstr ""
+msgstr "Vedi il manuale di Alexandria"
 
 #: ../lib/alexandria/ui/main_app.rb:1304
 msgid "_About"
@@ -837,7 +838,7 @@ msgstr "Tipo di ricerca non valido."
 
 #: ../lib/alexandria/ui/main_app.rb:1453
 msgid "Type here the search criterion"
-msgstr ""
+msgstr "Scrivi qui il criterio di ricerca"
 
 #: ../lib/alexandria/ui/main_app.rb:1460
 msgid "View as Icons"
@@ -849,7 +850,7 @@ msgstr "Vedi come Lista"
 
 #: ../lib/alexandria/ui/main_app.rb:1481
 msgid "Choose how to show books"
-msgstr ""
+msgstr "Scegli come mostrare i libri"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:27
 msgid "Invalid ISBN '%s'"
@@ -1018,11 +1019,11 @@ msgstr "_ISBN:"
 #: ../data/alexandria/glade/book_properties_dialog.glade:267
 #, fuzzy
 msgid "Add an author"
-msgstr "Autore"
+msgstr "Aggiungi un Autore"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:295
 msgid "Remove an author"
-msgstr ""
+msgstr "Togli un autore"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:339
 msgid "_Authors:"

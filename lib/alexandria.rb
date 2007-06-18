@@ -53,6 +53,7 @@ module Alexandria
         'Laurent Sansonetti <lrz@gnome.org> (fr)',
         'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
         'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
+        'Marco Costantini <costanti@science.unitn.it>',
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
         'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)',
         'Mirko Maischberger <mirko@lilik.it> (it)'
