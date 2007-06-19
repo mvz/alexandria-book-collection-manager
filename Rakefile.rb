@@ -18,12 +18,13 @@ Pallet.new('alexandria', Pallet::VERSION) do |p|
     deb.recommends = %w{fakeroot}
     deb.prerequisites = [:presetup, :make_config]
     deb.section     = 'misc'
+    deb.scripts  =  {:postinst => 'postinst'}
     deb.copyright = 'COPYING'
     deb.files       = [ Installer.new('lib',   '/usr/lib/ruby/1.8'),
                         Installer.new('data', '/usr/share/alexandria'),
                         Installer.new('bin',   '/usr/bin') { FileList["alexandria"]},
                       ]
-    #deb.docs        = [ Installer.new('doc', 'html'), ]
+    deb.docs        = [ Installer.new('doc', '/usr/share/doc/alexandria'), ]
   end
 end
 

@@ -203,6 +203,39 @@
         <long>Whether the rating column should be visible in the list view.</long>
       </locale>
     </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_redd_visible</key>
+      <applyto>/apps/alexandria/col_redd_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Read column visibility</short>
+        <long>Whether the read column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_own_visible</key>
+      <applyto>/apps/alexandria/col_own_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Own column visibility</short>
+        <long>Whether the own column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/col_want_visible</key>
+      <applyto>/apps/alexandria/col_want_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Want column visibility</short>
+        <long>Whether the want column should be visible in the list view.</long>
+      </locale>
+    </schema>
     <schema>
       <key>/schemas/apps/alexandria/cols_width</key>
       <applyto>/apps/alexandria/cols_width</applyto>

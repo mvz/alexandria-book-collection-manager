@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Masao Mutoh, Laurent Sansonetti, Joseph Method
 
-config = {'data-dir' => '/usr/share/data', 'rb-dir' => '/usr/bin/ruby/1.8'}
+config = {'data-dir' => '/usr/share/alexandria', 'rb-dir' => '/usr/bin/ruby/1.8'}
 
 # Generates config.rb.
 File.open('lib/alexandria/config.rb', 'w') do |file|
