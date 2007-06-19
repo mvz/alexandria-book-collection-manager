@@ -14,8 +14,8 @@ Pallet.new('alexandria', Pallet::VERSION) do |p|
   p.packages << Pallet::Deb.new(p => :doc) do |deb|
     deb.architecture = 'all'
     deb.changelog = 'ChangeLog' 
-    deb.depends     = %w{ruby-gnome2(>=0.15) libwww-mechanize-ruby libimage-size-ruby1.8}
-    deb.recommends = %w{fakeroot}
+    deb.depends     = %w{ruby1.8 libgnome2-ruby(>=0.15) libamazon-ruby libwww-mechanize-ruby libimage-size-ruby1.8 libgconf2-ruby(>=0.12.0) libyaml-ruby1.8                           libgettext-ruby1.8}
+    #deb.recommends = %w{}
     deb.prerequisites = [:presetup, :make_config]
     deb.section     = 'misc'
     deb.scripts  =  {:postinst => 'postinst'}
