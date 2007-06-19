@@ -16,7 +16,7 @@ Pallet.new('alexandria', Pallet::VERSION) do |p|
     deb.changelog = 'ChangeLog' 
     deb.depends     = %w{ruby-gnome2(>=0.15) libwww-mechanize-ruby libimage-size-ruby1.8}
     deb.recommends = %w{fakeroot}
-    deb.prerequisites = [:presetup]
+    deb.prerequisites = [:presetup, :make_config]
     deb.section     = 'misc'
     deb.copyright = 'COPYING'
     deb.files       = [ Installer.new('lib',   '/usr/lib/ruby/1.8'),
@@ -63,4 +63,8 @@ task :postinstall do
   Dir["schemas/*.schemas"].each do |schema|
     system("gconftool-2 --makefile-install-rule '#{schema}'") 
   end
+end
+
+task :make_config do
+  require 'make-config'
 end
