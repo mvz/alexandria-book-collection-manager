@@ -346,7 +346,7 @@
 	<!-- ======== Adding books by scanning a barcode ====== -->
 	<sect2 id="add-book-by-barcode-scan">
 		<title>To add a book by scanning its barcode</title>
-		<para>&app; supports Cuecard (c) barcode scanners. If you have set up a Cuecard (c) barcode scanner on your computer, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Acquire from Scanner</guimenuitem></menuchoice>. Scan each book barcode in turn, and they will be listed in the <guilabel>Acquire from Scanner</guilabel> window. Choose which library you wish to save the books in with the <guilabel>Save in</guilabel> drop-down menu, and click <guibutton>Add</guibutton> to complete the operation.</para>
+		<para>&app; supports CueCat (c) barcode scanners. If you have set up a CueCat (c) barcode scanner on your computer, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Acquire from Scanner</guimenuitem></menuchoice>. Scan each book barcode in turn, and they will be listed in the <guilabel>Acquire from Scanner</guilabel> window. Choose which library you wish to save the books in with the <guilabel>Save in</guilabel> drop-down menu, and click <guibutton>Add</guibutton> to complete the operation.</para>
 	</sect2>
 
 	<!-- ======== Adding a book manually ================= -->

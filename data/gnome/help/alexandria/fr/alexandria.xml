@@ -705,13 +705,13 @@ Date : 30 décembre 2005
 			<!--To add a book by scanning its barcode-->
 		</title>
 		<para>
-			&app; prend en charge les scanners de code-barres Cuecard©. Si vous 
-			avez installé un scanner de code-barres Cuecard©, &app; 
+			&app; prend en charge les scanners de code-barres CueCat©. Si vous 
+			avez installé un scanner de code-barres CueCat©, &app; 
 			affiche une petite image d&#8217;un code-barres à la droite de la boîte 
 			de texte <guilabel><accel>I</accel>SBN</guilabel>. 
 			Si vous n&#8217;avez pas de scanner, cette image sera grisée.
-			<!--&app; supports Cuecard (c) barcode scanners. If you have set up
-			a Cuecard (c) barcode scanner on your computer, &app; will display
+			<!--&app; supports CueCat (c) barcode scanners. If you have set up
+			a CueCat (c) barcode scanner on your computer, &app; will display
 			a small picture of a barcode next to the
 			<guilabel>ISBN</guilabel> field.
 			(If you don&#8217;t have a scanner, this picture will be greyed out.)-->
