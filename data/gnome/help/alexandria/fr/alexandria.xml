@@ -274,8 +274,8 @@ Date : 30 décembre 2005
 			</listitem>
 			<listitem>
 				<para>
-					le support des lecteurs de code-barres Cuecat©.
-				<!--supports Cuecat (c) barcode readers-->
+					le support des lecteurs de code-barres CueCat©.
+				<!--supports CueCat (c) barcode readers-->
 				</para>
 			</listitem>
     </itemizedlist>
@@ -749,7 +749,7 @@ Date : 30 décembre 2005
 			The book may not not have an ISBN (ISBN numbers only became
 			standard in the 1970s). Perhaps the book is too new, and no
 			information is available online. Or perhaps you simply don&#8217;t have
-			an internet connection. &app; allows you to specify all the details
+			an Internet connection. &app; allows you to specify all the details
 			of a book - the Title, Authors, cover image and so forth - 
 			by supplying them yourself.-->
 		</para>
@@ -2204,7 +2204,7 @@ Date : 30 décembre 2005
 				le nom d&#8217;utilisateur et le mot de passe pour se connecter au service.
 				
 				<!--Here you can specify the <guilabel>Name</guilabel> of the 
-				provider, the <guilabel>Hostname</guilabel>, the internet 
+				provider, the <guilabel>Hostname</guilabel>, the Internet 
 				<guilabel>Port</guilabel> to connect to, the name of the 
 				online <guilabel>Database</guilabel>, the 
 				<guilabel>Record Syntax</guilabel> used (&app; currently 

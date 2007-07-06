@@ -169,7 +169,7 @@
 		<para>generate XHTML web pages theme-able with CSS from your libraries</para>
 	</listitem>
 	<listitem>
-		<para>supports Cuecat (c) barcode readers</para>
+		<para>supports CueCat (c) barcode readers</para>
 	</listitem>
 
     </itemizedlist>
@@ -352,7 +352,7 @@
 	<!-- ======== Adding a book manually ================= -->
 	<sect2 id="add-book-manually">
 		<title>To manually add a book</title>
-		<para>Sometimes you will not be able to search for a book online. The book may not not have an ISBN (ISBN numbers only became standard in the 1970s). Perhaps the book is too new, and no information is available online. Or perhaps you simply don't have an internet connection. &app; allows you to specify all the details of a book - the Title, Authors, cover image and so forth - by supplying them yourself.</para>
+		<para>Sometimes you will not be able to search for a book online. The book may not not have an ISBN (ISBN numbers only became standard in the 1970s). Perhaps the book is too new, and no information is available online. Or perhaps you simply don't have an Internet connection. &app; allows you to specify all the details of a book - the Title, Authors, cover image and so forth - by supplying them yourself.</para>
 		<para>To manually add a book to a library, choose 
 			<menuchoice><guimenu>Library</guimenu><guimenuitem>Add Book Manually</guimenuitem></menuchoice>. The following dialog will appear:
 		</para>
@@ -668,9 +668,9 @@ between libraries.</para>
 	</sect2>
 
 	<sect2 id="exporting-as-bibtex">
-		<title>Exporting as a Bibtex file</title>
-		<para>Bibtex is a LaTeX based file format for storing bibliographic information.</para>
-		<para>To export your library as a Bibtex (.bib) file, choose <guimenuitem>Bibtex (.bib)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
+		<title>Exporting as a BibTeX file</title>
+		<para>BibTeX is a LaTeX based file format for storing bibliographic information.</para>
+		<para>To export your library as a BibTeX (.bib) file, choose <guimenuitem>BibTeX (.bib)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
 	</sect2>
 
 	<sect2 id="exporting-as-plaintext">
@@ -806,7 +806,7 @@ between libraries.</para>
 	          </mediaobject>
 	        </screenshot>
 	     </figure>
-		<para>Here you can specify the <guilabel>Name</guilabel> of the provider, the <guilabel>Hostname</guilabel>, the internet <guilabel>Port</guilabel> to connect to, the name of the online <guilabel>Database</guilabel>, the <guilabel>Record Syntax</guilabel> used (&app; currently supports USMARC, UNIMARC and SUTRS formats), and, if relevant, a username and password to connect to the provider.</para>
+		<para>Here you can specify the <guilabel>Name</guilabel> of the provider, the <guilabel>Hostname</guilabel>, the Internet <guilabel>Port</guilabel> to connect to, the name of the online <guilabel>Database</guilabel>, the <guilabel>Record Syntax</guilabel> used (&app; currently supports USMARC, UNIMARC and SUTRS formats), and, if relevant, a username and password to connect to the provider.</para>
 		<para>To remove a provider, select its name from the list and click on <guibutton>Remove</guibutton>. You cannot remove any of the default providers provided by &app;.</para>
 	</sect3>
     </sect2>

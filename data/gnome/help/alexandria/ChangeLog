@@ -20,7 +20,7 @@
 
 	- Rewrote Acquire from Scanner section to match new functionality;
 	- Added Reynaud-Bray provider;
-	- Added Bibtex export.
+	- Added BibTeX export.
 
 2005-08-14  Liam Davison		<carnegie@liamjdavison.info>
 
