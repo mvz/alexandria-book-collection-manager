@@ -65,44 +65,61 @@ module Alexandria
             /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
         
         def self.load(name)
-        	test = [0,nil]
-					ruined_books = []
-					library = Library.new(name)
-					FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
-					Dir.chdir(library.path) do
+          test = [0,nil]
+          ruined_books = []
+          library = Library.new(name)
+          FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
+          Dir.chdir(library.path) do
             Dir["*" + EXT[:book]].each do |filename|
-            	puts "back from the future of #{test[1]}:" if test[0] == 1
-            	puts "Regularizing book :#{filename}" if $DEBUG
-            	book = self.regularize_book_from_yaml(filename)
-            	puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
-            	test = 0
-            	old_isbn = book.isbn
+
+              test[1] = filename if test[0] == 0
+
+              puts "back from the future of #{test[1]}:" if test[0] == 1
+              puts "Regularizing book :#{test[1]}" if $DEBUG
+              book = self.regularize_book_from_yaml(test[1])
+              puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
+
+              old_isbn = book.isbn
               old_pub_year = book.publishing_year
-            	begin
-            		puts "Entering resave-test block for #{filename}" if $DEBUG
+              begin
+                puts "Entering resave-test block for #{test[1]}" if $DEBUG
               	begin
-              		book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
-              		raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
-								rescue InvalidISBNError => e
-              		puts e.message if $DEBUG
+                  book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
+                  raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
+                rescue InvalidISBNError => e
+                  puts e.message if $DEBUG
               	  book.isbn = old_isbn
- 								end
- 								book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
- 								# Or if isbn has changed
-              	raise "#{filename} isbn is not okay" unless book.isbn == old_isbn
-								# Re-save book if VERSION changes
-              	raise "#{filename} version is not okay" unless book.version == VERSION
-              	# Or if publishing year has changed 
-              	raise "#{filename} pub year is not okay" unless book.publishing_year == old_pub_year	
-              	# ruined_books << [book, book.isbn, library]
-								library << book
-							rescue => e
-								puts "I'm reformatting #{filename} because #{e.message}"
-								book.version = VERSION
-        				library.simple_save(book)
-        				test = [1,filename]
-        				retry
-        			end
+                end
+ 		
+                book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
+
+                # Or if isbn has changed
+              	raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
+		
+                # Re-save book if VERSION changes
+              	raise "#{test[1]} version is not okay" unless book.version == VERSION
+              	
+                # Or if publishing year has changed 
+              	raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year	
+              	
+                # ruined_books << [book, book.isbn, library]
+                library << book
+              rescue => e
+                puts "I'm reformatting #{test[1]} because #{e.message}"
+                book.version = VERSION
+                savedfilename = library.simple_save(book)
+                test[0] = test[0] + 1
+                test[1] = savedfilename
+                # retry ## no, this would retry the outer 'begin' block, not the Dir.each block
+
+                
+                # retries the Dir.each block...
+                # but gives up after three tries
+                redo unless test[0] > 2 
+
+              else
+                test = [0,nil]
+              end
             end
                 
             # Since 0.4.0 the cover files '_small.jpg' and 
@@ -359,8 +376,12 @@ module Alexandria
           		end
           	end
           	book.saved_ident = book.ident
-          	File.open(book.saved_ident.to_s + ".yaml", "w") { |io| io.puts book.to_yaml }
-          	puts File.open(book.saved_ident.to_s + ".yaml", "r").read
+
+                                  filename = book.saved_ident.to_s + ".yaml"
+          	File.open(filename, "w") { |io| io.puts book.to_yaml }
+                                  puts "outputting book data..."
+          	puts File.open(filename, "r").read
+                                  filename
        	end
 				
         def save(book, final=false)

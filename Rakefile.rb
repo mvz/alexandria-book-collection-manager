@@ -2,6 +2,10 @@ require 'fileutils'
 include FileUtils
 require 'rake/clean'
 require 'pallet'
+require 'spec/rake/spectask'
+
+# debian output dir to clean up
+CLOBBER.include('debian')
 
 Pallet.new('alexandria', Pallet::VERSION) do |p|
   p.author = 'Joseph Method'
@@ -66,6 +70,24 @@ task :postinstall do
   end
 end
 
+
+# generated files to clean up
+CLOBBER.include('lib/alexandria/config.rb',
+                'lib/alexandria/version.rb',
+                'lib/alexandria/default_preferences.rb')
+
 task :make_config do
   require 'make-config'
 end
+
+
+# test dirs to clean up
+CLOBBER.include('specs/data/libraries/test')
+
+desc "Run Alexandria specifications"
+Spec::Rake::SpecTask.new("spec") do |t|
+  t.spec_files = FileList['specs/**/*_spec.rb']
+  t.spec_opts = ["--format", "specdoc"]
+end
+
+task :spec => [:make_config]
