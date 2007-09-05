@@ -10,14 +10,14 @@ rescue => e
 -----------------------
 Alexandria just crashed
 -----------------------
-Timestamp: \#{Time.now}
-Message: \#{e.message}
+Timestamp: #{Time.now}
+Message: #{e.message}
 Backtrace:
-\#{e.backtrace.join("\\n")}
-Release: \#{Alexandria::VERSION}
-Uname -a: \#{`uname -a`.chomp}
+#{e.backtrace.join("\n")}
+Release: #{Alexandria::VERSION}
+Uname -a: #{`uname -a`.chomp}
 --
-Please report this dump to '\#{Alexandria::LIST}' with some additional
+Please report this dump to '#{Alexandria::LIST}' with some additional
 information, such as the description of the crash and the steps to reproduce it
 (if it's possible).
 EOS
