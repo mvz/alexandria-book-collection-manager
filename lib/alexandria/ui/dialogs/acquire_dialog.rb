@@ -56,16 +56,18 @@ module UI
 
         def read_barcode_scan
             puts "reading CueCat data #{@scanner_buffer}"
-            buf = @scanner_buffer
-            @scanner_buffer = ""
-            barcode_text = @scanner.decode(buf)
-            puts "got barcode text #{barcode_text}"
+            barcode_text = nil
+            isbn = nil
             begin
+                barcode_text = @scanner.decode(@scanner_buffer)
+                puts "got barcode text #{barcode_text}"
                 isbn = Library.canonicalise_isbn(barcode_text)
                 # TODO :: use an AppFacade
                 # isbn =  LookupBook.get_isbn(barcode_text)
-            rescue
-                puts "barcode invalid somehow #{isbn}"
+            rescue StandardError => err
+                puts "Bad scan:  #{@scanner_buffer} #{err}"
+            ensure
+                @scanner_buffer = ""
             end
             if isbn
                 puts "<<< #{isbn} >>>"
