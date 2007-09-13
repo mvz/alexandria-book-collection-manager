@@ -476,15 +476,18 @@ module Alexandria
                 raise if @@deleted_libraries.include?(self)
                 @@deleted_libraries << self
             else
-                raise if @deleted_books.include?(book)
+                if @deleted_books.include?(book)
+                    doubles = @deleted_books.reject { |b| not b.equal? book }
+                    raise "Book #{book.isbn} was already deleted" unless doubles.empty?
+                end
                 @deleted_books << book
                 i = self.index(book)
                 # We check object IDs there because the user could have added
                 # a book with the same identifier as another book he/she
                 # previously deleted and that he/she is trying to redo.
-                if i != nil and self[i].object_id == book.object_id
+                if i and self[i].equal? book
                     changed
-                    old_delete(book)
+                    old_delete(book) # FIX this will old_delete all '==' books
                     notify_observers(self, BOOK_REMOVED, book)
                 end
             end
