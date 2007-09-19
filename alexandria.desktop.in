@@ -6,5 +6,5 @@ _Comment=Manage your book collection
 Exec=/usr/bin/alexandria
 Terminal=false
 Type=Application
-Categories=Application;Office;
+Categories=GNOME;GTK;Office;Database;
 Icon=alexandria

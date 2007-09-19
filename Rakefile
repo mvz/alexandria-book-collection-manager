@@ -19,6 +19,8 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
   b.files.data = FileList['data/alexandria/**/*.*',
                           'data/gnome/**/*.*',
                           'data/omf/alexandria/*.omf']
+  b.files.icons = FileList['data/app-icon/**/*.png',
+                           'data/app-icon/scalable/*.svg']
   b.files.rdoc = FileList['doc/*',
                           'COPYING',
                           'ChangeLog',
@@ -167,7 +169,11 @@ task :gconf do
   end
 end
 
-task :post_install => [:scrollkeeper, :gconf]
+task :update_icon_cache do
+  system("gtk-update-icon-cache -f -t /usr/share/icons/hicolor") # HACK
+end
+
+task :post_install => [:scrollkeeper, :gconf, :update_icon_cache]
 
 
 # vim: syntax=Ruby

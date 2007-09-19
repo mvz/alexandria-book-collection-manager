@@ -1151,7 +1151,9 @@ module Alexandria
 				end
 
 				def initialize_ui
-						@main_app.icon = Icons::ALEXANDRIA_SMALL
+						# @main_app.icon = Icons::ALEXANDRIA_SMALL
+						Gtk::Window.set_default_icon_name("alexandria")
+						@main_app.icon_name = "alexandria"
 			puts "Initializing UI elements..." if $DEBUG
 						
 						on_new = proc do

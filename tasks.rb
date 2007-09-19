@@ -106,7 +106,7 @@ class AlexandriaBuild < Rake::TaskLib
   end
 
   class FileConfig < BuildConfig
-    attr_accessor :source, :rdoc, :data
+    attr_accessor :source, :rdoc, :data, :icons
     def initialize(build)
       super(build)
     end
@@ -118,6 +118,9 @@ class AlexandriaBuild < Rake::TaskLib
     end
     def specs
       source.grep(/^specs\/.*_spec.rb/)
+    end
+    def desktop
+      "#{build.name}.desktop"
     end
   end
 
@@ -206,11 +209,7 @@ class AlexandriaBuild < Rake::TaskLib
     task :pre_install # just an empty hook
 
     task :install_files do
-      [
-       ['lib', @files.libs, @install.rubylib, 0444],
-       ['data', @files.data, @install.sharedir, 0444],
-       ['bin', @files.programs, @install.bindir, 0555]
-      ].each do |src, files, dest, mode|
+      @install.groups.each do |src, files, dest, mode|
         files.each do |file|
           install_file(src, file, dest, mode)
         end
@@ -222,6 +221,7 @@ class AlexandriaBuild < Rake::TaskLib
     desc "Install the package. Override destination with $PREFIX"
     task :install => [:pre_install, :install_files, :post_install]
   end
+
 
   class InstallConfig < BuildConfig
 
@@ -238,7 +238,48 @@ class AlexandriaBuild < Rake::TaskLib
         libpart = sitelibdir[ruby_prefix.size .. -1]
         @rubylib = File.join(@prefix, libpart)
       end
+      @groups = []
     end
+
+    def groups
+      if @groups.empty?
+        @groups.push(*default_installation)
+      end
+      @groups
+    end
+
+    def default_installation
+      default_groups = base_installation
+      default_groups.push(icon_installation)
+      default_groups.push(desktop_installation)
+      default_groups
+    end
+
+    def base_installation
+      [
+       ['lib',  build.files.libs,     rubylib,  0444],
+       ['data', build.files.data,     sharedir, 0444],
+       ['bin',  build.files.programs, bindir,   0555]
+      ]
+    end
+
+    def icon_installation
+      icon_dir = File.join(sharedir, 'icons', 'hicolor')
+      icon_group = []
+      build.files.icons.each do |filename|
+        filename =~ /.*\/(.+)\/.+/
+        size = $1
+        dest = File.join(icon_dir, size, 'apps')
+        icon_group << [File.dirname(filename), filename, dest, 0666]
+      end
+      icon_group
+    end
+
+    def desktop_installation
+      desktop_dir = File.join(sharedir, 'applications')
+      [['.', files.desktop, desktop_dir, 0644]]
+    end
+
     def bindir
       File.join(@prefix, 'bin')
     end
@@ -297,7 +338,7 @@ class AlexandriaBuild < Rake::TaskLib
 
   def define_gettext_tasks
     # extract translations from PO files into other files
-    file "#{name}.desktop" => ["#{name}.desktop.in",
+    file files.desktop => ["#{files.desktop}.in",
                                   *@gettext.po_files] do |f|
       system("intltool-merge -d #{@gettext.po_dir} #{f.name}.in #{f.name}")
     end
@@ -312,10 +353,10 @@ class AlexandriaBuild < Rake::TaskLib
     end
 
     desc "Generate gettext localization files"
-    task :gettext => ["#{name}.desktop", *@gettext.mo_files]
+    task :gettext => [files.desktop, *@gettext.mo_files]
 
     task :clobber_gettext do
-      FileUtils.rm_f("#{name}.desktop")
+      FileUtils.rm_f(files.desktop)
       FileUtils.rm_rf(@gettext.mo_dir)
     end
     task :clobber => [:clobber_gettext]
