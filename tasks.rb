@@ -277,7 +277,7 @@ class AlexandriaBuild < Rake::TaskLib
 
     def desktop_installation
       desktop_dir = File.join(sharedir, 'applications')
-      [['.', files.desktop, desktop_dir, 0644]]
+      [['.', build.files.desktop, desktop_dir, 0644]]
     end
 
     def bindir
