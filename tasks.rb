@@ -250,8 +250,8 @@ class AlexandriaBuild < Rake::TaskLib
 
     def default_installation
       default_groups = base_installation
-      default_groups.push(icon_installation)
-      default_groups.push(desktop_installation)
+      default_groups.push(*icon_installation)
+      default_groups.push(*desktop_installation)
       default_groups
     end
 
