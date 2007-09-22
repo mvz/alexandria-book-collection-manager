@@ -15,7 +15,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
 
   b.files.source = FileList['lib/**/*.rb',
                             'bin/alexandria',
-                            'specs/**/*.rb']
+                            'spec/**/*.rb']
   b.files.data = FileList['data/alexandria/**/*.*',
                           'data/gnome/**/*.*',
                           'data/omf/alexandria/*.omf']
@@ -26,6 +26,10 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
                           'ChangeLog',
                           'TODO']
   b.rdoc.main = 'doc/README'
+
+  b.install.fake_prefix='debian/alexandria'
+  #b.install.groups << ['a', 'b', 'c', 0444]
+
 end
 
 ##

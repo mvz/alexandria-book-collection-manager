@@ -117,7 +117,7 @@ class AlexandriaBuild < Rake::TaskLib
       source.grep(/^bin/)
     end
     def specs
-      source.grep(/^specs\/.*_spec.rb/)
+      source.grep(/^spec\/.*_spec.rb/)
     end
     def desktop
       "#{build.name}.desktop"
@@ -178,7 +178,7 @@ class AlexandriaBuild < Rake::TaskLib
       require 'spec/rake/spectask'
       desc "Run RSpec specifications"
       Spec::Rake::SpecTask.new("spec") do |t|
-        t.spec_files = @files.specs #FileList['specs/**/*_spec.rb']
+        t.spec_files = @files.specs
         t.spec_opts = ["--format", "specdoc"]
       end
     rescue LoadError => err
@@ -205,6 +205,11 @@ class AlexandriaBuild < Rake::TaskLib
     File.install(file, dest, mode)
   end
 
+  def fake_install_file(src_dir, file, dest_dir, mode)
+    fake_dest = File.join(@install.fake_prefix, dest_dir)
+    install_file(src_dir, file, fake_dest, mode)
+  end
+
   def define_install_tasks
     task :pre_install # just an empty hook
 
@@ -220,12 +225,25 @@ class AlexandriaBuild < Rake::TaskLib
 
     desc "Install the package. Override destination with $PREFIX"
     task :install => [:pre_install, :install_files, :post_install]
+
+    task :fake_install_files do # HACK cut-n-paste blues!
+      @install.groups.each do |src, files, dest, mode|
+        files.each do |file|
+          fake_install_file(src, file, dest, mode)
+        end
+      end
+    end
+
+    task :fake_install => [:pre_install, :fake_install_files] do
+      puts "Also remember to copy across postinst files and such..."
+    end
+
   end
 
 
   class InstallConfig < BuildConfig
 
-    attr_accessor :prefix, :rubylib
+    attr_accessor :prefix, :rubylib, :fake_prefix
 
     def initialize(build)
       super(build)
@@ -239,6 +257,7 @@ class AlexandriaBuild < Rake::TaskLib
         @rubylib = File.join(@prefix, libpart)
       end
       @groups = []
+      @fake_prefix = nil
     end
 
     def groups

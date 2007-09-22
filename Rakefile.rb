@@ -17,7 +17,7 @@ Pallet.new('alexandria', Pallet::VERSION) do |p|
     DESC
   p.packages << Pallet::Deb.new(p => :doc) do |deb|
     deb.architecture = 'all'
-    deb.changelog = 'ChangeLog' 
+    deb.changelog = 'ChangeLog'
     deb.depends     = %w{ruby1.8 libgnome2-ruby(>=0.15) libamazon-ruby libwww-mechanize-ruby libimage-size-ruby1.8 libgconf2-ruby(>=0.12.0) libyaml-ruby1.8                           libgettext-ruby1.8}
     #deb.recommends = %w{}
     deb.prerequisites = [:presetup, :make_config]
@@ -49,14 +49,14 @@ task :presetup do
       puts path
       Dir.mkdir(path) unless FileTest.exists?(path)
     end
-  
+
     system("msgfmt po/#{lang}.po -o #{mo_path}/#{basename}.mo")
     raise "msgfmt failed on po/#{lang}.po" if $? != 0
   end
 
 end
 
-task :postinstall do 
+task :postinstall do
   exit 0 if ENV['GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL']
 
   unless system("which gconftool-2")
@@ -66,7 +66,7 @@ task :postinstall do
 
   ENV['GCONF_CONFIG_SOURCE'] = `gconftool-2 --get-default-source`.chomp
   Dir["schemas/*.schemas"].each do |schema|
-    system("gconftool-2 --makefile-install-rule '#{schema}'") 
+    system("gconftool-2 --makefile-install-rule '#{schema}'")
   end
 end
 
@@ -82,11 +82,11 @@ end
 
 
 # test dirs to clean up
-CLOBBER.include('specs/data/libraries/test')
+CLOBBER.include('spec/data/libraries/test')
 
 desc "Run Alexandria specifications"
 Spec::Rake::SpecTask.new("spec") do |t|
-  t.spec_files = FileList['specs/**/*_spec.rb']
+  t.spec_files = FileList['spec/**/*_spec.rb']
   t.spec_opts = ["--format", "specdoc"]
 end
 
