@@ -18,13 +18,13 @@
 class Gdk::Pixbuf
     def tag(tag_pixbuf)
         # Computes some tweaks.
-        tweak_x = tag_pixbuf.width / 3 
+        tweak_x = tag_pixbuf.width / 3
         tweak_y = tag_pixbuf.height / 3
-        
+
         # Creates the destination pixbuf.
         new_pixbuf = Gdk::Pixbuf.new(Gdk::Pixbuf::COLORSPACE_RGB,
-                                     true, 
-                                     8, 
+                                     true,
+                                     8,
                                      self.width + tweak_x,
                                      self.height + tweak_y)
 
@@ -32,19 +32,19 @@ class Gdk::Pixbuf
         new_pixbuf.fill!(0)
 
         # Copies the current pixbuf there (south-west).
-        self.copy_area(0, 0, 
+        self.copy_area(0, 0,
                        self.width, self.height,
                        new_pixbuf,
                        0, tweak_y)
 
         # Copies the tag pixbuf there (north-est).
         tag_pixbuf_x = self.width - (tweak_x * 2)
-        new_pixbuf.composite!(tag_pixbuf, 
-                              0, 0, 
+        new_pixbuf.composite!(tag_pixbuf,
+                              0, 0,
                               tag_pixbuf.width + tag_pixbuf_x,
                               tag_pixbuf.height,
-                              tag_pixbuf_x, 0, 
-                              1, 1, 
+                              tag_pixbuf_x, 0,
+                              1, 1,
                               Gdk::Pixbuf::INTERP_HYPER, 255)
         return new_pixbuf
     end
@@ -64,7 +64,16 @@ module UI
 
         def self.cover(library, book)
             filename = library.cover(book)
-            File.exists?(filename) ? Gdk::Pixbuf.new(filename) : BOOK_ICON
+            if File.exists?(filename)
+                begin
+                    return Gdk::Pixbuf.new(filename)
+                rescue Exception => err
+                    # report load error; FIX should go to a Logger...
+                    puts err.message
+                  puts "Failed to load Gdk::Pixbuf, please ensure that from #{filename} is a valid image file"
+                end
+            end
+            BOOK_ICON
         end
 
         def self.blank?(filename)
