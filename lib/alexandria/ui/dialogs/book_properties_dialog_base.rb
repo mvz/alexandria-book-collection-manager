@@ -30,6 +30,7 @@ module UI
             @parent, @cover_file = parent, cover_file
 
             @entry_title.complete_titles
+            @entry_title.grab_focus
             @entry_publisher.complete_publishers
             @entry_edition.complete_editions
             @entry_loaned_to.complete_borrowers
@@ -40,14 +41,14 @@ module UI
             renderer.signal_connect('edited') do |cell, path_string, new_text|
                 path = Gtk::TreePath.new(path_string)
                 iter = @treeview_authors.model.get_iter(path)
-                iter[0] = new_text 
+                iter[0] = new_text
             end
-            renderer.signal_connect('editing_started') do |cell, entry, 
+            renderer.signal_connect('editing_started') do |cell, entry,
                                                            path_string|
                 entry.complete_authors
             end
-            col = Gtk::TreeViewColumn.new("", renderer, 
-                                          :text => 0, 
+            col = Gtk::TreeViewColumn.new("", renderer,
+                                          :text => 0,
                                           :editable => 1)
             @treeview_authors.append_column(col)
         end
@@ -58,62 +59,62 @@ module UI
                 _("Properties for '%s'") % title
             else
                 _("Properties")
-            end 
+            end
         end
-        
+
         def on_add_author
             iter = @treeview_authors.model.append
             iter[0] = _("Author")
             iter[1] = true
-            @treeview_authors.set_cursor(iter.path, 
-                                         @treeview_authors.get_column(0), 
+            @treeview_authors.set_cursor(iter.path,
+                                         @treeview_authors.get_column(0),
                                          true)
         end
 
         def on_remove_author
             if iter = @treeview_authors.selection.selected
-	            @treeview_authors.model.remove(iter)
+                    @treeview_authors.model.remove(iter)
             end
         end
-        
+
         def on_image_rating1_press
             self.rating = 1
         end
-        
+
         def on_image_rating2_press
-            self.rating = 2 
+            self.rating = 2
         end
-        
+
         def on_image_rating3_press
-            self.rating = 3 
+            self.rating = 3
         end
-        
+
         def on_image_rating4_press
-            self.rating = 4 
+            self.rating = 4
         end
-        
+
         def on_image_rating5_press
-            self.rating = 5 
+            self.rating = 5
         end
-   
+
         def on_image_no_rating_press
             self.rating = 0
         end
-        
+
         def redd_toggled
         end
-        
+
         def own_toggled
-        	if @checkbutton_own.active?
-        		@checkbutton_want.inconsistent = true
-        	else
-        		@checkbutton_want.inconsistent = false
-        	end
+                if @checkbutton_own.active?
+                        @checkbutton_want.inconsistent = true
+                else
+                        @checkbutton_want.inconsistent = false
+                end
         end
-        
+
         def want_toggled
         end
-  
+
         @@latest_filechooser_directory = ENV['HOME']
         def on_change_cover
             backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
@@ -122,10 +123,10 @@ module UI
                                                 Gtk::FileChooser::ACTION_OPEN,
                                                 backend,
                                                 [_("No Cover"),
-                                                 Gtk::Dialog::RESPONSE_REJECT], 
-                                                [Gtk::Stock::CANCEL, 
+                                                 Gtk::Dialog::RESPONSE_REJECT],
+                                                [Gtk::Stock::CANCEL,
                                                  Gtk::Dialog::RESPONSE_CANCEL],
-                                                [Gtk::Stock::OPEN, 
+                                                [Gtk::Stock::OPEN,
                                                  Gtk::Dialog::RESPONSE_ACCEPT])
             dialog.current_folder = @@latest_filechooser_directory
             response = dialog.run
@@ -136,7 +137,7 @@ module UI
                     FileUtils.cp(dialog.filename, @cover_file)
                     self.cover = cover
                     @@latest_filechooser_directory = dialog.current_folder
-                rescue RuntimeError => e 
+                rescue RuntimeError => e
                     ErrorDialog.new(@book_properties_dialog, e.message)
                 end
             elsif response == Gtk::Dialog::RESPONSE_REJECT
@@ -158,23 +159,23 @@ module UI
         def on_loaned_date_changed
             loaned_time = Time.at(@date_loaned_since.time)
             n_days = ((Time.now - loaned_time) / (3600*24)).to_i
-            @label_loaning_duration.label = if n_days > 0 
+            @label_loaning_duration.label = if n_days > 0
                 n_("%d day", "%d days", n_days) % n_days
             else
                 ""
             end
         end
-            
+
         #######
         private
         #######
-    
+
         def rating=(rating)
             images = [
-                @image_rating1, 
-                @image_rating2, 
-                @image_rating3, 
-                @image_rating4, 
+                @image_rating1,
+                @image_rating2,
+                @image_rating3,
+                @image_rating4,
                 @image_rating5
             ]
             raise "out of range" if rating < 0 or rating > images.length
@@ -185,9 +186,9 @@ module UI
 
         def cover=(pixbuf)
             if pixbuf.width > COVER_MAXWIDTH
-                new_height = pixbuf.height / 
+                new_height = pixbuf.height /
                              (pixbuf.width / COVER_MAXWIDTH.to_f)
-                # We don't want to modify in place the given pixbuf, 
+                # We don't want to modify in place the given pixbuf,
                 # that's why we make a copy.
                 pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
             end

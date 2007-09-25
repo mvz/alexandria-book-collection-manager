@@ -51,19 +51,19 @@ module UI
         include GetText
         extend GetText
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-        
+
         def initialize(parent, selected_library=nil, &block)
             super('new_book_dialog.glade')
             puts "New Book Dialog" if $DEBUG
             @new_book_dialog.transient_for = @parent = parent
             @block = block
-			@destroyed = false
+                        @destroyed = false
             libraries = Libraries.instance.all_regular_libraries
             if selected_library.is_a?(SmartLibrary)
                 selected_library = libraries.first
             end
             @combo_libraries.populate_with_libraries(libraries,
-                                                     selected_library) 
+                                                     selected_library)
 
             @treeview_results.model = Gtk::ListStore.new(String, String,
                 Gdk::Pixbuf)
@@ -76,7 +76,7 @@ module UI
             col = Gtk::TreeViewColumn.new("", renderer)
             col.set_cell_data_func(renderer) do |column, cell, model, iter|
                 pixbuf = iter[2]
-                max_height = 25 
+                max_height = 25
 
                 if pixbuf.height > max_height
                     new_width = pixbuf.width * (max_height.to_f / pixbuf.height)
@@ -87,10 +87,10 @@ module UI
             end
             @treeview_results.append_column(col)
 
-            col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new, 
+            col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new,
                                           :text => 0)
             @treeview_results.append_column(col)
-            @entry_isbn.grab_focus
+
             @combo_search.active = 0
 
             # Re-select the last selected criterion.
@@ -98,34 +98,41 @@ module UI
                 @title_radiobutton.active = @@last_criterion_was_not_isbn
             rescue NameError
                 @@last_criterion_was_not_isbn = false
-            end 
+            end
+
+            if @@last_criterion_was_not_isbn
+                @entry_search.grab_focus
+            else
+                @entry_isbn.grab_focus
+            end
 
             @find_thread = nil
             @image_thread = nil
-            
-            @new_book_dialog.signal_connect("destroy") { @new_book_dialog.destroy
-            											 @destroyed = true	
-            											 }
+
+            @new_book_dialog.signal_connect("destroy") {
+                @new_book_dialog.destroy
+                @destroyed = true
+            }
         end
 
         def on_criterion_toggled(item)
             return unless item.active?
             if is_isbn = item == @isbn_radiobutton
                 @latest_size = @new_book_dialog.size
-                @new_book_dialog.resizable = false 
+                @new_book_dialog.resizable = false
             else
-                @new_book_dialog.resizable = true 
+                @new_book_dialog.resizable = true
                 @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
             end
-            @entry_isbn.sensitive = is_isbn 
-            @combo_search.sensitive = !is_isbn 
-            @entry_search.sensitive = !is_isbn 
+            @entry_isbn.sensitive = is_isbn
+            @combo_search.sensitive = !is_isbn
+            @entry_search.sensitive = !is_isbn
             @button_find.sensitive = !is_isbn
             @scrolledwindow.visible = !is_isbn
             on_changed(is_isbn ? @entry_isbn : @entry_search)
             unless is_isbn
-                @button_add.sensitive = 
-                    @treeview_results.selection.count_selected_rows > 0 
+                @button_add.sensitive =
+                    @treeview_results.selection.count_selected_rows > 0
             end
 
             # Remember the last criterion selected (so that we can re-select
@@ -147,20 +154,20 @@ module UI
         end
 
         def get_images_async
-        	puts "get_images_async" if $DEBUG
+                puts "get_images_async" if $DEBUG
             @images = {}
             @image_error = nil
             @image_thread = Thread.new do
-            	puts "New @image_thread #{Thread.current}" if $DEBUG
+                puts "New @image_thread #{Thread.current}" if $DEBUG
                 begin
-                	@results.each_with_index do |result, i|
+                        @results.each_with_index do |result, i|
                         uri = result[1]
                         if uri
-                        	if URI.parse(uri).scheme.nil?
+                                if URI.parse(uri).scheme.nil?
                                 File.open(uri, "r") do |io|
                                     @images[i] = io.read
                                 end
-                            else                                                    
+                            else
                                 @images[i] = URI.parse(uri).read
                             end
                         end
@@ -182,8 +189,8 @@ module UI
 
                             if pixbuf.width > 1
                                 iter = @treeview_results.model.get_iter(key.to_s)
-                                unless @treeview_results.model.iter_is_valid?(iter) 
-                                	raise "Iter is invalid! %s" % iter
+                                unless @treeview_results.model.iter_is_valid?(iter)
+                                        raise "Iter is invalid! %s" % iter
                                 end
                                 iter[2] = pixbuf #I bet you this is it!
                             end
@@ -197,17 +204,17 @@ module UI
 
                 # Stop if the image download thread has stopped.
                 if @image_thread.alive?
-                	puts "@image_thread (#{@image_thread}) still alive." if $DEBUG
-                	true
+                        puts "@image_thread (#{@image_thread}) still alive." if $DEBUG
+                        true
                 else
-                	puts "@image_thread (#{@image_thread}) asleep now." if $DEBUG
-                	false                	
+                        puts "@image_thread (#{@image_thread}) asleep now." if $DEBUG
+                        false
                 end
             end
         end
 
         def on_find
-        	puts "on_find" if $DEBUG
+                puts "on_find" if $DEBUG
             mode = case @combo_search.active
                 when 0
                     BookProviders::SEARCH_BY_TITLE
@@ -219,7 +226,7 @@ module UI
 
             criterion = @entry_search.text.strip
             @treeview_results.model.clear
-            puts "TreeStore Model: %s columns; ref_counts: %s" % 
+            puts "TreeStore Model: %s columns; ref_counts: %s" %
             [@treeview_results.model.n_columns, @treeview_results.model.ref_count] if $DEBUG
             @new_book_dialog.sensitive = false
             @find_error = nil
@@ -227,9 +234,9 @@ module UI
 
             @find_thread.kill if @find_thread
             @image_thread.kill if @image_thread
-            
+
             @find_thread = Thread.new do
-            	puts "New @find_thread #{Thread.current}" if $DEBUG
+                puts "New @find_thread #{Thread.current}" if $DEBUG
                 begin
                     @results = Alexandria::BookProviders.search(criterion, mode)
                     puts "got #{@results.length} results" if $DEBUG
@@ -241,7 +248,7 @@ module UI
             Gtk.timeout_add(100) do
                 # This block copies results into the tree view, or shows an
                 # error if the search failed.
-                
+
                 # Err... continue == false if @find_error
                 continue = if @find_error
                     ErrorDialog.new(@parent,
@@ -249,50 +256,50 @@ module UI
                                     @find_error)
                     false
                 elsif @results
-                	puts "Got results: #{@results[0]}..." if $DEBUG
+                        puts "Got results: #{@results[0]}..." if $DEBUG
                     @results.each do |book, cover|
                         s = _("%s, by %s") % [ book.title,
                                                book.authors.join(', ') ]
-						if @results.find { |book2, cover2|
+                                                if @results.find { |book2, cover2|
                                             book.title == book2.title and
                                             book.authors == book2.authors
                                          }.length > 1
                             s += " (#{book.edition}, #{book.publisher})"
                         end
                         puts "Copying %s into tree view." % book.title if $DEBUG
-						iter = @treeview_results.model.append
+                                                iter = @treeview_results.model.append
                         iter[0] = s
                         iter[1] = book.isbn
                         iter[2] = Icons::BOOK
                     end
 
                     # Kick off the image download thread.
-					if @find_thread.alive?
-						puts "@find_thread (#{@find_thread}) still alive." if $DEBUG
-                    	true
+                                        if @find_thread.alive?
+                                                puts "@find_thread (#{@find_thread}) still alive." if $DEBUG
+                        true
                     else
-                    	puts "@find_thread (#{@find_thread}) asleep now." if $DEBUG
-                    	#Not really async now.
-                    	get_images_async
-                    	false #continue == false if you get to here. Stop timeout_add.
+                        puts "@find_thread (#{@find_thread}) asleep now." if $DEBUG
+                        #Not really async now.
+                        get_images_async
+                        false #continue == false if you get to here. Stop timeout_add.
                     end
                 else
                     # Stop if the book find thread has stopped.
                     @find_thread.alive?
                 end
-                # continue == false if @find_error OR if results are returned 
+                # continue == false if @find_error OR if results are returned
                 # @new_book_dialog.sensitive is a bad call if window has been destroyed
                 # timeout_add ends if continue is false!
-                
+
                 unless continue
-                	unless @find_thread.alive? #This happens after find_thread is done
-                		unless @destroyed
-                			@new_book_dialog.sensitive = true
-                			@button_add.sensitive = false
-                		end
-                	end
+                        unless @find_thread.alive? #This happens after find_thread is done
+                                unless @destroyed
+                                        @new_book_dialog.sensitive = true
+                                        @button_add.sensitive = false
+                                end
+                        end
                 end
-                
+
                 continue #timeout_add loop condition
             end
         end
@@ -312,7 +319,7 @@ module UI
         def on_results_button_press_event(widget, event)
             # double left click
             if event.event_type == Gdk::Event::BUTTON2_PRESS and
-               event.button == 1 
+               event.button == 1
 
                 on_add
             end
@@ -325,7 +332,7 @@ module UI
 
             begin
                 libraries = Libraries.instance.all_libraries
-                library, new_library = 
+                library, new_library =
                     @combo_libraries.selection_from_libraries(libraries)
                 books_to_add = []
                 if @isbn_radiobutton.active?
@@ -340,8 +347,8 @@ module UI
                     assert_not_exist(library, @entry_isbn.text)
                     books_to_add << Alexandria::BookProviders.isbn_search(isbn)
                 else
-                    @treeview_results.selection.selected_each do |model, path,  
-                                                                 iter| 
+                    @treeview_results.selection.selected_each do |model, path,
+                                                                 iter|
                         @results.each do |book, cover|
                             next unless book.isbn == iter[1]
                             begin
@@ -355,7 +362,7 @@ module UI
                             books_to_add << [book, cover]
                         end
                     end
-                end 
+                end
 
                 # Save the books in the library.
                 books_to_add.each do |book, cover_uri|
@@ -369,11 +376,11 @@ module UI
                 # Do not destroy if there is no addition.
                 return if books_to_add.empty?
 
-                # Now we can destroy the dialog and go back to the main 
+                # Now we can destroy the dialog and go back to the main
                 # application.
                 @new_book_dialog.destroy
-                @block.call(books_to_add.map { |x| x.first }, 
-                            library, 
+                @block.call(books_to_add.map { |x| x.first },
+                            library,
                             new_library)
             rescue => e
                 ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
@@ -391,7 +398,7 @@ module UI
                 clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
                 if text = clipboard.wait_for_text
                     @entry_isbn.text = text if
-                        Library.valid_isbn?(text) or Library.valid_ean?(text) or 
+                        Library.valid_isbn?(text) or Library.valid_ean?(text) or
                         Library.valid_upc?(text)
                 end
             end
@@ -403,28 +410,28 @@ module UI
 
                 radio, target_widget, box2, box3 = case widget
                     when @eventbox_entry_search
-                        [@title_radiobutton, @entry_search, 
+                        [@title_radiobutton, @entry_search,
                          @eventbox_combo_search, @eventbox_entry_isbn]
 
-                    when @eventbox_combo_search 
-                        [@title_radiobutton, @combo_search, 
+                    when @eventbox_combo_search
+                        [@title_radiobutton, @combo_search,
                          @eventbox_entry_search, @eventbox_entry_isbn]
 
-                    when @eventbox_entry_isbn 
-                        [@isbn_radiobutton, @entry_isbn, 
+                    when @eventbox_entry_isbn
+                        [@isbn_radiobutton, @entry_isbn,
                          @eventbox_entry_search, @eventbox_combo_search]
                 end
                 radio.active = true
-                target_widget.grab_focus 
+                target_widget.grab_focus
                 widget.above_child = false
                 box2.above_child = box3.above_child = true
             end
         end
- 
+
         def on_help
             begin
                 Gnome::Help.display('alexandria', 'add-book-by-isbn')
-            rescue => e 
+            rescue => e
                 ErrorDialog.new(@preferences_dialog, e.message)
             end
         end
