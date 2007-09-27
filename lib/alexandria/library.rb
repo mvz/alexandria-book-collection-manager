@@ -36,7 +36,7 @@ module Alexandria
         attr_accessor :ruined_books
         DIR = File.join(ENV['HOME'], '.alexandria')
         EXT = { :book => '.yaml', :cover => '.cover' }
-        
+
         include GetText
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -48,7 +48,7 @@ module Alexandria
             File.join(DIR, @name)
         end
 
-        def self.generate_new_name(existing_libraries, 
+        def self.generate_new_name(existing_libraries,
                                    from_base=_("Untitled"))
             i = 1
             name = nil
@@ -61,9 +61,9 @@ module Alexandria
             return name
         end
 
-        FIX_BIGNUM_REGEX = 
+        FIX_BIGNUM_REGEX =
             /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
-        
+
         def self.load(name)
           test = [0,nil]
           ruined_books = []
@@ -83,25 +83,25 @@ module Alexandria
               old_pub_year = book.publishing_year
               begin
                 puts "Entering resave-test block for #{test[1]}" if $DEBUG
-              	begin
+                begin
                   book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
                   raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
                 rescue InvalidISBNError => e
                   puts e.message if $DEBUG
-              	  book.isbn = old_isbn
+                  book.isbn = old_isbn
                 end
- 		
+
                 book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
 
                 # Or if isbn has changed
-              	raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
-		
+                raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
+
                 # Re-save book if VERSION changes
-              	raise "#{test[1]} version is not okay" unless book.version == VERSION
-              	
-                # Or if publishing year has changed 
-              	raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year	
-              	
+                raise "#{test[1]} version is not okay" unless book.version == VERSION
+
+                # Or if publishing year has changed
+                raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year
+
                 # ruined_books << [book, book.isbn, library]
                 library << book
               rescue => e
@@ -112,68 +112,68 @@ module Alexandria
                 test[1] = savedfilename
                 # retry ## no, this would retry the outer 'begin' block, not the Dir.each block
 
-                
+
                 # retries the Dir.each block...
                 # but gives up after three tries
-                redo unless test[0] > 2 
+                redo unless test[0] > 2
 
               else
                 test = [0,nil]
               end
             end
-                
-            # Since 0.4.0 the cover files '_small.jpg' and 
-            # '_medium.jpg' have been deprecated for a single medium
-           	# cover file named '.cover'.
-                
-            Dir["*" + '_medium.jpg'].each do |medium_cover|
-            	begin
-            		FileUtils.mv(medium_cover, 
-            							medium_cover.sub(/_medium\.jpg$/,
-           								EXT[:cover]))
-           		rescue
-           		end
-            end
-                
-                
-                
-           	Dir["*" + EXT[:cover]].each do |cover|
-           		md = /(.+)\.cover/.match(cover)
-           		begin
-           			ean = self.canonicalise_ean(md[1])
-           		rescue
-           		  ean = md[1]
-           		end
-           		begin
-            		FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
-         			rescue
-         			end
-         		end
-                
-         	  FileUtils.rm_f(Dir['*_small.jpg'])
-         	end
-         	#puts ruined_books.inspect
-					library.ruined_books = ruined_books
 
-        	library 
+            # Since 0.4.0 the cover files '_small.jpg' and
+            # '_medium.jpg' have been deprecated for a single medium
+                # cover file named '.cover'.
+
+            Dir["*" + '_medium.jpg'].each do |medium_cover|
+                begin
+                        FileUtils.mv(medium_cover,
+                                                                medium_cover.sub(/_medium\.jpg$/,
+                                                                        EXT[:cover]))
+                        rescue
+                        end
+            end
+
+
+
+                Dir["*" + EXT[:cover]].each do |cover|
+                        md = /(.+)\.cover/.match(cover)
+                        begin
+                                ean = self.canonicalise_ean(md[1])
+                        rescue
+                          ean = md[1]
+                        end
+                        begin
+                        FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
+                                rescue
+                                end
+                        end
+
+                  FileUtils.rm_f(Dir['*_small.jpg'])
+                end
+                #puts ruined_books.inspect
+                                        library.ruined_books = ruined_books
+
+                library
         end
-				
-				def self.regularize_book_from_yaml(name)
-					text = IO.read(name)
-              	      
-         	#Code to remove the mystery string in books imported from Amazon
+
+                                def self.regularize_book_from_yaml(name)
+                                        text = IO.read(name)
+
+                #Code to remove the mystery string in books imported from Amazon
           # (In the past, still?) To allow ruby-amazon to be removed.
-              	      
+
           # The string is removed on load, but can't make it stick, maybe has to do with cache
-                    
+
           if /!str:Amazon::Search::Response/.match(text)
-          	puts text if $DEBUG
-          	text.gsub!("!str:Amazon::Search::Response", "")
-          	puts "got one!" if $DEBUG
-           	puts text if $DEBUG
+                puts text if $DEBUG
+                text.gsub!("!str:Amazon::Search::Response", "")
+                puts "got one!" if $DEBUG
+                puts text if $DEBUG
           end
-                    
-          # Backward compatibility with versions <= 0.6.0, where the 
+
+          # Backward compatibility with versions <= 0.6.0, where the
           # loaned_since field was a numeric.
           if md = FIX_BIGNUM_REGEX.match(text)
             new_yaml = Time.at(md[2].to_i).to_yaml
@@ -183,13 +183,20 @@ module Alexandria
           end
           book = YAML.load(text)
           unless book.isbn.class == String
-          	string_isbn = /isbn: (.+)/.match(text)[1].strip
-          	book.isbn = string_isbn
-          	puts "Reset to string value #{string_isbn}"
+              # HACK
+              md = /isbn: (.+)/.match(text)
+              if md
+                  string_isbn = md[1].strip
+                  book.isbn = string_isbn
+                  puts "Reset to string value #{string_isbn}"
+              end
           end
+                                    if book.isbn.class == String and book.isbn.length == 0
+                                        book.isbn = nil # save trouble later
+                                    end
           book
-				end
-       	
+                                end
+
         def self.loadall
             a = []
             begin
@@ -198,19 +205,19 @@ module Alexandria
                     next if /^\./.match(file)
                     # Skip non-directory files.
                     next unless File.stat(File.join(DIR, file)).directory?
-    
-                    a << self.load(file)       
-            	end
-             
+
+                    a << self.load(file)
+                end
+
             rescue Errno::ENOENT
                 FileUtils.mkdir_p(DIR)
             end
             # Create the default library if there is no library yet.
-            
+
             if a.empty?
                 a << self.load(_("My Library"))
             end
-            
+
             return a
         end
 
@@ -224,14 +231,20 @@ module Alexandria
 
                 source_library.changed
                 source_library.old_delete(book)
-                source_library.notify_observers(source_library, 
-                                                BOOK_REMOVED, 
+                source_library.notify_observers(source_library,
+                                                BOOK_REMOVED,
                                                 book)
 
                 dest_library.changed
                 dest_library.delete_if { |book2| book2.ident == book.ident }
                 dest_library << book
                 dest_library.notify_observers(dest_library, BOOK_ADDED, book)
+            end
+        end
+
+        class NoISBNError < StandardError
+            def initialize(msg)
+                super(msg)
             end
         end
 
@@ -244,7 +257,7 @@ module Alexandria
         end
 
         def self.extract_numbers(isbn)
-            raise "Nil ISBN" if isbn == nil
+            raise NoISBNError.new("Nil ISBN") if isbn == nil
 
             isbn.delete('- ').upcase.split('').map do |x|
                 raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
@@ -277,9 +290,9 @@ module Alexandria
         def self.valid_ean?(ean)
             begin
                 numbers = self.extract_numbers(ean)
-                (numbers.length == 13 and 
+                (numbers.length == 13 and
                     self.ean_checksum(numbers[0 .. 11]) == numbers[12]) or
-                (numbers.length == 18 and 
+                (numbers.length == 18 and
                     self.ean_checksum(numbers[0 .. 11]) == numbers[12])
             rescue InvalidISBNError
                 false
@@ -294,14 +307,14 @@ module Alexandria
         def self.valid_upc?(upc)
             begin
                 numbers = self.extract_numbers(upc)
-                (numbers.length == 17 and 
+                (numbers.length == 17 and
                     self.upc_checksum(numbers[0 .. 10]) == numbers[11])
             rescue InvalidISBNError
                 false
             end
         end
 
-	    AMERICAN_UPC_LOOKUP = {
+            AMERICAN_UPC_LOOKUP = {
             "014794" => "08041", "018926" => "0445", "02778" => "0449",
             "037145" => "0812", "042799" => "0785",  "043144" => "0688",
             "044903" => "0312", "045863" => "0517", "046594" => "0064",
@@ -337,9 +350,9 @@ module Alexandria
 
         def self.canonicalise_isbn(isbn)
             numbers = self.extract_numbers(isbn)
-						if self.valid_ean?(isbn)  and numbers[0 .. 2] != [9,7,8]
-    					return isbn
-						end
+                                                if self.valid_ean?(isbn)  and numbers[0 .. 2] != [9,7,8]
+                                        return isbn
+                                                end
             canonical = if self.valid_ean?(isbn)
                 # Looks like an EAN number -- extract the intersting part and
                 # calculate a checksum. It would be nice if we could validate
@@ -359,40 +372,41 @@ module Alexandria
 
             canonical.map { |x| x.to_s }.join()
         end
-				
-				def simple_save(book)
-						# Let's initialize the saved identifier if not already
-          	# (backward compatibility from 0.4.0)
-          	book.saved_ident ||= book.ident
-						if book.ident != book.saved_ident
-							puts "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" if $DEBUG
-          		FileUtils.rm(yaml(book.saved_ident))
-          	end
-          	if File.exists?(cover(book.saved_ident))
-          		begin
-          			puts "Moving cover #{cover(book.saved_ident)} to #{cover(book.ident)}" if $DEBUG
-          			FileUtils.mv(cover(book.saved_ident), cover(book.ident))
-          		rescue
-          		end
-          	end
-          	book.saved_ident = book.ident
 
-                                  filename = book.saved_ident.to_s + ".yaml"
-          	File.open(filename, "w") { |io| io.puts book.to_yaml }
-                                  puts "outputting book data..."
-          	puts File.open(filename, "r").read
-                                  filename
-       	end
-				
+        def simple_save(book)
+            # Let's initialize the saved identifier if not already
+            # (backward compatibility from 0.4.0)
+            book.saved_ident ||= book.ident
+            if book.ident != book.saved_ident
+                puts "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" if $DEBUG
+                FileUtils.rm(yaml(book.saved_ident))
+            end
+            if File.exists?(cover(book.saved_ident))
+                begin
+                    puts "Moving cover #{cover(book.saved_ident)} to #{cover(book.ident)}" if $DEBUG
+                    FileUtils.mv(cover(book.saved_ident), cover(book.ident))
+                rescue
+                end
+            end
+            book.saved_ident = book.ident
+
+            filename = book.saved_ident.to_s + ".yaml"
+            puts filename
+            File.open(filename, "w") { |io| io.puts book.to_yaml }
+            puts "outputting book data..."
+            puts File.open(filename, "r").read
+            filename
+        end
+
         def save(book, final=false)
             changed unless final
-            
+
             puts "Saving book #{book.title}..." if $DEBUG
-            
+
             # Let's initialize the saved identifier if not already
             # (backward compatibility from 0.4.0).
             book.saved_ident ||= book.ident
-            
+
             puts "#{book.title}'s saved_ident is #{book.saved_ident}" if $DEBUG
 
             if book.ident != book.saved_ident
@@ -400,26 +414,26 @@ module Alexandria
                 if File.exists?(cover(book.saved_ident))
                     FileUtils.mv(cover(book.saved_ident), cover(book.ident))
                 end
-    
+
                 # Notify before updating the saved identifier, so the views
                 # can still use the old one to update their models.
                 notify_observers(self, BOOK_UPDATED, book) unless final
                 book.saved_ident = book.ident
             end
-            already_there = (File.exists?(yaml(book)) and 
+            already_there = (File.exists?(yaml(book)) and
                              !@deleted_books.include?(book))
-            
+
             puts "Doing the saving deed: #{book.title} -- #{book.isbn}" if $DEBUG
             File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
-            
+
             # Do not notify twice.
             if changed?
-                notify_observers(self, 
-                                 already_there ? BOOK_UPDATED : BOOK_ADDED, 
+                notify_observers(self,
+                                 already_there ? BOOK_UPDATED : BOOK_ADDED,
                                  book)
             end
         end
-				
+
         def transport
                 config = Alexandria::Preferences.instance.http_proxy_config
                 config ? Net::HTTP.Proxy(*config) : Net::HTTP
@@ -439,14 +453,14 @@ module Alexandria
                         io.puts transport.get(uri)
                     end
                 end
-            
+
                 # Remove the file if its blank.
                 if Alexandria::UI::Icons.blank?(cover_file)
                     File.delete(cover_file)
                 end
             end
         end
-        
+
         @@deleted_libraries = []
 
         def self.deleted_libraries
@@ -454,7 +468,7 @@ module Alexandria
         end
 
         def self.really_delete_deleted_libraries
-            @@deleted_libraries.each do |library| 
+            @@deleted_libraries.each do |library|
                 puts "Deleting library directory (#{library.path})" if $DEBUG
                 FileUtils.rm_rf(library.path)
             end
@@ -529,15 +543,15 @@ module Alexandria
                 when String
                     something
                 when Bignum
-                		something
+                                something
                 when Fixnum
-                		something
+                                something
                 else
                     raise "#{something} is a #{something.class}"
             end
             File.join(self.path, ident.to_s + EXT[:cover])
         end
-    
+
         def yaml(something, basedir=self.path)
             ident = case something
                 when Book
@@ -545,15 +559,15 @@ module Alexandria
                 when String
                     something
                 when Bignum
-                		something
+                                something
                 when Fixnum
-                		something
+                                something
                 else
                     raise "#{something} is #{something.class}"
             end
             File.join(basedir, ident.to_s + EXT[:book])
         end
-        
+
         def name=(name)
             File.rename(path, File.join(DIR, name))
             @name = name
@@ -562,22 +576,22 @@ module Alexandria
         def n_rated
             select { |x| !x.rating.nil? and x.rating > 0 }.length
         end
-       
+
         def n_unrated
             length - n_rated
         end
-        
+
         def ==(object)
             object.is_a?(self.class) && object.name == self.name
         end
-        
+
         def copy_covers(somewhere)
             FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
             FileUtils.mkdir(somewhere)
             each do |book|
                 next unless File.exists?(cover(book))
                 FileUtils.cp(File.join(self.path, book.ident + EXT[:cover]),
-                             File.join(somewhere, final_cover(book))) 
+                             File.join(somewhere, final_cover(book)))
             end
         end
 
@@ -588,7 +602,7 @@ module Alexandria
         def final_cover(book)
             book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
         end
-        
+
         #########
         protected
         #########
@@ -598,7 +612,7 @@ module Alexandria
             @deleted_books = []
         end
     end
-    
+
     class Libraries
         attr_reader :all_libraries, :ruined_books
 
@@ -606,16 +620,16 @@ module Alexandria
         include Singleton
 
         def reload
-            @all_libraries.clear 
+            @all_libraries.clear
             @all_libraries.concat(Library.loadall)
             @all_libraries.concat(SmartLibrary.loadall)
-           	ruined = [] 
-           	last = []
-           	all_regular_libraries.each {|library|
-           								ruined += library.ruined_books 
-           								}	
-           	#puts ruined.inspect
-           	@ruined_books = ruined
+                ruined = []
+                last = []
+                all_regular_libraries.each {|library|
+                                                                        ruined += library.ruined_books
+                                                                        }
+                #puts ruined.inspect
+                @ruined_books = ruined
         end
 
         def all_regular_libraries
@@ -625,7 +639,7 @@ module Alexandria
         def all_smart_libraries
             @all_libraries.select { |x| x.is_a?(SmartLibrary) }
         end
-        
+
         LIBRARY_ADDED, LIBRARY_REMOVED = 1, 2
 
         def add_library(library)
@@ -642,21 +656,21 @@ module Alexandria
             Library.really_delete_deleted_libraries
             SmartLibrary.really_delete_deleted_libraries
         end
-        
+
         def really_save_all_books
-        	all_regular_libraries.each do |library|
-        		library.each {|book| library.save(book, true)}	
-        	end
+                all_regular_libraries.each do |library|
+                        library.each {|book| library.save(book, true)}
+                end
         end
-        
+
         #######
         private
         #######
-        
+
         def initialize
             @all_libraries = []
         end
-        
+
         def notify(action, library)
             changed
             notify_observers(self, action, library)

@@ -269,7 +269,7 @@ module UI
                         puts "Copying %s into tree view." % book.title if $DEBUG
                                                 iter = @treeview_results.model.append
                         iter[0] = s
-                        iter[1] = book.isbn
+                        iter[1] = book.ident
                         iter[2] = Icons::BOOK
                     end
 
@@ -350,16 +350,24 @@ module UI
                     @treeview_results.selection.selected_each do |model, path,
                                                                  iter|
                         @results.each do |book, cover|
-                            next unless book.isbn == iter[1]
+                            next unless book.ident == iter[1]
+                            #print iter[0].inspect
+                            #print "  "
+                            #puts iter[1].inspect
                             begin
                                 next unless
                                     assert_not_exist(library, book.isbn)
                             rescue Alexandria::Library::InvalidISBNError
                                 next unless
                                     KeepBadISBNDialog.new(@parent, book).keep?
-                                book.isbn = book.saved_ident = ""
+                                book.isbn = book.saved_ident = nil
+                            rescue Alexandria::Library::NoISBNError
+                                book.isbn = book.saved_ident = nil
+                                books_to_add << [book, cover]
+                                next
                             end
                             books_to_add << [book, cover]
+
                         end
                     end
                 end
