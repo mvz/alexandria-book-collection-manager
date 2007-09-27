@@ -1,4 +1,21 @@
-# -*- ruby -*-
+#-- -*- ruby -*-
+# Copyright (C) 2007 Cathal Mc Ginley
+#
+# Alexandria is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# Alexandria is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public
+# License along with Alexandria; see the file COPYING.  If not,
+# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
+# Boston, MA 02111-1307, USA.
+
 
 $:.unshift(File.join(File.dirname(__FILE__), '../../lib'))
 
@@ -109,3 +126,59 @@ describe Alexandria::Library, " imported from 0.6.1 data files" do
   end
 
 end
+
+describe Alexandria::Library, " with books without an ISBN" do
+
+  before(:each) do
+    libVersion = File.join(LIBDIR, '0.6.1-noisbn')
+    FileUtils.cp_r(libVersion, TESTDIR)
+  end
+
+
+  it "allows books to have no ISBN" do
+      libs = Alexandria::Library.loadall
+      libs.size.should == 1
+      myLibrary = libs[0]
+      myLibrary.size.should == 2
+
+      # Guide to LaTeX
+      latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
+      latexBook.isbn.should == '9780201398250'
+      latexBook.publisher.should == 'Addison Wesley' # note, no Ruby-Amazon cruft
+      latexBook.version.should == Alexandria::VERSION
+
+      #Lex and Yacc
+      lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
+      lexAndYaccBook.publisher.should == "O'Reilley"
+
+      puts "ident -> " + lexAndYaccBook.ident
+
+      myLibrary.each do |book|
+          myLibrary.save(book, true)
+      end
+      libs = nil
+      myLibrary = nil
+
+      librariesReloaded = Alexandria::Library.loadall
+      myLibraryReloaded = librariesReloaded[0]
+
+      myLibraryReloaded.size.should == 2
+
+      latexBook = myLibraryReloaded.select{|b| b.title.include? 'Latex'}[0]
+      latexBook.should_not be_nil
+      latexBook.publisher.should == 'Addison Wesley'
+      puts latexBook.title
+
+      lexAndYaccBook = myLibraryReloaded.select{|b| b.title.include? 'Lex'}[0]
+      lexAndYaccBook.should_not be_nil
+      lexAndYaccBook.publisher.should == "O'Reilley"
+      puts lexAndYaccBook.title
+
+  end
+
+  after(:each) do
+      FileUtils.rm_rf(TESTDIR)
+  end
+
+end
+

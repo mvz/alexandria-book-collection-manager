@@ -1,0 +1,10 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- !str:Amazon::Search::Response Helmut Kopka
+- !str:Amazon::Search::Response Patrick Daly
+edition: !str:Amazon::Search::Response Paperback
+isbn: !str:Amazon::Search::Response 0201398257
+notes: ""
+publisher: !str:Amazon::Search::Response Addison Wesley
+saved_ident: !str:Amazon::Search::Response 0201398257
+title: !str:Amazon::Search::Response "Kopka:A Guide to Latex_p3: Document preparation for beginners and advanced users: Document Preparation for Beginners and Advanced Users"

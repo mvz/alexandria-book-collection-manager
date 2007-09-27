@@ -1,0 +1,10 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Mason
+- Brown, Doug
+edition: ""
+isbn: ""
+notes: ""
+publisher: O'Reilley
+saved_ident: "1565920007"
+title: Lex & Yacc / John R. Levine, Tony Mason, Doug Brown
