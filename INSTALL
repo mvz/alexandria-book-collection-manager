@@ -1,0 +1,89 @@
+= Installing Alexandria
+
+Alexandria is written in Ruby with a GTK+2/GNOME user-interface. It
+currently only runs on UNIX-style systems, such as GNU/Linux.
+
+Alexandria is not an easy project to build from scratch. Apart from
+Ruby and GNOME, it has a lot of dependencies; however, many of these
+are now optional as detailed below. Once the dependencies have been
+installed, building and installing Alexandria is relatively
+straightforward.
+
+== Dependencies
+
+The {Ruby-GNOME2}[http://ruby-gnome2.sourceforge.jp/] user-interface
+involves a number of packages:
+
+* <tt>ruby-gtk2</tt>
+* <tt>ruby-gnome2</tt>
+* <tt>ruby-libglade2</tt>
+* <tt>ruby-gconf2</tt>
+
+<tt>ruby-gettext</tt>[http://ponx.s5.xrea.com/hiki/ruby-gettext.html]
+is required for the internationalisation of the user interface.
+
+== Build Dependencies
+
++rake+[http://rake.rubyforge.org] is required to build Alexandria from
+the project +Rakefile+.
+
+The non-Ruby +gettext+[http://www.gnu.org/software/gettext] package is
+also needed to generate the binary +mo+ files used by
+<tt>ruby-gettext</tt> at runtime.
+
+== Optional Dependencies
+
+=== Ruby/Amazon
+
+For the <b>Amazon</b> book provider, you will need
+<tt>ruby-amazon</tt>[http://www.caliban.org/ruby/ruby-amazon.shtml],
+which provides a Ruby interface to Amazon Web Services (AWS) including
+book search.
+
+=== Ruby/ZOOM and Yaz
+
+For Z39.50 support and and the <b>Library of Congress</b> and
+<b>British Library</b> book providers you will need
+<tt>ruby-zoom</tt>[http://ruby-zoom.rubyforge.org], which in turn
+requires the non-Ruby package +yaz+[http://www.indexdata.dk/yaz].
+
+The Z39.50 Object-Orientation Model (ZOOM) is an international
+standard for communication between computer systems, particularly
+libraries and information-related systems.
+
+=== Mechanize and Hpricot
+
+For the <b>Deastore</b> book provider, you will need
++mechanize+[http://wwwsearch.sourceforge.net/mechanize], which in turn
+requires +hpricot+[http://code.whytheluckystiff.net/hpricot].
+
+Mechanize provides a Ruby package for stateful programmatic web
+browsing. It is used for "scraping" web sites, extracting data
+programatically from ordinary web pages. It uses Hpricot as its HTML
+parser.
+
+=== image_size
+
+You will need
+<tt>image_size</tt>[http://rubyforge.org/projects/imagesize/] for
+optimizing the cover images in exported libraries.
+
+== Build and Install
+
+To build Alexandria, go to the base project directory (where the
+Rakefile and this INSTALL file are located) and issue the command
+    rake build
+
+You must have root priveledges to install, so use +su+
+    su -c 'rake install'
+or +sudo+
+    sudo rake install
+
+Now you can check the version of the installed Alexandria
+    alexandria --version
+
+To launch Alexandria, simply use
+    alexandria
+
+If you wish to see more output on the console, you can use
+    alexandria --debug
