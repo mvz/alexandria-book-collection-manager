@@ -35,10 +35,20 @@ require 'pathname'
 require 'rbconfig'
 require 'yaml'
 
-require 'rubygems'
-require 'rake'
-require 'rake/tasklib'
-require 'rake/rdoctask'
+retrying_with_rubygems = false
+begin
+    require 'rake'
+    require 'rake/tasklib'
+    require 'rake/rdoctask'
+rescue LoadError => err
+    unless retrying_with_rubygems
+        require 'rubygems'
+        retrying_with_rubygems = true
+        retry
+    else
+        raise err
+    end
+end
 
 #require 'rake/contrib/sshpublisher'
 #require 'rake/gempackagetask'
@@ -151,7 +161,7 @@ class AlexandriaBuild < Rake::TaskLib
       rd.main = @rdoc.main
       # no graphviz dot generation (for the moment)
       rd.rdoc_dir = @rdoc.dir
-      rd.rdoc_files.push(*files.source)#.grep(@rdoc.pattern))
+      rd.rdoc_files.push(*files.source.grep(@rdoc.pattern))
       rd.rdoc_files.push(*files.rdoc)
       title = "#{name}-#{version} Documentation"
       title = "#{rubyforge_name}'s " + title if rubyforge_name != name
@@ -165,7 +175,7 @@ class AlexandriaBuild < Rake::TaskLib
     def initialize(build)
       super(build)
       @dir = 'doc/html'
-      @pattern = /^(lib|bin|ext)|txt$/
+      @pattern = /^(lib|bin|ext)|rdoc$/
       @main = 'README'
     end
   end
