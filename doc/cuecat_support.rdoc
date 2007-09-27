@@ -1,0 +1,67 @@
+= CueCat Barcode Scanner Support
+
+Alexandria now supports the use of unmodified CueCat barcode scanners
+for scanning ISBN barcodes.
+
+
+== What is a CueCat?
+
+The CueCat is a wand-style barcode scanner, available with either a
+PS/2 keyboard connector (and a PS/2 keyboard pass-through), or with a
+standard keyboard-type USB connector. 
+
+You scan a barcode by placing the 'nose' of the scanner on one side of
+the barcode, in the clear area before the first black bar, and waiting
+until the flashing red light stops flashing and illuminates the
+surface brightly, then swiftly passing the scanner across the barcode
+and into the clear area on the far side. The scan data is then input
+into your computer as if through a keyboard. You can test the
+operation of your CueCat by placing your keyboard cursor inside any
+text editor and scanning a barcode.
+
+By default the scan data is scrambled. There are instructions, widely
+available on the Internet, detailing how to modify the circuit board to
+disable scrambling, but some barcode scanning applications, including
+Alexandria, can automatically decode scrambled data from a CueCat.
+
+
+== The History of CueCat?
+
+Millions of CueCat scanners were distributed free of charge by their
+creator the Digital Convergence Corporation in the late 1990s and
+early 2000s. The intention was that customers would use the scanners
+to scan special barcodes in magazine advertisments and articles, and
+software would take the customers to a related web page.
+
+Dozens of eager hackers, upon recieving these barcode scanners,
+immediately set about finding a way to use them for a wider variety of
+purposes, such as book cataloging. They decoded the very simple
+scrambling of the scanner output data (it was a form of Base64
+encoding), and even reported on how to lift a single microchip pin to
+circumvent the scrambling in hardware. They also discovered that each
+CueCat has a unique serial number (which could have allowed
+DigitalConvergence to build up profiles of the products customers were
+interested in) and showed how to zero-out or avoid the serial number.
+
+Digital Convergence attempted to restrict such activities, but
+eventually the company went bust, leaving several electronics
+warehouses to buy up hundreds of thousands of unshipped CueCats in the
+ensuing liquidation sale.
+
+Today, PS/2 and USB CueCat scanners are available cheaply over the
+internet (about US$12 in 2007). Apart from the slight inconvenience
+caused by the data scrambling, they are eminently usable as cheap,
+robust, wand-style barcode scanners.
+
+== The Old Linux Driver
+
+A kernel driver for the CueCat was developed as a patch for the 2.4
+Linux kernel series. This provided decoding of the scrambled input,
+and made input data available from <tt>/dev/scanners/cuecat</tt>.
+
+Since this driver is currently unmaintained and does not work with 2.6
+kernels, support for this has been dropped from Alexandria. However,
+since Alexandria 0.6.2, there is so-called 'userland' support for the
+CueCat, which simply means that modifications to the kernel are not
+necessary. Instead, the decoding of the simple data scrambling is done
+by the application software.

@@ -22,14 +22,13 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
   b.files.icons = FileList['data/app-icon/**/*.png',
                            'data/app-icon/scalable/*.svg']
   b.files.rdoc = FileList['doc/*',
+                          'INSTALL',
                           'COPYING',
                           'ChangeLog',
                           'TODO']
   b.rdoc.main = 'doc/README'
 
   b.install.fake_prefix='debian/alexandria'
-  #b.install.groups << ['a', 'b', 'c', 0444]
-
 end
 
 ##
