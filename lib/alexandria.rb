@@ -17,7 +17,7 @@
 
 require 'gettext'
 
-module Alexandria 
+module Alexandria
     TITLE = 'Alexandria'
     TEXTDOMAIN = 'alexandria'
     extend GetText
@@ -27,6 +27,7 @@ module Alexandria
     AUTHORS = [
         'Alexander McCormmach <alexander@tunicate.org>',
         'Aymeric Nys <aymeric@nnx.com>',
+        'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
         'Claudio Belotti <bel8@lilik.it>',
         'Constantine Evans <cevans@costinet.org>',
         'Dafydd Harries <daf@muse.19inch.net>',
@@ -45,7 +46,7 @@ module Alexandria
     DOCUMENTERS = [
         'Liam Davison <registrations@liamjdavison.info>'
     ]
-    TRANSLATORS = [ 
+    TRANSLATORS = [
         'Dafydd Harries <daf@muse.19inch.net> (cy)',
         'David Weinehall <tao@debian.org> (sv)',
         'Jiri Pejchal <jiri.pejchal@gmail.com> (cs)',
@@ -59,18 +60,19 @@ module Alexandria
         'Mirko Maischberger <mirko@lilik.it> (it)'
     ]
     ARTISTS = [
+        'Andreas Nilsson <nisses.mail@home.se>',
         'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
     ]
     LIST = 'alexandria-list@rubyforge.org'
     BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
     WEBSITE_URL = 'http://alexandria.rubyforge.org'
     DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=lrz%40rubymonks%2eorg&item_name=Alexandria&no_shipping=0&no_note=1&currency_code=EUR'
-    
+
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?
-        $DEBUG = true if ARGV.include? "--debug" 
-		puts "Initializing Alexandria..." if $DEBUG
-		
+        $DEBUG = true if ARGV.include? "--debug"
+                puts "Initializing Alexandria..." if $DEBUG
+
         ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
                                 and URI.parse(ENV['http_proxy']).userinfo.nil?
         Alexandria::UI.main
