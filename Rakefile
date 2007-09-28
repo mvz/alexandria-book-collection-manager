@@ -1,6 +1,25 @@
 # -*- ruby -*-
 
 require './tasks.rb'
+begin
+  require 'rubygems'
+  require 'spec/rake/spectask'
+  namespace :spec do
+    task :default => Spec::Rake::SpecTask.new("spec") do |t|
+      t.spec_files = FileList['spec/**/*_spec.rb']
+      t.spec_opts = ["--format", "specdoc"]
+    end
+
+    Spec::Rake::SpecTask.new("rcov") do |t|
+      t.spec_files = FileList['spec/**/*_spec.rb']
+      t.spec_opts = ["--format", "specdoc"]
+      t.rcov = true
+    end
+  end
+
+rescue
+  puts "Install rubygems in order to run test suite"
+end
 
 build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
 
@@ -16,19 +35,19 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
   b.files.source = FileList['lib/**/*.rb',
                             'bin/alexandria',
                             'spec/**/*.rb']
-  b.files.data = FileList['data/alexandria/**/*.*',
+                            b.files.data = FileList['data/alexandria/**/*.*',
                           'data/gnome/**/*.*',
                           'data/omf/alexandria/*.omf']
-  b.files.icons = FileList['data/app-icon/**/*.png',
+                            b.files.icons = FileList['data/app-icon/**/*.png',
                            'data/app-icon/scalable/*.svg']
-  b.files.rdoc = FileList['doc/*',
+                            b.files.rdoc = FileList['doc/*',
                           'INSTALL',
                           'COPYING',
                           'ChangeLog',
                           'TODO']
-  b.rdoc.main = 'doc/README'
+                            b.rdoc.main = 'doc/README'
 
-  b.install.fake_prefix='debian/alexandria'
+                            b.install.fake_prefix='debian/alexandria'
 end
 
 ##
@@ -41,7 +60,7 @@ end
 # generate lib/alexandria/config.rb
 file 'lib/alexandria/config.rb' => ['Rakefile'] do |f|
   build.generate f.name do
-<<EOS
+    <<EOS
 module Alexandria
   module Config
     DATA_DIR = '#{build.install.prefix}/share/#{build.name}'
@@ -56,7 +75,7 @@ end
 # generate lib/alexandria/version.rb
 file 'lib/alexandria/version.rb' => ['Rakefile'] do |f|
   build.generate f.name do
-<<EOS
+    <<EOS
 module Alexandria
   VERSION = "#{build.version}"
 end
@@ -64,20 +83,18 @@ EOS
   end
 end
 
-
-
 # generate default_preferences.rb
 def convert_with_type(value, type)
-    case type
-        when 'int'
-            value.to_i
-        when 'float'
-            value.to_f
-        when 'bool'
-            value == 'true'
-        else
-            value.strip
-    end
+  case type
+  when 'int'
+    value.to_i
+  when 'float'
+    value.to_f
+  when 'bool'
+    value == 'true'
+  else
+    value.strip
+  end
 end
 
 SCHEMA_PATH = 'schemas/alexandria.schemas'
@@ -115,7 +132,7 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
   end
 
   build.generate f.name do
-<<EOS
+    <<EOS
 module Alexandria
   class Preferences
     DEFAULT_VALUES = {#{generated_lines.join(",\n      ")}}
@@ -179,4 +196,4 @@ end
 task :post_install => [:scrollkeeper, :gconf, :update_icon_cache]
 
 
-# vim: syntax=Ruby
+#vim: filetype=ruby syntax=Ruby

@@ -41,7 +41,8 @@ module Alexandria
         'Rene Samselnig <sandman@sdm-net.org>',
         'Robby Stephenson <robby@periapsis.org>',
         'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
-        'Zachary P. Landau <kapheine@hypa.net>'
+        'Zachary P. Landau <kapheine@hypa.net>',
+        'Joseph Method <tristil@gmail.com>'
     ]
     DOCUMENTERS = [
         'Liam Davison <registrations@liamjdavison.info>'

@@ -15,36 +15,7 @@
 # License along with Alexandria; see the file COPYING.  If not,
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
-
-
-$:.unshift(File.join(File.dirname(__FILE__), '../../lib'))
-
-require  'alexandria'
-
-LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '../data/libraries'))
-TESTDIR = File.join(LIBDIR, 'test')
-
-
-#def useTestLibrary(version)
-#  libVersion = File.join(LIBDIR, version)
-#  FileUtils.cp_r(libVersion, TESTDIR)
-#end
-
-def an_artist_of_the_floating_world
-  Alexandria::Book.new("An Artist of the Floating World",
-                       "Kazuo Ishiguro",
-                       "9780571147168",
-                       "Faber and Faber", 1999,
-                       "Paperback")
-end
-
-
-# find a nicer way to do this... it generates a warning at the moment
-module Alexandria
-  class Library
-    DIR = TESTDIR
-  end
-end
+require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Alexandria::Library do
 
@@ -69,7 +40,7 @@ describe Alexandria::Library do
   it "allows multiple copies of a book to be added and deleted in turn" do
     myLibrary = Alexandria::Library.loadall()[0]
     first_copy = an_artist_of_the_floating_world()
-    puts "first_copy #{first_copy.object_id}"
+    #puts "first_copy #{first_copy.object_id}"
     myLibrary << first_copy
     myLibrary.delete(first_copy)
 
@@ -78,14 +49,14 @@ describe Alexandria::Library do
     third_copy = an_artist_of_the_floating_world()
     myLibrary << third_copy
 
-    puts "AAA myLibrary.size #{myLibrary.size}"
+    #puts "AAA myLibrary.size #{myLibrary.size}"
 
-    puts "second_copy #{second_copy.object_id}"
+    #puts "second_copy #{second_copy.object_id}"
     #lambda {  myLibrary.delete(second_copy) }.should raise_error
     lambda { myLibrary.delete(second_copy) }.should_not raise_error
 
 
-    puts "BBB myLibrary.size #{myLibrary.size}"
+    #puts "BBB myLibrary.size #{myLibrary.size}"
     # myLibrary.size.should == 1 # not yet an established feature...
   end
 
@@ -151,7 +122,7 @@ describe Alexandria::Library, " with books without an ISBN" do
       lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
       lexAndYaccBook.publisher.should == "O'Reilley"
 
-      puts "ident -> " + lexAndYaccBook.ident
+      #puts "ident -> " + lexAndYaccBook.ident
 
       myLibrary.each do |book|
           myLibrary.save(book, true)
@@ -167,12 +138,12 @@ describe Alexandria::Library, " with books without an ISBN" do
       latexBook = myLibraryReloaded.select{|b| b.title.include? 'Latex'}[0]
       latexBook.should_not be_nil
       latexBook.publisher.should == 'Addison Wesley'
-      puts latexBook.title
+      #puts latexBook.title
 
       lexAndYaccBook = myLibraryReloaded.select{|b| b.title.include? 'Lex'}[0]
       lexAndYaccBook.should_not be_nil
       lexAndYaccBook.publisher.should == "O'Reilley"
-      puts lexAndYaccBook.title
+      #puts lexAndYaccBook.title
 
   end
 
