@@ -206,13 +206,15 @@ module UI
             end
             left_operand_combo.signal_connect('changed') do
                 operand = operands[left_operand_combo.active]
-                #operator_combo.model.clear
-                operations = SmartLibrary::Rule.operations_for_operand(operand)
-                operations.each do |operation|
-                    operator = operation.first
-                    operator_combo.append_text(operator.name)
+                operator_combo.freeze_notify do
+                    operator_combo.model.clear
+                    operations = SmartLibrary::Rule.operations_for_operand(operand)
+                    operations.each do |operation|
+                        operator = operation.first
+                        operator_combo.append_text(operator.name)
+                    end
+                    operator_combo.active = 0
                 end
-                operator_combo.active = 0
             end
 
             rule_box.pack_start(left_operand_combo, false, false, 0)
