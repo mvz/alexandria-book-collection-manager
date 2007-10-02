@@ -9,6 +9,7 @@ are now optional as detailed below. Once the dependencies have been
 installed, building and installing Alexandria is relatively
 straightforward.
 
+
 == Dependencies
 
 The {Ruby-GNOME2}[http://ruby-gnome2.sourceforge.jp/] user-interface
@@ -22,14 +23,31 @@ involves a number of packages:
 <tt>ruby-gettext</tt>[http://ponx.s5.xrea.com/hiki/ruby-gettext.html]
 is required for the internationalisation of the user interface.
 
+
 == Build Dependencies
+
+=== Ruby Dependencies
 
 +rake+[http://rake.rubyforge.org] is required to build Alexandria from
 the project +Rakefile+.
 
-The non-Ruby +gettext+[http://www.gnu.org/software/gettext] package is
-also needed to generate the binary +mo+ files used by
-<tt>ruby-gettext</tt> at runtime.
+You also need +rubygems+[http://www.rubygems.org/] and
++rspec+[http://rspec.rubyforge.org/] to run the RSpec test suite. (At
+the moment, you will need +rubygems+ and +rspec+ even if you are not
+running the spec task. I will try to remove such dependencies from the
++Rakefile+ in future.)
+
+=== Native Dependencies
+
+The +gettext+[http://www.gnu.org/software/gettext] package is needed
+to generate the binary +mo+ files used by <tt>ruby-gettext</tt> at
+runtime. You also need the
++intltool+[http://www.freedesktop.org/wiki/Software/intltool] package
+to merge translations into generated files (and to extract
+translatable string from xml files during development).
+
+To build deb files, you will need +dpkg+ and +fakeroot+ (which are
+available on all Debian-based systems through <tt>apt-get</tt>).
 
 == Optional Dependencies
 
@@ -68,6 +86,7 @@ You will need
 <tt>image_size</tt>[http://rubyforge.org/projects/imagesize/] for
 optimizing the cover images in exported libraries.
 
+
 == Build and Install
 
 To build Alexandria, go to the base project directory (where the
@@ -78,6 +97,10 @@ You must have root priveledges to install, so use +su+
     su -c 'rake install'
 or +sudo+
     sudo rake install
+
+You can generate a .deb file using
+    rake debian:deb
+You can install the deb using dpkg. 
 
 Now you can check the version of the installed Alexandria
     alexandria --version
