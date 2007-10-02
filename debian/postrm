@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+# Automatically added by dh_installmenu
+if [ -x "`which update-menus 2>/dev/null`" ]; then update-menus ; fi
+# End automatically added section
+# Automatically added by dh_gconf
+if [ "$1" = purge ]; then
+	OLD_DIR=/etc/gconf/schemas
+	SCHEMA_FILES="alexandria.schemas "
+	if [ -d $OLD_DIR ]; then
+		for SCHEMA in $SCHEMA_FILES; do
+			rm -f $OLD_DIR/$SCHEMA
+		done
+		rmdir -p --ignore-fail-on-non-empty $OLD_DIR
+	fi
+fi
+# End automatically added section
+# Automatically added by dh_desktop
+if [ "$1" = "remove" ] && which update-desktop-database >/dev/null 2>&1 ; then
+	update-desktop-database -q
+fi
+# End automatically added section
