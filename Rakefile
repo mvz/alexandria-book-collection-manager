@@ -56,7 +56,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
                           'TODO']
                             b.rdoc.main = 'doc/README'
 
-                            b.install.fake_prefix='tmp-alexandria-deb'
+                            b.debinstall.staging_dir = 'tmp-alexandria-deb'
 end
 
 ##
@@ -172,55 +172,6 @@ task :clobber => [:autogen_clobber]
 task :build => [:autogen, :gettext, :omf]
 
 task :default => [:build]
-
-## # # # debian # # # ##
-
-
-
-def template_copy(src, dest, data)
-    src_text = File.open(src).read()
-    dest_text = src_text.gsub(/#(\w+)#/) { |match| data[$1.intern] }
-    puts dest_text
-    FileUtils.mkdir_p(File.dirname(dest))
-    File.open(dest, 'w') { |f| f.write(dest_text) }
-end
-namespace "debian" do
-  task :deb_control do
-    inst = `du -sk #{build.install.fake_prefix}`.split()[0]
-    tmpl_data = { :name => build.name,
-    :version => build.version,
-    :inst => inst,
-    :author => build.author,
-    :email => build.email}
-
-    debian_dir = File.join(build.install.fake_prefix, "DEBIAN")
-
-    template_copy("debian/control.tmpl", File.join(debian_dir, "control"), tmpl_data)
-  end
-
-  task :deb_files do
-    debian_dir = File.join(build.install.fake_prefix, "DEBIAN")
-    files = %w{postinst postrm prerm}
-    files.each do |file|
-      FileUtils.cp("debian/#{file}", File.join(debian_dir, file))
-    end
-  end
-
-  ## obviously this task needs 'fakeroot' and 'dpkg' to be installed
-  desc "Create a deb file"
-  task :deb => [:fake_install, :deb_control, :deb_files] do
-    msg = `fakeroot dpkg-deb --build #{build.install.fake_prefix} #{build.name}-#{build.version}.deb`
-    puts msg
-  end
-
-
-  task :deb_clobber do |t|
-    FileUtils.rm_rf(build.install.fake_prefix)
-    FileUtils.rm_f("#{build.name}-#{build.version}.deb")
-  end
-
-end
-task :clobber => ["debian:deb_clobber"]
 
 
 ## # # # installation # # # ##

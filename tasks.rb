@@ -69,6 +69,7 @@ class AlexandriaBuild < Rake::TaskLib
   attr_accessor :files
   attr_accessor :rdoc
   attr_accessor :install
+  attr_accessor :debinstall
   attr_accessor :omf
   attr_accessor :gettext
 
@@ -81,6 +82,7 @@ class AlexandriaBuild < Rake::TaskLib
     @files = FileConfig.new(self)
     @rdoc = RDocConfig.new(self)
     @install = InstallConfig.new(self)
+    @debinstall = DebianInstallConfig.new(self)
     @omf = OMFConfig.new(self)
     @gettext = GettextConfig.new(self)
 
@@ -140,6 +142,7 @@ class AlexandriaBuild < Rake::TaskLib
     define_rdoc_tasks
     define_rspec_tasks
     define_install_tasks
+    define_debinstall_tasks
     define_omf_tasks
     define_gettext_tasks
   end
@@ -203,21 +206,16 @@ class AlexandriaBuild < Rake::TaskLib
   ## # # # install tasks # # # ##
 
   def install_file(src_dir, file, dest_dir, mode)
-    source_basedir = Pathname(src_dir)
-    source_file = Pathname(file)
-    dest_basedir = Pathname(dest_dir)
+    source_basedir = Pathname.new(src_dir)
+    source_file = Pathname.new(file)
+    dest_basedir = Pathname.new(dest_dir)
     if source_file.file?
       source_path = source_file.dirname.relative_path_from(source_basedir)
     end
     dest = source_path ? dest_basedir + source_path : dest_basedir
     FileUtils.mkdir_p dest unless test ?d, dest
     puts "Installing #{file} to #{dest}"
-    File.install(file, dest, mode)
-  end
-
-  def fake_install_file(src_dir, file, dest_dir, mode)
-    fake_dest = File.join(@install.fake_prefix, dest_dir)
-    install_file(src_dir, file, fake_dest, mode)
+    File.install(file.to_s, dest.to_s, mode)
   end
 
   def define_install_tasks
@@ -236,24 +234,12 @@ class AlexandriaBuild < Rake::TaskLib
     desc "Install the package. Override destination with $PREFIX"
     task :install => [:pre_install, :install_files, :post_install]
 
-    task :fake_install_files do # HACK cut-n-paste blues!
-      @install.groups.each do |src, files, dest, mode|
-        files.each do |file|
-          fake_install_file(src, file, dest, mode)
-        end
-      end
-    end
-
-    task :fake_install => [:pre_install, :fake_install_files] do
-      puts "Also remember to copy across postinst files and such..."
-    end
-
   end
 
 
   class InstallConfig < BuildConfig
 
-    attr_accessor :prefix, :rubylib, :fake_prefix
+    attr_accessor :prefix, :rubylib
 
     def initialize(build)
       super(build)
@@ -267,7 +253,6 @@ class AlexandriaBuild < Rake::TaskLib
         @rubylib = File.join(@prefix, libpart)
       end
       @groups = []
-      @fake_prefix = nil
     end
 
     def groups
@@ -320,6 +305,122 @@ class AlexandriaBuild < Rake::TaskLib
     end
   end
 
+  ## # # # debian # # # ##
+
+  def stage_install_file(src_dir, file, dest_dir, mode)
+    stage_dest = File.join(@debinstall.staging_dir, dest_dir)
+    install_file(src_dir, file, stage_dest, mode)
+  end
+
+  def template_copy(src, dest, data)
+    src_text = File.open(src).read()
+    dest_text = src_text.gsub(/#(\w+)#/) { |match| data[$1.intern] }
+    FileUtils.mkdir_p(File.dirname(dest))
+    File.open(dest, 'w') { |f| f.write(dest_text) }
+  end
+
+  def define_debinstall_tasks
+    namespace "debian" do
+
+      task :stage_install_files do # HACK cut-n-paste blues!
+        @debinstall.groups.each do |src, files, dest, mode|
+          files.each do |file|
+            stage_install_file(src, file, dest, mode)
+          end
+        end
+      end
+
+      task :stage_install => [:pre_install, :stage_install_files]
+
+      task :deb_control do
+        inst = `du -sk #{@debinstall.staging_dir}`.split()[0]
+        tmpl_data = { :name => @name,
+          :version => @version,
+          :inst => inst,
+          :author => @author,
+          :email => @email}
+
+        debian_dir = File.join(@debinstall.staging_dir, "DEBIAN")
+
+        template_copy("debian/control.tmpl",
+                      File.join(debian_dir, "control"), tmpl_data)
+      end
+
+      task :deb_files do
+        debian_dir = File.join(@debinstall.staging_dir, "DEBIAN")
+        files = %w{postinst postrm prerm}
+        files.each do |file|
+          FileUtils.cp("debian/#{file}", File.join(debian_dir, file))
+        end
+      end
+
+      ## obviously this task needs 'fakeroot' and 'dpkg' to be installed
+      task :build_deb => [:build, :stage_install, :deb_control, :deb_files] do
+        # HACK
+        gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
+        FileUtils.mkdir_p(gconf_dir)
+        File.install("schemas/alexandria.schemas", gconf_dir, 0444)
+
+        autogen_files = ["lib/alexandria/config.rb",
+                         "lib/alexandria/version.rb",
+                         "lib/alexandria/default_preferences.rb"]
+        autogen_files.each do |file|
+          stage_install_file('lib', file, @debinstall.rubylib, 0444)
+          puts "HACK:: installing -> 'lib', #{file}, #{@debinstall.rubylib}"
+        end
+
+        puts "Creating deb file #{@debinstall.deb}"
+        msg = `fakeroot dpkg-deb --build #{@debinstall.staging_dir} #{@debinstall.deb}`
+        puts msg
+      end
+
+      task :deb_clean do |t|
+        FileUtils.rm_rf(@debinstall.staging_dir)
+      end
+
+      task :deb_clobber do |t|
+        FileUtils.rm_f(@debinstall.deb)
+      end
+
+      desc "Create a deb file"
+      task :deb => [:build_deb, :deb_clean]
+
+    end
+    task :clean => ["debian:deb_clean"]
+    task :clobber => ["debian:deb_clobber"]
+
+
+  end
+
+
+
+  class DebianInstallConfig < InstallConfig
+
+    attr_accessor :staging_dir, :deb
+
+    # Debian is peculiar about where it installs ruby libraries.
+    # Its 'sitelibdir' (for ruby 1.8) is /usr/local/lib/site_ruby/1.8
+    # According to the Linux Standards Base (LSB) a package manager
+    # should not install anything to /usr/local
+    # So, to install to /usr/lib/ruby, deb files will install to
+    # 'rubylibdir' instead (this is /usr/lib/ruby/1.8)
+    def initialize(build)
+      super(build)
+      ruby_prefix = Config::CONFIG['prefix']
+      sitelibdir = Config::CONFIG['rubylibdir']
+      @prefix = ENV['PREFIX'] || ruby_prefix
+      if @prefix == ruby_prefix
+        @rubylib = sitelibdir
+      else
+        libpart = sitelibdir[ruby_prefix.size .. -1]
+        @rubylib = File.join(@prefix, libpart)
+      end
+      @groups = []
+      @staging_dir = nil
+      @deb = "#{build.name}-#{build.version}-1.deb"
+    end
+
+  end
 
   ## # # # omf tasks # # # ##
 
