@@ -271,9 +271,9 @@ class AlexandriaBuild < Rake::TaskLib
 
     def base_installation
       [
-       ['lib',  build.files.libs,     rubylib,  0444],
-       ['data', build.files.data,     sharedir, 0444],
-       ['bin',  build.files.programs, bindir,   0555]
+       ['lib',  build.files.libs,     rubylib,  0644],
+       ['data', build.files.data,     sharedir, 0644],
+       ['bin',  build.files.programs, bindir,   0755]
       ]
     end
 
@@ -284,7 +284,7 @@ class AlexandriaBuild < Rake::TaskLib
         filename =~ /.*\/(.+)\/.+/
         size = $1
         dest = File.join(icon_dir, size, 'apps')
-        icon_group << [File.dirname(filename), filename, dest, 0666]
+        icon_group << [File.dirname(filename), filename, dest, 0644]
       end
       icon_group
     end
@@ -359,13 +359,13 @@ class AlexandriaBuild < Rake::TaskLib
         # HACK
         gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
         FileUtils.mkdir_p(gconf_dir)
-        File.install("schemas/alexandria.schemas", gconf_dir, 0444)
+        File.install("schemas/alexandria.schemas", gconf_dir, 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",
                          "lib/alexandria/default_preferences.rb"]
         autogen_files.each do |file|
-          stage_install_file('lib', file, @debinstall.rubylib, 0444)
+          stage_install_file('lib', file, @debinstall.rubylib, 0644)
           puts "HACK:: installing -> 'lib', #{file}, #{@debinstall.rubylib}"
         end
 

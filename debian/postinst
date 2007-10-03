@@ -1,17 +1,25 @@
 #!/bin/sh
 set -e
 # Automatically added by dh_installmenu
-if [ "$1" = "configure" ] && [ -x "`which update-menus 2>/dev/null`" ]; then
-	update-menus
-fi
+#if [ "$1" = "configure" ] && [ -x "`which update-menus 2>/dev/null`" ]; then
+#	update-menus
+#fi
 # End automatically added section
+
 # Automatically added by dh_gconf
 if [ "$1" = "configure" ]; then
 	gconf-schemas --register alexandria.schemas 
 fi
 # End automatically added section
+
 # Automatically added by dh_desktop
 if [ "$1" = "configure" ] && which update-desktop-database >/dev/null 2>&1 ; then
 	update-desktop-database -q
 fi
 # End automatically added section
+
+# Manually added by Cathal Mc Ginley :^)
+# Updates the icon cache so our icon is visible
+if [ "$1" = "configure" ] && which gtk-update-icon-cache >/dev/null 2>&1 ; then
+    gtk-update-icon-cache -q -f -t /usr/share/icons/hicolor
+fi
