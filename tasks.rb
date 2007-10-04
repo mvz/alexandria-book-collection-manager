@@ -356,10 +356,16 @@ class AlexandriaBuild < Rake::TaskLib
 
       ## obviously this task needs 'fakeroot' and 'dpkg' to be installed
       task :build_deb => [:build, :stage_install, :deb_control, :deb_files] do
-        # HACK
+        # HACK gconf
         gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
         FileUtils.mkdir_p(gconf_dir)
         File.install("schemas/alexandria.schemas", gconf_dir, 0644)
+
+        # HACK copyright
+        doc_dir = File.join(@debinstall.staging_dir, "/usr/share/doc/#{@name}")
+        FileUtils.mkdir_p(doc_dir)
+        File.install("debian/copyright", doc_dir, 0644)
+        File.install("doc/AUTHORS", doc_dir, 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",
