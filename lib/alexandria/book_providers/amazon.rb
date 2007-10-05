@@ -26,17 +26,17 @@ class BookProviders
         GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
         CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
-        
+
         def initialize
             super("Amazon", "Amazon (Usa)")
             prefs.add("locale", _("Locale"), "us",
                        Amazon::Search::LOCALES.keys)
-            prefs.add("dev_token", _("Development token"), 
+            prefs.add("dev_token", _("Development token"),
                       "142TF8CHT48WYPPS6J82")
-            prefs.add("associate", _("Associate ID"), "calibanorg-20", nil, 
+            prefs.add("associate", _("Associate ID"), "calibanorg-20", nil,
                       false)
-            
-            # Backward compatibility hack - the previous developer token has 
+
+            # Backward compatibility hack - the previous developer token has
             # been revoked.
             prefs.read
             token = prefs.variable_named("dev_token")
@@ -69,11 +69,11 @@ class BookProviders
                 case type
                     when SEARCH_BY_ISBN
                         criterion = Library.canonicalise_isbn(criterion)
-                        req.asin_search(criterion) do |product| 
+                        req.asin_search(criterion) do |product|
                             products << product
                         end
                         # shouldn't happen
-                        raise TooManyResultsError if products.length > 1 
+                        raise TooManyResultsError if products.length > 1
 
                     when SEARCH_BY_TITLE
                         req.keyword_search(criterion) do |product|
@@ -83,7 +83,7 @@ class BookProviders
                         end
 
                     when SEARCH_BY_AUTHORS
-                        req.author_search(criterion) do |product| 
+                        req.author_search(criterion) do |product|
                             products << product
                         end
 
@@ -105,14 +105,14 @@ class BookProviders
             products.each do |product|
                 next unless product.catalog == 'Book'
                 title = product.product_name.squeeze(' ')
-                
+
                 # Work around Amazon US encoding bug. Amazon US apparently
                 # interprets UTF-8 titles as ISO-8859 titles and then converts
                 # the garbled titles to UTF-8. This tries to convert back into
                 # valid UTF-8. It does not always work - see isbn 2259196098
                 # (from the mailing list) for an example.
                 #if req.locale == 'us'
-                #    title = title.convert('ISO-8859-1','UTF-8') 
+                #    title = title.convert('ISO-8859-1','UTF-8')
                 #end
 
                 media = product.media.squeeze(' ')
@@ -124,15 +124,16 @@ class BookProviders
                 else
                     isbn = nil # it may be an ASIN which is not an ISBN
                 end
-
+                # hack, extract year by regexp (not Y10K compatible :-)
+                /([1-9][0-9]{3})/ =~ product.release_date
+                publishing_year = $1 ? $1.to_i : nil
                 book = Book.new(title,
                                 (product.authors.map { |x| x.squeeze(' ') } \
                                     rescue [  ]),
                                 isbn,
                                 (product.manufacturer.squeeze(' ') \
                                     rescue nil),
-                                (Time.parse(product.release_date).year \
-                                    rescue nil),
+                                publishing_year,
                                 media)
 
                 results << [ book, product.image_url_medium ]
@@ -144,7 +145,7 @@ class BookProviders
             url = case prefs["locale"]
                 when "fr"
                     "http://www.amazon.fr/exec/obidos/ASIN/%s"
-                when "uk"    
+                when "uk"
                     "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
                 when "de"
                     "http://www.amazon.de/exec/obidos/ASIN/%s"
