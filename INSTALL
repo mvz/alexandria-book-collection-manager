@@ -19,6 +19,9 @@ involves a number of packages:
 * <tt>ruby-gnome2</tt>
 * <tt>ruby-libglade2</tt>
 * <tt>ruby-gconf2</tt>
+* <tt>ruby-pango</tt>
+
+You should have GTK+ >= 2.8.0, and use Ruby-GNOME2 >= 0.16.0.
 
 <tt>ruby-gettext</tt>[http://ponx.s5.xrea.com/hiki/ruby-gettext.html]
 is required for the internationalisation of the user interface.
@@ -32,10 +35,7 @@ is required for the internationalisation of the user interface.
 the project +Rakefile+.
 
 You also need +rubygems+[http://www.rubygems.org/] and
-+rspec+[http://rspec.rubyforge.org/] to run the RSpec test suite. (At
-the moment, you will need +rubygems+ and +rspec+ even if you are not
-running the spec task. I will try to remove such dependencies from the
-+Rakefile+ in future.)
++rspec+[http://rspec.rubyforge.org/] to run the RSpec test suite.
 
 === Native Dependencies
 
@@ -86,12 +86,20 @@ You will need
 <tt>image_size</tt>[http://rubyforge.org/projects/imagesize/] for
 optimizing the cover images in exported libraries.
 
+=== Revolution
+
+If you want to auto-complete the names of people you loan books to
+from your Evolution contacts database, you can install
++revolution+[ http://revolution.rubyforge.org/].
 
 == Build and Install
 
-To build Alexandria, go to the base project directory (where the
-Rakefile and this INSTALL file are located) and issue the command
+To build Alexandria from a subversion checkout, go to the base project
+directory (where the Rakefile and this INSTALL file are located) and
+issue the command
     rake build
+If you have downloaded a source package, this step will not usually be
+necessary.
 
 You must have root priveledges to install, so use +su+
     su -c 'rake install'

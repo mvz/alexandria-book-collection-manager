@@ -30,16 +30,19 @@
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
+# these requirements are part of core ruby
 require 'pathname'
 require 'rbconfig'
 require 'yaml'
 
+# these may be distributed as ordinary libraries,
+# or as gems. Try the library versions first.
 retrying_with_rubygems = false
 begin
     require 'rake'
     require 'rake/tasklib'
     require 'rake/rdoctask'
+    require 'rake/packagetask'
 rescue LoadError => err
     unless retrying_with_rubygems
         require 'rubygems'
@@ -141,6 +144,7 @@ class AlexandriaBuild < Rake::TaskLib
     define_clean_tasks
     define_rdoc_tasks
     define_rspec_tasks
+    define_package_tasks
     define_install_tasks
     define_debinstall_tasks
     define_omf_tasks
@@ -194,6 +198,13 @@ class AlexandriaBuild < Rake::TaskLib
         t.spec_files = @files.specs
         t.spec_opts = ["--format", "specdoc"]
       end
+      namespace :spec do
+        Spec::Rake::SpecTask.new("rcov") do |t|
+          t.spec_files = FileList['spec/**/*_spec.rb']
+          t.spec_opts = ["--format", "specdoc"]
+          t.rcov = true
+        end
+      end
     rescue LoadError => err
       # @@log.warn('rspec not found') # FIX add logging
       task :spec do
@@ -202,6 +213,20 @@ class AlexandriaBuild < Rake::TaskLib
     end
   end
 
+
+  ## # # # package tasks # # # ##
+
+  def define_package_tasks
+      Rake::PackageTask.new(@name, @version) do |p|
+          p.need_tar_gz = true
+          p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
+                                  "Rakefile", "TODO", "alexandria.desktop",
+                                  "alexandria.desktop.in", "tasks.rb",
+                                  "bin/**/*", "data/**/*", "debian/**/*",
+                                  "doc/**/*", "lib/**/*", "po/**/*",
+                                  "schemas/**/*", "spec/**/*", "tests/**/*")
+      end
+  end
 
   ## # # # install tasks # # # ##
 
@@ -376,7 +401,8 @@ class AlexandriaBuild < Rake::TaskLib
         end
 
         puts "Creating deb file #{@debinstall.deb}"
-        msg = `fakeroot dpkg-deb --build #{@debinstall.staging_dir} #{@debinstall.deb}`
+        debfile = File.join(File.dirname(@debinstall.staging_dir), @debinstall.deb)
+        msg = `fakeroot dpkg-deb --build #{@debinstall.staging_dir} #{debfile}`
         puts msg
       end
 
@@ -423,7 +449,7 @@ class AlexandriaBuild < Rake::TaskLib
       end
       @groups = []
       @staging_dir = nil
-      @deb = "#{build.name}-#{build.version}-1.deb"
+      @deb = "#{build.name}-#{build.version}.deb"
     end
 
   end

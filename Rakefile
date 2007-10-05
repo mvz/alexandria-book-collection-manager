@@ -1,25 +1,6 @@
 # -*- ruby -*-
 
 require './tasks.rb'
-begin
-  require 'rubygems'
-  require 'spec/rake/spectask'
-  Spec::Rake::SpecTask.new("spec") do |t|
-    t.spec_files = FileList['spec/**/*_spec.rb']
-    t.spec_opts = ["--format", "specdoc"]
-  end
-
-  namespace :spec do
-    Spec::Rake::SpecTask.new("rcov") do |t|
-      t.spec_files = FileList['spec/**/*_spec.rb']
-      t.spec_opts = ["--format", "specdoc"]
-      t.rcov = true
-    end
-  end
-
-rescue
-  puts "Install rubygems in order to run test suite"
-end
 
 desc "Add new files to subversion"
 task :add_new_files do
@@ -30,7 +11,7 @@ desc "shortcut for adding new files"
 task :add => [ :add_new_files ]
 
 
-build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
+build = AlexandriaBuild.new('alexandria', '0.6.2b1') do |b|
 
   b.author = 'Joseph Method'     # Maintainer
   b.email  = 'tristil@gmail.com' # Maintainer e-mail
@@ -56,7 +37,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
                           'TODO']
                             b.rdoc.main = 'doc/README'
 
-                            b.debinstall.staging_dir = 'tmp-alexandria-deb'
+                            b.debinstall.staging_dir = 'pkg/tmp-alexandria-deb'
 end
 
 ##
@@ -172,7 +153,6 @@ task :clobber => [:autogen_clobber]
 task :build => [:autogen, :gettext, :omf]
 
 task :default => [:build]
-
 
 ## # # # installation # # # ##
 

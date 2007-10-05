@@ -6,7 +6,7 @@ For the next release:
 [X] Drag-and-drop books within libraries
 [X] Infinite Undo/Redo
 [X] Smart libraries
-[ ] CueCat userland support
+[X] CueCat userland support
 [ ] Threading of all operations
 
 Future releases:
