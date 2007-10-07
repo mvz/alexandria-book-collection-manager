@@ -81,6 +81,8 @@ module Alexandria
     end
 end
 
+require 'alexandria/logging'
+
 unless $MACOSX
     require 'alexandria/config'
     require 'alexandria/version'

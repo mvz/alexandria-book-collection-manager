@@ -25,6 +25,7 @@ module Alexandria
     module UI
         class AcquireDialog < GladeBase
             include GetText
+            include Logging
             extend GetText
             GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -92,7 +93,7 @@ module Alexandria
                 library, new_library =
                     @combo_libraries.selection_from_libraries(libraries)
                 isbns.each do |isbn|
-                    puts "Adding #{isbn}" if $DEBUG
+                    log.debug { "Adding #{isbn}" }
                     result = @book_results[isbn]
                     book = result[0]
                     cover_uri = result[1]
@@ -113,26 +114,25 @@ module Alexandria
             end
 
             def read_barcode_scan
-                puts "reading CueCat data #{@scanner_buffer}" if $DEBUG
+                log.debug { "reading CueCat data #{@scanner_buffer}" }
                 barcode_text = nil
                 isbn = nil
                 begin
                     barcode_text = @scanner.decode(@scanner_buffer)
-                    puts "got barcode text #{barcode_text}" if $DEBUG
+                    log.debug { "got barcode text #{barcode_text}" }
                     isbn = Library.canonicalise_isbn(barcode_text)
                     # TODO :: use an AppFacade
                     # isbn =  LookupBook.get_isbn(barcode_text)
                 rescue StandardError => err
-                    puts "Bad scan:  #{@scanner_buffer} #{err}" if $DEBUG
+                    log.error { "Bad scan:  #{@scanner_buffer} #{err}" }
                 ensure
                     @scanner_buffer = ""
                 end
                 if isbn
-                    puts "<<< #{isbn} >>>" if $DEBUG
+                    log.debug { "Got ISBN #{isbn}" }
                     # TODO :: sound
                     # play_sound("gnometris/turn")
 
-                    #t = Thread.new(isbn) do |isbn|
                     @barcodes_treeview.model.freeze_notify do
                         iter = @barcodes_treeview.model.append
                         iter[0] = isbn
@@ -140,9 +140,8 @@ module Alexandria
                         iter[2] = ""
                     end
                     lookup_book(isbn)
-                    #end
                 else
-                    puts "was not an ISBN barcode" if $DEBUG
+                    log.debug { "was not an ISBN barcode" }
                     # TODO :: sound
                     # play_sound("question")
                 end
@@ -169,11 +168,8 @@ module Alexandria
 
                         @add_button.sensitive = true
                     rescue StandardError => err
-                        if $DEBUG
-                            puts "error finding book"
-                            puts err.backtrace.join("\n")
-                            puts err
-                        end
+                        log.error { "Book Search failed: #{err.message}"}
+                        log << err if log.error?
                     end
                 end
             end
@@ -209,11 +205,11 @@ module Alexandria
 
 
                     rescue StandardError => err
-                        if $DEBUG
-                            puts "error loading image"
-                            puts err.backtrace.join("\n")
-                            puts err
-                        end
+                        log.error {
+                            "Failed to load cover image icon: #{err.message}"
+                        }
+                        log << err if log.error?
+
                     end
                 end
             end
@@ -236,7 +232,8 @@ module Alexandria
                         @scanner_background = Gnome::CanvasPolygon.new(@barcode_canvas.root,
                                                                        {:points => points, :fill_color_rgba => 0xFDFDFDFF})
                     rescue StandardError => err
-                        puts err if $DEBUG
+                        log.error { "Error drawing to Gnome Canvas" }
+                        log << err if log.error?
                     end
                 end
                 @scan_area.signal_connect("focus-out-event") do |widget, event|
@@ -247,7 +244,7 @@ module Alexandria
 
                 @@debug_index = 0
                 @scan_area.signal_connect("key-press-event") do |button, event|
-                    #puts event.keyval
+                    #log.debug { event.keyval }
                     if event.keyval < 255
                         if @scanner_buffer.empty?
                             if event.keyval.chr == '`' # backtick key for devs
@@ -255,7 +252,7 @@ module Alexandria
                                 next
                             else
                                 # this is our first character, notify user
-                                puts "Scanning... " if $DEBUG
+                                log.debug { "Scanning! Received first character." }
                             end
                             # TODO :: sound
                             # play_sound("iagno/flip-piece")
@@ -276,7 +273,7 @@ module Alexandria
             end
 
             def developer_test_scan
-                puts "Developer test scan..."
+                log.info { "Developer test scan." }
                 scans = [".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3j3C3f1Dxj3Dq.",
                          ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.",
                          ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3r2DNbXCxTZCW.",
@@ -292,7 +289,6 @@ module Alexandria
             end
 
             def init_treeview
-                puts 'initializing treeview...' if $DEBUG
                 liststore = Gtk::ListStore.new(String, Gdk::Pixbuf, String)
 
                 @barcodes_treeview.selection.mode = Gtk::SELECTION_MULTIPLE
