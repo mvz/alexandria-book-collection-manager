@@ -2,19 +2,16 @@
 
 require './tasks.rb'
 
-desc "Add new files to subversion"
-task :add_new_files do
-  system "svn status | grep '^\?' | grep -v '.swp' | grep -v '.omf' | grep -v '*.tmp' | grep -v '*.bak' | sed -e 's/? *//' | sed -e 's/ /\ /g' | xargs svn add"
-end
+#too dangerous without greater specification of what not to include.
+#desc "Add new files to subversion"
+#task :add_new_files do
+#  system "svn status | grep '^\?' | grep -v '.swp' | grep -v '.omf' | grep -v '*.tmp' | grep -v '*.bak' | sed -e 's/? *//' | sed -e 's/ /\ /g' | xargs svn add"
+#end
 
-desc "shortcut for adding new files"
-task :add => [ :add_new_files ]
+#desc "shortcut for adding new files"
+#task :add => [ :add_new_files ]
 
-task :website do
-  puts "Building website..."
-  system 'staticmatic build website'
-  puts "Website built."
-end
+
 
 build = AlexandriaBuild.new('alexandria', '0.6.2b1') do |b|
 
@@ -49,11 +46,18 @@ end
 ## Extra tasks (not yet part of AlexandriaBuild tasks)
 ##
 
+task :website do
+  puts "Building website..."
+  system 'staticmatic build website'
+  puts "Website built."
+end
+
 # stolen from newgem
 desc 'Upload website files to rubyforge'
 task :website_upload => [:docs, 'spec:rcov'] do
   sh 'cp -rf coverage/* website/site/rcov'
   sh 'cp -rf doc/* website/site/rdoc'
+  sh 'rake spec:html > website/site/spec_report.html'
   host = ENV["ADMIN_USER"] ? "#{ENV['ADMIN_USER']}@rubyforge.org" : "method@rubyforge.org" 
   remote_dir = "/var/www/gforge-projects/alexandria/"
   local_dir = 'website/site'

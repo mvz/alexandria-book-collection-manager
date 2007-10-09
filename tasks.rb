@@ -206,7 +206,13 @@ class AlexandriaBuild < Rake::TaskLib
           t.rcov_opts = ["--exclude", "spec"]
           t.rcov = true
         end
+        Spec::Rake::SpecTask.new("html") do |t|
+          t.spec_files = FileList['spec/**/*_spec.rb']
+          t.spec_opts = ["--format", "html"]
+          t.rcov_opts = ["--exclude", "spec"]
+        end
       end
+      
     rescue LoadError => err
       # @@log.warn('rspec not found') # FIX add logging
       task :spec do
