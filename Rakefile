@@ -18,7 +18,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.2b1') do |b|
   b.author = 'Joseph Method'     # Maintainer
   b.email  = 'tristil@gmail.com' # Maintainer e-mail
   b.summary = 'A book library manager for Gnome'
-  
+
   # ... this next bit is from Hoe and may yet be implemented ....
   # b.description = b.paragraphs_of('doc/README', 2..5).join("\n\n")
   # b.url = b.paragraphs_of('README.txt', 0).first.split(/\n/)[1..-1]
@@ -39,7 +39,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.2b1') do |b|
                           'TODO']
                             b.rdoc.main = 'doc/README'
 
-                            b.debinstall.staging_dir = 'pkg/tmp-alexandria-deb'
+                            b.debinstall.staging_dir = 'debian/tmp'
 end
 
 ##
@@ -52,13 +52,13 @@ task :website do
   puts "Website built."
 end
 
-# stolen from newgem
+# rsync upload technique is from newgem (tasks/website.rake)
 desc 'Upload website files to rubyforge'
 task :website_upload => [:docs, 'spec:rcov'] do
   sh 'cp -rf coverage/* website/site/rcov'
   sh 'cp -rf doc/* website/site/rdoc'
   sh 'rake spec:html > website/site/spec_report.html'
-  host = ENV["ADMIN_USER"] ? "#{ENV['ADMIN_USER']}@rubyforge.org" : "method@rubyforge.org" 
+  host = ENV["ADMIN_USER"] ? "#{ENV['ADMIN_USER']}@rubyforge.org" : "method@rubyforge.org"
   remote_dir = "/var/www/gforge-projects/alexandria/"
   local_dir = 'website/site'
   sh %{rsync -aCv #{local_dir}/ #{host}:#{remote_dir}}

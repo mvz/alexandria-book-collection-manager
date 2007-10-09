@@ -212,7 +212,7 @@ class AlexandriaBuild < Rake::TaskLib
           t.rcov_opts = ["--exclude", "spec"]
         end
       end
-      
+
     rescue LoadError => err
       # @@log.warn('rspec not found') # FIX add logging
       task :spec do
@@ -363,32 +363,11 @@ class AlexandriaBuild < Rake::TaskLib
         end
       end
 
-      task :stage_install => [:pre_install, :stage_install_files]
+      task :stage_install => [:pre_install, :stage_install_files] do
+        # some files are not copied over straight away, because
+        # of how FileList globs work (they are generated after the
+        # globs are evaluated)
 
-      task :deb_control do
-        inst = `du -sk #{@debinstall.staging_dir}`.split()[0]
-        tmpl_data = { :name => @name,
-          :version => @version,
-          :inst => inst,
-          :author => @author,
-          :email => @email}
-
-        debian_dir = File.join(@debinstall.staging_dir, "DEBIAN")
-
-        template_copy("debian/control.tmpl",
-                      File.join(debian_dir, "control"), tmpl_data)
-      end
-
-      task :deb_files do
-        debian_dir = File.join(@debinstall.staging_dir, "DEBIAN")
-        files = %w{postinst postrm prerm}
-        files.each do |file|
-          FileUtils.cp("debian/#{file}", File.join(debian_dir, file))
-        end
-      end
-
-      ## obviously this task needs 'fakeroot' and 'dpkg' to be installed
-      task :build_deb => [:build, :stage_install, :deb_control, :deb_files] do
         # HACK gconf
         gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
         FileUtils.mkdir_p(gconf_dir)
@@ -407,6 +386,25 @@ class AlexandriaBuild < Rake::TaskLib
           stage_install_file('lib', file, @debinstall.rubylib, 0644)
           puts "HACK:: installing -> 'lib', #{file}, #{@debinstall.rubylib}"
         end
+      end
+
+      task :deb_files => [:stage_install] do
+        # create dir
+        debian_dir = File.join(@debinstall.staging_dir, "DEBIAN")
+        FileUtils.mkdir_p(debian_dir)
+
+        # copy files from debian/*
+        files = %w{postinst postrm prerm}
+        files.each do |file|
+          FileUtils.cp("debian/#{file}", File.join(debian_dir, file))
+        end
+
+        # create DEBIAN/control and debian/files
+        `dpkg-gencontrol -isp`
+      end
+
+      ## obviously this task needs 'fakeroot' and 'dpkg' to be installed
+      task :build_deb => [:deb_files] do
 
         puts "Creating deb file #{@debinstall.deb}"
         debfile = File.join(File.dirname(@debinstall.staging_dir), @debinstall.deb)
@@ -416,10 +414,13 @@ class AlexandriaBuild < Rake::TaskLib
 
       task :deb_clean do |t|
         FileUtils.rm_rf(@debinstall.staging_dir)
+        FileUtils.rm_rf("debian/files")
+        FileUtils.rm_rf("build-stamp")
       end
 
       task :deb_clobber do |t|
-        FileUtils.rm_f(@debinstall.deb)
+        debfile = File.join(File.dirname(@debinstall.staging_dir), @debinstall.deb)
+        FileUtils.rm_f(debfile)
       end
 
       desc "Create a deb file"
@@ -429,10 +430,7 @@ class AlexandriaBuild < Rake::TaskLib
     task :clean => ["debian:deb_clean"]
     task :clobber => ["debian:deb_clobber"]
 
-
   end
-
-
 
   class DebianInstallConfig < InstallConfig
 
@@ -457,10 +455,11 @@ class AlexandriaBuild < Rake::TaskLib
       end
       @groups = []
       @staging_dir = nil
-      @deb = "#{build.name}-#{build.version}.deb"
+      @deb = "#{build.name}_#{build.version}_all.deb"
     end
 
   end
+
 
   ## # # # omf tasks # # # ##
 

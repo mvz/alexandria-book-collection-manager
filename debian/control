@@ -1,11 +1,15 @@
-Package: #name#
-Version: #version#
+Source: alexandria
+Section: gnome
+Priority: extra
+Maintainer: Joseph Method <tristil@gmail.com>
+Build-Depends:  ruby1.8, rake, xsltproc, docbook-xsl, gettext, intltool
+Standards-Version: 3.6.2
+
+Package: alexandria
 Section: gnome
 Priority: extra
 Architecture: all
 Depends: ruby1.8, libamazon-ruby (>= 0.8.3), libgnome2-ruby (>= 0.12.0), libglade2-ruby (>= 0.12.0), libgconf2-ruby (>= 0.12.0), libyaml-ruby1.8, libgettext-ruby1.8, gconf2 (>= 2.12.1-4ubuntu1)
-Installed-Size: #inst#
-Maintainer: #author# <#email#>
 Description: a GNOME application for managing book collections
  Alexandria is a program for organising collections of books. It
  .
