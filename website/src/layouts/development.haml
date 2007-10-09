@@ -1,0 +1,12 @@
+!!!
+%html
+  %head
+    %title Alexandria: a book collection manager for GNOME 
+    = stylesheets
+    %link{:href => "/stylesheets/menu.css", :rel => "stylesheet"}
+    %link{:href => "/stylesheets/style.css", :rel => "stylesheet"}
+  %body.section-4
+    = img "alexandria.png"
+    = partial("menu2")  
+    = yield 
+    = partial("footer")

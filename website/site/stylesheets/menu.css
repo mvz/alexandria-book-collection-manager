@@ -1,4 +1,4 @@
-#menu {
+.menu {
   border-bottom : 1px solid gray;
   margin : 0;
   padding-bottom : 19px;
@@ -6,7 +6,7 @@
   font-weight: bold;
 }
 
-#menu ul, #menu li      {
+.menu ul, .menu li      {
   display : inline;
   list-style-type : none;
   margin : 0;
@@ -14,7 +14,7 @@
   font-weight: bold;
 }
 
-#menu a:link, #menu a:visited   {
+.menu a:link, .menu a:visited   {
   font-weight: bold;
   background : #E8EBF0;
   border : 1px solid gray;
@@ -27,24 +27,24 @@
   text-decoration : none;
 }
 
-#menu a:link.active, #menu a:visited.active     {
+.menu a:link.active, .menu a:visited.active     {
   font-weight: bold;
   background : #fff;
   border-bottom : 1px solid #fff;
   color : #000;
 }
 
-#menu a:hover   {
+.menu a:hover   {
   font-weight: bold;
   color : darkRed;
 }
 
-#menu ul a:hover {
+.menu ul a:hover {
 color : #f00 !important;
 font-weight : bold;
 }
 
-#contents {
+.contents {
   background : #fff;
   border : 1px solid gray; 
   border-top : none;
@@ -55,25 +55,25 @@ font-weight : bold;
 
 
 
-body.section-1 #menu li#nav-1 a,
-body.section-2 #menu li#nav-2 a,
-body.section-3 #menu li#nav-3 a,
-body.section-4 #menu li#nav-4 a,
-body.section-5 #menu li#nav-5 a,
-body.section-6 #menu li#nav-6 a,
-body.section-7 #menu li#nav-7 a {
+body.section-1 .menu li#nav-1 a,
+body.section-2 .menu li#nav-2 a,
+body.section-3 .menu li#nav-3 a,
+body.section-4 .menu li#nav-4 a,
+body.section-5 .menu li#nav-5 a,
+body.section-6 .menu li#nav-6 a,
+body.section-7 .menu li#nav-7 a {
 background : #fff;
 border-bottom : 1px solid #fff;
 color : #000;
 font-weight: bold;
 }
-body.section-1 #menu ul,
-body.section-2 #menu ul,
-body.section-3 #menu ul,
-body.section-4 #menu ul,
-body.section-5 #menu ul,
-body.section-6 #menu ul,
-body.section-7 #menu ul {
+body.section-1 .menu ul,
+body.section-2 .menu ul,
+body.section-3 .menu ul,
+body.section-4 .menu ul,
+body.section-5 .menu ul,
+body.section-6 .menu ul,
+body.section-7 .menu ul {
     font-weight: bold;
     display : inline;
     left : 10px;
