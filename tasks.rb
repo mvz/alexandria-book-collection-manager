@@ -143,12 +143,12 @@ class AlexandriaBuild < Rake::TaskLib
   def define_tasks
     define_clean_tasks
     define_rdoc_tasks
-    define_rspec_tasks
     define_package_tasks
     define_install_tasks
     define_debinstall_tasks
     define_omf_tasks
     define_gettext_tasks
+    define_rspec_tasks
   end
 
   # Defines :clean and :clobber tasks from Rake's built-in definitions.
@@ -192,6 +192,7 @@ class AlexandriaBuild < Rake::TaskLib
 
   def define_rspec_tasks
     begin
+      require 'rubygems'
       require 'spec/rake/spectask'
       desc "Run RSpec specifications"
       Spec::Rake::SpecTask.new("spec") do |t|
@@ -202,6 +203,7 @@ class AlexandriaBuild < Rake::TaskLib
         Spec::Rake::SpecTask.new("rcov") do |t|
           t.spec_files = FileList['spec/**/*_spec.rb']
           t.spec_opts = ["--format", "specdoc"]
+          t.rcov_opts = ["--exclude", "spec"]
           t.rcov = true
         end
       end

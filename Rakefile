@@ -51,8 +51,10 @@ end
 
 # stolen from newgem
 desc 'Upload website files to rubyforge'
-task :website_upload do
-  host = "method@rubyforge.org"
+task :website_upload => [:docs, 'spec:rcov'] do
+  sh 'cp -rf coverage/* website/site/rcov'
+  sh 'cp -rf doc/* website/site/rdoc'
+  host = ENV["ADMIN_USER"] ? "#{ENV['ADMIN_USER']}@rubyforge.org" : "method@rubyforge.org" 
   remote_dir = "/var/www/gforge-projects/alexandria/"
   local_dir = 'website/site'
   sh %{rsync -aCv #{local_dir}/ #{host}:#{remote_dir}}
