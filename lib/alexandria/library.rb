@@ -32,6 +32,8 @@ end
 
 module Alexandria
   class Library < Array
+      include Logging
+
     attr_reader :name
     attr_accessor :ruined_books
     DIR = File.join(ENV['HOME'], '.alexandria')
@@ -76,6 +78,10 @@ module Alexandria
 
             #puts "back from the future of #{test[1]}:" if test[0] == 1
             #puts "Regularizing book :#{test[1]}" if $DEBUG
+                  if not File.size? test[1]
+                      log.warn { "Book file #{test[1]} was empty"}
+                      next
+                  end
             book = self.regularize_book_from_yaml(test[1])
             #puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
 
