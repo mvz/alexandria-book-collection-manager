@@ -299,6 +299,7 @@ class AlexandriaBuild < Rake::TaskLib
       default_groups = base_installation
       default_groups.push(*icon_installation)
       default_groups.push(*desktop_installation)
+      default_groups.push(*locale_installation)
       default_groups
     end
 
@@ -325,6 +326,10 @@ class AlexandriaBuild < Rake::TaskLib
     def desktop_installation
       desktop_dir = File.join(sharedir, 'applications')
       [['.', build.files.desktop, desktop_dir, 0644]]
+    end
+
+    def locale_installation
+        [['data', build.gettext.mo_files, sharedir, 0644]]
     end
 
     def bindir
