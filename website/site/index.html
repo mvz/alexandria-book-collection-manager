@@ -2,111 +2,47 @@
 <html>
   <head>
     <title>Alexandria: a book collection manager for GNOME</title>
-    <link href="/stylesheets/application.css" media="all" rel="stylesheet"/>
-    <link href="/stylesheets/menu.css" media="all" rel="stylesheet"/>
-    <link href="/stylesheets/style.css" media="all" rel="stylesheet"/>
+    <link href='/stylesheets/screen.css' media='screen/projection' rel='stylesheet' />
+    <link href='/stylesheets/print.css' media='print' rel='stylesheet' />
     <link href='/stylesheets/menu.css' rel='stylesheet' />
-    <link href='/stylesheets/style.css' rel='stylesheet' />
   </head>
   <body class='section-4'>
-    <img src="images/alexandria.png" alt="Alexandria"/>
-    <ul class='menu'>
-      <li id='nav-1'>
-        <a href="/index.html">Home</a>
-      </li>
-      <li id='nav-2'>
-        <a href="/download.html">Download</a>
-      </li>
-      <li id='nav-5'>
-        <a href="/development.html">Development</a>
-      </li>
-    </ul>
-    <h1>
-      Alexandria
-    </h1>
-    <p>
-      Alexandria is a
-      <a href="http://www.gnome.org">GNOME</a>
-      application to help you manage your book collection.
-    </p>
-    <h2 id='features'>
-      Features
-    </h2>
-    <p>
-      Alexandria:
-    </p>
-    <ul>
-      <li>
-        retrieves and displays book information (sometimes with cover pictures) from several online libraries, such as <a href="http://www.amazon.com">Amazon</a>, <a href="http://www.proxis.be">Proxis</a>, <a href="http://www.barnesandnoble.com/">Barnes and Noble</a>, the <a href="http://www.mcu.es/">Spanish Ministry of Culture</a>, <a href="http://www.thalia.de/">Thalia</a>, <a href="http://www.internetbookshop.it">Internet Bookshop Italia</a>, the <a href="http://www.loc.gov/">US Library of Congress</a> and the <a href="http://www.bl.uk/">British Library</a> ;
-      </li>
-      <li>
-        allows books to be added and updated by hand ;
-      </li>
-      <li>
-        enables searches either by <acronym title="European Article Numbering">EAN</acronym>/<acronym title="International Standard Book Number">ISBN</acronym>/<acronym title="Universal Product Code">UPC</acronym>, title, authors or keyword ;
-      </li>
-      <li>
-        supports the <a href="http://www.z3950.org/">Z39.50</a> standard and allow you to manage your own sources ;
-      </li>
-      <li>
-        saves data using the <a href="http://www.yaml.org"><acronym title="YAML Ain't Markup Language">YAML</acronym></a> format ;
-      </li>
-      <li>
-        can import and export data into <a href="http://www.editeur.org/onix.html"><acronym title="ONline Information eXchange">ONIX</acronym></a>, <a href="http://www.periapsis.org/tellico/">Tellico</a> and <acronym title="European Article Numbering">EAN</acronym>/<acronym title="International Standard Book Number">ISBN</acronym>/<acronym title="Universal Product Code">UPC</acronym>-list formats ;
-      </li>
-      <li>
-        generates from your libraries <acronym title="eXtensible Hypertext Markup Language">XHTML</acronym> web pages themable with <acronym title="Cascading Style Sheets">CSS</acronym> ;
-      </li>
-      <li>
-        allows marking your books as loaned, each with the loan-date and the name of the person who has borrowed them ;
-      </li>
-      <li>
-        features a <a href="http://developer.gnome.org/projects/gup/hig/"><acronym title="Human Interface Guidelines">HIG</acronym></a>-compliant user interface ;
-      </li>
-      <li>
-        shows books in different views (standard list or icons list), that can be filtered and/or sorted;
-      </li>
-      <li>
-        handles book rating and notes ;
-      </li>
-      <li>
-        supports <a href="http://www.cuecat.com/">CueCat (C)</a> barcode readers ;
-      </li>
-      <li>
-        includes translations for several languages ;
-      </li>
-      <li>
-        is documented in a complete manual (at the moment in English only).
-      </li>
-    </ul>
-    <p>
-      Planned features are in a <a href="http://rubyforge.org/viewvc/trunk/alexandria/TODO?revision=HEAD&root=alexandria">TODO</a> list.
-    </p>
-    <p>
-      Alexandria is written during spare time.  If you want to support the development you can make a donation (whatever you want).
-    </p>
-    <p>
-      Copyright 2007
-      <a href="http://alexandria.rubyforge.org">The Alexandria Project</a>
-    </p>
-    <p>
-      SVN and files graciously hosted by
-      <a href="http://www.rubyforge.org">RubyForge</a>
-      !
-    </p>
-    <p>
-      Related links:
-      <a href="http://directory.fsf.org/All_Packages_in_Directory/alexandria.html http://www.gnu.org/directory/All_Packages_in_Directory/alexandria.html">GNU Directory</a>
-      ,
-      <a href="http://raa.ruby-lang.org/project/alexandria">RAA</a>
-      ,
-      <a href="http://freshmeat.net/projects/alexandria_book_collection_manager/">Freshmeat</a>
-      ,
-      <a href="http://www.gnomefiles.org/app.php?soft_id=110">GnomeFiles.</a>
-    </p>
-    <p>
-      <a href="http://jigsaw.w3.org/css-validator/check/referer"> <img border="0" width="88px" height="31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!"/></a>
-      <a href="http://www.ruby-lang.org"><img border="0" src="images/powered_by_ruby.png" alt="powered by ruby!"/></a>
-    </p>
+    <div class='container'>
+      <div class='column span-24 first last' id='header'>
+        <img src="images/alexandria.png" alt="Alexandria"/>
+        <ul class='menu'>
+          <li>
+            <a href="/index.html">Home</a>
+          </li>
+          <li>
+            <a href="/features.html">Features</a>
+          </li>
+          <li>
+            <a href="/feedback.html">Feedback</a>
+          </li>
+          <li>
+            <a href="/download.html">Download</a>
+          </li>
+          <li>
+            <a href="/development.html">Development</a>
+          </li>
+        </ul>
+      </div>
+      <div class='column span-16 first last' id='content'>
+        <h1>Alexandria</h1>
+        
+        <p>Alexandria is a <a href="http://www.gnome.org">GNOME</a> application to help you manage your book collection.</p>
+        
+        <p>It is <a href="http://www.gnu.org/philosophy/free-sw.html">free software</a> and is distributed under the terms of the <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html">GNU General Public License</a> (version 2 or later).</p>
+      </div>
+      <div class='column span-24 first last' id='footer'>
+        <p>Copyright 2007 <a href="http://alexandria.rubyforge.org">The Alexandria Project</a>. SVN and files graciously hosted by <a href="http://www.rubyforge.org">RubyForge</a>!</p>
+        
+        <p>Related links: <a href="http://directory.fsf.org/All_Packages_in_Directory/alexandria.html http://www.gnu.org/directory/All_Packages_in_Directory/alexandria.html">GNU Directory</a>, <a href="http://raa.ruby-lang.org/project/alexandria">RAA</a>, <a href="http://freshmeat.net/projects/alexandria_book_collection_manager/">Freshmeat</a>, <a href="http://www.gnomefiles.org/app.php?soft_id=110">GnomeFiles</a>.</p>
+        
+        <p><a href="http://jigsaw.w3.org/css-validator/check/referer"> <img border="0" width="88px" height="31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!"/></a><br/>
+        <a href="http://www.ruby-lang.org"><img border="0" src="images/powered_by_ruby.png" alt="powered by ruby!"/></a></p>
+      </div>
+    </div>
   </body>
 </html>
