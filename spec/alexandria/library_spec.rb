@@ -153,3 +153,65 @@ describe Alexandria::Library, " with books without an ISBN" do
 
 end
 
+describe Alexandria::Library, " export sort order" do
+
+  before(:all) do
+    require 'tmpdir'
+    require 'csv'
+  end
+
+  before(:each) do
+    libVersion = File.join(LIBDIR, '0.6.2')
+    FileUtils.cp_r(libVersion, TESTDIR)
+    @format = Alexandria::ExportFormat.new("CSV list", "csv", :export_as_csv_list)
+    @outfile = File.join(Dir.tmpdir, "myLibrary-0.6.2.csv")
+    @myLibrary = Alexandria::Library.loadall[0]
+  end
+
+
+  def load_rows_from_csv
+      csv_reader = CSV.open(@outfile, 'r', col_sep=';')
+      rows = []
+      while row = csv_reader.shift
+        if row.size == 0
+          break
+        end
+        rows << row
+      end
+      rows
+  end
+
+  it "can sort by title" do
+    sort_by_title = Alexandria::LibrarySortOrder.new(:title)
+    @format.invoke(@myLibrary, sort_by_title, @outfile)
+    File.exists?(@outfile).should be_true
+    rows = load_rows_from_csv
+    rows.size.should == @myLibrary.size
+    TITLE = 0
+    comparisons = rows.size - 1
+    comparisons.times do |index|
+      rows[index][TITLE].should <= rows[index+1][TITLE]
+    end
+  end
+
+  it "can sort in descending order" do
+    sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
+    @format.invoke(@myLibrary, sort_by_date_desc, @outfile)
+    File.exists?(@outfile).should be_true
+    rows = load_rows_from_csv
+    rows.size.should == @myLibrary.size
+    DATE = 5
+    comparisons = rows.size - 1
+    comparisons.times do |index|
+      rows[index][DATE].should >= rows[index+1][DATE]
+    end
+  end
+
+  after(:each) do
+    FileUtils.rm_rf(TESTDIR)
+    if File.exists? @outfile
+      File.unlink @outfile
+    end
+  end
+
+end

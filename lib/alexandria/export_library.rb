@@ -19,20 +19,65 @@ require 'cgi'
 
 begin        # image_size is optional
     $IMAGE_SIZE_LOADED = true
-    require 'image_size' 
+    require 'image_size'
 rescue LoadError
     $IMAGE_SIZE_LOADED = false
     puts "Can't load image_size, hence exported libraries are not optimized"
 end
 
 module Alexandria
+
+    class LibrarySortOrder
+        def initialize(book_attribute, ascending=true)
+            @book_attribute = book_attribute
+            @ascending = ascending
+        end
+
+        def sort(library)
+            sorted = library.sort_by do |book|
+                book.send(@book_attribute)
+            end
+            if not @ascending
+                sorted.reverse!
+            end
+            sorted
+        end
+
+        def to_s
+            "#{@book_attribute} #{@ascending ? 'ascending' : 'descending'}"
+        end
+
+        class Unsorted < LibrarySortOrder
+            def initialize
+            end
+
+            def sort(library)
+                library
+            end
+
+            def to_s
+                "unsorted"
+            end
+        end
+    end
+
+    class SortedLibrary < Library
+        def initialize(library, sort_order)
+            super("#{library.name} sorted by #{sort_order}")
+            sorted = sort_order.sort(library)
+            sorted.each do |book|
+                self << book
+            end
+        end
+    end
+
     class ExportFormat
         attr_reader :name, :ext, :message
 
         include GetText
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-        
+
         def self.all
         [
             self.new(_("Archived ONIX XML"), "onix.tbz2",
@@ -46,18 +91,23 @@ module Alexandria
         ]
         end
 
-        def invoke(library, filename, *args)
-            library.send(@message, filename, *args)
+        def invoke(library, sort_order, filename, *args)
+            if sort_order
+                sorted = SortedLibrary.new(library, sort_order)
+                sorted.send(@message, filename, *args)
+            else
+                library.send(@message, filename, *args)
+            end
         end
-       
+
         def needs_preview?
             @needs_preview
         end
-       
+
         #######
         private
         #######
-        
+
         def initialize(name, ext, message, needs_preview=false)
             @name = name
             @ext = ext
@@ -72,7 +122,7 @@ module Alexandria
                 to_onix_document.write(io, 0)
             end
             copy_covers(File.join(Dir.tmpdir, "images"))
-            Dir.chdir(Dir.tmpdir) do  
+            Dir.chdir(Dir.tmpdir) do
                 output = `tar -cjf \"#{filename}\" onix.xml images 2>&1`
                 raise output unless $?.success?
             end
@@ -100,12 +150,12 @@ module Alexandria
                 end
             end
         end
-       
+
         def export_as_html(filename, theme)
             FileUtils.mkdir(filename) unless File.exists?(filename)
             Dir.chdir(filename) do
                 copy_covers("pixmaps")
-                FileUtils.cp_r(theme.pixmaps_directory, 
+                FileUtils.cp_r(theme.pixmaps_directory,
                                "pixmaps") if theme.has_pixmaps?
                 FileUtils.cp(theme.css_file, ".")
                 File.open("index.html", "w") do |io|
@@ -127,8 +177,8 @@ module Alexandria
                 end
             end
         end
-      
-        #######  
+
+        #######
         private
         #######
 
@@ -136,15 +186,15 @@ module Alexandria
         def to_onix_document
             doc = REXML::Document.new
             doc << REXML::XMLDecl.new
-            doc << REXML::DocType.new('ONIXMessage', 
+            doc << REXML::DocType.new('ONIXMessage',
                                       "SYSTEM \"#{ONIX_DTD_URL}\"")
             msg = doc.add_element('ONIXMessage')
             header = msg.add_element('Header')
             header.add_element('FromCompany').text = "Alexandria"
             header.add_element('FromPerson').text = Etc.getlogin
             now = Time.now
-            header.add_element('SentDate').text = "%.4d%.2d%.2d%.2d%.2d" % [ 
-                now.year, now.month, now.day, now.hour, now.min 
+            header.add_element('SentDate').text = "%.4d%.2d%.2d%.2d%.2d" % [
+                now.year, now.month, now.day, now.hour, now.min
             ]
             header.add_element('MessageNote').text = name
             each_with_index do |book, idx|
@@ -152,7 +202,7 @@ module Alexandria
                 prod = msg.add_element('Product')
                 prod.add_element('RecordReference').text = idx
                 prod.add_element('NotificationType').text = "03"  # confirmed
-                prod.add_element('RecordSourceName').text = 
+                prod.add_element('RecordSourceName').text =
                     "Alexandria " + VERSION
                 prod.add_element('ISBN').text = book.isbn
                 prod.add_element('ProductForm').text = 'BA'       # book
@@ -168,7 +218,7 @@ module Alexandria
                 if book.notes and not book.notes.empty?
                     elem = prod.add_element('OtherText')
                     # reader description
-                    elem.add_element('TextTypeCode').text = '12' 
+                    elem.add_element('TextTypeCode').text = '12'
                     elem.add_element('TextFormat').text = '00'  # ASCII
                     elem.add_element('Text').text = book.notes
                 end
@@ -176,19 +226,19 @@ module Alexandria
                     elem = prod.add_element('MediaFile')
                     # front cover image
                     elem.add_element('MediaFileTypeCode').text = '04'
-                    elem.add_element('MediaFileFormatCode').text = 
+                    elem.add_element('MediaFileFormatCode').text =
                         (Library.jpeg?(cover(book)) ? '03' : '02' )
                     # filename
                     elem.add_element('MediaFileLinkTypeCode').text = '06'
-                    elem.add_element('MediaFileLink').text = 
+                    elem.add_element('MediaFileLink').text =
                         File.join('images', final_cover(book))
                 end
                 if book.isbn
                     BookProviders.each do |provider|
                         elem = prod.add_element('ProductWebsite')
-                        elem.add_element('ProductWebsiteDescription').text = 
+                        elem.add_element('ProductWebsiteDescription').text =
                             provider.fullname
-                        elem.add_element('ProductWebsiteLink').text = 
+                        elem.add_element('ProductWebsiteLink').text =
                             provider.url(book)
                     end
                 end
@@ -214,7 +264,7 @@ module Alexandria
             collection.add_attribute('type', "2")
             fields = collection.add_element('fields')
             field1 = fields.add_element('field')
-            # a field named _default implies adding all default book 
+            # a field named _default implies adding all default book
             # collection fields
             field1.add_attribute('name', "_default")
             images = collection.add_element('images')
@@ -251,7 +301,7 @@ module Alexandria
                         image.add_attribute('width', image_s.get_width)
                         image.add_attribute('format', image_s.get_type)
                     else
-                        image.add_attribute('format', 
+                        image.add_attribute('format',
                                         Library.jpeg?(cover(book)) \
                                             ? "JPEG" : "GIF")
                     end
@@ -259,7 +309,7 @@ module Alexandria
             end
             return doc
         end
-      
+
         def to_xhtml(css)
             generator = "Alexandria " + Alexandria::VERSION
             xhtml = ""
@@ -290,7 +340,7 @@ EOS
                 if File.exists?(cover(book))
                     xhtml << <<EOS
   <img class="book_cover"
-       src="#{File.join("pixmaps", final_cover(book))}" 
+       src="#{File.join("pixmaps", final_cover(book))}"
        alt="Cover file for '#{book.title}'"
 EOS
                     if $IMAGE_SIZE_LOADED
@@ -355,7 +405,7 @@ EOS
             bibtex << "\%Generated on #{Date.today()} by: #{generator}\n"
             bibtex << "\%\n"
             bibtex << "\n"
-          
+
             auths = Hash.new(0)
             each do |book|
                 k = (book.authors[0] or "Anonymous").split[0]
@@ -401,7 +451,7 @@ EOS
             return my_str
         end
     end
-    
+
     class Library
         include Exportable
     end

@@ -1,0 +1,21 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Francoise Sagan
+- Irene Ash
+edition: Paperback
+isbn: "9780140278781"
+loaned: false
+loaned_since: 2007-10-16 00:00:00 +01:00
+loaned_to: ""
+notes: Essential penguin
+own: true
+publisher: Penguin Books Ltd
+publishing_year: 1998
+rating: 0
+redd: false
+saved_ident: "9780140278781"
+tags: []
+
+title: Bonjour Tristesse
+version: 0.6.2b1
+want: true

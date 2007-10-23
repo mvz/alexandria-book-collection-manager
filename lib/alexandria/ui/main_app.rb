@@ -1108,6 +1108,40 @@ module Alexandria
             end
           end
 
+
+          # Gets the sort order of the current library, for use by export
+          def library_sort_order
+              # added by Cathal Mc Ginley, 23 Oct 2007
+              current_view_model = case @notebook.page
+                                   when 0
+                                       @iconview.model
+                                   when 1
+                                       @listview.model
+                                   end
+              sorted_on = current_view_model.sort_column_id
+              if sorted_on
+                  sort_column = sorted_on[0]
+                  sort_order = sorted_on[1]
+
+                  column_ids_to_attributes = { 2 => :title,
+                      4 => :authors,
+                      5 => :isbn,
+                      6 => :publisher,
+                      7 => :publishing_year,
+                      8 =>:edition, #binding
+                      12 => :redd,
+                      13 => :own,
+                      14 => :want,
+                      9 => :rating}
+
+                  sort_attribute = column_ids_to_attributes[sort_column]
+                  ascending = (sort_order == Gtk::SORT_ASCENDING)
+                  LibrarySortOrder.new(sort_attribute, ascending)
+              else
+                  LibrarySortOrder::Unsorted.new
+              end
+          end
+
           def undoable_delete(library, books=nil)
             # Deleting a library.
             if books.nil?
@@ -1211,7 +1245,7 @@ module Alexandria
                 end
               end
 
-              on_export = proc { ExportDialog.new(@main_app, selected_library) }
+              on_export = proc { ExportDialog.new(@main_app, selected_library, library_sort_order) }
 
               on_acquire = proc do
                 AcquireDialog.new(@main_app,

@@ -1,0 +1,20 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Kazuo Ishiguro
+edition: Paperback
+isbn: "9780571147168"
+loaned: true
+loaned_since: 2007-10-12 00:00:00 +01:00
+loaned_to: Fred
+notes: ""
+own: true
+publisher: Faber and Faber
+publishing_year: 1999
+rating: 4
+redd: false
+saved_ident: "9780571147168"
+tags: []
+
+title: An Artist of the Floating World
+version: 0.6.2b1
+want: true

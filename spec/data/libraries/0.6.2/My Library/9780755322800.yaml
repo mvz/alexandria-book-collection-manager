@@ -1,0 +1,20 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Neil Gaiman
+edition: Paperback
+isbn: "9780755322800"
+loaned: false
+loaned_since: 2007-10-16 00:00:00 +01:00
+loaned_to: ""
+notes: The Author's Preferred Text
+own: true
+publisher: Headline Review
+publishing_year: 2005
+rating: 5
+redd: false
+saved_ident: "9780755322800"
+tags: 
+- preferred
+title: Neverwhere
+version: 0.6.2b1
+want: true

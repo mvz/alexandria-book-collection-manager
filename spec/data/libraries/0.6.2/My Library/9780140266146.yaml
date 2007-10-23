@@ -1,0 +1,16 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- !str:Amazon::Search::Response William Gibson
+edition: !str:Amazon::Search::Response Paperback
+isbn: "9780140266146"
+notes: ""
+own: true
+publisher: !str:Amazon::Search::Response Penguin Books Ltd
+publishing_year: 2004
+redd: false
+saved_ident: "9780140266146"
+tags: []
+
+title: !str:Amazon::Search::Response Pattern Recognition
+version: 0.6.2b1
+want: true
