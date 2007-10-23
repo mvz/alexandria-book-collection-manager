@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2007 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -14,6 +15,9 @@
 # License along with Alexandria; see the file COPYING.  If not,
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
+
+# Export sorting added 23 Oct 2007 by Cathal Mc Ginley
+# Classes LibrarySortOrder and SortedLibrary, and changed ExportFormat#invoke
 
 require 'cgi'
 
@@ -64,10 +68,23 @@ module Alexandria
     class SortedLibrary < Library
         def initialize(library, sort_order)
             super("#{library.name} sorted by #{sort_order}")
+            @library = library
             sorted = sort_order.sort(library)
             sorted.each do |book|
                 self << book
             end
+        end
+
+        def cover(book)
+            @library.cover(book)
+        end
+
+        def final_cover(book)
+            @library.final_cover(book)
+        end
+
+        def copy_covers(dest)
+            @library.copy_covers(dest)
         end
     end
 
