@@ -48,7 +48,7 @@ module Alexandria
         end
 
         def to_s
-            "#{@book_attribute} #{@ascending ? 'ascending' : 'descending'}"
+            "#{@book_attribute} #{@ascending ? '(ascending)' : '(descending)'}"
         end
 
         class Unsorted < LibrarySortOrder
@@ -60,14 +60,14 @@ module Alexandria
             end
 
             def to_s
-                "unsorted"
+                "default order"
             end
         end
     end
 
     class SortedLibrary < Library
         def initialize(library, sort_order)
-            super("#{library.name} sorted by #{sort_order}")
+            super(library.name)
             @library = library
             sorted = sort_order.sort(library)
             sorted.each do |book|
@@ -92,6 +92,7 @@ module Alexandria
         attr_reader :name, :ext, :message
 
         include GetText
+        include Logging
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -111,6 +112,7 @@ module Alexandria
         def invoke(library, sort_order, filename, *args)
             if sort_order
                 sorted = SortedLibrary.new(library, sort_order)
+                log.debug { "Exporting library sorted by #{sort_order}" }
                 sorted.send(@message, filename, *args)
             else
                 library.send(@message, filename, *args)
