@@ -77,6 +77,7 @@ module Alexandria
   module UI
     class MainApp < GladeBase
       attr_accessor :main_app, :actiongroup, :appbar
+        include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -985,9 +986,14 @@ module Alexandria
                     x.name == iter[1]
                   end
                   move_selected_books_to_library(library)
+                    success = true
                 end
               end
-              Gtk::Drag.finish(drag_context, success, false, time)
+                begin
+                    Gtk::Drag.finish(drag_context, success, false, 0) #,time)
+                rescue Exception => ex
+                    log.error { "Gtk::Drag.finish failed: #{ex}"}
+                end
             end
         end
 
