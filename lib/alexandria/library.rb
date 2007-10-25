@@ -112,6 +112,8 @@ module Alexandria
               library << book
             rescue => e
               #puts "I'm reformatting #{test[1]} because #{e.message}"
+
+
               book.version = VERSION
               savedfilename = library.simple_save(book)
               test[0] = test[0] + 1
@@ -174,6 +176,7 @@ module Alexandria
 
       if /!str:Amazon::Search::Response/.match(text)
         #puts text if $DEBUG
+          log.debug { "Removing Ruby/Amazon strings from #{name}" }
         text.gsub!("!str:Amazon::Search::Response", "")
         #puts "got one!" if $DEBUG
         #puts text if $DEBUG
@@ -196,6 +199,17 @@ module Alexandria
           book.isbn = string_isbn
           #puts "Reset to string value #{string_isbn}"
         end
+      end
+
+      # another HACK of the same type as above
+      unless book.saved_ident.class == String
+
+          md2 = /saved_ident: (.+)/.match(text)
+          if md2
+              string_saved_ident = md2[1].strip
+              log.debug { "fixing saved_ident #{book.saved_ident} -> #{string_saved_ident}" }
+              book.saved_ident = string_saved_ident
+          end
       end
       if book.isbn.class == String and book.isbn.length == 0
         book.isbn = nil # save trouble later
@@ -384,7 +398,7 @@ module Alexandria
       # (backward compatibility from 0.4.0)
       book.saved_ident ||= book.ident
       if book.ident != book.saved_ident
-        #puts "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" if $DEBUG
+          #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
         FileUtils.rm(yaml(book.saved_ident))
       end
       if File.exists?(cover(book.saved_ident))
