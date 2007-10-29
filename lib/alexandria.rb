@@ -58,7 +58,7 @@ module Alexandria
         'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
         'Marco Costantini <costanti@science.unitn.it>',
         'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
-        'Miguel Angel Garcia <miguela.garcia3@alu.uclm.es> (es)',
+        'Miguel Angel Garcia <miguelangel.garcia@gmail.com> (es)',
         'Mirko Maischberger <mirko@lilik.it> (it)'
     ]
     ARTISTS = [
