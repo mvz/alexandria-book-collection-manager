@@ -15,30 +15,6 @@
 # write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
-class Time
-    def self.parse(*arg)
-        date = nil
-        begin
-            date = super
-        rescue ArgumentError
-            if arg.length == 1
-                # Handle the 'XXXX' case (year-only)
-                if /^(\d\d\d\d)$/.match(arg.first)
-                    date = super("01 January, %s" % arg.first)
-
-                # Handle the 'XXXX, YYYY' (month name and year)
-                elsif /^(\c+)\s*,\s*(\d\d\d\d)$/.match(arg.first)
-                    begin
-                        date = super("01 " + arg.first)
-                    rescue ArgumentError
-                    end
-                end
-            end
-        end
-        return date
-    end
-end
-
 begin
 require 'glib2'
 
