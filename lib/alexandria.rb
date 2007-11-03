@@ -16,6 +16,8 @@
 # Boston, MA 02111-1307, USA.
 
 require 'gettext'
+require 'logger'
+require 'alexandria/logging'
 
 module Alexandria
     TITLE = 'Alexandria'
@@ -73,7 +75,10 @@ module Alexandria
     def self.main
         $DEBUG = !ENV['DEBUG'].nil?
         $DEBUG = true if ARGV.include? "--debug"
-                puts "Initializing Alexandria..." if $DEBUG
+        if $DEBUG
+            Alexandria.log.level = Logger::DEBUG
+        end
+        Alexandria.log.debug { "Initializing Alexandria..." }
 
         ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
                                 and URI.parse(ENV['http_proxy']).userinfo.nil?
@@ -81,7 +86,6 @@ module Alexandria
     end
 end
 
-require 'alexandria/logging'
 
 unless $MACOSX
     require 'alexandria/config'
