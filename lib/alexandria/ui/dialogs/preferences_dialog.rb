@@ -357,7 +357,6 @@ module UI
         end
 
         def sensitize_providers
-            puts "sensitizing providers"
             model = @treeview_providers.model
             sel_iter = @treeview_providers.selection.selected
             if sel_iter.nil?

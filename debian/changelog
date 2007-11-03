@@ -1,4 +1,10 @@
-alexandria (0.6.2-1) unstable; urgency=low
+alexandria (0.6.2b2) unstable; urgency=low
+
+  * Bugfix release
+
+ -- Cathal Mc Ginley <cathal.alexandria@gnostai.org>  Sun, 28 Oct 2007 07:17:00 +0000
+
+alexandria (0.6.2b1) unstable; urgency=low
 
   * Initial release of new development series.
 

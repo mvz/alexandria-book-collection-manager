@@ -13,7 +13,7 @@ require './tasks.rb'
 
 
 
-build = AlexandriaBuild.new('alexandria', '0.6.2b1') do |b|
+build = AlexandriaBuild.new('alexandria', '0.6.2b2') do |b|
 
   b.author = 'Joseph Method'     # Maintainer
   b.email  = 'tristil@gmail.com' # Maintainer e-mail
@@ -173,6 +173,22 @@ task :clobber => [:autogen_clobber]
 task :build => [:autogen, :gettext, :omf]
 
 task :default => [:build]
+
+## # # # building source package # # # ##
+
+task :pre_package => ['pkg:clobber_package', 'lib/alexandria/version.rb', :gettext]
+
+desc "Build a source package for distribution"
+task :package => [:pre_package, 'pkg:package'] do
+  found_mo_files = false
+  require 'find'
+  Find.find('pkg') do |path|
+  if /.+\.mo/ =~ path
+      found_mo_files = true
+  end
+  end
+  puts "Run package task again to include .mo files" unless found_mo_files
+end
 
 ## # # # installation # # # ##
 

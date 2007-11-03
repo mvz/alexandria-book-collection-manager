@@ -225,6 +225,7 @@ class AlexandriaBuild < Rake::TaskLib
   ## # # # package tasks # # # ##
 
   def define_package_tasks
+      namespace 'pkg' do
       Rake::PackageTask.new(@name, @version) do |p|
           p.need_tar_gz = true
           p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
@@ -234,6 +235,8 @@ class AlexandriaBuild < Rake::TaskLib
                                   "doc/**/*", "lib/**/*", "po/**/*",
                                   "schemas/**/*", "spec/**/*", "tests/**/*")
       end
+      end
+      task :clobber => ['pkg:clobber_package']
   end
 
   ## # # # install tasks # # # ##
