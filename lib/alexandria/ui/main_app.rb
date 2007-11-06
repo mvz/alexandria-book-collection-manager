@@ -84,7 +84,7 @@ module Alexandria
       module Columns
         COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
           ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT,
-          NOTES, REDD, OWN, WANT = (0..15).to_a
+          NOTES, REDD, OWN, WANT, TAGS = (0..16).to_a
       end
 
       # The maximum number of rating stars displayed.
@@ -405,6 +405,7 @@ module Alexandria
           iter[Columns::OWN] = book.own?
           iter[Columns::REDD] = book.redd?
           iter[Columns::WANT] = book.want?
+          iter[Columns::TAGS] = book.tags.join(',')
 
           icon = Icons.cover(selected_library, book)
           iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
@@ -703,6 +704,21 @@ module Alexandria
               @listview.selection.signal_connect('changed') do
                 on_books_selection_changed
               end
+
+            # adding tags column...
+            title = _("Tags")
+                puts "Create listview column for tags..."  if $DEBUG
+                renderer = Gtk::CellRendererText.new
+                renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+                column = Gtk::TreeViewColumn.new(title, renderer,
+                                                 :text => Columns::TAGS)
+                column.widget = Gtk::Label.new(title).show
+                column.sort_column_id = Columns::TAGS
+                column.resizable = true
+                @listview.append_column(column)
+             # ...
+
+
 
               @listview.signal_connect('row-activated') do
                 # Dirty hack to avoid the beginning of a drag within this
@@ -1551,7 +1567,9 @@ module Alexandria
                                                         _("Authors contain"),
                                                         _("ISBN contains"),
                                                         _("Publisher contains"),
-                                                        _("Notes contain") ].each do |item|
+                                                        _("Notes contain"),
+                                                        _("Tags contain")
+              ].each do |item|
 
                 cb.append_text(item)
                                                         end
@@ -1665,7 +1683,8 @@ module Alexandria
                                           String,                 # NOTES
                                           TrueClass,              #REDD
                                           TrueClass,              #OWN
-                                          TrueClass               #WANT
+                                          TrueClass,               #WANT
+                                          String          # TAGS
                                          )
 
                                          # Filter books according to the search toolbar widgets.
@@ -1682,12 +1701,14 @@ module Alexandria
                                                         (iter[Columns::AUTHORS] or "") +
                                                         (iter[Columns::ISBN] or "") +
                                                         (iter[Columns::PUBLISHER] or "") +
-                                                        (iter[Columns::NOTES] or "")
+                                                        (iter[Columns::NOTES] or "") +
+                                                        (iter[Columns::TAGS] or "")
                                                     when 2 then iter[Columns::TITLE]
                                                     when 3 then iter[Columns::AUTHORS]
                                                     when 4 then iter[Columns::ISBN]
                                                     when 5 then iter[Columns::PUBLISHER]
                                                     when 6 then iter[Columns::NOTES]
+                                                    when 7 then iter[Columns::TAGS]
                                                     end
                                              data != nil and data.downcase.include?(filter.downcase)
                                            end
