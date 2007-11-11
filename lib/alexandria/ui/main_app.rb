@@ -405,7 +405,11 @@ module Alexandria
           iter[Columns::OWN] = book.own?
           iter[Columns::REDD] = book.redd?
           iter[Columns::WANT] = book.want?
-          iter[Columns::TAGS] = book.tags.join(',')
+            if book.tags
+                iter[Columns::TAGS] = book.tags.join(',')
+            else
+                iter[Columns::TAGS] = ""
+            end
 
           icon = Icons.cover(selected_library, book)
           iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
