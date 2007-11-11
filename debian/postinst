@@ -21,5 +21,10 @@ fi
 # Manually added by Cathal Mc Ginley :^)
 # Updates the icon cache so our icon is visible
 if [ "$1" = "configure" ] && which gtk-update-icon-cache >/dev/null 2>&1 ; then
-    gtk-update-icon-cache -q -f -t /usr/share/icons/hicolor
+    if gtk-update-icon-cache -q -f -t /usr/share/icons/hicolor
+    then
+	true
+    else
+	echo "gtk-update-icon-cache failed, desktop icon will not appear"
+    fi
 fi

@@ -26,5 +26,10 @@ fi
 # Manually added by Cathal Mc Ginley :^)
 # Updates the icon cache so our icon no longer listed
 if [ "$1" = "remove" ] && which gtk-update-icon-cache >/dev/null 2>&1 ; then
-    gtk-update-icon-cache -q -f -t /usr/share/icons/hicolor 
+    if gtk-update-icon-cache -q -f -t /usr/share/icons/hicolor
+    then
+	true
+    else
+	echo "gtk-update-icon-cache failed, desktop icon may still appear"
+    fi
 fi
