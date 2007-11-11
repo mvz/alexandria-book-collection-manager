@@ -24,12 +24,12 @@ module UI
         attr_reader :predicate_operator_rule
 
         def initialize(parent)
-            super("", parent, Gtk::Dialog::MODAL, 
+            super("", parent, Gtk::Dialog::MODAL,
                   [Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP])
-            
-            self.window_position = Gtk::Window::POS_CENTER 
+
+            self.window_position = Gtk::Window::POS_CENTER
             self.has_separator = false
-            self.resizable = true 
+            self.resizable = true
             self.border_width = 4
             self.vbox.border_width = 12
 
@@ -43,9 +43,9 @@ module UI
 
             @rules_header_box = Gtk::HBox.new
             @rules_header_box.spacing = 2
- 
+
             @rules_box = Gtk::VBox.new
-            @rules_box.spacing = 8 
+            @rules_box.spacing = 8
             @rules_box.border_width = 8
 
             scrollview = Gtk::ScrolledWindow.new
@@ -78,7 +78,7 @@ module UI
         def user_confirms_possible_weirdnesses_before_saving?
             return true unless has_weirdnesses?
             dialog = AlertDialog.new(
-                self,             
+                self,
                 _("Empty or conflictive condition"),
                 Gtk::Stock::DIALOG_QUESTION,
                 [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
@@ -99,24 +99,24 @@ module UI
 
             @rules_header_box.children.each { |x| @rules_header_box.remove(x) }
 
-            if @rules_box.children.length > 1 
+            if @rules_box.children.length > 1
                 label1 = Gtk::Label.new
                 label1.set_alignment(0.0, 0.5)
                 label1.text = _("Match")
-              
+
                 cb = Gtk::ComboBox.new
                 [_("all"), _("any")].each { |x| cb.append_text(x) }
                 cb.signal_connect('changed') do
                     @predicate_operator_rule = cb.active == 0 \
                         ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
                 end
-                cb.active = 
-                    predicate_operator_rule == SmartLibrary::ALL_RULES ? 0 : 1 
+                cb.active =
+                    predicate_operator_rule == SmartLibrary::ALL_RULES ? 0 : 1
 
                 label2 = Gtk::Label.new
                 label2.set_alignment(0.0, 0.5)
                 label2.text = _("of the following rules:")
-                
+
                 @rules_header_box.pack_start(label1, false, false, 0)
                 @rules_header_box.pack_start(cb, false, false, 0)
                 @rules_header_box.pack_start(label2, false, false, 0)
@@ -125,7 +125,7 @@ module UI
                 label.set_alignment(0.0, 0.5)
                 label.text = _("Match the following rule:")
                 @rules_header_box << label
-                @predicate_operator_rule = SmartLibrary::ALL_RULES 
+                @predicate_operator_rule = SmartLibrary::ALL_RULES
             end
 
             @rules_header_box.show_all
@@ -137,24 +137,29 @@ module UI
 
             left_operand_combo = Gtk::ComboBox.new
             operator_combo = Gtk::ComboBox.new
+            operator_model = Gtk::ListStore.new(String)
+            # we can't just pass the model to the combo constructor,
+            # it doesn't seem to work properly
+            operator_combo.model = operator_model
+
             value_entry = Gtk::Entry.new
             date_entry = Gnome::DateEdit.new(0, false, false)
             # Really hide the time part of the date entry, as the constructor
             # does not seem to do it...
             date_entry.children[2..3].each { |x| date_entry.remove(x) }
-            date_entry.spacing = 8 
+            date_entry.spacing = 8
             entry_label = Gtk::Label.new("")
 
             add_button = Gtk::Button.new("")
             add_button.remove(add_button.children.first)
-            add_button << Gtk::Image.new(Gtk::Stock::ADD, 
+            add_button << Gtk::Image.new(Gtk::Stock::ADD,
                                          Gtk::IconSize::BUTTON)
-        
+
             add_button.signal_connect('clicked') { insert_new_rule }
 
             remove_button = Gtk::Button.new("")
             remove_button.remove(remove_button.children.first)
-            remove_button << Gtk::Image.new(Gtk::Stock::REMOVE, 
+            remove_button << Gtk::Image.new(Gtk::Stock::REMOVE,
                                             Gtk::IconSize::BUTTON)
 
             remove_button.signal_connect('clicked') do |button|
@@ -174,8 +179,8 @@ module UI
                 operand = operands[left_operand_combo.active]
                 operations = SmartLibrary::Rule.operations_for_operand(operand)
                 operation = operations[operator_combo.active]
-                
-                value_entry.visible = date_entry.visible = 
+
+                value_entry.visible = date_entry.visible =
                     entry_label.visible = false
                 right_operand = operation.last
                 unless right_operand.nil?
@@ -195,14 +200,14 @@ module UI
                 idx = @rules_box.children.index(rule_box)
                 new_rule = @smart_library_rules[idx]
                 if new_rule.nil?
-                    new_rule = SmartLibrary::Rule.new(operand, 
-                                                      operation.first, 
+                    new_rule = SmartLibrary::Rule.new(operand,
+                                                      operation.first,
                                                       nil)
-                    @smart_library_rules << new_rule 
-                end   
+                    @smart_library_rules << new_rule
+                end
                 new_rule.operand = operand
                 new_rule.operation = operation.first
-                new_rule.value = nil 
+                new_rule.value = nil
             end
             left_operand_combo.signal_connect('changed') do
                 operand = operands[left_operand_combo.active]
@@ -211,7 +216,8 @@ module UI
                     operations = SmartLibrary::Rule.operations_for_operand(operand)
                     operations.each do |operation|
                         operator = operation.first
-                        operator_combo.append_text(operator.name)
+                        iter = operator_combo.model.append
+                        iter[0] = operator.name
                     end
                     operator_combo.active = 0
                 end
@@ -226,14 +232,14 @@ module UI
             rule_box.pack_end(add_button, false, false, 0)
 
             rule_box.show_all
-            value_entry.visible = date_entry.visible = entry_label.visible = 
+            value_entry.visible = date_entry.visible = entry_label.visible =
                 false
 
             @rules_box.pack_start(rule_box, false, true, 0)
-            
+
             if rule
                 operand_idx = operands.index(rule.operand)
-                operations = 
+                operations =
                     SmartLibrary::Rule.operations_for_operand(rule.operand)
                 operation_idx = operations.map \
                     { |x| x.first }.index(rule.operation)
