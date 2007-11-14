@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-16 16:16+0100\n"
-"PO-Revision-Date: 2007-11-07 20:25-0900\n"
+"PO-Revision-Date: 2007-11-14 22:20-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "バーコードスキャナ準備完了(_B)"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:240
 msgid "Click below to scan _barcodes"
-msgstr "バーコードをスキャンするには以下をクリックしてください"
+msgstr "バーコードをスキャンするには以下をクリックしてください(_b)"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
 msgid "Error while importing"
@@ -308,7 +308,7 @@ msgstr "作者"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
 msgid "Select a cover image"
-msgstr "カバーイメージを選択してください"
+msgstr "表紙画像の選択"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
 msgid "No Cover"
@@ -468,7 +468,7 @@ msgstr "ライブラリ(_L)"
 
 #: ../lib/alexandria/ui/main_app.rb:1330
 msgid "_New Library"
-msgstr "新規ライブラリの作成(_L)"
+msgstr "新規ライブラリの作成(_N)"
 
 #: ../lib/alexandria/ui/main_app.rb:1331
 msgid "Create a new library"
@@ -544,7 +544,7 @@ msgstr "編集(_E)"
 
 #: ../lib/alexandria/ui/main_app.rb:1351
 msgid "_Undo"
-msgstr "アンドゥ"
+msgstr "アンドゥ(_U)"
 
 #: ../lib/alexandria/ui/main_app.rb:1352
 msgid "Undo the last action"
@@ -560,7 +560,7 @@ msgstr "アンドゥした操作を元に戻します"
 
 #: ../lib/alexandria/ui/main_app.rb:1355
 msgid "_Select All"
-msgstr "全て選択(_A)"
+msgstr "全て選択(_S)"
 
 #: ../lib/alexandria/ui/main_app.rb:1356
 msgid "Select all visible books"
@@ -692,7 +692,7 @@ msgstr "Alexandriaに関する情報を表示します"
 
 #: ../lib/alexandria/ui/main_app.rb:1416
 msgid "Side _Pane"
-msgstr "サイドペイン(_S)"
+msgstr "サイドペイン(_P)"
 
 #: ../lib/alexandria/ui/main_app.rb:1418
 msgid "_Toolbar"
@@ -772,7 +772,7 @@ msgstr "検索タイプを変更します"
 
 #: ../lib/alexandria/ui/main_app.rb:1547
 msgid "Type here the search criterion"
-msgstr "検索する内容をここに入力してします"
+msgstr "検索する内容をここに入力してください"
 
 #: ../lib/alexandria/ui/main_app.rb:1554
 msgid "View as Icons"
@@ -901,7 +901,7 @@ msgstr "Archived Tellico XML"
 
 #: ../lib/alexandria/export_library.rb:42
 msgid "BibTeX"
-msgstr "BibTex"
+msgstr "BibTeX"
 
 #: ../lib/alexandria/export_library.rb:43
 msgid "CSV list"
