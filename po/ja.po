@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-16 16:16+0100\n"
-"PO-Revision-Date: 2007-11-14 22:20-0900\n"
+"PO-Revision-Date: 2007-11-21 20:40-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n==0) ? 0 : 1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -82,8 +82,7 @@ msgstr "'%s'を削除します。よろしいですか？"
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:41
 msgid "If you continue, %d book will be deleted."
 msgid_plural "If you continue, %d books will be deleted."
-msgstr[0] "続行すると1冊の本が削除されます。"
-msgstr[1] "続行すると%d冊の本が削除されます。"
+msgstr[0] "続行すると%d冊の本が削除されます。"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:46
 msgid "Are you sure you want to delete '%s' from '%s'?"
@@ -252,7 +251,6 @@ msgstr ""
 "従ってこの条件を満たす本はおそらく見つかりません。"
 "それでもこの高機能ライブラリを保存しますか？"
 
-
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
 msgid "Match"
 msgstr "以下の"
@@ -318,7 +316,6 @@ msgstr "表紙なし"
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 日"
-msgstr[1] "%d 日"
 
 #: ../lib/alexandria/ui/libraries_combo.rb:44
 msgid "New Library"
@@ -331,20 +328,18 @@ msgstr "ライブラリ'%s'が選択されています。"
 #: ../lib/alexandria/ui/main_app.rb:170
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "ライブラリ'%s'が選択されています。評価なしの%d冊の本があります。"
-msgstr[1] "ライブラリ'%s'が選択されています。評価なしの%d冊の本があります。"
+msgstr[0] "ライブラリ'%s'が選択されています。評価なしの本が%d冊あります。"
 
 #: ../lib/alexandria/ui/main_app.rb:175
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があります。"
-msgstr[1] "ライブラリ'%s'が選択されています。%d冊の本があります。"
+
 
 #: ../lib/alexandria/ui/main_app.rb:182
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "ライブラリ'%s'が選択されています。評価なしの%d冊の本があります。"
-msgstr[1] "ライブラリ'%s'が選択されています。評価なしの%d冊の本があります。"
+msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があり、そのうち%d冊に評価がありません。"
 
 #: ../lib/alexandria/ui/main_app.rb:188
 msgid "'%s' selected"
@@ -354,7 +349,6 @@ msgstr "'%s'が選択されています"
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d冊の本が選択されています"
-msgstr[1] "%d冊の本が選択されています"
 
 #: ../lib/alexandria/ui/main_app.rb:301
 msgid "Unable to launch the web browser"
