@@ -137,7 +137,7 @@ module Alexandria
 
           widget.grab_focus
 
-          if path = widget.get_path_at_pos(event.x, event.y)
+          if path = widget.get_path_at_pos(event.x.to_i, event.y.to_i)
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
 
