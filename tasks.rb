@@ -75,6 +75,7 @@ class AlexandriaBuild < Rake::TaskLib
   attr_accessor :debinstall
   attr_accessor :omf
   attr_accessor :gettext
+  attr_accessor :doc
 
 
   def initialize(name, version)
@@ -88,6 +89,7 @@ class AlexandriaBuild < Rake::TaskLib
     @debinstall = DebianInstallConfig.new(self)
     @omf = OMFConfig.new(self)
     @gettext = GettextConfig.new(self)
+    @doc = DocConfig.new(self)
 
     yield self if block_given?
     define_tasks
@@ -303,6 +305,7 @@ class AlexandriaBuild < Rake::TaskLib
       default_groups.push(*icon_installation)
       default_groups.push(*desktop_installation)
       default_groups.push(*locale_installation)
+      default_groups.push(*manpage_installation)
       default_groups
     end
 
@@ -333,6 +336,11 @@ class AlexandriaBuild < Rake::TaskLib
 
     def locale_installation
         [['data', build.gettext.mo_files, sharedir, 0644]]
+    end
+
+    def manpage_installation
+        man_dir = File.join(File.join(sharedir, 'man'), 'man1')
+        [['doc', build.doc.man_files, man_dir, 0644]]
     end
 
     def bindir
@@ -537,6 +545,13 @@ class AlexandriaBuild < Rake::TaskLib
       FileUtils.rm_rf(@gettext.mo_dir)
     end
     task :clobber => [:clobber_gettext]
+  end
+
+  class DocConfig < BuildConfig
+      attr_accessor :man_files
+      def initialize(build)
+          super(build)
+      end
   end
 
   class GettextConfig < BuildConfig

@@ -1,0 +1,120 @@
+.de URL
+\\$2 \(laURL: \\$1 \(ra\\$3
+..
+.if \n[.g] .mso www.tmac
+.TH ALEXANDRIA 1 "December 1, 2007" gnome "GNOME User's Manuals"
+.SH NAME
+alexandria \- a book collection manager
+
+.SH SYNOPSIS
+.B alexandria
+.I "[OPTIONS]"
+
+.SH DESCRIPTION
+.I Alexandria
+is a GNOME desktop application for managing book collections. It has a
+simple user interface which makes it easy to enter the details of your
+library, generally using Internet sources to find catalogue
+information for your books. It also enables you to create filtered
+views of your book collection based on details such as author,
+publisher etc.
+.LP
+When launched without any options the 
+.I Alexandria
+main window opens and presents a view of your libraries, or if run
+for the first time creates a new library ready for you to add books
+either manually or with the help of providers of book information on
+the Internet.
+
+.SH OPTIONS
+.B \-\-debug
+    Print verbose debug information describing the operation of the
+    program. Useful for determining behaviour when a problem is
+    encountered. This also sets the logger level to DEBUG.
+.LP
+.B \-\-version
+    Show program version information and exit.
+.LP
+.B \-\-help
+    Show summary of options and exit. This also shows a great many
+    predefined options common to all GTK programs which are not
+    defined in this manual page.
+
+.SH FILES
+.B $HOME/.alexandria
+    The per-user configuration of 
+.I Alexandria 
+    is stored in this directory. Each the books in each library are
+    stored in a sub-directory with the library's name e.g. `My
+    Library'. Book files are stored in YAML format (a text-based data
+    format). They are named after the book's ISBN
+    e.g. 9780755322800.yaml The cover images are also named after with
+    book's ISBN, with the file extension .cover, although they are
+    usually JPEG format files. If a book has no ISBN, it's ID will be
+    a number generated from the book title.
+.LP
+.B $HOME/.alexandria/.smart_libraries
+    Smart Libraries are a filtered view of your book collection, and
+    are saved as YAML format files in this directory.
+
+.SH ENVIRONMENT
+.B LOGLEVEL
+    Setting this environment variable affects the level at which
+    messages will be logged. The log levels are cumulative, setting
+    the level to log information messages means it will also include
+    all warnings and error messages. Possible values are:
+.RS
+.LP
+.B FATAL
+Only log messages for fatal errors.
+.LP
+.B ERROR
+Log messages for all errors.
+.LP
+.B WARN
+Log warnings and errors.
+.LP
+.B INFO
+Also include information messages.
+.LP
+.B DEBUG
+Log everything, including debug messages.
+.RE
+.LP
+    The default level is 
+.B WARN
+
+.SH BUGS
+Please report any bugs you find on the
+.URL "http://rubyforge.org/tracker/?group_id=205" "Tracker" " at RubyForge."
+Please check for any similar reports before reporting a new bug.
+.LP
+You can also discuss any problems you encounter with the 
+.I Alexandria
+developers and other users by joining the
+.URL "http://rubyforge.org/mailman/listinfo/alexandria-list" "alexandria-list" " mailing list."
+
+.SH WEB SITE
+News, details of the development team and further documentation may be
+found on the
+.URL "http://alexandria.rubyforge.org/" "Alexandria web site" "."
+
+.SH AUTHOR
+Alexandria was originally written by Laurent Sansonetti. The current
+maintainer is Joseph Method <tristil@gmail.com>. For a full list of
+contributors, see the file AUTHORS in Alexandria's documentation.
+.LP
+This manual page was written by Cathal Mc Ginley
+<cathal.alexandria@gnostai.org>.
+
+.SH COPYRIGHT
+Copyright (C) 2004-2006 Laurent Sansonetti
+.LP
+Copyright (C) 2007 Alexandria Contributors
+
+.SH LICENSE
+.I Alexandria
+is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.

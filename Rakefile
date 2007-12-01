@@ -38,7 +38,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.2b2') do |b|
                           'ChangeLog',
                           'TODO']
                             b.rdoc.main = 'doc/README'
-
+                            b.doc.man_files = ['doc/alexandria.1']
                             b.debinstall.staging_dir = 'debian/tmp'
 end
 
