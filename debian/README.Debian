@@ -1,0 +1,41 @@
+Not all of Alexandria's dependencies are available within the Debian
+packaging system. Here are some of the extra steps you might have to
+take to enjoy all of the features of this program.
+
+
+= Optional Dependencies
+
+== Ruby/Amazon
+
+The version of Ruby/Amazon currently included with Debian derivatives,
+libamazon-ruby 0.9.0, has known problems which cause most lookups to
+fail for non-us Amazon locales. These problems are fixed in
+ruby-amazon 0.9.2, which you is easy to install from source.
+
+You can find it here: [http://www.caliban.org/ruby/ruby-amazon.shtml]
+
+
+== Ruby/ZOOM and Yaz
+
+For Z39.50 support and and the "Library of Congress" and "British
+Library" book providers you will need Ruby/ZOOM.  There is no recent
+deb file for Ruby/ZOOM, so it must be installed as a gem. (Kind of
+like deb/apt for Ruby: this is sort of anathema to many in Debian
+because it tends to conflict with the way Debian does things, and we
+at the Alexandria project are looking into providing a deb file
+installation for libzoom-ruby instead.)
+
+Firstly, install the prerequisites:
+
+  sudo aptitude install ruby1.8-dev libruby1.8 libyaz libyaz-dev
+
+Then if you haven't installed it already, install rubygems:
+
+  sudo aptitude install rubygems
+
+Finally, install the gems; Alexandria needs 'zoom' and 'marc'
+(ruby-zoom used to have its own implementation of marc, but now we use
+the marc gem):
+
+  sudo gem install --remote zoom
+  sudo gem install --remote marc

@@ -417,6 +417,8 @@ class AlexandriaBuild < Rake::TaskLib
         FileUtils.mkdir_p(doc_dir)
         File.install("debian/copyright", doc_dir, 0644)
         FileUtils.rm_f(File.join(doc_dir, 'COPYING'))
+        FileUtils.rm_f(File.join(doc_dir, 'INSTALL'))
+        File.install("debian/README.Debian", doc_dir, 0644)
         File.install("debian/changelog", doc_dir, 0644)
 
         autogen_files = ["lib/alexandria/config.rb",

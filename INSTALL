@@ -65,6 +65,10 @@ For Z39.50 support and and the <b>Library of Congress</b> and
 <tt>ruby-zoom</tt>[http://ruby-zoom.rubyforge.org], which in turn
 requires the non-Ruby package +yaz+[http://www.indexdata.dk/yaz].
 
+Note that if you install the recent Ruby/ZOOM as the +zoom+ gem, you
+will also need to install the +marc+ gem. (Older implementations of
+ruby-zoom contained their own implementation of MARC.)
+
 The Z39.50 Object-Orientation Model (ZOOM) is an international
 standard for communication between computer systems, particularly
 libraries and information-related systems.
