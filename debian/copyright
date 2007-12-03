@@ -1,16 +1,20 @@
+This is the Debian package of Alexandria, a book collection manager.
+The latest version of Alexandria can always be found at:
+        http://alexandria.rubyforge.org/
+
+
+Authors and Copyright Holders:
+  Copyright (C) 2004, 2005, 2006 Laurent Sansonetti
+  Copyright (C) 2007 Alexandria Contributors
+The complete list of authors and copyright holders is in 
+the file '/usr/share/doc/alexandria/AUTHORS'.
+
+
 This package was originally Debianised by Dafydd Harries
 <daf@muse.19inch.net>, on 14th April 2004.
 
-The current binary deb file was created by Cathal Mc Ginley
-<cathal.alexandria@gnostai.org> in October 2007.
+Alexandria is now built as a native Debian package.
 
-Originally obtained from <http://alexandria.rubyforge.org/>.
-
-Upstream Authors and Copyright Holders:
-  Copyright (C) 2004, 2005, 2006 Laurent Sansonetti
-  Copyright (C) 2007 Alexandria Contributors
-The complete list of upstream authors and copyright holders is in 
-the file '/usr/share/doc/alexandria/AUTHORS'.
 
 License:
 

@@ -1,0 +1,87 @@
+= Alexandria
+
+Version:      0.6.2
+Release Date: 2007-12-03
+Home Page:    http://alexandria.rubyforge.org/
+
+Alexandria is a GNOME application for managing collections of books.
+
+Alexandria is written in Ruby, and is free software, distributed under
+the terms of the GNU General Public License, version 2 or later. See
+the file COPYING for more information.
+
+
+== Features
+
+Alexandria is a simple program designed to allow individuals to keep a
+catalogue of their book collection. In addition, it enables users to
+keep track of books which are on loan.
+
+    * retrieves and displays book information (sometimes with cover
+      pictures) from several online libraries and bookshops, such as
+          o Amazon
+          o Proxis
+          o Barnes and Noble
+          o Spanish Ministry of Culture
+          o Thalia
+          o Internet Bookshop Italia
+          o US Library of Congress
+          o British Library
+    * allows books to be added and updated by hand
+    * enables searches either byEAN/ISBN/UPC, title, authors or
+      keyword
+    * supports the Z39.50 standard and allow you to manage your own
+      sources
+    * saves data using the YAML format
+    * can import and export data into ONIX, Tellico and
+      EAN/ISBN/UPC-list formats
+    * generates from your libraries XHTML web pages themable with CSS
+    * allows marking your books as loaned, each with the loan-date and
+      the name of the person who has borrowed them
+    * features a HIG-compliant user interface
+    * shows books in different views (standard list or icons list),
+      that can be filtered and/or sorted
+    * handles book rating and notes
+    * supports CueCat barcode readers
+    * includes translations for several languages
+    * is documented in a complete manual (at the moment only in
+      English and French)
+
+
+== 0.6.2 Release
+
+Alexandria 0.6.2 is the first official release of the program in over
+two years. (Alexandria 0.6.1 was released in 2005.)  The software is
+still slightly sketchy at the moment as the new maintainers are not
+fully experienced with the release process.
+
+Alexandria has been tested in beta for a few months now, and most
+issues to do with upgrading from earlier versions are believed to be
+resolved. However, you should still back up your library (the
+~/.alexandria directory) before you run the new version.
+
+If you encounter any problems, please leave a bug report on the
+Tracker at RubyForge <http://rubyforge.org/tracker/?group_id=205>
+
+If you want to help with the development of Alexandria, please join
+the alexandria-list mailing list.
+<http://rubyforge.org/mail/?group_id=205>
+
+
+== Installation
+
+There are full instructions for installing Alexandria from source in the 
+file INSTALL, including information about all the dependencies.
+
+If you are installing on a Debian-based system, things should be easier as
+the dependencies are handled automatically (although, at the moment, there
+is no up-to-date Debian package for Ruby/ZOOM - you will have to install it
+from source, see INSTALL for details).
+
+To run the program, just type
+    alexandria
+or, to get verbose debugging information,
+    alexandria --debug
+
+If you are running GNOME, Alexandria should appear under the
+'Applications > Office' menu.

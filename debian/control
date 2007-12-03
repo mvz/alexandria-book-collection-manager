@@ -10,8 +10,8 @@ Section: gnome
 Priority: extra
 Architecture: all
 Depends: ruby1.8, libgnome2-ruby (>= 0.12.0), libglade2-ruby (>= 0.12.0), libgconf2-ruby (>= 0.12.0), libyaml-ruby1.8, libgettext-ruby1.8, gconf2 (>= 2.12.1)
-Suggests: libimage-size-ruby
 Recommends: libamazon-ruby (>= 0.8.3), libwww-mechanize-ruby
+Suggests: libimage-size-ruby, librevolution-ruby
 Description: a GNOME application for managing book collections
  Alexandria is a program for organising collections of books. It
  .
@@ -22,6 +22,6 @@ Description: a GNOME application for managing book collections
    * can import and export data into ONIX, Tellico and ISBN-list formats
    * features a HIG-compliant user interface
    * handles book rating and notes
-   * supports CueCat (R) barcode readers
+   * supports CueCat barcode readers
  .
  Website: http://alexandria.rubyforge.org/

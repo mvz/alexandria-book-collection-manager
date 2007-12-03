@@ -1,3 +1,9 @@
+alexandria (0.6.2) stable; urgency=low
+
+  * Release
+
+ -- Cathal Mc Ginley <cathal.alexandria@gnostai.org>  Mon, 03 Dec 2007 10:00:00 +0000
+
 alexandria (0.6.2b2) unstable; urgency=low
 
   * Bugfix release

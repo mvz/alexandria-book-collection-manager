@@ -306,6 +306,7 @@ class AlexandriaBuild < Rake::TaskLib
       default_groups.push(*desktop_installation)
       default_groups.push(*locale_installation)
       default_groups.push(*manpage_installation)
+      default_groups.push(*documentation_installation)
       default_groups
     end
 
@@ -336,6 +337,23 @@ class AlexandriaBuild < Rake::TaskLib
 
     def locale_installation
         [['data', build.gettext.mo_files, sharedir, 0644]]
+    end
+
+    def documentation_installation
+        doc_dir = File.join(File.join(sharedir, 'doc'), build.name)
+        curdir_files = []
+        docdir_files = []
+        build.doc.doc_files.each do |f|
+            if f =~ /^doc\//
+                docdir_files << f
+            else
+                curdir_files << f
+            end
+        end
+        [
+         ['doc', docdir_files, doc_dir, 0644],
+         ['.', curdir_files, doc_dir, 0644]
+        ]
     end
 
     def manpage_installation
@@ -371,6 +389,11 @@ class AlexandriaBuild < Rake::TaskLib
   def define_debinstall_tasks
     namespace "debian" do
 
+      task :stage_pre_install => [:pre_install]
+
+      task :stage_post_install
+      # just an empty hook, note we do NOT invoke post_install here
+
       task :stage_install_files do # HACK cut-n-paste blues!
         @debinstall.groups.each do |src, files, dest, mode|
           files.each do |file|
@@ -379,16 +402,7 @@ class AlexandriaBuild < Rake::TaskLib
         end
       end
 
-      task :stage_install => [:pre_install, :stage_install_files] do
-
-        # HACK change /usr/bin/env line in alexandria script
-        script = File.join(@debinstall.staging_dir, '/usr/bin/alexandria')
-        script_contents = File.open(script).read()
-        script_contents.sub!(/\/usr\/bin\/env\ ruby/, '/usr/bin/env ruby1.8')
-        File.open(script, 'w') do |f|
-            f.write(script_contents)
-        end
-
+      task :stage_install_files_workaround do
         # some files are not copied over straight away, because
         # of how FileList globs work (they are generated after the
         # globs are evaluated)
@@ -402,8 +416,8 @@ class AlexandriaBuild < Rake::TaskLib
         doc_dir = File.join(@debinstall.staging_dir, "/usr/share/doc/#{@name}")
         FileUtils.mkdir_p(doc_dir)
         File.install("debian/copyright", doc_dir, 0644)
-        File.install("doc/AUTHORS", doc_dir, 0644)
-        File.install("debian/changelog.gz", doc_dir, 0644)
+        FileUtils.rm_f(File.join(doc_dir, 'COPYING'))
+        File.install("debian/changelog", doc_dir, 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",
@@ -411,6 +425,16 @@ class AlexandriaBuild < Rake::TaskLib
         autogen_files.each do |file|
           stage_install_file('lib', file, @debinstall.rubylib, 0644)
           puts "HACK:: installing -> 'lib', #{file}, #{@debinstall.rubylib}"
+        end
+      end
+
+      task :stage_install => [:stage_pre_install, :stage_install_files, :stage_install_files_workaround, :stage_post_install] do
+        # HACK change /usr/bin/env line in alexandria script
+        script = File.join(@debinstall.staging_dir, '/usr/bin/alexandria')
+        script_contents = File.open(script).read()
+        script_contents.sub!(/\/usr\/bin\/env\ ruby/, '/usr/bin/env ruby1.8')
+        File.open(script, 'w') do |f|
+            f.write(script_contents)
         end
       end
 
@@ -559,6 +583,7 @@ class AlexandriaBuild < Rake::TaskLib
 
   class DocConfig < BuildConfig
       attr_accessor :man_files
+      attr_accessor :doc_files
       def initialize(build)
           super(build)
       end
