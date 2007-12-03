@@ -380,6 +380,15 @@ class AlexandriaBuild < Rake::TaskLib
       end
 
       task :stage_install => [:pre_install, :stage_install_files] do
+
+        # HACK change /usr/bin/env line in alexandria script
+        script = File.join(@debinstall.staging_dir, '/usr/bin/alexandria')
+        script_contents = File.open(script).read()
+        script_contents.sub!(/\/usr\/bin\/env\ ruby/, '/usr/bin/env ruby1.8')
+        File.open(script, 'w') do |f|
+            f.write(script_contents)
+        end
+
         # some files are not copied over straight away, because
         # of how FileList globs work (they are generated after the
         # globs are evaluated)
@@ -394,6 +403,7 @@ class AlexandriaBuild < Rake::TaskLib
         FileUtils.mkdir_p(doc_dir)
         File.install("debian/copyright", doc_dir, 0644)
         File.install("doc/AUTHORS", doc_dir, 0644)
+        File.install("debian/changelog.gz", doc_dir, 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",
