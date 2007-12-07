@@ -2,17 +2,6 @@
 
 require './tasks.rb'
 
-#too dangerous without greater specification of what not to include.
-#desc "Add new files to subversion"
-#task :add_new_files do
-#  system "svn status | grep '^\?' | grep -v '.swp' | grep -v '.omf' | grep -v '*.tmp' | grep -v '*.bak' | sed -e 's/? *//' | sed -e 's/ /\ /g' | xargs svn add"
-#end
-
-#desc "shortcut for adding new files"
-#task :add => [ :add_new_files ]
-
-
-
 build = AlexandriaBuild.new('alexandria', '0.6.2') do |b|
 
   b.author = 'Joseph Method'     # Maintainer

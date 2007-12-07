@@ -134,7 +134,7 @@ class AlexandriaBuild < Rake::TaskLib
       source.grep(/^bin/)
     end
     def specs
-      source.grep(/^spec\/.*_spec.rb/)
+      source.grep(/^spec\/alexandria\/.*_spec.rb/)
     end
     def desktop
       "#{build.name}.desktop"
@@ -202,6 +202,7 @@ class AlexandriaBuild < Rake::TaskLib
         t.spec_opts = ["--format", "specdoc"]
       end
       namespace :spec do
+        desc "Verify test coverage"
         Spec::Rake::SpecTask.new("rcov") do |t|
           t.spec_files = FileList['spec/**/*_spec.rb']
           t.spec_opts = ["--format", "specdoc"]
@@ -212,6 +213,11 @@ class AlexandriaBuild < Rake::TaskLib
           t.spec_files = FileList['spec/**/*_spec.rb']
           t.spec_opts = ["--format", "html"]
           t.rcov_opts = ["--exclude", "spec"]
+        end
+        desc "Run slower acceptance tests (real world data)"
+        Spec::Rake::SpecTask.new("acceptance") do |t|
+          t.spec_files = FileList['spec/acceptance/*_spec.rb']
+          t.spec_opts = ["--format", "specdoc"]
         end
       end
 
