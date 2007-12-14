@@ -1,0 +1,135 @@
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+<section id="introduction">
+  <title>Introduction</title>
+
+  <para>&app; is a simple GNOME application designed to allow
+  individuals to keep a catalogue of their book collection. In
+  addition, it enables users to keep track of books which are on
+  loan.</para>
+
+  <section id="features">
+    <title>Features</title>
+    
+    <para>&app; provides the following features:</para>
+
+
+    <itemizedlist>
+      <listitem>
+	<para>
+	  retrieves and displays book information (sometimes with cover
+	  pictures) from several online libraries and bookshops, such as
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<ulink url="http://www.amazon.com">Amazon</ulink>
+		(searches .co.uk, .fr, .de, .jp and .ca websites, as
+		well as amazon.com)
+	      </para>
+	    </listitem>
+	    
+	    <listitem>
+	      <para><ulink url="http://www.proxis.be">Proxis</ulink></para>
+	    </listitem>
+	    
+	    <listitem>
+	      <para><ulink url="http://www.barnesandnoble.com">Barnes and Noble</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.mcu.es">Spanish Ministry of Culture</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.thalia.de">Thalia</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.internetbookshop.it">Internet Bookshop Italia</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.renaud-bray.com/">Renaud-Bray</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.loc.gov">US Library of Congress</ulink></para>
+	    </listitem>
+	    <listitem>
+	      <para><ulink url="http://www.bl.uk">British Library</ulink></para>
+	    </listitem>
+	  </itemizedlist>
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>allows books to be added and updated by hand</para>
+      </listitem>
+      <listitem>
+	<para>enables searches either by <acronym>EAN</acronym>/<acronym>ISBN</acronym>/<acronym>UPC</acronym>, title, authors or keyword</para>
+      </listitem>
+      <listitem>
+	<para>supports the <ulink
+	url="http://www.z3950.org/">Z39.50</ulink> standard and
+	allow you to define your own online book information sources</para>
+      </listitem>
+
+      <listitem>
+	<para>saves data using the text-based <ulink
+	url="http://www.yaml.org"><acronym>YAML</acronym></ulink>
+	format, making it easy to work with your book data</para>
+      </listitem>
+      <listitem>
+	<para>can import and export data into <ulink
+	url="http://www.editeur.org/onix.html"><acronym>ONIX</acronym></ulink>,
+	<ulink url="http://www.periapsis.org/tellico/">Tellico</ulink>
+	and
+	<acronym>
+	  EAN</acronym>/<acronym>ISBN</acronym>/<acronym>UPC</acronym>-list
+	formats</para>
+      </listitem>
+
+      <listitem>
+	<para>generates from your libraries
+	<acronym>XHTML</acronym> web pages themable with
+	<acronym>CSS</acronym></para>
+      </listitem>
+      <listitem>
+	<para>allows marking your books as loaned, each with the loan-date and
+	the name of the person who has borrowed them</para>
+      </listitem>
+
+      <listitem>
+	<para>features a <ulink
+	url="http://developer.gnome.org/projects/gup/hig/"><acronym>HIG</acronym></ulink>-compliant
+	user interface</para>
+      </listitem>
+      <listitem>
+	<para>shows books in different views (standard list or
+	icons list), that can be filtered and/or sorted</para>
+      </listitem>
+      <listitem>
+	<para>handles book rating and notes</para>
+      </listitem>
+
+      <listitem>
+	<para>supports <ulink
+	url="http://www.cuecat.com/">CueCat</ulink> barcode
+	readers</para>
+      </listitem>
+      <listitem>
+	<para>includes translations for several languages</para>
+      </listitem>
+    </itemizedlist>
+
+    <note>
+      <para>Alexandria is under active development (as of December
+      2007) and new features are being planned and added
+      regularly.</para>
+    </note>
+
+  </section>
+
+</section>
+

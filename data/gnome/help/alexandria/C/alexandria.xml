@@ -1,851 +1,173 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY legal SYSTEM "legal.xml">
-<!ENTITY appversion "0.6.1">
-<!ENTITY manrevision "0.0.8">
-<!ENTITY date "November 2005">
-<!ENTITY app "<application>Alexandria</application>">
-<!-- Information about the entities
-       The legal.xml file contains legal information, there is no need to edit the file. 
-       Use the appversion entity to specify the version of the application.
-       Use the manrevision entity to specify the revision number of this manual.
-       Use the date entity to specify the release date of this manual.
-       Use the app entity to specify the name of the application. -->]>
-<!-- 
-  This is a GNOME documentation template, designed by the GNOME
-  Documentation Project Team. Please use it for writing GNOME
-  documentation, making obvious changes. In particular, all the words
-  written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for "legalnotice", please leave the reference
-  unchanged.
 
-  Remember that this is a guide, rather than a perfect model to follow
-  slavishly. Make your manual logical and readable.  And don't forget
-  to remove these comments in your final documentation!  ;-)
+<!-- SYMBOLIC ENTITIES -->
+<!ENTITY appversion "0.6.2">   <!-- the version of the application -->
+<!ENTITY manrevision "0.0.9">  <!-- the revision number of this manual -->
+<!ENTITY date "December 2007"> <!-- the release date of this manual -->
+<!ENTITY app "<application>Alexandria</application>">
+<!-- the name of the application -->
+<!-- INCLUDED FILES -->
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY gettingstarted SYSTEM "getting-started.xml">
+<!ENTITY addingbooks SYSTEM "adding-books.xml">
+<!ENTITY editingbookproperties SYSTEM "editing-book-properties.xml">
+<!ENTITY workingwithlibraries SYSTEM "working-with-libraries.xml">
+<!ENTITY searching SYSTEM "searching.xml">
+<!ENTITY smartlibraries SYSTEM "smart-libraries.xml">
+<!ENTITY exporting SYSTEM "exporting.xml">
+<!ENTITY settings SYSTEM "settings.xml">
+<!ENTITY bugs SYSTEM "bugs.xml">
+<!ENTITY about SYSTEM "about.xml">
+<!-- ENTITY legal SYSTEM "legal.xml" -->
+<!ENTITY gnufdl SYSTEM "gnu-fdl-1.2.xml">
+
+<!-- CHARACTER MNEMONICS -->
+<!ENTITY copy "&#169;"> <!-- copyright sign -->
+]>
+
+<!-- 
+This document is based upon a GNOME documentation template, designed
+by the GNOME Documentation Project Team.
 -->
 <!-- 
-      (Do not remove this comment block.)
-  Maintained by the GNOME Documentation Project
-  http://developer.gnome.org/projects/gdp
-  Template version: 2.0 beta
-  Template last modified Apr 11, 2002
+(Do not remove this comment block.)
+Maintained by the GNOME Documentation Project
+http://developer.gnome.org/projects/gdp
+Template version: 2.0 beta
+Template last modified Apr 11, 2002
 -->
+
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
-<!-- please do not change the id; for translations, change lang to -->
-<!-- appropriate code -->
+
+  <!-- please do not change the id; for translations, change lang to -->
+  <!-- appropriate code -->
+
   <articleinfo>
     <title>&app; Manual</title>
+    
+    <copyright>
+      <year>2007</year>
+      <holder>Cathal Mc Ginley</holder>
+    </copyright>
     <copyright>
       <year>2005</year>
       <holder>Liam Davison</holder>
     </copyright>
-    <copyright>
-      <year>2005</year>
-      <holder>LIAM DAVISON</holder>
-    </copyright>
-<!-- translators: uncomment this:
+    <!-- translators: uncomment this:
+	 <copyright>
+	 <year>2007</year>
+	 <holder>TRANSLATOR_NAME (LANGUAGE translation)</holder>
+	 </copyright>
+    -->
 
-  <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
-  </copyright>
+    <legalnotice id="legalnotice">
+      <para>
+	Permission is granted to copy, distribute and/or modify this
+	document under the terms of the GNU Free Documentation License,
+	Version 1.2 or any later version published by the Free Software
+	Foundation; with no Invariant Sections, no Front-Cover Texts,
+	and no Back-Cover Texts. A copy of the license is included in
+	the section entitled <xref linkend="gfdl"/>.
+      </para>
+    </legalnotice>
 
-   -->
-<!-- An address can be added to the publisher information.  If a role is 
-     not specified, the publisher/author is the same for all versions of the 
-     document.  -->
-<!-- <publisher><publishername> GNOME Documentation Project </publishername></publisher>&legal;   -->
-<!-- This file  contains link to license for the documentation (GNU FDL), and 
-        other legal stuff such as "NO WARRANTY" statement. Please do not change 
-	any of this. -->
+
     <authorgroup>
       <author>
-        <firstname>Liam</firstname>
-        <surname>Davison</surname>
-        <affiliation>
-          <orgname>&app; documentation writing</orgname>
-          <address> carnegie@liamjdavison.info<email>carnegie@liamjdavison.info</email> </address>
-        </affiliation>
+	<firstname>Liam</firstname>
+	<surname>Davison</surname>
+	<affiliation>
+	  <orgname>&app; documentation writing</orgname>
+	  <address> carnegie@liamjdavison.info<email>carnegie@liamjdavison.info</email> </address>
+	</affiliation>
       </author>
-<!-- This is appropriate place for other contributors: translators,
-     maintainers,  etc. Commented out by default.
-     
-      <othercredit role="translator">
-		<firstname>Latin</firstname> 
-		<surname>Translator 1</surname> 
-		<affiliation> 
-	  		<orgname>Latin Translation Team</orgname> 
-	  		<address> <email>translator@gnome.org</email> </address> 
-		</affiliation>
-		<contrib>Latin translation</contrib>
+      <othercredit role="maintainer">
+	<firstname>Cathal</firstname> 
+	<surname>Mc Ginley</surname> 
+	<affiliation> 
+	  <orgname>&app; developers</orgname> 
+	  <address> <email>cathal.alexandria@gnostai.org</email> </address> 
+	</affiliation>
+	<contrib>Maintenance</contrib>
       </othercredit>
--->
+      <!-- This is appropriate place for other contributors: translators,
+	   maintainers,  etc. Commented out by default.
+	   
+	   <othercredit role="translator">
+	   <firstname>Latin</firstname> 
+	   <surname>Translator 1</surname> 
+	   <affiliation> 
+	   <orgname>Latin Translation Team</orgname> 
+	   <address> <email>translator@gnome.org</email> </address> 
+	   </affiliation>
+	   <contrib>Latin translation</contrib>
+	   </othercredit>
+      -->
     </authorgroup>
-<!-- According to GNU FDL, revision history is mandatory if you are -->
-<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
-<!-- Remember to remove the &manrevision; entity from the revision entries other
--->
-<!-- than the current revision. -->
-<!-- The revision numbering system for GNOME manuals is as follows: -->
-<!-- * the revision number consists of two components -->
-<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
-<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
-<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
-<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
-<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
-<!-- to V3.0, and so on. -->
+
+    <!-- According to GNU FDL, revision history is mandatory if you are -->
+    <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+    <!-- Remember to remove the &manrevision; entity from the revision entries -->
+    <!-- other than the current revision. -->
+
     <revhistory>
       <revision>
-        <revnumber>Alexandria Manual V&manrevision;</revnumber>
-        <date>&date;</date>
-        <revdescription>
-          <para role="author">Liam Davison
-	    	<email>carnegie@liamjdavison.info</email>
-	  		</para>
-          <para role="publisher">Alexandria Documentation</para>
-        </revdescription>
+	<revnumber>Alexandria Manual V&manrevision;</revnumber>
+	<date>&date;</date>
+	<revdescription>
+	  <para role="author">Cathal Mc Ginley
+	  <email>cathal.alexandria@gnostai.org</email></para>
+	  <para role="publisher">Alexandria Documentation</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>Alexandria Manual V0.0.8</revnumber>
+	<date>November 2005</date>
+	<revdescription>
+	  <para role="author">Liam Davison
+	  <email>carnegie@liamjdavison.info</email></para>
+	  <para role="publisher">Alexandria Documentation</para>
+	</revdescription>
       </revision>
     </revhistory>
-    <releaseinfo>This manual describes version &appversion; of Alexandria
-    </releaseinfo>
-    <legalnotice>
+
+    <releaseinfo>This manual describes version &appversion; of &app;</releaseinfo>
+
+    <legalnotice id="feedback">
       <title>Feedback</title>
-      <para>To report a bug or make a suggestion regarding the &app; application or
-      this manual, follow the directions in the <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. 
+
+      <para>Alexandria is not an official part of GNOME. To report a bug
+      or make a suggestion regarding the &app; application or this
+      manual, follow the directions on the <ulink
+      url="http://alexandria.rubyforge.org/feedback.html"
+      type="http">&app; Feedback web page</ulink>.
       </para>
-<!-- Translators may also add here feedback address for translations -->
+
     </legalnotice>
+    <!-- Translators may also add here feedback address for translations -->
+
   </articleinfo>
+
   <indexterm zone="index">
     <primary>Alexandria</primary>
   </indexterm>
-  <indexterm zone="index">
-    <primary>Alexandria</primary>
-  </indexterm>
-<!-- ============= Document Body ============================= -->
-<!-- ============= Introduction ============================== -->
-<!-- Use the Introduction section to give a brief overview of what
-     the application is and what it does. -->
-  <sect1 id="myapp-introduction">
-    <title>Introduction</title>
 
-  <para>The &app; application enables you to manage your collection of books. &app; provides the following features:</para>
-    <itemizedlist>
-      	<listitem><para>retrieves and displays book information (including cover pictures) from online libraries:</para>
-		<itemizedlist>
-			<listitem><para>Amazon (.com, .co.uk, .de and .jp)</para></listitem>
-			<listitem><para>Proxis</para></listitem>
-			<listitem><para>Barnes and Noble</para></listitem> 
-			<listitem><para>the Spanish Ministry of Culture</para></listitem>
-			<listitem><para>Amadeus Buch</para></listitem>
-			<listitem><para>Internet Bookshop Italia</para></listitem>
-			<listitem><para>The British Library and the US Library of Congress</para></listitem>
-			<listitem><para>Renaud-Bray Bookstore, Canada</para></listitem>
-		</itemizedlist>
-		</listitem>
-	<listitem>
-		<para>allows you to add new online providers using the Z39.50 protocol</para>
-	</listitem>
-	<listitem>
-		<para>allows books to be added and updated by hand</para>
-	</listitem>
-	<listitem>
-		<para>enables searches either by EAN/ISBN, title, authors or keyword</para>
-	</listitem>
-	<listitem>
-		<para>shows books in different views (standard list or icons list), that can be filtered and/or sorted</para>
-	</listitem>
-	<listitem>
-		<para>allows marking your books as loaned, each with the loan-date and the name of the person who has borrowed them</para>
-	</listitem>
-	<listitem>
-		<para>handles book rating, favourite books, and additional notes</para>
-	</listitem>
-	<listitem>
-		<para>can import and export data into ONIX, Tellico and EAN/ISBN-list formats</para>
-	</listitem>
-	<listitem>
-		<para>generate XHTML web pages theme-able with CSS from your libraries</para>
-	</listitem>
-	<listitem>
-		<para>supports CueCat (c) barcode readers</para>
-	</listitem>
+  <!-- ============= Document Body ============================= -->
 
-    </itemizedlist>
-    <note>
-      <para>Alexandria is under constant development - new features are being added regularly.</para>
-    </note>
-  </sect1>
-  
-<!-- =========== Getting Started ============================== -->
-<!-- Use the Getting Started section to describe the steps required
-     to start the application and to describe the user interface components
-     of the application. If there is other information that it is important
-     for readers to know before they start using the application, you should
-     also include this information here. 
-     If the information about how to get started is very short, you can 
-     include it in the Introduction and omit this section. -->
-  <sect1 id="myapp-getting-started">
-    <title>Getting Started</title>
-    <sect2 id="myapp-start">
-      <title>To Start &app;</title>
-      <para>You can start <application>&app;</application> in the following ways:
-    </para>
-      <variablelist>
-<!--        <varlistentry>
-          <term><guimenu>Applications</guimenu> menu</term>
-          <listitem>
-            <para>Choose 
-    		<menuchoice><guisubmenu>Office </guisubmenu><guimenuitem>Alexandria</guimenuitem></menuchoice>. </para>
-          </listitem>
-        </varlistentry>
--->
-        <varlistentry>
-          <term><guimenu>Command line</guimenu></term>
-          <listitem>
-            <para>To start <application>&app;</application> from a command line, type the following command, 
-    		then press <keycap>Return</keycap>:</para>
-            <para> 
-			<command>alexandria</command> 		
-    		</para>
-            <para>&app; will open the most recently accessed library.</para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
-    </sect2>
-    <sect2 id="myapp-when-start">
-      <title>When You Start &app;</title>
-      <para>When you start <application>&app;</application>, the following window is displayed.</para>
-<!-- ==== Figure ==== -->
-      <figure id="mainwindow-fig">
-        <title>&app; Start Up Window</title>
-        <screenshot>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="figures/alexandria_main_window.png" format="PNG"/>
-            </imageobject>
-<!-- EPS versions of the figures are not required at the moment. -->
-<!-- 
-		    <imageobject>
-      		<imagedata fileref="figures/image.eps" format="EPS"/>
-    		    </imageobject>
-	    -->
-            <textobject>
-              <phrase>Shows &app; main window. Contains titlebar, menubar, toolbar, library list
-	      and book display area. Menubar contains Library, Edit, View and Help menus. </phrase>
-            </textobject>
-          </mediaobject>
-        </screenshot>
-      </figure>
-<!-- ==== End of Figure ==== -->
-<!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
-<!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
-      <para>The &app; window contains the following elements:
-    </para>
-      <variablelist>
-        <varlistentry>
-          <term>Menubar:</term>
-          <listitem>
-            <para>The menus on the menubar contain all of the commands you need to work with libraries and books in 
-	<application>&app;</application>.</para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>Toolbar:</term>
-          <listitem>
-            <para>The toolbar contains buttons to quickly add new books and libraries to <application>&app;</application>,
-	    plus a search tool to filter books displayed in the main display area.</para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>Library List:</term>
-          <listitem>
-            <para>The library list pane at the left edge of the window displays the different libraries which
-		have been set up in <application>&app;</application>.</para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>Book display:</term>
-          <listitem>
-            <para>The main part of the display lists all the books in the current library. <application>&app;</application> can
-		display your books either in an Icon or List view - the List View, similar to that used in the <application>Nautilus</application>
-		file manager, displays detailed information about each book on separate lines.</para>
-	    <para>In the icon view, your favourite books - rated with five stars - will be shown with a heart icon in the top corner.</para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>Statusbar:</term>
-          <listitem>
-            <para>The statusbar displays information about the current library in <application>&app;</application>, including the number of books, and the number of books which have not been rated.</para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
-    </sect2>
-  </sect1>
-<!-- ================ Adding Books ================================ -->
-<!-- Use this section to describe how to use the application to perform the tasks for 
-  which the application is designed. -->
-  <sect1 id="alexandria-adding">
-    <title>Adding Books</title>
-    <para>You can add books to &app; in several different ways:
-      <itemizedlist><listitem><para> 
-	    <xref linkend="add-book-by-isbn"/></para></listitem><listitem><para> 
-	    <xref linkend="add-book-by-search"/></para></listitem><listitem><para> 
-	    <xref linkend="add-book-by-barcode-scan"/></para></listitem><listitem><para> 
-	    <xref linkend="add-book-manually"/></para></listitem></itemizedlist> </para>
-	<para>You can also import a list of books into &app;:
-		<itemizedlist>
-			<listitem><para><xref linkend="import-library"/></para></listitem>
-		</itemizedlist>
-	</para>
-	<para>&app; will remember which method you prefer, and will automatically select the most recently used method. For instance, if you last added a book by searching for an author, &app; will open the <guilabel>Add Book...</guilabel> dialog with the <guilabel>Add book by author</guilabel> field selected.</para>
+  &introduction;
+  &gettingstarted;
+  &addingbooks;
+  &editingbookproperties;
+  &workingwithlibraries;
+  &searching;
+  &smartlibraries;
+  &exporting;
+  &settings;
+  &bugs;
+  &about;
 
-<!-- ================ Adding Books Subsection ================================ -->
+  &gnufdl;
 
-	<sect2 id="add-book-by-isbn">
-		<title>To add a book by supplying an ISBN</title>
-		<para>If you know the ISBN of the book you wish to add to a library, choose 
-			<menuchoice><guimenu>Library</guimenu><guimenuitem>Add Book...</guimenuitem></menuchoice>, or click on the <guibutton>Add</guibutton> button on the toolbar. The <guilabel>Adding a Book</guilabel> dialog is displayed. Type in the ISBN of the book you wish to add, then click <guibutton>Add</guibutton>. The book will be added to the currently selected library. To add the book to a different library, select the library name from the <guilabel>Save in Library</guilabel> drop-down menu.</para>
-		<caution>
-        <para>&app; will validate the ISBN supplied and will warn you if the number entered is not a valid ISBN.</para>
-      </caution>
-	  <para>&app; will automatically fetch the information about the book from the online information source selected in the application preferences.</para>
-	</sect2>
-	
-	<!-- ========== Adding books by searching ====== -->
-	<sect2 id="add-book-by-search">
-		<title>To search for a book whose ISBN you do not know</title>
-		<para>If you do not know the ISBN of the book you wish to add, you can specify either the Title, the Authors or the Keywords, and &app; will search your online information provider, such as Amazon, for books that match. You can then select the desired book from the displayed list and click <guibutton>Add</guibutton> to the book to the selected library.</para>
-		<para>With the <guilabel>Adding a Book</guilabel> dialog open, click on the <guilabel>Search</guilabel> checkbox then choose either <guilabel>by title, by authors</guilabel> or <guilabel>by keyword</guilabel> from the drop-down menu. Type in the details of the book you are looking for, then click on <guibutton>Find</guibutton>.</para>
-		<figure id="add-by-search-fig">
-	        <title>&app; Adding a book by searching</title>
-	        <screenshot>
-	          <mediaobject>
-	            <imageobject>
-	              <imagedata fileref="figures/alexandria_add_by_search_1.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>Shows the &app; Add by Search dialogue, allowing you to add a book by searching your online information provider for a specific Title, Author or Keyword.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<para>Where possible, &app; will show thumbnails of the books it finds, making it easier to choose the right book or edition of a book. Select the book you want from the list, and click <guibutton>Add</guibutton>.</para>
-		<tip>
-			<para>You may have to try several different search terms to find the book you want.</para>
-		</tip>
-	</sect2>
-
-	<!-- ======== Adding books by scanning a barcode ====== -->
-	<sect2 id="add-book-by-barcode-scan">
-		<title>To add a book by scanning its barcode</title>
-		<para>&app; supports CueCat (c) barcode scanners. If you have set up a CueCat (c) barcode scanner on your computer, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Acquire from Scanner</guimenuitem></menuchoice>. Scan each book barcode in turn, and they will be listed in the <guilabel>Acquire from Scanner</guilabel> window. Choose which library you wish to save the books in with the <guilabel>Save in</guilabel> drop-down menu, and click <guibutton>Add</guibutton> to complete the operation.</para>
-	</sect2>
-
-	<!-- ======== Adding a book manually ================= -->
-	<sect2 id="add-book-manually">
-		<title>To manually add a book</title>
-		<para>Sometimes you will not be able to search for a book online. The book may not not have an ISBN (ISBN numbers only became standard in the 1970s). Perhaps the book is too new, and no information is available online. Or perhaps you simply don't have an Internet connection. &app; allows you to specify all the details of a book - the Title, Authors, cover image and so forth - by supplying them yourself.</para>
-		<para>To manually add a book to a library, choose 
-			<menuchoice><guimenu>Library</guimenu><guimenuitem>Add Book Manually</guimenuitem></menuchoice>. The following dialog will appear:
-		</para>
-<figure id="add-manually-fig">
-	        <title>&app; adding a book manually</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_add_manually.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>Shows the &app; Add book manually dialogue, allowing type in all the information for the book yourself.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<para>This dialogue is very similar to the <guilabel>Edit Book</guilabel> dialog. There are three tabs to this dialogue - <guilabel>General</guilabel>, <guilabel>Loaning</guilabel> and <guilabel>Notes</guilabel>. There is space for you to specify the book title, the ISBN if you know it, the book publisher, the binding (such as Paperback, Hardback, or Audiobook), and the Authors.</para>
-		<tip>
-			<para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
-		</tip>
-		<para>To supply a book cover image, click on the <guibutton>Cover</guibutton> button. A standard file selection dialogue will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialogue.</para>
-		<para>You can rate a book by clicking on the stars. To clear the rating, click on the space immediately to the left of the first star.</para>
-		<para>When you have filled in all the information, click on the <guibutton>Add</guibutton> button.</para>
-	</sect2>
-
-	<!-- =========== Importing a list of books ========== -->
-    <sect2 id="import-library">
-		<title>To import a list of books</title>
-		<para>&app; can import Tellico files, used by applications such as <application>Bookcase</application>. It can also import a simple list of ISBNs, fetching the details for each book in turn. To import either a Tellico file or a flat ISBN list, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Import...</guimenuitem></menuchoice>. Navigate to the appropriate file, and click <guibutton>Import</guibutton>. &app; can automatically determine what type of file is being imported; you can, of course, specify the file format by choosing either <guimenuitem>Archived Tellico</guimenuitem> or <guimenuitem>ISBN List</guimenuitem> from the <guilabel>Autodetect</guilabel> drop-down menu.</para>
-		<figure id="importing-fig">
-	        <title>&app; importing a list of ISBNs</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_importing.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>Shows &app; importing a list of ISBNs.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<tip>
-		 <para>&app; will create a new Library when importing a library - its name will be the same as the filename you imported. &app; will automatically select and highlight this library in the library pane - you can immediately rename this by typing a new name, or accept the default by clicking the left mouse button.</para>
-		</tip>
-	</sect2>
-</sect1>
-
-
-<!-- ============= Editing Book Properties Subsection =========== -->
-
-  <sect1 id="editing-book-properties">
-	<title>Editing Book Properties</title>
-	<para>You can use &app; to edit and update your book information:
-	<itemizedlist>
-		<listitem><para><xref linkend="editing-info"/></para></listitem>
-		<listitem><para><xref linkend="changing-cover-image"/></para></listitem>
-		<listitem><para><xref linkend="loaning-books"/></para></listitem>
-		<listitem><para><xref linkend="editing-notes"/></para></listitem>
-	</itemizedlist></para>
-
-	<!-- ======== Editing information ========= -->
-	<sect2 id="editing-info">
-	<title>Editing basic information</title>
-	<para>To edit a book, simply double-click on the book image in the main window, or choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Properties</guimenuitem></menuchoice>. The following window will appear, where you can change the books' Title, ISBN, Authors, Publisher, Binding and Rating.</para>
-		<figure id="editing-info-fig">
-	        <title>Editing a book with &app;</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_edit_info.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>Shows &app; editing a book.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the new name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
-		<tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space immediately to the left of the first star. Your favourite books - those with five stars - will have a small heart icon in the Icon view of the main window.</para></tip>
-	</sect2>
-	
-	<!-- ======== Changing cover images ========= -->
-	<sect2 id="changing-cover-image">
-		<title>Changing cover images</title>
-		<para>To supply a book cover image, click on the existing cover image (or the image of a book if no cover is available). A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
-	</sect2>
-
-	<!-- ======== Loaning books ========= -->
-	<sect2 id="loaning-books">
-		<title>Loaning books</title>
-		<para>To mark a book as loaned, firstly open the Edit Book dialog as in <xref linkend="editing-info"/>. Then click on the <guilabel>Loaning</guilabel> tab. Click on the <guilabel>This book is loaned</guilabel> checkbox to mark the book as loaned. You can fill in the <guilabel>To</guilabel> field to specify who the book is loaned to. And click on the <guilabel>Since</guilabel> drop-down menu to specify the date the book was loaned on.</para>
-	<figure id="loaning-fig">
-	        <title>Loaning a book in &app;</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_loaning.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>Shows &app; loaning a book.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-	</sect2>
-
-	<!-- ========== Adding notes ========== -->
-	<sect2 id="editing-notes">
-		<title>Adding and editing notes</title>
-		<para>&app; allows you to store addition notes about your books - maybe a personal review, or useful page references. To add or edit a note, firstly open the Edit Book dialogue as in <xref linkend="editing-info"/>. Then click on the <guilabel>Notes</guilabel> tab. You can type your plain-text notes in this field.</para>
-	</sect2>
-
-  </sect1>
-
-<!-- ============= Working with Libraries Subsection ============ -->
-
-  <sect1 id="working-with-libraries">
-	<title>Working with Libraries</title>
-	<para>Books stored in &app; can be grouped into different collections, called libraries. For instance, you may have
-one library for all your novels, and other for your programming manuals. &app; allows you to create, edit, and move books
-between libraries.</para>
-	<para>Available libraries are listed in the <guilabel>Library pane</guilabel> at the left of the main &app; window. If you cannot see the library pane, open it with <menuchoice><guimenu>View</guimenu><guimenuitem>Side Pane</guimenuitem></menuchoice>. You can close it again with the same menu option, or by clicking the <guibutton>Close</guibutton> icon in the top right of the library pane.</para>
-	<figure id="library-pane-fig">
-	        <title>An &app; list of libraries</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_library_pane.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>The &app; list of libraries.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	</figure>
-	<para>
-		<itemizedlist>
-			<listitem><para><xref linkend="create-new-library"/></para></listitem>
-			<listitem><para><xref linkend="renaming-libraries"/></para></listitem>
-			<listitem><para><xref linkend="delete-library"/></para></listitem>
-			<listitem><para><xref linkend="moving-between-libraries"/></para></listitem>
-		</itemizedlist>
-	</para>
-
-	<!-- ======= Creating libraries ===== -->
-	<sect2 id="create-new-library">
-		<title>Creating a new library</title>
-		<para>To create a new library, click on the <guibutton>New</guibutton> button on the toolbar, or choose <menuchoice><guimenu>Library</guimenu><guimenuitem>New</guimenuitem></menuchoice> from the main menu. A new library will also be automatically created when you import a list of books from another source.</para>
-	</sect2>
-
-	<!-- ======= Renaming libraries ===== -->
-	<sect2 id="renaming-libraries">
-		<title>Renaming a library</title>
-		<para>To rename a library, simply click on its name in the Library pane, and type in the new name. You can also right-click on the library name, and select <guimenuitem>Rename</guimenuitem> from the pop-up menu.</para>
-	</sect2>
-
-	<!-- ======= Deleting libraries ===== -->
-	<sect2 id="delete-library">
-		<title>Deleting a library</title>
-		<para>To delete a library, select the library in the library pane, either right-click and select <guimenuitem>Delete</guimenuitem>, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Delete</guimenuitem></menuchoice> from the main menu, or press the <source>Delete</source> key on your keyboard. &app; will ask for confirmation before deleting the library.</para>
-		<warning>
-			<para>Deleting a library deletes all the books it contains, and cannot be undone!</para>
-		</warning>
-	</sect2>
-
-	<!-- ====== Moving between libraries == -->
-	<sect2 id="moving-between-libraries">
-		<title>Moving books between libraries</title>
-		<para>You can move books between libraries by selecting the book or books you wish to move, right-clicking and choosing <menuchoice><guimenu>Move</guimenu><guimenuitem>In Library Name</guimenuitem></menuchoice> or choosing <menuchoice><guimenu>Edit</guimenu><guimenuitem>Move</guimenuitem><guimenuitem>In Library Name</guimenuitem></menuchoice> from the main menu.
-		</para>
-	</sect2>
-  </sect1>
-
-<!-- ============= Searching and views subsection =============== -->
-
-  <sect1 id="searching">
-	<title>Searching, Filtering and Views</title>
-	<para>&app; includes powerful tools for searching and filtering and books display. You can use these tools to display only books by a certain author or publisher, only those you rate highly or those with additional notes. &app; also contains both Icon and List views, and can directly link to online information providers to display more detailed information.
-	<itemizedlist>
-		<listitem><para><xref linkend="searching-views"/></para></listitem>
-		<listitem><para><xref linkend="searching-filtering"/></para></listitem>
-		<listitem><para><xref linkend="searching-more-online"/></para></listitem>
-	</itemizedlist>
-	</para>
-
-
-	<!-- ========= Icon and List views =========== -->
-	<sect2 id="searching-views">
-		<title>Icon and List Views</title>
-		<para>Like the <application>Nautilus</application> file manager, &app; has both Icon and List views. The Icon view shows the cover and title for every book in your library, while the List view shows more detailed information (as defined in the <xref linkend="alexandria-prefs-display"/> preferences), with one book per line.</para>
-		<tip>
-			<para>To switch between Icon and List views, either use the <guibutton>View as...</guibutton> button in the top right of the main window, or <menuchoice><guimenu>View</guimenu><guimenuitem>View As List / View as Icons</guimenuitem></menuchoice> in the main menu and right-click menu.</para>
-		</tip>
-		<para>The icons can be arranged in order of Title, Author, Publishing, Binding or Rating, and you can reverse this order. To change the order of the books in the Icon view, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Arrange Icons</guimenuitem></menuchoice> from the main menu or <guimenuitem>Arrange Icons</guimenuitem> from the right-click menu.</para>
-		<para>To change the order of the books in the List view, click on the appropriate column header.</para>
-		<figure id="listview-fig">
-	        <title>The list view, showing books sorted in reverse by author name</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_list_view.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>The list view, showing books sorted by author name</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>	
-	</sect2>
-
-	<!-- ========== Searching/filtering ======== -->
-	<sect2 id="searching-filtering">
-		<title>Searching or filtering the view</title>
-		<para>It is very easy to search for a particular book, or to limit the number of books displayed. To search for a specific title, just enter its name in the entry field on the toolbar. Use the <guilabel>Title contains</guilabel> drop-down menu to choose between searching for Titles, Authors, ISBNs, Publishers or Notes.</para>
-  		<figure id="listview-search-fig">
-	        <title>The list view, showing books only those books whose author name contains 'banks'</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_list_view_search.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>The list view, searching for books by 'banks'</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<tip>
-			<para>From the keyboard, you can move to the search field by pressing Ctrl-F. You can clear the search by pressing Ctrl-Alt-B.</para>
-		</tip>
-	</sect2>
-
-	<!-- ========= Finding out more online =========== -->
-	<sect2 id="searching-more-online">
-		<title>Finding out more information about your books online</title>
-		<para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, Renaud-Bray or Internet Bookshop Italia.</para>
-		<tip>
-			<para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, or jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
-		</tip>
-		<caution>
-			<para>Not every online information source has a complete list of books and you may have to try several different providers to find the information you want.</para>
-		</caution>
-	</sect2>
-  </sect1>
-
-<!-- ============= Exporting information Subsection ============= -->
-
-  <sect1 id="exporting">
-	<title>Exporting Information</title>
-	<para>Information in &app; can be exported for use in other applications. Information can be exported in several formats:
-	<itemizedlist>
-		<listitem><para><xref linkend="exporting-as-onix"/></para></listitem>
-		<listitem><para><xref linkend="exporting-as-Tellico"/></para></listitem>
-		<listitem><para><xref linkend="exporting-as-bibtex"/></para></listitem>
-		<listitem><para><xref linkend="exporting-as-plaintext"/></para></listitem>
-		<listitem><para><xref linkend="exporting-as-web-page"/>, using XHTML and CSS stylesheets</para></listitem>
-	</itemizedlist>
-	</para>
-
-	<sect2 id="exporting-as-onix">
-		<title>Exporting as a compressed ONIX archive</title>
-		<para>ONIX is an international standard used by publishers and retailers to define information - title, price, contributors, reviews and many others - about books. For more information about ONIX and its uses, see http://www.editeur.org/ .</para>
-		<para>&app; can gather up all your book information and export it as an archived (.tar.bz2) collection of ONIX files (called ONIX messages). To export your library as an ONIX archive, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>Archived ONIX XML (.onix.tbz2)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Specify a file name and a location to save the archive, and press <guibutton>Export</guibutton>.</para>
-	</sect2>
-
-	<sect2 id="exporting-as-Tellico">
-		<title>Exporting as a compressed Tellico file</title>
-		<para>Tellico is a standard file format, based on XML, for storing information about book and other collections. &app; can both import and export information in the Tellico format.</para>
-		<para>To export your library as a compressed (.tc) file, choose <guimenuitem>Archived Tellico XML (.tc)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
-	</sect2>
-
-	<sect2 id="exporting-as-bibtex">
-		<title>Exporting as a BibTeX file</title>
-		<para>BibTeX is a LaTeX based file format for storing bibliographic information.</para>
-		<para>To export your library as a BibTeX (.bib) file, choose <guimenuitem>BibTeX (.bib)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
-	</sect2>
-
-	<sect2 id="exporting-as-plaintext">
-		<title>Exporting a list of ISBNs</title>
-		<para>&app; can export a plain test list of ISBNs - perhaps to transfer to another machine. To export a list of ISBNs, choose <guimenuitem>ISBN list (.txt)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
-	</sect2>
-
-	<sect2 id="exporting-as-web-page">
-		<title>Exporting a library as a web page</title>
-		<para>&app; can create a web page from your book library, listing each book complete with cover images. To do this, it creates a directory of images, an XHMTL web page, and a CSS stylesheet. You can choose from different stylesheets to customise the appearance of the web page.</para>
-		<para>To export your library as a web page, <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>HTML Web Page (directory)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Choose a style - or theme - for the web page from the <guimenuitem>Theme</guimenuitem> menu.</para>
-		<figure id="export-as-web-page-fig">
-	        <title>Using &app; to create a web page</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_export_web_page.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>Shows &app; exporting a library as a web page.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<para>Type in a name for the directory the web page will be saved in, and press the <guibutton>Export</guibutton> to save the files.</para>
-		<tip>
-			<para>Only one theme, called Clean, is available at present.</para>
-		</tip>
-	</sect2>
-  </sect1>	
-
-<!-- ============= Customization ============================= -->
-<!-- Use this section to describe how to customise the application. -->
-  <sect1 id="alexandria-preferences">
-    <title>Settings</title>
-    <para>To configure &app;, choose 
-      <menuchoice><guimenu>Edit</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice>. The 
-      <guilabel>Preferences</guilabel> dialogue contains the following tabbed
-      sections:</para>
-    <itemizedlist>
-      <listitem>
-        <para> 
-	  <xref linkend="alexandria-prefs-display"/></para>
-      </listitem>
-      <listitem>
-        <para> 
-	  <xref linkend="myapp-prefs-providers"/></para>
-      </listitem>
-    </itemizedlist>
-	<para>You can also add new online information providers to &app;:</para>
-	<itemizedlist>
-		<listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
-	</itemizedlist>
-
-	<!-- ======== Visible columns ======= -->
-    <sect2 id="alexandria-prefs-display">
-      <title>List View</title>
-      <para>You can choose which columns are displayed in the List view by selecting or deselecting the checkboxes. Possible columns are Authors, ISBN, Publisher, Binding and Rating.</para>
-    </sect2>
-
-	<!-- ======== Providers ======== -->
-    <sect2 id="myapp-prefs-providers">
-      <title>Online information providers</title>
-      <para>&app; can download information from a variety of different online sources; some of these sources have additional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
-	<itemizedlist>
-		<listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
-		<listitem><para><xref linkend="alexandria-proxis-prefs"/></para></listitem>
-		<listitem><para>The Spanish Culture Ministry</para></listitem>
-		<listitem><para>Barnes and Noble</para></listitem>
-		<listitem><para>Amadeus Buch</para></listitem>
-		<listitem><para>Internet Bookshop Italia</para></listitem>
-		<listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
-		<listitem><para><xref linkend="alexandria-uslibcon-prefs"/></para></listitem>
-		<listitem><para>Reynaud-Bray</para></listitem>
-	</itemizedlist>
-	</para>
-	<para>You can also use the Z39.50 protocol to add and remove new information providers. Two providers have been set up using this protocol for you.
-	<itemizedlist>
-		<listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
-	</itemizedlist>
-	</para>
-
-
-      <sect3 id="alexandria-amazon-prefs">
-        <title>Amazon preferences</title>
-        <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
-	  	<warning>
-			<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. You sign for an Amazon Web Services account at <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. If you don't know what this means, then you can safely leave these values alone.</para>
-		</warning>
-      </sect3>
-
-
-      <sect3 id="alexandria-proxis-prefs">
-        <title>Proxis preferences</title>
-        <para>&app; can search the Proxis website for books in either English, French or Dutch. To change which language to use, select Proxis from the Provider list, and click on <guibutton>Setup</guibutton>. Then chose either <guilabel>en, fr</guilabel> or <guilabel>nl</guilabel> from the drop-down menu.</para>
-      </sect3>
-	  
-	  <sect3 id="alexandria-britlib-prefs">
-	  	<title>British Library preferences</title>
-		<para>If you have an account with the British Library, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>
-	  </sect3>
-	  
-	  <sect3 id="alexandria-uslibcon-prefs">
-	  	<title>US Library of Congress preferences</title>
-		<para>If you have an account with the US Library of Congress, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>
-	  </sect3>
-	  
-	  <sect3 id="alexandria-z3950-prefs">
-	  	<title>Adding Z39.50 providers</title>
-		<para>To add or remove a Z39.50 provider, you must first enable the advanced preferences options by clicking on the <guilabel>Advanced Settings</guilabel> checkbox. Two new buttons will appear: <guibutton>Add</guibutton> and <guibutton>Remove</guibutton>. Clicking Add will open the Z39.50 provider dialogue:</para>
-		<figure id="add-z3950">
-	        <title>Adding a new Z39.50 information provider</title>
-	        <screenshot>
-	          <mediaobject>
-	           <imageobject>
-	              <imagedata fileref="figures/alexandria_add_z3950.png" format="PNG"/>
-	            </imageobject>
-	<!-- EPS versions of the figures are not required at the moment. -->
-	<!-- 
-			    <imageobject>
-	      		<imagedata fileref="figures/image.eps" format="EPS"/>
-	    		    </imageobject>
-		    -->
-	            <textobject>
-	              <phrase>The Z39.50 information provider dialog.</phrase>
-	            </textobject>
-	          </mediaobject>
-	        </screenshot>
-	     </figure>
-		<para>Here you can specify the <guilabel>Name</guilabel> of the provider, the <guilabel>Hostname</guilabel>, the Internet <guilabel>Port</guilabel> to connect to, the name of the online <guilabel>Database</guilabel>, the <guilabel>Record Syntax</guilabel> used (&app; currently supports USMARC, UNIMARC and SUTRS formats), and, if relevant, a username and password to connect to the provider.</para>
-		<para>To remove a provider, select its name from the list and click on <guibutton>Remove</guibutton>. You cannot remove any of the default providers provided by &app;.</para>
-	</sect3>
-    </sect2>
-  </sect1>
-
-<!-- ============= Bugs ================================== -->
-<!-- This section is optional and is commented out by default. 
-     You can use it to describe known bugs and limitations of the 
-	  program if there are any - please be frank and list all
-     problems you know of. 
-  
-  <sect1 id="mayapp-bugs">
-  <title>Known Bugs and Limitations</title>
-  <para> </para>
- </sect1>
--->
-<!-- ============= About ================================== -->
-<!-- This section contains info about the program (not docs), such as
-      author's name(s), web page, license, feedback address. This
-      section is optional: primary place for this info is "About.." box of
-      the program. However, if you do wish to include this info in the
-      manual, this is the place to put it. Alternatively, you can put this information in the title page.-->
-  <sect1 id="myapp-about">
-    <title>About &app;</title>
-    <para> &app; was written by Laurent Sansonetti
-      (<email>lrz@gnome.org</email>). To find more information about
-      &app;, please visit the 
-      <ulink url="http://alexandria.rubyforge.org/" type="http">&app; Web
-	page</ulink>. </para>
-    <para>
-      To report a bug or make a suggestion regarding this application or
-      this manual, follow the directions in this 
-      <ulink url="ghelp:gnome-feedback" type="help">document</ulink>.
-    </para>
-    <para> This program is distributed under the terms of the GNU
-      General Public license as published by the Free Software
-      Foundation; either version 2 of the License, or (at your option)
-      any later version. A copy of this license can be found at this
-      <ulink url="ghelp:gpl" type="help">link</ulink>, or in the file
-      COPYING included with the source code of this program. </para>
-  </sect1>
 </article>

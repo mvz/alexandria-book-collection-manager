@@ -1,0 +1,147 @@
+<!-- =========== Getting Started ============================== -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+<section id="getting-started">
+  <title>Getting Started</title>
+  <section id="start">
+    <title>To Start &app;</title>
+    <para>You can start <application>&app;</application> in the following ways:
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term><guimenu>Applications</guimenu> menu</term>
+	<listitem>
+	  <para>Choose 
+	  <menuchoice>
+	    <guisubmenu>Office </guisubmenu>
+	    <guimenuitem>Alexandria Book Collection Manager</guimenuitem>
+	  </menuchoice>. </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guimenu>Command line</guimenu></term>
+	<listitem>
+	  <para>To start <application>&app;</application> from a command line, type the following command, 
+	  then press <keycap>Return</keycap>:</para>
+	  <para> 
+	    <command>alexandria</command> 		
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    <para>&app; will open the most recently accessed library.</para>
+    
+  </section>
+  <section id="when-start">
+    <title>When You Start &app;</title>
+    <para>When you start <application>&app;</application>, the following window is displayed.</para>
+    <!-- ==== Figure ==== -->
+    <figure id="mainwindow-fig">
+      <title>&app; Start Up Window</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/getting_started_first_launched.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows &app; main window. Contains titlebar,
+	    menubar, toolbar, library list (including smart library
+	    list) and an empty book display area. Menubar contains Library,
+	    Edit, View and Help menus. </phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <!-- ==== End of Figure ==== -->
+    <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
+    <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+
+    <para>The &app; window contains the following elements:</para>
+
+    <variablelist>
+      <varlistentry>
+	<term>Menubar:</term>
+	
+	<listitem>
+	  <para>
+	    The menus on the menubar contain all of the commands you need
+	    to work with libraries and books in &app;.
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>Toolbar:</term>
+	<listitem>
+	  <para>The toolbar contains buttons to quickly add new books and
+	  libraries to <application>&app;</application>, plus a search
+	  tool to filter books displayed in the main display area.</para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>Library List:</term>
+	
+	<listitem>
+	  <para>
+	    The library list pane at the left edge of the window
+	    displays the different libraries which have been set up in
+	    &app;. Below the main libraries, there is a list of
+	    <quote>smart libraries</quote> which are a kind of
+	    filtered view on the main libraries.
+	  </para>
+
+	  <para>When &app; starts for the first time, it creates a
+	  library called <quote>My Library</quote>, and a set of
+	  useful smart libraries.</para>
+	  
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term>Book display:</term>
+	
+	<listitem>
+	  <para>
+	    The main part of the display lists all the books in the
+	    current library. <application>&app;</application> can display
+	    your books either in an Icon or List view - the List View,
+	    similar to that used in the
+	    <application>Nautilus</application> file manager, displays
+	    detailed information about each book on separate lines.
+	  </para>
+	  
+	  <para>
+	    In the icon view, your favourite books - rated with five stars
+	    - will be shown with a heart icon in the top corner.
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>Statusbar:</term>
+	
+	<listitem>
+	  <para>
+	    The statusbar displays information about the current
+	    library in <application>&app;</application>, including
+	    the number of books, and the number of books which have
+	    not been rated.
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    
+  </section>
+</section>

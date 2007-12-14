@@ -1,0 +1,69 @@
+<!-- ============= Working with Libraries Subsection ============ -->
+
+<section id="working-with-libraries">
+  <title>Working with Libraries</title>
+  <para>Books stored in &app; can be grouped into different collections, called libraries. For instance, you may have
+  one library for all your novels, and other for your programming manuals. &app; allows you to create, edit, and move books
+  between libraries.</para>
+  <para>Available libraries are listed in the <guilabel>Library pane</guilabel> at the left of the main &app; window. If you cannot see the library pane, open it with <menuchoice><guimenu>View</guimenu><guimenuitem>Side Pane</guimenuitem></menuchoice>. You can close it again with the same menu option, or by clicking the <guibutton>Close</guibutton> icon in the top right of the library pane.</para>
+  <figure id="library-pane-fig">
+    <title>An &app; list of libraries</title>
+    <screenshot>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="figures/working_with_libraries_library_pane.png" format="PNG"/>
+	</imageobject>
+	<!-- EPS versions of the figures are not required at the moment. -->
+	<!-- 
+	     <imageobject>
+	     <imagedata fileref="figures/image.eps" format="EPS"/>
+	     </imageobject>
+	-->
+	<textobject>
+	  <phrase>The &app; list of libraries.</phrase>
+	</textobject>
+      </mediaobject>
+    </screenshot>
+  </figure>
+  <para>
+    <itemizedlist>
+      <listitem><para><xref linkend="create-new-library"/></para></listitem>
+      <listitem><para><xref linkend="renaming-libraries"/></para></listitem>
+      <listitem><para><xref linkend="delete-library"/></para></listitem>
+      <listitem><para><xref linkend="moving-between-libraries"/></para></listitem>
+    </itemizedlist>
+  </para>
+
+  <!-- ======= Creating libraries ===== -->
+  <section id="create-new-library">
+    <title>Creating a new library</title>
+    <para>To create a new library, click on the <guibutton>New
+    Library</guibutton> button on the toolbar, or choose
+    <menuchoice><guimenu>Library</guimenu><guimenuitem>New
+    Library</guimenuitem></menuchoice> from the main menu. A new
+    library will also be automatically created when you import a list
+    of books from another source.</para>
+  </section>
+
+  <!-- ======= Renaming libraries ===== -->
+  <section id="renaming-libraries">
+    <title>Renaming a library</title>
+    <para>To rename a library, simply click on its name in the Library pane, and type in the new name. You can also right-click on the library name, and select <guimenuitem>Rename</guimenuitem> from the pop-up menu.</para>
+  </section>
+
+  <!-- ======= Deleting libraries ===== -->
+  <section id="delete-library">
+    <title>Deleting a library</title>
+    <para>To delete a library, select the library in the library pane, either right-click and select <guimenuitem>Delete</guimenuitem>, choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Delete</guimenuitem></menuchoice> from the main menu, or press the <source>Delete</source> key on your keyboard. &app; will ask for confirmation before deleting the library.</para>
+    <warning>
+      <para>Deleting a library deletes all the books it contains, and cannot be undone!</para>
+    </warning>
+  </section>
+
+  <!-- ====== Moving between libraries == -->
+  <section id="moving-between-libraries">
+    <title>Moving books between libraries</title>
+    <para>You can move books between libraries by selecting the book or books you wish to move, right-clicking and choosing <menuchoice><guimenu>Move</guimenu><guimenuitem>In Library Name</guimenuitem></menuchoice> or choosing <menuchoice><guimenu>Edit</guimenu><guimenuitem>Move</guimenuitem><guimenuitem>In Library Name</guimenuitem></menuchoice> from the main menu.
+    </para>
+  </section>
+</section>

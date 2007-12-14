@@ -1,0 +1,323 @@
+<!-- ================ Adding Books ================================ -->
+<!-- Use this section to describe how to use the application to perform
+     the tasks for which the application is designed. -->
+
+<section id="adding-books">
+  <title>Adding Books</title>
+
+  <para>You can add books to &app; in several different ways:
+  <itemizedlist>
+    <listitem><para><xref linkend="add-book-by-isbn"/></para></listitem>
+    <listitem><para><xref linkend="add-book-by-search"/></para></listitem>
+    <listitem><para><xref linkend="add-book-by-barcode-scan"/></para></listitem>
+    <listitem><para><xref linkend="add-book-manually"/></para></listitem>
+  </itemizedlist>
+  </para>
+  
+  <para>You can also import a list of books into &app;:
+  <itemizedlist>
+    <listitem><para><xref linkend="import-library"/></para></listitem>
+  </itemizedlist>
+  </para>
+  
+  <para>&app; will remember which method you prefer, and will
+  automatically select the most recently used method. For instance, if
+  you last added a book by searching for an author, &app; will open
+  the <guilabel>Add Book...</guilabel> dialog with the <guilabel>Add
+  book by author</guilabel> field selected.</para>
+
+  <!-- ================ Adding Books Subsection ====================== -->
+
+  <section id="add-book-by-isbn">
+    <title>To add a book by supplying an ISBN</title>
+
+    <para>If you know the ISBN of the book you wish to add to a
+    library, choose
+    <menuchoice><guimenu>Library</guimenu><guimenuitem>Add
+    Book...</guimenuitem></menuchoice>, or click on the
+    <guibutton>Add</guibutton> button on the toolbar. The
+    <guilabel>Adding a Book</guilabel> dialog is displayed. Type in
+    the ISBN of the book you wish to add, then click
+    <guibutton>Add</guibutton>.</para>
+
+    <figure id="add-by-isbn-fig">
+      <title>&app; Adding a book by ISBN</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_add_by_isbn.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows the &app; Add by ISBN dialogue, allowing you to add a book by searching all online information providers the book with that ISBN.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <caution>
+      <itemizedlist>
+	<listitem>
+	  <para> 
+	    &app; will validate the ISBN supplied and will warn you if
+	    the number entered is not a valid ISBN.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    &app; supports both 10-digit ISBN and the newer
+	    ISBN-13.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    ISBNs are frequently written with dashes at various
+	    positions to aid legibility, but these are ignored by
+	    &app;.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </caution>
+    
+    <para>
+      &app; will attempt to fetch the information about the book from
+      online information sources, searching in the order specified in
+      the application preferences.  If the book is found by one of the
+      online providers, it will be added to the currently selected
+      library. To add the book to a different library, select the
+      library name from the <guilabel>Save in </guilabel> drop-down
+      menu. If there is only one library, there will naturally be no
+      choice to be made.
+    </para>
+
+  </section>
+  
+  <!-- ========== Adding books by searching ====== -->
+  <section id="add-book-by-search">
+    <title>To search for a book whose ISBN you do not know</title>
+    
+    <para>If you do not know the ISBN of the book you wish to add, you
+    can specify either the Title, the Authors or the Keywords, and
+    &app; will search your online information provider, such as
+    Amazon, for books that match. You can then select the desired book
+    from the displayed list and click <guibutton>Add</guibutton> to
+    the book to the selected library.</para>
+    
+    <para>With the <guilabel>Adding a Book</guilabel> dialog open,
+    click on the <guilabel>Search</guilabel> checkbox then choose
+    either <guilabel>by title, by authors</guilabel> or <guilabel>by
+    keyword</guilabel> from the drop-down menu. Type in the details of
+    the book you are looking for, then click on
+    <guibutton>Find</guibutton>.</para>
+
+    <figure id="add-by-search-fig">
+      <title>&app; Adding a book by searching</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_search_results.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows the &app; Add by Search dialogue, allowing you to add a book by searching your online information provider for a specific Title, Author or Keyword.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>Where possible, &app; will show thumbnails of the books it
+    finds, making it easier to choose the right book or edition of a
+    book. Select the book you want from the list, and click
+    <guibutton>Add</guibutton>.</para>
+    
+    <tip>
+      <para>You may have to try several different search terms to find
+      the book you want.</para>
+    </tip>
+  </section>
+
+  <!-- ======== Adding books by scanning a barcode ====== -->
+  <section id="add-book-by-barcode-scan">
+    <title>To add a book by scanning its barcode</title>
+    
+    <para>
+      &app; supports CueCat barcode scanners. If you have set up a
+      CueCat barcode scanner on your computer, choose
+      <menuchoice><guimenu>Library</guimenu><guimenuitem>Acquire from
+      Scanner</guimenuitem></menuchoice>. Scan each book barcode in
+      turn, and they will be listed in the <guilabel>Acquire from
+      Scanner</guilabel> window.
+    </para>
+
+    <figure id="add-manually-fig">
+      <title>Adding books by scanning ISBN barcodes</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_acquire_from_scanner_process.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows the &app; Acquire from Scanner dialogue, while scanning and then after scanning a book barcode.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>
+      Choose which library you wish to save the books in with the
+      <guilabel>Save in</guilabel> drop-down menu, and click
+      <guibutton>Add</guibutton> to complete the operation.
+    </para>
+  </section>
+
+  <!-- ======== Adding a book manually ================= -->
+  <section id="add-book-manually">
+    <title>To manually add a book</title>
+    
+    <para>Sometimes you will not be able to search for a book
+    online. The book may not not have an ISBN (ISBN numbers only
+    became standard in the 1970s). Perhaps the book is too new, and no
+    information is available online. Or perhaps you simply don't have
+    an Internet connection. &app; allows you to specify all the
+    details of a book - the Title, Authors, cover image and so forth -
+    by supplying them yourself.</para>
+    
+    <para>To manually add a book to a library, choose
+    <menuchoice><guimenu>Library</guimenu><guimenuitem>Add Book
+    Manually</guimenuitem></menuchoice>. The following dialog will
+    appear:
+    </para>
+    
+    <figure id="add-manually-fig">
+      <title>&app; adding a book manually</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_manual_details.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows the &app; Add book manually dialogue, allowing type in all the information for the book yourself.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>This dialogue is very similar to the <guilabel>Edit
+    Book</guilabel> dialog. There are three tabs to this dialogue -
+    <guilabel>General</guilabel>, <guilabel>Loaning</guilabel> and
+    <guilabel>Notes</guilabel>. There is space for you to specify the
+    book title, the ISBN if you know it, the book publisher, the
+    binding (such as Paperback, Hardback, or Audiobook), and the
+    Authors.</para>
+    
+    <tip>
+      <para>To add a author, click on the <guibutton>+</guibutton>
+      next to the author list, then type the name. To remove an
+      author, select the name and click <guibutton>-</guibutton>. To
+      edit a name, click twice on the name.</para>
+    </tip>
+    
+    <para>To supply a book cover image, click on the
+    <guibutton>Cover</guibutton> button. A standard file selection
+    dialogue will open. Navigate to the cover image file on your
+    system - which can be in JPEG or GIF format - and click
+    <guibutton>Open</guibutton>. The image will be scaled to fit into
+    the <guilabel>Edit Book</guilabel> dialogue.</para>
+    
+    <para>You can rate a book by clicking on the stars. To clear the
+    rating, click on the space immediately to the left of the first
+    star.</para>
+    
+    <para>When you have filled in all the information, click on the
+    <guibutton>Add</guibutton> button.</para>
+  </section>
+
+  <!-- =========== Importing a list of books ========== -->
+  <section id="import-library">
+    <title>To import a list of books</title>
+    
+    <para>&app; can import Tellico files, used by applications such as
+    <application>Bookcase</application>. It can also import a simple
+    list of ISBNs, fetching the details for each book in turn. To
+    import either a Tellico file or a flat ISBN list, choose
+    <menuchoice><guimenu>Library</guimenu><guimenuitem>Import...</guimenuitem></menuchoice>. Navigate
+    to the appropriate file, and click
+    <guibutton>Import</guibutton>. &app; can automatically determine
+    what type of file is being imported; you can, of course, specify
+    the file format by choosing either <guimenuitem>Archived
+    Tellico</guimenuitem> or <guimenuitem>ISBN List</guimenuitem> from
+    the <guilabel>Autodetect</guilabel> drop-down menu.</para>
+    
+    <figure id="importing-fig">
+      <title>&app; importing a list of ISBNs</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_isbn_import.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows &app; importing a list of ISBNs.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    
+    <tip>
+      <para>&app; will create a new Library when importing a library -
+      its name will be the same as the filename you imported. &app;
+      will automatically select and highlight this library in the
+      library pane - you can immediately rename this by typing a new
+      name, or accept the default by clicking the left mouse
+      button.</para>
+    </tip>
+
+    <figure id="importing-new-library">
+      <title>Renaming the new library after importing a list of ISBNs</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_rename_library_after_import.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows &app; new library after importing a list of ISBNs.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+  </section>
+</section>

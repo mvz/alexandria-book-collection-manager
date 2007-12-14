@@ -1,0 +1,146 @@
+<!-- ============= Smart Libraries Subsection ============ -->
+
+<section id="smart-libraries">
+  <title>Smart Libraries</title>
+  <para>
+    The search feature makes it easy to narrow down the view of books
+    in a single library according to a single search term. In order to
+    support more complex filtering, in a persistent form, &app; uses
+    <quote>Smart Libraries</quote>.
+  </para>
+
+  <para>
+    Smart Libraries are listed beneath the actual libraries in the
+    application side pane. They do not actually contain books, but
+    rather a set of rules describing which books you wish to see. The
+    books from all libraries which satisfy the set of rules will be
+    displayed. You cannot directly add books to a Smart Library.
+  </para>
+
+  <para>
+    <itemizedlist>
+      <listitem><para><xref linkend="new-smart-library"/></para></listitem>
+      <listitem><para><xref linkend="edit-smart-library"/></para></listitem>
+      <listitem><para><xref linkend="renaming-libraries"/></para></listitem>
+      <listitem><para><xref linkend="delete-library"/></para></listitem>
+      <listitem><para><xref linkend="moving-between-libraries"/></para></listitem>
+    </itemizedlist>
+  </para>
+
+  <!-- ======= Creating smart libraries ===== -->
+  <section id="new-smart-library">
+    <title>Creating a new Smart Library</title>
+
+    <para>
+      To create a new Smart library, choose
+      <menuchoice><guimenu>Library</guimenu><guimenuitem>New Smart
+      Library...</guimenuitem></menuchoice> from the main menu.  The
+      New Smart Library dialog allows you to define the rules which
+      select which books will be displayed. Each rule is displayed on
+      one line. The first drop-down list gives you the choice of what
+      attribute of a book you are concerned with (e.g. Title or
+      Publisher). The second drop-down gives a choice of conditions
+      for that attribute (e.g. contains). Depending on the attribute
+      you choose, there may be a text box to enter text or numbers to
+      further define the condition. You can add another rule by
+      clicking on the <guibutton>+</guibutton> button. You can remove
+      any rule (except the last remaining rule) by clicking on the
+      <guibutton>-</guibutton> button.
+    </para>
+    
+
+    <para>
+      An example will illustrate the use of Smart Libraries. Let us
+      suppose you have a large collections of books by Terry
+      Practchett and you add the tag <quote>discworld</quote> to all
+      the books in the Discworld series. Let us create a Smart Library
+      for all his non-Discworld books.
+    </para>
+    
+    <figure id="new-smart-library-fig">
+      <title>A New Smart Library dialog</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/smart_libraries_new_smart_library.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>A New Smart Library dialog showing two rules; The
+	    first is <quote>Author</quote> <quote>contains</quote>
+	    <quote>Pratchett</quote>, the second is <quote>Tags</quote>
+	    <quote>does not contain</quote>
+	    <quote>discworld</quote>.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    
+    <para>
+      This is quite simple. We make the first rule select all
+      Pratchett books by selecting <quote>Author</quote> and
+      <quote>contains</quote> and typing <quote>Pratchett</quote> into
+      the text box. Now we click <guibutton>+</guibutton> to add
+      another rule. Here we narrow the selection by selecting
+      <quote>Tags</quote> and <quote>does not contain</quote> and
+      typing <quote>discworld</quote> into the text box. Also be sure
+      that <quote>Match <quote>all</quote> the following rules</quote>
+      is selected.  When you click <guibutton>New</guibutton>, the
+      new Smart Library will be created, and you should see the books
+      it contains. You will also be able rename the Smart Library
+      immediately, or you can accept the default name.
+    </para>
+  </section>
+
+  <!-- ======= Editing smart libraries ===== -->
+  <section id="edit-smart-library">
+    <title>Editing a Smart Library</title> 
+
+    <para>
+      To edit a Smart Library, select it in the Smart Library list,
+      right-click the Smart Library name and select
+      <guimenuitem>Properties</guimenuitem> from the pop-up menu. The
+      Properties dialog is the same as the New Smart Library dialog;
+      you can modify, add and delete rules.
+    </para>
+  </section>
+
+  <!-- ======= Renaming smart libraries ===== -->
+  <section id="renaming-smart-libraries">
+    <title>Renaming a Smart Library</title>
+
+    <para>
+      To rename a Smart Library, simply click on its name twice in the
+      Smart Library pane, and type in the new name. You can also
+      right-click on the name, and select
+      <guimenuitem>Rename</guimenuitem> from the pop-up menu.
+    </para>
+  </section>
+
+  <!-- ======= Deleting smart libraries ===== -->
+  <section id="delete-smart-library">
+    <title>Deleting a Smart Library</title>
+
+    <para>
+      To delete a Smart Library, select it in the library pane, either
+      right-click and select <guimenuitem>Delete</guimenuitem>, choose
+      <menuchoice><guimenu>Edit</guimenu><guimenuitem>Delete</guimenuitem></menuchoice>
+      from the main menu, or press the <source>Delete</source> key on
+      your keyboard. &app; will ask for confirmation before deleting
+    the Smart Library.</para>
+
+    <note>
+      <para>
+	Deleting a Smart Library does not delete any books, just the
+	set of rules by which books are selected for display. However,
+	the deletion cannot be undone.
+      </para>
+    </note>
+  </section>
+
+</section>

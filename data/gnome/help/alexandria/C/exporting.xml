@@ -1,0 +1,74 @@
+<!-- ============= Exporting information Subsection ============= -->
+
+<section id="exporting">
+  <title>Exporting Information</title>
+  <para>Information in &app; can be exported for use in other applications. Information can be exported in several formats:
+  <itemizedlist>
+    <listitem><para><xref linkend="exporting-as-onix"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-Tellico"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-bibtex"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-plaintext"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-web-page"/>, using XHTML and CSS stylesheets</para></listitem>
+  </itemizedlist>
+  </para>
+
+  <section id="exporting-as-onix">
+    <title>Exporting as a compressed ONIX archive</title>
+
+    <para>
+      ONIX is an international standard used by publishers
+      and retailers to define information - title, price,
+      contributors, reviews and many others - about
+      books. For more information about ONIX and its uses,
+      see <ulink url="http://www.editeur.org/"
+      type="http">http://www.editeur.org/</ulink> .</para>
+
+      <para>&app; can gather up all your book information and export it as an archived (.tar.bz2) collection of ONIX files (called ONIX messages). To export your library as an ONIX archive, choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>Archived ONIX XML (.onix.tbz2)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Specify a file name and a location to save the archive, and press <guibutton>Export</guibutton>.</para>
+  </section>
+
+  <section id="exporting-as-Tellico">
+    <title>Exporting as a compressed Tellico file</title>
+    <para>Tellico is a standard file format, based on XML, for storing information about book and other collections. &app; can both import and export information in the Tellico format.</para>
+    <para>To export your library as a compressed (.tc) file, choose <guimenuitem>Archived Tellico XML (.tc)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
+  </section>
+
+  <section id="exporting-as-bibtex">
+    <title>Exporting as a BibTeX file</title>
+    <para>BibTeX is a LaTeX based file format for storing bibliographic information.</para>
+    <para>To export your library as a BibTeX (.bib) file, choose <guimenuitem>BibTeX (.bib)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
+  </section>
+
+  <section id="exporting-as-plaintext">
+    <title>Exporting a list of ISBNs</title>
+    <para>&app; can export a plain test list of ISBNs - perhaps to transfer to another machine. To export a list of ISBNs, choose <guimenuitem>ISBN list (.txt)</guimenuitem> from the <guilabel>Export format</guilabel> menu in the Export dialogue.</para>
+  </section>
+
+  <section id="exporting-as-web-page">
+    <title>Exporting a library as a web page</title>
+    <para>&app; can create a web page from your book library, listing each book complete with cover images. To do this, it creates a directory of images, an XHMTL web page, and a CSS stylesheet. You can choose from different stylesheets to customise the appearance of the web page.</para>
+    <para>To export your library as a web page, <menuchoice><guimenu>Library</guimenu><guimenuitem>Export</guimenuitem></menuchoice> from the main menu, then choose <guimenuitem>HTML Web Page (directory)</guimenuitem> from the <guilabel>Export format</guilabel> menu. Choose a style - or theme - for the web page from the <guimenuitem>Theme</guimenuitem> menu.</para>
+    <figure id="export-as-web-page-fig">
+      <title>Using &app; to create a web page</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/exporting_information_html.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows &app; exporting a library as a web page.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <para>Type in a name for the directory the web page will be saved in, and press the <guibutton>Export</guibutton> to save the files.</para>
+    <tip>
+      <para>Only one theme, called Clean, is available at present.</para>
+    </tip>
+  </section>
+</section>	

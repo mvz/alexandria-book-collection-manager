@@ -1,0 +1,77 @@
+<!-- ============= Editing Book Properties Subsection =========== -->
+
+<section id="editing-book-properties">
+  <title>Editing Book Properties</title>
+  <para>You can use &app; to edit and update your book information:
+  <itemizedlist>
+    <listitem><para><xref linkend="editing-info"/></para></listitem>
+    <listitem><para><xref linkend="changing-cover-image"/></para></listitem>
+    <listitem><para><xref linkend="loaning-books"/></para></listitem>
+    <listitem><para><xref linkend="editing-notes"/></para></listitem>
+  </itemizedlist></para>
+
+  <!-- ======== Editing information ========= -->
+  <section id="editing-info">
+    <title>Editing basic information</title>
+    <para>To edit a book, simply double-click on the book image in the main window, or choose <menuchoice><guimenu>Library</guimenu><guimenuitem>Properties</guimenuitem></menuchoice>. The following window will appear, where you can change the books' Title, ISBN, Authors, Publisher, Binding and Rating.</para>
+    <figure id="editing-info-fig">
+      <title>Editing a book with &app;</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/editing_book_properties_info.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows &app; editing a book.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <para>To add a author, click on the <guibutton>+</guibutton> next to the author list, then type the new name. To remove an author, select the name and click <guibutton>-</guibutton>. To edit a name, click twice on the name.</para>
+    <tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space immediately to the left of the first star. Your favourite books - those with five stars - will have a small heart icon in the Icon view of the main window.</para></tip>
+  </section>
+  
+  <!-- ======== Changing cover images ========= -->
+  <section id="changing-cover-image">
+    <title>Changing cover images</title>
+    <para>To supply a book cover image, click on the existing cover image (or the image of a book if no cover is available). A standard file selection dialog will open. Navigate to the cover image file on your system - which can be in JPEG or GIF format - and click <guibutton>Open</guibutton>. The image will be scaled to fit into the <guilabel>Edit Book</guilabel> dialog.</para>
+  </section>
+
+  <!-- ======== Loaning books ========= -->
+  <section id="loaning-books">
+    <title>Loaning books</title>
+    <para>To mark a book as loaned, firstly open the Edit Book dialog as in <xref linkend="editing-info"/>. Then click on the <guilabel>Loaning</guilabel> tab. Click on the <guilabel>This book is loaned</guilabel> checkbox to mark the book as loaned. You can fill in the <guilabel>To</guilabel> field to specify who the book is loaned to. And click on the <guilabel>Since</guilabel> drop-down menu to specify the date the book was loaned on.</para>
+    <figure id="loaning-fig">
+      <title>Loaning a book in &app;</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/editing_book_properties_loaning.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>Shows &app; loaning a book.</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+  </section>
+
+  <!-- ========== Adding notes ========== -->
+  <section id="editing-notes">
+    <title>Adding and editing notes</title>
+    <para>&app; allows you to store addition notes about your books - maybe a personal review, or useful page references. To add or edit a note, firstly open the Edit Book dialogue as in <xref linkend="editing-info"/>. Then click on the <guilabel>Notes</guilabel> tab. You can type your plain-text notes in this field.</para>
+  </section>
+
+</section>

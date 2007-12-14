@@ -1,0 +1,36 @@
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+     author's name(s), web page, license, feedback address. This
+     section is optional: primary place for this info is "About.." box of
+     the program. However, if you do wish to include this info in the
+     manual, this is the place to put it. Alternatively, you can put 
+     this information in the title page.-->
+
+<section id="about">
+  <title>About &app;</title>
+
+  <para> 
+    &app; was originally written by Laurent Sansonetti. It is
+    currently maintained by Joseph Method. For a full list of
+    contributors, see the file AUTHORS which came with the program.
+    To find more information about &app;, please visit the <ulink
+    url="http://alexandria.rubyforge.org/" type="http">&app; Web
+    page</ulink>.
+  </para>
+
+  <para>
+    To report a bug or make a suggestion regarding the &app;
+    application or this manual, follow the directions on the <ulink
+    url="http://alexandria.rubyforge.org/feedback.html"
+    type="http">&app; Feedback web page</ulink>.
+  </para>
+
+  <para>
+    This program is distributed under the terms of the GNU General
+    Public license as published by the Free Software Foundation;
+    either version 2 of the License, or (at your option) any later
+    version. A copy of this license can be found at this <ulink
+    url="ghelp:gpl" type="help">link</ulink>, or in the file COPYING
+    included with the source code of this program.
+  </para>
+</section>

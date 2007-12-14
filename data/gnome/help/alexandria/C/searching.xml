@@ -1,0 +1,83 @@
+<!-- ============= Searching and views subsection =============== -->
+
+<section id="searching">
+  <title>Searching, Filtering and Views</title>
+  <para>&app; includes powerful tools for searching and filtering and books display. You can use these tools to display only books by a certain author or publisher, only those you rate highly or those with additional notes. &app; also contains both Icon and List views, and can directly link to online information providers to display more detailed information.
+  <itemizedlist>
+    <listitem><para><xref linkend="searching-views"/></para></listitem>
+    <listitem><para><xref linkend="searching-filtering"/></para></listitem>
+    <listitem><para><xref linkend="searching-more-online"/></para></listitem>
+  </itemizedlist>
+  </para>
+
+
+  <!-- ========= Icon and List views =========== -->
+  <section id="searching-views">
+    <title>Icon and List Views</title>
+    <para>Like the <application>Nautilus</application> file manager, &app; has both Icon and List views. The Icon view shows the cover and title for every book in your library, while the List view shows more detailed information (as defined in the <xref linkend="alexandria-prefs-display"/> preferences), with one book per line.</para>
+    <tip>
+      <para>To switch between Icon and List views, either use the <guibutton>View as...</guibutton> button in the top right of the main window, or <menuchoice><guimenu>View</guimenu><guimenuitem>View As List / View as Icons</guimenuitem></menuchoice> in the main menu and right-click menu.</para>
+    </tip>
+    <para>The icons can be arranged in order of Title, Author, Publishing, Binding or Rating, and you can reverse this order. To change the order of the books in the Icon view, choose <menuchoice><guimenu>View</guimenu><guimenuitem>Arrange Icons</guimenuitem></menuchoice> from the main menu or <guimenuitem>Arrange Icons</guimenuitem> from the right-click menu.</para>
+    <para>To change the order of the books in the List view, click on the appropriate column header.</para>
+    <figure id="listview-fig">
+      <title>The list view, showing books sorted in reverse by author name</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/searching_filtering_views_list_view.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>The list view, showing books sorted by author name</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>	
+  </section>
+
+  <!-- ========== Searching/filtering ======== -->
+  <section id="searching-filtering">
+    <title>Searching or filtering the view</title>
+    <para>It is very easy to search for a particular book, or to limit the number of books displayed. To search for a specific title, just enter its name in the entry field on the toolbar. Use the <guilabel>Title contains</guilabel> drop-down menu to choose between searching for Titles, Authors, ISBNs, Publishers or Notes.</para>
+    <figure id="listview-search-fig">
+      <title>The list view, showing books only those books whose author name contains 'banks'</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/searching_filtering_views_list_view_search.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>The list view, searching for books by 'banks'</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <tip>
+      <para>From the keyboard, you can move to the search field by pressing Ctrl-F. You can clear the search by pressing Ctrl-Alt-B.</para>
+    </tip>
+  </section>
+
+  <!-- ========= Finding out more online =========== -->
+  <section id="searching-more-online">
+    <title>Finding out more information about your books online</title>
+    <para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Proxis, Spanish Culture Ministry, Amadeus Buch, Renaud-Bray or Internet Bookshop Italia.</para>
+    <tip>
+      <para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, or jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
+    </tip>
+    <caution>
+      <para>Not every online information source has a complete list of books and you may have to try several different providers to find the information you want.</para>
+    </caution>
+  </section>
+</section>

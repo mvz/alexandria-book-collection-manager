@@ -1,0 +1,103 @@
+<!-- ============= Customization ============================= -->
+<!-- Use this section to describe how to customise the application. -->
+<section id="alexandria-preferences">
+  <title>Settings</title>
+  <para>To configure &app;, choose 
+  <menuchoice><guimenu>Edit</guimenu><guimenuitem>Preferences</guimenuitem></menuchoice>. The 
+  <guilabel>Preferences</guilabel> dialogue contains the following tabbed
+  sections:</para>
+  <itemizedlist>
+    <listitem>
+      <para> 
+      <xref linkend="alexandria-prefs-display"/></para>
+    </listitem>
+    <listitem>
+      <para> 
+      <xref linkend="myapp-prefs-providers"/></para>
+    </listitem>
+  </itemizedlist>
+  <para>You can also add new online information providers to &app;:</para>
+  <itemizedlist>
+    <listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
+  </itemizedlist>
+
+  <!-- ======== Visible columns ======= -->
+  <section id="alexandria-prefs-display">
+    <title>List View</title>
+    <para>You can choose which columns are displayed in the List view by selecting or deselecting the checkboxes. Possible columns are Authors, ISBN, Publisher, Binding and Rating.</para>
+  </section>
+
+  <!-- ======== Providers ======== -->
+  <section id="myapp-prefs-providers">
+    <title>Online information providers</title>
+    <para>&app; can download information from a variety of different online sources; some of these sources have additional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
+    <itemizedlist>
+      <listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
+      <listitem><para><xref linkend="alexandria-proxis-prefs"/></para></listitem>
+      <listitem><para>The Spanish Culture Ministry</para></listitem>
+      <listitem><para>Barnes and Noble</para></listitem>
+      <listitem><para>Amadeus Buch</para></listitem>
+      <listitem><para>Internet Bookshop Italia</para></listitem>
+      <listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
+      <listitem><para><xref linkend="alexandria-uslibcon-prefs"/></para></listitem>
+      <listitem><para>Reynaud-Bray</para></listitem>
+    </itemizedlist>
+    </para>
+    <para>You can also use the Z39.50 protocol to add and remove new information providers. Two providers have been set up using this protocol for you.
+    <itemizedlist>
+      <listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
+    </itemizedlist>
+    </para>
+
+
+    <sect3 id="alexandria-amazon-prefs">
+      <title>Amazon preferences</title>
+      <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .de and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>UK, DE, JP</guilabel> or <guilabel>US</guilabel> from the drop-down menu.</para>
+      <warning>
+	<para>The <guilabel>Development token</guilabel> and <guilabel>Associate ID</guilabel> can be changed if you have an amazon web services account. You sign for an Amazon Web Services account at <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. If you don't know what this means, then you can safely leave these values alone.</para>
+      </warning>
+    </sect3>
+
+
+    <sect3 id="alexandria-proxis-prefs">
+      <title>Proxis preferences</title>
+      <para>&app; can search the Proxis website for books in either English, French or Dutch. To change which language to use, select Proxis from the Provider list, and click on <guibutton>Setup</guibutton>. Then chose either <guilabel>en, fr</guilabel> or <guilabel>nl</guilabel> from the drop-down menu.</para>
+    </sect3>
+    
+    <sect3 id="alexandria-britlib-prefs">
+      <title>British Library preferences</title>
+      <para>If you have an account with the British Library, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>
+    </sect3>
+    
+    <sect3 id="alexandria-uslibcon-prefs">
+      <title>US Library of Congress preferences</title>
+      <para>If you have an account with the US Library of Congress, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>
+    </sect3>
+    
+    <sect3 id="alexandria-z3950-prefs">
+      <title>Adding Z39.50 providers</title>
+      <para>To add or remove a Z39.50 provider, you must first enable the advanced preferences options by clicking on the <guilabel>Advanced Settings</guilabel> checkbox. Two new buttons will appear: <guibutton>Add</guibutton> and <guibutton>Remove</guibutton>. Clicking Add will open the Z39.50 provider dialogue:</para>
+      <figure id="add-z3950">
+	<title>Adding a new Z39.50 information provider</title>
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="figures/settings_providers_new_z3950.png" format="PNG"/>
+	    </imageobject>
+	    <!-- EPS versions of the figures are not required at the moment. -->
+	    <!-- 
+		 <imageobject>
+		 <imagedata fileref="figures/image.eps" format="EPS"/>
+		 </imageobject>
+	    -->
+	    <textobject>
+	      <phrase>The Z39.50 information provider dialog.</phrase>
+	    </textobject>
+	  </mediaobject>
+	</screenshot>
+      </figure>
+      <para>Here you can specify the <guilabel>Name</guilabel> of the provider, the <guilabel>Hostname</guilabel>, the Internet <guilabel>Port</guilabel> to connect to, the name of the online <guilabel>Database</guilabel>, the <guilabel>Record Syntax</guilabel> used (&app; currently supports USMARC, UNIMARC and SUTRS formats), and, if relevant, a username and password to connect to the provider.</para>
+      <para>To remove a provider, select its name from the list and click on <guibutton>Remove</guibutton>. You cannot remove any of the default providers provided by &app;.</para>
+    </sect3>
+  </section>
+</section>
