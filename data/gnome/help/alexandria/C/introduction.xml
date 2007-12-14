@@ -67,7 +67,7 @@
 	<para>allows books to be added and updated by hand</para>
       </listitem>
       <listitem>
-	<para>enables searches either by <acronym>EAN</acronym>/<acronym>ISBN</acronym>/<acronym>UPC</acronym>, title, authors or keyword</para>
+	<para>enables searches either by <acronym>ISBN</acronym>, title, authors or keyword</para>
       </listitem>
       <listitem>
 	<para>supports the <ulink
@@ -84,14 +84,11 @@
 	<para>can import and export data into <ulink
 	url="http://www.editeur.org/onix.html"><acronym>ONIX</acronym></ulink>,
 	<ulink url="http://www.periapsis.org/tellico/">Tellico</ulink>
-	and
-	<acronym>
-	  EAN</acronym>/<acronym>ISBN</acronym>/<acronym>UPC</acronym>-list
-	formats</para>
+	and <acronym>ISBN</acronym>-list formats</para>
       </listitem>
 
       <listitem>
-	<para>generates from your libraries
+	<para>can export library data in the form of
 	<acronym>XHTML</acronym> web pages themable with
 	<acronym>CSS</acronym></para>
       </listitem>
@@ -100,11 +97,11 @@
 	the name of the person who has borrowed them</para>
       </listitem>
 
-      <listitem>
+      <!-- listitem>
 	<para>features a <ulink
 	url="http://developer.gnome.org/projects/gup/hig/"><acronym>HIG</acronym></ulink>-compliant
 	user interface</para>
-      </listitem>
+      </listitem -->
       <listitem>
 	<para>shows books in different views (standard list or
 	icons list), that can be filtered and/or sorted</para>
@@ -116,7 +113,7 @@
       <listitem>
 	<para>supports <ulink
 	url="http://www.cuecat.com/">CueCat</ulink> barcode
-	readers</para>
+	readers for data entry</para>
       </listitem>
       <listitem>
 	<para>includes translations for several languages</para>
@@ -124,9 +121,12 @@
     </itemizedlist>
 
     <note>
-      <para>Alexandria is under active development (as of December
-      2007) and new features are being planned and added
-      regularly.</para>
+      <para>
+	Alexandria is under active development (as of December 2007)
+	and new features are being planned and added regularly.  See
+	the <ulink url="http://alexandria.rubyforge.org/feedback.html"
+	type="http">&app; web page</ulink> for more information.
+      </para>
     </note>
 
   </section>

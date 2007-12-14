@@ -233,11 +233,17 @@
     Authors.</para>
     
     <tip>
-      <para>To add a author, click on the <guibutton>+</guibutton>
+      <para>To add an author, click on the <guibutton>+</guibutton>
       next to the author list, then type the name. To remove an
       author, select the name and click <guibutton>-</guibutton>. To
       edit a name, click twice on the name.</para>
     </tip>
+
+    <para>
+      You can also add a set of Tags to a book by entering words or
+      phrases separated by commas. Tags are used as an informal way to
+      note subject information.
+    </para>
     
     <para>To supply a book cover image, click on the
     <guibutton>Cover</guibutton> button. A standard file selection
@@ -258,10 +264,11 @@
   <section id="import-library">
     <title>To import a list of books</title>
     
-    <para>&app; can import Tellico files, used by applications such as
-    <application>Bookcase</application>. It can also import a simple
-    list of ISBNs, fetching the details for each book in turn. To
-    import either a Tellico file or a flat ISBN list, choose
+    <para>&app; can import Tellico files, (used by the
+    <application>Tellico</application> application).  It can also
+    import a simple list of ISBNs, fetching the details for each book
+    in turn. To import either a Tellico file or a flat ISBN list,
+    choose
     <menuchoice><guimenu>Library</guimenu><guimenuitem>Import...</guimenuitem></menuchoice>. Navigate
     to the appropriate file, and click
     <guibutton>Import</guibutton>. &app; can automatically determine

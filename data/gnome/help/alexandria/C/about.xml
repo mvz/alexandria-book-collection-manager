@@ -10,10 +10,11 @@
   <title>About &app;</title>
 
   <para> 
-    &app; was originally written by Laurent Sansonetti. It is
-    currently maintained by Joseph Method. For a full list of
-    contributors, see the file AUTHORS which came with the program.
-    To find more information about &app;, please visit the <ulink
+    &app; was originally written by Laurent Sansonetti. Many people
+    have contributed to it since it was first released. For a full
+    list of contributors, see the file AUTHORS which came with the
+    program.  It is currently maintained by Joseph Method. To find
+    more information about &app;, please visit the <ulink
     url="http://alexandria.rubyforge.org/" type="http">&app; Web
     page</ulink>.
   </para>
@@ -26,11 +27,11 @@
   </para>
 
   <para>
-    This program is distributed under the terms of the GNU General
-    Public license as published by the Free Software Foundation;
-    either version 2 of the License, or (at your option) any later
-    version. A copy of this license can be found at this <ulink
-    url="ghelp:gpl" type="help">link</ulink>, or in the file COPYING
-    included with the source code of this program.
+    &app; is distributed under the terms of the GNU General Public
+    license as published by the Free Software Foundation; either
+    version 2 of the License, or (at your option) any later version. A
+    copy of this license can be found at this <ulink url="ghelp:gpl"
+    type="help">link</ulink>, or in the file COPYING included with the
+    source code of this program.
   </para>
 </section>

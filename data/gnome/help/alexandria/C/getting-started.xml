@@ -24,7 +24,7 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><guimenu>Command line</guimenu></term>
+	<term>Command line</term>
 	<listitem>
 	  <para>To start <application>&app;</application> from a command line, type the following command, 
 	  then press <keycap>Return</keycap>:</para>

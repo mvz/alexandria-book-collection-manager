@@ -86,14 +86,22 @@
       Pratchett books by selecting <quote>Author</quote> and
       <quote>contains</quote> and typing <quote>Pratchett</quote> into
       the text box. Now we click <guibutton>+</guibutton> to add
-      another rule. Here we narrow the selection by selecting
-      <quote>Tags</quote> and <quote>does not contain</quote> and
-      typing <quote>discworld</quote> into the text box. Also be sure
-      that <quote>Match <quote>all</quote> the following rules</quote>
-      is selected.  When you click <guibutton>New</guibutton>, the
-      new Smart Library will be created, and you should see the books
-      it contains. You will also be able rename the Smart Library
-      immediately, or you can accept the default name.
+      another rule. With the second rule we narrow the selection by
+      selecting <quote>Tags</quote> and <quote>does not
+      contain</quote> and typing <quote>discworld</quote> into the
+      text box. Also be sure that <quote>Match <quote>all</quote> the
+      following rules</quote> is selected.  When you click
+      <guibutton>New</guibutton>, the new Smart Library will be
+      created, and you should see the books it contains. You will also
+      be able rename the Smart Library immediately, or you can accept
+      the default name.
+    </para>
+
+    <para>
+      Remember, some attributes are boolean - they can either be
+      <quote>set</quote> or <quote>not set</quote> (for example the
+      <quote>Own</quote> attribute). A text box is not required for
+      rules concerning these attributes.
     </para>
   </section>
 
