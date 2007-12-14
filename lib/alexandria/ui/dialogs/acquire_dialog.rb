@@ -23,6 +23,159 @@ require 'alexandria/scanners/cuecat'
 
 module Alexandria
     module UI
+
+class BarcodeAnimation < Gtk::VBox
+
+  def initialize()
+    super()
+
+      @tid2 = nil
+    @box = Gtk::EventBox.new
+    pack_start(@box)
+    #set_border_width(@pad = 2)
+      @pad = 2
+    set_size_request(300, 100) # (@width = 48)+(@pad*2), (@height = 48)+(@pad*2))
+
+
+    @canvas = Gnome::Canvas.new(true)
+
+    @box.add(@canvas)
+    @box.signal_connect('size-allocate') { |w,e,*b|
+      @width, @height = [e.width,e.height].collect{|i|i - (@pad*2)}
+      @canvas.set_size(@width,@height)
+      @canvas.set_scroll_region(0,0,@width,@height)
+      #puts "canvas size #{@canvas.size[0]}, #{@canvas.size[1]}"
+      false
+     }
+    #signal_connect_after('show') {|w,e| start() }
+    # signal_connect_after('hide') {|w,e| stop() }
+    @canvas.show()
+    @box.show()
+    show()
+  end
+
+  def set_active
+      points = [[0,0], [300,0], [300,100], [0,100]]
+      poly_data = {:points => points,
+          :fill_color_rgba => 0xFFFFFFFF,
+          :join_style => Gdk::GC::JOIN_MITER}
+      @scanner_background = Gnome::CanvasPolygon.new(@canvas.root, poly_data)
+  end
+
+  def set_passive
+      if @scanner_background
+          @scanner_background.destroy
+      end
+  end
+
+
+  def setup_barcode_display()
+      create_ean_barcode_data
+  end
+
+  def create_ean_barcode_data
+    @index = 0 # -16
+    @wipeout = false
+    @barcode_bars = []
+    @barcode_data = []
+    d = '911113123121112331122131113211111123122211132321112311231111'
+
+    @hpos = 0
+
+    while d.size > 0
+      space_width = d[0].chr.to_i
+      bar_width = d[1].chr.to_i
+      d = d[2..-1]
+
+      @barcode_data << [space_width, bar_width]
+
+    end
+  end
+
+
+
+  def draw_barcode_bars
+    return false if destroyed?
+    setup_barcode_display() unless defined?(@barcode_data)
+
+    if @wipeout
+      if @index >= @barcode_data.size
+        @index = -34
+        return true
+                        end
+      if @index > -12
+                        faded_grey = @barcode_bars[0].fill_color_rgba - 5
+        if faded_grey < 0
+          faded_grey = 0
+          stop
+        end
+        @barcode_bars.each {|b| b.set_fill_color_rgba faded_grey }
+      end
+                  @index += 1
+      if @index >= @barcode_data.size
+                @barcode_bars.each {|b| b.destroy }
+                @wipeout = false
+        @index = 0
+        @barcode_bars = []
+        @hpos = 0
+      end
+      return true
+    end
+
+    if @index < 0
+      @index += 1
+      return true
+    end
+    if @index >= @barcode_data.size
+                  @barcode_bars.each {|b| b.set_fill_color_rgba 0x000000CC }
+      @wipeout = true
+      return true
+    end
+
+    scale = 2.5
+    ytop = 5
+    ybase = 50
+
+
+    current_bar = @barcode_data[@index]
+    space_width = current_bar[0]
+    bar_width = current_bar[1]
+
+    @hpos += space_width
+    bar_points = [[scale*(@hpos), ytop], [scale*(@hpos+bar_width), ytop],
+                  [scale*(@hpos+bar_width), ybase], [scale*(@hpos), ybase]]
+    if not @barcode_bars.empty?
+      @barcode_bars.last.fill_color_rgba = 0xFF000080
+    end
+
+    @barcode_bars << Gnome::CanvasPolygon.new(@canvas.root,
+                                              { :points => bar_points,
+                                                :fill_color_rgba => 0xFF000090,
+                                                :join_style => Gdk::GC::JOIN_MITER } )
+    @hpos += bar_width
+
+    @index += 1
+    true
+  end
+
+
+
+  def start
+      unless @tid2
+          #puts "starting animation..."
+          @tid2 = Gtk::timeout_add(30) { draw_barcode_bars() }
+      end
+  end
+
+  def stop
+    #puts "stopping..."
+    Gtk::timeout_remove(@tid2) if @tid2
+    @tid2 = nil
+  end
+
+end
+
+
         class AcquireDialog < GladeBase
             include GetText
             include Logging
@@ -114,6 +267,7 @@ module Alexandria
             end
 
             def read_barcode_scan
+                @animator.start
                 log.debug { "reading CueCat data #{@scanner_buffer}" }
                 barcode_text = nil
                 isbn = nil
@@ -131,7 +285,7 @@ module Alexandria
                 if isbn
                     log.debug { "Got ISBN #{isbn}" }
                     # TODO :: sound
-                    # play_sound("gnometris/turn")
+                    play_sound("gnometris/turn")
 
                     @barcodes_treeview.model.freeze_notify do
                         iter = @barcodes_treeview.model.append
@@ -143,7 +297,7 @@ module Alexandria
                 else
                     log.debug { "was not an ISBN barcode" }
                     # TODO :: sound
-                    # play_sound("question")
+                    play_sound("question")
                 end
             end
 
@@ -218,6 +372,9 @@ module Alexandria
                 @scanner_buffer = ""
                 @scanner = Alexandria::Scanners::CueCat.new # HACK :: use Registry
 
+                @animator = BarcodeAnimation.new()
+                @barcode_canvas.add(@animator)
+
                 # attach signals
                 @scan_area.signal_connect("button-press-event") do |widget, event|
                     @scan_area.grab_focus
@@ -226,11 +383,12 @@ module Alexandria
                     @barcode_label.label = _("_Barcode Scanner Ready")
                     @scanner_buffer = ""
                     begin
+                        @animator.set_active
                         # @frame1.modify_bg(Gtk::STATE_NORMAL, Gdk::Color.new(0, 0, 0xEE))
                         # @frame1.modify_bg(Gtk::STATE_ACTIVE, Gdk::Color.new(0, 0, 0xEE))
-                        points = [[-100,-10], [300,-10], [300,300], [-100,300]]
-                        @scanner_background = Gnome::CanvasPolygon.new(@barcode_canvas.root,
-                                                                       {:points => points, :fill_color_rgba => 0xFDFDFDFF})
+                        #points = [[-100,-10], [300,-10], [300,300], [-100,300]]
+                        # @scanner_background = Gnome::CanvasPolygon.new(@barcode_canvas.root,
+                        #                                               {:points => points, :fill_color_rgba => 0xFDFDFDFF})
                     rescue StandardError => err
                         log.error { "Error drawing to Gnome Canvas" }
                         log << err if log.error?
@@ -239,7 +397,8 @@ module Alexandria
                 @scan_area.signal_connect("focus-out-event") do |widget, event|
                     @barcode_label.label = _("Click below to scan _barcodes")
                     @scanner_buffer = ""
-                    @scanner_background.destroy
+                    @animator.set_passive
+                    # @scanner_background.destroy
                 end
 
                 @@debug_index = 0
@@ -255,7 +414,7 @@ module Alexandria
                                 log.debug { "Scanning! Received first character." }
                             end
                             # TODO :: sound
-                            # play_sound("iagno/flip-piece")
+                            play_sound("iagno/flip-piece")
                         end
                         @scanner_buffer << event.keyval.chr
 
@@ -268,7 +427,7 @@ module Alexandria
 
 
                 # TODO :: sound
-                # Gnome::Sound.init("localhost")
+                Gnome::Sound.init("localhost")
 
             end
 
@@ -337,10 +496,10 @@ module Alexandria
 
             end
 
-            #def play_sound(filename)
-            #    dir = "/usr/share/sounds"
-            #    Gnome::Sound.play("#{dir}/#{filename}.wav")
-            #end
+            def play_sound(filename)
+                dir = "/usr/share/sounds"
+                Gnome::Sound.play("#{dir}/#{filename}.wav")
+            end
 
         end
     end
