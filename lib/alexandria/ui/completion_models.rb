@@ -45,18 +45,17 @@ class Gtk::Entry
         model = Alexandria::UI::CompletionModels.instance.models[model_id]
         completion.model = model
         completion.text_column = 0
-        self.completion = completion 
+        self.completion = completion
     end
 end
 
 begin
     require 'revolution'
-    
-    EVOLUTION_CONTACTS = 
+
+    EVOLUTION_CONTACTS =
         Revolution::Revolution.new.get_all_contacts.map do |contact|
-        
         first, last = contact.first_name, contact.last_name
-        
+
         if first
             first.strip!
             first = nil if first.empty?
@@ -69,7 +68,11 @@ begin
 
         first and last ? first + ' ' + last : first ? first : last
     end
-rescue LoadError
+rescue LoadError => e
+    Alexandria::log.debug { "Could not find optional ruby-revolution; Evolution contacts will not be loaded"}
+    EVOLUTION_CONTACTS = []
+rescue Revolution::RevolutionException => e
+    Alexandria::log.warn { e.message }
     EVOLUTION_CONTACTS = []
 end
 
@@ -107,7 +110,7 @@ module UI
             rebuild_models if dirty?
             @models
         end
- 
+
         def title_model
             rebuild_models if dirty?
             @models[TITLE]
@@ -122,7 +125,7 @@ module UI
             rebuild_models if dirty?
             @models[PUBLISHER]
         end
-        
+
         def edition_model
             rebuild_models if dirty?
             @models[EDITION]
@@ -136,7 +139,7 @@ module UI
         #######
         private
         #######
-            
+
         def touch
             @dirty = true
         end
@@ -173,7 +176,7 @@ module UI
             iter = nil
             values.uniq.each do |value|
                 next if value.nil?
-                iter = iter ? model.insert_after(iter) : model.append 
+                iter = iter ? model.insert_after(iter) : model.append
                 iter[0] = value
             end
         end
