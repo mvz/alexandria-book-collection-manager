@@ -16,46 +16,41 @@
 # Boston, MA 02111-1307, USA.
 
 module Alexandria
-module UI
+  module UI
     class SmartLibraryPropertiesDialog < SmartLibraryPropertiesDialogBase
-        include GetText
-        GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-        
-        def initialize(parent, smart_library, &block)
-            super(parent)
+      include GetText
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-            add_buttons([Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL], 
-                        [Gtk::Stock::SAVE, Gtk::Dialog::RESPONSE_OK])
- 
-            self.title = _("Properties for '%s'") % smart_library.name
-            self.default_response = Gtk::Dialog::RESPONSE_CANCEL
-            
-            show_all
-            smart_library.rules.each { |x| insert_new_rule(x) } 
-            update_rules_header_box(smart_library.predicate_operator_rule)
-            
-            while (response = run) != Gtk::Dialog::RESPONSE_CANCEL 
-                if response == Gtk::Dialog::RESPONSE_HELP
-                    begin
-                        # TODO: write manual
-                        #Gnome::Help.display('alexandria', 'edit-smart-library')
-                    rescue => e 
-                        ErrorDialog.new(self, e.message)
-                    end
-                elsif response == Gtk::Dialog::RESPONSE_OK
-                    if user_confirms_possible_weirdnesses_before_saving?
-                        smart_library.rules = self.smart_library_rules
-                        smart_library.predicate_operator_rule = 
-                            self.predicate_operator_rule 
-                        smart_library.save
-                        block.call(smart_library)
-                        break
-                    end
-                end
+      def initialize(parent, smart_library, &block)
+        super(parent)
+
+        add_buttons([Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+                    [Gtk::Stock::SAVE, Gtk::Dialog::RESPONSE_OK])
+
+        self.title = _("Properties for '%s'") % smart_library.name
+        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+
+        show_all
+        smart_library.rules.each { |x| insert_new_rule(x) }
+        update_rules_header_box(smart_library.predicate_operator_rule)
+
+        while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
+          if response == Gtk::Dialog::RESPONSE_HELP
+            Alexandria::UI::display_help(self, 'edit-smart-library')
+          elsif response == Gtk::Dialog::RESPONSE_OK
+            if user_confirms_possible_weirdnesses_before_saving?
+              smart_library.rules = self.smart_library_rules
+              smart_library.predicate_operator_rule =
+                self.predicate_operator_rule
+              smart_library.save
+              block.call(smart_library)
+              break
             end
-
-            destroy
+          end
         end
+
+        destroy
+      end
     end
-end
+  end
 end
