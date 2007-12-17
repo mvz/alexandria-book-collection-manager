@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-16 16:16+0100\n"
+"POT-Creation-Date: 2007-12-16 20:34+0000\n"
 "PO-Revision-Date: 2007-11-21 20:40-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
@@ -19,16 +19,16 @@ msgstr ""
 msgid "New Smart Library"
 msgstr "高機能ライブラリの新規作成"
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:54
+#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
 msgid "Smart Library"
 msgstr "高機能ライブラリ"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:226
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
 #: ../data/alexandria/glade/acquire_dialog.glade:25
 msgid "_Barcode Scanner Ready"
 msgstr "バーコードスキャナ準備完了(_B)"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:240
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:398
 msgid "Click below to scan _barcodes"
 msgstr "バーコードをスキャンするには以下をクリックしてください(_b)"
 
@@ -48,11 +48,11 @@ msgstr "ライブラリのインポート"
 msgid "_Import"
 msgstr "インポート(_I)"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:168
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:164
 msgid "Couldn't import the library"
 msgstr "ライブラリをインポートできません"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:169
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
 msgid ""
 "The format of the file you provided is unknown.  Please retry with another "
 "file."
@@ -137,7 +137,7 @@ msgstr "指定したEAN/ISBNプロバイダを有効にできません。再度�
 msgid "Couldn't add the book"
 msgstr "本を追加できません"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:455
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:451
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s'はすでに'%s' (タイトル： '%s')に存在します。"
 
@@ -157,11 +157,11 @@ msgstr "名称(_N):"
 msgid "_Type:"
 msgstr "種別(_T):"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:290
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:291
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "プロバイダ'%s'を削除します。よろしいですか？"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:298
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -218,17 +218,17 @@ msgstr "ディレクトリ"
 msgid "Export for_mat:"
 msgstr "エクスポートフォーマット(_m):"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:132
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:128
 msgid "Export failed"
 msgstr "エクスポートに失敗しました"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
 msgstr "'%s'はファイルです。ディレクトリを選択して再度実行してください。"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:163
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
 msgid "Not a directory"
 msgstr "ディレクトリではありません"
 
@@ -246,10 +246,9 @@ msgid ""
 "conflict with each other. This is likely to result in never matching a book. "
 "Are you sure you want to save this library?"
 msgstr ""
-"この高機能ライブラリには、空の条件が設定されているものが１つまたは複数あるか、"
-"もしくはお互いに矛盾する条件が設定されています。"
-"従ってこの条件を満たす本はおそらく見つかりません。"
-"それでもこの高機能ライブラリを保存しますか？"
+"この高機能ライブラリには、空の条件が設定されているものが１つまたは複数ある"
+"か、もしくはお互いに矛盾する条件が設定されています。従ってこの条件を満たす本"
+"はおそらく見つかりません。それでもこの高機能ライブラリを保存しますか？"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
 msgid "Match"
@@ -321,40 +320,52 @@ msgstr[0] "%d 日"
 msgid "New Library"
 msgstr "新規ライブラリ"
 
-#: ../lib/alexandria/ui/main_app.rb:163
+#: ../lib/alexandria/ui/main_app.rb:88
+#, fuzzy
+msgid "Unable to launch the help browser"
+msgstr "Webブラウザを起動できませんでした"
+
+#: ../lib/alexandria/ui/main_app.rb:89
+msgid ""
+"Could not display help for Alexandria. There was an error launching the "
+"system help browser."
+msgstr ""
+
+#: ../lib/alexandria/ui/main_app.rb:181
 msgid "Library '%s' selected"
 msgstr "ライブラリ'%s'が選択されています。"
 
-#: ../lib/alexandria/ui/main_app.rb:170
+#: ../lib/alexandria/ui/main_app.rb:188
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "ライブラリ'%s'が選択されています。評価なしの本が%d冊あります。"
 
-#: ../lib/alexandria/ui/main_app.rb:175
+#: ../lib/alexandria/ui/main_app.rb:193
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があります。"
 
-
-#: ../lib/alexandria/ui/main_app.rb:182
+#: ../lib/alexandria/ui/main_app.rb:200
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があり、そのうち%d冊に評価がありません。"
+msgstr[0] ""
+"ライブラリ'%s'が選択されています。%d冊の本があり、そのうち%d冊に評価がありま"
+"せん。"
 
-#: ../lib/alexandria/ui/main_app.rb:188
+#: ../lib/alexandria/ui/main_app.rb:206
 msgid "'%s' selected"
 msgstr "'%s'が選択されています"
 
-#: ../lib/alexandria/ui/main_app.rb:191
+#: ../lib/alexandria/ui/main_app.rb:209
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d冊の本が選択されています"
 
-#: ../lib/alexandria/ui/main_app.rb:301
+#: ../lib/alexandria/ui/main_app.rb:313
 msgid "Unable to launch the web browser"
 msgstr "Webブラウザを起動できませんでした"
 
-#: ../lib/alexandria/ui/main_app.rb:302
+#: ../lib/alexandria/ui/main_app.rb:314
 msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -362,11 +373,11 @@ msgstr ""
 "標準のWebブラウザの設定を確認してください (デスクトップの設定->拡張設定->お気"
 "に入りのアプリ)"
 
-#: ../lib/alexandria/ui/main_app.rb:314
+#: ../lib/alexandria/ui/main_app.rb:326
 msgid "Unable to launch the mail reader"
 msgstr "メールリーダを起動できませんでした"
 
-#: ../lib/alexandria/ui/main_app.rb:315
+#: ../lib/alexandria/ui/main_app.rb:327
 msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -374,409 +385,419 @@ msgstr ""
 "標準のメールリーダの設定を確認してください (デスクトップの設定->拡張設定->お"
 "気に入りのアプリ)"
 
-#: ../lib/alexandria/ui/main_app.rb:338
+#: ../lib/alexandria/ui/main_app.rb:350
 msgid ""
 "These books do not conform to the ISBN-13 standard. We will attempt to "
 "replace them from the book providers. Otherwise, we will turn them into "
 "manual entries.\n"
 msgstr ""
-"これらの本はISBN-13に準拠していません。本のプロバイダーから得られたもので"
-"置き換えられます。そうでなければ手で入力してください\n"
+"これらの本はISBN-13に準拠していません。本のプロバイダーから得られたもので置き"
+"換えられます。そうでなければ手で入力してください\n"
 
-#: ../lib/alexandria/ui/main_app.rb:579 ../lib/alexandria/smart_library.rb:336
+#: ../lib/alexandria/ui/main_app.rb:596 ../lib/alexandria/smart_library.rb:336
 msgid "Title"
 msgstr "タイトル"
 
-#: ../lib/alexandria/ui/main_app.rb:621 ../lib/alexandria/smart_library.rb:338
+#: ../lib/alexandria/ui/main_app.rb:638 ../lib/alexandria/smart_library.rb:338
 msgid "Authors"
 msgstr "作者"
 
-#: ../lib/alexandria/ui/main_app.rb:622 ../lib/alexandria/smart_library.rb:337
+#: ../lib/alexandria/ui/main_app.rb:639 ../lib/alexandria/smart_library.rb:337
 msgid "ISBN"
 msgstr "ISBN"
 
-#: ../lib/alexandria/ui/main_app.rb:623 ../lib/alexandria/smart_library.rb:339
+#: ../lib/alexandria/ui/main_app.rb:640 ../lib/alexandria/smart_library.rb:339
 msgid "Publisher"
 msgstr "出版社"
 
-#: ../lib/alexandria/ui/main_app.rb:624 ../lib/alexandria/smart_library.rb:340
+#: ../lib/alexandria/ui/main_app.rb:641 ../lib/alexandria/smart_library.rb:340
 msgid "Publish Year"
 msgstr "出版年"
 
-#: ../lib/alexandria/ui/main_app.rb:625 ../lib/alexandria/smart_library.rb:341
+#: ../lib/alexandria/ui/main_app.rb:642 ../lib/alexandria/smart_library.rb:341
 msgid "Binding"
 msgstr "装丁"
 
-#: ../lib/alexandria/ui/main_app.rb:628 ../lib/alexandria/smart_library.rb:98
-#: ../lib/alexandria/smart_library.rb:347
+#: ../lib/alexandria/ui/main_app.rb:645 ../lib/alexandria/smart_library.rb:98
+#: ../lib/alexandria/smart_library.rb:348
 msgid "Read"
 msgstr "読んだ本"
 
-#: ../lib/alexandria/ui/main_app.rb:629 ../lib/alexandria/smart_library.rb:348
+#: ../lib/alexandria/ui/main_app.rb:646 ../lib/alexandria/smart_library.rb:349
 msgid "Own"
 msgstr "持ってる本"
 
-#: ../lib/alexandria/ui/main_app.rb:630 ../lib/alexandria/smart_library.rb:349
+#: ../lib/alexandria/ui/main_app.rb:647 ../lib/alexandria/smart_library.rb:350
 msgid "Want"
 msgstr "欲しい本"
 
-#: ../lib/alexandria/ui/main_app.rb:677 ../lib/alexandria/smart_library.rb:342
+#: ../lib/alexandria/ui/main_app.rb:694 ../lib/alexandria/smart_library.rb:342
 msgid "Rating"
 msgstr "評価"
 
-#: ../lib/alexandria/ui/main_app.rb:878
+#: ../lib/alexandria/ui/main_app.rb:724 ../lib/alexandria/smart_library.rb:344
+#, fuzzy
+msgid "Tags"
+msgstr "タグ:"
+
+#: ../lib/alexandria/ui/main_app.rb:910
 msgid "Library"
 msgstr "ライブラリ"
 
-#: ../lib/alexandria/ui/main_app.rb:893
+#: ../lib/alexandria/ui/main_app.rb:925
 msgid "Invalid library name '%s'"
 msgstr "ライブラリ名が不正です '%s'"
 
-#: ../lib/alexandria/ui/main_app.rb:895
+#: ../lib/alexandria/ui/main_app.rb:927
 msgid "The name provided contains the illegal character '<i>%s</i>'."
 msgstr "その名称は不正な文字を含んでいます '<i>%s</i>'"
 
-#: ../lib/alexandria/ui/main_app.rb:899
+#: ../lib/alexandria/ui/main_app.rb:931
 msgid "The library name can not be empty"
 msgstr "ライブラリ名を入力してください"
 
-#: ../lib/alexandria/ui/main_app.rb:906
+#: ../lib/alexandria/ui/main_app.rb:938
 msgid "The library can not be renamed"
 msgstr "ライブラリ名は変更できません"
 
-#: ../lib/alexandria/ui/main_app.rb:907
+#: ../lib/alexandria/ui/main_app.rb:939
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr "そのライブラリ名はすでに存在します。他の名前を指定してください。"
 
-#: ../lib/alexandria/ui/main_app.rb:1094
+#: ../lib/alexandria/ui/main_app.rb:1131
 msgid "In '_%s'"
 msgstr "'_%s'へ"
 
-#: ../lib/alexandria/ui/main_app.rb:1204
+#: ../lib/alexandria/ui/main_app.rb:1275
 msgid "The following lines are not valid ISBNs and were not imported:"
 msgstr "以下は無効なISBNなのでインポートされませんでした"
 
-#: ../lib/alexandria/ui/main_app.rb:1329
+#: ../lib/alexandria/ui/main_app.rb:1400
 msgid "_Library"
 msgstr "ライブラリ(_L)"
 
-#: ../lib/alexandria/ui/main_app.rb:1330
+#: ../lib/alexandria/ui/main_app.rb:1401
 msgid "_New Library"
 msgstr "新規ライブラリの作成(_N)"
 
-#: ../lib/alexandria/ui/main_app.rb:1331
+#: ../lib/alexandria/ui/main_app.rb:1402
 msgid "Create a new library"
 msgstr "新しくライブラリを作成します"
 
-#: ../lib/alexandria/ui/main_app.rb:1332
+#: ../lib/alexandria/ui/main_app.rb:1403
 msgid "New _Smart Library..."
 msgstr "新規高機能ライブラリの作成(_S)"
 
-#: ../lib/alexandria/ui/main_app.rb:1333
+#: ../lib/alexandria/ui/main_app.rb:1404
 msgid "Create a new smart library"
 msgstr "新しく高機能ライブラリを作成します"
 
-#: ../lib/alexandria/ui/main_app.rb:1335
+#: ../lib/alexandria/ui/main_app.rb:1406
 msgid "_Add Book..."
 msgstr "本を追加(_A)"
 
-#: ../lib/alexandria/ui/main_app.rb:1336
+#: ../lib/alexandria/ui/main_app.rb:1407
 msgid "Add a new book from the Internet"
 msgstr "インターネットから本を追加します"
 
-#: ../lib/alexandria/ui/main_app.rb:1337
+#: ../lib/alexandria/ui/main_app.rb:1408
 msgid "Add Book _Manually..."
 msgstr "本を手入力で追加(_M)..."
 
-#: ../lib/alexandria/ui/main_app.rb:1338
+#: ../lib/alexandria/ui/main_app.rb:1409
 msgid "Add a new book manually"
 msgstr "本を手入力で追加します"
 
-#: ../lib/alexandria/ui/main_app.rb:1340
+#: ../lib/alexandria/ui/main_app.rb:1411
 msgid "_Import..."
 msgstr "インポート(_I)..."
 
-#: ../lib/alexandria/ui/main_app.rb:1341
+#: ../lib/alexandria/ui/main_app.rb:1412
 msgid "Import a library"
 msgstr "ライブラリのインポートします"
 
-#: ../lib/alexandria/ui/main_app.rb:1342
+#: ../lib/alexandria/ui/main_app.rb:1413
 msgid "_Export..."
 msgstr "エクスポート(_E)..."
 
-#: ../lib/alexandria/ui/main_app.rb:1343
+#: ../lib/alexandria/ui/main_app.rb:1414
 msgid "Export the selected library"
 msgstr "選択したライブラリをエクスポートします"
 
-#: ../lib/alexandria/ui/main_app.rb:1344
+#: ../lib/alexandria/ui/main_app.rb:1415
 msgid "_Acquire from Scanner..."
 msgstr "スキャナから読み込む(_A)..."
 
-#: ../lib/alexandria/ui/main_app.rb:1345
+#: ../lib/alexandria/ui/main_app.rb:1416
 msgid "Acquire books from a scanner"
 msgstr "スキャナから本を読み込みます"
 
-#: ../lib/alexandria/ui/main_app.rb:1346
+#: ../lib/alexandria/ui/main_app.rb:1417
 msgid "_Properties"
 msgstr "プロパティ(_P)"
 
-#: ../lib/alexandria/ui/main_app.rb:1347
+#: ../lib/alexandria/ui/main_app.rb:1418
 msgid "Edit the properties of the selected book"
 msgstr "選択した本のプロパティを編集します"
 
-#: ../lib/alexandria/ui/main_app.rb:1348
+#: ../lib/alexandria/ui/main_app.rb:1419
 msgid "_Quit"
 msgstr "終了(_Q)"
 
-#: ../lib/alexandria/ui/main_app.rb:1349
+#: ../lib/alexandria/ui/main_app.rb:1420
 msgid "Quit the program"
 msgstr "プログラムを終了します"
 
-#: ../lib/alexandria/ui/main_app.rb:1350
+#: ../lib/alexandria/ui/main_app.rb:1421
 msgid "_Edit"
 msgstr "編集(_E)"
 
-#: ../lib/alexandria/ui/main_app.rb:1351
+#: ../lib/alexandria/ui/main_app.rb:1422
 msgid "_Undo"
 msgstr "アンドゥ(_U)"
 
-#: ../lib/alexandria/ui/main_app.rb:1352
+#: ../lib/alexandria/ui/main_app.rb:1423
 msgid "Undo the last action"
 msgstr "最後の操作をアンドゥします"
 
-#: ../lib/alexandria/ui/main_app.rb:1353
+#: ../lib/alexandria/ui/main_app.rb:1424
 msgid "_Redo"
 msgstr "リドゥ(_R)"
 
-#: ../lib/alexandria/ui/main_app.rb:1354
+#: ../lib/alexandria/ui/main_app.rb:1425
 msgid "Redo the undone action"
 msgstr "アンドゥした操作を元に戻します"
 
-#: ../lib/alexandria/ui/main_app.rb:1355
+#: ../lib/alexandria/ui/main_app.rb:1426
 msgid "_Select All"
 msgstr "全て選択(_S)"
 
-#: ../lib/alexandria/ui/main_app.rb:1356
+#: ../lib/alexandria/ui/main_app.rb:1427
 msgid "Select all visible books"
 msgstr "見えている本をすべて選択します"
 
-#: ../lib/alexandria/ui/main_app.rb:1357
+#: ../lib/alexandria/ui/main_app.rb:1428
 msgid "Dese_lect All"
 msgstr "全て非選択(_l)"
 
-#: ../lib/alexandria/ui/main_app.rb:1358
+#: ../lib/alexandria/ui/main_app.rb:1429
 msgid "Deselect everything"
 msgstr "全てを非選択にします"
 
-#: ../lib/alexandria/ui/main_app.rb:1359
+#: ../lib/alexandria/ui/main_app.rb:1430
 msgid "My _Rating"
 msgstr "評価(_R)"
 
-#: ../lib/alexandria/ui/main_app.rb:1360
+#: ../lib/alexandria/ui/main_app.rb:1431
 msgid "None"
 msgstr "評価なし"
 
-#: ../lib/alexandria/ui/main_app.rb:1361
+#: ../lib/alexandria/ui/main_app.rb:1432
 msgid "One Star"
 msgstr "１つ星"
 
-#: ../lib/alexandria/ui/main_app.rb:1363
+#: ../lib/alexandria/ui/main_app.rb:1434
 msgid "Two Stars"
 msgstr "２つ星"
 
-#: ../lib/alexandria/ui/main_app.rb:1365
+#: ../lib/alexandria/ui/main_app.rb:1436
 msgid "Three Stars"
 msgstr "３つ星"
 
-#: ../lib/alexandria/ui/main_app.rb:1367
+#: ../lib/alexandria/ui/main_app.rb:1438
 msgid "Four Stars"
 msgstr "４つ星"
 
-#: ../lib/alexandria/ui/main_app.rb:1369
+#: ../lib/alexandria/ui/main_app.rb:1440
 msgid "Five Stars"
 msgstr "５つ星"
 
-#: ../lib/alexandria/ui/main_app.rb:1371
+#: ../lib/alexandria/ui/main_app.rb:1442
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../lib/alexandria/ui/main_app.rb:1372
+#: ../lib/alexandria/ui/main_app.rb:1443
 msgid "_Rename"
 msgstr "名称変更(_R)"
 
-#: ../lib/alexandria/ui/main_app.rb:1373
+#: ../lib/alexandria/ui/main_app.rb:1444
 msgid "_Delete"
 msgstr "削除(_D)"
 
-#: ../lib/alexandria/ui/main_app.rb:1374
+#: ../lib/alexandria/ui/main_app.rb:1445
 msgid "Delete the selected books or library"
 msgstr "選択した本またはライブラリを削除します"
 
-#: ../lib/alexandria/ui/main_app.rb:1375
+#: ../lib/alexandria/ui/main_app.rb:1446
 msgid "_Search"
 msgstr "検索(_S)"
 
-#: ../lib/alexandria/ui/main_app.rb:1376
+#: ../lib/alexandria/ui/main_app.rb:1447
 msgid "Filter books"
 msgstr "本にフィルタをかけます"
 
-#: ../lib/alexandria/ui/main_app.rb:1377
+#: ../lib/alexandria/ui/main_app.rb:1448
 msgid "_Clear Results"
 msgstr "結果のクリア(_C)"
 
-#: ../lib/alexandria/ui/main_app.rb:1378
+#: ../lib/alexandria/ui/main_app.rb:1449
 msgid "Clear the search results"
 msgstr "結果のをクリアします"
 
-#: ../lib/alexandria/ui/main_app.rb:1380
+#: ../lib/alexandria/ui/main_app.rb:1451
 msgid "_Preferences"
 msgstr "設定(_P)"
 
-#: ../lib/alexandria/ui/main_app.rb:1381
+#: ../lib/alexandria/ui/main_app.rb:1452
 msgid "Change Alexandria's settings"
 msgstr "Alexandriaの設定変更"
 
-#: ../lib/alexandria/ui/main_app.rb:1382
+#: ../lib/alexandria/ui/main_app.rb:1453
 msgid "_View"
 msgstr "表示(_V)"
 
-#: ../lib/alexandria/ui/main_app.rb:1383
+#: ../lib/alexandria/ui/main_app.rb:1454
 msgid "_Refresh"
 msgstr "再読込(_R)"
 
-#: ../lib/alexandria/ui/main_app.rb:1384
+#: ../lib/alexandria/ui/main_app.rb:1455
 msgid "Reload the selected library"
 msgstr "選択したライブラリを再読み込みします"
 
-#: ../lib/alexandria/ui/main_app.rb:1385
+#: ../lib/alexandria/ui/main_app.rb:1456
 msgid "Arran_ge Icons"
 msgstr "アイコンの表示順(_g)"
 
-#: ../lib/alexandria/ui/main_app.rb:1386
+#: ../lib/alexandria/ui/main_app.rb:1457
 msgid "Display Online _Information"
 msgstr "オンライン情報の表示(_I)"
 
-#: ../lib/alexandria/ui/main_app.rb:1387
+#: ../lib/alexandria/ui/main_app.rb:1458
 msgid "_Help"
 msgstr "ヘルプ(_H)"
 
-#: ../lib/alexandria/ui/main_app.rb:1389
+#: ../lib/alexandria/ui/main_app.rb:1460
 msgid "Submit _Bug Report"
 msgstr "バグレポートを送る(_B)"
 
-#: ../lib/alexandria/ui/main_app.rb:1390
+#: ../lib/alexandria/ui/main_app.rb:1461
 msgid "Submit a bug report to the developers"
 msgstr "バグレポートを開発者に送ります"
 
-#: ../lib/alexandria/ui/main_app.rb:1392
+#: ../lib/alexandria/ui/main_app.rb:1463
 msgid "Contents"
 msgstr "内容"
 
-#: ../lib/alexandria/ui/main_app.rb:1393
+#: ../lib/alexandria/ui/main_app.rb:1464
 msgid "View Alexandria's manual"
 msgstr "Alexandriaのマニュアルを見る"
 
-#: ../lib/alexandria/ui/main_app.rb:1394
+#: ../lib/alexandria/ui/main_app.rb:1465
 msgid "_About"
 msgstr "Alexandriaについて(_A)"
 
-#: ../lib/alexandria/ui/main_app.rb:1395
+#: ../lib/alexandria/ui/main_app.rb:1466
 msgid "Show information about Alexandria"
 msgstr "Alexandriaに関する情報を表示します"
 
-#: ../lib/alexandria/ui/main_app.rb:1416
+#: ../lib/alexandria/ui/main_app.rb:1487
 msgid "Side _Pane"
 msgstr "サイドペイン(_P)"
 
-#: ../lib/alexandria/ui/main_app.rb:1418
+#: ../lib/alexandria/ui/main_app.rb:1489
 msgid "_Toolbar"
 msgstr "ツールバー(_T)"
 
-#: ../lib/alexandria/ui/main_app.rb:1420
+#: ../lib/alexandria/ui/main_app.rb:1491
 msgid "_Statusbar"
 msgstr "ステータスバー(_S)"
 
-#: ../lib/alexandria/ui/main_app.rb:1422
+#: ../lib/alexandria/ui/main_app.rb:1493
 msgid "Re_versed Order"
 msgstr "逆順(_v)"
 
-#: ../lib/alexandria/ui/main_app.rb:1427
+#: ../lib/alexandria/ui/main_app.rb:1498
 msgid "View as _Icons"
 msgstr "アイコン表示(_I)"
 
-#: ../lib/alexandria/ui/main_app.rb:1428
+#: ../lib/alexandria/ui/main_app.rb:1499
 msgid "View as _List"
 msgstr "リスト表示(_L)"
 
-#: ../lib/alexandria/ui/main_app.rb:1432
+#: ../lib/alexandria/ui/main_app.rb:1503
 msgid "By _Title"
 msgstr "タイトル順(_T)"
 
-#: ../lib/alexandria/ui/main_app.rb:1433
+#: ../lib/alexandria/ui/main_app.rb:1504
 msgid "By _Authors"
 msgstr "作者順(_A)"
 
-#: ../lib/alexandria/ui/main_app.rb:1434
+#: ../lib/alexandria/ui/main_app.rb:1505
 msgid "By _ISBN"
 msgstr "ISBN順(_I)"
 
-#: ../lib/alexandria/ui/main_app.rb:1435
+#: ../lib/alexandria/ui/main_app.rb:1506
 msgid "By _Publisher"
 msgstr "出版社順(_P)"
 
-#: ../lib/alexandria/ui/main_app.rb:1436
+#: ../lib/alexandria/ui/main_app.rb:1507
 msgid "By _Binding"
 msgstr "装丁順(_B)"
 
-#: ../lib/alexandria/ui/main_app.rb:1437
+#: ../lib/alexandria/ui/main_app.rb:1508
 msgid "By _Rating"
 msgstr "評価順(_R)"
 
-#: ../lib/alexandria/ui/main_app.rb:1442
+#: ../lib/alexandria/ui/main_app.rb:1513
 msgid "At _%s"
 msgstr "%sを開く"
 
-#: ../lib/alexandria/ui/main_app.rb:1508
+#: ../lib/alexandria/ui/main_app.rb:1579
 msgid "Match everything"
 msgstr "全てに一致"
 
-#: ../lib/alexandria/ui/main_app.rb:1510
+#: ../lib/alexandria/ui/main_app.rb:1581
 msgid "Title contains"
 msgstr "タイトル検索"
 
-#: ../lib/alexandria/ui/main_app.rb:1511
+#: ../lib/alexandria/ui/main_app.rb:1582
 msgid "Authors contain"
 msgstr "作者検索"
 
-#: ../lib/alexandria/ui/main_app.rb:1512
+#: ../lib/alexandria/ui/main_app.rb:1583
 msgid "ISBN contains"
 msgstr "ISBN検索"
 
-#: ../lib/alexandria/ui/main_app.rb:1513
+#: ../lib/alexandria/ui/main_app.rb:1584
 msgid "Publisher contains"
 msgstr "出版社検索"
 
-#: ../lib/alexandria/ui/main_app.rb:1514
+#: ../lib/alexandria/ui/main_app.rb:1585
 msgid "Notes contain"
 msgstr "ノーツ検索"
 
-#: ../lib/alexandria/ui/main_app.rb:1534
+#: ../lib/alexandria/ui/main_app.rb:1586
+#, fuzzy
+msgid "Tags contain"
+msgstr "ノーツ検索"
+
+#: ../lib/alexandria/ui/main_app.rb:1607
 msgid "Change the search type"
 msgstr "検索タイプを変更します"
 
-#: ../lib/alexandria/ui/main_app.rb:1547
+#: ../lib/alexandria/ui/main_app.rb:1620
 msgid "Type here the search criterion"
 msgstr "検索する内容をここに入力してください"
 
-#: ../lib/alexandria/ui/main_app.rb:1554
+#: ../lib/alexandria/ui/main_app.rb:1627
 msgid "View as Icons"
 msgstr "アイコン表示"
 
-#: ../lib/alexandria/ui/main_app.rb:1555
+#: ../lib/alexandria/ui/main_app.rb:1628
 msgid "View as List"
 msgstr "リスト表示"
 
-#: ../lib/alexandria/ui/main_app.rb:1575
+#: ../lib/alexandria/ui/main_app.rb:1648
 msgid "Choose how to show books"
 msgstr "本を表示する方法を選択してください"
 
@@ -813,99 +834,99 @@ msgstr "欲しい本"
 msgid "Notes"
 msgstr "ノート"
 
-#: ../lib/alexandria/smart_library.rb:344
+#: ../lib/alexandria/smart_library.rb:345
 msgid "Loaning State"
 msgstr "貸し出し状態"
 
-#: ../lib/alexandria/smart_library.rb:345
+#: ../lib/alexandria/smart_library.rb:346
 msgid "Loaning Date"
 msgstr "貸し出し日"
 
-#: ../lib/alexandria/smart_library.rb:346
+#: ../lib/alexandria/smart_library.rb:347
 msgid "Loaning Person"
 msgstr "貸し出した人"
 
-#: ../lib/alexandria/smart_library.rb:355
+#: ../lib/alexandria/smart_library.rb:357
 msgid "days"
 msgstr "日"
 
-#: ../lib/alexandria/smart_library.rb:365
+#: ../lib/alexandria/smart_library.rb:367
 msgid "is set"
 msgstr "チェックをつけたもの"
 
-#: ../lib/alexandria/smart_library.rb:369
+#: ../lib/alexandria/smart_library.rb:371
 msgid "is not set"
 msgstr "チェックをつけてないもの"
 
-#: ../lib/alexandria/smart_library.rb:373
+#: ../lib/alexandria/smart_library.rb:375
 msgid "is"
 msgstr "が以下と同じもの"
 
-#: ../lib/alexandria/smart_library.rb:377
+#: ../lib/alexandria/smart_library.rb:379
 msgid "is not"
 msgstr "が以下と同じでないもの"
 
-#: ../lib/alexandria/smart_library.rb:381
+#: ../lib/alexandria/smart_library.rb:383
 msgid "contains"
 msgstr "が以下を含むもの"
 
-#: ../lib/alexandria/smart_library.rb:385
+#: ../lib/alexandria/smart_library.rb:387
 msgid "does not contain"
 msgstr "が以下を含まないもの"
 
-#: ../lib/alexandria/smart_library.rb:389
+#: ../lib/alexandria/smart_library.rb:391
 msgid "starts with"
 msgstr "が以下で始まるもの"
 
-#: ../lib/alexandria/smart_library.rb:393
+#: ../lib/alexandria/smart_library.rb:395
 msgid "ends with"
 msgstr "が以下で終わるもの"
 
-#: ../lib/alexandria/smart_library.rb:397
+#: ../lib/alexandria/smart_library.rb:399
 msgid "is greater than"
 msgstr "が以下より大きいもの"
 
-#: ../lib/alexandria/smart_library.rb:401
+#: ../lib/alexandria/smart_library.rb:403
 msgid "is less than"
 msgstr "が以下より小さいもの"
 
-#: ../lib/alexandria/smart_library.rb:405
+#: ../lib/alexandria/smart_library.rb:407
 msgid "is after"
 msgstr "が以下より後のもの"
 
-#: ../lib/alexandria/smart_library.rb:409
+#: ../lib/alexandria/smart_library.rb:411
 msgid "is before"
 msgstr "が以下より前のもの"
 
-#: ../lib/alexandria/smart_library.rb:413
+#: ../lib/alexandria/smart_library.rb:415
 msgid "is in last"
 msgstr "が以下の期間以内のもの"
 
-#: ../lib/alexandria/smart_library.rb:417
+#: ../lib/alexandria/smart_library.rb:419
 msgid "is not in last"
 msgstr "が以下の期間以上のもの"
 
-#: ../lib/alexandria/export_library.rb:38
+#: ../lib/alexandria/export_library.rb:101
 msgid "Archived ONIX XML"
 msgstr "Archived ONIX XML"
 
-#: ../lib/alexandria/export_library.rb:40
+#: ../lib/alexandria/export_library.rb:103
 msgid "Archived Tellico XML"
 msgstr "Archived Tellico XML"
 
-#: ../lib/alexandria/export_library.rb:42
+#: ../lib/alexandria/export_library.rb:105
 msgid "BibTeX"
 msgstr "BibTeX"
 
-#: ../lib/alexandria/export_library.rb:43
+#: ../lib/alexandria/export_library.rb:106
 msgid "CSV list"
 msgstr "CSVリスト"
 
-#: ../lib/alexandria/export_library.rb:44
+#: ../lib/alexandria/export_library.rb:107
 msgid "ISBN List"
 msgstr "ISBNリスト"
 
-#: ../lib/alexandria/export_library.rb:45
+#: ../lib/alexandria/export_library.rb:108
 msgid "HTML Web Page"
 msgstr "HTMLウェブページ"
 
@@ -935,7 +956,7 @@ msgstr "検索種別が不正です。"
 msgid "Untitled"
 msgstr "タイトル未設定"
 
-#: ../lib/alexandria/library.rb:224
+#: ../lib/alexandria/library.rb:238
 msgid "My Library"
 msgstr "マイライブラリ"
 
@@ -995,7 +1016,7 @@ msgstr "大英図書館"
 msgid "Language"
 msgstr "言語"
 
-#: ../lib/alexandria.rb:25
+#: ../lib/alexandria.rb:27
 msgid "A program to help you manage your book collection."
 msgstr "本のコレクション管理お手伝いプログラム"
 
@@ -1211,5 +1232,3 @@ msgstr "ブック・コレクション・マネージャ"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "ブック・コレクション管理お手伝いプログラム"
-
-
