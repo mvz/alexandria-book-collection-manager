@@ -1,13 +1,14 @@
 # Japanese resources for Alexandria
 # This file is distributed under the same license as the Alexandria package.
 # Masao Mutoh <mutoh@highway.ne.jp>, 2004, 2005
+# CHIKAMA Masaki <masaki.chikama@gmail.com>, 2007
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Alexandria\n"
+"Project-Id-Version: alexandria 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-16 20:34+0000\n"
-"PO-Revision-Date: 2007-11-21 20:40-0900\n"
+"PO-Revision-Date: 2007-12-17 23:00-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
 "MIME-Version: 1.0\n"
@@ -321,15 +322,16 @@ msgid "New Library"
 msgstr "新規ライブラリ"
 
 #: ../lib/alexandria/ui/main_app.rb:88
-#, fuzzy
 msgid "Unable to launch the help browser"
-msgstr "Webブラウザを起動できませんでした"
+msgstr "ヘルプブラウザを起動できません"
 
 #: ../lib/alexandria/ui/main_app.rb:89
 msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
 msgstr ""
+"システムのヘルプブラウザを起動しようとしてエラーが発生したので、"
+"Alexandriaのヘルプを開けませんでした。"
 
 #: ../lib/alexandria/ui/main_app.rb:181
 msgid "Library '%s' selected"
@@ -436,9 +438,8 @@ msgid "Rating"
 msgstr "評価"
 
 #: ../lib/alexandria/ui/main_app.rb:724 ../lib/alexandria/smart_library.rb:344
-#, fuzzy
 msgid "Tags"
-msgstr "タグ:"
+msgstr "タグ"
 
 #: ../lib/alexandria/ui/main_app.rb:910
 msgid "Library"
@@ -642,7 +643,7 @@ msgstr "結果のクリア(_C)"
 
 #: ../lib/alexandria/ui/main_app.rb:1449
 msgid "Clear the search results"
-msgstr "結果のをクリアします"
+msgstr "結果をクリアします"
 
 #: ../lib/alexandria/ui/main_app.rb:1451
 msgid "_Preferences"
@@ -774,12 +775,11 @@ msgstr "出版社検索"
 
 #: ../lib/alexandria/ui/main_app.rb:1585
 msgid "Notes contain"
-msgstr "ノーツ検索"
+msgstr "ノート検索"
 
 #: ../lib/alexandria/ui/main_app.rb:1586
-#, fuzzy
 msgid "Tags contain"
-msgstr "ノーツ検索"
+msgstr "タグ検索"
 
 #: ../lib/alexandria/ui/main_app.rb:1607
 msgid "Change the search type"
