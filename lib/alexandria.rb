@@ -12,92 +12,94 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gettext'
 require 'logger'
 require 'alexandria/logging'
 
 module Alexandria
-    TITLE = 'Alexandria'
-    TEXTDOMAIN = 'alexandria'
-    extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-    DESCRIPTION = _('A program to help you manage your book collection.')
-    COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" +
-        "Copyright (C) 2007 Alexandria Contributors"
-    AUTHORS = [
-        'Alexander McCormmach <alexander@tunicate.org>',
-        'Aymeric Nys <aymeric@nnx.com>',
-        'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
-        'Claudio Belotti <bel8@lilik.it>',
-        'Constantine Evans <cevans@costinet.org>',
-        'Dafydd Harries <daf@muse.19inch.net>',
-        'Javier Fernandez-Sanguino Pena <jfs@debian.org>',
-        'Kevin Schultz <schultkl@ieee.org>',
-        'Laurent Sansonetti <lrz@gnome.org>',
-        'Marco Costantini <costanti@science.unitn.it>',
-        'Mathieu Leduc-Hamel <arrak@arrak.org>',
-        'Owain Evans <o.evans@gmail.com>',
-        'Pascal Terjan <pterjan@linuxfr.org>',
-        'Rene Samselnig <sandman@sdm-net.org>',
-        'Robby Stephenson <robby@periapsis.org>',
-        'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
-        'Zachary P. Landau <kapheine@hypa.net>',
-        'Joseph Method <tristil@gmail.com>'
-    ]
-    DOCUMENTERS = [
-        'Liam Davison <registrations@liamjdavison.info>'
-    ]
-    TRANSLATORS = [
-        'Dafydd Harries <daf@muse.19inch.net> (cy)',
-        'David Weinehall <tao@debian.org> (sv)',
-        'Jiri Pejchal <jiri.pejchal@gmail.com> (cs)',
-        'Joachim Breitner <mail@joachim-breitner.de> (de)',
-        'Laurent Sansonetti <lrz@gnome.org> (fr)',
-        'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
-        'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
-        'Marco Costantini <costanti@science.unitn.it>',
-        'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
-        'Miguel Angel Garcia <miguelangel.garcia@gmail.com> (es)',
-        'Mirko Maischberger <mirko@lilik.it> (it)'
-    ]
-    ARTISTS = [
-        'Andreas Nilsson <nisses.mail@home.se>',
-        'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
-    ]
-    LIST = 'alexandria-list@rubyforge.org'
-    BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
-    WEBSITE_URL = 'http://alexandria.rubyforge.org'
-    DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=lrz%40rubymonks%2eorg&item_name=Alexandria&no_shipping=0&no_note=1&currency_code=EUR'
+  TITLE = 'Alexandria'
+  TEXTDOMAIN = 'alexandria'
+  extend GetText
+  bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+  DESCRIPTION = _('A program to help you manage your book collection.')
+  COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" +
+    "Copyright (C) 2007 Alexandria Contributors"
+  AUTHORS = [
+             'Alexander McCormmach <alexander@tunicate.org>',
+             'Aymeric Nys <aymeric@nnx.com>',
+             'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
+             'Claudio Belotti <bel8@lilik.it>',
+             'Constantine Evans <cevans@costinet.org>',
+             'Dafydd Harries <daf@muse.19inch.net>',
+             'Javier Fernandez-Sanguino Pena <jfs@debian.org>',
+             'Kevin Schultz <schultkl@ieee.org>',
+             'Laurent Sansonetti <lrz@gnome.org>',
+             'Marco Costantini <costanti@science.unitn.it>',
+             'Mathieu Leduc-Hamel <arrak@arrak.org>',
+             'Owain Evans <o.evans@gmail.com>',
+             'Pascal Terjan <pterjan@linuxfr.org>',
+             'Rene Samselnig <sandman@sdm-net.org>',
+             'Robby Stephenson <robby@periapsis.org>',
+             'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
+             'Zachary P. Landau <kapheine@hypa.net>',
+             'Joseph Method <tristil@gmail.com>'
+            ]
+  DOCUMENTERS = [
+                 'Liam Davison <registrations@liamjdavison.info>'
+                ]
+  TRANSLATORS = [
+                 'Dafydd Harries <daf@muse.19inch.net> (cy)',
+                 'David Weinehall <tao@debian.org> (sv)',
+                 'Jiri Pejchal <jiri.pejchal@gmail.com> (cs)',
+                 'Joachim Breitner <mail@joachim-breitner.de> (de)',
+                 'Laurent Sansonetti <lrz@gnome.org> (fr)',
+                 'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
+                 'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
+                 'Marco Costantini <costanti@science.unitn.it>',
+                 'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
+                 'Miguel Angel Garcia <miguelangel.garcia@gmail.com> (es)',
+                 'Mirko Maischberger <mirko@lilik.it> (it)'
+                ]
+  ARTISTS = [
+             'Andreas Nilsson <nisses.mail@home.se>',
+             'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
+            ]
+  LIST = 'alexandria-list@rubyforge.org'
+  BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
+  WEBSITE_URL = 'http://alexandria.rubyforge.org'
+  DONATE_URL = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=lrz%40rubymonks%2eorg&item_name=Alexandria&no_shipping=0&no_note=1&currency_code=EUR'
 
-    def self.main
-        $DEBUG = !ENV['DEBUG'].nil?
-        $DEBUG = true if ARGV.include? "--debug"
-        if $DEBUG
-            Alexandria.log.level = Logger::DEBUG
-        end
-        Alexandria.log.debug { "Initializing Alexandria..." }
-
-        ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
-                                and URI.parse(ENV['http_proxy']).userinfo.nil?
-        Alexandria::UI.main
+  def self.main
+    $DEBUG = !ENV['DEBUG'].nil?
+    $DEBUG = true if ARGV.include? "--debug"
+    if $DEBUG
+      Alexandria.log.level = Logger::DEBUG
     end
+    Alexandria.log.debug { "Initializing Alexandria..." }
+
+    ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
+    and URI.parse(ENV['http_proxy']).userinfo.nil?
+    Alexandria::UI.main
+  end
 end
 
 
-unless $MACOSX
-    require 'alexandria/config'
-    require 'alexandria/version'
-else
-    module Alexandria
-        module Config
-            DATA_DIR = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
-        end
-        VERSION = OSX::NSBundle.mainBundle.infoDictionary.objectForKey('CFBundleVersion').to_s
-    end
-end
+# lrz says 'macui' is obsolete (may be supported again some day)
+#unless $MACOSX
+equire 'alexandria/config'
+require 'alexandria/version'
+
+#else
+#  module Alexandria
+#    module Config
+#      DATA_DIR = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
+#    end
+#    VERSION = OSX::NSBundle.mainBundle.infoDictionary.objectForKey('CFBundleVersion').to_s
+#  end
+#end
 
 require 'alexandria/book'
 require 'alexandria/utils'
@@ -111,4 +113,7 @@ require 'alexandria/preferences'
 require 'alexandria/undo_manager'
 require 'alexandria/web_themes'
 
-require $MACOSX ? 'alexandria/macui' : 'alexandria/ui'
+# lrz says 'macui' is obsolete (may be supported again some day)
+# require $MACOSX ? 'alexandria/macui' : 'alexandria/ui'
+
+require 'alexandria/ui'
