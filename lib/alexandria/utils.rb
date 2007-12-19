@@ -12,36 +12,37 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
-begin
+#begin
 require 'glib2'
 
 class String
-    def convert(charset_from, charset_to)
-        GLib.convert(self, charset_from, charset_to)
-    end
+  def convert(charset_from, charset_to)
+    GLib.convert(self, charset_from, charset_to)
+  end
 end
 
+=begin
 rescue LoadError
 
-# We assume that Ruby/Cocoa is loaded there
+  # We assume that Ruby/Cocoa is loaded there
 
-#require 'iconv'
+  #require 'iconv'
 
-class String
+  class String
     def to_utf8_nsstring
-        # This should be writen in ObjC in order to catch the ObjC exception if the
-        # string could not be converted to UTF8.
-        (OSX::NSString.stringWithUTF8String(self) or self)
+      # This should be writen in ObjC in order to catch the ObjC exception if the
+      # string could not be converted to UTF8.
+      (OSX::NSString.stringWithUTF8String(self) or self)
     end
 
     def convert(charset_from, charset_to)
-        # Do nothing for the moment...
-        self
+      # Do nothing for the moment...
+      self
     end
-=begin
+
         return OSX::NSString.stringWithUTF8String(self)
         x = Iconv.iconv(charset_to, charset_from, self).first
         p "#{self} -> #{x}"
@@ -57,7 +58,8 @@ class String
         s
         #self
     end
-=end
-end
+
+  end
 
 end
+=end
