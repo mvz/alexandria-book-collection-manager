@@ -89,7 +89,7 @@ end
 
 # lrz says 'macui' is obsolete (may be supported again some day)
 #unless $MACOSX
-equire 'alexandria/config'
+require 'alexandria/config'
 require 'alexandria/version'
 
 #else
