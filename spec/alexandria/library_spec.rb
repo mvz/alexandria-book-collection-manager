@@ -13,8 +13,8 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Alexandria::Library do
@@ -107,48 +107,48 @@ describe Alexandria::Library, " with books without an ISBN" do
 
 
   it "allows books to have no ISBN" do
-      libs = Alexandria::Library.loadall
-      libs.size.should == 1
-      myLibrary = libs[0]
-      myLibrary.size.should == 2
+    libs = Alexandria::Library.loadall
+    libs.size.should == 1
+    myLibrary = libs[0]
+    myLibrary.size.should == 2
 
-      # Guide to LaTeX
-      latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
-      latexBook.isbn.should == '9780201398250'
-      latexBook.publisher.should == 'Addison Wesley' # note, no Ruby-Amazon cruft
-      latexBook.version.should == Alexandria::VERSION
+    # Guide to LaTeX
+    latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
+    latexBook.isbn.should == '9780201398250'
+    latexBook.publisher.should == 'Addison Wesley' # note, no Ruby-Amazon cruft
+    latexBook.version.should == Alexandria::VERSION
 
-      #Lex and Yacc
-      lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
-      lexAndYaccBook.publisher.should == "O'Reilley"
+    #Lex and Yacc
+    lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
+    lexAndYaccBook.publisher.should == "O'Reilley"
 
-      #puts "ident -> " + lexAndYaccBook.ident
+    #puts "ident -> " + lexAndYaccBook.ident
 
-      myLibrary.each do |book|
-          myLibrary.save(book, true)
-      end
-      libs = nil
-      myLibrary = nil
+    myLibrary.each do |book|
+      myLibrary.save(book, true)
+    end
+    libs = nil
+    myLibrary = nil
 
-      librariesReloaded = Alexandria::Library.loadall
-      myLibraryReloaded = librariesReloaded[0]
+    librariesReloaded = Alexandria::Library.loadall
+    myLibraryReloaded = librariesReloaded[0]
 
-      myLibraryReloaded.size.should == 2
+    myLibraryReloaded.size.should == 2
 
-      latexBook = myLibraryReloaded.select{|b| b.title.include? 'Latex'}[0]
-      latexBook.should_not be_nil
-      latexBook.publisher.should == 'Addison Wesley'
-      #puts latexBook.title
+    latexBook = myLibraryReloaded.select{|b| b.title.include? 'Latex'}[0]
+    latexBook.should_not be_nil
+    latexBook.publisher.should == 'Addison Wesley'
+    #puts latexBook.title
 
-      lexAndYaccBook = myLibraryReloaded.select{|b| b.title.include? 'Lex'}[0]
-      lexAndYaccBook.should_not be_nil
-      lexAndYaccBook.publisher.should == "O'Reilley"
-      #puts lexAndYaccBook.title
+    lexAndYaccBook = myLibraryReloaded.select{|b| b.title.include? 'Lex'}[0]
+    lexAndYaccBook.should_not be_nil
+    lexAndYaccBook.publisher.should == "O'Reilley"
+    #puts lexAndYaccBook.title
 
   end
 
   after(:each) do
-      FileUtils.rm_rf(TESTDIR)
+    FileUtils.rm_rf(TESTDIR)
   end
 
 end
@@ -170,15 +170,15 @@ describe Alexandria::Library, " export sort order" do
 
 
   def load_rows_from_csv
-      csv_reader = CSV.open(@outfile, 'r', col_sep=';')
-      rows = []
-      while row = csv_reader.shift
-        if row.size == 0
-          break
-        end
-        rows << row
+    csv_reader = CSV.open(@outfile, 'r', col_sep=';')
+    rows = []
+    while row = csv_reader.shift
+      if row.size == 0
+        break
       end
-      rows
+      rows << row
+    end
+    rows
   end
 
   it "can sort by title" do

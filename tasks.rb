@@ -39,18 +39,18 @@ require 'yaml'
 # or as gems. Try the library versions first.
 retrying_with_rubygems = false
 begin
-    require 'rake'
-    require 'rake/tasklib'
-    require 'rake/rdoctask'
-    require 'rake/packagetask'
+  require 'rake'
+  require 'rake/tasklib'
+  require 'rake/rdoctask'
+  require 'rake/packagetask'
 rescue LoadError => err
-    unless retrying_with_rubygems
-        require 'rubygems'
-        retrying_with_rubygems = true
-        retry
-    else
-        raise err
-    end
+  unless retrying_with_rubygems
+    require 'rubygems'
+    retrying_with_rubygems = true
+    retry
+  else
+    raise err
+  end
 end
 
 #require 'rake/contrib/sshpublisher'
@@ -233,18 +233,18 @@ class AlexandriaBuild < Rake::TaskLib
   ## # # # package tasks # # # ##
 
   def define_package_tasks
-      namespace 'pkg' do
+    namespace 'pkg' do
       Rake::PackageTask.new(@name, @version) do |p|
-          p.need_tar_gz = true
-          p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
-                                  "Rakefile", "TODO", "alexandria.desktop",
-                                  "alexandria.desktop.in", "tasks.rb",
-                                  "bin/**/*", "data/**/*", "debian/**/*",
-                                  "doc/**/*", "lib/**/*", "po/**/*",
-                                  "schemas/**/*", "spec/**/*", "tests/**/*")
+        p.need_tar_gz = true
+        p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
+                                "Rakefile", "TODO", "alexandria.desktop",
+                                "alexandria.desktop.in", "tasks.rb",
+                                "bin/**/*", "data/**/*", "debian/**/*",
+                                "doc/**/*", "lib/**/*", "po/**/*",
+                                "schemas/**/*", "spec/**/*", "tests/**/*")
       end
-      end
-      task :clobber => ['pkg:clobber_package']
+    end
+    task :clobber => ['pkg:clobber_package']
   end
 
   ## # # # install tasks # # # ##
@@ -342,29 +342,29 @@ class AlexandriaBuild < Rake::TaskLib
     end
 
     def locale_installation
-        [['data', build.gettext.mo_files, sharedir, 0644]]
+      [['data', build.gettext.mo_files, sharedir, 0644]]
     end
 
     def documentation_installation
-        doc_dir = File.join(File.join(sharedir, 'doc'), build.name)
-        curdir_files = []
-        docdir_files = []
-        build.doc.doc_files.each do |f|
-            if f =~ /^doc\//
-                docdir_files << f
-            else
-                curdir_files << f
-            end
+      doc_dir = File.join(File.join(sharedir, 'doc'), build.name)
+      curdir_files = []
+      docdir_files = []
+      build.doc.doc_files.each do |f|
+        if f =~ /^doc\//
+          docdir_files << f
+        else
+          curdir_files << f
         end
-        [
-         ['doc', docdir_files, doc_dir, 0644],
-         ['.', curdir_files, doc_dir, 0644]
-        ]
+      end
+      [
+       ['doc', docdir_files, doc_dir, 0644],
+       ['.', curdir_files, doc_dir, 0644]
+      ]
     end
 
     def manpage_installation
-        man_dir = File.join(File.join(sharedir, 'man'), 'man1')
-        [['doc', build.doc.man_files, man_dir, 0644]]
+      man_dir = File.join(File.join(sharedir, 'man'), 'man1')
+      [['doc', build.doc.man_files, man_dir, 0644]]
     end
 
     def bindir
@@ -442,7 +442,7 @@ class AlexandriaBuild < Rake::TaskLib
         script_contents = File.open(script).read()
         script_contents.sub!(/\/usr\/bin\/env\ ruby/, '/usr/bin/env ruby1.8')
         File.open(script, 'w') do |f|
-            f.write(script_contents)
+          f.write(script_contents)
         end
       end
 
@@ -566,7 +566,7 @@ class AlexandriaBuild < Rake::TaskLib
   def define_gettext_tasks
     # extract translations from PO files into other files
     file files.desktop => ["#{files.desktop}.in",
-                                  *@gettext.po_files] do |f|
+                           *@gettext.po_files] do |f|
       system("intltool-merge -d #{@gettext.po_dir} #{f.name}.in #{f.name}")
     end
 
@@ -590,11 +590,11 @@ class AlexandriaBuild < Rake::TaskLib
   end
 
   class DocConfig < BuildConfig
-      attr_accessor :man_files
-      attr_accessor :doc_files
-      def initialize(build)
-          super(build)
-      end
+    attr_accessor :man_files
+    attr_accessor :doc_files
+    def initialize(build)
+      super(build)
+    end
   end
 
   class GettextConfig < BuildConfig

@@ -12,8 +12,8 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gdk_pixbuf2'
 require 'libglade2'
@@ -28,23 +28,23 @@ require 'alexandria/ui/main_app'
 
 
 module Pango
-    def self.ellipsizable?
-        @ellipsizable ||= Pango.constants.include?('ELLIPSIZE_END')
-    end
+  def self.ellipsizable?
+    @ellipsizable ||= Pango.constants.include?('ELLIPSIZE_END')
+  end
 end
 
 module Alexandria
-module UI
+  module UI
     def self.main
-    	puts "Initializing app_datadir..." if $DEBUG
-        Gnome::Program.new('alexandria', VERSION).app_datadir = 
-            Config::MAIN_DATA_DIR
-      	puts "Initializing Icons..." if $DEBUG
-        Icons.init
-        puts "Starting MainApp..." if $DEBUG
-        MainApp.new
-        puts "Starting Gtk.main..." if $DEBUG
-        Gtk.main
+      puts "Initializing app_datadir..." if $DEBUG
+      Gnome::Program.new('alexandria', VERSION).app_datadir =
+        Config::MAIN_DATA_DIR
+      puts "Initializing Icons..." if $DEBUG
+      Icons.init
+      puts "Starting MainApp..." if $DEBUG
+      MainApp.new
+      puts "Starting Gtk.main..." if $DEBUG
+      Gtk.main
     end
-end
+  end
 end

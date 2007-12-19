@@ -12,8 +12,8 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'alexandria/scanners'
 
@@ -50,26 +50,26 @@ module Alexandria
           type = 'IBN'
           code = code[0, 13]
         end
-        
+
         return code if type == 'IBN'
-                      
+
         raise "Don't know how to handle type #{type} (barcode: #{code})"
       end
 
       private
-        
+
       def decode_field (encoded)
         seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-';
-      
+
         chars   = encoded.split(//)
         values  = chars.map {|c| seq.index(c) }
-        
+
         padding = pad(values)
         result  = calc(values)
         result  = result[0, result.length - padding]
         return result
       end
-    
+
       def calc (values)
         result = ''
         while values.length > 0
@@ -77,22 +77,22 @@ module Alexandria
           result += ((num >> 16) ^ 67).chr
           result += ((num >> 8 & 255) ^ 67).chr
           result += ((num & 255) ^ 67).chr
-          
+
           values = values[4, values.length]
         end
         return result
       end
-      
+
       def pad (array)
         length = array.length % 4
-      
+
         if length != 0
           raise "Error parsing CueCat input" if length == 1
-                                               
+
           length = 4 - length
           length.times { array.push(0) }
         end
-      
+
         return length
       end
     end

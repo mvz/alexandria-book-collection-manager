@@ -12,8 +12,8 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'yaml'
 require 'fileutils'
@@ -32,7 +32,7 @@ end
 
 module Alexandria
   class Library < Array
-      include Logging
+    include Logging
 
     attr_reader :name
     attr_accessor :ruined_books
@@ -66,105 +66,105 @@ module Alexandria
     FIX_BIGNUM_REGEX =
       /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
 
-      def self.load(name)
-        test = [0,nil]
-        ruined_books = []
-        library = Library.new(name)
-        FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
-        Dir.chdir(library.path) do
-          Dir["*" + EXT[:book]].each do |filename|
+    def self.load(name)
+      test = [0,nil]
+      ruined_books = []
+      library = Library.new(name)
+      FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
+      Dir.chdir(library.path) do
+        Dir["*" + EXT[:book]].each do |filename|
 
-            test[1] = filename if test[0] == 0
+          test[1] = filename if test[0] == 0
 
-            #puts "back from the future of #{test[1]}:" if test[0] == 1
-            #puts "Regularizing book :#{test[1]}" if $DEBUG
-                  if not File.size? test[1]
-                      log.warn { "Book file #{test[1]} was empty"}
-                      next
-                  end
-            book = self.regularize_book_from_yaml(test[1])
-            #puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
-
-            old_isbn = book.isbn
-            old_pub_year = book.publishing_year
-            begin
-              #puts "Entering resave-test block for #{test[1]}" if $DEBUG
-              begin
-                book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
-                raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
-              rescue InvalidISBNError => e
-                #puts e.message if $DEBUG
-                book.isbn = old_isbn
-              end
-
-              book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
-
-              # Or if isbn has changed
-              raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
-
-              # Re-save book if VERSION changes
-              raise "#{test[1]} version is not okay" unless book.version == VERSION
-
-              # Or if publishing year has changed
-              raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year
-
-              # ruined_books << [book, book.isbn, library]
-              library << book
-            rescue => e
-              #puts "I'm reformatting #{test[1]} because #{e.message}"
-
-
-              book.version = VERSION
-              savedfilename = library.simple_save(book)
-              test[0] = test[0] + 1
-              test[1] = savedfilename
-              # retry ## no, this would retry the outer 'begin' block, not the Dir.each block
-
-
-              # retries the Dir.each block...
-              # but gives up after three tries
-              redo unless test[0] > 2
-
-            else
-              test = [0,nil]
-            end
+          #puts "back from the future of #{test[1]}:" if test[0] == 1
+          #puts "Regularizing book :#{test[1]}" if $DEBUG
+          if not File.size? test[1]
+            log.warn { "Book file #{test[1]} was empty"}
+            next
           end
+          book = self.regularize_book_from_yaml(test[1])
+          #puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
 
-          # Since 0.4.0 the cover files '_small.jpg' and
-          # '_medium.jpg' have been deprecated for a single medium
-          # cover file named '.cover'.
-
-          Dir["*" + '_medium.jpg'].each do |medium_cover|
+          old_isbn = book.isbn
+          old_pub_year = book.publishing_year
+          begin
+            #puts "Entering resave-test block for #{test[1]}" if $DEBUG
             begin
-              FileUtils.mv(medium_cover,
-                           medium_cover.sub(/_medium\.jpg$/,
-                                            EXT[:cover]))
-            rescue
+              book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
+              raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
+            rescue InvalidISBNError => e
+              #puts e.message if $DEBUG
+              book.isbn = old_isbn
             end
+
+            book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
+
+            # Or if isbn has changed
+            raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
+
+            # Re-save book if VERSION changes
+            raise "#{test[1]} version is not okay" unless book.version == VERSION
+
+            # Or if publishing year has changed
+            raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year
+
+            # ruined_books << [book, book.isbn, library]
+            library << book
+          rescue => e
+            #puts "I'm reformatting #{test[1]} because #{e.message}"
+
+
+            book.version = VERSION
+            savedfilename = library.simple_save(book)
+            test[0] = test[0] + 1
+            test[1] = savedfilename
+            # retry ## no, this would retry the outer 'begin' block, not the Dir.each block
+
+
+            # retries the Dir.each block...
+            # but gives up after three tries
+            redo unless test[0] > 2
+
+          else
+            test = [0,nil]
           end
-
-
-
-          Dir["*" + EXT[:cover]].each do |cover|
-            md = /(.+)\.cover/.match(cover)
-            begin
-              ean = self.canonicalise_ean(md[1])
-            rescue
-              ean = md[1]
-            end
-            begin
-              FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
-            rescue
-            end
-          end
-
-          FileUtils.rm_f(Dir['*_small.jpg'])
         end
-        #puts ruined_books.inspect
-        library.ruined_books = ruined_books
 
-        library
+        # Since 0.4.0 the cover files '_small.jpg' and
+        # '_medium.jpg' have been deprecated for a single medium
+        # cover file named '.cover'.
+
+        Dir["*" + '_medium.jpg'].each do |medium_cover|
+          begin
+            FileUtils.mv(medium_cover,
+                         medium_cover.sub(/_medium\.jpg$/,
+                                          EXT[:cover]))
+          rescue
+          end
+        end
+
+
+
+        Dir["*" + EXT[:cover]].each do |cover|
+          md = /(.+)\.cover/.match(cover)
+          begin
+            ean = self.canonicalise_ean(md[1])
+          rescue
+            ean = md[1]
+          end
+          begin
+            FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
+          rescue
+          end
+        end
+
+        FileUtils.rm_f(Dir['*_small.jpg'])
       end
+      #puts ruined_books.inspect
+      library.ruined_books = ruined_books
+
+      library
+    end
 
     def self.regularize_book_from_yaml(name)
       text = IO.read(name)
@@ -176,7 +176,7 @@ module Alexandria
 
       if /!str:Amazon::Search::Response/.match(text)
         #puts text if $DEBUG
-          log.debug { "Removing Ruby/Amazon strings from #{name}" }
+        log.debug { "Removing Ruby/Amazon strings from #{name}" }
         text.gsub!("!str:Amazon::Search::Response", "")
         #puts "got one!" if $DEBUG
         #puts text if $DEBUG
@@ -204,12 +204,12 @@ module Alexandria
       # another HACK of the same type as above
       unless book.saved_ident.class == String
 
-          md2 = /saved_ident: (.+)/.match(text)
-          if md2
-              string_saved_ident = md2[1].strip
-              log.debug { "fixing saved_ident #{book.saved_ident} -> #{string_saved_ident}" }
-              book.saved_ident = string_saved_ident
-          end
+        md2 = /saved_ident: (.+)/.match(text)
+        if md2
+          string_saved_ident = md2[1].strip
+          log.debug { "fixing saved_ident #{book.saved_ident} -> #{string_saved_ident}" }
+          book.saved_ident = string_saved_ident
+        end
       end
       if book.isbn.class == String and book.isbn.length == 0
         book.isbn = nil # save trouble later
@@ -281,7 +281,7 @@ module Alexandria
 
       isbn.delete('- ').upcase.split('').map do |x|
         raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
-          x == 'X' ? 10 : x.to_i
+        x == 'X' ? 10 : x.to_i
       end
     end
 
@@ -312,8 +312,8 @@ module Alexandria
         numbers = self.extract_numbers(ean)
         (numbers.length == 13 and
          self.ean_checksum(numbers[0 .. 11]) == numbers[12]) or
-         (numbers.length == 18 and
-          self.ean_checksum(numbers[0 .. 11]) == numbers[12])
+          (numbers.length == 18 and
+           self.ean_checksum(numbers[0 .. 11]) == numbers[12])
       rescue InvalidISBNError
         false
       end
@@ -335,18 +335,18 @@ module Alexandria
     end
 
     AMERICAN_UPC_LOOKUP = {
-            "014794" => "08041", "018926" => "0445", "02778" => "0449",
-            "037145" => "0812", "042799" => "0785",  "043144" => "0688",
-            "044903" => "0312", "045863" => "0517", "046594" => "0064",
-            "047132" => "0152", "051487" => "08167", "051488" => "0140",
-            "060771" => "0002", "065373" => "0373", "070992" => "0523",
-            "070993" => "0446", "070999" => "0345", "071001" => "0380",
-            "071009" => "0440", "071125" => "088677", "071136" => "0451",
-            "071149" => "0451", "071152" => "0515", "071162" => "0451",
-            "071268" => "08217", "071831" => "0425", "071842" => "08439",
-            "072742" => "0441", "076714" => "0671", "076783" => "0553",
-            "076814" => "0449", "078021" => "0872", "079808" => "0394",
-            "090129" => "0679", "099455" => "0061", "099769" => "0451"
+      "014794" => "08041", "018926" => "0445", "02778" => "0449",
+      "037145" => "0812", "042799" => "0785",  "043144" => "0688",
+      "044903" => "0312", "045863" => "0517", "046594" => "0064",
+      "047132" => "0152", "051487" => "08167", "051488" => "0140",
+      "060771" => "0002", "065373" => "0373", "070992" => "0523",
+      "070993" => "0446", "070999" => "0345", "071001" => "0380",
+      "071009" => "0440", "071125" => "088677", "071136" => "0451",
+      "071149" => "0451", "071152" => "0515", "071162" => "0451",
+      "071268" => "08217", "071831" => "0425", "071842" => "08439",
+      "072742" => "0441", "076714" => "0671", "076783" => "0553",
+      "076814" => "0449", "078021" => "0872", "079808" => "0394",
+      "090129" => "0679", "099455" => "0061", "099769" => "0451"
     }
 
     def self.upc_convert(upc)
@@ -398,7 +398,7 @@ module Alexandria
       # (backward compatibility from 0.4.0)
       book.saved_ident ||= book.ident
       if book.ident != book.saved_ident
-          #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
+        #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
         FileUtils.rm(yaml(book.saved_ident))
       end
       if File.exists?(cover(book.saved_ident))
@@ -443,15 +443,15 @@ module Alexandria
       already_there = (File.exists?(yaml(book)) and
                        !@deleted_books.include?(book))
 
-                       #puts "Doing the saving deed: #{book.title} -- #{book.isbn}" if $DEBUG
-                       File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
+      #puts "Doing the saving deed: #{book.title} -- #{book.isbn}" if $DEBUG
+      File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
 
-                       # Do not notify twice.
-                       if changed?
-                         notify_observers(self,
-                                          already_there ? BOOK_UPDATED : BOOK_ADDED,
-                                          book)
-                       end
+      # Do not notify twice.
+      if changed?
+        notify_observers(self,
+                         already_there ? BOOK_UPDATED : BOOK_ADDED,
+                         book)
+      end
     end
 
     def transport
@@ -616,7 +616,7 @@ module Alexandria
     end
 
     def self.jpeg?(file)
-            'JFIF' == IO.read(file, 10)[6..9]
+      'JFIF' == IO.read(file, 10)[6..9]
     end
 
     def final_cover(book)

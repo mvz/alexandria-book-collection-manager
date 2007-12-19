@@ -12,67 +12,67 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-    class UndoManager
-        include Singleton
-        include Observable
+  class UndoManager
+    include Singleton
+    include Observable
 
-        attr_reader :actions
+    attr_reader :actions
 
-        def initialize
-            @undo_actions = []
-            @redo_actions = []
-            @within_undo = @withing_redo = false
-        end
-
-        def push(&block)
-            (@within_undo ? @redo_actions : @undo_actions) << block
-            notify
-        end
-
-        def can_undo?
-            @undo_actions.length > 0
-        end
-
-        def can_redo?
-            @redo_actions.length > 0
-        end
-        
-        def undo!
-            @within_undo = true
-            begin
-                action(@undo_actions)
-            ensure
-                @within_undo = false
-            end
-        end
-
-        def redo!
-            @within_redo = true
-            begin
-                action(@redo_actions)
-            ensure
-                @within_redo = false
-            end
-        end
-
-        #######
-        private
-        #######
-
-        def action(array)
-            action = array.pop
-            raise if action.nil?
-            action.call
-            notify
-        end
-
-        def notify
-            changed
-            notify_observers(self)
-        end
+    def initialize
+      @undo_actions = []
+      @redo_actions = []
+      @within_undo = @withing_redo = false
     end
+
+    def push(&block)
+      (@within_undo ? @redo_actions : @undo_actions) << block
+      notify
+    end
+
+    def can_undo?
+      @undo_actions.length > 0
+    end
+
+    def can_redo?
+      @redo_actions.length > 0
+    end
+
+    def undo!
+      @within_undo = true
+      begin
+        action(@undo_actions)
+      ensure
+        @within_undo = false
+      end
+    end
+
+    def redo!
+      @within_redo = true
+      begin
+        action(@redo_actions)
+      ensure
+        @within_redo = false
+      end
+    end
+
+    #######
+    private
+    #######
+
+    def action(array)
+      action = array.pop
+      raise if action.nil?
+      action.call
+      notify
+    end
+
+    def notify
+      changed
+      notify_observers(self)
+    end
+  end
 end

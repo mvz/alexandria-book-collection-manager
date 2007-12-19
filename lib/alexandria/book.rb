@@ -12,18 +12,18 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
   class Book
     attr_accessor :title, :authors, :isbn, :publisher, :publishing_year,
-      :edition, :rating, :notes, :loaned, :loaned_since, 
-      :loaned_to, :saved_ident, :redd, :own, :want, :tags, :version
+    :edition, :rating, :notes, :loaned, :loaned_since,
+    :loaned_to, :saved_ident, :redd, :own, :want, :tags, :version
 
-    DEFAULT_RATING = 0 
+    DEFAULT_RATING = 0
 
-    def initialize(title, authors, isbn, publisher, publishing_year, 
+    def initialize(title, authors, isbn, publisher, publishing_year,
                    edition)
 
       @title = title
@@ -46,7 +46,7 @@ module Alexandria
       @isbn or @title.hash.to_s
     end
 
-    def loaned? 
+    def loaned?
       loaned or false
     end
 

@@ -12,8 +12,8 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 # http://en.wikipedia.org/wiki/Renaud-Bray
 
@@ -35,7 +35,7 @@ module Alexandria
       def search(criterion, type)
         criterion = criterion.convert("ISO-8859-1", "UTF-8")
         req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri="
-#        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
+        #        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
         req += case type
                when SEARCH_BY_ISBN
                  "ISBN"
@@ -58,15 +58,15 @@ module Alexandria
             return to_books(data).pop()
           else
             results = []
-            to_books(data).each{|book| 
-              results << book 
+            to_books(data).each{|book|
+              results << book
             }
             while /Suivant/.match(data)
               md = /Enteterouge\">([\d]*)<\/b>/.match(data)
               num = md[1].to_i+1
               data = transport.get(URI.parse(req+"&PageActuelle="+num.to_s))
-              to_books(data).each{|book| 
-                results << book 
+              to_books(data).each{|book|
+                results << book
               }
             end
             return results
@@ -77,14 +77,14 @@ module Alexandria
       end
 
       def url(book)
-#        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
+        #        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
         "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
       end
 
       #######
       private
       #######
-      
+
       def to_books(data)
         data = CGI::unescapeHTML(data)
         data = data.convert("UTF-8", "ISO-8859-1")
@@ -126,11 +126,11 @@ module Alexandria
           book_covers << BASE_URI + md[0].strip
         }
         raise if book_covers.empty?
-        
+
         books = []
         titles.each_with_index{|title, i|
-          books << [Book.new(title, authors[i], isbns[i], publishers[i], publish_years[i], editions[i]), 
-            book_covers[i]]
+          books << [Book.new(title, authors[i], isbns[i], publishers[i], publish_years[i], editions[i]),
+                    book_covers[i]]
           #print books
         }
         raise if books.empty?

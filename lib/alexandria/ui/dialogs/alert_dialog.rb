@@ -12,57 +12,57 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 # HIG compliant error dialog boxes
 module Alexandria
-module UI
+  module UI
     class AlertDialog < Gtk::Dialog
-        def initialize(parent, title, stock_icon, buttons, message=nil)
-            super("", parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
+      def initialize(parent, title, stock_icon, buttons, message=nil)
+        super("", parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
 
-            self.border_width = 6
-            self.resizable = false
-            self.has_separator = false
-            self.vbox.spacing = 12
+        self.border_width = 6
+        self.resizable = false
+        self.has_separator = false
+        self.vbox.spacing = 12
 
-            hbox = Gtk::HBox.new(false, 12)
-            hbox.border_width = 6
-            self.vbox.pack_start(hbox)
+        hbox = Gtk::HBox.new(false, 12)
+        hbox.border_width = 6
+        self.vbox.pack_start(hbox)
 
-            image = Gtk::Image.new(stock_icon,
-                                   Gtk::IconSize::DIALOG)
-            image.set_alignment(0.5, 0)
-            hbox.pack_start(image)
+        image = Gtk::Image.new(stock_icon,
+                               Gtk::IconSize::DIALOG)
+        image.set_alignment(0.5, 0)
+        hbox.pack_start(image)
 
-            vbox = Gtk::VBox.new(false, 6)
-            hbox.pack_start(vbox)
+        vbox = Gtk::VBox.new(false, 6)
+        hbox.pack_start(vbox)
 
-            label = Gtk::Label.new
-            label.set_alignment(0, 0)
-            label.wrap = label.selectable = true
-            label.markup = "<b><big>#{title}</big></b>"
-            vbox.pack_start(label)
+        label = Gtk::Label.new
+        label.set_alignment(0, 0)
+        label.wrap = label.selectable = true
+        label.markup = "<b><big>#{title}</big></b>"
+        vbox.pack_start(label)
 
-            if message
-                label = Gtk::Label.new
-                label.set_alignment(0, 0)
-                label.wrap = label.selectable = true
-                label.markup = message.strip
-                vbox.pack_start(label)
-            end
+        if message
+          label = Gtk::Label.new
+          label.set_alignment(0, 0)
+          label.wrap = label.selectable = true
+          label.markup = message.strip
+          vbox.pack_start(label)
         end
+      end
     end
 
     class ErrorDialog < AlertDialog
-        def initialize(parent, title, message=nil)
-            super(parent, title, Gtk::Stock::DIALOG_ERROR, 
-                  [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
-            self.default_response = Gtk::Dialog::RESPONSE_OK
-            show_all and run
-            destroy
-        end
+      def initialize(parent, title, message=nil)
+        super(parent, title, Gtk::Stock::DIALOG_ERROR,
+              [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
+        self.default_response = Gtk::Dialog::RESPONSE_OK
+        show_all and run
+        destroy
+      end
     end
-end
+  end
 end

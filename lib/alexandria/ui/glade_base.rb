@@ -12,22 +12,22 @@
 #
 # You should have received a copy of the GNU General Public
 # License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-# Boston, MA 02111-1307, USA.
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-module UI
+  module UI
     class GladeBase
-        def initialize(filename)
-            file = File.join(Alexandria::Config::DATA_DIR, 'glade', filename)
-            glade = GladeXML.new(file, nil, Alexandria::TEXTDOMAIN) { |handler| method(handler) }
-            glade.widget_names.each do |name|
-                begin
-                    instance_variable_set("@#{name}".intern, glade[name])
-                rescue
-                end
-            end
+      def initialize(filename)
+        file = File.join(Alexandria::Config::DATA_DIR, 'glade', filename)
+        glade = GladeXML.new(file, nil, Alexandria::TEXTDOMAIN) { |handler| method(handler) }
+        glade.widget_names.each do |name|
+          begin
+            instance_variable_set("@#{name}".intern, glade[name])
+          rescue
+          end
         end
+      end
     end
-end
+  end
 end
