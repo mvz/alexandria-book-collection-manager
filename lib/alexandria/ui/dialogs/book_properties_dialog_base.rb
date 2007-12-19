@@ -186,18 +186,20 @@ module Alexandria
 
       def cover=(pixbuf)
         if pixbuf.width > COVER_MAXWIDTH
-          new_height = pixbuf.height /
-                             (pixbuf.width / COVER_MAXWIDTH.to_f)
-      # We don't want to modify in place the given pixbuf,
-      # that's why we make a copy.
-      pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
-    end
-    @image_cover.pixbuf = pixbuf
-  end
+          new_height = pixbuf.height / (pixbuf.width / COVER_MAXWIDTH.to_f)
+          # We don't want to modify in place the given pixbuf,
+          # that's why we make a copy.
+          pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
+        end
+        @image_cover.pixbuf = pixbuf
+      end
 
-  def loaned_since=(time)
-    @date_loaned_since.time = time.tv_sec
-    # XXX 'date_changed' signal not automatically called after #time=.
-    on_loaned_date_changed
+      def loaned_since=(time)
+        @date_loaned_since.time = time.tv_sec
+        # XXX 'date_changed' signal not automatically called after #time=.
+        on_loaned_date_changed
+      end
+
+    end
   end
 end
