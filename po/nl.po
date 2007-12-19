@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Alexandria 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-16 20:34+0000\n"
-"PO-Revision-Date: 2007-10-29 13:00+0100\n"
+"PO-Revision-Date: 2007-12-19 13:00+0100\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +150,7 @@ msgstr "Voorkeuren voor %s"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:118
 msgid "New Provider"
-msgstr "Nieuwe Bron"
+msgstr "Nieuwe bron"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:133
 msgid "_Name:"
@@ -192,8 +192,8 @@ msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correcty, and try again."
 msgstr ""
-"Kon het EAN/ISBN dat u invoerde niet valideren. Kijk of het goed geschreven "
-"is en probeer het nogmaals."
+"Kon het EAN/ISBN dat u invoerde niet valideren. Kijk of het correct "
+"geschreven is en probeer het nogmaals."
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
 msgid "File already exists"
@@ -229,14 +229,14 @@ msgstr "Export for_maat:"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:128
 msgid "Export failed"
-msgstr "Exporteren is mislukt"
+msgstr "Het exporteren is mislukt"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
 msgstr ""
-"Het doel, genaamd '%s', is een normaal bestand. Voor deze bewerking is een "
+"Het doel, genaamd '%s', is een bestand. Voor deze bewerking is een "
 "map nodig. Gelieve een map te selecteren en opnieuw te proberen."
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
@@ -245,7 +245,7 @@ msgstr "Geen map"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:82
 msgid "Empty or conflictive condition"
-msgstr "lege of conflicterende voorwaarde"
+msgstr "Lege of conflicterende voorwaarde"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:85
 msgid "_Save However"
@@ -333,15 +333,16 @@ msgid "New Library"
 msgstr "Nieuwe bibliotheek"
 
 #: ../lib/alexandria/ui/main_app.rb:88
-#, fuzzy
 msgid "Unable to launch the help browser"
-msgstr "Kon geen webbrowser starten"
+msgstr "Kon de helpbrowser niet starten"
 
 #: ../lib/alexandria/ui/main_app.rb:89
 msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
 msgstr ""
+"Kon de help voor Alexandria niet tonen omdat er een fout optrad bij het "
+"starten van de systeemhelpbrowser."
 
 #: ../lib/alexandria/ui/main_app.rb:181
 msgid "Library '%s' selected"
@@ -405,6 +406,9 @@ msgid ""
 "replace them from the book providers. Otherwise, we will turn them into "
 "manual entries.\n"
 msgstr ""
+"Deze boeken voldoen niet aan de ISBN-13 standaard. Er zal geprobeerd worden"
+" om ze te vervangen door gebruik te maken van de bronnen. Als dat niet lukt"
+" converteren we ze naar handmatige invoer.\n"
 
 #: ../lib/alexandria/ui/main_app.rb:596 ../lib/alexandria/smart_library.rb:336
 msgid "Title"
@@ -448,9 +452,8 @@ msgid "Rating"
 msgstr "Waardering"
 
 #: ../lib/alexandria/ui/main_app.rb:724 ../lib/alexandria/smart_library.rb:344
-#, fuzzy
 msgid "Tags"
-msgstr "Trefwoorden:"
+msgstr "Trefwoorden"
 
 #: ../lib/alexandria/ui/main_app.rb:910
 msgid "Library"
@@ -462,7 +465,7 @@ msgstr "Ongeldige bibliotheeknaam '%s'"
 
 #: ../lib/alexandria/ui/main_app.rb:927
 msgid "The name provided contains the illegal character '<i>%s</i>'."
-msgstr "The opgegeven naam bevat een ongeldig teken '<i>%s</i>'."
+msgstr "The opgegeven naam bevat het ongeldige teken '<i>%s</i>'."
 
 #: ../lib/alexandria/ui/main_app.rb:931
 msgid "The library name can not be empty"
@@ -486,7 +489,7 @@ msgstr "In '_%s'"
 msgid "The following lines are not valid ISBNs and were not imported:"
 msgstr ""
 "De volgende regels bevatten geen geldige ISBNs en zijn daarom niet "
-"geimporteerd:"
+"geïmporteerd:"
 
 #: ../lib/alexandria/ui/main_app.rb:1400
 msgid "_Library"
@@ -498,7 +501,7 @@ msgstr "_Nieuwe bibliotheek"
 
 #: ../lib/alexandria/ui/main_app.rb:1402
 msgid "Create a new library"
-msgstr "Maak een nieuwe bibliotheek"
+msgstr "Maak een nieuwe bibliotheek aan"
 
 #: ../lib/alexandria/ui/main_app.rb:1403
 msgid "New _Smart Library..."
@@ -506,7 +509,7 @@ msgstr "Nieuwe _Slimme bibliotheek..."
 
 #: ../lib/alexandria/ui/main_app.rb:1404
 msgid "Create a new smart library"
-msgstr "Maak een nieuwe slimme bibliotheek"
+msgstr "Maak een nieuwe slimme bibliotheek aan"
 
 #: ../lib/alexandria/ui/main_app.rb:1406
 msgid "_Add Book..."
@@ -522,7 +525,7 @@ msgstr "Boek Hand_matig Toevoegen..."
 
 #: ../lib/alexandria/ui/main_app.rb:1409
 msgid "Add a new book manually"
-msgstr "Boek hand_matig toevoegen..."
+msgstr "Een nieuw boek handmatig toevoegen"
 
 #: ../lib/alexandria/ui/main_app.rb:1411
 msgid "_Import..."
@@ -542,7 +545,7 @@ msgstr "Exporteer de geselecteerde bibliotheek"
 
 #: ../lib/alexandria/ui/main_app.rb:1415
 msgid "_Acquire from Scanner..."
-msgstr "_Inlezen d.m.v. scanner"
+msgstr "_Inlezen d.m.v. scanner..."
 
 #: ../lib/alexandria/ui/main_app.rb:1416
 msgid "Acquire books from a scanner"
@@ -578,7 +581,7 @@ msgstr "De laatste actie ongedaan maken"
 
 #: ../lib/alexandria/ui/main_app.rb:1424
 msgid "_Redo"
-msgstr "Opnieuw _doen"
+msgstr "_Opnieuw uitvoeren"
 
 #: ../lib/alexandria/ui/main_app.rb:1425
 msgid "Redo the undone action"
@@ -642,7 +645,7 @@ msgstr "_Verwijderen"
 
 #: ../lib/alexandria/ui/main_app.rb:1445
 msgid "Delete the selected books or library"
-msgstr "De geselecteerde boeken verwijderen?"
+msgstr "De geselecteerde boeken verwijderen"
 
 #: ../lib/alexandria/ui/main_app.rb:1446
 msgid "_Search"
@@ -682,7 +685,7 @@ msgstr "De geselecteerde bibliotheek herladen"
 
 #: ../lib/alexandria/ui/main_app.rb:1456
 msgid "Arran_ge Icons"
-msgstr "Iconen _herschikken"
+msgstr "Iconen _schikken"
 
 #: ../lib/alexandria/ui/main_app.rb:1457
 msgid "Display Online _Information"
@@ -793,13 +796,12 @@ msgid "Notes contain"
 msgstr "Notities bevat"
 
 #: ../lib/alexandria/ui/main_app.rb:1586
-#, fuzzy
 msgid "Tags contain"
-msgstr "Notities bevat"
+msgstr "Trefwoorden bevat"
 
 #: ../lib/alexandria/ui/main_app.rb:1607
 msgid "Change the search type"
-msgstr "Wijzig zoektype."
+msgstr "Wijzig zoektype"
 
 #: ../lib/alexandria/ui/main_app.rb:1620
 msgid "Type here the search criterion"
@@ -815,11 +817,11 @@ msgstr "Toon als Lijst"
 
 #: ../lib/alexandria/ui/main_app.rb:1648
 msgid "Choose how to show books"
-msgstr "Bepaal hoe de boeken getoond moeten wordne"
+msgstr "Bepaal hoe de boeken getoond moeten worden"
 
 #: ../lib/alexandria/import_library.rb:29
 msgid "Autodetect"
-msgstr "Automatisch herkennen"
+msgstr "Automatische detectie"
 
 #: ../lib/alexandria/import_library.rb:30
 msgid "Archived Tellico XML (*.bc, *.tc)"
@@ -932,7 +934,7 @@ msgstr "Gearchiveerd Tellico XML"
 
 #: ../lib/alexandria/export_library.rb:105
 msgid "BibTeX"
-msgstr "bibTeX"
+msgstr "BibTeX"
 
 #: ../lib/alexandria/export_library.rb:106
 msgid "CSV list"
@@ -976,7 +978,7 @@ msgstr "Naamloos"
 
 #: ../lib/alexandria/library.rb:238
 msgid "My Library"
-msgstr "Mijn Bibliotheek"
+msgstr "Mijn bibliotheek"
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
 msgid "Locale"
@@ -1041,7 +1043,7 @@ msgstr "Een programma dat u helpt om uw boekcollectie bij te houden."
 #: ../data/alexandria/glade/new_book_dialog.glade:69
 #: ../data/alexandria/glade/acquire_dialog.glade:85
 msgid "Save _in:"
-msgstr "Opslaan in:"
+msgstr "Opslaan _in:"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:93
 msgid ""
@@ -1092,11 +1094,11 @@ msgstr "_Uitgever:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:148
 msgid "Add an author"
-msgstr "Auteur toevoegen"
+msgstr "Een auteur toevoegen"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:166
 msgid "Remove an author"
-msgstr "Auteur verwijderen"
+msgstr "Een auteur verwijderen"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:202
 msgid "_Authors:"
