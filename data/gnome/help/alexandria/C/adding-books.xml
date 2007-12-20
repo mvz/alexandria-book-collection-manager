@@ -1,3 +1,10 @@
+<!-- 
+  This is part of the Alexandria Manual.
+  Copyright (C)  2005  Liam Davison
+  Copyright (C)  2007  Cathal Mc Ginley
+  See the file alexandria.xml for copying conditions.
+-->
+
 <!-- ================ Adding Books ================================ -->
 <!-- Use this section to describe how to use the application to perform
      the tasks for which the application is designed. -->
@@ -151,8 +158,10 @@
     <title>To add a book by scanning its barcode</title>
     
     <para>
-      &app; supports CueCat barcode scanners. If you have set up a
-      CueCat barcode scanner on your computer, choose
+      &app; supports CueCat barcode scanners. (At the moment, only
+      unmodified CueCats are supported; support for ordinary barcode
+      scanners is planned.) If you have a USB or PS/2 CueCat barcode
+      scanner attached to your computer, choose
       <menuchoice><guimenu>Library</guimenu><guimenuitem>Acquire from
       Scanner</guimenuitem></menuchoice>. Scan each book barcode in
       turn, and they will be listed in the <guilabel>Acquire from

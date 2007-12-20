@@ -25,11 +25,23 @@
 <!-- CHARACTER MNEMONICS -->
 <!ENTITY copy "&#169;"> <!-- copyright sign -->
 ]>
+<!--
+  Copyright (C)  2005  Liam Davison
+  Copyright (C)  2007  Cathal Mc Ginley
+
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.2
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+  A copy of the license is included in the section entitled "GNU
+  Free Documentation License" (see the file gnu-fdl-1.2.xml).
+-->
 
 <!-- 
 This document is based upon a GNOME documentation template, designed
 by the GNOME Documentation Project Team.
 -->
+
 <!-- 
 (Do not remove this comment block.)
 Maintained by the GNOME Documentation Project
