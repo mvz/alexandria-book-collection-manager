@@ -1,7 +1,7 @@
 = Alexandria
 
 Version:      0.6.2
-Release Date: 2007-12-03
+Release Date: 2007-12-20
 Home Page:    http://alexandria.rubyforge.org/
 
 Alexandria is a GNOME application for managing collections of books.
@@ -47,6 +47,7 @@ keep track of books which are on loan.
     * is documented in a complete manual (at the moment only in
       English and French)
 
+Alexandria is not without problems. See doc/BUGS for a summary of issues.
 
 == 0.6.2 Release
 
