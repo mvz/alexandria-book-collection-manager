@@ -37,56 +37,56 @@ alexandria (0.6.2) unstable; urgency=low
 	* added new Z39.50 provider "Servizio Bibliotecario Nazionale (Italy)"
 	* added the FAQ
 	* added hotkey "<control>O" for preferences
-	* allowed manual entry of books without author (for instance 
+	* allowed manual entry of books without author (for instance
 	  9788841574195 has no author)
-	* in the "Book Properties Dialog", added "cancel" button, and 
+	* in the "Book Properties Dialog", added "cancel" button, and
 	  renamed "close" button to "save"
 	* improved error messages
 	* ignored empty lines when importing a list of ISBNs
 	* added info in case that Alexandria can't load optional libraries
-	* book_providers.rb: added debug message in case that a book is 
+	* book_providers.rb: added debug message in case that a book is
 	  not found
 	* book_properties_dialog.rb: keeps ISBN-13 instead to convert to ISBN
-	* publishing_year is converted to integer when quitting, 
+	* publishing_year is converted to integer when quitting,
 	  importing a Tellico library, or with some providers
-	* clean.css: added foreground color, see 
+	* clean.css: added foreground color, see
 	  http://www.w3.org/QA/Tips/color for the reason
-	* import_library.rb smart_library.rb main_app.rb: changed 
-	  variable name from MAX_STARS to MAX_RATING_STARS, and replaced 
+	* import_library.rb smart_library.rb main_app.rb: changed
+	  variable name from MAX_STARS to MAX_RATING_STARS, and replaced
 	  some occurrences of '5' with MAX_RATING_STARS
 	* library.rb: canonicalise_ean now removes dashes and spaces
 	* added debug info about which provider the book has been found at
-	* export_library.rb: 
-	- export_library.rb: changed from "Generated" to "Generated on 
+	* export_library.rb:
+	- export_library.rb: changed from "Generated" to "Generated on
 	  #{Date.today()}", when exporting to BibTex or HTML web page
-	- Added optional requirement "image_size", in order to provide 
+	- Added optional requirement "image_size", in order to provide
 	  data for the images like
 	  height='143' width='95'
 	  when exporting to HTML web page or to Tellico
 	** HTML export:
-	- Changed type from Transitional to Strict when exporting to 
+	- Changed type from Transitional to Strict when exporting to
 	  HTML web page
-	- used CGI.escapeHTML when exporting HTML web page (for the 
-	  moment, CGI.escapeHTML is not used for title and authors, 
-	  because they may contain HTML entities (bug to be fixed on the 
+	- used CGI.escapeHTML when exporting HTML web page (for the
+	  moment, CGI.escapeHTML is not used for title and authors,
+	  because they may contain HTML entities (bug to be fixed on the
 	  providers site))
-	**  ONIX export: 
-	- exported publishing_year, and modified PublisherName to fit 
+	**  ONIX export:
+	- exported publishing_year, and modified PublisherName to fit
 	  more strict requirements
 	- reordered elements, in order to make it valid XML
 	- Added element Publisher/PublishingRole = '01' when exporting to ONIX
 	- fixed "ProductWebSite" -> "ProductWebsite" when exporting ONIX
 	** Tellico export:
-	- removed description of the field "rating", which is already 
+	- removed description of the field "rating", which is already
 	  present in recent Tellico versions
 	- renamed things from "bookcase" to "tellico"
-	- changed doctype and syntaxVersion to version 7 (the earliest 
-	  version for which there is still a DTD) in order to allow the 
+	- changed doctype and syntaxVersion to version 7 (the earliest
+	  version for which there is still a DTD) in order to allow the
 	  library to be imported also by older versions of Tellico.
 	- added attribute "id", required by tellico.dtd
 	- added export of publishing_year
 
-	* import_library.rb: 
+	* import_library.rb:
 	- now some messages are displayed only if $DEBUG
 	** Tellico import
 	- added rating
@@ -94,67 +94,67 @@ alexandria (0.6.2) unstable; urgency=low
 	- canonicalise_ean is used (because Tellico returns EAN with dashes)
 	- fixed import, even if "authors" is empty
 
-	* test_providers.rb 
+	* test_providers.rb
 	- improved test of thalia.rb: added foreign book, DVD, CD
 	- added test for provider LOC and a book with non-ASCII letters
-	- test of provider MCU: added test that bugs [#2533] and [#2518] 
+	- test of provider MCU: added test that bugs [#2533] and [#2518]
 	  are fixed
-	- added test of SBN, LOC and BL, and grouped together tests of 
+	- added test of SBN, LOC and BL, and grouped together tests of
           providers depending on optional libraries
 
-	* z3950.rb: 
+	* z3950.rb:
 	- refactored
-	- the user must specify charset, when adding new providers. default 
+	- the user must specify charset, when adding new providers. default
 	  charset is ISO-8859-1
-	- now, when searching by ISBN, the ISBN of the returned book is 
-	  the ISBN used in the search. This because ruby/zoom has a bug, 
-	  and may return a cutted ISBN, or because the z39.50 server may 
+	- now, when searching by ISBN, the ISBN of the returned book is
+	  the ISBN used in the search. This because ruby/zoom has a bug,
+	  and may return a cutted ISBN, or because the z39.50 server may
 	  return more than one ISBN.
 	- when searching by ISBN, only one record is asked from the provider
-	- added element_set_name = 'F', in order to return the 'full' 
+	- added element_set_name = 'F', in order to return the 'full'
 	  set of data (SBN default is 'brief')
 	- added support for books without ISBN
 	- fixed bug, publish_year can be unbound
 	- added function url(book) for LOC and BL
 	- added info about Copac
 	- returns output even if author is empty
-	- uses Library.canonicalise_isbn on input and 
+	- uses Library.canonicalise_isbn on input and
 	  Library.canonicalise_ean on output
 	- fixed bug about publish_year for BL
 	- publisher and edition are nil instead of ""
-	- now returns [Book.new(...)] instead of [Book.new(...), nil] 
+	- now returns [Book.new(...)] instead of [Book.new(...), nil]
 	  (where nil is the image). This is required to pass the test.
 	- other minor changes
 
 	* various fixes and updates for the providers:
-	- adlibris.rb bn.rb bol_it.rb dea_store_it.rb ibs_it.rb ls.rb 
+	- adlibris.rb bn.rb bol_it.rb dea_store_it.rb ibs_it.rb ls.rb
 	  renaud.rb thalia.rb webster_it.rb worldcat.rb :
 	  added to the function to_book of each provider code like
 	  raise NoResultsError if /not found/.match(data) != nil
 	- worldcat.rb improved
-	- worldcat.rb: allowed to return nul as ISBN (this provider 
+	- worldcat.rb: allowed to return nul as ISBN (this provider
 	  lists also old books without ISBN)
 	- ls.rb fixed the typo Siliciano -> Siciliano
-	- ls.rb: added code for imported books, and replaced non-ASCII 
+	- ls.rb: added code for imported books, and replaced non-ASCII
 	  chars with dots
 	- webster_it.rb: updated, site now supports ISBN-13
-	- webster_it.rb improved for handling books like 9788830417588 
+	- webster_it.rb improved for handling books like 9788830417588
 	  with wrong image
 	- adlibris.rb: fixed authors and publish_year
 	- proxis.rb:
 	-- now returns the ISBN-13
 	-- fixed 'url',which requires ISBN-10
-	-- in the user preferences, changed "Locale" to "Language", 
-	  which is more meaningful, corresponds closer to the code, and 
+	-- in the user preferences, changed "Locale" to "Language",
+	  which is more meaningful, corresponds closer to the code, and
 	  is for a different topic of "Locale" used by Amazon
-	- ibs_it.rb: partially updated, to make it work again. It is 
+	- ibs_it.rb: partially updated, to make it work again. It is
 	  still necessary to fix authors, edition, publish_year
 	- BL fixed "authors"
 	- thalia.rb: updated
 	- dea_store_it.rb:
 	-- minor improvements
 	-- updated (the site has switched to ISBN-13)
-	-- added optional load of rubygems (rubygems may be required or 
+	-- added optional load of rubygems (rubygems may be required or
 	  not by hpricot (used by mechanize), and may be installed or not)
 	-- modified to return "Surname, Name"
 	- renaud.rb: now supports also books in the section for youngs
@@ -171,25 +171,25 @@ alexandria (0.6.2) unstable; urgency=low
 
 2007-02-20 Marco Costantini <costanti@science.unitn.it
 
-	* New providers: webster.it, deastore.com, worldcat.org, 
+	* New providers: webster.it, deastore.com, worldcat.org,
 	bol.it.
 	* several fixes and updates for various providers
 	* added info about the Wikipedia page for each provider (if any)
 	* added the country of the provider after the name
-	* converted the encoding from UTF-8, when searching by 
+	* converted the encoding from UTF-8, when searching by
 	title/author/keyword
 	* converted the output from the provider to UTF-8
 	* used CGI::unescapeHTML for renaud and thalia
 	* now most providers return EAN instead of ISBN-10
-	* added Library.canonicalise_isbn for the providers that don't 
-	yet use EAN, so that now EAN can be used with every provider 
+	* added Library.canonicalise_isbn for the providers that don't
+	yet use EAN, so that now EAN can be used with every provider
 	file
-	* for the function url, the check that the book has the ISBN 
+	* for the function url, the check that the book has the ISBN
 	has been moved to only one place in the ui library
-	* provider amadeus renamed to thalia (Amadeus was bought by 
+	* provider amadeus renamed to thalia (Amadeus was bought by
 	Thalia)
 	* the requirement Ruby/Amazon is now optional
-	* now nul is returned instead of "", "n/a", or "Unknown 
+	* now nul is returned instead of "", "n/a", or "Unknown
 	Binding", when the provider doesn't return a value
 	* other minor and cosmetic changes
 
@@ -208,16 +208,16 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/book_providers/ibs_it.rb
 	- Download covers to .ibs_it.cache using referer
-	- Cleanup the cache at exit   
+	- Cleanup the cache at exit
 
 	* lib/alexandria/ui/new_book_dialog.rb
-	- In tree view handle cover as files (and not only as urls) 
+	- In tree view handle cover as files (and not only as urls)
 
 2006-03-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/new_smart_library_dialog.rb:
 
-	Close the dialog when destroyed.	
+	Close the dialog when destroyed.
 
 2006-02-27  Aymeric Nys	<aymeric@nnx.com>
 
@@ -239,7 +239,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/completion_models.rb:
 
-	Use the Evolution contacts database to furnish borrowers 
+	Use the Evolution contacts database to furnish borrowers
 	auto-completion, via the Revolution library. If this library is
 	not present on the system this feature is disabled.
 
@@ -264,7 +264,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/library.rb,
 	  lib/alexandria/ui/main_app.rb:
 
-	Separate regular libraries from smart ones in the sidepane using a 
+	Separate regular libraries from smart ones in the sidepane using a
 	separator.
 
 2006-01-04  Laurent Sansonetti  <lrz@gnome.org>
@@ -318,7 +318,7 @@ alexandria (0.6.2) unstable; urgency=low
 2006-01-02  Laurent Sansonetti  <lrz@gnome.org>
 
 	Update copyright to 2006 to all source files.
-	
+
 	* lib/alexandria/ui/main_app.rb:
 
 	Fixed right click on the books list view and make sure we grab the focus
@@ -337,7 +337,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/main_app.rb:
 
-	- Added a keyboard shortcut (CTRL+SHIFT+N) for the manual add book 
+	- Added a keyboard shortcut (CTRL+SHIFT+N) for the manual add book
 	  action ;
 
 	- Make sure we observe libraries that have just been added, and we remove
@@ -400,7 +400,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* data/alexandria/glade/preferences_dialog.glade,
 	  lib/alexandria/ui/preferences_dialog.rb:
-	
+
 	Set the providers tree view as reorderable with drag-and-drop.
 
 	* lib/alexandria/ui/main_app.rb:
@@ -426,7 +426,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* README:
 
 	- Mention Ruby/Pango as a new dependency ;
-	- Mention GTK+ 2.8.0 or greater as recommended (but optional) as 
+	- Mention GTK+ 2.8.0 or greater as recommended (but optional) as
 	  it brings DND for the icon view.
 
 	* TODO:
@@ -446,7 +446,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/book_providers/renaud.rb:
 
 	Implementing the publish year field.
-	
+
 2005-11-18  Laurent Sansonetti  <lrz@gnome.org>
 
 	* data/alexandria/glade/book_properties_dialog.glade:
@@ -483,7 +483,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/ui/main_app.rb:
 
 	- Show tooltips for combo toolbar items ;
-	- Filter the books views directly when the filter entry has been modified, 
+	- Filter the books views directly when the filter entry has been modified,
 	  not upon validation.
 
 	* data/alexandria/glade/book_properties_dialog.glade,
@@ -560,7 +560,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Do not launch the action when the window is destroyed.
 
-2005-10-15  Alexander McCormmach  <alexander@tunicate.org> 
+2005-10-15  Alexander McCormmach  <alexander@tunicate.org>
 
 	* lib/alexandria/ui/main_app.rb:
 
@@ -570,7 +570,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* schemas/alexandria.schemas:
 
 	- Added schema for cols_width property.
-	
+
 2005-10-15  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
@@ -578,7 +578,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Added Alexander.
 
-2005-10-15  Alexander McCormmach  <alexander@tunicate.org> 
+2005-10-15  Alexander McCormmach  <alexander@tunicate.org>
 
 	* lib/alexandria/ui/main_app.rb:
 
@@ -591,7 +591,7 @@ alexandria (0.6.2) unstable; urgency=low
 	Side pane close button shouldn't grab input focus.
 
 	* lib/alexandria/ui/book_properties_dialog.rb,
-	  lib/alexandria/ui/new_book_dialog_manual.rb: 
+	  lib/alexandria/ui/new_book_dialog_manual.rb:
 
 	Fixed 'pressed' GtkButton events to 'clicked'.
 
@@ -608,9 +608,9 @@ alexandria (0.6.2) unstable; urgency=low
     - Double click on a row in the libraries table view will edit ;
     - Added ellipsis after action names in some popup menus ;
     - Set the vertical scrollbar as autohide in the libraries table view ;
-    - Double click outside a row in the libraries table view will create a 
+    - Double click outside a row in the libraries table view will create a
       new library ;
-    - Double click outside a row in the books table view or a cell in the 
+    - Double click outside a row in the books table view or a cell in the
       books matrix will open the add book sheet ;
     - Some cleaning.
 
@@ -638,7 +638,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/ui/libraries_combo.rb:
 
 	New file that shares code to populate a combo box with libraries.
-	
+
 	* data/alexandria/glade/new_book_dialog.glade,
 	  lib/alexandria/ui/new_book_dialog.rb:
 
@@ -650,13 +650,13 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/library.rb:
 
 	Shared the generation of library names.
-	
+
 	* lib/alexandria/ui/book_properties_dialog.rb,
 	  lib/alexandria/ui/new_book_dialog_manual.rb,
 	  lib/alexandria/ui/preferences_dialog.rb:
 
 	Fixed the help error transcient window.
-	  
+
 	* lib/alexandria/ui/export_dialog.rb,
 	  lib/alexandria/ui/import_dialog.rb:
 
@@ -681,7 +681,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/macui/MainWindow.nib/info.nib,
 	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
 
-	In the books properties window, disable the previous/next buttons if the 
+	In the books properties window, disable the previous/next buttons if the
 	given library has only one book.
 
 2005-08-29  Laurent Sansonetti  <lrz@gnome.org>
@@ -818,7 +818,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/macui/AddBookController.rb:
 
 	When displaying the results of a search and multiple books with the same
-	title, display the ISBN if the edition is not available. 
+	title, display the ISBN if the edition is not available.
 
 2005-08-02  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -830,7 +830,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/book_providers.rb:
 
 	It is now possible to instantiate abstract providers by subclassing
-	their classes.    
+	their classes.
 
 	* lib/alexandria/preferences.rb:
 
@@ -912,7 +912,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  alexandria.xcodeproj/project.pbxproj:
 
 	- Switching to Xcode 2.1 (.xcode -> .xcodeproj) ;
-	- The build target in Xcode now generates an all-in-one binary. 
+	- The build target in Xcode now generates an all-in-one binary.
 
 	* lib/alexandria.rb,
 	  lib/alexandria/macui.rb,
@@ -1023,8 +1023,8 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/new_book_dialog.rb:
 
-	Make the new book dialog accept upc barcodes from the clipboard. 
- 
+	Make the new book dialog accept upc barcodes from the clipboard.
+
 2005-06-28  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/utils.rb,
@@ -1039,9 +1039,9 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/export_library.rb:
 
-	Added <FromCompany> attribute to the ONIX export. Company is simply set 
+	Added <FromCompany> attribute to the ONIX export. Company is simply set
 	to 'Alexandria'.
-	Moved <SentDate> attribute to correct position in ONIX export. Header 
+	Moved <SentDate> attribute to correct position in ONIX export. Header
 	should now be valid.
 
 2005-06-26  Laurent Sansonetti  <lrz@gnome.org>
@@ -1207,7 +1207,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/macui/MainWindow.nib/info.nib,
 	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
 
-	- Automatically show the toolbar when it is hidden and the Find menu item 
+	- Automatically show the toolbar when it is hidden and the Find menu item
 	  is activated ;
 	- Center text in the titled image cell plus removed some dead code.
 
@@ -1305,7 +1305,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/book_providers.rb:
 
-	Removed a debug log. 
+	Removed a debug log.
 
 	* lib/alexandria/library.rb (Library#select):
 
@@ -1335,7 +1335,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Added Owain.
 
-2005-05-22  Owain Evans  <o.evans@gmail.com> 
+2005-05-22  Owain Evans  <o.evans@gmail.com>
 
 	* lib/alexandria/library.rb:
 
@@ -1424,7 +1424,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/book_providers.rb:
 
 	Introduced the concept of abstract providers (not complete though).
-	
+
 	* lib/alexandria/ui/preferences_dialog.rb:
 
 	Introduced an Add Provider dialog (not complete though).
@@ -1445,13 +1445,13 @@ alexandria (0.6.2) unstable; urgency=low
 2005-04-07  Pascal Terjan  <pterjan@linuxfr.org>
 
 	* lib/alexandria/book_providers/proxis.rb:
-	
+
 	Fix previous fix
-	
+
 	* tests/test_providers.rb:
 
 	Test that the result of ISBN search has the right ISBN
-	
+
 2005-04-06  Laurent Sansonetti  <lrz@gnome.org>
 
 	* AUTHORS,
@@ -1460,7 +1460,7 @@ alexandria (0.6.2) unstable; urgency=low
 	Added Claudio.
 
 2005-04-06  Claudio Belotti  <bel8@lilik.it>
-	
+
 	* lib/alexandria/book_providers/ibs_it.rb:
 
 	Added (provided to the Internet Bookshop Italia).
@@ -1509,7 +1509,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Setups the GNOME application to use the data dir determined at the
 	install.
-	
+
 	* lib/alexandria/ui/main_app.rb,
 	  data/alexandria/ui/menus.xml:
 
@@ -1520,7 +1520,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/book_providers/proxis.rb:
 
 	Workaround proxis returning all editions of a book in ISBN search
-		
+
 2005-04-03  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/alert_dialog.rb:
@@ -1584,7 +1584,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	- Use alternating colours for rows in the providers list ;
 	- Make the dialog resizable.
-	
+
 	* lib/alexandria/library.rb:
 
 	Preserves backward compatibility when saving a book by resetting the
@@ -1612,7 +1612,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/new_book_dialog.rb:
 
-	Remembers (within the live scope of the application though) the latest 
+	Remembers (within the live scope of the application though) the latest
 	selected criterion in the Add Book dialog and automatically switches to
 	it when the dialog is shown.
 
@@ -1629,7 +1629,7 @@ alexandria (0.6.2) unstable; urgency=low
 	Really ignores hidden directories in ~/.alexandria/.
 
 	* lib/alexandria/web_themes.rb:
-	
+
 	Allows user-specific themes in ~/.alexandria/.web-themes/.
 
 	* AUTHORS,
@@ -1637,12 +1637,12 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Added Rene.
 
-2005-03-22  Rene Samselnig  <sandman@sdm-net.org> 
+2005-03-22  Rene Samselnig  <sandman@sdm-net.org>
 
 	* lib/alexandria/book_providers/amadeus.rb:
 
 	Added amadeusbuch.at provider.
-	
+
 	* lib/alexandria/book_providers.rb,
 	  schemas/alexandria.schemas:
 
@@ -1681,7 +1681,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/library.rb (Library.move):
 
 	Removes books with the same ident before adding them in the array.
-	
+
 	* lib/alexandria/ui/main_app.rb:
 
 	- Display an confirmation message when trying to move a book into a
@@ -1691,7 +1691,7 @@ alexandria (0.6.2) unstable; urgency=low
 2005-03-19  Mirko Maischberger  <mirko@lilik.it>
 
 	* lib/alexandria.rb: Added myself as italian translator.
-	
+
 2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/book_properties_dialog.rb:
@@ -1705,13 +1705,13 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/ui/new_book_dialog_manual.rb:
 
 	- Forgot to mark some translatable strings ;
-	- Display an error message when trying to add a book with an EAN/ISBN 
+	- Display an error message when trying to add a book with an EAN/ISBN
 	  that is already used by another book in the same library.
 
 	* .cvsignore:
-	
+
 	Added alexandria.desktop and alexandria.desktop.in.h.
-	
+
 2005-03-19  Dafydd Harries  <daf@muse.19inch.net>
 
 	* alexandria.desktop.in:
@@ -1779,7 +1779,7 @@ alexandria (0.6.2) unstable; urgency=low
 2005-03-13  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/ui/main_app.rb:
-	
+
 	Pack the cover as non-expandable in the list view.
 
 === Alexandria 0.5.0 ===
@@ -1812,7 +1812,7 @@ alexandria (0.6.2) unstable; urgency=low
 2005-03-12  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book_providers/bn.rb:
-	
+
 	Fixed the regexp once again.
 
 2005-03-11  Laurent Sansonetti  <lrz@gnome.org>
@@ -1967,7 +1967,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* data/alexandria/COPYING:
 
 	Added.
-	
+
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/preferences.rb,
 	  lib/alexandria/ui/about_dialog.rb,
@@ -2008,7 +2008,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Follow previous change.
 
-2005-02-18  Kevin Schultz  <schultkl@ieee.org> 
+2005-02-18  Kevin Schultz  <schultkl@ieee.org>
 
 	* lib/alexandria/book_providers/bn.rb:
 
@@ -2071,18 +2071,18 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/library.rb:
 
-	- In Library.load, mkdir the directory if it does not already exist, 
+	- In Library.load, mkdir the directory if it does not already exist,
 	  outside of the Dir.chdir block (to avoid nested blocks within threads) ;
 	- Fixed indentation.
 
 	* lib/alexandria/ui/export_dialog.rb:
 
-	Fixed a wording bug plus a GTK table attachment bug. 
+	Fixed a wording bug plus a GTK table attachment bug.
 
 	* lib/alexandria/import_library.rb,
 	  lib/alexandria/ui/import_dialog.rb:
 
-	- The import dialog now displays the progress of the operation, and 
+	- The import dialog now displays the progress of the operation, and
 	  throws alert boxes when an error occured in the meantime ;
 	- Fixed some things.
 
@@ -2110,7 +2110,7 @@ alexandria (0.6.2) unstable; urgency=low
 	Splitted.
 
 	* lib/alexandria.rb,
-	  lib/alexandria/ui/export_dialog.rb, 
+	  lib/alexandria/ui/export_dialog.rb,
 	  lib/alexandria/ui/import_dialog.rb:
 
 	Follow changes.
@@ -2139,7 +2139,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	- Disable the Setup button if the selected provider does not have any
 	  preferences to setup, instead of displaying a dialog (HIG) ;
-	- Fixed indentation. 
+	- Fixed indentation.
 
 2005-01-01  Dafydd Harries  <daf@muse.19inch.net>
 
@@ -2154,7 +2154,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria.rb:
 
 	Added Takayuki.
-	
+
 2004-12-15  Takayuki Kusano  <AE5T-KSN@asahi-net.or.jp>
 
 	* lib/alexandria/library.rb:
@@ -2212,14 +2212,14 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/library.rb:
 
-	- Tellico Import: check for either 'bookcase.xml' or 'tellico.xml' 
+	- Tellico Import: check for either 'bookcase.xml' or 'tellico.xml'
 	  as the XML file ;
 	- Tellico Import: check for either 'bookcase' or 'tellico' as the
 	  root element inside the XML ;
 	- Tellico Import: check for either 2 or 5 as the collection type ;
 	- ONIX and Tellico Export: rename the .cover extention either to
 	  'jpg' or 'gif' according to the file type.
-	- Tellico Export: remove the 'www' part of the namespace address. 
+	- Tellico Export: remove the 'www' part of the namespace address.
 
 2004-11-02  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -2235,7 +2235,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria.rb:
 
-	Fixed a crash when the 'http_proxy' environment variable was not set. 
+	Fixed a crash when the 'http_proxy' environment variable was not set.
 
 2004-11-01  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -2346,7 +2346,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 2004-10-12  Laurent Sansonetti  <lrz@gnome.org>
 
-	General reformat of the code.	
+	General reformat of the code.
 
 	* data/alexandria/glade/info_book_dialog.glade,
 	  lib/alexandria/library.rb,
@@ -2363,12 +2363,12 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/ui/icons.rb,
 	  lib/alexandria/ui/main_app.rb,
 	  lib/alexandria/ui/new_book_dialog.rb:
-	
+
 	Follows data model changes.
 
 	* lib/alexandria/ui/export_dialog.rb:
 
-	Changed the ONIX archive extension (xml.tbz2 -> onix.tbz2). 
+	Changed the ONIX archive extension (xml.tbz2 -> onix.tbz2).
 
 	* TODO:
 
@@ -2426,7 +2426,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/new_book_dialog.rb:
 
-	Splitted some translatable strings. 
+	Splitted some translatable strings.
 
 	* lib/alexandria/library.rb (#n_rated, #n_unrated):
 
@@ -2465,7 +2465,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  data/alexandria/glade/new_book_dialog.glade,
 	  lib/alexandria/ui/preferences_dialog.rb:
 
-	Migrated to Gtk::ComboBox.	
+	Migrated to Gtk::ComboBox.
 
 2004-09-10  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -2474,13 +2474,13 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Moved the CUECAT_DEV constant to a GConf variable.
 
-2004-09-10  Zachary P. Landau  <kapheine@hypa.net> 
+2004-09-10  Zachary P. Landau  <kapheine@hypa.net>
 
 	* lib/alexandria/ui/new_book_dialog.rb,
 	  data/alexandria/glade/new_book_dialog.glade
 
 	Added CueCat support.
-	  
+
 	* data/alexandria/icons/cuecat.png,
 	  data/alexandria/icons/cuecat_inactive.png:
 
@@ -2499,14 +2499,14 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/book_providers.rb:
 
 	- Fixed catching of the Timeout::Error exception ;
-	- Added a $DEBUG trace before calling each provider. 
+	- Added a $DEBUG trace before calling each provider.
 
 	* lib/alexandria/ui/main_app.rb:
-		
+
 	Set correct border width for toolitems.
 
 2004-09-07  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* data/alexandria/glade/main_app.glade:
 
 	Removed the toolbar, popups and menubar definitions.
@@ -2526,12 +2526,12 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/ui.rb:
 
 	Removed '.rb' suffixes in require statements.
-	
+
 	* data/alexandria/glade/main_app.glade:
 
 	Added a "Online Information at" menu item in the popup
 	menu of a book.
-	  
+
 	* lib/alexandria/ui/main_app.rb:
 
 	- Fills the "Online Information at" menu item ;
@@ -2550,7 +2550,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	- Includes the BN provider.
 	- Moved the HTTP proxy code there;
-	- Introduced GenericProvider#fullname. 
+	- Introduced GenericProvider#fullname.
 
 	* lib/alexandria/book_providers/amazon.rb:
 
@@ -2558,7 +2558,7 @@ alexandria (0.6.2) unstable; urgency=low
 	- Follow changes in book_provider.rb.
 
 	* lib/alexandria/book_providers/proxis.rb,
-	  lib/alexandria/ui/preferences_dialog.rb: 
+	  lib/alexandria/ui/preferences_dialog.rb:
 
 	Follow changes in book_provider.rb.
 
@@ -2582,7 +2582,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/library.rb:
 
-	Added code for the compressed XML export.	
+	Added code for the compressed XML export.
 
 	* lib/alexandria/ui.rb,
 	  lib/alexandria/ui/main_app.rb:
@@ -2640,7 +2640,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* data/alexandria/glade/new_book_dialog.glade:
 
 	Modified the ISBN text entry to allow 18 characters instead
-	of 13.  
+	of 13.
 
 	* bin/pre-setup.rb:
 
@@ -2648,7 +2648,7 @@ alexandria (0.6.2) unstable; urgency=low
 	will be replaced with the correct Ruby path by install.rb.
 
 	* bin/alexandria:
-	
+
 	Removed.
 
 	* bin/.cvsignore:
@@ -2693,7 +2693,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Fixed the providers calling mechanism (if a provider raises an
 	exception we call the next one if any, otherwise we pass the exception
-	to the main app). 
+	to the main app).
 
 2004-07-05  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -2729,10 +2729,10 @@ alexandria (0.6.2) unstable; urgency=low
 	Added the README step.
 
 2004-06-30  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* NEWS:
 
-	Updated for 0.3.0. 
+	Updated for 0.3.0.
 
 2004-06-27  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -2754,7 +2754,7 @@ alexandria (0.6.2) unstable; urgency=low
 	Generates version.rb.
 
 2004-06-25  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* README:
 
 	Incremented Ruby/Amazon's version (0.8.2 -> 0.8.3).
@@ -2777,7 +2777,7 @@ alexandria (0.6.2) unstable; urgency=low
 	Implemented "up" and "down" buttons in the providers list.
 
 	* schemas/alexandria.schemas:
-	
+
 	Added the "providers_priority" variable.
 
 	* lib/alexandria/book_providers.rb,
@@ -2808,7 +2808,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/library.rb:
 
 	- Added ;
-	- The Proxis provider has been contributed by Pascal Terjan ; 
+	- The Proxis provider has been contributed by Pascal Terjan ;
 	- Do not save covers that are blank ;
 	- The book providers factory should handle multiple providers now.
 
@@ -2860,7 +2860,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/new_book_dialog.rb:
 
-	Fixed a bug when Alexandria crashed in the add new book dialog when the 
+	Fixed a bug when Alexandria crashed in the add new book dialog when the
 	clipboard was empty.
 
 2004-06-16  Laurent Sansonetti  <lrz@gnome.org>
@@ -2895,7 +2895,7 @@ alexandria (0.6.2) unstable; urgency=low
 	- Fixed some small UI issues.
 
 	* lib/alexandria/ui/main_app.rb:
-		
+
 	Sorts the current library after a book has been added.
 
 2004-06-14  Laurent Sansonetti  <lrz@gnome.org>
@@ -2904,7 +2904,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  data/alexandria/glade/new_book_dialog.glade,
 	  lib/alexandria/ui/new_book_dialog.rb:
 
-	Modified to allow title searches (as well as ISBN searches). 
+	Modified to allow title searches (as well as ISBN searches).
 
 2004-06-14  Pascal Terjan  <pterjan@linuxfr.org>
 
@@ -2916,7 +2916,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 2004-06-14  Laurent Sansonetti  <lrz@gnome.org>
 
-	* data/.cvsignore: 
+	* data/.cvsignore:
 
 	Added.
 
@@ -2935,7 +2935,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* data/post-clean.rb:
 
 	Added.  This script removes the 'locale' directory.
-	
+
 2004-06-13  Dafydd Harries  <daf@muse.19inch.net>
 
 	* pre-setup.rb:
@@ -3018,7 +3018,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* data/alexandria/glade/info_book_dialog.glade,
 	  data/alexandria/glade/main_app.glade:
 
-	Empted strings that shouldn't be translated. 
+	Empted strings that shouldn't be translated.
 
 	* bin/alexandria,
 	  lib/alexandria.rb,
@@ -3027,19 +3027,19 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/ui/glade_base.rb,
 	  lib/alexandria/ui/main_app.rb,
 	  lib/alexandria/ui/new_book_dialog.rb:
-	  
+
 	Localised strings using Ruby/GetText.
 
 2004-06-06  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* schemas/alexandria.schemas,
 	  post-install.rb:
-	
+
 	Added.  GConf2 schemas have been introduced.
 
 	* lib/alexandria/ui/main_app.rb:
 
-	Refactored the code since GConf preferences have now default values.  
+	Refactored the code since GConf preferences have now default values.
 
 2004-06-05  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -3051,7 +3051,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/ui/main_app.rb:
 
 	Added a search field in the toolbar to filter books.  Refactored a bit
-	the existing code. 
+	the existing code.
 
 2004-06-04  Dafydd Harries  <daf@muse.19inch.net>
 
@@ -3087,7 +3087,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb:
 
-	Added the possibility to sort icons (via the main or 
+	Added the possibility to sort icons (via the main or
 	popup menus).
 
 2004-05-27  Laurent Sansonetti  <lrz@gnome.org>
@@ -3095,7 +3095,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* README:
 
 	Incremented Ruby/Amazon version (0.8.1 -> 0.8.2).
-	
+
 	* data/alexandria/glade/preferences_dialog.glade,
 	  lib/alexandria/book.rb,
 	  lib/alexandria/ui/main_app.rb,
@@ -3120,7 +3120,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/ui/info_book_dialog.rb:
 
-	Follow book.rb changes and refresh the book views if the 
+	Follow book.rb changes and refresh the book views if the
 	properties has changed.
 
 	* lib/alexandria/ui/main_app.rb:
@@ -3172,7 +3172,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/preferences.rb:
 
 	Added with a single implementation using GConf.
-	  
+
 	* lib/alexandria.rb:
 
 	Required preferences.rb and added an URL which leads to the
@@ -3185,12 +3185,12 @@ alexandria (0.6.2) unstable; urgency=low
 	  the books are viewed as icons or list) ;
 
 	- Implemented the 'report_bug' handler, where the default web
-	  browser is started. 
+	  browser is started.
 
 	* data/alexandria/glade/main_app.glade:
 
 	- Embed the sidepane's header in a Gtk::Frame (like Evolution) ;
-	- Added a toolbar separator between "Refresh" and "View as Icons|List". 
+	- Added a toolbar separator between "Refresh" and "View as Icons|List".
 
 2004-05-18  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -3202,9 +3202,9 @@ alexandria (0.6.2) unstable; urgency=low
 2004-05-17  Laurent Sansonetti  <lrz@gnome.org>
 
 	* lib/alexandria/book.rb:
-	
+
 	Fixed encoding problems in the Amazon provider,
-	which seems to encode strings in UTF-8 twice (?!). 
+	which seems to encode strings in UTF-8 twice (?!).
 
 	* lib/alexandria.rb:
 
@@ -3254,7 +3254,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/book.rb:
 
-	- Refactored the YAML object, by removing the following 
+	- Refactored the YAML object, by removing the following
 	  fields: saved, small_cover and medium_cover ;
 	- Improved the loading and saving procedures.
 
@@ -3283,7 +3283,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	- Redesigned the layout of the Book Property dialog, adding
 	  a notebook and packing the cover image in a frame ;
-	- Introduced notes (not yet saved though). 
+	- Introduced notes (not yet saved though).
 
 2004-04-21  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -3302,7 +3302,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/ui/preferences_dialog.rb:
 
 	Constructs a dynamic dialog box according to the preferences
-	of the selected provider. 
+	of the selected provider.
 
 2004-04-20  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -3372,7 +3372,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Updated for 0.1.2.
 
-2004-04-15  Zachary P. Landau  <kapheine@hypa.net> 
+2004-04-15  Zachary P. Landau  <kapheine@hypa.net>
 
 	* lib/alexandria/ui/main_app.rb,
 	  lib/alexandria/ui/new_book_dialog.rb:
@@ -3403,7 +3403,7 @@ alexandria (0.6.2) unstable; urgency=low
 2004-04-12  Laurent Sansonetti  <lrz@gnome.org>
 
 	* NEWS:
-	
+
 	New file.
 
 	* README,
@@ -3432,7 +3432,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	* lib/alexandria/book.rb:
 
-	Fixed a bug introduced in the latest commit entry. 
+	Fixed a bug introduced in the latest commit entry.
 
 2004-04-08  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -3456,18 +3456,18 @@ alexandria (0.6.2) unstable; urgency=low
 	Implemented the possibility to delete a library.
 
 2004-04-06  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* data/alexandria/glade/main_app.glade,
 	  lib/alexandria/ui/main_app.rb,
 	  lib/alexandria/ui/new_book_dialog.rb:
 
-	- Displays an error dialog when the user picks a new name for a 
+	- Displays an error dialog when the user picks a new name for a
 	  library which contains at least one illegal character ;
 
 	- Automatically show the sidepane upon "New Library", because it
 	  may be hidden ;
 
-	- Fixed a bug in the random name chooser (for "New Library") ; 
+	- Fixed a bug in the random name chooser (for "New Library") ;
 
 	- Displays an error dialog when the user tries to add a book
 	  which already exists in the selected library ;
@@ -3501,7 +3501,7 @@ alexandria (0.6.2) unstable; urgency=low
 
 	Properties [menu|popup] items are now disabled unless a single book
 	is selected.
-	
+
 	* data/alexandria/glade/info_book_dialog.glade,
 	  data/alexandria/glade/new_book_dialog.glade:
 
@@ -3522,7 +3522,7 @@ alexandria (0.6.2) unstable; urgency=low
 	* lib/alexandria/book.rb,
 	  lib/alexandria/ui/main_app.rb:
 
-	Implemented the 'Delete' book action.  
+	Implemented the 'Delete' book action.
 
 	* lib/alexandria/ui/alert_dialog.rb,
 	  lib/alexandria/ui/error_dialog.rb,
@@ -3563,7 +3563,7 @@ alexandria (0.6.2) unstable; urgency=low
 	  lib/alexandria/ui/about_dialog.rb,
 	  lib/alexandria/ui/main_app.rb,
 	  lib/alexandria/ui/new_book_dialog.rb:
-	
+
 	- Implemented the side pane ;
 	- Implemented 'View as Icons/List' ;
 	- Added popup menu for single selections ;
