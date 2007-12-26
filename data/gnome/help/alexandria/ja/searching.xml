@@ -1,0 +1,104 @@
+<!-- ============= Searching and views subsection =============== -->
+
+<section id="searching">
+  <title>検索・フィルタリング・表示について</title>
+  <para>&app; には、表示する本を検索したりフィルタリングしたりできる強力な機能があります。
+この機能を使うと、特定の作者や出版社の本だけを表示したり、評価の高い本、
+あるいは特定のノートを付けた本だけを表示出来ます。また、&app; はアイコン表示と一覧表示ができ、
+オンラインのプロバイダーに直接リンクして、より詳細な情報を得ることもできます。
+  <itemizedlist>
+    <listitem><para><xref linkend="searching-views"/></para></listitem>
+    <listitem><para><xref linkend="searching-filtering"/></para></listitem>
+    <listitem><para><xref linkend="searching-more-online"/></para></listitem>
+  </itemizedlist>
+  </para>
+
+
+  <!-- ========= Icon and List views =========== -->
+  <section id="searching-views">
+    <title>アイコン表示と一覧表示</title>
+    <para><application>Nautilus</application> ファイルマネージャと同様に、&app;
+にはアイコン表示と一覧表示の両方の機能があります。アイコン表示ではライブラリ中の
+本の表紙とタイトルを表示します。一覧表示では、本ごとに１行づつより詳細な情報
+（<xref linkend="alexandria-prefs-display"/>の設定のところで指定したもの）
+を表示します。</para>
+    <tip>
+      <para>アイコン表示と一覧表示を切り替えるには、メインウィンド右上の
+<guibutton>アイコン（リスト）表示</guibutton>ボタンを押すか、メニューから
+<menuchoice><guimenu>表示</guimenu><guimenuitem>アイコン（リスト）表示</guimenuitem></menuchoice>で表示する方を左クリックします。</para>
+    </tip>
+    <para>アイコン表示では、タイトル順や作者順、装丁順、評価順で表示できます。
+またそれを逆順でも表示できます。アイコン表示での本の表示順を変更するには、メインメニューから
+<menuchoice><guimenu>表示</guimenu><guimenuitem>アイコンの表示順</guimenuitem>
+</menuchoice>を選択するか、右クリックメニューで<guimenuitem>アイコンの表示順</guimenuitem>を
+選択して変更します。</para>
+    <para>一覧表示の時に本の表示順を変更するには、変更したいカラムの項目部分をクリックしてください。</para>
+    <figure id="listview-fig">
+      <title>一覧表示 作者を逆順で並べ替えて表示しています。</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/searching_filtering_views_list_view.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>一覧表示　作者でソートして本を表示中</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>	
+  </section>
+
+  <!-- ========== Searching/filtering ======== -->
+  <section id="searching-filtering">
+    <title>検索と表示のフィルタリングをするには</title>
+    <para>特定の本を検索したり、表示する本の数を制限したりするのが簡単に出来ます。
+特定のタイトルの本を探すには、ツールバーの検索文字列入力欄に本のタイトルを入力します。
+<guilabel>全検索</guilabel>とあるドロップダウンメニューからタイトルや作者、ISBN、出版社、ノートを選んでください。</para>
+    <figure id="listview-search-fig">
+      <title>一覧表示 作者に"banks"を含む本を表示しています</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/searching_filtering_views_list_view_search.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>一覧表示 "bank" で検索中</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <tip>
+      <para>キーボードからCtrl-Fを押すと、検索文字列を入力する欄に移動します。Ctrl-Alt-Bで検索文字列を消せます。</para>
+    </tip>
+  </section>
+
+  <!-- ========= Finding out more online =========== -->
+  <section id="searching-more-online">
+    <title>オンラインで本に関する詳細な情報を探すには</title>
+    <para>もし本について詳細な情報を知りたければ、&app; はAmazonやBarnes and Noble
+などのオンライン情報プロバイダーのウェブページを開いて、その本に関する情報を直接得ることが
+出来ます。より詳しく知りたい本を選択して右クリックし、
+<guimenuitem>オンライン情報の表示</guimenuitem>を選択して、Amazonなどのプロバイダーを
+選択してください。</para>
+    <tip>
+      <para><menuchoice><guimenu>オンライン情報の表示</guimenu><guimenuitem>Amazon</guimenuitem></menuchoice>を選択した時は、<xref linkend="alexandria-amazon-prefs"/>で
+設定した amazon.com, co.uk, .de, .jpのいずれかのサイトが選択されます。</para>
+    </tip>
+    <caution>
+      <para>すべてのオンライン情報源が、本に関する完璧な情報を持っているわけではありません。
+欲しい情報を得るために、別のプロバイダーをいくつか試す必要があるかもしれません。</para>
+    </caution>
+  </section>
+</section>

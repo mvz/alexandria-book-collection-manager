@@ -28,9 +28,8 @@
     <itemizedlist>
       <listitem><para><xref linkend="new-smart-library"/></para></listitem>
       <listitem><para><xref linkend="edit-smart-library"/></para></listitem>
-      <listitem><para><xref linkend="renaming-libraries"/></para></listitem>
-      <listitem><para><xref linkend="delete-library"/></para></listitem>
-      <listitem><para><xref linkend="moving-between-libraries"/></para></listitem>
+      <listitem><para><xref linkend="renaming-smart-libraries"/></para></listitem>
+      <listitem><para><xref linkend="delete-smart-library"/></para></listitem>
     </itemizedlist>
   </para>
 

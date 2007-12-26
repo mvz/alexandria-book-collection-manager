@@ -1,0 +1,100 @@
+<!-- ============= Editing Book Properties Subsection =========== -->
+
+<section id="editing-book-properties">
+  <title>本の設定を編集するには</title>
+  <para>&app; を使って本の情報を編集できます。
+  <itemizedlist>
+    <listitem><para><xref linkend="editing-info"/></para></listitem>
+    <listitem><para><xref linkend="changing-cover-image"/></para></listitem>
+    <listitem><para><xref linkend="loaning-books"/></para></listitem>
+    <listitem><para><xref linkend="editing-notes"/></para></listitem>
+  </itemizedlist></para>
+
+  <!-- ======== Editing information ========= -->
+  <section id="editing-info">
+    <title>基本的な情報を編集するには</title>
+    <para>本の情報を変更するには、メインウィンドの本の表紙画像をクリックするか、メニューの
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>設定</guimenuitem></menuchoice>
+を選択します。次のようなウィンドが表示されますので、本のタイトル、ISBN、作者、出版社、装丁、
+評価を変更します。</para>
+    <figure id="editing-info-fig">
+      <title>&app; を使って本の情報を編集している様子</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/editing_book_properties_info.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app; を表示中。本を編集しています。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <para>作者を追加するには、作者一覧の横にある<guibutton>+</guibutton>
+ボタンをクリックして、新しい名前を入力してください。作者を削除するには、名前を選択して、
+<guibutton>-</guibutton> ボタンをクリックしてください。名前を編集するには、
+名前のところを２回クリックしてください。</para>
+    <tip><para>星をクリックすることで本を評価できます。評価を消すには、
+一番左の星のすぐ左をクリックしてください。あなたの好みの本（星が５つついた本）
+はメインウィンドでアイコン一覧表示したときに、
+アイコンの右上に小さなハートマークのアイコンがつきます。</para></tip>
+  </section>
+  
+  <!-- ======== Changing cover images ========= -->
+  <section id="changing-cover-image">
+    <title>表紙画像を変更するには</title>
+    <para>本の表紙画像を変更するには、すでにつけてある表紙画像（表紙をつけていない場合は、
+デフォルトの本の画像）をクリックしてください。標準的なファイル選択ダイアログが開きます。
+あなたのコンピュータ上のファイルから画像ファイル（JPEG,PNG,GIFファイル）を選択して  
+<guibutton>開く</guibutton> のボタンをクリックしてください。選択した画像が
+<guilabel>本の編集</guilabel> のダイアログのところに大きさを合わせて表示されます。</para>
+  </section>
+
+  <!-- ======== Loaning books ========= -->
+  <section id="loaning-books">
+    <title>本の貸し出しをするには</title>
+    <para>本に貸出中マークを付けるには、最初に<xref linkend="editing-info"/>
+で述べた本の編集のダイアログを開きます。次に、<guilabel>貸し出し</guilabel>
+のタブをクリックします。<guilabel>この本は貸し出し中です</guilabel>
+のチェックボックスをクリックして貸し出し中であることにします。
+<guilabel>誰に</guilabel>のところに、誰に本を貸し出したかを書けます。
+<guilabel>いつから</guilabel>のドロップダウンメニューをクリックして、
+本を貸し出した日を設定できます。</para>
+    <figure id="loaning-fig">
+      <title>&app; で本の貸し出し情報を付加している様子</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/editing_book_properties_loaning.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app;を表示中です。本を貸し出しています。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+  </section>
+
+  <!-- ========== Adding notes ========== -->
+  <section id="editing-notes">
+    <title>ノートの追加と更新をするには</title>
+    <para>&app; では、本に関する追加のノート（メモ）をつけることが出来ます。
+例えば、個人的な書評や、有用なページの情報などです。
+ノートを追加、編集するには、最初に<xref linkend="editing-info"/>
+の本の編集のダイアログを開きます。次に、<guilabel>ノート</guilabel>のタブをクリックします。
+ここにプレーンテキスト形式でノートを入力します。</para>
+  </section>
+
+</section>

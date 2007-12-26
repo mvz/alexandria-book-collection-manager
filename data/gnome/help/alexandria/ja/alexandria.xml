@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+
+<!-- SYMBOLIC ENTITIES -->
+<!ENTITY appversion "0.6.2">   <!-- the version of the application -->
+<!ENTITY manrevision "0.0.9">  <!-- the revision number of this manual -->
+<!ENTITY date "December 2007"> <!-- the release date of this manual -->
+<!ENTITY app "<application>Alexandria</application>">
+<!-- the name of the application -->
+<!-- INCLUDED FILES -->
+<!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY gettingstarted SYSTEM "getting-started.xml">
+<!ENTITY addingbooks SYSTEM "adding-books.xml">
+<!ENTITY editingbookproperties SYSTEM "editing-book-properties.xml">
+<!ENTITY workingwithlibraries SYSTEM "working-with-libraries.xml">
+<!ENTITY searching SYSTEM "searching.xml">
+<!ENTITY smartlibraries SYSTEM "smart-libraries.xml">
+<!ENTITY exporting SYSTEM "exporting.xml">
+<!ENTITY settings SYSTEM "settings.xml">
+<!ENTITY bugs SYSTEM "bugs.xml">
+<!ENTITY about SYSTEM "about.xml">
+<!-- ENTITY legal SYSTEM "legal.xml" -->
+<!ENTITY gnufdl SYSTEM "gnu-fdl-1.2.xml">
+
+<!-- CHARACTER MNEMONICS -->
+<!ENTITY copy "&#169;"> <!-- copyright sign -->
+]>
+
+<!-- 
+This document is based upon a GNOME documentation template, designed
+by the GNOME Documentation Project Team.
+-->
+<!-- 
+(Do not remove this comment block.)
+Maintained by the GNOME Documentation Project
+http://developer.gnome.org/projects/gdp
+Template version: 2.0 beta
+Template last modified Apr 11, 2002
+-->
+
+<!-- =============Document Header ============================= -->
+<article id="index" lang="ja">
+
+  <!-- please do not change the id; for translations, change lang to -->
+  <!-- appropriate code -->
+
+  <articleinfo>
+    <title>&app; マニュアル</title>
+    
+    <copyright>
+      <year>2007</year>
+      <holder>Cathal Mc Ginley</holder>
+    </copyright>
+    <copyright>
+      <year>2005</year>
+      <holder>Liam Davison</holder>
+    </copyright>
+    <!-- translators: uncomment this: -->
+	 <copyright>
+	 <year>2007</year>
+	 <holder>近間 正樹 (日本語訳)</holder>
+	 </copyright>
+    <!-- -->
+
+    <legalnotice id="legalnotice">
+      <para>
+この文書を、フリーソフトウェア財団発行の GNU フリー文書利用許諾契約書
+(バージョン1.2かそれ以降から一つを選択)が定める条件の下で複製、頒布、
+あるいは改変することを許可する。変更不可部分、表カバーテキスト、
+裏カバーテキストは存在しない。この利用許諾契約書の複製物は
+<xref linkend="gfdl"/>という章に含まれている。
+      </para>
+    </legalnotice>
+
+
+    <authorgroup>
+      <author>
+	<firstname>Liam</firstname>
+	<surname>Davison</surname>
+	<affiliation>
+	  <orgname>&app; documentation writing</orgname>
+	  <address> carnegie@liamjdavison.info<email>carnegie@liamjdavison.info</email> </address>
+	</affiliation>
+      </author>
+      <othercredit role="maintainer">
+	<firstname>Cathal</firstname> 
+	<surname>Mc Ginley</surname> 
+	<affiliation> 
+	  <orgname>&app; developers</orgname> 
+	  <address> <email>cathal.alexandria@gnostai.org</email> </address> 
+	</affiliation>
+	<contrib>Maintenance</contrib>
+      </othercredit>
+      <!-- This is appropriate place for other contributors: translators,
+	   maintainers,  etc. Commented out by default.-->
+	   
+	   <othercredit role="translator">
+	   <firstname>Masaki</firstname> 
+	   <surname>CHIKAMA</surname> 
+	   <affiliation> 
+	   <orgname>バージョン0.6.2の日本語訳全般</orgname> 
+	   <address> <email>masaki.chikama@gmail.com</email> </address> 
+	   </affiliation>
+	   <contrib>日本語訳</contrib>
+	   </othercredit>
+      <!-- -->
+    </authorgroup>
+
+    <!-- According to GNU FDL, revision history is mandatory if you are -->
+    <!-- modifying/reusing someone else's document.  If not, you can omit it. -->
+    <!-- Remember to remove the &manrevision; entity from the revision entries -->
+    <!-- other than the current revision. -->
+
+    <revhistory>
+      <revision>
+	<revnumber>Alexandria Manual V&manrevision;</revnumber>
+	<date>&date;</date>
+	<revdescription>
+	  <para role="author">Cathal Mc Ginley
+	  <email>cathal.alexandria@gnostai.org</email></para>
+	  <para role="publisher">Alexandria Documentation</para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>Alexandria Manual V0.0.8</revnumber>
+	<date>November 2005</date>
+	<revdescription>
+	  <para role="author">Liam Davison
+	  <email>carnegie@liamjdavison.info</email></para>
+	  <para role="publisher">Alexandria Documentation</para>
+	</revdescription>
+      </revision>
+    </revhistory>
+
+    <releaseinfo>This manual describes version &appversion; of &app;</releaseinfo>
+
+    <legalnotice id="feedback">
+      <title>フィードバック Feedback</title>
+
+      <para>AlexandriaはGNOMEの公式のプロジェクトではありません。
+&app;のプログラムやこのマニュアルに対するバグレポートや提案は
+<ulink url="http://alexandria.rubyforge.org/feedback.html"
+      type="http">&app; フィードバックページ</ulink>の指示に従ってください。
+ (訳注：日本語訳についてのフィードバックは、最後に翻訳を担当した人に連絡してください。）
+      </para>
+
+    </legalnotice>
+    <!-- Translators may also add here feedback address for translations -->
+
+  </articleinfo>
+
+  <indexterm zone="index">
+    <primary>Alexandria</primary>
+  </indexterm>
+
+  <!-- ============= Document Body ============================= -->
+
+  &introduction;
+  &gettingstarted;
+  &addingbooks;
+  &editingbookproperties;
+  &workingwithlibraries;
+  &searching;
+  &smartlibraries;
+  &exporting;
+  &settings;
+  &bugs;
+  &about;
+
+  &gnufdl;
+
+</article>

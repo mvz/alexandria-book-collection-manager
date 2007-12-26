@@ -755,7 +755,7 @@ msgstr "%sを開く"
 
 #: ../lib/alexandria/ui/main_app.rb:1579
 msgid "Match everything"
-msgstr "全てに一致"
+msgstr "全検索"
 
 #: ../lib/alexandria/ui/main_app.rb:1581
 msgid "Title contains"
@@ -982,7 +982,7 @@ msgstr "ホスト名"
 
 #: ../lib/alexandria/book_providers/z3950.rb:33
 msgid "Port"
-msgstr "ポート"
+msgstr "ポート番号"
 
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Database"

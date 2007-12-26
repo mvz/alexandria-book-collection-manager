@@ -1,0 +1,314 @@
+<!-- ================ Adding Books ================================ -->
+<!-- Use this section to describe how to use the application to perform
+     the tasks for which the application is designed. -->
+
+<section id="adding-books">
+  <title>本を追加するには</title>
+
+  <para>&app; に本を追加するにはいくつかの方法があります:
+  <itemizedlist>
+    <listitem><para><xref linkend="add-book-by-isbn"/></para></listitem>
+    <listitem><para><xref linkend="add-book-by-search"/></para></listitem>
+    <listitem><para><xref linkend="add-book-by-barcode-scan"/></para></listitem>
+    <listitem><para><xref linkend="add-book-manually"/></para></listitem>
+  </itemizedlist>
+  </para>
+  
+  <para>また、本の一覧表から &app; に本をインポートすることもできます:
+  <itemizedlist>
+    <listitem><para><xref linkend="import-library"/></para></listitem>
+  </itemizedlist>
+  </para>
+  
+  <para>&app; は、あなたがどの方法でよく本を追加するかを覚えていますので、
+最後に追加した方法を自動的に選択します。
+例えば、あなたが最後に作者を検索して本を追加したとすると、&app; は
+<guilabel>本の追加...</guilabel> ダイアログを開いて、<guilabel>作者</guilabel>
+のフィールドを選択しています。</para>
+
+  <!-- ================ Adding Books Subsection ====================== -->
+
+  <section id="add-book-by-isbn">
+    <title>ISBNで本の追加するには</title>
+
+    <para>追加したい本のISBNを知っている場合には、メニューから
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>本の追加...</guimenuitem>
+</menuchoice> を選択するか、ツールバーの <guibutton>本を追加</guibutton>
+のボタンを押してください。<guilabel>本を追加</guilabel> ダイアログが表示されます。
+追加したいISBNを入力し、 <guibutton>追加</guibutton> のボタンを押します。
+</para>
+<para>
+（訳注：日本で一般的に入手できるバーコードリーダを使う場合には、
+ここでバーコードをスキャンして入力します。翻訳者が持っている機種では、
+スキャンするとISBNを入力して「追加」を押したのと同じ動作をします。
+２列あるバーコードの上の方がISBNです。）</para>
+
+    <figure id="add-by-isbn-fig">
+      <title>&app; ISBNにで本の追加を追加しています</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_add_by_isbn.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase> &app; を表示しています。 ISBNによる本の追加のダイアログです。
+指定のISBNを持つ本を、すべてのオンライン情報から検索して追加できます。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <caution>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    &app; は入力されたISBNをチェックします。無効なISBNの場合、警告が出ます。 
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    &app; は従来の10桁のISBNと新しい13桁のISBNの両方をサポートします。
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    ISBNは通常読みやすいようにダッシュ(-)が何ヶ所か挿入されていますが、
+	    &app; はこれを適切に無視します。
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </caution>
+    
+    <para>
+&app; はアプリケーションの設定で指定された順番にオンラインの情報を検索し、
+本に関する情報を取得しようとします。もしオンラインのプロバイダーから１つでも本が見つかれば、
+現在選択されているライブラリに本を追加します。別のライブラリに本を追加する場合には、
+<guilabel>保存先ライブラリ</guilabel> のドロップダウンメニューからライブラリの名前を選択してください。
+ライブラリが１つしか無い場合には選択できません。
+    </para>
+
+  </section>
+  
+  <!-- ========== Adding books by searching ====== -->
+  <section id="add-book-by-search">
+    <title>ISBNが分からない本を探すには</title>
+    
+    <para>
+追加したい本のISBNが分からない場合には、本のタイトルや作者、キーワードを入力すると、
+&app; はAmazonなどのオンライン情報のプロバイダーから本を検索します。
+リストに表示された検索結果から追加したい本を選択し、<guibutton>追加</guibutton>
+のボタンを押して選択したライブラリに本を追加できます。</para>
+    
+    <para><guilabel>本の追加</guilabel> のダイアログを開き、<guilabel>検索</guilabel>
+のチェックボックスを選択し、<guilabel>タイトル、作者、キーワード</guilabel>
+のいずれかをドロップダウンメニューから選択します。探したい本の詳細を入力して、
+<guibutton>検索</guibutton> のボタンを押します。</para>
+
+    <figure id="add-by-search-fig">
+      <title>&app; 検索して本を追加</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_search_results.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app; を表示しています。検索して追加のダイアログで、オンライン情報の
+プロバイダーから指定したタイトル、作者、キーワードを検索して本を追加出来ます。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>可能ならば、&app; は見つかった本のサムネイルを表示して、
+正しい本や本の版数の違いを区別して選択しやすくしています。
+一覧から追加したい本を選択して <guibutton>追加</guibutton>
+のボタンを押してください。</para>
+    
+    <tip>
+      <para>必要な本を探すために、別の検索語をいくつか試す必要があるかもしれません。</para>
+    </tip>
+  </section>
+
+  <!-- ======== Adding books by scanning a barcode ====== -->
+  <section id="add-book-by-barcode-scan">
+    <title>バーコードをスキャンして本を追加するには</title>
+    
+    <para>
+（訳注：日本で一般的なバーコードスキャナを使う場合は<xref linkend="add-book-by-isbn"/>
+を参照）
+</para>
+<para>&app; はCueCatバーコードスキャナーに対応しています。
+スキャナのセットアップを完了して使用可能な状態にしたら、メニューから
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>スキャナから読み込む</guimenuitem>
+</menuchoice> を選択してください。次にそれぞれの本のバーコードをスキャンすると、
+<guilabel>スキャナから読み込み</guilabel> のウィンドに一覧が表示されます。
+    </para>
+
+    <figure id="add-manually-fig">
+      <title>スキャンしたISBNバーコードから本を追加</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_acquire_from_scanner_process.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app; を表示しています。スキャナーから読み込むダイアログです。本のバーコードのスキャン中とスキャン後です。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>
+<guilabel>保存先ライブラリ</guilabel> のドロップダウンメニューで本を保存するライブラリを選択し、<guibutton>追加</guibutton>のボタンを押して操作を完了します。
+    </para>
+  </section>
+
+  <!-- ======== Adding a book manually ================= -->
+  <section id="add-book-manually">
+    <title>手入力で本を追加するには</title>
+    
+    <para>オンラインから本の情報を取得できないときもあります。
+例えばISBNが無い場合などです（ISBN番号は1970年代に標準となりました）。
+あるいは、本が新しすぎてまだオンラインに載っていないのかもしれません。
+もしかすると、単にあなたがインターネットに繋いでいないだけかもしれません。
+&app; では本の詳細情報を全て（タイトル、作者、表紙など）を自分で付けることができます。</para>
+    
+    <para>ライブラリに本を手入力で追加するには、メニューから
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>本を手入力で追加</guimenuitem></menuchoice> を選択してください。次のようなダイアログが現れます。</para>
+    
+    <figure id="add-manually-fig">
+      <title>&app; 本を手入力で追加している様子</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_manual_details.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app; を表示してます。手入力で本を入力するダイアログです。本の情報を全て自分で入力できます。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <para>このダイアログは <guilabel>本の編集</guilabel> のダイアログによく似てます。
+３つのタブ（<guilabel>一般</guilabel>、<guilabel>貸し出し</guilabel>、<guilabel>ノート</guilabel>）があります。本のタイトル、ISBN（知っていれば）、本の出版社、
+本の装丁（ペーパバック、ハードカバー、オーディオカセットブックなど）、
+作者などを入力する場所があります。</para>
+    
+    <tip>
+      <para>作者を追加する場合には、作者リストの隣にある
+<guibutton>+</guibutton>ボタンを押して、名前を入力します。作者を削除するには、
+作者の名前を選択して<guibutton>-</guibutton>ボタンを押します。名前を編集するには、
+名前を２回クリックしてください。</para>
+    </tip>
+
+    <para>
+	本には複数のタグを付けることができます。コンマで区切って、
+複数の単語もしくはフレーズを入力してください。
+タグは副次的な情報をつける非公式な方法として使用できます。
+    </para>
+    
+    <para>表紙をつけるには、<guibutton>表紙</guibutton>のボタンをクリックしてください。
+標準的なファイル選択ダイアログが開きます。あなたのコンピュータの中にある画像を選択して
+（JPEG,PNG,GIF画像が選択可能です）、<guibutton>開く</guibutton> のボタンを
+クリックしてください。選択した画像が<guilabel>本を編集</guilabel>
+のダイアログに大きさを合わせて表示されます。</para>
+    
+    <para>星をクリックすることで、本を評価できます。評価を消すには、
+左端の星のすぐ左をクリックしてください。</para>
+    
+    <para>すべての情報を入力したら、<guibutton>追加</guibutton> のボタンを押します。</para>
+  </section>
+
+  <!-- =========== Importing a list of books ========== -->
+  <section id="import-library">
+    <title>本の一覧をインポートする</title>
+    
+    <para>
+&app; はTellico（<application>Tellico</application> アプリケーションで使用）
+のファイルをインポートできます。また単純なISBNの一覧表から、
+それぞれ本の詳細情報を取得しつつインポートできます。
+TellicoのファイルまたはISBN一覧表からインポートするには、
+メニューから <menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>インポート...</guimenuitem></menuchoice> を選択します。
+適切なファイルを選択し、<guibutton>インポート</guibutton> のボタンを押します。
+&app; は自動的にどの種類のファイルかを判定してインポートしますが、
+<guilabel>自動判別</guilabel> のドロップダウンメニューから
+<guimenuitem>Archived Tellico</guimenuitem> や <guimenuitem>ISBNリスト</guimenuitem>
+を選択することもできます。
+    </para>
+    
+    <figure id="importing-fig">
+      <title>&app; ISBNの一覧表からインポートしている様子</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_isbn_import.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase> &app; を表示。ISBNの一覧からインポートしています。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    
+    <tip>
+      <para>
+&app; はライブラリをインポートしたときに、
+インポートしたファイル名と同じ名前のライブラリを作成します。
+&app; は自動的にインポートしたライブラリをライブラリペイン中で選択してハイライト表示します。
+そこですぐにライブラリの名前を入力して変更することができますし、
+そのままマウスの左ボタンを押して自動的に設定されたライブラリ名を使うこともできます。</para>
+    </tip>
+
+    <figure id="importing-new-library">
+      <title>ISBNの一覧をインポートした後に新しいライブラリ名に変更している様子</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/adding_books_rename_library_after_import.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app;を表示しています。ISBNの一覧をインポートした後に新しいライブラリ名を入力中。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+  </section>
+</section>

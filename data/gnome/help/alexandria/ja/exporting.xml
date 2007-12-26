@@ -1,0 +1,98 @@
+<!-- ============= Exporting information Subsection ============= -->
+
+<section id="exporting">
+  <title>本の情報のエクスポートをするには</title>
+  <para>
+&app; の中の本の情報を他のアプリケーションで利用できるよう、データをいくつかの
+形式でエクスポート出来ます。
+  <itemizedlist>
+    <listitem><para><xref linkend="exporting-as-onix"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-Tellico"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-bibtex"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-plaintext"/></para></listitem>
+    <listitem><para><xref linkend="exporting-as-web-page"/>、XHTMLとCSSスタイルシートを使います</para></listitem>
+  </itemizedlist>
+  </para>
+
+  <section id="exporting-as-onix">
+    <title>ONIX圧縮アーカイブ形式でエクスポートする方法</title>
+
+    <para>
+ONIXとは出版社や再販業者が本の情報（タイトル、価格、貢献者、書評など）を定義するのに
+用いる国際標準です。ONIXに関する詳細な情報は、<ulink url="http://www.editeur.org/"  type="http">http://www.editeur.org/</ulink> をご覧ください。
+    </para>
+
+    <para>
+&app; はあなたの本の情報をすべて集め、個々の本をONIXファイル
+(ONIXメッセージと呼ばれています)をアーカイブ形式(tar+bzip2)でエクスポートします。
+ONIXアーカイブでエクスポートするには、メインメニューから
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>エクスポート</guimenuitem>
+</menuchoice>を選択し、<guilabel>エクスポートフォーマット</guilabel> メニューで、
+<guimenuitem>Archived ONIX XML (.onix.tbz2)</guimenuitem>を選択します。
+ファイル名を入力し、アーカイブを保存する場所を選択して、<guibutton>エクスポート</guibutton>
+のボタンを押してください。
+    </para>
+  </section>
+
+  <section id="exporting-as-Tellico">
+    <title>圧縮Tellicoファイル形式でエクスポートする方法</title>
+    <para>
+Tellicoは本や他のコレクションの情報を格納する標準的な
+XMLベースのフォーマットです。&app; はTellico形式のフォーマットの情報をインポート
+とエクスポートの両方が出来ます。
+    </para>
+    <para>
+圧縮ファイル(.tc)としてライブラリをエクスポートするには、エクスポートの
+ダイアログで、<guilabel>エクスポートフォーマット</guilabel>から、
+<guimenuitem>Archived Tellico XML (.tc)</guimenuitem>を選んでください。
+    </para>
+  </section>
+
+  <section id="exporting-as-bibtex">
+    <title>BibTeX形式でエクスポートする方法</title>
+    <para>BibTeXは参考文献情報を格納するLaTeXベースのファイルフォーマットです。</para>
+    <para>BibTeX(.bib)形式でエクスポートするには、エクスポートのダイアログで、
+<guilabel>エクスポートフォーマット</guilabel>から、<guimenuitem>BibTeX (.bib)</guimenuitem>を選んでください。</para>
+  </section>
+
+  <section id="exporting-as-plaintext">
+    <title>ISBNの一覧形式でエクスポートする方法</title>
+    <para>&app; はISBNの一覧をプレーンテキストでエクスポートできます。例えば別のマシーンに
+データを移すときに使えます。ISBN一覧形式でエクスポートするには、
+エクスポートのダイアログで、
+<guilabel>エクスポートフォーマット</guilabel>から、<guimenuitem>ISBN list (.txt)</guimenuitem>を選んでください。</para>
+  </section>
+
+  <section id="exporting-as-web-page">
+    <title>ウェブページとしてエクスポートする方法</title>
+    <para>&app; はあなたのライブラリをそれぞれの本に表紙をつけて一覧形式で、ウェブページ
+として作成できます。そのために、&app; は表紙画像と、XHTMLウェブページと、CSSスタイルシート
+を生成します。ウェブページの見え方をカスタマイズするため、いくつかのスタイルシートを
+選択できます。</para>
+    <para>ウェブページとしてライブラリをエクスポートするには、メインメニューから
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>エクスポート</guimenuitem></menuchoice>を選択し、<guilabel>エクスポートフォーマット</guilabel>から、<guimenuitem>HTML Web Page (directory)</guimenuitem>を選んでください。次に、<guimenuitem>テーマ</guimenuitem>メニューからウェブページのスタイルまたはテーマを選択してください。</para>
+    <figure id="export-as-web-page-fig">
+      <title>&app; をつかってウェブページを作成している様子</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/exporting_information_html.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app;を表示中。 ウェブページとしてライブラリをエクスポートしています。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <para>ウェブページを保存するディレクトリ名を名前のところに入力し、<guibutton>エクスポート</guibutton>のボタンを押して保存します。</para>
+    <tip>
+      <para>現時点では Clean というテーマが１つだけ利用できます。</para>
+    </tip>
+  </section>
+</section>	

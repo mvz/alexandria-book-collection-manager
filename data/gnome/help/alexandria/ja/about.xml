@@ -1,0 +1,33 @@
+<!-- ============= About ================================== -->
+<!-- This section contains info about the program (not docs), such as
+     author's name(s), web page, license, feedback address. This
+     section is optional: primary place for this info is "About.." box of
+     the program. However, if you do wish to include this info in the
+     manual, this is the place to put it. Alternatively, you can put 
+     this information in the title page.-->
+
+<section id="about">
+  <title>&app;について</title>
+
+  <para>
+    &app; は最初 Laurent Sansonetti によって書かれました。最初のリリース
+    以来多くの人が貢献してきました。貢献者の全一覧はプログラムに付属する
+    AUTHORSファイルをご覧ください。現在の&app; は Joseph Method によって
+    メンテナンスされています。&app; についてのより詳しい情報を知るには、
+    <ulink url="http://alexandria.rubyforge.org/" type="http">&app;
+    のウエブサイト</ulink>にお越しください。
+  </para>
+
+  <para>
+    &app; のアプリケーションやこのマニュアルに対するバクレポートや提案を行うには、
+    <ulink url="http://alexandria.rubyforge.org/feedback.html" type="http">&app;
+フィードバックのページ</ulink>の指示に従ってください。
+  </para>
+
+  <para>
+    &app; は Free Software Foundation が発行しているGNU一般公衆利用許諾契約書(GPL)
+    のバージョン２または（オプションで）それ以降のバージョンに従います。この契約書
+    のコピーは<ulink url="ghelp:gpl" type="help">こちら</ulink>にあります。
+    また、このプログラムのソースに含まれているCOPYINGファイルにもあります。
+  </para>
+</section>

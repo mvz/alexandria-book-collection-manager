@@ -1,0 +1,129 @@
+<!-- ============= Customization ============================= -->
+<!-- Use this section to describe how to customise the application. -->
+<section id="alexandria-preferences">
+  <title>設定</title>
+  <para>&app; の設定をするには、メインメニューから<menuchoice><guimenu>編集</guimenu><guimenuitem>設定</guimenuitem></menuchoice>を選択してください。
+<guilabel>設定</guilabel>のダイアログには、次の２つの項目があります。</para>
+  <itemizedlist>
+    <listitem>
+      <para> 
+      <xref linkend="alexandria-prefs-display"/></para>
+    </listitem>
+    <listitem>
+      <para> 
+      <xref linkend="myapp-prefs-providers"/></para>
+    </listitem>
+  </itemizedlist>
+  <para>&app; に新しいオンライン情報のプロバイダーを設定することも出来ます。</para>
+  <itemizedlist>
+    <listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
+  </itemizedlist>
+
+  <!-- ======== Visible columns ======= -->
+  <section id="alexandria-prefs-display">
+    <title>一覧表示</title>
+    <para>一覧表示時に、どの項目を表示するかをチェックボックスを選んで選択できます。
+選択できる項目は、作者、ISBN、出版社、装丁、評価、出版年、読んだ本、持っている本、欲しい本
+です。</para>
+  </section>
+
+  <!-- ======== Providers ======== -->
+  <section id="myapp-prefs-providers">
+    <title>オンライン情報のプロバイダー</title>
+    <para>
+&app; は様々なオンライン情報源から情報をダウンロード出来ます。情報源のいくつかは
+ダウンロードする際に情報をとってくる方法について追加のオプションがあります。
+&app; は表示されている情報源に上から順にアクセスして検索を行います。
+<guibutton>上へ</guibutton>と<guibutton>下へ</guibutton>のボタンを使って
+検索する情報源の順番を変えることができます。
+    <itemizedlist>
+      <listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
+      <listitem><para><xref linkend="alexandria-proxis-prefs"/></para></listitem>
+      <listitem><para>スペイン文化省</para></listitem>
+      <listitem><para>Barnes and Noble</para></listitem>
+      <listitem><para>Amadeus Buch</para></listitem>
+      <listitem><para>Internet Bookshop Italia</para></listitem>
+      <listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
+      <listitem><para><xref linkend="alexandria-uslibcon-prefs"/></para></listitem>
+      <listitem><para>Reynaud-Bray</para></listitem>
+    </itemizedlist>
+    </para>
+    <para>また、Z39.50プロトコルを使って、新しい情報プロバイダーを追加したり削除したりできます。２つのプロバイダーがこのプロトコルを使っています。
+    <itemizedlist>
+      <listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
+    </itemizedlist>
+    </para>
+
+
+    <sect3 id="alexandria-amazon-prefs">
+      <title>Amazonの設定</title>
+      <para>&app; はいくつかの異なるAmazonのサイトから本の情報をダウンロード出来ます。
+現時点では、amazon.com, .co.uk, .de, .jp, .fr, .ca です。使用するサイトを
+変更するには、プロバイダーの一覧からAmazonを選択し、<guibutton>セットアップ</guibutton>
+をクリックします。次にドロップダウンメニューから<guilabel>UK, DE, JP, FR, CA, US</guilabel>
+のいずれかを選択します。</para>
+      <warning>
+	<para><guilabel>デベロッパートークン</guilabel>と <guilabel>アソシエイトID</guilabel>は、もしあなたがAmazonのウェブサービスアカウントを持っていればそれに変更できます。
+ <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>でAmazon
+ウェブサービスアカウントのサインアップをしてください。もしこの意味が分からなければ、
+変更せずにデフォルトのままにしておいてください。</para>
+      </warning>
+    </sect3>
+
+
+    <sect3 id="alexandria-proxis-prefs">
+      <title>Proxisの設定</title>
+      <para>&app; は Proxisのウェブサイトで英語またはフランス語、またはオランダ語で
+本を検索できます。どの言語で検索するかを選択するには、プロバイダーの一覧からProxisを
+選択し、<guibutton>セットアップ</guibutton>をクリックします。次にドロップダウンメニュー
+から<guilabel>en, fr, nl</guilabel>のいずれかを選択します。</para>
+    </sect3>
+    
+    <sect3 id="alexandria-britlib-prefs">
+      <title>大英図書館の設定</title>
+      <para>大英図書館のアカウントを持っているなら、ダイアログでz39.50サービス用の
+あなたのユーザ名とパスワードを入力してください。また接続するデータベースを選択する
+ことも出来ます。</para>
+    </sect3>
+    
+    <sect3 id="alexandria-uslibcon-prefs">
+      <title>米国国会図書館の設定</title>
+      <para>米国国会図書館のアカウントを持っているなら、ダイアログでz39.50サービス用の
+あなたのユーザ名とパスワードを入力してください。また接続するデータベースを選択する
+ことも出来ます。</para>
+    </sect3>
+    
+    <sect3 id="alexandria-z3950-prefs">
+      <title>Z39.50プロバイダーの追加</title>
+      <para>Z39.50プロバイダーを追加または削除するには、最初に
+<guilabel>詳細設定</guilabel>のチェックボックスをクリックしてオンにしてください。
+<guibutton>追加</guibutton> と <guibutton>削除</guibutton>のボタンが
+現れます。追加のボタンを押すと、Z39.50プロバイダーのダイアログが開きます。</para>
+      <figure id="add-z3950">
+	<title>Z39.50情報プロバイダーを追加しているところ</title>
+	<screenshot>
+	  <mediaobject>
+	    <imageobject>
+	      <imagedata fileref="figures/settings_providers_new_z3950.png" format="PNG"/>
+	    </imageobject>
+	    <!-- EPS versions of the figures are not required at the moment. -->
+	    <!-- 
+		 <imageobject>
+		 <imagedata fileref="figures/image.eps" format="EPS"/>
+		 </imageobject>
+	    -->
+	    <textobject>
+	      <phrase>Z39.50情報プロバイダーのダイアログです。</phrase>
+	    </textobject>
+	  </mediaobject>
+	</screenshot>
+      </figure>
+      <para>ここでは、プロバイダーの<guilabel>名前</guilabel>、
+接続先の<guilabel>ホスト名</guilabel>と<guilabel>ポート番号</guilabel>
+オンライン<guilabel>データベース</guilabel>の名前、使用する
+<guilabel>レコードシンタックス</guilabel>（現時点では、&app;はUSMARC,UNIMARC,SUTRS
+フォーマットをサポートしてます）、必要ならプロバイダーに接続するための
+ユーザ名とパスワードを入力します。</para>
+    </sect3>
+  </section>
+</section>

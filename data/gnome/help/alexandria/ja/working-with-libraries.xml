@@ -1,0 +1,88 @@
+<!-- ============= Working with Libraries Subsection ============ -->
+
+<section id="working-with-libraries">
+  <title>ライブラリを管理するには</title>
+  <para>&app; に登録した本は、いくつかのコレクションにグループ分けされて収納されます。
+これをライブラリと呼びます。例えば、小説を全て１つのライブラリに入れてもよいですし、
+また別のライブラリにはプログラミングのマニュアルをいれてもよいです。&app; では、
+ライブラリを作成したり、編集したり、ライブラリ間で本を移動したりできます。</para>
+  <para>&app; のメインウィンドの左にある<guilabel>ライブラリのペイン</guilabel>
+には利用可能なライブラリの一覧が表示されています。
+ライブラリのペインが表示されていない場合には、メインメニューから
+<menuchoice><guimenu>表示</guimenu><guimenuitem>サイドペイン</guimenuitem></menuchoice>
+を選択してください。ペインを消すには、同じようにしてメニューから選ぶか、
+ライブラリペインの左上にある<guibutton>閉じる（×）</guibutton>
+のアイコンをクリックしてください。</para>
+  <figure id="library-pane-fig">
+    <title>&app; のライブラリの一覧</title>
+    <screenshot>
+      <mediaobject>
+	<imageobject>
+	  <imagedata fileref="figures/working_with_libraries_library_pane.png" format="PNG"/>
+	</imageobject>
+	<!-- EPS versions of the figures are not required at the moment. -->
+	<!-- 
+	     <imageobject>
+	     <imagedata fileref="figures/image.eps" format="EPS"/>
+	     </imageobject>
+	-->
+	<textobject>
+	  <phrase>&app;のライブラリの一覧です。</phrase>
+	</textobject>
+      </mediaobject>
+    </screenshot>
+  </figure>
+  <para>
+    <itemizedlist>
+      <listitem><para><xref linkend="create-new-library"/></para></listitem>
+      <listitem><para><xref linkend="renaming-libraries"/></para></listitem>
+      <listitem><para><xref linkend="delete-library"/></para></listitem>
+      <listitem><para><xref linkend="moving-between-libraries"/></para></listitem>
+    </itemizedlist>
+  </para>
+
+  <!-- ======= Creating libraries ===== -->
+  <section id="create-new-library">
+    <title>新しいライブラリを作成作成するには</title>
+    <para>新しいライブラリを作成するには、ツールバーにある
+<guibutton>新規ライブラリの作成</guibutton> のボタンを押すか、メニューから
+<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>新規ライブラリの作成</guimenuitem>
+</menuchoice>を選択します。他の場所から本のリストをインポートした時にも、
+新しいライブラリが新規に作成されます。</para>
+  </section>
+
+  <!-- ======= Renaming libraries ===== -->
+  <section id="renaming-libraries">
+    <title>ライブラリ名を変更するには</title>
+    <para>ライブラリの名前を変更するにはライブラリペインの名前のところをクリックして、
+新しい名前を入力してください。または、ライブラリの名前の上で右クリックをして、
+ポップアップのメニューから<guimenuitem>名称変更</guimenuitem> を選択してください。</para>
+  </section>
+
+  <!-- ======= Deleting libraries ===== -->
+  <section id="delete-library">
+    <title>ライブラリを削除するには</title>
+    <para>ライブラリを削除するには、ライブラリのペインの名前の上で右クリックして、
+<guimenuitem>削除</guimenuitem>,を選択するか、メインメニューから
+<menuchoice>
+ <guimenu>編集</guimenu>
+ <guimenuitem>削除</guimenuitem>
+</menuchoice>
+を選択するか、キーボードから<source>Delete</source>キーを押します。削除するとき、&app;
+は本当にライブラリを削除してもよいか尋ねてきます。</para>
+    <warning>
+      <para>ライブラリを削除すると、そのライブラリの中にある本を全て削除します。この操作は
+取り消せません。</para>
+    </warning>
+  </section>
+
+  <!-- ====== Moving between libraries == -->
+  <section id="moving-between-libraries">
+    <title>ライブラリ間で本を移動するには</title>
+    <para>本を移動するには、移動したい本を１つまたは複数を選択し、右クリックして<menuchoice><guimenu>移動</guimenu><guimenuitem>移動先ライブラリの名前</guimenuitem>
+</menuchoice> を選択するか、メインメニューから
+<menuchoice><guimenu>編集</guimenu><guimenuitem>移動</guimenuitem>
+<guimenuitem>移動先ライブラリの名前</guimenuitem></menuchoice> を選択してください。
+    </para>
+  </section>
+</section>

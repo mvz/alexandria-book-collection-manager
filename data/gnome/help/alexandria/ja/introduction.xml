@@ -1,0 +1,134 @@
+<!-- ============= Introduction ============================== -->
+<!-- Use the Introduction section to give a brief overview of what
+     the application is and what it does. -->
+<section id="introduction">
+  <title>概要</title>
+
+  <para>
+    &app; は個人用の蔵書カタログを管理するシンプルなGNOMEアプリケーションです。
+    さらに、他人に貸した本の管理にも使えます。
+  </para>
+
+  <section id="features">
+    <title>機能</title>
+    
+    <para>&app; には次の機能があります:</para>
+
+
+    <itemizedlist>
+      <listitem>
+	<para>
+	  オンラインの図書館や書店から本の情報（や本の表紙）を検索して表示できます。
+	  例として、
+	  <itemizedlist>
+	    <listitem>
+	      <para>
+		<ulink url="http://www.amazon.com">Amazon</ulink>
+		（amazon.comの他に .co.uk, .fr, .de, .ja, .caのウェブサイトを検索できます）
+	      </para>
+	    </listitem>
+	    
+	    <listitem>
+	      <para><ulink url="http://www.proxis.be">Proxis</ulink></para>
+	    </listitem>
+	    
+	    <listitem>
+	      <para><ulink url="http://www.barnesandnoble.com">Barnes and Noble</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.mcu.es">Spanish Ministry of Culture</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.thalia.de">Thalia</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.internetbookshop.it">Internet Bookshop Italia</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.renaud-bray.com/">Renaud-Bray</ulink></para>
+	    </listitem>
+
+	    <listitem>
+	      <para><ulink url="http://www.loc.gov">米国国会図書館</ulink></para>
+	    </listitem>
+	    <listitem>
+	      <para><ulink url="http://www.bl.uk">大英図書館</ulink></para>
+	    </listitem>
+	  </itemizedlist>
+	</para>
+      </listitem>
+
+      <listitem>
+	<para>手入力で本を追加・更新できます。</para>
+      </listitem>
+      <listitem>
+	<para><acronym>ISBN</acronym> やタイトル、作者やキーワードなどで本を検索できます。</para>
+      </listitem>
+      <listitem>
+	<para><ulink url="http://www.z3950.org/">Z39.50</ulink> 標準に対応しており、
+	自分でオンライン書籍情報源を構築できます。</para>
+      </listitem>
+
+      <listitem>
+	<para>テキストベースの<ulink url="http://www.yaml.org"><acronym>YAML</acronym>
+        </ulink>フォーマットでデータを保存でき、本のデータの管理が容易になります。</para>
+      </listitem>
+      <listitem>
+	<para><ulink url="http://www.editeur.org/onix.html"><acronym>ONIX</acronym>
+        </ulink> や <ulink url="http://www.periapsis.org/tellico/">Tellico</ulink>、
+	<acronym>ISBN</acronym> の一覧などのフォーマットのデータのインポートとエクスポートができます。</para>
+      </listitem>
+
+      <listitem>
+	<para>ライブラリーのデータを<acronym>CSS</acronym> でテーマをつけて
+        <acronym>XHTML</acronym> ウェブページ形式にエクスポート出来ます。</para>
+      </listitem>
+      <listitem>
+	<para>貸し出し中の本に印をつけたり、貸出日、貸した人の情報を加えることができます。</para>
+      </listitem>
+
+      <!-- listitem>
+	<para>features a <ulink
+	url="http://developer.gnome.org/projects/gup/hig/"><acronym>HIG</acronym></ulink>-compliant
+	user interface</para>
+      </listitem -->
+      <listitem>
+	<para>本の一覧を２つの方法で表示（普通の一覧表示とアイコンによる一覧表示）でき、
+タイトル順などで並べ替えたり、検索条件などを加えてフィルターした結果を表示したり出来ます。</para>
+      </listitem>
+      <listitem>
+	<para>本の評価やノートをつけることができます。</para>
+      </listitem>
+
+      <listitem>
+	<para>データを入力するための方法として、
+<ulink url="http://www.cuecat.com/">CueCat</ulink>
+バーコードリーダーをサポートしています。
+（訳注：日本ではこのデバイスは一般的ではありません。
+日本で普通に入手できるバーコードリーダーは、
+スキャンさせると認識したISBN番号を出力するタイプのもので、
+例えば<ulink url="http://www.a-poc.co.jp/">エイポック</ulink>などから購入できます。
+私はここの一番安いのを使ってます。）</para>
+      </listitem>
+      <listitem>
+	<para>いくつかの言語の翻訳が入っています。</para>
+      </listitem>
+    </itemizedlist>
+
+    <note>
+      <para>
+	Alexandriaは(２００７年１２月現在）活発に開発中であり、
+	常に新しい機能が計画され追加されています。もっと情報を知りたい場合には、
+<ulink url="http://alexandria.rubyforge.org/feedback.html" type="http">&app;
+のウェブページ</ulink> をご覧ください。
+      </para>
+    </note>
+
+  </section>
+
+</section>
+

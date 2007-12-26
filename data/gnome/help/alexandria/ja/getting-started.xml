@@ -1,0 +1,144 @@
+<!-- =========== Getting Started ============================== -->
+<!-- Use the Getting Started section to describe the steps required
+     to start the application and to describe the user interface components
+     of the application. If there is other information that it is important
+     for readers to know before they start using the application, you should
+     also include this information here. 
+     If the information about how to get started is very short, you can 
+     include it in the Introduction and omit this section. -->
+<section id="getting-started">
+  <title>まず最初に</title>
+  <section id="start">
+    <title>&app;の起動方法</title>
+    <para>
+	<application>&app;</application> を起動するには、次のいずれかの方法で行います。
+    </para>
+    <variablelist>
+      <varlistentry>
+	<term><guimenu>アプリケーション</guimenu>メニューから</term>
+	<listitem>
+	  <para>
+	  <menuchoice>
+	    <guisubmenu>オフィス</guisubmenu>
+	    <guimenuitem>Alexandria ブック・コレクション・マネージャー</guimenuitem>
+	  </menuchoice>を選択</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>Command line コマンドラインから</term>
+	<listitem>
+	  <para>
+コマンドラインから <application>&app;</application> を起動するには、
+以下のコマンドを入力して、<keycap>Return</keycap>キーを押してください。
+	  </para>
+	  <para> 
+	    <command>alexandria</command> 		
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    <para>起動後、&app; は最後に開いていたライブラリを開きます。</para>
+    
+  </section>
+  <section id="when-start">
+    <title>&app;を起動したら</title>
+    <para><application>&app;</application> を起動した直後は次のような画面になっています。</para>
+    <!-- ==== Figure ==== -->
+    <figure id="mainwindow-fig">
+      <title>&app;起動画面</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/getting_started_first_launched.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>&app; のメインウィンドを表示しています。
+	タイトルバー、メニューバー、ライブラリの一覧（高機能ライブラリの一覧を含む）があり、
+	本を表示する場所には本は１冊もありません。
+	メニューバーにはライブラリ、編集、表示、ヘルプのメニューがあります。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+
+    <!-- ==== End of Figure ==== -->
+    <!-- Include any descriptions of the GUI immediately after the screenshot of the main UI, -->
+    <!-- for example, the items on the menubar and on the toolbar. This section is optional. -->
+
+    <para>&app;のウィンド中の各要素の説明: </para>
+
+    <variablelist>
+      <varlistentry>
+	<term>メニューバー:</term>
+	
+	<listitem>
+	  <para>
+メニューバー上のメニューは &app; でライブラリと本を管理するのに必要なすべてのコマンドが入っています。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>ツールバー:</term>
+	<listitem>
+	  <para>
+ツールバーには、&app; に新しい本やライブラリをすぐに追加するためのボタンがあります。
+また、メイン画面の本を表示する場所にフィルターをかけて検索した結果を表示するためのツールもあります。
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>ライブラリ一覧:</term>
+	
+	<listitem>
+	  <para>
+ウィンドの左側にあるライブラリ一覧のペインには &app; で設定したライブラリを全て表示します。
+メインライブラリの下は<quote>高機能ライブラリ</quote>で、
+メインライブラリの中を指定した条件でフィルターした結果を表示します。 
+	  </para>
+
+	  <para>
+最初に &app; を起動したときに、<quote>マイライブラリ</quote>という名前のライブラリと、
+いくつかの有用と思われる高機能ライブラリが作成されます。
+	  </para>
+	  
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term>本の表示領域:</term>
+	
+	<listitem>
+	  <para>
+メインの表示領域には、現在選択されているライブラリの中にあるすべての本が一覧表示されます。
+<application>&app;</application> はアイコン表示または一覧表示ができます。
+一覧表示は<application>Nautilus</application>ファイルマネージャーで使われているのと似た表示方法で、
+１行ごとに本の詳細な情報を表示します。
+	  </para>
+	  
+	  <para>
+アイコン表示では、あなたのお気に入りの本（５つ星がついた本）にはアイコンの右上にハート型のアイコンがつきます。
+	  </para>
+	</listitem>
+      </varlistentry>
+      
+      <varlistentry>
+	<term>ステータスバー:</term>
+	
+	<listitem>
+	  <para>
+ステータスバーには、<application>&app;</application> の現在選択中のライブラリに関する情報
+（本の数、評価の付けていていない本の数）が表示されます。
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+    
+  </section>
+</section>

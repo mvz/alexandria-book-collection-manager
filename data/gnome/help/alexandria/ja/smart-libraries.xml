@@ -1,0 +1,140 @@
+<!-- ============= Smart Libraries Subsection ============ -->
+
+<section id="smart-libraries">
+  <title>高機能ライブラリについて</title>
+  <para>
+検索機能のおかげで、１つのライブラリの中で１つの検索項目を指定して
+表示する本を絞り込むことが容易に出来るようになりました。
+しかし、より複雑なフィルタリングを提供するための強力な方法として、
+&app; では<quote>高機能ライブラリ</quote>を使用できます。
+  </para>
+
+  <para>
+高機能ライブラリは、アプリケーションの左ペインに配置されている
+本物のライブラリの下に配置されています。このライブラリには本は含まれて
+いませんが、表示したい本の条件が書かれています。すべてのライブラリの
+中から、表示したい条件に一致する本が表示されます。高機能ライブラリに
+直接本を追加することはできません。
+  </para>
+
+  <para>
+    <itemizedlist>
+      <listitem><para><xref linkend="new-smart-library"/></para></listitem>
+      <listitem><para><xref linkend="edit-smart-library"/></para></listitem>
+      <listitem><para><xref linkend="renaming-smart-libraries"/></para></listitem>
+      <listitem><para><xref linkend="delete-smart-library"/></para></listitem>
+   </itemizedlist>
+  </para>
+
+  <!-- ======= Creating smart libraries ===== -->
+  <section id="new-smart-library">
+    <title>高機能ライブラリを作成するには</title>
+
+    <para>
+高機能ライブラリを作成するには、メインメニューから<menuchoice><guimenu>ライブラリ</guimenu><guimenuitem>新規高機能ライブラリの作成</guimenuitem></menuchoice>
+を選択してください。ライブラリ作成のダイアログで表示したい本の条件を定義します。
+1行で１つの条件を指定します。最初のドロップダウンメニューで、本の何について
+（タイトルとか作者とか）
+検索したいかを選択します。２番目のドロップダウンメニューで、最初に選んだ
+条件の属性（含むもの、など）を指定します。属性によっては、さらに次の入力欄に
+文字列や、追加の条件を指定します。<guibutton>+</guibutton>ボタンを押して、
+追加の条件を設定することもできます。<guibutton>-</guibutton>ボタンを押して、
+条件を削除できますが、最後の１個は削除できません。
+    </para>
+    
+
+    <para>
+高機能ライブラリの例を以下に示します。Terry Practchettという作者の本をたくさん持っていて、
+Discworldシリーズの本に<quote>discworld</quote>というタグをつけてあるとします。
+高機能ライブラリで、彼のDiscworldシリーズでない本を探してライブラリ化します。
+    </para>
+    
+    <figure id="new-smart-library-fig">
+      <title>高機能ライブラリの作成のダイアログ</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/smart_libraries_new_smart_library.png" format="PNG"/>
+	  </imageobject>
+	  <!-- EPS versions of the figures are not required at the moment. -->
+	  <!-- 
+	       <imageobject>
+	       <imagedata fileref="figures/image.eps" format="EPS"/>
+	       </imageobject>
+	  -->
+	  <textobject>
+	    <phrase>高機能ライブラリで、２つの条件を設定しています。
+最初は<quote>作者</quote><quote>以下を含むもの</quote><quote>Pratchett</quote>
+で、２番目は <quote>タグ</quote><quote>以下を含まないもの</quote>
+<quote>discworld</quote>です。</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    
+    <para>
+これは簡単に実現できます。最初の条件は、<quote>作者</quote><quote>以下を含むもの</quote>
+を選択し、<quote>Pratchett</quote>とテキスト入力欄に入力します。次に<guibutton>+
+</guibutton>ボタンを押して、次の条件を入力します。２番目の条件は、<quote>タグ</quote>
+<quote>以下を含まないもの</quote>を選択し、<quote>discworld</quote>とテキストに
+入力します。もちろん、<quote>以下の<quote>すべての</quote>条件にあう本</quote>
+を選択しておきます。<guibutton>新規</guibutton>のボタンを押すと、
+高機能ライブラリが作成され、条件にあう本が入っているのが分かります。
+その場でライブラリの名前を変更できますが、デフォルトの名前を使ってもかまいません。
+    </para>
+
+    <para>
+いくつかの属性は真偽値である点に注意してください。
+例えば<quote>持っている本</quote>は<quote>チェックをつけたもの</quote>、または
+<quote>チェックをつけていないもの</quote>のどちらかとなります。
+テキスト欄は真偽値の属性のものにはありません。
+    </para>
+  </section>
+
+  <!-- ======= Editing smart libraries ===== -->
+  <section id="edit-smart-library">
+    <title>高機能ライブラリを編集するには</title> 
+
+    <para>
+検索条件を編集するには、ライブラリ一覧から変更したいものを選択し、名前のところで
+右クリックして、ポップアップメニューから<guimenuitem>プロパティ</guimenuitem>
+を選択します。ライブラリの名前のついた設定画面が表示されますので、
+条件を編集したり、追加、削除したりします。
+    </para>
+  </section>
+
+  <!-- ======= Renaming smart libraries ===== -->
+  <section id="renaming-smart-libraries">
+    <title>高機能ライブラリの名前を変更するには</title>
+
+    <para>
+名前を変更するには、ライブラリ一覧から変更したいものの名前を
+２度クリックして新しい名前を入力します。あるいは、名前のところで右クリックして、
+ポップアップメニューから<guimenuitem>名称変更</guimenuitem>を選択して
+変更します。 
+    </para>
+  </section>
+
+  <!-- ======= Deleting smart libraries ===== -->
+  <section id="delete-smart-library">
+    <title>高機能ライブラリを削除するには</title>
+
+    <para>
+削除するには、ライブラリ一覧から変更したいものを選択した状態で、名前のところで
+右クリックして<guimenuitem>削除</guimenuitem>を選択するか、
+メインメニューから
+<menuchoice><guimenu>編集</guimenu><guimenuitem>削除</guimenuitem></menuchoice>
+を選ぶか、キーボードの<source>Delete</source>キーを押すかのいずれかの方法
+で削除できます。 &app; はライブラリを削除する時に、本当に削除しても良いのかを
+聞いてきます。
+    </para>
+
+    <note>
+      <para>
+高機能ライブラリを削除しても、本の方は削除されません。表示する時の条件を
+削除するだけです。しかし、削除操作のやりなおし（アンドゥ）はできません。
+      </para>
+    </note>
+  </section>
+
+</section>
