@@ -48,20 +48,23 @@ module Alexandria
              'Joseph Method <tristil@gmail.com>'
             ]
   DOCUMENTERS = [
-                 'Liam Davison <registrations@liamjdavison.info>'
+                 'Liam Davison <registrations@liamjdavison.info>',
+                 'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
                 ]
   TRANSLATORS = [
+                 'CHIKAMA Masaki <masaki.chikama@gmail.com> (ja)',
                  'Dafydd Harries <daf@muse.19inch.net> (cy)',
                  'David Weinehall <tao@debian.org> (sv)',
                  'Jiri Pejchal <jiri.pejchal@gmail.com> (cs)',
                  'Joachim Breitner <mail@joachim-breitner.de> (de)',
+                 'L.C. Karssen <lennart@karssen.org>',
                  'Laurent Sansonetti <lrz@gnome.org> (fr)',
                  'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
                  'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
-                 'Marco Costantini <costanti@science.unitn.it>',
-                 'Masao Mutoh <mutoh@highway.ne.jp> (ja)',
-                 'Miguel Angel Garcia <miguelangel.garcia@gmail.com> (es)',
-                 'Mirko Maischberger <mirko@lilik.it> (it)'
+                 'Marco Costantini <costanti@science.unitn.it> (it)',
+                 'Miguel Ángel García <magmax@ieee.org> (es)',
+                 'Mirko Maischberger <mirko@lilik.it> (it)',
+                 'Serhij Dubyk <dubyk@library.lviv.ua> (uk)'
                 ]
   ARTISTS = [
              'Andreas Nilsson <nisses.mail@home.se>',
