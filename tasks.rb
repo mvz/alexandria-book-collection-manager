@@ -567,7 +567,7 @@ class AlexandriaBuild < Rake::TaskLib
     # extract translations from PO files into other files
     file files.desktop => ["#{files.desktop}.in",
                            *@gettext.po_files] do |f|
-      system("intltool-merge -d #{@gettext.po_dir} #{f.name}.in #{f.name}")
+      raise "Need to install intltool" unless system("intltool-merge -d #{@gettext.po_dir} #{f.name}.in #{f.name}")
     end
 
     # create MO files
