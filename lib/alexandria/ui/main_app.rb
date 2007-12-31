@@ -588,15 +588,12 @@ module Alexandria
         @filtered_model.refilter    # force redraw
       end
 
-      def setup_books_listview
-        # first column
-        puts "setup_books_listview" if $DEBUG
-        @listview.model = @listview_model
-        renderer = Gtk::CellRendererPixbuf.new
+      def setup_title_column
         title = _("Title")
         puts "Create listview column for %s" % title if $DEBUG
         column = Gtk::TreeViewColumn.new(title)
         column.widget = Gtk::Label.new(title).show
+        renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
         column.set_cell_data_func(renderer) do |column, cell, model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
@@ -605,95 +602,103 @@ module Alexandria
         end
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
-=begin
-           # Editable tree views are behaving strangely
-           renderer.signal_connect('editing_started') do |cell, entry,
-            path_string|
-            entry.complete_titles
-          end
-           renderer.signal_connect('edited') do |cell, path_string, new_string|
-            path = Gtk::TreePath.new(path_string)
-            path = @listview_model.convert_path_to_child_path(path)
-            path = @filtered_model.convert_path_to_child_path(path)
-            iter = @model.get_iter(path)
-            book = book_from_iter(selected_library, iter)
-            book.title = new_string
-            @iconview.freeze
-            fill_iter_with_book(iter, book)
-            @iconview.unfreeze
-          end
-=end
+        # Editable tree views are behaving strangely
+        make_renderer_editable renderer
         column.pack_start(renderer, true)
-        column.set_cell_data_func(renderer) do |column, cell, model, iter|
-          iter = @listview_model.convert_iter_to_child_iter(iter)
-          iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.text, cell.editable = iter[Columns::TITLE], false #true
-        end
+        make_column_editable column, renderer
         column.sort_column_id = Columns::TITLE
         column.resizable = true
         @listview.append_column(column)
+      end
 
-        # other columns
-        names = [
+      def make_column_editable column, renderer
+        column.set_cell_data_func(renderer) do |column, cell, model, iter|
+          iter = @listview_model.convert_iter_to_child_iter(iter)
+          iter = @filtered_model.convert_iter_to_child_iter(iter)
+          cell.text, cell.editable = iter[Columns::TITLE], true 
+        end
+      end
+
+      def make_renderer_editable renderer
+        renderer.signal_connect('editing_started') do |cell, entry,
+          path_string|
+          entry.complete_titles
+        end
+
+        renderer.signal_connect('edited') do |cell, path_string, new_string|
+          path = Gtk::TreePath.new(path_string)
+          path = @listview_model.convert_path_to_child_path(path)
+          path = @filtered_model.convert_path_to_child_path(path)
+          iter = @model.get_iter(path)
+          book = book_from_iter(selected_library, iter)
+          book.title = new_string
+          @iconview.freeze
+          fill_iter_with_book(iter, book)
+          @iconview.unfreeze
+        end
+      end
+
+TEXT_COLUMNS = [
                  [ _("Authors"), Columns::AUTHORS ],
                  [ _("ISBN"), Columns::ISBN ],
                  [ _("Publisher"), Columns::PUBLISHER ],
                  [ _("Publish Year"), Columns::PUBLISH_DATE ],
-                 [ _("Binding"), Columns::EDITION ]]
-
-        check_names= [
+                 [ _("Binding"), Columns::EDITION ]
+]
+CHECK_COLUMNS = [
                       [ _("Read"), Columns::REDD],
                       [ _("Own"), Columns::OWN],
-                      [ _("Want"), Columns::WANT]]
+                      [ _("Want"), Columns::WANT]
+]
 
-
-        names.each do |title, iterid|
-          puts "Create listview column for %s..." % title if $DEBUG
-          renderer = Gtk::CellRendererText.new
-          renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
-          column = Gtk::TreeViewColumn.new(title, renderer,
-                                           :text => iterid)
-          column.widget = Gtk::Label.new(title).show
-          column.sort_column_id = iterid
-          column.resizable = true
-          @listview.append_column(column)
+      def setup_books_listview
+        puts "setup_books_listview" if $DEBUG
+        @listview.model = @listview_model
+        setup_title_column
+        TEXT_COLUMNS.each do |title, iterid|
+          setup_text_column title, iterid
         end
+        CHECK_COLUMNS.each do |title, iterid|
+          setup_check_column title, iterid
+        end
+        setup_rating_column  
+        @listview.selection.mode = Gtk::SELECTION_MULTIPLE
+        @listview.selection.signal_connect('changed') do
+          on_books_selection_changed
+        end
+        setup_tags_column
+        setup_listview_hack 
+        setup_view_source_dnd(@listview)
+      end
 
-        check_names.each do |title, iterid|
-          renderer= CellRendererToggle.new
-          column = Gtk::TreeViewColumn.new(title, renderer)
-          column.widget = Gtk::Label.new(title).show
-          column.sort_column_id = iterid
-          column.resizable = true
-          #column.pack_start(renderer, false)
-          column.add_attribute(renderer, 'text', iterid)
-          puts "Create listview column for %s..." % title if $DEBUG
-          column.set_cell_data_func(renderer) do |column, cell,
-            model, iter|
-            case iterid
-            when 12
-              state = iter[Columns::REDD]
-              cell.set_active(state)
+      def setup_tags_column
+        # adding tags column...
+        title = _("Tags")
+        puts "Create listview column for tags..."  if $DEBUG
+        renderer = Gtk::CellRendererText.new
+        renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+        column = Gtk::TreeViewColumn.new(title, renderer,
+                                         :text => Columns::TAGS)
+        column.widget = Gtk::Label.new(title).show
+        column.sort_column_id = Columns::TAGS
+        column.resizable = true
+        @listview.append_column(column)
+      end
 
-            when 13
-              state = iter[Columns::OWN]
-              cell.set_active(state)
-
-            when 14
-              state = iter[Columns::WANT]
-              own_state = iter[Columns::OWN]
-              cell.inconsistent = own_state
-              cell.set_active(state)
-
-            end
+      def setup_listview_hack
+        @listview.signal_connect('row-activated') do
+          # Dirty hack to avoid the beginning of a drag within this
+          # handler.
+          Gtk.timeout_add(100) do
+            @actiongroup["Properties"].activate
+            false
           end
-          @listview.append_column(column)
         end
+      end
 
-        # final column
-        title = _("Rating")
+      def setup_rating_column
+title = _("Rating")
         puts "Create listview column for %s..." % title if $DEBUG
-
         column = Gtk::TreeViewColumn.new(title)
         column.widget = Gtk::Label.new(title).show
         column.sizing = Gtk::TreeViewColumn::FIXED
@@ -714,37 +719,49 @@ module Alexandria
         column.sort_column_id = Columns::RATING
         column.resizable = false
         @listview.append_column(column)
+      end
 
-        @listview.selection.mode = Gtk::SELECTION_MULTIPLE
-        @listview.selection.signal_connect('changed') do
-          on_books_selection_changed
-        end
-
-        # adding tags column...
-        title = _("Tags")
-        puts "Create listview column for tags..."  if $DEBUG
-        renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
-        column = Gtk::TreeViewColumn.new(title, renderer,
-                                         :text => Columns::TAGS)
+      def setup_check_column title, iterid
+        renderer= CellRendererToggle.new
+        column = Gtk::TreeViewColumn.new(title, renderer)
         column.widget = Gtk::Label.new(title).show
-        column.sort_column_id = Columns::TAGS
+        column.sort_column_id = iterid
         column.resizable = true
-        @listview.append_column(column)
-        # ...
-
-
-
-        @listview.signal_connect('row-activated') do
-          # Dirty hack to avoid the beginning of a drag within this
-          # handler.
-          Gtk.timeout_add(100) do
-            @actiongroup["Properties"].activate
-            false
+        #column.pack_start(renderer, false)
+        column.add_attribute(renderer, 'text', iterid)
+        puts "Create listview column for %s..." % title if $DEBUG
+        setup_column = Proc.new do |iter, cell, column| 
+            state = iter[column]
+            cell.set_active(state)
+            cell.activatable = true
           end
-        end
+          column.set_cell_data_func(renderer) do |column, cell,
+            model, iter|
+            case iterid
+            when 12
+              setup_column.call(iter, cell, Columns::REDD)
+            when 13
+              setup_column.call(iter, cell, Columns::OWN)
+            when 14
+              setup_column.call(iter, cell, Columns::WANT)
+              own_state = iter[Columns::OWN]
+              cell.inconsistent = own_state
+            end
+          end
+          @listview.append_column(column)
 
-        setup_view_source_dnd(@listview)
+      end
+
+      def setup_text_column title, iterid
+puts "Create listview column for %s..." % title if $DEBUG
+          renderer = Gtk::CellRendererText.new
+          renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+          column = Gtk::TreeViewColumn.new(title, renderer,
+                                           :text => iterid)
+          column.widget = Gtk::Label.new(title).show
+          column.sort_column_id = iterid
+          column.resizable = true
+          @listview.append_column(column)
       end
 
       def setup_listview_columns_visibility
