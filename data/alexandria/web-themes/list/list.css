@@ -1,0 +1,105 @@
+/*
+ * Copyright (C) 2005 Laurent Sansonetti
+ * Copyright (C) 2008 Cathal Mc Ginley
+ *
+ * Alexandria is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * Alexandria is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with Alexandria; see the file COPYING.  If not,
+ * write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+body {
+    background: #FFF;
+    color: #000;
+    margin: 2px 2px 2px 5px;
+    font-family: helvetica, arial, sans-serif;
+}
+
+h1.library_name {
+    font-size: 12pt;
+    font-weight: bold;
+    text-align: left;
+    border-bottom: 2px solid black;
+    margin: 0 0 2px 0;
+    padding-bottom: 2px;
+}
+
+div.book {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.book_isbn {
+    float: right;    
+    font-family: monospace;
+}
+.book_isbn:before { font-style: italic; color: #888; content: "ISBN-13:  ";  }
+
+img.book_cover {
+    display: none;
+}
+
+.no_book_cover {
+    /* do nothing */
+}
+
+p { 
+    margin: 0; 
+}
+
+.book_title {
+    /* no extra style */
+}
+
+ul.book_authors {
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+li.book_author {
+    display: inline;
+    font-size: 90%;
+    font-style: italic;
+    padding: 2px 4px 2px 10px;
+    border-left: 1px solid #888;
+}
+
+.book_author:first-child { 
+   border-left: none;
+   padding-left: 0;
+}
+
+.book_binding {
+    display: none;
+}
+
+.book_publisher {
+    display: none;
+}
+
+.copyright {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 10px;
+    font-size: 80%;
+    text-align: right;
+    color: #AAA;
+}
+
+.copyright a { 
+    color: #555;
+    font-style: italic;
+    text-decoration: none;
+ }
