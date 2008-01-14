@@ -727,7 +727,7 @@ title = _("Rating")
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
-        #column.pack_start(renderer, false)
+        column.pack_start(renderer, false)
         column.add_attribute(renderer, 'text', iterid)
         puts "Create listview column for %s..." % title if $DEBUG
         setup_column = Proc.new do |iter, cell, column| 

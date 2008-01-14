@@ -259,7 +259,7 @@ class AlexandriaBuild < Rake::TaskLib
     dest = source_path ? dest_basedir + source_path : dest_basedir
     FileUtils.mkdir_p dest unless test ?d, dest
     puts "Installing #{file} to #{dest}"
-    File.install(file.to_s, dest.to_s, mode)
+    FileUtils.install(file.to_s, dest.to_s, :mode => mode)
   end
 
   def define_install_tasks
@@ -416,16 +416,16 @@ class AlexandriaBuild < Rake::TaskLib
         # HACK gconf
         gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
         FileUtils.mkdir_p(gconf_dir)
-        File.install("schemas/alexandria.schemas", gconf_dir, 0644)
+        FileUtils.install("schemas/alexandria.schemas", gconf_dir, :mode => 0644)
 
         # HACK copyright
         doc_dir = File.join(@debinstall.staging_dir, "/usr/share/doc/#{@name}")
         FileUtils.mkdir_p(doc_dir)
-        File.install("debian/copyright", doc_dir, 0644)
+        FileUtils.install("debian/copyright", doc_dir, :mode => 0644)
         FileUtils.rm_f(File.join(doc_dir, 'COPYING'))
         FileUtils.rm_f(File.join(doc_dir, 'INSTALL'))
-        File.install("debian/README.Debian", doc_dir, 0644)
-        File.install("debian/changelog", doc_dir, 0644)
+        FileUtils.install("debian/README.Debian", doc_dir, :mode => 0644)
+        FileUtils.install("debian/changelog", doc_dir, :mode => 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",

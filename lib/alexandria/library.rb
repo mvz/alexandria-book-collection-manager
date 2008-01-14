@@ -76,24 +76,19 @@ module Alexandria
 
           test[1] = filename if test[0] == 0
 
-          #puts "back from the future of #{test[1]}:" if test[0] == 1
-          #puts "Regularizing book :#{test[1]}" if $DEBUG
           if not File.size? test[1]
             log.warn { "Book file #{test[1]} was empty"}
             next
           end
           book = self.regularize_book_from_yaml(test[1])
-          #puts "File state for #{test[1].inspect}: " + book.to_yaml if test[0] == 1
-
+          book.library = library
           old_isbn = book.isbn
           old_pub_year = book.publishing_year
           begin
-            #puts "Entering resave-test block for #{test[1]}" if $DEBUG
             begin
               book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
               raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
             rescue InvalidISBNError => e
-              #puts e.message if $DEBUG
               book.isbn = old_isbn
             end
 
@@ -111,15 +106,10 @@ module Alexandria
             # ruined_books << [book, book.isbn, library]
             library << book
           rescue => e
-            #puts "I'm reformatting #{test[1]} because #{e.message}"
-
-
             book.version = VERSION
             savedfilename = library.simple_save(book)
             test[0] = test[0] + 1
             test[1] = savedfilename
-            # retry ## no, this would retry the outer 'begin' block, not the Dir.each block
-
 
             # retries the Dir.each block...
             # but gives up after three tries
@@ -160,7 +150,6 @@ module Alexandria
 
         FileUtils.rm_f(Dir['*_small.jpg'])
       end
-      #puts ruined_books.inspect
       library.ruined_books = ruined_books
 
       library
@@ -175,11 +164,8 @@ module Alexandria
       # The string is removed on load, but can't make it stick, maybe has to do with cache
 
       if /!str:Amazon::Search::Response/.match(text)
-        #puts text if $DEBUG
         log.debug { "Removing Ruby/Amazon strings from #{name}" }
         text.gsub!("!str:Amazon::Search::Response", "")
-        #puts "got one!" if $DEBUG
-        #puts text if $DEBUG
       end
 
       # Backward compatibility with versions <= 0.6.0, where the
@@ -197,7 +183,6 @@ module Alexandria
         if md
           string_isbn = md[1].strip
           book.isbn = string_isbn
-          #puts "Reset to string value #{string_isbn}"
         end
       end
 
@@ -403,7 +388,6 @@ module Alexandria
       end
       if File.exists?(cover(book.saved_ident))
         begin
-          #puts "Moving cover #{cover(book.saved_ident)} to #{cover(book.ident)}" if $DEBUG
           FileUtils.mv(cover(book.saved_ident), cover(book.ident))
         rescue
         end
@@ -411,23 +395,18 @@ module Alexandria
       book.saved_ident = book.ident
 
       filename = book.saved_ident.to_s + ".yaml"
-      #puts filename
       File.open(filename, "w") { |io| io.puts book.to_yaml }
-      #puts "outputting book data..."
-      #puts File.open(filename, "r").read
       filename
     end
 
     def save(book, final=false)
       changed unless final
 
-      #puts "Saving book #{book.title}..." if $DEBUG
 
       # Let's initialize the saved identifier if not already
       # (backward compatibility from 0.4.0).
       book.saved_ident ||= book.ident
 
-      #puts "#{book.title}'s saved_ident is #{book.saved_ident}" if $DEBUG
 
       if book.ident != book.saved_ident
         FileUtils.rm(yaml(book.saved_ident))
@@ -443,7 +422,6 @@ module Alexandria
       already_there = (File.exists?(yaml(book)) and
                        !@deleted_books.include?(book))
 
-      #puts "Doing the saving deed: #{book.title} -- #{book.isbn}" if $DEBUG
       File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
 
       # Do not notify twice.
@@ -489,7 +467,6 @@ module Alexandria
 
     def self.really_delete_deleted_libraries
       @@deleted_libraries.each do |library|
-        #puts "Deleting library directory (#{library.path})" if $DEBUG
         FileUtils.rm_rf(library.path)
       end
     end
@@ -497,7 +474,6 @@ module Alexandria
     def really_delete_deleted_books
       @deleted_books.each do |book|
         [yaml(book), cover(book)].each do |file|
-          #puts "Deleting book file #{file} " if $DEBUG
           FileUtils.rm_f(file)
         end
       end
@@ -648,7 +624,6 @@ module Alexandria
       all_regular_libraries.each {|library|
         ruined += library.ruined_books
       }
-      #puts ruined.inspect
       @ruined_books = ruined
     end
 
