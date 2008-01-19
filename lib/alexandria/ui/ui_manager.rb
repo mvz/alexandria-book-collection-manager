@@ -4,7 +4,6 @@ module Alexandria
     class UIManager < GladeBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
         :iconview_model, :filtered_model, :on_books_selection_changed
-
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -70,17 +69,23 @@ module Alexandria
 
       def setup_toolbar
         log.debug { "setup_toolbar" }
-        mid = @uimanager.new_merge_id
-        BookProviders.each do |provider|
-          name = provider.action_name
-          [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
-                "ui/BookPopup/OnlineInformation/",
-                "ui/NoBookPopup/OnlineInformation/" ].each do |path|
-            @uimanager.add_ui(mid, path, name, name,
-                              Gtk::UIManager::MENUITEM, false)
-                end
-        end
+        setup_book_providers 
+        add_main_toolbar_items 
+        @toolbar = @uimanager.get_widget("/MainToolbar")
+        @toolbar.show_arrow = true
+        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+        setup_toolbar_combobox 
+        setup_toolbar_filter_entry
+        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+        setup_toolbar_viewas
+        @toolbar.show_all
+        @actiongroup["Undo"].sensitive = @actiongroup["Redo"].sensitive = false
+        UndoManager.instance.add_observer(self)
+        log.debug { "Connect ui elements to mainapp." }
+        @main_app.toolbar = @toolbar
+      end
 
+      def add_main_toolbar_items
         mid = @uimanager.new_merge_id
         @uimanager.add_ui(mid, "ui/", "MainToolbar", "MainToolbar",
                           Gtk::UIManager::TOOLBAR, false)
@@ -92,11 +97,22 @@ module Alexandria
                           Gtk::UIManager::SEPARATOR, false)
         @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
                           Gtk::UIManager::TOOLITEM, false)
+      end
 
-        @toolbar = @uimanager.get_widget("/MainToolbar")
-        @toolbar.show_arrow = true
-        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
-        tooltips = Gtk::Tooltips.new
+      def setup_toolbar_filter_entry
+        @filter_entry = Gtk::Entry.new
+        @filter_entry.signal_connect('changed', &method(:on_toolbar_filter_entry_changed))        
+        @toolitem = Gtk::ToolItem.new
+        @toolitem.expand = true
+        @toolitem.border_width = 5
+        @tooltips.set_tip(@filter_entry,
+                          _("Type here the search criterion"), nil)
+        @toolitem << @filter_entry
+        @toolbar.insert(-1, @toolitem)
+      end
+
+      def setup_toolbar_combobox
+        @tooltips = Gtk::Tooltips.new
 
         cb = Gtk::ComboBox.new
         cb.set_row_separator_func do |model, iter|
@@ -115,78 +131,48 @@ module Alexandria
           cb.append_text(item)
         end
         cb.active = 0
-        cb.signal_connect('changed') do |cb|
-          log.debug { "changed" }
-          @filter_books_mode = cb.active
-          @filter_entry.text.strip!
-          @iconview.freeze
-          @filtered_model.refilter
-          @iconview.unfreeze
-        end
+        cb.signal_connect('changed', &method(:on_criterion_combobox_changed))
+
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
         eb = Gtk::EventBox.new
         eb << cb
-        toolitem = Gtk::ToolItem.new
-        toolitem.border_width = 5
-        toolitem << eb
-        @toolbar.insert(-1, toolitem)
-        tooltips.set_tip(eb, _("Change the search type"), nil)
+        @toolitem = Gtk::ToolItem.new
+        @toolitem.border_width = 5
+        @toolitem << eb
+        @toolbar.insert(-1, @toolitem)
+        @tooltips.set_tip(eb, _("Change the search type"), nil)
+      end
 
-        @filter_entry = Gtk::Entry.new
-        @filter_entry.signal_connect('changed') do
-          log.debug { "changed" }
-          @filter_entry.text.strip!
-          @iconview.freeze
-          @filtered_model.refilter
-          @iconview.unfreeze
-        end
-        toolitem = Gtk::ToolItem.new
-        toolitem.expand = true
-        toolitem.border_width = 5
-        tooltips.set_tip(@filter_entry,
-                         _("Type here the search criterion"), nil)
-        toolitem << @filter_entry
-        @toolbar.insert(-1, toolitem)
-
-        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
-
+      def setup_toolbar_viewas
         @toolbar_view_as = Gtk::ComboBox.new
         @toolbar_view_as.append_text(_("View as Icons"))
         @toolbar_view_as.append_text(_("View as List"))
         @toolbar_view_as.active = 0
-        @toolbar_view_as_signal_hid = toolbar_view_as_changed 
+        @toolbar_view_as_signal_hid = \
+          @toolbar_view_as.signal_connect('changed', &method(:on_toolbar_view_as_changed))      
+ 
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
         eb = Gtk::EventBox.new
         eb << @toolbar_view_as
-        toolitem = Gtk::ToolItem.new
-        toolitem.border_width = 5
-        toolitem << eb
-        @toolbar.insert(-1, toolitem)
-        tooltips.set_tip(eb, _("Choose how to show books"), nil)
-
-        @toolbar.show_all
-
-        @actiongroup["Undo"].sensitive =
-          @actiongroup["Redo"].sensitive = false
-        UndoManager.instance.add_observer(self)
-
-        log.debug { "Connect ui elements to mainapp." }
-
-        @main_app.toolbar = @toolbar
+        @toolitem = Gtk::ToolItem.new
+        @toolitem.border_width = 5
+        @toolitem << eb
+        @toolbar.insert(-1, @toolitem)
+        @tooltips.set_tip(eb, _("Choose how to show books"), nil)
       end
 
-      def toolbar_view_as_changed
-        @toolbar_view_as.signal_connect('changed') do |cb|
-          log.debug { "changed" }
-          action = case cb.active
-                   when 0
-                     @actiongroup['AsIcons']
-                   when 1
-                     @actiongroup['AsList']
-                   end
-          action.active = true
+      def setup_book_providers
+        mid = @uimanager.new_merge_id
+        BookProviders.each do |provider|
+          name = provider.action_name
+          [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
+                "ui/BookPopup/OnlineInformation/",
+                "ui/NoBookPopup/OnlineInformation/" ].each do |path|
+            @uimanager.add_ui(mid, path, name, name,
+                              Gtk::UIManager::MENUITEM, false)
+                end
         end
       end
 
@@ -231,18 +217,8 @@ module Alexandria
 
       def setup_window_events
         log.debug { "setup_window_events" }
-        @main_app.signal_connect('window-state-event') do |w, e|
-          log.debug { "window-state-event" }
-          if e.is_a?(Gdk::EventWindowState)
-            @maximized = e.new_window_state == Gdk::EventWindowState::MAXIMIZED
-          end
-          log.debug { "end window-state-event" }
-        end
-
-        @main_app.signal_connect('destroy') do
-          log.debug { "destroy" }
-          @actiongroup["Quit"].activate
-        end
+        @main_app.signal_connect('window-state-event', &method(:on_window_state_event))
+        @main_app.signal_connect('destroy', &method(:on_window_destroy))      
       end
 
       def setup_active_model
@@ -462,12 +438,16 @@ module Alexandria
 
       def select_a_book book
         log.info { "select_a_book" }
-        iter = iter_from_book book
-        path = iter.path
-        log.info { "selecting path #{path}: #{path.inspect}" }
-        @listview.selection.unselect_all
-        @listview.selection.select_path(path)
-        # @iconview.select_path(path) TODO Why doesn't this work?
+        if selected_books.empty?
+          iter = iter_from_book book
+          path = iter.path
+          log.info { "selecting path #{path}: #{path.inspect}" }
+          @listview.selection.select_path(path)
+          iter = iter_from_book book
+          path = iter.path
+          log.info { "selecting path #{path}: #{path.inspect}" }
+          @iconview.select_path(path)
+        end
       end
 
       def update(*ary)
@@ -477,27 +457,31 @@ module Alexandria
           @actiongroup["Undo"].sensitive = caller.can_undo?
           @actiongroup["Redo"].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
-          library, kind, book = ary
-          if library == selected_library
-            @iconview.freeze
-            case kind
-            when Library::BOOK_ADDED
-              append_book(book)
-              select_a_book book
-            when Library::BOOK_UPDATED
-              iter = iter_from_ident(book.saved_ident)
-              if iter
-                fill_iter_with_book(iter, book)
-              end
-            when Library::BOOK_REMOVED
-              @model.remove(iter_from_book(book))
-            end
-            @iconview.unfreeze
-          elsif selected_library.is_a?(SmartLibrary)
-            refresh_books
-          end
+          handle_update_caller_library ary
         else
           raise "unrecognized update event"
+        end
+      end
+
+      def handle_update_caller_library ary
+        library, kind, book = ary
+        if library == selected_library
+          @iconview.freeze
+          case kind
+          when Library::BOOK_ADDED
+            append_book(book)
+            select_a_book book
+          when Library::BOOK_UPDATED
+            iter = iter_from_ident(book.saved_ident)
+            if iter
+              fill_iter_with_book(iter, book)
+            end
+          when Library::BOOK_REMOVED
+            @model.remove(iter_from_book(book))
+          end
+          @iconview.unfreeze
+        elsif selected_library.is_a?(SmartLibrary)
+          refresh_books
         end
       end
 

@@ -19,12 +19,12 @@ module Alexandria
       end
 
       def initialize listview, parent
-        @main_app = parent
-        @prefs = @main_app.prefs
-        @listview = @main_app.listview
-        @listview_model = @main_app.listview_model
-        @filtered_model = @main_app.filtered_model
-        @actiongroup = @main_app.actiongroup
+        @parent = parent
+        @prefs = @parent.prefs
+        @listview = @parent.listview
+        @listview_model = @parent.listview_model
+        @filtered_model = @parent.filtered_model
+        @actiongroup = @parent.actiongroup
         setup_books_listview
       end
 
@@ -71,11 +71,11 @@ module Alexandria
           path = @listview_model.convert_path_to_child_path(path)
           path = @filtered_model.convert_path_to_child_path(path)
           iter = @listview.model.get_iter(path)
-          book = @main_app.book_from_iter(@main_app.selected_library, iter)
+          book = @parent.book_from_iter(@parent.selected_library, iter)
           book.title = new_string
           @listview.freeze
           @iconview.freeze
-          @main_app.fill_iter_with_book(iter, book)
+          @parent.fill_iter_with_book(iter, book)
           @iconview.unfreeze
           @listview.unfreeze
         end
@@ -108,7 +108,7 @@ module Alexandria
         @listview.selection.mode = Gtk::SELECTION_MULTIPLE
         @listview.selection.signal_connect('changed') do
           log.debug { "changed" }
-          @main_app.on_books_selection_changed
+          @parent.on_books_selection_changed
         end
         setup_tags_column
         setup_listview_hack 

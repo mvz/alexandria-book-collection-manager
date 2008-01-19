@@ -49,6 +49,47 @@ module Alexandria
         end
       end
 
+      def on_window_state_event window, event
+        log.debug { "window-state-event" }
+        if event.is_a?(Gdk::EventWindowState)
+          @maximized = event.new_window_state == Gdk::EventWindowState::MAXIMIZED
+        end
+        log.debug { "end window-state-event" }
+      end
+
+      def on_toolbar_view_as_changed cb
+        log.debug { "changed" }
+        action = case cb.active
+                 when 0
+                   @actiongroup['AsIcons']
+                 when 1
+                   @actiongroup['AsList']
+                 end
+        action.active = true
+      end
+
+      def on_window_destroy window
+        log.debug { "destroy" }
+        @actiongroup["Quit"].activate
+      end
+
+      def on_toolbar_filter_entry_changed
+        log.debug { "changed" }
+        @filter_entry.text.strip!
+        @iconview.freeze
+        @filtered_model.refilter
+        @iconview.unfreeze
+      end
+
+      def on_criterion_combobox_changed(cb)
+        log.debug { "changed" }
+        @filter_books_mode = cb.active
+        @filter_entry.text.strip!
+        @iconview.freeze
+        @filtered_model.refilter
+        @iconview.unfreeze
+      end
+
       def on_export widget, event
         ExportDialog.new(@main_app, selected_library, library_sort_order)
       end

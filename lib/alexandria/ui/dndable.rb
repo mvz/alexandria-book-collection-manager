@@ -9,7 +9,7 @@ module Alexandria
         # better be Loggable!
         log.info { "setup_view_source_dnd for %s" % view }
         view.signal_connect_after('drag-begin') do |widget, drag_context|
-          n_books = selected_books.length
+          n_books = @parent.selected_books.length
           if n_books > 1
             # Render generic book icon.
             pixmap, mask = Icons::BOOK_ICON.render_pixmap_and_mask(255)
@@ -49,7 +49,7 @@ module Alexandria
           selection_data, info,
           time|
 
-        idents = selected_books.map { |book| book.ident }
+        idents = @parent.selected_books.map { |book| book.ident }
         unless idents.empty?
           selection_data.set(Gdk::Selection::TYPE_STRING,
                              idents.join(','))
