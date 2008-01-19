@@ -38,6 +38,7 @@ require 'yaml'
 # these may be distributed as ordinary libraries,
 # or as gems. Try the library versions first.
 retrying_with_rubygems = false
+
 begin
   require 'rake'
   require 'rake/tasklib'
@@ -199,21 +200,35 @@ class AlexandriaBuild < Rake::TaskLib
       desc "Run RSpec specifications"
       Spec::Rake::SpecTask.new("spec") do |t|
         t.spec_files = @files.specs
-        t.spec_opts = ["--format", "specdoc"]
+        t.spec_opts = ["--format", "progress"]
       end
+
       namespace :spec do
+        Spec::Rake::SpecTask.new("autotest") do |t|
+          t.spec_files = @files.specs
+          t.spec_opts = ["--format", "progress"]
+        end
+
         desc "Verify test coverage"
         Spec::Rake::SpecTask.new("rcov") do |t|
-          t.spec_files = FileList['spec/**/*_spec.rb']
+          t.spec_files = @files.specs
           t.spec_opts = ["--format", "specdoc"]
           t.rcov_opts = ["--exclude", "spec"]
           t.rcov = true
         end
+        desc "Generate spec html"
         Spec::Rake::SpecTask.new("html") do |t|
-          t.spec_files = FileList['spec/**/*_spec.rb']
+          t.spec_files = @files.specs
           t.spec_opts = ["--format", "html"]
           t.rcov_opts = ["--exclude", "spec"]
         end
+        desc "Profile slowest examples"
+        Spec::Rake::SpecTask.new("profile") do |t|
+          t.spec_files = @files.specs 
+          t.spec_opts = ["--format", "profile"]
+          t.rcov_opts = ["--exclude", "spec"]
+        end
+
         desc "Run slower acceptance tests (real world data)"
         Spec::Rake::SpecTask.new("acceptance") do |t|
           t.spec_files = FileList['spec/acceptance/*_spec.rb']
@@ -258,7 +273,7 @@ class AlexandriaBuild < Rake::TaskLib
     end
     dest = source_path ? dest_basedir + source_path : dest_basedir
     FileUtils.mkdir_p dest unless test ?d, dest
-    puts "Installing #{file} to #{dest}"
+    puts "Installing #{file} to #{dest} with #{mode}"
     FileUtils.install(file.to_s, dest.to_s, :mode => mode)
   end
 
@@ -318,9 +333,9 @@ class AlexandriaBuild < Rake::TaskLib
 
     def base_installation
       [
-       ['lib',  build.files.libs,     rubylib,  0644],
-       ['data', build.files.data,     sharedir, 0644],
-       ['bin',  build.files.programs, bindir,   0755]
+        ['lib',  build.files.libs,     rubylib,  0644],
+        ['data', build.files.data,     sharedir, 0644],
+        ['bin',  build.files.programs, bindir,   0755]
       ]
     end
 
@@ -329,7 +344,7 @@ class AlexandriaBuild < Rake::TaskLib
       icon_group = []
       build.files.icons.each do |filename|
         filename =~ /.*\/(.+)\/.+/
-        size = $1
+          size = $1
         dest = File.join(icon_dir, size, 'apps')
         icon_group << [File.dirname(filename), filename, dest, 0644]
       end
@@ -357,8 +372,8 @@ class AlexandriaBuild < Rake::TaskLib
         end
       end
       [
-       ['doc', docdir_files, doc_dir, 0644],
-       ['.', curdir_files, doc_dir, 0644]
+        ['doc', docdir_files, doc_dir, 0644],
+        ['.', curdir_files, doc_dir, 0644]
       ]
     end
 
@@ -388,7 +403,7 @@ class AlexandriaBuild < Rake::TaskLib
   def template_copy(src, dest, data)
     src_text = File.open(src).read()
     dest_text = src_text.gsub(/#(\w+)#/) { |match| data[$1.intern] }
-    FileUtils.mkdir_p(File.dirname(dest))
+      FileUtils.mkdir_p(File.dirname(dest))
     File.open(dest, 'w') { |f| f.write(dest_text) }
   end
 
@@ -416,16 +431,16 @@ class AlexandriaBuild < Rake::TaskLib
         # HACK gconf
         gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
         FileUtils.mkdir_p(gconf_dir)
-        FileUtils.install("schemas/alexandria.schemas", gconf_dir, :mode => 0644)
+        FileUtils.install("schemas/alexandria.schemas", gconf_dir, 0644)
 
         # HACK copyright
         doc_dir = File.join(@debinstall.staging_dir, "/usr/share/doc/#{@name}")
         FileUtils.mkdir_p(doc_dir)
-        FileUtils.install("debian/copyright", doc_dir, :mode => 0644)
+        FileUtils.install("debian/copyright", doc_dir, 0644)
         FileUtils.rm_f(File.join(doc_dir, 'COPYING'))
         FileUtils.rm_f(File.join(doc_dir, 'INSTALL'))
-        FileUtils.install("debian/README.Debian", doc_dir, :mode => 0644)
-        FileUtils.install("debian/changelog", doc_dir, :mode => 0644)
+        FileUtils.install("debian/README.Debian", doc_dir, 0644)
+        FileUtils.install("debian/changelog", doc_dir, 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",
@@ -549,7 +564,7 @@ class AlexandriaBuild < Rake::TaskLib
     end
     def locale_for(omf_file)
       omf_file =~ /.*-(.+)\.omf/
-      $1
+        $1
     end
     def in_files
       FileList["#{@omf_dir}/*.omf.in"]
@@ -566,9 +581,9 @@ class AlexandriaBuild < Rake::TaskLib
   def define_gettext_tasks
     # extract translations from PO files into other files
     file files.desktop => ["#{files.desktop}.in",
-                           *@gettext.po_files] do |f|
+      *@gettext.po_files] do |f|
       raise "Need to install intltool" unless system("intltool-merge -d #{@gettext.po_dir} #{f.name}.in #{f.name}")
-    end
+      end
 
     # create MO files
     rule( /\.mo$/ => [ lambda { |dest| @gettext.source_file(dest) }]) do |t|

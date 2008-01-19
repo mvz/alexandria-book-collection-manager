@@ -61,6 +61,7 @@ class Gtk::TreeView
 
     @context.button_press_handler =
       signal_connect('button_press_event') do |widget, event, data|
+        puts "button_press_event"
       button_press_event(event)
     end
   end

@@ -32,11 +32,11 @@ module Alexandria
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
-              _("The book titled '%s' has an invalid ISBN, but still " +
+                [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
+                _("The book titled '%s' has an invalid ISBN, but still " +
                 "exists in the providers libraries.  Do you want to " +
                 "keep the book but change the ISBN or cancel the add?") \
-              % book.title)
+                % book.title)
         self.default_response = Gtk::Dialog::RESPONSE_OK
         show_all and @response = run
         destroy
@@ -48,22 +48,28 @@ module Alexandria
     end
 
     class NewBookDialog < GladeBase
+      include Logging
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
       def initialize(parent, selected_library=nil, &block)
         super('new_book_dialog.glade')
-        puts "New Book Dialog" if $DEBUG
+        log.info { "New Book Dialog" }
         @new_book_dialog.transient_for = @parent = parent
         @block = block
         @destroyed = false
+        @selected_library = selected_library
+        setup_dialog_gui
+      end
+
+      def setup_dialog_gui
         libraries = Libraries.instance.all_regular_libraries
-        if selected_library.is_a?(SmartLibrary)
-          selected_library = libraries.first
+        if @selected_library.is_a?(SmartLibrary)
+          @selected_library = libraries.first
         end
         @combo_libraries.populate_with_libraries(libraries,
-                                                 selected_library)
+                                                 @selected_library)
 
         @treeview_results.model = Gtk::ListStore.new(String, String,
                                                      Gdk::Pixbuf)
@@ -148,17 +154,17 @@ module Alexandria
 
       def image_error_dialog(error)
         ErrorDialog.new(
-                        @parent,
-                        _("A problem occurred while downloading images"),
-                        error)
+          @parent,
+          _("A problem occurred while downloading images"),
+          error)
       end
 
       def get_images_async
-        puts "get_images_async" if $DEBUG
+        log.info { "get_images_async" }
         @images = {}
         @image_error = nil
         @image_thread = Thread.new do
-          puts "New @image_thread #{Thread.current}" if $DEBUG
+          log.info { "New @image_thread #{Thread.current}" }
           begin
             @results.each_with_index do |result, i|
               uri = result[1]
@@ -204,17 +210,17 @@ module Alexandria
 
           # Stop if the image download thread has stopped.
           if @image_thread.alive?
-            puts "@image_thread (#{@image_thread}) still alive." if $DEBUG
+            log.info { "@image_thread (#{@image_thread}) still alive." }
             true
           else
-            puts "@image_thread (#{@image_thread}) asleep now." if $DEBUG
+            log.info { "@image_thread (#{@image_thread}) asleep now." }
             false
           end
         end
       end
 
       def on_find
-        puts "on_find" if $DEBUG
+        log.info { "on_find" }
         mode = case @combo_search.active
                when 0
                  BookProviders::SEARCH_BY_TITLE
@@ -226,8 +232,9 @@ module Alexandria
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
-        puts "TreeStore Model: %s columns; ref_counts: %s" %
-          [@treeview_results.model.n_columns, @treeview_results.model.ref_count] if $DEBUG
+        log.info { "TreeStore Model: %s columns; ref_counts: %s" %
+        [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
+
         @new_book_dialog.sensitive = false
         @find_error = nil
         @results = nil
@@ -236,10 +243,10 @@ module Alexandria
         @image_thread.kill if @image_thread
 
         @find_thread = Thread.new do
-          puts "New @find_thread #{Thread.current}" if $DEBUG
+          log.info { "New @find_thread #{Thread.current}" }
           begin
             @results = Alexandria::BookProviders.search(criterion, mode)
-            puts "got #{@results.length} results" if $DEBUG
+            log.info { "got #{@results.length} results" }
           rescue => e
             @find_error = e.message
           end
@@ -256,29 +263,29 @@ module Alexandria
                                        @find_error)
                        false
                      elsif @results
-                       puts "Got results: #{@results[0]}..." if $DEBUG
+                       log.info { "Got results: #{@results[0]}..." }
                        @results.each do |book, cover|
-              s = _("%s, by %s") % [ book.title,
-                                     book.authors.join(', ') ]
-              if @results.find { |book2, cover2|
-                  book.title == book2.title and
-                  book.authors == book2.authors
-                }.length > 1
-                s += " (#{book.edition}, #{book.publisher})"
-              end
-              puts "Copying %s into tree view." % book.title if $DEBUG
-              iter = @treeview_results.model.append
-              iter[0] = s
-              iter[1] = book.ident
-              iter[2] = Icons::BOOK
-            end
+                         s = _("%s, by %s") % [ book.title,
+                           book.authors.join(', ') ]
+                         if @results.find { |book2, cover2|
+                           book.title == book2.title and
+                           book.authors == book2.authors
+                         }.length > 1
+                         s += " (#{book.edition}, #{book.publisher})"
+                         end
+                         log.info { "Copying %s into tree view." % book.title }
+                         iter = @treeview_results.model.append
+                         iter[0] = s
+                         iter[1] = book.ident
+                         iter[2] = Icons::BOOK
+                       end
 
                        # Kick off the image download thread.
                        if @find_thread.alive?
-                         puts "@find_thread (#{@find_thread}) still alive." if $DEBUG
+                         log.info { "@find_thread (#{@find_thread}) still alive." }
                          true
                        else
-                         puts "@find_thread (#{@find_thread}) asleep now." if $DEBUG
+                         log.info { "@find_thread (#{@find_thread}) asleep now." }
                          #Not really async now.
                          get_images_async
                          false #continue == false if you get to here. Stop timeout_add.
@@ -319,7 +326,7 @@ module Alexandria
       def on_results_button_press_event(widget, event)
         # double left click
         if event.event_type == Gdk::Event::BUTTON2_PRESS and
-            event.button == 1
+          event.button == 1
 
           on_add
         end
@@ -349,26 +356,23 @@ module Alexandria
           else
             @treeview_results.selection.selected_each do |model, path,
               iter|
-              @results.each do |book, cover|
-                next unless book.ident == iter[1]
-                #print iter[0].inspect
-                #print "  "
-                #puts iter[1].inspect
-                begin
-                  next unless
-                    assert_not_exist(library, book.isbn)
-                rescue Alexandria::Library::InvalidISBNError
-                  next unless
-                    KeepBadISBNDialog.new(@parent, book).keep?
-                  book.isbn = book.saved_ident = nil
-                rescue Alexandria::Library::NoISBNError
-                  book.isbn = book.saved_ident = nil
-                  books_to_add << [book, cover]
-                  next
-                end
+            @results.each do |book, cover|
+              next unless book.ident == iter[1]
+              begin
+                next unless
+                assert_not_exist(library, book.isbn)
+              rescue Alexandria::Library::InvalidISBNError
+                next unless
+                KeepBadISBNDialog.new(@parent, book).keep?
+                book.isbn = book.saved_ident = nil
+              rescue Alexandria::Library::NoISBNError
+                book.isbn = book.saved_ident = nil
                 books_to_add << [book, cover]
-
+                next
               end
+              books_to_add << [book, cover]
+
+            end
             end
           end
 
@@ -393,6 +397,7 @@ module Alexandria
         rescue => e
           ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
         end
+        books_to_add
       end
 
       def on_cancel
@@ -406,28 +411,28 @@ module Alexandria
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
           if text = clipboard.wait_for_text
             @entry_isbn.text = text if
-              Library.valid_isbn?(text) or Library.valid_ean?(text) or
-              Library.valid_upc?(text)
+            Library.valid_isbn?(text) or Library.valid_ean?(text) or
+            Library.valid_upc?(text)
           end
         end
       end
 
       def on_clicked(widget, event)
         if event.event_type == Gdk::Event::BUTTON_PRESS and
-            event.button == 1
+          event.button == 1
 
           radio, target_widget, box2, box3 = case widget
                                              when @eventbox_entry_search
                                                [@title_radiobutton, @entry_search,
-                                                @eventbox_combo_search, @eventbox_entry_isbn]
+                                                 @eventbox_combo_search, @eventbox_entry_isbn]
 
                                              when @eventbox_combo_search
                                                [@title_radiobutton, @combo_search,
-                                                @eventbox_entry_search, @eventbox_entry_isbn]
+                                                 @eventbox_entry_search, @eventbox_entry_isbn]
 
                                              when @eventbox_entry_isbn
                                                [@isbn_radiobutton, @entry_isbn,
-                                                @eventbox_entry_search, @eventbox_combo_search]
+                                                 @eventbox_entry_search, @eventbox_combo_search]
                                              end
           radio.active = true
           target_widget.grab_focus
@@ -449,7 +454,7 @@ module Alexandria
         canonical = Library.canonicalise_isbn(isbn)
         if book = library.find { |book| book.isbn == canonical }
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
-          [ isbn, library.name, book.title.sub("&", "&amp;") ]
+            [ isbn, library.name, book.title.sub("&", "&amp;") ]
         end
         true
       end

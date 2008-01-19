@@ -53,12 +53,18 @@ end
 module Alexandria
   module UI
     module Icons
+      ICONS_DIR = File.join(Alexandria::Config::DATA_DIR, "icons")
       def self.init
-        icons_dir = File.join(Alexandria::Config::DATA_DIR, "icons")
-        Dir.entries(icons_dir).each do |file|
+        load_icon_images
+      end
+
+      # loads icons from icons_dir location and gives them as uppercase constants to
+      # Alexandria::UI::Icons namespace, e.g., Icons::STAR_SET
+      def self.load_icon_images
+        Dir.entries(ICONS_DIR).each do |file|
           next unless file =~ /\.png$/    # skip non '.png' files
-          name = File.basename(file, ".png").upcase
-          const_set(name, Gdk::Pixbuf.new(File.join(icons_dir, file)))
+            name = File.basename(file, ".png").upcase
+          const_set(name, Gdk::Pixbuf.new(File.join(ICONS_DIR, file)))
         end
       end
 

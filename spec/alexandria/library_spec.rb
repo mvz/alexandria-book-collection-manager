@@ -20,7 +20,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Alexandria::Library do
 
   before(:each) do
-    FileUtils.mkdir(TESTDIR)
+    FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
   end
 
   it "has symbolic references to file extensions" do

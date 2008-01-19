@@ -23,6 +23,7 @@ LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '/data/libraries'))
 TESTDIR = File.join(LIBDIR, 'test')
 
 
+
 #def useTestLibrary(version)
 #  libVersion = File.join(LIBDIR, version)
 #  FileUtils.cp_r(libVersion, TESTDIR)
@@ -36,6 +37,8 @@ def an_artist_of_the_floating_world
                        "Paperback")
 end
 
+Thread.new { Alexandria::UI::start_gnome_program }
+Alexandria::UI::Icons.init
 
 # find a nicer way to do this... it generates a warning at the moment
 module Alexandria

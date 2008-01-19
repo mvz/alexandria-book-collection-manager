@@ -26,25 +26,35 @@ require 'alexandria/ui/libraries_combo'
 require 'alexandria/ui/multi_drag_treeview'
 require 'alexandria/ui/main_app'
 
-
-module Pango
-  def self.ellipsizable?
-    @ellipsizable ||= Pango.constants.include?('ELLIPSIZE_END')
-  end
-end
-
 module Alexandria
   module UI
-    def self.main
-      puts "Initializing app_datadir..." if $DEBUG
+    include Logging
+    def self.start_gnome_program
+      log.info { "Initializing app_datadir..." }
       Gnome::Program.new('alexandria', VERSION).app_datadir =
         Config::MAIN_DATA_DIR
-      puts "Initializing Icons..." if $DEBUG
+    end
+    def self.init_icons
+      log.info { "Initializing Icons..." }
       Icons.init
-      puts "Starting MainApp..." if $DEBUG
-      MainApp.new
-      puts "Starting Gtk.main..." if $DEBUG
+    end
+    def self.start_main_app
+      puts "==========================" if $DEBUG
+      log.info { "Starting MainApp..." }
+      puts "==========================" if $DEBUG
+      MainApp.instance
+    end
+    def self.start_gtk
+      puts "====================================" if $DEBUG
+      log.info { "Starting Gtk..." }
+      puts "====================================" if $DEBUG
       Gtk.main
+    end
+    def self.main
+      start_gnome_program
+      init_icons
+      start_main_app
+      start_gtk
     end
   end
 end

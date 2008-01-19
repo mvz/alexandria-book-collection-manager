@@ -32,7 +32,15 @@ describe Gtk::IconView do
 end
 
 describe Alexandria::UI::MainApp do
-  it "should be broken up"
+  before do
+    Alexandria::UI::UIManager.stub!(:new).and_return(mock(Alexandria::UI::UIManager, :actiongroup => mock(Object), :appbar => nil, :prefs => nil))
+  end
+  it "should be a singleton" do
+    proc do
+      Alexandria::UI::MainApp.new
+    end.should raise_error
+    #Alexandria::UI::MainApp.instance
+  end
 end
 
 

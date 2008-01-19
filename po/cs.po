@@ -1,38 +1,36 @@
 # translation of alexandria to czech
-# This file is distributed under the same license as the Alexandria package.
 # Jiří Pejchal <jiri.pejchal@gmail.com>, 2005.
-# Petr Vanek <vanous@penguin.cz>, 2008
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.2\n"
+"Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-12-16 20:34+0000\n"
-"PO-Revision-Date: 2008-01-05 21:48+0100\n"
-"Last-Translator: Petr Vanek <vanous@penguin.cz>\n"
+"PO-Revision-Date: 2005-10-15 17:24+0200\n"
+"Last-Translator: Jiří Pejchal <jiri.pejchal@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-Country: CZECH REPUBLIC\n"
+"Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
+#, fuzzy
 msgid "New Smart Library"
-msgstr "Nová inteligentní knihovna"
+msgstr "Importovat knihovnu"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
+#, fuzzy
 msgid "Smart Library"
-msgstr "Inteligentní knihovna"
+msgstr "Importovat knihovnu"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
 #: ../data/alexandria/glade/acquire_dialog.glade:25
 msgid "_Barcode Scanner Ready"
-msgstr "Čtečka čárového kódu připravena k použití"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:398
 msgid "Click below to scan _barcodes"
-msgstr "Kliněte níže pro naskenování čárových kódů"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
 msgid "Error while importing"
@@ -47,6 +45,7 @@ msgid "Import a Library"
 msgstr "Importovat knihovnu"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:68
+#, fuzzy
 msgid "_Import"
 msgstr "Importovat"
 
@@ -55,7 +54,9 @@ msgid "Couldn't import the library"
 msgstr "Knihovnu nelze importovat"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
-msgid "The format of the file you provided is unknown.  Please retry with another file."
+msgid ""
+"The format of the file you provided is unknown.  Please retry with another "
+"file."
 msgstr "Nerozpoznán formát zadaného souboru. Zkuste prosím jiný soubor."
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:9
@@ -76,28 +77,33 @@ msgid "If you replace the existing book, its contents will be overwritten."
 msgstr "Jestliže nahradíte existující knihu, její obsah bude přepsán."
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:33
+#, fuzzy
 msgid "Are you sure you want to delete '%s'?"
-msgstr "Jste si jisti, že chcete trvale odstranit '%s'?"
+msgstr "Jste si jisti, že chcete natrvalo odstranit '%s'?"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:41
+#, fuzzy
 msgid "If you continue, %d book will be deleted."
 msgid_plural "If you continue, %d books will be deleted."
-msgstr[0] "Pokud budete pokračovat, %d kniha bude odstraněna."
-msgstr[1] "Pokud budete pokračovat, %d knihy budou odstraněny."
-msgstr[2] "Pokud budete pokračovat, %d knih bude odstraněno."
+msgstr[0] "Pokud budete pokračovat, výběr bude natrvalo odstraněn."
+msgstr[1] "Pokud budete pokračovat, výběr bude natrvalo odstraněn."
+msgstr[2] "Pokud budete pokračovat, výběr bude natrvalo odstraněn."
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:46
+#, fuzzy
 msgid "Are you sure you want to delete '%s' from '%s'?"
-msgstr "Jste si jisti, že chcete trvale odstranit '%s' z '%s'?"
+msgstr "Jste si jisti, že chcete natrvalo odstranit '%s' z '%s'?"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:49
+#, fuzzy
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "Jste si jisti, že chcete natrvalo odstranit vybrané knihy z '%s'?"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
+#, fuzzy
 msgid "Properties for '%s'"
-msgstr "Vlastnosti %s"
+msgstr "Nastavení pro %s"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
 msgid "Invalid ISBN '%s'"
@@ -108,8 +114,13 @@ msgid "_Keep"
 msgstr "_Ponechat"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
-msgid "The book titled '%s' has an invalid ISBN, but still exists in the providers libraries.  Do you want to keep the book but change the ISBN or cancel the add?"
-msgstr "Kniha s názvem '%s' má neplatné ISBN, ale u poskytovatelů o ní existuje záznam.  Chcete si knihu ponechat a změnit ISBN nebo zrušit přidání?"
+msgid ""
+"The book titled '%s' has an invalid ISBN, but still exists in the providers "
+"libraries.  Do you want to keep the book but change the ISBN or cancel the "
+"add?"
+msgstr ""
+"Kniha s názvem '%s' má neplatné ISBN, ale u poskytovatelů o ní existuje "
+"záznam.  Chcete si knihu ponechat a změnit ISBN nebo zrušit přidání?"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:152
 msgid "A problem occurred while downloading images"
@@ -124,8 +135,13 @@ msgid "%s, by %s"
 msgstr "%s, od %s"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:343
-msgid "Couldn't validate the EAN/ISBN you provided.  Make sure it is written correctly, and try again."
-msgstr "Zadané EAN/ISBN je neplatné.  Přesvědčte se, zda je napsáno správně a zkuste to znovu."
+#, fuzzy
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correctly, and try again."
+msgstr ""
+"Zadané EAN/ISBN je neplatné.  Přesvědčte se, zda je napsáno správně a zkuste "
+"to znovu."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:394
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:136
@@ -157,12 +173,16 @@ msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Jste si jisti, že chcete natrvalo odstranit poskytovatele '%s'?"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
-msgid "If you continue, the provider and all of its preferences will be permanently deleted."
-msgstr "Pokud budete pokračovat, poskytovatel a jeho nastavení budou natrvalo odstraněny."
+msgid ""
+"If you continue, the provider and all of its preferences will be permanently "
+"deleted."
+msgstr ""
+"Pokud budete pokračovat, poskytovatel a jeho nastavení budou natrvalo "
+"odstraněny."
 
 #: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:7
 msgid "There's a problem"
-msgstr "Vyskytla se chyba"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
@@ -176,16 +196,24 @@ msgstr "Zadané EAN/ISBN je již v této knihovně používáno."
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
-msgid "Couldn't validate the EAN/ISBN you provided.  Make sure it is written correcty, and try again."
-msgstr "Zadané EAN/ISBN je neplatné.  Přesvědčte se, zda je napsáno správně a zkuste to znovu."
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"Zadané EAN/ISBN je neplatné.  Přesvědčte se, zda je napsáno správně a zkuste "
+"to znovu."
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
 msgid "File already exists"
 msgstr "Soubor již existuje"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:29
-msgid "A file named '%s' already exists.  Do you want to replace it with the one you are generating?"
-msgstr "Soubor se jménem '%s' již existuje. Chcete jej nahradit souborem, který vytváříte?"
+msgid ""
+"A file named '%s' already exists.  Do you want to replace it with the one "
+"you are generating?"
+msgstr ""
+"Soubor se jménem '%s' již existuje. Chcete jej nahradit souborem, který "
+"vytváříte?"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
 msgid "Export '%s'"
@@ -212,8 +240,12 @@ msgid "Export failed"
 msgstr "Export se nezdařil"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
-msgid "The target, named '%s', is a regular file.  A directory is needed for this operation.  Please select a directory and try again."
-msgstr "Cíl se jménem '%s' je obyčejný soubor.  Pro tuto operaci je nutný adresář.  Vyberte prosím adresář a zkuste to znovu."
+msgid ""
+"The target, named '%s', is a regular file.  A directory is needed for this "
+"operation.  Please select a directory and try again."
+msgstr ""
+"Cíl se jménem '%s' je obyčejný soubor.  Pro tuto operaci je nutný adresář.  "
+"Vyberte prosím adresář a zkuste to znovu."
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
 msgid "Not a directory"
@@ -221,39 +253,43 @@ msgstr "Není adresář"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:82
 msgid "Empty or conflictive condition"
-msgstr "Podmínka je prázdná nebo neplatná"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:85
 msgid "_Save However"
-msgstr "Přesto uložit"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
-msgid "This smart library contains one or more conditions which are empty or conflict with each other. This is likely to result in never matching a book. Are you sure you want to save this library?"
-msgstr "Inteligentní knihovna obsahuje jednu nebo více podmínek, které jsou buď prázdné, nebo v konfliktu, což se může v konečném důsledku projevit knihovnou, která budu vždy bez knih. Chcete opravdu uložit tuto knihovnu?"
+msgid ""
+"This smart library contains one or more conditions which are empty or "
+"conflict with each other. This is likely to result in never matching a book. "
+"Are you sure you want to save this library?"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
 msgid "Match"
-msgstr "Porovnat"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
 msgid "all"
-msgstr "vše"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
 msgid "any"
-msgstr "kterékoliv"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:118
 msgid "of the following rules:"
-msgstr "z následujících plavidel:"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:126
 msgid "Match the following rule:"
-msgstr "Vybrat podle následujícího pravidla:"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
+#, fuzzy
 msgid "Adding '%s'"
-msgstr "Přidávám '%s'"
+msgstr "Do '_%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
 #: ../data/alexandria/glade/new_book_dialog.glade:8
@@ -277,6 +313,7 @@ msgid "At least one author must be provided."
 msgstr "Musí být vyplněn alespoň jeden autor."
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
+#, fuzzy
 msgid "Properties"
 msgstr "_Vlastnosti"
 
@@ -289,8 +326,9 @@ msgid "Select a cover image"
 msgstr "Vybrání obrázku obálky"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
+#, fuzzy
 msgid "No Cover"
-msgstr "Není obal"
+msgstr "_Obálka"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:163
 msgid "%d day"
@@ -300,16 +338,20 @@ msgstr[1] "%d dny"
 msgstr[2] "%d dnů"
 
 #: ../lib/alexandria/ui/libraries_combo.rb:44
+#, fuzzy
 msgid "New Library"
-msgstr "Nová knihovna"
+msgstr "Knihovna"
 
 #: ../lib/alexandria/ui/main_app.rb:88
+#, fuzzy
 msgid "Unable to launch the help browser"
-msgstr "Nelze spustit prohlížeč nápovědy"
+msgstr "Nelze spustit prohlížeč webových stránek·"
 
 #: ../lib/alexandria/ui/main_app.rb:89
-msgid "Could not display help for Alexandria. There was an error launching the system help browser."
-msgstr "Nemohu zobrazit soubor nápovědy kvůli chybě spuštění prohlížeče."
+msgid ""
+"Could not display help for Alexandria. There was an error launching the "
+"system help browser."
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:181
 msgid "Library '%s' selected"
@@ -352,79 +394,76 @@ msgid "Unable to launch the web browser"
 msgstr "Nelze spustit prohlížeč webových stránek·"
 
 #: ../lib/alexandria/ui/main_app.rb:314
-msgid "Check out that a web browser is configured as default (Desktop Preferences -> Advanced -> Preferred Applications) and try again."
-msgstr "Zkontrolujte, zda je nastavený výchozí webový prohlížeč a zkuste to znovu."
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Zkontrolujte, zda je nastavený výchozí webový prohlížeč a zkuste to znovu."
 
 #: ../lib/alexandria/ui/main_app.rb:326
 msgid "Unable to launch the mail reader"
 msgstr "Nelze spustit program pro čtení pošty."
 
 #: ../lib/alexandria/ui/main_app.rb:327
-msgid "Check out that a mail reader is configured as default (Desktop Preferences -> Advanced -> Preferred Applications) and try again."
-msgstr "Zkontrolujete, zda je nastaven výchozí program pro čtení pošty, a zkuste to znovu."
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Zkontrolujete, zda je nastaven výchozí program pro čtení pošty, a zkuste to "
+"znovu."
 
 #: ../lib/alexandria/ui/main_app.rb:350
-msgid "These books do not conform to the ISBN-13 standard. We will attempt to replace them from the book providers. Otherwise, we will turn them into manual entries.\n"
-msgstr "Tyto knihy neodpovídají standardu ISBN-13. Pokusíme se je nahradit daty od poskytovatelů knižních dat. V opačném případě budou převedeny na manuální položky.\n"
+msgid ""
+"These books do not conform to the ISBN-13 standard. We will attempt to "
+"replace them from the book providers. Otherwise, we will turn them into "
+"manual entries.\n"
+msgstr ""
 
-#: ../lib/alexandria/ui/main_app.rb:596
-#: ../lib/alexandria/smart_library.rb:336
+#: ../lib/alexandria/ui/main_app.rb:596 ../lib/alexandria/smart_library.rb:336
 msgid "Title"
 msgstr "Název"
 
-#: ../lib/alexandria/ui/main_app.rb:638
-#: ../lib/alexandria/smart_library.rb:338
+#: ../lib/alexandria/ui/main_app.rb:638 ../lib/alexandria/smart_library.rb:338
 msgid "Authors"
 msgstr "Autoři"
 
-#: ../lib/alexandria/ui/main_app.rb:639
-#: ../lib/alexandria/smart_library.rb:337
+#: ../lib/alexandria/ui/main_app.rb:639 ../lib/alexandria/smart_library.rb:337
 msgid "ISBN"
 msgstr "ISBN"
 
-#: ../lib/alexandria/ui/main_app.rb:640
-#: ../lib/alexandria/smart_library.rb:339
+#: ../lib/alexandria/ui/main_app.rb:640 ../lib/alexandria/smart_library.rb:339
 msgid "Publisher"
 msgstr "Vydavatel"
 
-#: ../lib/alexandria/ui/main_app.rb:641
-#: ../lib/alexandria/smart_library.rb:340
+#: ../lib/alexandria/ui/main_app.rb:641 ../lib/alexandria/smart_library.rb:340
+#, fuzzy
 msgid "Publish Year"
-msgstr "Rok vydání"
+msgstr "Vydavatel"
 
-#: ../lib/alexandria/ui/main_app.rb:642
-#: ../lib/alexandria/smart_library.rb:341
+#: ../lib/alexandria/ui/main_app.rb:642 ../lib/alexandria/smart_library.rb:341
 msgid "Binding"
 msgstr "Vazba"
 
-#: ../lib/alexandria/ui/main_app.rb:645
-#: ../lib/alexandria/smart_library.rb:98
+#: ../lib/alexandria/ui/main_app.rb:645 ../lib/alexandria/smart_library.rb:98
 #: ../lib/alexandria/smart_library.rb:348
-#, fuzzy
 msgid "Read"
-msgstr "Čtená"
+msgstr ""
 
-#: ../lib/alexandria/ui/main_app.rb:646
-#: ../lib/alexandria/smart_library.rb:349
-#, fuzzy
+#: ../lib/alexandria/ui/main_app.rb:646 ../lib/alexandria/smart_library.rb:349
 msgid "Own"
-msgstr "Vlastní"
+msgstr ""
 
-#: ../lib/alexandria/ui/main_app.rb:647
-#: ../lib/alexandria/smart_library.rb:350
-#, fuzzy
+#: ../lib/alexandria/ui/main_app.rb:647 ../lib/alexandria/smart_library.rb:350
 msgid "Want"
-msgstr "Chtěná"
+msgstr ""
 
-#: ../lib/alexandria/ui/main_app.rb:694
-#: ../lib/alexandria/smart_library.rb:342
+#: ../lib/alexandria/ui/main_app.rb:694 ../lib/alexandria/smart_library.rb:342
 msgid "Rating"
 msgstr "Hodnocení"
 
-#: ../lib/alexandria/ui/main_app.rb:724
-#: ../lib/alexandria/smart_library.rb:344
+#: ../lib/alexandria/ui/main_app.rb:724 ../lib/alexandria/smart_library.rb:344
 msgid "Tags"
-msgstr "Značka"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:910
 msgid "Library"
@@ -456,27 +495,29 @@ msgstr "Do '_%s'"
 
 #: ../lib/alexandria/ui/main_app.rb:1275
 msgid "The following lines are not valid ISBNs and were not imported:"
-msgstr "Následující řádky obsahující neplatná ISBN nebyly importovány:"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1400
 msgid "_Library"
 msgstr "_Knihovna"
 
 #: ../lib/alexandria/ui/main_app.rb:1401
+#, fuzzy
 msgid "_New Library"
-msgstr "Nová knihovna"
+msgstr "_Knihovna"
 
 #: ../lib/alexandria/ui/main_app.rb:1402
+#, fuzzy
 msgid "Create a new library"
-msgstr "Vytvořit novou knihovnu"
+msgstr "Importovat knihovnu"
 
 #: ../lib/alexandria/ui/main_app.rb:1403
 msgid "New _Smart Library..."
-msgstr "Nová inteligentní knihovna"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1404
 msgid "Create a new smart library"
-msgstr "Vytvořit inteligentní knihovnu"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1406
 msgid "_Add Book..."
@@ -484,21 +525,23 @@ msgstr "Přid_at knihu"
 
 #: ../lib/alexandria/ui/main_app.rb:1407
 msgid "Add a new book from the Internet"
-msgstr "Přidat novou knihu z Internetu"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1408
 msgid "Add Book _Manually..."
 msgstr "Přidat knihu _ručně..."
 
 #: ../lib/alexandria/ui/main_app.rb:1409
+#, fuzzy
 msgid "Add a new book manually"
-msgstr "Přidat knihu _ručně"
+msgstr "Přidat knihu _ručně..."
 
 #: ../lib/alexandria/ui/main_app.rb:1411
 msgid "_Import..."
 msgstr "_Importovat..."
 
 #: ../lib/alexandria/ui/main_app.rb:1412
+#, fuzzy
 msgid "Import a library"
 msgstr "Importovat knihovnu"
 
@@ -508,15 +551,15 @@ msgstr "_Exportovat..."
 
 #: ../lib/alexandria/ui/main_app.rb:1414
 msgid "Export the selected library"
-msgstr "Exportovat vybranou knihovnu"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1415
 msgid "_Acquire from Scanner..."
-msgstr "Získat ze čtečky"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1416
 msgid "Acquire books from a scanner"
-msgstr "Získat knihy ze čtečky"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1417
 msgid "_Properties"
@@ -524,7 +567,7 @@ msgstr "_Vlastnosti"
 
 #: ../lib/alexandria/ui/main_app.rb:1418
 msgid "Edit the properties of the selected book"
-msgstr "Editovat vlastnosti vybrané knihy"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1419
 msgid "_Quit"
@@ -532,7 +575,7 @@ msgstr "_Konec"
 
 #: ../lib/alexandria/ui/main_app.rb:1420
 msgid "Quit the program"
-msgstr "Ukončit program"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1421
 msgid "_Edit"
@@ -540,19 +583,19 @@ msgstr "Ú_pravy"
 
 #: ../lib/alexandria/ui/main_app.rb:1422
 msgid "_Undo"
-msgstr "Zpět"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1423
 msgid "Undo the last action"
-msgstr "Vrátit poslední akci"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1424
 msgid "_Redo"
-msgstr "Znovu"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1425
 msgid "Redo the undone action"
-msgstr "Znovu poslední akci"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1426
 msgid "_Select All"
@@ -560,43 +603,46 @@ msgstr "Vybrat _vše"
 
 #: ../lib/alexandria/ui/main_app.rb:1427
 msgid "Select all visible books"
-msgstr "Vybrat všechny viditelné knihy"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1428
 msgid "Dese_lect All"
 msgstr "_Zrušit vybrání"
 
 #: ../lib/alexandria/ui/main_app.rb:1429
+#, fuzzy
 msgid "Deselect everything"
-msgstr "Odvybrat vše"
+msgstr "Prohledávat vše"
 
 #: ../lib/alexandria/ui/main_app.rb:1430
+#, fuzzy
 msgid "My _Rating"
-msgstr "Mé _hodnocení"
+msgstr "Podle _hodnocení"
 
 #: ../lib/alexandria/ui/main_app.rb:1431
+#, fuzzy
 msgid "None"
-msgstr "Nic"
+msgstr "Poznámky"
 
 #: ../lib/alexandria/ui/main_app.rb:1432
 msgid "One Star"
-msgstr "Jedna hvězdička"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1434
 msgid "Two Stars"
-msgstr "Dvě hvězdičky"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1436
 msgid "Three Stars"
-msgstr "Tři hvězdičky"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1438
 msgid "Four Stars"
-msgstr "Čtyři hvězdičky"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1440
 msgid "Five Stars"
-msgstr "Pět hvězdiček"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1442
 msgid "_Move"
@@ -612,7 +658,7 @@ msgstr "_Odstranit"
 
 #: ../lib/alexandria/ui/main_app.rb:1445
 msgid "Delete the selected books or library"
-msgstr "Vymazat vybrané knihy nebo knihovny"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1446
 msgid "_Search"
@@ -620,15 +666,16 @@ msgstr "_Hledat"
 
 #: ../lib/alexandria/ui/main_app.rb:1447
 msgid "Filter books"
-msgstr "Filtrovat knihy"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1448
 msgid "_Clear Results"
 msgstr "V_ymazat výsledky"
 
 #: ../lib/alexandria/ui/main_app.rb:1449
+#, fuzzy
 msgid "Clear the search results"
-msgstr "V_ymazat výsledky hledání"
+msgstr "V_ymazat výsledky"
 
 #: ../lib/alexandria/ui/main_app.rb:1451
 msgid "_Preferences"
@@ -636,7 +683,7 @@ msgstr "_Nastavení"
 
 #: ../lib/alexandria/ui/main_app.rb:1452
 msgid "Change Alexandria's settings"
-msgstr "Změnit nastavení programu"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1453
 msgid "_View"
@@ -648,7 +695,7 @@ msgstr "_Obnovit"
 
 #: ../lib/alexandria/ui/main_app.rb:1455
 msgid "Reload the selected library"
-msgstr "Znovu načíst vybranou knihovnu"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1456
 msgid "Arran_ge Icons"
@@ -668,7 +715,7 @@ msgstr "Nahlásit chy_bu"
 
 #: ../lib/alexandria/ui/main_app.rb:1461
 msgid "Submit a bug report to the developers"
-msgstr "Odeslat vývojářům zprávu o chybě"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1463
 msgid "Contents"
@@ -676,7 +723,7 @@ msgstr "Obsah"
 
 #: ../lib/alexandria/ui/main_app.rb:1464
 msgid "View Alexandria's manual"
-msgstr "Prohlédnout uživatelský manuál"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1465
 msgid "_About"
@@ -684,7 +731,7 @@ msgstr "O _aplikaci"
 
 #: ../lib/alexandria/ui/main_app.rb:1466
 msgid "Show information about Alexandria"
-msgstr "Zobrazit informace o programu Alexandria"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1487
 msgid "Side _Pane"
@@ -763,16 +810,18 @@ msgid "Notes contain"
 msgstr "Poznámky obsahují"
 
 #: ../lib/alexandria/ui/main_app.rb:1586
+#, fuzzy
 msgid "Tags contain"
-msgstr "Značky obsahují"
+msgstr "Poznámky obsahují"
 
 #: ../lib/alexandria/ui/main_app.rb:1607
+#, fuzzy
 msgid "Change the search type"
-msgstr "Změnit druh hledání"
+msgstr "Chybný druh hledání."
 
 #: ../lib/alexandria/ui/main_app.rb:1620
 msgid "Type here the search criterion"
-msgstr "Zde napište hledací kritéria"
+msgstr ""
 
 #: ../lib/alexandria/ui/main_app.rb:1627
 msgid "View as Icons"
@@ -784,7 +833,7 @@ msgstr "Zobrazit jako seznam"
 
 #: ../lib/alexandria/ui/main_app.rb:1648
 msgid "Choose how to show books"
-msgstr "Zvolte jak zobrazit knihy"
+msgstr ""
 
 #: ../lib/alexandria/import_library.rb:29
 msgid "Autodetect"
@@ -800,20 +849,20 @@ msgstr "Seznam ISBN (*.txt)"
 
 #: ../lib/alexandria/smart_library.rb:86
 msgid "Favorite"
-msgstr "Oblíbená"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:92
+#, fuzzy
 msgid "Loaned"
-msgstr "Vypůjčeno"
+msgstr "Pobočka"
 
 #: ../lib/alexandria/smart_library.rb:104
-#, fuzzy
 msgid "Owned"
-msgstr "Vlastněná"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:113
 msgid "Wishlist"
-msgstr "List přání"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:343
 #: ../data/alexandria/glade/book_properties_dialog.glade:732
@@ -821,80 +870,82 @@ msgid "Notes"
 msgstr "Poznámky"
 
 #: ../lib/alexandria/smart_library.rb:345
+#, fuzzy
 msgid "Loaning State"
-msgstr "Stav výpůjčky"
+msgstr "Výpůjčky"
 
 #: ../lib/alexandria/smart_library.rb:346
+#, fuzzy
 msgid "Loaning Date"
-msgstr "Datum výpůjčky"
+msgstr "Výpůjčky"
 
 #: ../lib/alexandria/smart_library.rb:347
+#, fuzzy
 msgid "Loaning Person"
-msgstr "Komu vypůjčeno"
+msgstr "Výpůjčky"
 
 #: ../lib/alexandria/smart_library.rb:357
+#, fuzzy
 msgid "days"
-msgstr "dní"
+msgstr "%d den"
 
 #: ../lib/alexandria/smart_library.rb:367
-#, fuzzy
 msgid "is set"
-msgstr "je nastaveno"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:371
-#, fuzzy
 msgid "is not set"
-msgstr "není nastaveno"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:375
 msgid "is"
-msgstr "je"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:379
 msgid "is not"
-msgstr "není"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:383
+#, fuzzy
 msgid "contains"
-msgstr "obsahuje"
+msgstr "ISBN obsahuje"
 
 #: ../lib/alexandria/smart_library.rb:387
+#, fuzzy
 msgid "does not contain"
-msgstr "neobsahuje"
+msgstr "Poznámky obsahují"
 
 #: ../lib/alexandria/smart_library.rb:391
 msgid "starts with"
-msgstr "začíná na"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:395
 msgid "ends with"
-msgstr "končí na"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:399
 msgid "is greater than"
-msgstr "je větší než"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:403
 msgid "is less than"
-msgstr "je menší než"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:407
 msgid "is after"
-msgstr "je po"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:411
 msgid "is before"
-msgstr "je před"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:415
-#, fuzzy
 msgid "is in last"
-msgstr "je v poslední"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:419
-#, fuzzy
 msgid "is not in last"
-msgstr "není v poslední"
+msgstr ""
 
 #: ../lib/alexandria/export_library.rb:101
 msgid "Archived ONIX XML"
@@ -906,11 +957,11 @@ msgstr "Zkomprimované Tellico XML"
 
 #: ../lib/alexandria/export_library.rb:105
 msgid "BibTeX"
-msgstr "BibTeX"
+msgstr ""
 
 #: ../lib/alexandria/export_library.rb:106
 msgid "CSV list"
-msgstr "CSV seznam"
+msgstr ""
 
 #: ../lib/alexandria/export_library.rb:107
 msgid "ISBN List"
@@ -929,8 +980,12 @@ msgid "Couldn't reach the provider '%s': socket error (%s)."
 msgstr "Poskytovatel '%s' je nedostupný: soketová chyba (%s)."
 
 #: ../lib/alexandria/book_providers.rb:60
-msgid "No results were found.  Make sure your search criterion is spelled correctly, and try again."
-msgstr "Žádné výsledky nenalezeny. Zkontrolujte prosím, zda je vaše vyhledávací kritérium správně zapsané, a zkuste to znovu."
+msgid ""
+"No results were found.  Make sure your search criterion is spelled "
+"correctly, and try again."
+msgstr ""
+"Žádné výsledky nenalezeny. Zkontrolujte prosím, zda je vaše vyhledávací "
+"kritérium správně zapsané, a zkuste to znovu."
 
 #: ../lib/alexandria/book_providers.rb:65
 msgid "Too many results for that search."
@@ -941,8 +996,9 @@ msgid "Invalid search type."
 msgstr "Chybný druh hledání."
 
 #: ../lib/alexandria/library.rb:54
+#, fuzzy
 msgid "Untitled"
-msgstr "Nepojmenovaná"
+msgstr "Nepojmenovaná %d"
 
 #: ../lib/alexandria/library.rb:238
 msgid "My Library"
@@ -966,7 +1022,7 @@ msgstr "Španělské ministerstvo kultury"
 
 #: ../lib/alexandria/book_providers/z3950.rb:32
 msgid "Hostname"
-msgstr "Jméno počítače"
+msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:33
 msgid "Port"
@@ -990,19 +1046,21 @@ msgstr "Heslo"
 
 #: ../lib/alexandria/book_providers/z3950.rb:38
 msgid "Charset encoding"
-msgstr "Kódování"
+msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:146
+#, fuzzy
 msgid "Library of Congress (Usa)"
-msgstr "Kongresová knihovna USA"
+msgstr "Library of Congress"
 
 #: ../lib/alexandria/book_providers/z3950.rb:174
 msgid "British Library"
 msgstr "British Library"
 
 #: ../lib/alexandria/book_providers/proxis.rb:35
+#, fuzzy
 msgid "Language"
-msgstr "Jazyk"
+msgstr "Výpůjčky"
 
 #: ../lib/alexandria.rb:27
 msgid "A program to help you manage your book collection."
@@ -1010,8 +1068,9 @@ msgstr "Program, který vám pomůže spravovat vaši sbírku knih."
 
 #: ../data/alexandria/glade/new_book_dialog.glade:69
 #: ../data/alexandria/glade/acquire_dialog.glade:85
+#, fuzzy
 msgid "Save _in:"
-msgstr "Uložit do:"
+msgstr "Uložit do _knihovny:"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:93
 msgid ""
@@ -1034,24 +1093,24 @@ msgstr "_ISBN:"
 
 #: ../data/alexandria/glade/main_app.glade:17
 msgid "Main Window"
-msgstr "Hlavní okno"
+msgstr ""
 
 #: ../data/alexandria/glade/main_app.glade:32
+#, fuzzy
 msgid "Libraries listing."
-msgstr "Výpis knihovny."
+msgstr "_Knihovny:"
 
 #: ../data/alexandria/glade/main_app.glade:46
 msgid "_Libraries:"
 msgstr "_Knihovny:"
 
 #: ../data/alexandria/glade/main_app.glade:111
-#, fuzzy
 msgid "Book listing."
-msgstr "Výpis knih."
+msgstr ""
 
 #: ../data/alexandria/glade/main_app.glade:194
 msgid "Status messages."
-msgstr "Stavová hlášení"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:37
 msgid "_Title:"
@@ -1062,12 +1121,13 @@ msgid "_Publisher:"
 msgstr "_Vydavatel:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:148
+#, fuzzy
 msgid "Add an author"
-msgstr "Přidat autora"
+msgstr "Autor"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:166
 msgid "Remove an author"
-msgstr "Vymazat autora"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:202
 msgid "_Authors:"
@@ -1078,12 +1138,13 @@ msgid "_Binding:"
 msgstr "Va_zba:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:248
+#, fuzzy
 msgid "Publish _year:"
-msgstr "Rok vydání:"
+msgstr "_Vydavatel:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:278
 msgid "Tags:"
-msgstr "Značky:"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:321
 msgid "_Cover:"
@@ -1091,19 +1152,19 @@ msgstr "_Obálka"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:334
 msgid "Click to pick a cover"
-msgstr "Klikněte pro výběr obrázku obalu"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:359
 msgid "Own it?"
-msgstr "Vlastníte to?"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:376
 msgid "Read it?"
-msgstr "Četli jste to?"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:397
 msgid "Want it?"
-msgstr "Chcete to?"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:418
 msgid "Rating:"
@@ -1111,7 +1172,7 @@ msgstr "Hodnocení:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:430
 msgid "Click on the stars to rate the book"
-msgstr "Klikněte na hvězdičky pro hodnocení knihy"
+msgstr ""
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:582
 msgid "General"
@@ -1135,7 +1196,7 @@ msgstr "Výpůjčky"
 
 #: ../data/alexandria/glade/acquire_dialog.glade:9
 msgid "Acquire from Scanner"
-msgstr "Získat ze skaneru"
+msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:7
 msgid "Preferences"
@@ -1147,19 +1208,20 @@ msgstr "<b>Viditelné sloupce</b>"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:48
 msgid "Want?"
-msgstr "Chcete?"
+msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:64
 msgid "Own?"
-msgstr "Vlastníte?"
+msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:80
 msgid "Read?"
-msgstr "Čteno?"
+msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:96
+#, fuzzy
 msgid "Publish _year"
-msgstr "Rok vydání"
+msgstr "Vydavatel"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:112
 msgid "_Binding"
@@ -1194,8 +1256,14 @@ msgid "_Setup"
 msgstr "_Nastavení"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:365
-msgid "Providers are libraries that supply information about books.  Some of them can be configured to get better results.  You can also customize the order in which they are queried."
-msgstr "Poskytovatelé jsou knihovny, knihkupectví, atd., které poskytují informace o knihách. Některé lze nastavit, aby vraceli výsledky lépe odpovídající vašim požadavkům. Můžete také určit pořadí, v jakém budou dotazováni."
+msgid ""
+"Providers are libraries that supply information about books.  Some of them "
+"can be configured to get better results.  You can also customize the order "
+"in which they are queried."
+msgstr ""
+"Poskytovatelé jsou knihovny, knihkupectví, atd., které poskytují informace o "
+"knihách. Některé lze nastavit, aby vraceli výsledky lépe odpovídající vašim "
+"požadavkům. Můžete také určit pořadí, v jakém budou dotazováni."
 
 #: ../data/alexandria/glade/preferences_dialog.glade:378
 msgid "_Advanced Settings"
@@ -1219,25 +1287,31 @@ msgstr "Spravovat vaši sbírku knih"
 
 #~ msgid "n/a"
 #~ msgstr "n/a"
+
 #~ msgid "Library _name:"
 #~ msgstr "Jmé_no knihovny:"
+
 #~ msgid ""
 #~ "Are you sure you want to permanently delete '%s' which has %d book?Are "
 #~ "you sure you want to permanently delete '%s' which has %d books?"
 #~ msgstr ""
 #~ "Jste si jisti, že chcete natrvalo odstranit '%s', kde je %d kniha?Jste si "
 #~ "jisti, že chcete natrvalo odstranit '%s', kde jsou %d knihy?"
+
 #~ msgid "_New"
 #~ msgstr "_Nová"
+
 #~ msgid "Couldn't validate the scanner input"
 #~ msgstr "Vstup snímače je neplatný"
+
 #~ msgid "Locale site to contact"
 #~ msgstr "Kontaktovat pobočku"
+
 #~ msgid "Language of the books to search"
 #~ msgstr "Vyhledávat knihy v jazyce"
+
 #~ msgid "%d unrated"
 #~ msgid_plural "%d unrated"
 #~ msgstr[0] "%d bez hodnocení"
 #~ msgstr[1] "%d bez hodnocení"
 #~ msgstr[2] "%d bez hodnocení"
-
