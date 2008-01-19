@@ -87,16 +87,16 @@ module Alexandria
               @entry_isbn.text }
             raise AddError.new(_("The EAN/ISBN you provided is " +
                                  "already used in this library.")) \
-            unless ary.empty?
-              isbn = begin
-                       Library.canonicalise_isbn(@entry_isbn.text)
-                     rescue Alexandria::Library::InvalidISBNError
-                       raise AddError.new(_("Couldn't validate the " +
+                                 unless ary.empty?
+                                   isbn = begin
+                                            Library.canonicalise_isbn(@entry_isbn.text)
+                                          rescue Alexandria::Library::InvalidISBNError
+                                            raise AddError.new(_("Couldn't validate the " +
                                             "EAN/ISBN you provided.  Make " +
                                             "sure it is written correcty, " +
                                             "and try again."))
-                     end
-            end
+                                          end
+                                 end
 
             if (publisher = @entry_publisher.text.strip).empty?
               raise AddError.new(_("A publisher must be provided."))
@@ -104,6 +104,7 @@ module Alexandria
 
             publishing_year = @entry_publish_date.text.to_i
 
+            # TODO Get rid of this silly requirement
             if (edition = @entry_edition.text.strip).empty?
               raise AddError.new(_("A binding must be provided."))
             end
@@ -123,6 +124,11 @@ module Alexandria
             book.loaned = @checkbutton_loaned.active?
             book.loaned_to = @entry_loaned_to.text
             book.loaned_since = Time.at(@date_loaned_since.time)
+
+            book.redd = @checkbutton_redd.active?
+            book.own = @checkbutton_own.active?
+            book.want = @checkbutton_want.active?
+            book.tags = @entry_tags.text.split
 
             @library << book
             @library.save(book)

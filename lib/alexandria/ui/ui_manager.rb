@@ -426,7 +426,11 @@ module Alexandria
 
       def on_refresh
         log.debug { "on_refresh" }
-        load_libraries
+
+        # Might want to ditch refresh altogether, since it's an admission of
+        # failure.  
+        # load_libraries
+
         refresh_libraries
         refresh_books
       end

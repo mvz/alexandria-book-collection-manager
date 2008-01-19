@@ -33,7 +33,9 @@ module Alexandria
 
       def on_add_book_manual widget, event
         library = selected_library
-        NewBookDialogManual.new(@main_app, library) { |book| }
+        NewBookDialogManual.new(@main_app, library) { |book| 
+        refresh_books 
+        }
       end
 
       def on_import widget, event

@@ -21,7 +21,7 @@ module Alexandria
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
-      #               def initialize(parent, library, book, &on_close_cb)
+
       def initialize(parent, library, book)
         super(parent, library.cover(book))
         puts "Initializing Book Properties Dialog..." if $DEBUG
@@ -31,7 +31,6 @@ module Alexandria
         cancel_button.show
         @button_box << cancel_button
 
-        #@on_close_cb = on_close_cb Not really hooked up to anything... (JCM)
         close_button = Gtk::Button.new(Gtk::Stock::SAVE)
         close_button.signal_connect('clicked') { on_close }
         close_button.show
@@ -95,9 +94,6 @@ module Alexandria
         if @checkbutton_own.active = book.own?
           @checkbutton_want.inconsistent = true
         end
-
-
-
       end
 
       #######
