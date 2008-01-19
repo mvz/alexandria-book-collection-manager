@@ -15,6 +15,10 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+## Modified by Cathal Mc Ginley 2008-01-13
+##   added check for instances where cover image not available
+##   fixes #16853
+
 # TODO:
 # fix едц
 
@@ -49,6 +53,7 @@ module Alexandria
           #puts "if type == SEARCH_BY_ISBN"
           #puts URI.parse(req)
           data = transport.get(URI.parse(req))
+
           return to_book_isbn(data, criterion) #rescue raise NoResultsError
         else
           begin
@@ -167,10 +172,14 @@ module Alexandria
 
 
         isbn10 = Library.canonicalise_isbn(isbn)
+
         img_url = "covers/" + isbn10[0 .. 0] + "/" + isbn10[1 .. 2] + "/" + isbn10 + ".jpg"
-        #puts img_url
-        #raise "No image found" unless md = data.match(img_url)
-        product["cover"] = BASE_URI + img_url
+        if data.match(img_url)
+          product["cover"] = BASE_URI + img_url
+        else
+          product["cover"] = nil
+        end
+
 
         book = Book.new(
                         translate_html_stuff(product["title"]),
