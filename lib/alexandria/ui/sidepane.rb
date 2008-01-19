@@ -8,7 +8,51 @@ module Alexandria
         @library_listview = library_listview
         @parent = parent
         @libraries = Libraries.instance
+        @main_app = @parent.main_app
         setup_sidepane
+      end
+
+      def library_already_exists new_text
+        x = (@libraries.all_libraries + Library.deleted_libraries).find do |library| 
+          library.name == new_text.strip 
+        end
+        x and x.name != @parent.selected_library.name
+      end
+
+      def contains_illegal_character new_text
+        /([^\w\s'"()&?!:;.\-])/.match(new_text)
+      end
+
+      def on_edited_library cell, path_string, new_text
+        log.debug { "edited" }
+        if cell.text != new_text
+          if match = contains_illegal_character(new_text)
+            log.debug { "Illegal character" }
+            ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
+              _("The name provided contains the " + "illegal character '<i>%s</i>'.") %
+            match[1].gsub(/&/, "&amp;"))
+          elsif new_text.strip.empty?
+            log.debug { "Empty text" }
+            ErrorDialog.new(@main_app, _("The library name " +
+                                           "can not be empty"))
+          elsif library_already_exists new_text
+            log.debug { "Already exists" }
+            ErrorDialog.new(@main_app,
+                            _("The library can not be renamed"),
+                            _("There is already a library named " +
+                                "'%s'.  Please choose a different " +
+                                "name.") % new_text.strip)
+          else
+            log.debug { "Attempting to apply #{path_string}, #{new_text}" }
+            path = Gtk::TreePath.new(path_string)
+            iter = @library_listview.model.get_iter(path)
+            library_name = new_text.strip
+            log.info { "library name is #{library_name}" }
+            iter[1] = @parent.selected_library.name = library_name
+            @parent.setup_move_actions
+            @parent.refresh_libraries
+          end
+        end
       end
 
       def setup_sidepane
@@ -35,37 +79,7 @@ module Alexandria
           cell.text, cell.editable = iter[1], iter[2]
           #log.debug { "exit sidepane: editable #{cell}, #{iter}" }
         end
-        renderer.signal_connect('edited') do |cell, path_string, new_text|
-          log.debug { "edited" }
-          if cell.text != new_text
-            if match = /([^\w\s'"()?!:;.\-])/.match(new_text)
-              ErrorDialog.new(@main_app,
-                              _("Invalid library name '%s'") %
-              new_text,
-                _("The name provided contains the " +
-                                "illegal character '<i>%s</i>'.") %
-              match[1])
-            elsif new_text.strip.empty?
-              ErrorDialog.new(@main_app, _("The library name " +
-                                           "can not be empty"))
-            elsif x = (@libraries.all_libraries +
-                       Library.deleted_libraries).find {
-              |library| library.name == new_text.strip } \
-              and x.name != @parent.selected_library.name
-              ErrorDialog.new(@main_app,
-                              _("The library can not be renamed"),
-                              _("There is already a library named " +
-                                "'%s'.  Please choose a different " +
-                                "name.") % new_text.strip)
-            else
-              path = Gtk::TreePath.new(path_string)
-              iter = @library_listview.model.get_iter(path)
-              iter[1] = @parent.selected_library.name = new_text.strip
-              @parent.setup_move_actions
-              @parent.refresh_libraries
-            end
-          end
-        end
+        renderer.signal_connect('edited', &method(:on_edited_library))         
         @library_listview.append_column(column)
 
         @library_listview.set_row_separator_func do |model, iter| 
