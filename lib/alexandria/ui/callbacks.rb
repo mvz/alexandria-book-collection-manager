@@ -33,8 +33,8 @@ module Alexandria
 
       def on_add_book_manual widget, event
         library = selected_library
-        NewBookDialogManual.new(@main_app, library) { |book| 
-        refresh_books 
+        NewBookDialogManual.new(@main_app, library) { |book|
+        refresh_books
         }
       end
 
@@ -75,7 +75,7 @@ module Alexandria
         @actiongroup["Quit"].activate
       end
 
-      def on_toolbar_filter_entry_changed
+      def on_toolbar_filter_entry_changed(entry)
         log.debug { "changed" }
         @filter_entry.text.strip!
         @iconview.freeze
