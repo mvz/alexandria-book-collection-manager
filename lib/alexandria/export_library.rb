@@ -18,7 +18,7 @@
 
 # Export sorting added 23 Oct 2007 by Cathal Mc Ginley
 # Classes LibrarySortOrder and SortedLibrary, and changed ExportFormat#invoke
-
+# iPod Notes support added 20 January 2008 by Tim Malone
 #require 'cgi'
 
 begin        # image_size is optional
@@ -105,6 +105,7 @@ module Alexandria
        self.new(_("BibTeX"), "bib", :export_as_bibtex),
        self.new(_("CSV list"), "csv", :export_as_csv_list),
        self.new(_("ISBN List"), "txt", :export_as_isbn_list),
+	 self.new(_("iPod Notes"), nil, :export_as_ipod_notes),
        self.new(_("HTML Web Page"), nil, :export_as_html, true)
       ]
     end
@@ -188,6 +189,39 @@ module Alexandria
         io << to_bibtex
       end
     end
+	def export_as_ipod_notes(filename, theme)
+                FileUtils.mkdir(filename) unless File.exists?(filename)
+		tempdir=Dir.getwd                
+		Dir.chdir(filename)
+                copy_covers("pixmaps")
+                File.open("index.linx", 'w') do |io|
+                        io.puts '<TITLE>' + name + '</TITLE>'
+                        each do |book|
+                                io.puts '<A HREF="' + book.ident + '">' + book.title + '</A>'
+                        end
+			io.close
+                end
+                each do |book|
+                        File.open(book.ident, 'w') do |io|
+                                io.puts "<TITLE>#{book.title} </TITLE>"
+                                #put a link to the book's cover. only works on iPod 5G and above(?).
+                                if File.exists?(cover(book))
+                                        io.puts '<A HREF="pixmaps/' + book.ident + '.jpg' + '">' + book.title + '</A>'
+                                else
+                                        io.puts book.title
+                                end
+                                io.puts book.authors.join(', ')
+                                io.puts book.edition
+                                io.puts book.isbn
+				#we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria				
+				io.close
+                        end
+			
+                end
+		#Again, allow the iPod to unmount		
+		Dir.chdir(tempdir)
+        end
+
 
     def export_as_csv_list(filename)
       File.open(filename, 'w') do |io|
