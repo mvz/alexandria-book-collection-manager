@@ -38,6 +38,7 @@ module Alexandria
         setup_books_iconview_sorting
         on_books_selection_changed
         restore_preferences
+        log.info { "At the end of it all: #{@iconview.model.inspect}" }
       end
 
       def create_uimanager
@@ -151,7 +152,7 @@ module Alexandria
         @toolbar_view_as.active = 0
         @toolbar_view_as_signal_hid = \
           @toolbar_view_as.signal_connect('changed', &method(:on_toolbar_view_as_changed))      
- 
+
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
         eb = Gtk::EventBox.new
@@ -281,22 +282,21 @@ module Alexandria
       def on_library_button_press_event(widget, event)
         log.debug { "library_button_press_event" }
         # right click
-        if event.event_type == Gdk::Event::BUTTON_PRESS and
-          event.button == 3
+        # If the library is big, can be very slow and make it seem like the program is hung.
+        # TODO: Make library loading not block this action.
+        if event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+          if path = widget.get_path_at_pos(event.x, event.y)
+            obj, path = widget.is_a?(Gtk::TreeView) \
+              ? [widget.selection, path.first] : [widget, path]
 
-          # This works, but the library loading is too slow!
-          #                if path = widget.get_path_at_pos(event.x, event.y)
-          #                     obj, path = widget.is_a?(Gtk::TreeView) \
-          #                         ? [widget.selection, path.first] : [widget, path]
+            unless obj.path_is_selected?(path)
+              widget.unselect_all
+              obj.select_path(path)
+            end
+          else
+            widget.unselect_all
+          end
 
-          #                     unless obj.path_is_selected?(path)
-          #                         widget.unselect_all
-          #                         obj.select_path(path)
-          #                     end
-          #                 else
-          #                     widget.unselect_all
-          #                 end
-          #
           menu = determine_library_popup widget, event
           menu.popup(nil, nil, event.button, event.time)
         end
@@ -441,17 +441,21 @@ module Alexandria
       end
 
       def select_a_book book
-        log.info { "select_a_book" }
-        if selected_books.empty?
+        select_this_book = proc do |book, view|
+          @filtered_model.refilter
           iter = iter_from_book book
           path = iter.path
-          log.info { "selecting path #{path}: #{path.inspect}" }
-          @listview.selection.select_path(path)
-          iter = iter_from_book book
-          path = iter.path
-          log.info { "selecting path #{path}: #{path.inspect}" }
-          @iconview.select_path(path)
+          path = view.model.convert_path_to_child_path(path)
+          path = @filtered_model.convert_path_to_child_path(path)
+          log.info { "Path for #{book.ident} is #{path}" }
+          selection = view.respond_to?(:selection) ? @listview.selection : @iconview
+          selection.unselect_all
+          selection.select_path(path)
         end
+        log.info { "select_a_book" }
+        select_this_book.call(book, @listview) 
+        # select_this_book.call(book, @iconview) 
+        # TODO: Figure out why this frequently selects the wrong book!
       end
 
       def update(*ary)
@@ -470,11 +474,10 @@ module Alexandria
       def handle_update_caller_library ary
         library, kind, book = ary
         if library == selected_library
-          @iconview.freeze
+          @iconview.freeze # This makes @iconview.model == nil
           case kind
           when Library::BOOK_ADDED
             append_book(book)
-            select_a_book book
           when Library::BOOK_UPDATED
             iter = iter_from_ident(book.saved_ident)
             if iter
@@ -484,6 +487,7 @@ module Alexandria
             @model.remove(iter_from_book(book))
           end
           @iconview.unfreeze
+          select_a_book(book) if [Library::BOOK_ADDED, Library::BOOK_UPDATED].include? kind
         elsif selected_library.is_a?(SmartLibrary)
           refresh_books
         end
@@ -928,19 +932,20 @@ module Alexandria
               end
         end
       end
-
+      def current_view        
+        case @notebook.page
+        when 0
+          @iconview
+        when 1
+          @listview        
+        end
+      end
 
       # Gets the sort order of the current library, for use by export
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
         log.info { "library_sort_order #{@notebook.page}: #{@iconview.model.inspect} #{@listview.model.inspect}" }
-        current_view_model = case @notebook.page
-                             when 0
-                               @iconview.model
-                             when 1
-                               @listview.model
-                             end
-        sorted_on = current_view_model.sort_column_id
+        sorted_on = current_view.model.sort_column_id
         if sorted_on
           sort_column = sorted_on[0]
           sort_order = sorted_on[1]
