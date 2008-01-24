@@ -13,8 +13,8 @@ module Alexandria
       end
 
       def library_already_exists new_text
-        x = (@libraries.all_libraries + Library.deleted_libraries).find do |library| 
-          library.name == new_text.strip 
+        x = (@libraries.all_libraries + Library.deleted_libraries).find do |library|
+          library.name == new_text.strip
         end
         x and x.name != @parent.selected_library.name
       end
@@ -79,12 +79,12 @@ module Alexandria
           cell.text, cell.editable = iter[1], iter[2]
           #log.debug { "exit sidepane: editable #{cell}, #{iter}" }
         end
-        renderer.signal_connect('edited', &method(:on_edited_library))         
+        renderer.signal_connect('edited', &method(:on_edited_library))
         @library_listview.append_column(column)
 
-        @library_listview.set_row_separator_func do |model, iter| 
+        @library_listview.set_row_separator_func do |model, iter|
           #log.debug { "library_listview row_separator #{iter}" }
-          iter[3] 
+          iter[3]
         end
 
 
@@ -156,7 +156,7 @@ module Alexandria
                 library = @libraries.all_libraries.find do |x|
                   x.name == iter[1]
                 end
-                move_selected_books_to_library(library)
+                @parent.move_selected_books_to_library(library)
                 success = true
               end
             end
