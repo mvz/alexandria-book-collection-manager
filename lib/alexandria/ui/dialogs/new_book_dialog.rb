@@ -61,6 +61,7 @@ module Alexandria
         @destroyed = false
         @selected_library = selected_library
         setup_dialog_gui
+        @progressbar.hide
       end
 
       def setup_dialog_gui
@@ -230,12 +231,21 @@ module Alexandria
                  BookProviders::SEARCH_BY_KEYWORD
                end
 
+        @progressbar.show 
+        progress_pulsing = Gtk.timeout_add(100) do
+          unless @destroyed
+            @progressbar.pulse
+            true
+          else
+            false
+          end
+        end
+
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
         log.info { "TreeStore Model: %s columns; ref_counts: %s" %
         [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
 
-        @new_book_dialog.sensitive = false
         @find_error = nil
         @results = nil
 
@@ -295,13 +305,13 @@ module Alexandria
                        @find_thread.alive?
                      end
           # continue == false if @find_error OR if results are returned
-          # @new_book_dialog.sensitive is a bad call if window has been destroyed
           # timeout_add ends if continue is false!
 
           unless continue
             unless @find_thread.alive? #This happens after find_thread is done
               unless @destroyed
-                @new_book_dialog.sensitive = true
+                Gtk.timeout_remove(progress_pulsing)
+                @progressbar.hide
                 @button_add.sensitive = false
               end
             end

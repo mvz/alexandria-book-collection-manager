@@ -442,17 +442,6 @@ module Alexandria
         sensitive
       end
 
-      def on_refresh
-        log.debug { "on_refresh" }
-
-        # Might want to ditch refresh altogether, since it's an admission of
-        # failure.  
-        # load_libraries
-
-        refresh_libraries
-        refresh_books
-      end
-
       def on_close_sidepane
         log.debug { "on_close_sidepane" }
         @actiongroup["Sidepane"].active = false
