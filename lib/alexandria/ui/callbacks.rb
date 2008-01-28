@@ -34,7 +34,7 @@ module Alexandria
       def on_add_book_manual widget, event
         library = selected_library
         NewBookDialogManual.new(@main_app, library) { |book|
-        refresh_books
+          refresh_books
         }
       end
 
@@ -112,11 +112,10 @@ module Alexandria
         if @library_listview.focus?
           library = selected_library
           if library.is_a?(SmartLibrary)
-            SmartLibraryPropertiesDialog.new(@main_app,
-                                             library) do
+            SmartLibraryPropertiesDialog.new(@main_app, library) do
               library.refilter
               refresh_books
-                                             end
+            end
           end
         else
           books = selected_books

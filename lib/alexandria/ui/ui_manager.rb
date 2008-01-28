@@ -282,14 +282,15 @@ module Alexandria
       def on_library_button_press_event(widget, event)
         log.debug { "library_button_press_event" }
         # right click
-        # If the library is big, can be very slow and make it seem like the program is hung.
-        # TODO: Make library loading not block this action.
-        if event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+
+        if event_is_right_click event          
+          log.debug { "library right click!" }
           if path = widget.get_path_at_pos(event.x, event.y)
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
 
             unless obj.path_is_selected?(path)
+              log.debug { "Select #{path}" }
               widget.unselect_all
               obj.select_path(path)
             end
@@ -303,24 +304,27 @@ module Alexandria
       end
 
       def determine_library_popup widget, event
+        log.debug { "determine_library_popup" }
         widget.get_path_at_pos(event.x, event.y) == nil \
           ? @nolibrary_popup \
           : selected_library.is_a?(SmartLibrary) \
           ? @smart_library_popup : @library_popup
       end
 
+      def event_is_right_click event
+        event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+      end
+
       def on_books_button_press_event(widget, event)
         log.debug { "books_button_press_event" }
-        # right click
-        if event.event_type == Gdk::Event::BUTTON_PRESS and
-          event.button == 3
-
+        if event_is_right_click event 
           widget.grab_focus
 
           if path = widget.get_path_at_pos(event.x.to_i, event.y.to_i)
             obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
 
             unless obj.path_is_selected?(path)
+              log.debug { "Select #{path}" }
               widget.unselect_all
               obj.select_path(path)
             end
@@ -333,45 +337,55 @@ module Alexandria
         end
       end
 
-      def on_books_selection_changed
-        log.debug { "Initializing books_selection choice..." }
-        library = selected_library
-        books = selected_books
-        @appbar.status = case books.length
-                         when 0
-                           case library.length
-                           when 0
-                             _("Library '%s' selected") % library.name
+      def get_library_selection_text library
+        case library.length
+        when 0
+          _("Library '%s' selected") % library.name
 
-                           else
-                             n_unrated = library.n_unrated
-                             if n_unrated == library.length
-                               n_("Library '%s' selected, %d unrated book",
+        else
+          n_unrated = library.n_unrated
+          if n_unrated == library.length
+            n_("Library '%s' selected, %d unrated book",
                                   "Library '%s' selected, %d unrated books",
                                   library.length) % [ library.name,
                                     library.length ]
-                             elsif n_unrated == 0
-                               n_("Library '%s' selected, %d book",
+          elsif n_unrated == 0
+            n_("Library '%s' selected, %d book",
                                   "Library '%s' selected, %d books",
                                   library.length) % [ library.name,
                                     library.length ]
-                             else
-                               n_("Library '%s' selected, %d book, " +
+          else
+            n_("Library '%s' selected, %d book, " +
                                   "%d unrated",
                                   "Library '%s' selected, %d books, " +
                                   "%d unrated",
                                   library.length) % [ library.name,
                                     library.length,
                                     n_unrated ]
-                             end
-                           end
-                         when 1
-                           _("'%s' selected") % books.first.title
-                         else
-                           n_("%d book selected", "%d books selected",
-                              books.length) % books.length
-                         end
+          end
+        end
+      end
+
+      def get_appbar_status library, books
+        case books.length
+        when 0
+          get_library_selection_text library
+        when 1
+          _("'%s' selected") % books.first.title
+        else
+          n_("%d book selected", "%d books selected",
+             books.length) % books.length
+        end
+      end
+
+      def on_books_selection_changed
+        log.debug { "on_books_selection_changed" }
+        library = selected_library
+        books = selected_books
+        @appbar.status = get_appbar_status library, books
+
         unless @library_listview.has_focus?
+          log.debug { "@library_listview does *NOT* have focus" }
           @actiongroup["Properties"].sensitive = \
             @actiongroup["OnlineInformation"].sensitive = \
             books.length == 1
@@ -409,19 +423,23 @@ module Alexandria
       end
 
       def on_focus(widget, event_focus)
-        log.debug { "on_focus" }
+        log.debug { "******on_focus******" }
         if widget == @library_listview
+          log.debug { "on_focus: @library_listview" }
           %w{OnlineInformation SelectAll DeselectAll}.each do |action|
             @actiongroup[action].sensitive = false
           end
-          @actiongroup["Properties"].sensitive =
-            selected_library.is_a?(SmartLibrary)
-          @actiongroup["Delete"].sensitive =
-            (@libraries.all_regular_libraries.length > 1 or
-             selected_library.is_a?(SmartLibrary))
+          @actiongroup["Properties"].sensitive = selected_library.is_a?(SmartLibrary)
+          @actiongroup["Delete"].sensitive = determine_delete_option
         else
           on_books_selection_changed
         end
+      end
+
+      def determine_delete_option
+        sensitive = (@libraries.all_regular_libraries.length > 1 or selected_library.is_a?(SmartLibrary))
+        log.debug { "sensitive: #{sensitive}" } 
+        sensitive
       end
 
       def on_refresh
@@ -465,7 +483,9 @@ module Alexandria
           @actiongroup["Undo"].sensitive = caller.can_undo?
           @actiongroup["Redo"].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
-          handle_update_caller_library ary
+          unless caller.updating?
+            handle_update_caller_library ary
+          end
         else
           raise "unrecognized update event"
         end
@@ -632,10 +652,15 @@ module Alexandria
 
       def append_book(book, tail=nil)
         log.debug { "append #{book.title}" }
-        iter = tail ? @model.insert_after(tail) : @model.append
+        log.debug { @model.inspect }
+        iter = @model.append
+        log.debug { "iter == #{iter}" }
         if iter
           fill_iter_with_book(iter, book)
         else
+          log.debug { "@model.append" }
+          iter = @model.append
+          fill_iter_with_book(iter, book)
           log.debug { "no iter for book #{book}" }
         end
         return iter
@@ -686,59 +711,44 @@ module Alexandria
 
       def refresh_books
         log.debug { "refresh_books" }
-        # Clear the views.
         library = selected_library
         @model.clear
         @iconview.freeze
-        @model.freeze_notify do
-          tail = nil
-          library.each { |book| tail = append_book(book, tail) }
+        @appbar.progress_percentage = 0
+        @appbar.children.first.visible = true   # show the progress bar
+        @appbar.status = _("Loading '%s'...") % library.name
+        total = library.length
+        n = 0
+        Gtk.idle_add do
+          book = library[n]
+          if book
+            log.debug { "Running block at #{Time.now.strftime("%H:%M:%S")}" }
+            tail = append_book(book)
+            # convert to percents
+            coeff = total / 100.0
+            percent = n / coeff
+            fraction = percent / 100
+            log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
+            puts "======================================================"
+            @appbar.progress_percentage = fraction
+            n+= 1
+            true
+          else
+            @iconview.unfreeze
+            @filtered_model.refilter
+            @listview.columns_autosize
+            @appbar.progress_percentage = 1
+            # Hide the progress bar.
+            @appbar.children.first.visible = false
+            # Refresh the status bar.
+            on_books_selection_changed
+            false 
+          end
         end
-        @filtered_model.refilter
-        @iconview.unfreeze
-        @listview.columns_autosize
-
-=begin
-           # Append books - we do that in a separate thread.
-           library = selected_library
-           @appbar.progress_percentage = 0
-           @appbar.children.first.visible = true   # show the progress bar
-           @appbar.status = _("Loading '%s'...") % library.name
-           exec_queue = ExecutionQueue.new
-
-           on_progress = proc do |percent|
-            @appbar.progress_percentage = percent
-          end
-
-           thread = Thread.start do
-            total = library.length
-            library.each_with_index do |book, n|
-              append_book(book)
-              # convert to percents
-              coeff = total / 100.0
-              percent = n / coeff
-              fraction = percent / 100
-              #log.debug { "#index #{n} percent #{percent} fraction #{fraction}"
-              exec_queue.call(on_progress, fraction)
-            end
-          end
-
-           while thread.alive?
-             exec_queue.iterate
-             Gtk.main_iteration_do(false)
-           end
-
-           @appbar.progress_percentage = 1
-=end
-
-        # Hide the progress bar.
-        @appbar.children.first.visible = false
-
-        # Refresh the status bar.
-        on_books_selection_changed
       end
 
       def selected_library
+        log.debug { "selected_library" }
         if iter = @library_listview.selection.selected
           @libraries.all_libraries.find { |x| x.name == iter[1] }
         else
@@ -782,27 +792,22 @@ module Alexandria
         iter_from_ident(book.ident)
       end
 
-      def selected_books
+      def collate_selected_books page 
         a = []
         library = selected_library
-        view = case @notebook.page
-               when 0
-                 @iconview.selected_each do |iconview, path|
-                   path = @iconview_model.convert_path_to_child_path(path)
-                   path = @filtered_model.convert_path_to_child_path(path)
-                   iter = @model.get_iter(path)
-                   a << book_from_iter(library, iter)
-                 end
+        view = page == 0 ? @iconview : @listview 
+        selection = page == 0 ? @iconview : @listview.selection
+        selection.selected_each do |iconview, path|
+          path = view.model.convert_path_to_child_path(path)
+          path = @filtered_model.convert_path_to_child_path(path)
+          iter = @model.get_iter(path)
+          a << book_from_iter(library, iter)
+        end
+        a
+      end
 
-               when 1
-                 @listview.selection.selected_each do |model, path,
-                   iter|
-                 path = @listview_model.convert_path_to_child_path(path)
-                 path = @filtered_model.convert_path_to_child_path(path)
-                 iter = @model.get_iter(path)
-                 a << book_from_iter(library, iter)
-                 end
-               end
+      def selected_books
+        a = collate_selected_books @notebook.page 
         selected = a.select { |x| x != nil }
         log.debug { "Selected books = #{selected}" }
         selected
@@ -818,16 +823,29 @@ module Alexandria
         # Disable the selected library in the move libraries actions.
         @libraries.all_regular_libraries.each do |i_library|
           action = @actiongroup[i_library.action_name]
-          action.sensitive = i_library != library if action
+          if action
+            action.sensitive = i_library != library
+          end
         end
+        sensitize_library library
+      end
 
-        # Disable some actions if we selected a smart library.
+      def sensitize_library library
         smart = library.is_a?(SmartLibrary)
+        log.debug { "sensitize_library: smartlibrary = #{smart}" }
         @actiongroup["AddBook"].sensitive = !smart
-        @actiongroup["AddBookManual"].sensitive = !smart
-        @actiongroup["Properties"].sensitive = smart
-        @actiongroup["Delete"].sensitive =
-          (@libraries.all_regular_libraries.length > 1 or smart)
+        @actiongroup["AddBookManual"].sensitive = !smart 
+        @actiongroup["Properties"].sensitive = true 
+        @actiongroup["Delete"].sensitive = true #(@libraries.all_regular_libraries.length > 1)
+      end
+
+      def get_view_actiongroup
+        case @prefs.view_as
+        when 0
+          @actiongroup["AsIcons"]
+        when 1
+          @actiongroup["AsList"]
+        end
       end
 
       def restore_preferences
@@ -844,12 +862,7 @@ module Alexandria
         @actiongroup["Toolbar"].active = @prefs.toolbar_visible
         @actiongroup["Statusbar"].active = @prefs.statusbar_visible
         @appbar.visible = @prefs.statusbar_visible
-        action = case @prefs.view_as
-                 when 0
-                   @actiongroup["AsIcons"]
-                 when 1
-                   @actiongroup["AsList"]
-                 end
+        action = get_view_actiongroup
         action.activate
         library = nil
         unless @prefs.selected_library.nil?
