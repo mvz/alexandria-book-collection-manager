@@ -101,9 +101,7 @@ module Alexandria
         self.rating = 0
       end
 
-      def redd_toggled
-      end
-
+      
       def own_toggled
         if @checkbutton_own.active?
           @checkbutton_want.inconsistent = true
@@ -165,6 +163,10 @@ module Alexandria
                                           ""
                                         end
       end
+      def redd_toggled
+	redd_yes=@checkbutton_redd.active?
+	@redd_date.sensitive=redd_yes
+      end
 
       #######
       private
@@ -199,7 +201,9 @@ module Alexandria
         # XXX 'date_changed' signal not automatically called after #time=.
         on_loaned_date_changed
       end
-
+      def redd_when=(time)
+	@redd_date.time = time.tv_sec
+      end
     end
   end
 end
