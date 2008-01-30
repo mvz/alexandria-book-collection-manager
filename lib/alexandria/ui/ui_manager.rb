@@ -288,6 +288,7 @@ module Alexandria
           if path = widget.get_path_at_pos(event.x, event.y)
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
+            widget.has_focus = true
 
             unless obj.path_is_selected?(path)
               log.debug { "Select #{path}" }
@@ -299,7 +300,10 @@ module Alexandria
           end
 
           menu = determine_library_popup widget, event
-          menu.popup(nil, nil, event.button, event.time)
+          Gtk.idle_add do
+            menu.popup(nil, nil, event.button, event.time)
+            false
+          end
         end
       end
 
@@ -383,9 +387,15 @@ module Alexandria
         library = selected_library
         books = selected_books
         @appbar.status = get_appbar_status library, books
-
-        unless @library_listview.has_focus?
+        #selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
+        
+        # Focus is the wrong idiom here.
+        unless @main_app.focus == @library_listview
+          log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
+          log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}"}
+          log.debug { "@library_listview: #{@library_listview.has_focus?} or @library_popup:#{@library_popup.has_focus?}" } #or selection: #{selection}"}
           log.debug { "@library_listview does *NOT* have focus" }
+          log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup["Properties"].sensitive = \
             @actiongroup["OnlineInformation"].sensitive = \
             books.length == 1
@@ -395,6 +405,8 @@ module Alexandria
             @actiongroup["DeselectAll"].sensitive = \
             @actiongroup["Move"].sensitive =
             @actiongroup["SetRating"].sensitive = !books.empty?
+
+          log.debug { "on_books_selection_changed Delete: #{@actiongroup["Delete"].sensitive?}" }
 
           if library.is_a?(SmartLibrary)
             @actiongroup["Delete"].sensitive =
@@ -431,6 +443,7 @@ module Alexandria
           end
           @actiongroup["Properties"].sensitive = selected_library.is_a?(SmartLibrary)
           @actiongroup["Delete"].sensitive = determine_delete_option
+          log.debug { "on_focus delete: #{@actiongroup["Delete"].sensitive?}" }
         else
           on_books_selection_changed
         end
@@ -801,7 +814,7 @@ module Alexandria
       def selected_books
         a = collate_selected_books(@notebook.page)
         selected = a.select { |x| x != nil }
-        log.debug { "Selected books = #{selected}" }
+        log.debug { "Selected books = #{selected.inspect}" }
         selected
       end
 
@@ -829,6 +842,7 @@ module Alexandria
         @actiongroup["AddBookManual"].sensitive = !smart 
         @actiongroup["Properties"].sensitive = true 
         @actiongroup["Delete"].sensitive = true #(@libraries.all_regular_libraries.length > 1)
+        log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }
       end
 
       def get_view_actiongroup
