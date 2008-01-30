@@ -60,8 +60,6 @@
       <menuitem action="Preferences"/>
     </menu>
     <menu action="ViewMenu">
-      <menuitem action="Refresh"/>
-      <separator/>
       <menuitem action="Sidepane"/>
       <menuitem action="Toolbar"/>
       <menuitem action="Statusbar"/>

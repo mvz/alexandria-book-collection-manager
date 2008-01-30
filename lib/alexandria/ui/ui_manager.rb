@@ -94,10 +94,10 @@ module Alexandria
                           Gtk::UIManager::TOOLITEM, false)
         @uimanager.add_ui(mid, "ui/MainToolbar/", "AddBook", "AddBook",
                           Gtk::UIManager::TOOLITEM, false)
-        @uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
-                          Gtk::UIManager::SEPARATOR, false)
-        @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
-                          Gtk::UIManager::TOOLITEM, false)
+        #@uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
+        #                  Gtk::UIManager::SEPARATOR, false)
+        #@uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
+        #                  Gtk::UIManager::TOOLITEM, false)
       end
 
       def setup_toolbar_filter_entry
@@ -459,9 +459,10 @@ module Alexandria
           selection.unselect_all
           selection.select_path(path)
         end
-        log.info { "select_a_book" }
+        log.info { "select_a_book: listview" }
         select_this_book.call(book, @listview) 
-        # select_this_book.call(book, @iconview) 
+        log.info { "select_a_book: listview" }
+        select_this_book.call(book, @iconview) 
         # TODO: Figure out why this frequently selects the wrong book!
       end
 
@@ -786,17 +787,19 @@ module Alexandria
         library = selected_library
         view = page == 0 ? @iconview : @listview 
         selection = page == 0 ? @iconview : @listview.selection
-        selection.selected_each do |iconview, path|
+        selection.selected_each do |treeview, path|
           path = view.model.convert_path_to_child_path(path)
-          path = @filtered_model.convert_path_to_child_path(path)
-          iter = @model.get_iter(path)
-          a << book_from_iter(library, iter)
+          if path
+            path = @filtered_model.convert_path_to_child_path(path)
+            iter = @model.get_iter(path)
+            a << book_from_iter(library, iter)
+          end
         end
         a
       end
 
       def selected_books
-        a = collate_selected_books @notebook.page 
+        a = collate_selected_books(@notebook.page)
         selected = a.select { |x| x != nil }
         log.debug { "Selected books = #{selected}" }
         selected
