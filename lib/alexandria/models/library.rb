@@ -423,8 +423,9 @@ module Alexandria
       end
       already_there = (File.exists?(yaml(book)) and
                        !@deleted_books.include?(book))
-
-      File.open(yaml(book), "w") { |io| io.puts book.to_yaml }
+      temp_book=book
+      temp_book.library=nil
+      File.open(yaml(temp_book), "w") { |io| io.puts temp_book.to_yaml }
 
       # Do not notify twice.
       if changed?
