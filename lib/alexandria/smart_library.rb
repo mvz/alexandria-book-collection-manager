@@ -339,7 +339,7 @@ module Alexandria
                 LeftOperand.new(:isbn, _("ISBN"), String),
                 LeftOperand.new(:authors, _("Authors"), String),
                 LeftOperand.new(:publisher, _("Publisher"), String),
-                LeftOperand.new(:publish_year, _("Publish Year"), Integer),
+                LeftOperand.new(:publishing_year, _("Publish Year"), Integer),
                 LeftOperand.new(:edition, _("Binding"), String),
                 LeftOperand.new(:rating, _("Rating"), Integer),
                 LeftOperand.new(:notes, _("Notes"), String),
