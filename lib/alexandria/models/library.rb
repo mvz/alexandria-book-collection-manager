@@ -613,7 +613,7 @@ module Alexandria
   end
 
   class Libraries
-    attr_reader :all_libraries, :ruined_books
+    attr_reader :all_libraries, :ruined_books, :deleted_books
 
     include Observable
     include Singleton
@@ -623,11 +623,15 @@ module Alexandria
       @all_libraries.concat(Library.loadall)
       @all_libraries.concat(SmartLibrary.loadall)
       ruined = []
+      deleted = []
       last = []
       all_regular_libraries.each {|library|
         ruined += library.ruined_books
+	#make deleted books from each library accessible so we don't crash on smart libraries	
+	deleted += library.deleted_books
       }
       @ruined_books = ruined
+      @deleted_books = deleted
     end
 
     def all_regular_libraries
@@ -667,6 +671,7 @@ module Alexandria
 
     def initialize
       @all_libraries = []
+      @deleted_books = []
     end
 
     def notify(action, library)

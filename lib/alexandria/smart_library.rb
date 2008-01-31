@@ -23,7 +23,7 @@ module Alexandria
 
     ALL_RULES, ANY_RULE = 1, 2
     attr_reader :name
-    attr_accessor :rules, :predicate_operator_rule
+    attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
     DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
     EXT = '.yaml'
@@ -38,6 +38,8 @@ module Alexandria
       libraries = Libraries.instance
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
+      #carry deleted books over from libraries that are part of the smart library
+      self.deleted_books=libraries.deleted_books
       @cache = {}
     end
 
