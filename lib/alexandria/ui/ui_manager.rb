@@ -388,7 +388,7 @@ module Alexandria
         books = selected_books
         @appbar.status = get_appbar_status library, books
         #selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
-        
+
         # Focus is the wrong idiom here.
         unless @main_app.focus == @library_listview
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
@@ -665,6 +665,12 @@ module Alexandria
           iter = @model.append
           fill_iter_with_book(iter, book)
           log.debug { "no iter for book #{book}" }
+        end
+        library = selected_library
+        if library.deleted_books.include?(book)
+          log.debug { "Stop! Don't delete this book! We re-added it!" }
+          library.undelete(book)
+          UndoManager.instance.push { undoable_delete(library, [book]) }
         end
         return iter
       end
@@ -988,72 +994,83 @@ module Alexandria
         end
       end
 
+      def get_previous_selected_library library
+        log.debug { "get_previous_selected_library: #{library}" }
+        previous_selected_library = selected_library
+        if previous_selected_library != library
+          select_library(library)
+        else
+          previous_selected_library = nil
+        end
+      end
+
+      def remove_library_iter
+        old_iter = @library_listview.selection.selected
+        next_iter = @library_listview.selection.selected
+        next_iter.next!
+        @library_listview.model.remove(old_iter)
+        @library_listview.selection.select_iter(next_iter)
+      end
+
       def undoable_delete(library, books=nil)
         # Deleting a library.
         if books.nil?
           library.delete_observer(self) if library.is_a?(Library)
           library.delete
           @libraries.remove_library(library)
-          if @library_separator_iter != nil and
-            @libraries.all_smart_libraries.empty?
-
-            @library_listview.model.remove(@library_separator_iter)
-            @library_separator_iter = nil
-          end
-          previous_selected_library = selected_library
-          if previous_selected_library != library
-            select_library(library)
-          else
-            previous_selected_library = nil
-          end
-          iter = @library_listview.selection.selected
-          next_iter = @library_listview.selection.selected
-          next_iter.next!
-          @library_listview.model.remove(iter)
-          @library_listview.selection.select_iter(next_iter)
+          remove_library_separator
+          remove_library_iter
+          get_previous_selected_library library
           setup_move_actions
-          select_library(previous_selected_library) \
-            unless previous_selected_library.nil?
-              # Deleting books.
-            else
-              books.each { |book| library.delete(book) }
-            end
-          UndoManager.instance.push { undoable_undelete(library, books) }
+          select_library(@previous_selected_library) unless @previous_selected_library.nil?
+          @previous_selected_library = nil
+        else
+          # Deleting books.
+          books.each { |book| library.delete(book) }
         end
+        UndoManager.instance.push { undoable_undelete(library, books) }
+      end
 
-        def undoable_undelete(library, books=nil)
-          # Undeleting a library.
-          if books.nil?
-            library.undelete
-            @libraries.add_library(library)
-            append_library(library)
-            setup_move_actions
-            library.add_observer(self) if library.is_a?(Library)
-            # Undeleting books.
-          else
-            books.each { |book| library.undelete(book) }
-          end
-          select_library(library)
-          UndoManager.instance.push { undoable_delete(library, books) }
+      def remove_library_separator
+        if @library_separator_iter != nil and @libraries.all_smart_libraries.empty?
+          @library_listview.model.remove(@library_separator_iter)
+          @library_separator_iter = nil
         end
+      end
 
-        def setup_window_icons
-          @main_app.icon = Icons::ALEXANDRIA_SMALL
-          Gtk::Window.set_default_icon_name("alexandria")
-          @main_app.icon_name = "alexandria"
+      def undoable_undelete(library, books=nil)
+        # Undeleting a library.
+        if books.nil?
+          library.undelete
+          @libraries.add_library(library)
+          append_library(library)
+          setup_move_actions
+          library.add_observer(self) if library.is_a?(Library)
+          # Undeleting books.
+        else
+          books.each { |book| library.undelete(book) }
         end
+        select_library(library)
+        UndoManager.instance.push { undoable_delete(library, books) }
+      end
 
-        ICONS_SORTS = [
-          Columns::TITLE, Columns::AUTHORS, Columns::ISBN,
-          Columns::PUBLISHER, Columns::EDITION, Columns::RATING, Columns::REDD, Columns::OWN, Columns::WANT
-        ]
+      def setup_window_icons
+        @main_app.icon = Icons::ALEXANDRIA_SMALL
+        Gtk::Window.set_default_icon_name("alexandria")
+        @main_app.icon_name = "alexandria"
+      end
 
-        def setup_books_iconview_sorting
-          sort_order = @prefs.reverse_icons ? Gtk::SORT_DESCENDING : Gtk::SORT_ASCENDING
-          mode = ICONS_SORTS[@prefs.arrange_icons_mode]
-          @iconview_model.set_sort_column_id(mode, sort_order)
-          @filtered_model.refilter # force redraw
-        end
+      ICONS_SORTS = [
+        Columns::TITLE, Columns::AUTHORS, Columns::ISBN,
+        Columns::PUBLISHER, Columns::EDITION, Columns::RATING, Columns::REDD, Columns::OWN, Columns::WANT
+      ]
+
+      def setup_books_iconview_sorting
+        sort_order = @prefs.reverse_icons ? Gtk::SORT_DESCENDING : Gtk::SORT_ASCENDING
+        mode = ICONS_SORTS[@prefs.arrange_icons_mode]
+        @iconview_model.set_sort_column_id(mode, sort_order)
+        @filtered_model.refilter # force redraw
       end
     end
   end
+end

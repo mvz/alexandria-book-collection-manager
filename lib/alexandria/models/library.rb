@@ -35,7 +35,7 @@ module Alexandria
     include Logging
 
     attr_reader :name
-    attr_accessor :ruined_books, :updating
+    attr_accessor :ruined_books, :updating, :deleted_books
     DIR = File.join(ENV['HOME'], '.alexandria')
     EXT = { :book => '.yaml', :cover => '.cover' }
 
@@ -404,7 +404,6 @@ module Alexandria
     def save(book, final=false)
       changed unless final
 
-
       # Let's initialize the saved identifier if not already
       # (backward compatibility from 0.4.0).
       book.saved_ident ||= book.ident
@@ -495,6 +494,7 @@ module Alexandria
         end
         @deleted_books << book
         i = self.index(book)
+        puts "i is #{i.inspect}"
         # We check object IDs there because the user could have added
         # a book with the same identifier as another book he/she
         # previously deleted and that he/she is trying to redo.
