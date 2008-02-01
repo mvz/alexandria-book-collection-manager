@@ -348,6 +348,7 @@ module Alexandria
                 LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
                 LeftOperand.new(:loaned_to, _("Loaning Person"), String),
                 LeftOperand.new(:redd, _("Read"), TrueClass),
+		LeftOperand.new(:redd_when, _("Date Read"), Time),
                 LeftOperand.new(:own, _("Own"), TrueClass),
                 LeftOperand.new(:want, _("Want"), TrueClass),
                ].sort
@@ -406,12 +407,12 @@ module Alexandria
                                     proc { |x, y| x < y })
         IS_AFTER = Operator.new(
                                 :is_after,
-                                _("is after"),
-                                IS_GREATER_THAN.proc)
+                                _("is after"),                              
+				proc { |x, y| x.to_i > y.to_i and x!=nil })
         IS_BEFORE = Operator.new(
                                  :is_before,
                                  _("is before"),
-                                 IS_LESS_THAN.proc)
+                                 proc { |x, y| x.to_i < y.to_i and x!=nil})
         IS_IN_LAST = Operator.new(
                                   :is_in_last_days,
                                   _("is in last"),
