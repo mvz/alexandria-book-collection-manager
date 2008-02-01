@@ -140,7 +140,11 @@ module Alexandria
         @book.loaned_since = Time.at(@date_loaned_since.time)
 
         @book.redd = @checkbutton_redd.active?
-	@book.redd_when = Time.at(@redd_date.time)
+	if @book.redd	
+		@book.redd_when = Time.at(@redd_date.time)
+	else
+		@book.redd_when = nil
+	end
         @book.own = @checkbutton_own.active?
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split
