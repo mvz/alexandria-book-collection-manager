@@ -1,3 +1,5 @@
+require 'alexandria/ui/iconview_tooltips'
+
 module Alexandria
   module UI
     module Columns
@@ -14,6 +16,7 @@ module Alexandria
       def initialize iconview, parent
         @parent = parent
         @iconview = @parent.iconview
+        @tooltips = IconViewTooltips.new(@iconview)
         @iconview_model = @parent.iconview_model
         @filtered_model = @parent.filtered_model
         @actiongroup = @parent.actiongroup
