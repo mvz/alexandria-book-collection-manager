@@ -19,6 +19,7 @@ require 'singleton'
 
 module Alexandria
   class BookProviders < Array
+    include Logging
     include Singleton
     include GetText
     GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -246,21 +247,21 @@ module Alexandria
     begin
       require 'alexandria/book_providers/amazon'
     rescue LoadError
-      puts "Can't load Ruby/Amazon, hence provider Amazon not available"
+      log.info { "Can't load Ruby/Amazon, hence provider Amazon not available" }
     end
 
     # mechanize is optional
     begin
       require 'alexandria/book_providers/dea_store_it'
     rescue LoadError
-      puts "Can't load mechanize, hence provider Deastore not available"
+      log.info { "Can't load mechanize, hence provider Deastore not available" }
     end
 
     # Ruby/ZOOM is optional
     begin
       require 'alexandria/book_providers/z3950'
     rescue LoadError
-      puts "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available"
+      log.info { "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available" }
     end
 
     attr_reader :abstract_classes

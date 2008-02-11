@@ -73,3 +73,4 @@ require 'alexandria/web_themes'
 # require $MACOSX ? 'alexandria/macui' : 'alexandria/ui'
 
 require 'alexandria/ui'
+require 'alexandria/console'
