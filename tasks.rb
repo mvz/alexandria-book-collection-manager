@@ -431,16 +431,16 @@ class AlexandriaBuild < Rake::TaskLib
         # HACK gconf
         gconf_dir = File.join(@debinstall.staging_dir, "/usr/share/gconf/schemas")
         FileUtils.mkdir_p(gconf_dir)
-        FileUtils.install("schemas/alexandria.schemas", gconf_dir, 0644)
+        FileUtils.install("schemas/alexandria.schemas", gconf_dir, :mode => 0644)
 
         # HACK copyright
         doc_dir = File.join(@debinstall.staging_dir, "/usr/share/doc/#{@name}")
         FileUtils.mkdir_p(doc_dir)
-        FileUtils.install("debian/copyright", doc_dir, 0644)
+        FileUtils.install("debian/copyright", doc_dir, :mode => 0644)
         FileUtils.rm_f(File.join(doc_dir, 'COPYING'))
         FileUtils.rm_f(File.join(doc_dir, 'INSTALL'))
-        FileUtils.install("debian/README.Debian", doc_dir, 0644)
-        FileUtils.install("debian/changelog", doc_dir, 0644)
+        FileUtils.install("debian/README.Debian", doc_dir, :mode => 0644)
+        FileUtils.install("debian/changelog", doc_dir, :mode => 0644)
 
         autogen_files = ["lib/alexandria/config.rb",
                          "lib/alexandria/version.rb",
