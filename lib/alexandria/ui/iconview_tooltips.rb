@@ -70,6 +70,7 @@ class IconViewTooltips
   def on_motion(view, event)
     tree_path = view.get_path(event.x, event.y)
     # TODO translate path a few times, for sorting & filtering...
+    # hmmm, actually seems to work. Report a bug if you can spot a failure
     if tree_path
       iter = view.model.get_iter(tree_path)
       if @latest_iter == nil
@@ -113,7 +114,7 @@ class IconViewTooltips
     end
     @latest_iter = nil
   end
-  
+
   def on_leave(view, event)
     @tooltip_window.hide()
   end

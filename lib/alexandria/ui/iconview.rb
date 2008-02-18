@@ -37,6 +37,7 @@ module Alexandria
 
         @iconview.signal_connect('selection-changed') do
           log.debug { "selection-changed" }
+          @tooltips.hide_tooltip
           @parent.on_books_selection_changed
         end
 
@@ -44,6 +45,7 @@ module Alexandria
           log.debug { "item-activated" }
           # Dirty hack to avoid the beginning of a drag within this
           # handler.
+          @tooltips.hide_tooltip
           Gtk.timeout_add(100) do
             @actiongroup["Properties"].activate
             false
