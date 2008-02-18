@@ -257,6 +257,15 @@ module Alexandria
       log.info { "Can't load mechanize, hence provider Deastore not available" }
     end
 
+    # new Amazon ECS 4 provider
+    begin
+      require 'alexandria/book_providers/amazon_ecs_util'
+      require 'alexandria/book_providers/amazon_ecs4'
+    rescue LoadError
+      puts "Can't load hpricot, hence provider Amazon not available"
+    end
+
+
     # Ruby/ZOOM is optional
     begin
       require 'alexandria/book_providers/z3950'
