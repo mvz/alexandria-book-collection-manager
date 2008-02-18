@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.2\n"
+"Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-18 13:56+0000\n"
-"PO-Revision-Date: 2007-12-17 23:00-0900\n"
+"PO-Revision-Date: 2008-02-18 23:40-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
 "MIME-Version: 1.0\n"
@@ -233,7 +233,7 @@ msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "'%s'から選択された全ての本を削除します。よろしいですか？"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
+#: ../lib/alexandmria/ui/dialogs/book_properties_dialog_base.rb:59
 msgid "Properties for '%s'"
 msgstr "'%s'の設定"
 
@@ -526,9 +526,8 @@ msgid "Library"
 msgstr "ライブラリ"
 
 #: ../lib/alexandria/ui/ui_manager.rb:728
-#, fuzzy
 msgid "Loading '%s'..."
-msgstr "'%s'を追加"
+msgstr "'%s'を読み込んでいます..."
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -868,9 +867,8 @@ msgid "Loaning Person"
 msgstr "貸し出した人"
 
 #: ../lib/alexandria/smart_library.rb:351
-#, fuzzy
 msgid "Date Read"
-msgstr "読んだ本"
+msgstr "読んだ日"
 
 #: ../lib/alexandria/smart_library.rb:360
 msgid "days"
@@ -957,9 +955,8 @@ msgid "ISBN List"
 msgstr "ISBNリスト"
 
 #: ../lib/alexandria/export_library.rb:108
-#, fuzzy
 msgid "iPod Notes"
-msgstr "ノート"
+msgstr "iPod用ノート"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "HTML Web Page"
@@ -1266,8 +1263,3 @@ msgstr "ブック・コレクション・マネージャ"
 msgid "Manage your book collection"
 msgstr "ブック・コレクション管理お手伝いプログラム"
 
-#~ msgid "_Refresh"
-#~ msgstr "再読込(_R)"
-
-#~ msgid "Reload the selected library"
-#~ msgstr "選択したライブラリを再読み込みします"
