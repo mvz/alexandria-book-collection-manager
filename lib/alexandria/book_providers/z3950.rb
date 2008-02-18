@@ -16,7 +16,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-$Z3950_DEBUG = $DEBUG
+## $Z3950_DEBUG = $DEBUG
 
 require 'zoom'
 require 'marc'
@@ -24,6 +24,7 @@ require 'marc'
 module Alexandria
   class BookProviders
     class Z3950Provider < AbstractProvider
+      include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -36,6 +37,9 @@ module Alexandria
         prefs.add("username", _("Username"), "", nil, false)
         prefs.add("password", _("Password"), "", nil, false)
         prefs.add("charset", _("Charset encoding"), "ISO-8859-1")
+
+        # HACK : piggybacking support
+        prefs.add("piggyback", "Piggyback", true, [true,false])
       end
 
       def search(criterion, type)
@@ -53,7 +57,7 @@ module Alexandria
         criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
         conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
         resultset = search_records(criterion, type, conn_count)
-        puts "total #{resultset.length}" if $Z3950_DEBUG
+        log.debug { "total #{resultset.length}" }
         raise NoResultsError if resultset.length == 0
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
@@ -73,19 +77,20 @@ module Alexandria
         results = []
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs['record_syntax'], 'USMARC')
-          puts marc_txt  if $Z3950_DEBUG
+          log.debug { marc_txt }
           marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
           marc = MARC::Record.new(marc_txt)
 
-          if $Z3950_DEBUG
-            puts "Parsing MARC"
-            puts "title: #{marc.title}"
-            puts "authors: #{marc.authors.join(', ')}"
-            puts "isbn: #{marc.isbn}, #{isbn}"
-            puts "publisher: #{marc.publisher}"
-            puts "publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
-            puts "edition: #{marc.edition}"
-          end
+          log.debug {
+            msg = "Parsing MARC"
+            msg += "\n title: #{marc.title}"
+            msg += "\n authors: #{marc.authors.join(', ')}"
+            msg += "\n isbn: #{marc.isbn}, #{isbn}"
+            msg += "\n publisher: #{marc.publisher}"
+            msg += "\n publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
+            msg += "\n edition: #{marc.edition}"
+            msg
+          }
 
           next if marc.title.nil? # or marc.authors.empty?
 
@@ -114,9 +119,13 @@ module Alexandria
           options['password'] = prefs['password']
         end
         hostname, port = prefs['hostname'], prefs['port'].to_i
-        puts "hostname #{hostname} port #{port} options #{options}" if $Z3950_DEBUG
+        log.debug { "hostname #{hostname} port #{port} options #{options}" }
         conn = ZOOM::Connection.new(options).connect(hostname, port)
         conn.database_name = prefs['database']
+
+        # HACK turn off piggybacking, just to see CMcG
+        ##conn.piggyback = false
+
         conn.preferred_record_syntax = prefs['record_syntax']
         conn.element_set_name = 'F'
         conn.count = conn_count
@@ -129,9 +138,34 @@ module Alexandria
         pqf = ""
         attr.each { |attr| pqf += "@attr 1=#{attr} "}
         pqf += "\"" + criterion.upcase + "\""
-        puts "pqf is #{pqf}, syntax #{prefs['record_syntax']}" if $Z3950_DEBUG
-        conn.search(pqf)
+        log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
+
+        begin
+          if prefs.variable_named("piggyback")
+            if not prefs['piggyback']
+              log.debug { "setting conn.piggyback to false" }
+              conn.piggyback = false
+            end
+          end
+          conn.search(pqf)
+        rescue Exception => ex
+          if /1005/ =~ ex.message
+            if prefs.variable_named("piggyback") and prefs['piggyback']
+              log.error { "Z39.50 search failed:: #{ex.message}" }
+              log.info { "Turning off piggybacking for this provider"}
+              prefs.variable_named('piggyback').new_value = false
+              conn = nil
+              search_records(criterion, type, conn_count)
+              # hopefully these precautions will prevent infinite loops here
+            else
+              raise ex
+            end
+          else
+            raise ex
+          end
+        end
       end
+
     end
 
 
@@ -186,7 +220,7 @@ module Alexandria
         criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
         conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
         resultset = search_records(criterion, type, conn_count)
-        puts "total #{resultset.length}" if $Z3950_DEBUG
+        log.debug { "total #{resultset.length}" }
         raise NoResultsError if resultset.length == 0
         results = books_from_sutrs(resultset)
         type == SEARCH_BY_ISBN ? results.first : results
@@ -204,7 +238,7 @@ module Alexandria
         results = []
         resultset[0..9].each do |record|
           text = record.render
-          puts text if $Z3950_DEBUG
+          log.debug { text }
           text = text.convert("UTF-8", prefs['charset'])
 
           title = isbn = publisher = publish_year = edition = nil
@@ -224,14 +258,15 @@ module Alexandria
             end
           end
 
-          if $Z3950_DEBUG
-            puts "Parsing SUTRS"
-            puts "title: #{title}"
-            puts "authors: #{authors.join(' and ')}"
-            puts "isbn: #{isbn}"
-            puts "publisher: #{publisher}"
-            puts "edition: #{edition}"
-          end
+          log.debug {
+            msg = "Parsing SUTRS"
+            msg += "\n title: #{title}"
+            msg += "\n authors: #{authors.join(' and ')}"
+            msg += "\n isbn: #{isbn}"
+            msg += "\n publisher: #{publisher}"
+            msg += "\n edition: #{edition}"
+            msg
+          }
 
           if title # and !authors.empty?
             book = Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
@@ -269,7 +304,7 @@ module Alexandria
         isbn = type == SEARCH_BY_ISBN ? criterion : nil
         criterion = canonicalise_isbn_with_dashes(criterion)
         resultset = search_records(criterion, type, 0)
-        puts "total #{resultset.length}" if $Z3950_DEBUG
+        log.debug { "total #{resultset.length}" }
         raise NoResultsError if resultset.length == 0
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results

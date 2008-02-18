@@ -46,6 +46,14 @@ module Alexandria
         @controls.clear
 
         provider.prefs.read.each do |variable|
+          if variable.name == 'piggyback'
+            next
+            # ULTRA-HACK!! for bug #13302
+            # not displaying the visual choice, as its usually unnecessary
+            # Either way, this is confusing to the user: FIX
+            #    -   Cathal Mc Ginley 2008-02-18
+          end
+
           label = Gtk::Label.new("_" + variable.description + ":")
           label.use_underline = true
           label.xalign = 0
