@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandia 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-01-23 23:40+0000\n"
+"POT-Creation-Date: 2008-02-18 13:56+0000\n"
 "PO-Revision-Date: 2008-01-29 04:31+0000\n"
 "Last-Translator: Cathal Mc Ginley <cathal.alexandria@gnostai.org>\n"
 "Language-Team: Irish\n"
@@ -14,6 +14,141 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:110
+#: ../lib/alexandria/ui/ui_manager.rb:110
+msgid "Type here the search criterion"
+msgstr "Scríobh na téarmaí cuardaigh anseo"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:123
+#: ../lib/alexandria/ui/ui_manager.rb:123
+msgid "Match everything"
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:125
+#: ../lib/alexandria/ui/ui_manager.rb:125
+msgid "Title contains"
+msgstr "Sa tideal, tá"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:126
+#: ../lib/alexandria/ui/ui_manager.rb:126
+msgid "Authors contain"
+msgstr "In údair, tá"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:127
+#: ../lib/alexandria/ui/ui_manager.rb:127
+msgid "ISBN contains"
+msgstr "In ISBN, tá"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:128
+#: ../lib/alexandria/ui/ui_manager.rb:128
+msgid "Publisher contains"
+msgstr "San fhoilsitheoir, tá"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:129
+#: ../lib/alexandria/ui/ui_manager.rb:129
+msgid "Notes contain"
+msgstr "Sna nótaí, tá"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:130
+#: ../lib/alexandria/ui/ui_manager.rb:130
+msgid "Tags contain"
+msgstr "Sna lipéid, tá"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:145
+#: ../lib/alexandria/ui/ui_manager.rb:145
+msgid "Change the search type"
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:150
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "View as Icons"
+msgstr "Taispeán mar Íomhaigh"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:151
+#: ../lib/alexandria/ui/ui_manager.rb:151
+msgid "View as List"
+msgstr "Taispeán mar Liosta"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:164
+#: ../lib/alexandria/ui/ui_manager.rb:164
+msgid "Choose how to show books"
+msgstr "Togh an dóigh leis na leabhartaí a thaispeáint"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:344
+#: ../lib/alexandria/ui/ui_manager.rb:347
+msgid "Library '%s' selected"
+msgstr "Bailiúchán '%s' toghtha"
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:351
+#: ../lib/alexandria/ui/ui_manager.rb:354
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:356
+#: ../lib/alexandria/ui/ui_manager.rb:359
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:363
+#: ../lib/alexandria/ui/ui_manager.rb:366
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:369
+#: ../lib/alexandria/ui/ui_manager.rb:378
+msgid "'%s' selected"
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:372
+#: ../lib/alexandria/ui/ui_manager.rb:381
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:510
+#: ../lib/alexandria/ui/ui_manager.rb:528
+msgid "Unable to launch the web browser"
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:511
+#: ../lib/alexandria/ui/ui_manager.rb:529
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:523
+#: ../lib/alexandria/ui/ui_manager.rb:541
+msgid "Unable to launch the mail reader"
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:524
+#: ../lib/alexandria/ui/ui_manager.rb:542
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:560
+#: ../lib/alexandria/ui/ui_manager.rb:578
+msgid ""
+"These books do not conform to the ISBN-13 standard. We will attempt to "
+"replace them from the book providers. Otherwise, we will turn them into "
+"manual entries.\n"
+msgstr ""
+
+#: ../lib/alexandria/ui/,wip/ui_manager.rb:932
+#: ../lib/alexandria/ui/ui_manager.rb:944
+msgid "In '_%s'"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -120,19 +255,19 @@ msgstr ""
 "foinsí. An mian leat an leabhar a choinneail ach an ISBN a athrú, nó é "
 "chealadh?"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:158
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:159
 msgid "A problem occurred while downloading images"
 msgstr "Tharla fadhb le linn aimsithe na h-íomhá"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:262
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:272
 msgid "Unable to find matches for your search"
 msgstr "Níl macsamhail ar fáil ar do chuardach"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:268
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:278
 msgid "%s, by %s"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:350
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:360
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correctly, and try again."
@@ -140,12 +275,12 @@ msgstr ""
 "Níl an EAN/ISBN a thug tú ceart. Bí cinnte go bhfuil sé scríobtha i gceart, "
 "agus deán ath-iarracht."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:398
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:408
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
 msgid "Couldn't add the book"
 msgstr "Níorbh fhéidir an leabhar a chur leis"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:456
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:466
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "Tá '%s' ar fáil cheana féin i '%s' (le teideal '%s')"
 
@@ -182,17 +317,17 @@ msgstr ""
 msgid "There's a problem"
 msgstr "Tá fadhb anseo"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:110
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:119
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:112
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:121
 msgid "Couldn't modify the book"
 msgstr "Níorbh fhéidir an leabhar a mhionathrú"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:111
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:113
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr "Tá an EAN/ISBN a tugeadh, sa bailiúchán seo cheana féin."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:120
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:122
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
@@ -241,7 +376,9 @@ msgstr "Theip ar onnmhaireadh"
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
-msgstr "Is comhad coitchianta an sprioc ainmnithe '%s'. Tá comhadlann riachtanach don obair seo. Toigh ceann agus deán athiarracht."
+msgstr ""
+"Is comhad coitchianta an sprioc ainmnithe '%s'. Tá comhadlann riachtanach "
+"don obair seo. Toigh ceann agus deán athiarracht."
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
 msgid "Not a directory"
@@ -315,63 +452,63 @@ msgstr "Tréithe"
 msgid "Author"
 msgstr "_Údair"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:119
 msgid "Select a cover image"
 msgstr "Togh samhail clúdaigh"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
 msgid "No Cover"
 msgstr "Gan Samhail Clúdaigh"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:163
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d lá"
 msgstr[1] "%d lá"
 
-#: ../lib/alexandria/ui/listview.rb:32 ../lib/alexandria/smart_library.rb:336
+#: ../lib/alexandria/ui/listview.rb:32 ../lib/alexandria/smart_library.rb:338
 msgid "Title"
 msgstr "_Tideal"
 
-#: ../lib/alexandria/ui/listview.rb:85 ../lib/alexandria/smart_library.rb:338
+#: ../lib/alexandria/ui/listview.rb:85 ../lib/alexandria/smart_library.rb:340
 msgid "Authors"
 msgstr "_Údair"
 
-#: ../lib/alexandria/ui/listview.rb:86 ../lib/alexandria/smart_library.rb:337
+#: ../lib/alexandria/ui/listview.rb:86 ../lib/alexandria/smart_library.rb:339
 msgid "ISBN"
 msgstr "_ISBN"
 
-#: ../lib/alexandria/ui/listview.rb:87 ../lib/alexandria/smart_library.rb:339
+#: ../lib/alexandria/ui/listview.rb:87 ../lib/alexandria/smart_library.rb:341
 msgid "Publisher"
 msgstr "_Foilsitheoir"
 
-#: ../lib/alexandria/ui/listview.rb:88 ../lib/alexandria/smart_library.rb:340
+#: ../lib/alexandria/ui/listview.rb:88 ../lib/alexandria/smart_library.rb:342
 msgid "Publish Year"
 msgstr "Blian Foilsithe"
 
-#: ../lib/alexandria/ui/listview.rb:89 ../lib/alexandria/smart_library.rb:341
+#: ../lib/alexandria/ui/listview.rb:89 ../lib/alexandria/smart_library.rb:343
 msgid "Binding"
 msgstr "Clúdach"
 
-#: ../lib/alexandria/ui/listview.rb:92 ../lib/alexandria/smart_library.rb:98
-#: ../lib/alexandria/smart_library.rb:348
+#: ../lib/alexandria/ui/listview.rb:92 ../lib/alexandria/smart_library.rb:100
+#: ../lib/alexandria/smart_library.rb:350
 msgid "Read"
 msgstr "Léighte"
 
-#: ../lib/alexandria/ui/listview.rb:93 ../lib/alexandria/smart_library.rb:349
+#: ../lib/alexandria/ui/listview.rb:93 ../lib/alexandria/smart_library.rb:352
 msgid "Own"
 msgstr "Imo Sheilbh"
 
-#: ../lib/alexandria/ui/listview.rb:94 ../lib/alexandria/smart_library.rb:350
+#: ../lib/alexandria/ui/listview.rb:94 ../lib/alexandria/smart_library.rb:353
 msgid "Want"
 msgstr "Ba Mhaith Liom"
 
-#: ../lib/alexandria/ui/listview.rb:120 ../lib/alexandria/smart_library.rb:344
+#: ../lib/alexandria/ui/listview.rb:120 ../lib/alexandria/smart_library.rb:346
 msgid "Tags"
 msgstr "Lipéid"
 
 # Barúil, nó Meas
-#: ../lib/alexandria/ui/listview.rb:145 ../lib/alexandria/smart_library.rb:342
+#: ../lib/alexandria/ui/listview.rb:145 ../lib/alexandria/smart_library.rb:344
 msgid "Rating"
 msgstr "Barúil"
 
@@ -399,398 +536,285 @@ msgstr "Tá bailiúchán den ainm '%s' ann cheana féin. Togh ainm eile."
 msgid "Library"
 msgstr "Bailiúchán"
 
-#: ../lib/alexandria/ui/ui_manager.rb:110
-msgid "Type here the search criterion"
-msgstr "Scríobh na téarmaí cuardaigh anseo"
-
-#: ../lib/alexandria/ui/ui_manager.rb:123
-msgid "Match everything"
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:125
-msgid "Title contains"
-msgstr "Sa tideal, tá"
-
-#: ../lib/alexandria/ui/ui_manager.rb:126
-msgid "Authors contain"
-msgstr "In údair, tá"
-
-#: ../lib/alexandria/ui/ui_manager.rb:127
-msgid "ISBN contains"
-msgstr "In ISBN, tá"
-
-#: ../lib/alexandria/ui/ui_manager.rb:128
-msgid "Publisher contains"
-msgstr "San fhoilsitheoir, tá"
-
-#: ../lib/alexandria/ui/ui_manager.rb:129
-msgid "Notes contain"
-msgstr "Sna nótaí, tá"
-
-#: ../lib/alexandria/ui/ui_manager.rb:130
-msgid "Tags contain"
-msgstr "Sna lipéid, tá"
-
-#: ../lib/alexandria/ui/ui_manager.rb:145
-msgid "Change the search type"
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:150
-msgid "View as Icons"
-msgstr "Taispeán mar Íomhaigh"
-
-#: ../lib/alexandria/ui/ui_manager.rb:151
-msgid "View as List"
-msgstr "Taispeán mar Liosta"
-
-#: ../lib/alexandria/ui/ui_manager.rb:164
-msgid "Choose how to show books"
-msgstr "Togh an dóigh leis na leabhartaí a thaispeáint"
-
-#: ../lib/alexandria/ui/ui_manager.rb:344
-msgid "Library '%s' selected"
-msgstr "Bailiúchán '%s' toghtha"
-
-#: ../lib/alexandria/ui/ui_manager.rb:351
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:356
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:363
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:369
-msgid "'%s' selected"
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:372
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:505
-msgid "Unable to launch the web browser"
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:506
-msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:518
-msgid "Unable to launch the mail reader"
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:519
-msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:555
-msgid ""
-"These books do not conform to the ISBN-13 standard. We will attempt to "
-"replace them from the book providers. Otherwise, we will turn them into "
-"manual entries.\n"
-msgstr ""
-
-#: ../lib/alexandria/ui/ui_manager.rb:924
-msgid "In '_%s'"
+#: ../lib/alexandria/ui/ui_manager.rb:728
+msgid "Loading '%s'..."
 msgstr ""
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
-msgstr "Chan uimhireacha ISBN dhilstineacha na línte seo leanas, agus níor allmhairiaghadh iad:"
+msgstr ""
+"Chan uimhireacha ISBN dhilstineacha na línte seo leanas, agus níor "
+"allmhairiaghadh iad:"
 
-#: ../lib/alexandria/ui/callbacks.rb:233
+#: ../lib/alexandria/ui/callbacks.rb:232
 msgid "_Library"
 msgstr "_Bailiúchán"
 
-#: ../lib/alexandria/ui/callbacks.rb:234
+#: ../lib/alexandria/ui/callbacks.rb:233
 msgid "_New Library"
 msgstr "Bailiúchan _Úr"
 
-#: ../lib/alexandria/ui/callbacks.rb:235
+#: ../lib/alexandria/ui/callbacks.rb:233
 msgid "Create a new library"
 msgstr "Cruthaigh bailiúchán úr"
 
-#: ../lib/alexandria/ui/callbacks.rb:236
+#: ../lib/alexandria/ui/callbacks.rb:234
 msgid "New _Smart Library..."
 msgstr "Bailiúchán _Cliste Úr..."
 
-#: ../lib/alexandria/ui/callbacks.rb:237
+#: ../lib/alexandria/ui/callbacks.rb:234
 msgid "Create a new smart library"
 msgstr "Cruthaigh bailiúchán cliste úr"
 
-#: ../lib/alexandria/ui/callbacks.rb:239
+#: ../lib/alexandria/ui/callbacks.rb:235
 msgid "_Add Book..."
 msgstr "Leabhar _Breise..."
 
-#: ../lib/alexandria/ui/callbacks.rb:240
+#: ../lib/alexandria/ui/callbacks.rb:235
 msgid "Add a new book from the Internet"
 msgstr "Cuir leabhar úr on Idirlíon isteach"
 
-#: ../lib/alexandria/ui/callbacks.rb:241
+#: ../lib/alexandria/ui/callbacks.rb:236
 msgid "Add Book _Manually..."
 msgstr "Cuir leabhar isteach de láimh..."
 
-#: ../lib/alexandria/ui/callbacks.rb:242
+#: ../lib/alexandria/ui/callbacks.rb:236
 msgid "Add a new book manually"
 msgstr "Cuir leabhar úr isteach de lamh"
 
-#: ../lib/alexandria/ui/callbacks.rb:244
+#: ../lib/alexandria/ui/callbacks.rb:237
 msgid "_Import..."
 msgstr "Allmhairigh"
 
-#: ../lib/alexandria/ui/callbacks.rb:245
+#: ../lib/alexandria/ui/callbacks.rb:237
 msgid "Import a library"
 msgstr "Allmhairigh bailiúcháin"
 
-#: ../lib/alexandria/ui/callbacks.rb:246
+#: ../lib/alexandria/ui/callbacks.rb:238
 msgid "_Export..."
 msgstr "_Onnmhairigh..."
 
-#: ../lib/alexandria/ui/callbacks.rb:247
+#: ../lib/alexandria/ui/callbacks.rb:238
 msgid "Export the selected library"
 msgstr "Onnmhairigh an bailiúchán togtha"
 
-#: ../lib/alexandria/ui/callbacks.rb:248
+#: ../lib/alexandria/ui/callbacks.rb:239
 msgid "_Acquire from Scanner..."
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:249
+#: ../lib/alexandria/ui/callbacks.rb:239
 msgid "Acquire books from a scanner"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:250
+#: ../lib/alexandria/ui/callbacks.rb:240
 msgid "_Properties"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:251
+#: ../lib/alexandria/ui/callbacks.rb:240
 msgid "Edit the properties of the selected book"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:252
+#: ../lib/alexandria/ui/callbacks.rb:241
 msgid "_Quit"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:253
+#: ../lib/alexandria/ui/callbacks.rb:241
 msgid "Quit the program"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:254
+#: ../lib/alexandria/ui/callbacks.rb:242
 msgid "_Edit"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:255
+#: ../lib/alexandria/ui/callbacks.rb:243
 msgid "_Undo"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:243
 msgid "Undo the last action"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:244
 msgid "_Redo"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:244
 msgid "Redo the undone action"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:245
 msgid "_Select All"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:260
+#: ../lib/alexandria/ui/callbacks.rb:245
 msgid "Select all visible books"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:261
+#: ../lib/alexandria/ui/callbacks.rb:246
 msgid "Dese_lect All"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:262
+#: ../lib/alexandria/ui/callbacks.rb:246
 msgid "Deselect everything"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:263
+#: ../lib/alexandria/ui/callbacks.rb:247
 msgid "My _Rating"
 msgstr "Mo _Bharamhuil"
 
-#: ../lib/alexandria/ui/callbacks.rb:264
+#: ../lib/alexandria/ui/callbacks.rb:248
 msgid "None"
 msgstr "Gan baramhuil ar fáil"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:249
 msgid "One Star"
 msgstr "Olc"
 
-#: ../lib/alexandria/ui/callbacks.rb:267
+#: ../lib/alexandria/ui/callbacks.rb:250
 msgid "Two Stars"
 msgstr "Measara"
 
-#: ../lib/alexandria/ui/callbacks.rb:269
+#: ../lib/alexandria/ui/callbacks.rb:251
 msgid "Three Stars"
 msgstr "Maith"
 
-#: ../lib/alexandria/ui/callbacks.rb:271
+#: ../lib/alexandria/ui/callbacks.rb:252
 msgid "Four Stars"
 msgstr "An-Mhaith"
 
-#: ../lib/alexandria/ui/callbacks.rb:273
+#: ../lib/alexandria/ui/callbacks.rb:253
 msgid "Five Stars"
 msgstr "Fíor-Mhaith"
 
-#: ../lib/alexandria/ui/callbacks.rb:275
+#: ../lib/alexandria/ui/callbacks.rb:254
 msgid "_Move"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:276
+#: ../lib/alexandria/ui/callbacks.rb:255
 msgid "_Rename"
 msgstr "_Athainmnigh"
 
-#: ../lib/alexandria/ui/callbacks.rb:277
+#: ../lib/alexandria/ui/callbacks.rb:256
 msgid "_Delete"
 msgstr "_Scrios"
 
-#: ../lib/alexandria/ui/callbacks.rb:278
+#: ../lib/alexandria/ui/callbacks.rb:256
 msgid "Delete the selected books or library"
 msgstr "Scrios na leabhartaí nó an bailiúchán togtha"
 
-#: ../lib/alexandria/ui/callbacks.rb:279
+#: ../lib/alexandria/ui/callbacks.rb:257
 msgid "_Search"
 msgstr "_Faigh"
 
-#: ../lib/alexandria/ui/callbacks.rb:280
+#: ../lib/alexandria/ui/callbacks.rb:257
 msgid "Filter books"
 msgstr "Scag leabhartaí"
 
-#: ../lib/alexandria/ui/callbacks.rb:281
+#: ../lib/alexandria/ui/callbacks.rb:258
 msgid "_Clear Results"
 msgstr "_Glan Torthaí"
 
-#: ../lib/alexandria/ui/callbacks.rb:282
+#: ../lib/alexandria/ui/callbacks.rb:258
 msgid "Clear the search results"
 msgstr "Glan torthaí an chuardaithe"
 
-#: ../lib/alexandria/ui/callbacks.rb:284
+#: ../lib/alexandria/ui/callbacks.rb:259
 msgid "_Preferences"
 msgstr "Rogha _Suímh"
 
-#: ../lib/alexandria/ui/callbacks.rb:285
+#: ../lib/alexandria/ui/callbacks.rb:259
 msgid "Change Alexandria's settings"
 msgstr "Athraigh rogha suímh Alexandria"
 
-#: ../lib/alexandria/ui/callbacks.rb:286
+#: ../lib/alexandria/ui/callbacks.rb:260
 msgid "_View"
 msgstr "_Radharc"
 
-#: ../lib/alexandria/ui/callbacks.rb:287
-msgid "_Refresh"
-msgstr "Ath_nuaidh"
-
-#: ../lib/alexandria/ui/callbacks.rb:288
-msgid "Reload the selected library"
-msgstr "Athlíon an bailiúchán togtha"
-
-#: ../lib/alexandria/ui/callbacks.rb:289
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "Arran_ge Icons"
 msgstr "Cuir Íomhaighthe in _Ord"
 
-#: ../lib/alexandria/ui/callbacks.rb:290
+#: ../lib/alexandria/ui/callbacks.rb:262
 msgid "Display Online _Information"
 msgstr "Taispeáin eolas ar _idirlíon"
 
-#: ../lib/alexandria/ui/callbacks.rb:291
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "_Help"
 msgstr "_Cuidiú"
 
-#: ../lib/alexandria/ui/callbacks.rb:293
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "Submit _Bug Report"
 msgstr "Tabhar tuairisc ar _locht"
 
-#: ../lib/alexandria/ui/callbacks.rb:294
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "Submit a bug report to the developers"
 msgstr "Tabhar trairisc do na táirgitheoirí"
 
-#: ../lib/alexandria/ui/callbacks.rb:296
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "Contents"
 msgstr "Clár"
 
-#: ../lib/alexandria/ui/callbacks.rb:297
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "View Alexandria's manual"
 msgstr "Taispeán an láimh-leabhar"
 
-#: ../lib/alexandria/ui/callbacks.rb:298
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "_About"
 msgstr "Fán chlár"
 
-#: ../lib/alexandria/ui/callbacks.rb:299
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "Show information about Alexandria"
 msgstr "Taispeáin eolas fá Alexandria"
 
-#: ../lib/alexandria/ui/callbacks.rb:324
+#: ../lib/alexandria/ui/callbacks.rb:292
 msgid "Side _Pane"
 msgstr "Barra Uirlis"
 
-#: ../lib/alexandria/ui/callbacks.rb:326
+#: ../lib/alexandria/ui/callbacks.rb:294
 msgid "_Toolbar"
 msgstr "Barra Uirlis"
 
-#: ../lib/alexandria/ui/callbacks.rb:328
+#: ../lib/alexandria/ui/callbacks.rb:296
 msgid "_Statusbar"
 msgstr "Barra Stádais"
 
-#: ../lib/alexandria/ui/callbacks.rb:330
+#: ../lib/alexandria/ui/callbacks.rb:298
 msgid "Re_versed Order"
 msgstr "Ord Tuathail"
 
-#: ../lib/alexandria/ui/callbacks.rb:335
+#: ../lib/alexandria/ui/callbacks.rb:303
 msgid "View as _Icons"
 msgstr "Taispeáin mar _Íomhaigh"
 
-#: ../lib/alexandria/ui/callbacks.rb:336
+#: ../lib/alexandria/ui/callbacks.rb:304
 msgid "View as _List"
 msgstr "Taispeáin mar _Liosta"
 
-#: ../lib/alexandria/ui/callbacks.rb:340
+#: ../lib/alexandria/ui/callbacks.rb:308
 msgid "By _Title"
 msgstr "De réir _Teidil"
 
-#: ../lib/alexandria/ui/callbacks.rb:341
+#: ../lib/alexandria/ui/callbacks.rb:309
 msgid "By _Authors"
 msgstr "De réir _Údair"
 
-#: ../lib/alexandria/ui/callbacks.rb:342
+#: ../lib/alexandria/ui/callbacks.rb:310
 msgid "By _ISBN"
 msgstr "De réir _ISBN"
 
-#: ../lib/alexandria/ui/callbacks.rb:343
+#: ../lib/alexandria/ui/callbacks.rb:311
 msgid "By _Publisher"
 msgstr "De réir _Foilsitheóra"
 
-#: ../lib/alexandria/ui/callbacks.rb:344
+#: ../lib/alexandria/ui/callbacks.rb:312
 msgid "By _Binding"
 msgstr "De réir _Clúdaigh"
 
-#: ../lib/alexandria/ui/callbacks.rb:345
+#: ../lib/alexandria/ui/callbacks.rb:313
 msgid "By _Rating"
 msgstr "De réir _Measa"
 
-#: ../lib/alexandria/ui/callbacks.rb:349
+#: ../lib/alexandria/ui/callbacks.rb:317
 msgid "At _%s"
 msgstr "Ag _%s"
 
@@ -820,96 +844,101 @@ msgstr ""
 msgid "ISBN List (*.txt)"
 msgstr "Liosta ISBN (*.txt)"
 
-#: ../lib/alexandria/smart_library.rb:86
+#: ../lib/alexandria/smart_library.rb:88
 msgid "Favorite"
 msgstr "Ard Mheas"
 
-#: ../lib/alexandria/smart_library.rb:92
+#: ../lib/alexandria/smart_library.rb:94
 msgid "Loaned"
 msgstr "Ar Iaseacht"
 
-#: ../lib/alexandria/smart_library.rb:104
+#: ../lib/alexandria/smart_library.rb:106
 msgid "Owned"
 msgstr "In mo Sheilbh"
 
-#: ../lib/alexandria/smart_library.rb:113
+#: ../lib/alexandria/smart_library.rb:115
 msgid "Wishlist"
 msgstr "Mian-Liosta"
 
-#: ../lib/alexandria/smart_library.rb:343
-#: ../data/alexandria/glade/book_properties_dialog.glade:732
+#: ../lib/alexandria/smart_library.rb:345
+#: ../data/alexandria/glade/book_properties_dialog.glade:1225
 msgid "Notes"
 msgstr "Nótaí"
 
-#: ../lib/alexandria/smart_library.rb:345
+#: ../lib/alexandria/smart_library.rb:347
 msgid "Loaning State"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:346
+#: ../lib/alexandria/smart_library.rb:348
 msgid "Loaning Date"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:347
+#: ../lib/alexandria/smart_library.rb:349
 msgid "Loaning Person"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:357
+#: ../lib/alexandria/smart_library.rb:351
+#, fuzzy
+msgid "Date Read"
+msgstr "Léighte"
+
+#: ../lib/alexandria/smart_library.rb:360
 msgid "days"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:367
+#: ../lib/alexandria/smart_library.rb:370
 msgid "is set"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:371
+#: ../lib/alexandria/smart_library.rb:374
 msgid "is not set"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:375
+#: ../lib/alexandria/smart_library.rb:378
 msgid "is"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:379
+#: ../lib/alexandria/smart_library.rb:382
 msgid "is not"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:383
+#: ../lib/alexandria/smart_library.rb:386
 msgid "contains"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:387
+#: ../lib/alexandria/smart_library.rb:390
 msgid "does not contain"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:391
+#: ../lib/alexandria/smart_library.rb:394
 msgid "starts with"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:395
+#: ../lib/alexandria/smart_library.rb:398
 msgid "ends with"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:399
+#: ../lib/alexandria/smart_library.rb:402
 msgid "is greater than"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:403
+#: ../lib/alexandria/smart_library.rb:406
 msgid "is less than"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:407
+#: ../lib/alexandria/smart_library.rb:410
 msgid "is after"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:411
+#: ../lib/alexandria/smart_library.rb:414
 msgid "is before"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:415
+#: ../lib/alexandria/smart_library.rb:418
 msgid "is in last"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:419
+#: ../lib/alexandria/smart_library.rb:422
 msgid "is not in last"
 msgstr ""
 
@@ -945,41 +974,43 @@ msgstr "Nótaí iPod"
 msgid "HTML Web Page"
 msgstr ""
 
-#: ../lib/alexandria/models/library.rb:54
+#: ../lib/alexandria/models/library.rb:56
 msgid "Untitled"
 msgstr ""
 
-#: ../lib/alexandria/models/library.rb:223
+#: ../lib/alexandria/models/library.rb:225
 msgid "My Library"
 msgstr "Mo Leabhartaí"
 
-#: ../lib/alexandria/book_providers.rb:52
+#: ../lib/alexandria/book_providers.rb:53
 msgid "Couldn't reach the provider '%s': timeout expired."
 msgstr ""
 
-#: ../lib/alexandria/book_providers.rb:56
+#: ../lib/alexandria/book_providers.rb:57
 msgid "Couldn't reach the provider '%s': socket error (%s)."
 msgstr ""
 
-#: ../lib/alexandria/book_providers.rb:60
+#: ../lib/alexandria/book_providers.rb:61
 msgid ""
 "No results were found.  Make sure your search criterion is spelled "
 "correctly, and try again."
 msgstr ""
 
-#: ../lib/alexandria/book_providers.rb:65
+#: ../lib/alexandria/book_providers.rb:66
 msgid "Too many results for that search."
 msgstr ""
 
-#: ../lib/alexandria/book_providers.rb:68
+#: ../lib/alexandria/book_providers.rb:69
 msgid "Invalid search type."
 msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:36
 msgid "Locale"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon.rb:34
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:37
 msgid "Development token"
 msgstr ""
 
@@ -1019,11 +1050,11 @@ msgstr ""
 msgid "Charset encoding"
 msgstr ""
 
-#: ../lib/alexandria/book_providers/z3950.rb:146
+#: ../lib/alexandria/book_providers/z3950.rb:150
 msgid "Library of Congress (Usa)"
 msgstr ""
 
-#: ../lib/alexandria/book_providers/z3950.rb:174
+#: ../lib/alexandria/book_providers/z3950.rb:178
 msgid "British Library"
 msgstr ""
 
@@ -1031,26 +1062,26 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: ../data/alexandria/glade/new_book_dialog.glade:69
-#: ../data/alexandria/glade/acquire_dialog.glade:85
-msgid "Save _in:"
+#: ../data/alexandria/glade/new_book_dialog.glade:31
+#: ../data/alexandria/glade/book_properties_dialog.glade:187
+msgid "_ISBN:"
+msgstr "_ISBN"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:46
+msgid "_Search:"
 msgstr ""
 
-#: ../data/alexandria/glade/new_book_dialog.glade:93
+#: ../data/alexandria/glade/new_book_dialog.glade:97
 msgid ""
 "by title\n"
 "by authors\n"
 "by keyword"
 msgstr ""
 
-#: ../data/alexandria/glade/new_book_dialog.glade:180
-msgid "_Search:"
+#: ../data/alexandria/glade/new_book_dialog.glade:161
+#: ../data/alexandria/glade/acquire_dialog.glade:85
+msgid "Save _in:"
 msgstr ""
-
-#: ../data/alexandria/glade/new_book_dialog.glade:197
-#: ../data/alexandria/glade/book_properties_dialog.glade:94
-msgid "_ISBN:"
-msgstr "_ISBN"
 
 #: ../data/alexandria/glade/main_app.glade:17
 msgid "Main Window"
@@ -1072,83 +1103,83 @@ msgstr ""
 msgid "Status messages."
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:37
+#: ../data/alexandria/glade/book_properties_dialog.glade:86
 msgid "_Title:"
 msgstr "_Tideal"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:51
+#: ../data/alexandria/glade/book_properties_dialog.glade:115
 msgid "_Publisher:"
 msgstr "_Foilsitheoir"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:148
+#: ../data/alexandria/glade/book_properties_dialog.glade:279
 msgid "Add an author"
 msgstr "Údar eile"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:166
+#: ../data/alexandria/glade/book_properties_dialog.glade:307
 msgid "Remove an author"
 msgstr "Bain amach údar"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:202
+#: ../data/alexandria/glade/book_properties_dialog.glade:351
 msgid "_Authors:"
 msgstr "_Údair:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:218
+#: ../data/alexandria/glade/book_properties_dialog.glade:380
 msgid "_Binding:"
 msgstr "Clúdach:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:248
+#: ../data/alexandria/glade/book_properties_dialog.glade:430
 msgid "Publish _year:"
 msgstr "_Blían foilsithe:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:278
+#: ../data/alexandria/glade/book_properties_dialog.glade:480
 msgid "Tags:"
 msgstr "Lipéid:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:321
+#: ../data/alexandria/glade/book_properties_dialog.glade:553
 msgid "_Cover:"
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:334
+#: ../data/alexandria/glade/book_properties_dialog.glade:579
 msgid "Click to pick a cover"
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:359
+#: ../data/alexandria/glade/book_properties_dialog.glade:620
 msgid "Own it?"
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:376
+#: ../data/alexandria/glade/book_properties_dialog.glade:646
 msgid "Read it?"
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:397
+#: ../data/alexandria/glade/book_properties_dialog.glade:695
 msgid "Want it?"
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:418
-msgid "Rating:"
-msgstr ""
-
-#: ../data/alexandria/glade/book_properties_dialog.glade:430
+#: ../data/alexandria/glade/book_properties_dialog.glade:721
 msgid "Click on the stars to rate the book"
 msgstr ""
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:582
+#: ../data/alexandria/glade/book_properties_dialog.glade:927
+msgid "Rating:"
+msgstr ""
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:967
 msgid "General"
 msgstr "Gnéithe Ginerálta"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:599
+#: ../data/alexandria/glade/book_properties_dialog.glade:998
 msgid "This book is _loaned"
 msgstr "Tá an leabhar seo ar _iaseacht"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:647
+#: ../data/alexandria/glade/book_properties_dialog.glade:1076
 msgid "_To:"
 msgstr "_Dó:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:661
+#: ../data/alexandria/glade/book_properties_dialog.glade:1106
 msgid "_Since:"
 msgstr "_Ó:"
 
-#: ../data/alexandria/glade/book_properties_dialog.glade:701
+#: ../data/alexandria/glade/book_properties_dialog.glade:1166
 msgid "Loaning"
 msgstr "Iasacht"
 
@@ -1238,3 +1269,9 @@ msgstr ""
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr ""
+
+#~ msgid "_Refresh"
+#~ msgstr "Ath_nuaidh"
+
+#~ msgid "Reload the selected library"
+#~ msgstr "Athlíon an bailiúchán togtha"
