@@ -1,10 +1,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Alexandria 0.6.2\n"
+"Project-Id-Version: Alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-18 13:56+0000\n"
-"PO-Revision-Date: 2007-12-19 13:00+0100\n"
+"PO-Revision-Date: 2008-02-18 19:00+0100\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -542,9 +542,8 @@ msgid "Library"
 msgstr "Bibliotheek"
 
 #: ../lib/alexandria/ui/ui_manager.rb:728
-#, fuzzy
 msgid "Loading '%s'..."
-msgstr "'_%s' wordt toegevoegd"
+msgstr "'_%s' wordt geladen..."
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -886,9 +885,8 @@ msgid "Loaning Person"
 msgstr "Uitgeleend aan"
 
 #: ../lib/alexandria/smart_library.rb:351
-#, fuzzy
 msgid "Date Read"
-msgstr "Gelezen"
+msgstr "Leesdatum"
 
 #: ../lib/alexandria/smart_library.rb:360
 msgid "days"
@@ -975,9 +973,8 @@ msgid "ISBN List"
 msgstr "ISBN-lijst"
 
 #: ../lib/alexandria/export_library.rb:108
-#, fuzzy
 msgid "iPod Notes"
-msgstr "Notities"
+msgstr "iPod notities"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "HTML Web Page"
@@ -1288,10 +1285,10 @@ msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
 
 #~ msgid "_Refresh"
-#~ msgstr "_Herladen"
+#~ msgstr "_Verversen"
 
 #~ msgid "Reload the selected library"
-#~ msgstr "De geselecteerde bibliotheek herladen"
+#~ msgstr "De geselecteerde bibliotheek opnieuw laden"
 
 #~ msgid "n/a"
 #~ msgstr "n.v.t."
