@@ -21,6 +21,9 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
+# Modified by Cathal Mc Ginley 2008-02-18
+# added Amazon::Ecs.transport - to enable Alexandria's proxy support
+
 require 'net/http'
 require 'hpricot'
 require 'cgi'
@@ -89,13 +92,20 @@ module Amazon
       self.send_request(opts)
     end
 
+    # HACK : copied from book_providers.rb
+    def self.transport
+      config = Alexandria::Preferences.instance.http_proxy_config
+      config ? Net::HTTP.Proxy(*config) : Net::HTTP
+    end
+
+
     # Generic send request to ECS REST service. You have to specify the :operation parameter.
     def self.send_request(opts)
       opts = self.options.merge(opts) if self.options
       request_url = prepare_url(opts)
       log "Request URL: #{request_url}"
 
-      res = Net::HTTP.get_response(URI::parse(request_url))
+      res = self.transport.get_response(URI::parse(request_url))
       unless res.kind_of? Net::HTTPSuccess
         raise Amazon::RequestError, "HTTP Response: #{res.code} #{res.message}"
       end

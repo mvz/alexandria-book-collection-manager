@@ -57,8 +57,6 @@ module Alexandria
           ENV['http_proxy'] = url
         end
 
-        ##req = Amazon::Search::Request.new(prefs["dev_token"])
-
         Amazon::Ecs.options = {:aWS_access_key_id => prefs["dev_token"] }
         ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonECSProvider::LOCALES.dup
@@ -73,6 +71,7 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             log.debug { "Amazon ECS search #{request_locale} for #{criterion}" }
+            # This isn't ideal : I'd like to do an ISBN/EAN-specific search
             res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
             res.items.each do |item|
               products << item
@@ -133,6 +132,7 @@ module Alexandria
           #if req.locale == 'us'
           #    title = title.convert('ISO-8859-1','UTF-8')
           #end
+          # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!!
 
           media = atts.get('binding').squeeze(' ')
           media = nil if media == 'Unknown Binding'
