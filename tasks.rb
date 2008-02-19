@@ -124,7 +124,7 @@ class AlexandriaBuild < Rake::TaskLib
   end
 
   class FileConfig < BuildConfig
-    attr_accessor :source, :rdoc, :data, :icons
+    attr_accessor :source, :rdoc, :data, :menu, :icons
     def initialize(build)
       super(build)
     end
@@ -327,6 +327,7 @@ class AlexandriaBuild < Rake::TaskLib
       default_groups.push(*desktop_installation)
       default_groups.push(*locale_installation)
       default_groups.push(*manpage_installation)
+      default_groups.push(*menu_installation)
       default_groups.push(*documentation_installation)
       default_groups
     end
@@ -375,6 +376,11 @@ class AlexandriaBuild < Rake::TaskLib
         ['doc', docdir_files, doc_dir, 0644],
         ['.', curdir_files, doc_dir, 0644]
       ]
+    end
+
+    def menu_installation
+      menu_dir = File.join(sharedir, 'menu') 
+      [['data/menu', build.files.menu, menu_dir, 0644]]
     end
 
     def manpage_installation
