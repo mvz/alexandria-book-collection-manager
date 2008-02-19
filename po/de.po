@@ -1,10 +1,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.2\n"
+"Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
-"PO-Revision-Date: 2007-12-17 16:31+0100\n"
+"PO-Revision-Date: 2008-02-19 22:34:40+01:00\n"
 "Last-Translator: Joachim Breitner <mail@joachim-breitner.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -516,7 +516,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/ui_manager.rb:583
 msgid "Repair Book Data"
-msgstr ""
+msgstr "Buch-Daten reparieren"
 
 #: ../lib/alexandria/ui/ui_manager.rb:584
 msgid ""
@@ -524,15 +524,17 @@ msgid ""
 "to attempt to download new information for them from the online book "
 "providers?\n"
 msgstr ""
+"Die Dateien für die folgenden Bücher sind beschädigt oder leer. Möchten Sie "
+"versuchen, neue Informationen für diese Bücher von den Internet-"
+"Quellen herunterzuladen?\n"
 
 #: ../lib/alexandria/ui/ui_manager.rb:641
 msgid "Added '%s' to library '%s'"
-msgstr ""
+msgstr "'%s' der Bibliothek '%s' hinzugefügt."
 
 #: ../lib/alexandria/ui/ui_manager.rb:794
-#, fuzzy
 msgid "Loading '%s'..."
-msgstr "Füge '_%s' hinzu"
+msgstr "Lade '%s'..."
 
 #: ../lib/alexandria/ui/ui_manager.rb:1010
 msgid "In '_%s'"
@@ -877,9 +879,8 @@ msgid "Loaning Person"
 msgstr "Verliehen an"
 
 #: ../lib/alexandria/smart_library.rb:351
-#, fuzzy
 msgid "Date Read"
-msgstr "Gelesen"
+msgstr "Gelesen am"
 
 #: ../lib/alexandria/smart_library.rb:360
 msgid "days"
@@ -966,9 +967,8 @@ msgid "ISBN List"
 msgstr "ISBN-Liste"
 
 #: ../lib/alexandria/export_library.rb:108
-#, fuzzy
 msgid "iPod Notes"
-msgstr "Bemerkungen"
+msgstr "iPod-Bemerkungen"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "HTML Web Page"
