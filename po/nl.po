@@ -60,12 +60,12 @@ msgstr "Wijzig zoektype"
 #: ../lib/alexandria/ui/,wip/ui_manager.rb:150
 #: ../lib/alexandria/ui/ui_manager.rb:150
 msgid "View as Icons"
-msgstr "Toon als Iconen"
+msgstr "Toon als iconen"
 
 #: ../lib/alexandria/ui/,wip/ui_manager.rb:151
 #: ../lib/alexandria/ui/ui_manager.rb:151
 msgid "View as List"
-msgstr "Toon als Lijst"
+msgstr "Toon als lijst"
 
 #: ../lib/alexandria/ui/,wip/ui_manager.rb:164
 #: ../lib/alexandria/ui/ui_manager.rb:164
@@ -95,8 +95,8 @@ msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken"
 #: ../lib/alexandria/ui/ui_manager.rb:366
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek, %d ongewaardeerd"
-msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken, %d ongewaardeerd"
+msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek, %d zonder waardering"
+msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken, %d zonder waardering"
 
 #: ../lib/alexandria/ui/,wip/ui_manager.rb:369
 #: ../lib/alexandria/ui/ui_manager.rb:378
@@ -152,7 +152,7 @@ msgstr ""
 #: ../lib/alexandria/ui/,wip/ui_manager.rb:932
 #: ../lib/alexandria/ui/ui_manager.rb:944
 msgid "In '_%s'"
-msgstr "In '_%s'"
+msgstr "Naar '_%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -413,7 +413,7 @@ msgstr "alle"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
 msgid "any"
-msgstr "elke"
+msgstr "een"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:118
 msgid "of the following rules:"
@@ -425,7 +425,7 @@ msgstr "Voldoen aan de volgende regel:"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
 msgid "Adding '%s'"
-msgstr "'_%s' wordt toegevoegd"
+msgstr "'%s' wordt toegevoegd"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
 #: ../data/alexandria/glade/new_book_dialog.glade:8
@@ -543,7 +543,7 @@ msgstr "Bibliotheek"
 
 #: ../lib/alexandria/ui/ui_manager.rb:728
 msgid "Loading '%s'..."
-msgstr "'_%s' wordt geladen..."
+msgstr "'%s' wordt geladen..."
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -565,7 +565,7 @@ msgstr "Maak een nieuwe bibliotheek aan"
 
 #: ../lib/alexandria/ui/callbacks.rb:234
 msgid "New _Smart Library..."
-msgstr "Nieuwe _Slimme bibliotheek..."
+msgstr "Nieuwe _slimme bibliotheek..."
 
 #: ../lib/alexandria/ui/callbacks.rb:234
 msgid "Create a new smart library"
@@ -573,7 +573,7 @@ msgstr "Maak een nieuwe slimme bibliotheek aan"
 
 #: ../lib/alexandria/ui/callbacks.rb:235
 msgid "_Add Book..."
-msgstr "Boek _Toevoegen..."
+msgstr "Boek _toevoegen..."
 
 #: ../lib/alexandria/ui/callbacks.rb:235
 msgid "Add a new book from the Internet"
@@ -581,7 +581,7 @@ msgstr "Voeg een nieuw boek toe vanaf het internet"
 
 #: ../lib/alexandria/ui/callbacks.rb:236
 msgid "Add Book _Manually..."
-msgstr "Boek Hand_matig Toevoegen..."
+msgstr "Boek hand_matig toevoegen..."
 
 #: ../lib/alexandria/ui/callbacks.rb:236
 msgid "Add a new book manually"
@@ -657,7 +657,7 @@ msgstr "Selecteer alle zichtbare boeken"
 
 #: ../lib/alexandria/ui/callbacks.rb:246
 msgid "Dese_lect All"
-msgstr "Alles _Deselecteren"
+msgstr "Alles _deselecteren"
 
 #: ../lib/alexandria/ui/callbacks.rb:246
 msgid "Deselect everything"
@@ -665,7 +665,7 @@ msgstr "Alles deselecteren"
 
 #: ../lib/alexandria/ui/callbacks.rb:247
 msgid "My _Rating"
-msgstr "Mijn _Waardering"
+msgstr "Mijn _waardering"
 
 #: ../lib/alexandria/ui/callbacks.rb:248
 msgid "None"
@@ -717,7 +717,7 @@ msgstr "Boeken filteren"
 
 #: ../lib/alexandria/ui/callbacks.rb:258
 msgid "_Clear Results"
-msgstr "Resultaten _Wissen"
+msgstr "Resultaten _wissen"
 
 #: ../lib/alexandria/ui/callbacks.rb:258
 msgid "Clear the search results"
@@ -777,7 +777,7 @@ msgstr "Zij_paneel"
 
 #: ../lib/alexandria/ui/callbacks.rb:294
 msgid "_Toolbar"
-msgstr "_Gereedschapsbalk"
+msgstr "_Knoppenbalk"
 
 #: ../lib/alexandria/ui/callbacks.rb:296
 msgid "_Statusbar"
@@ -785,23 +785,23 @@ msgstr "_Statusbalk"
 
 #: ../lib/alexandria/ui/callbacks.rb:298
 msgid "Re_versed Order"
-msgstr "_Omgekeerde Volgorde"
+msgstr "_Omgekeerde volgorde"
 
 #: ../lib/alexandria/ui/callbacks.rb:303
 msgid "View as _Icons"
-msgstr "Toon als _Iconen"
+msgstr "Toon als _iconen"
 
 #: ../lib/alexandria/ui/callbacks.rb:304
 msgid "View as _List"
-msgstr "Toon als _Lijst"
+msgstr "Toon als _lijst"
 
 #: ../lib/alexandria/ui/callbacks.rb:308
 msgid "By _Title"
-msgstr "Op _Titel"
+msgstr "Op _titel"
 
 #: ../lib/alexandria/ui/callbacks.rb:309
 msgid "By _Authors"
-msgstr "Op _Auteurs"
+msgstr "Op _auteurs"
 
 #: ../lib/alexandria/ui/callbacks.rb:310
 msgid "By _ISBN"
@@ -809,15 +809,15 @@ msgstr "Op _ISBN"
 
 #: ../lib/alexandria/ui/callbacks.rb:311
 msgid "By _Publisher"
-msgstr "Op _Uitgever"
+msgstr "Op _uitgever"
 
 #: ../lib/alexandria/ui/callbacks.rb:312
 msgid "By _Binding"
-msgstr "Op _Band"
+msgstr "Op _band"
 
 #: ../lib/alexandria/ui/callbacks.rb:313
 msgid "By _Rating"
-msgstr "Op _Waardering"
+msgstr "Op _waardering"
 
 #: ../lib/alexandria/ui/callbacks.rb:317
 msgid "At _%s"
@@ -978,7 +978,7 @@ msgstr "iPod notities"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "HTML Web Page"
-msgstr "HTML Webpagina"
+msgstr "HTML webpagina"
 
 #: ../lib/alexandria/models/library.rb:56
 msgid "Untitled"
@@ -1108,11 +1108,11 @@ msgstr "_Bibliotheken:"
 
 #: ../data/alexandria/glade/main_app.glade:111
 msgid "Book listing."
-msgstr "Boekenlijst:"
+msgstr "Boekenlijst."
 
 #: ../data/alexandria/glade/main_app.glade:194
 msgid "Status messages."
-msgstr "Statusmeldingen"
+msgstr "Statusmeldingen."
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:86
 msgid "_Title:"
