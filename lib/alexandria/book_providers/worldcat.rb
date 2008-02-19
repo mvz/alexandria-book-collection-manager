@@ -61,7 +61,31 @@ module Alexandria
         p req if $DEBUG
         data = transport.get(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          to_book(data) #rescue raise NoResultsError
+          book_rslt = to_book(data) #rescue raise NoResultsError
+          book = book_rslt[0]
+
+          #require 'pp'    ##
+          #puts "WorldCat" ##
+          #pp book    ##
+
+          begin
+            if book.isbn.nil?
+              ## this often happens because the html for a single book
+              ## lists multiple ISBNs, so we add the one we searched by here
+              isbn = Library.canonicalise_isbn(criterion)
+              ## This is amazing, we need to create a new book so that
+              ## the broken saved_ident value doesn't persist!
+              ## This domain model SO needs an overhaul...
+              new_book = Book.new(book.title, book.authors, isbn,
+                                  book.publisher, book.publishing_year,
+                                  book.edition)
+              return [new_book]
+            else
+              return book_rslt
+            end
+          rescue Exception => ex
+            puts ex
+          end
         else
           begin
             results = []
