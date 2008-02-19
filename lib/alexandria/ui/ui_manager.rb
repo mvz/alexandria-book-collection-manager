@@ -25,12 +25,12 @@ module Alexandria
         setup_window_icons
         setup_callbacks
         create_uimanager
+        add_menus_and_popups_from_xml 
         setup_toolbar
         setup_move_actions
         setup_active_model
         setup_dependents  
         setup_accel_group
-        add_menus_and_popups_from_xml 
         setup_menus
         setup_popups
         setup_window_events 
@@ -165,12 +165,15 @@ module Alexandria
       end
 
       def setup_book_providers
+        log.debug { "setup_book_providers" }
         mid = @uimanager.new_merge_id
         BookProviders.each do |provider|
+
           name = provider.action_name
           [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
                 "ui/BookPopup/OnlineInformation/",
                 "ui/NoBookPopup/OnlineInformation/" ].each do |path|
+            log.debug { "Adding #{name} to #{path}" }
             @uimanager.add_ui(mid, path, name, name,
                               Gtk::UIManager::MENUITEM, false)
                 end
