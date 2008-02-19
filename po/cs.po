@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-18 13:56+0000\n"
+"POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-01-05 21:48+0100\n"
 "Last-Translator: Petr Vanek <vanous@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -16,151 +16,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Poedit-Language: Czech\n"
 "X-Poedit-Country: CZECH REPUBLIC\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:110
-#: ../lib/alexandria/ui/ui_manager.rb:110
-msgid "Type here the search criterion"
-msgstr "Zde napište hledací kritéria"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:123
-#: ../lib/alexandria/ui/ui_manager.rb:123
-msgid "Match everything"
-msgstr "Prohledávat vše"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:125
-#: ../lib/alexandria/ui/ui_manager.rb:125
-msgid "Title contains"
-msgstr "Název obsahuje"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:126
-#: ../lib/alexandria/ui/ui_manager.rb:126
-msgid "Authors contain"
-msgstr "Autoři obsahují"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:127
-#: ../lib/alexandria/ui/ui_manager.rb:127
-msgid "ISBN contains"
-msgstr "ISBN obsahuje"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:128
-#: ../lib/alexandria/ui/ui_manager.rb:128
-msgid "Publisher contains"
-msgstr "Vydavatel obsahuje"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:129
-#: ../lib/alexandria/ui/ui_manager.rb:129
-msgid "Notes contain"
-msgstr "Poznámky obsahují"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:130
-#: ../lib/alexandria/ui/ui_manager.rb:130
-msgid "Tags contain"
-msgstr "Značky obsahují"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:145
-#: ../lib/alexandria/ui/ui_manager.rb:145
-msgid "Change the search type"
-msgstr "Změnit druh hledání"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:150
-#: ../lib/alexandria/ui/ui_manager.rb:150
-msgid "View as Icons"
-msgstr "Zobrazit jako ikony"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:151
-#: ../lib/alexandria/ui/ui_manager.rb:151
-msgid "View as List"
-msgstr "Zobrazit jako seznam"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:164
-#: ../lib/alexandria/ui/ui_manager.rb:164
-msgid "Choose how to show books"
-msgstr "Zvolte jak zobrazit knihy"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:344
-#: ../lib/alexandria/ui/ui_manager.rb:347
-msgid "Library '%s' selected"
-msgstr "Vybrána knihovna '%s'"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:351
-#: ../lib/alexandria/ui/ui_manager.rb:354
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "Vybrána knihovna '%s', %d neohodnocená kniha"
-msgstr[1] "Vybrána knihovna '%s', %d neohodnocené knihy"
-msgstr[2] "Vybrána knihovna '%s', %d neohodnocených knih"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:356
-#: ../lib/alexandria/ui/ui_manager.rb:359
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "Vybrána knihovna '%s', %d kniha"
-msgstr[1] "Vybrána knihovna '%s', %d knihy"
-msgstr[2] "Vybrána knihovna '%s', %d knih"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:363
-#: ../lib/alexandria/ui/ui_manager.rb:366
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Vybrána knihovna '%s', %d kniha, neohodnoceno: %d"
-msgstr[1] "Vybrána knihovna '%s', %d knihy, neohodnoceno: %d"
-msgstr[2] "Vybrána knihovna '%s', %d knih, neohodnoceno: %d"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:369
-#: ../lib/alexandria/ui/ui_manager.rb:378
-msgid "'%s' selected"
-msgstr "Vybráno '%s'"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:372
-#: ../lib/alexandria/ui/ui_manager.rb:381
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] "Vybrána %d kniha"
-msgstr[1] "Vybrány %d knihy"
-msgstr[2] "Vybráno %d knih"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:510
-#: ../lib/alexandria/ui/ui_manager.rb:528
-msgid "Unable to launch the web browser"
-msgstr "Nelze spustit prohlížeč webových stránek·"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:511
-#: ../lib/alexandria/ui/ui_manager.rb:529
-msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Zkontrolujte, zda je nastavený výchozí webový prohlížeč a zkuste to znovu."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:523
-#: ../lib/alexandria/ui/ui_manager.rb:541
-msgid "Unable to launch the mail reader"
-msgstr "Nelze spustit program pro čtení pošty."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:524
-#: ../lib/alexandria/ui/ui_manager.rb:542
-msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Zkontrolujete, zda je nastaven výchozí program pro čtení pošty, a zkuste to "
-"znovu."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:560
-#: ../lib/alexandria/ui/ui_manager.rb:578
-msgid ""
-"These books do not conform to the ISBN-13 standard. We will attempt to "
-"replace them from the book providers. Otherwise, we will turn them into "
-"manual entries.\n"
-msgstr ""
-"Tyto knihy neodpovídají standardu ISBN-13. Pokusíme se je nahradit daty od "
-"poskytovatelů knižních dat. V opačném případě budou převedeny na manuální "
-"položky.\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:932
-#: ../lib/alexandria/ui/ui_manager.rb:944
-msgid "In '_%s'"
-msgstr "Do '_%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -292,27 +147,27 @@ msgstr "Knihu nelze přidat"
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' již existuje v '%s' (s názvem '%s')."
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:93
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
 msgid "Preferences for %s"
 msgstr "Nastavení pro %s"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:118
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
 msgid "New Provider"
 msgstr "Nový poskytovatel"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:133
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
 msgid "_Name:"
 msgstr "_Jméno:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:145
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
 msgid "_Type:"
 msgstr "_Typ:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:291
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Jste si jisti, že chcete natrvalo odstranit poskytovatele '%s'?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:307
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -549,10 +404,136 @@ msgstr "Knihovna se jménem '%s' již existuje.  Zvolte prosím jiné jméno."
 msgid "Library"
 msgstr "Knihovna"
 
-#: ../lib/alexandria/ui/ui_manager.rb:728
+#: ../lib/alexandria/ui/ui_manager.rb:110
+msgid "Type here the search criterion"
+msgstr "Zde napište hledací kritéria"
+
+#: ../lib/alexandria/ui/ui_manager.rb:123
+msgid "Match everything"
+msgstr "Prohledávat vše"
+
+#: ../lib/alexandria/ui/ui_manager.rb:125
+msgid "Title contains"
+msgstr "Název obsahuje"
+
+#: ../lib/alexandria/ui/ui_manager.rb:126
+msgid "Authors contain"
+msgstr "Autoři obsahují"
+
+#: ../lib/alexandria/ui/ui_manager.rb:127
+msgid "ISBN contains"
+msgstr "ISBN obsahuje"
+
+#: ../lib/alexandria/ui/ui_manager.rb:128
+msgid "Publisher contains"
+msgstr "Vydavatel obsahuje"
+
+#: ../lib/alexandria/ui/ui_manager.rb:129
+msgid "Notes contain"
+msgstr "Poznámky obsahují"
+
+#: ../lib/alexandria/ui/ui_manager.rb:130
+msgid "Tags contain"
+msgstr "Značky obsahují"
+
+#: ../lib/alexandria/ui/ui_manager.rb:145
+msgid "Change the search type"
+msgstr "Změnit druh hledání"
+
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "View as Icons"
+msgstr "Zobrazit jako ikony"
+
+#: ../lib/alexandria/ui/ui_manager.rb:151
+msgid "View as List"
+msgstr "Zobrazit jako seznam"
+
+#: ../lib/alexandria/ui/ui_manager.rb:164
+msgid "Choose how to show books"
+msgstr "Zvolte jak zobrazit knihy"
+
+#: ../lib/alexandria/ui/ui_manager.rb:350
+msgid "Library '%s' selected"
+msgstr "Vybrána knihovna '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:357
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "Vybrána knihovna '%s', %d neohodnocená kniha"
+msgstr[1] "Vybrána knihovna '%s', %d neohodnocené knihy"
+msgstr[2] "Vybrána knihovna '%s', %d neohodnocených knih"
+
+#: ../lib/alexandria/ui/ui_manager.rb:362
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "Vybrána knihovna '%s', %d kniha"
+msgstr[1] "Vybrána knihovna '%s', %d knihy"
+msgstr[2] "Vybrána knihovna '%s', %d knih"
+
+#: ../lib/alexandria/ui/ui_manager.rb:369
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] "Vybrána knihovna '%s', %d kniha, neohodnoceno: %d"
+msgstr[1] "Vybrána knihovna '%s', %d knihy, neohodnoceno: %d"
+msgstr[2] "Vybrána knihovna '%s', %d knih, neohodnoceno: %d"
+
+#: ../lib/alexandria/ui/ui_manager.rb:381
+msgid "'%s' selected"
+msgstr "Vybráno '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:384
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "Vybrána %d kniha"
+msgstr[1] "Vybrány %d knihy"
+msgstr[2] "Vybráno %d knih"
+
+#: ../lib/alexandria/ui/ui_manager.rb:534
+msgid "Unable to launch the web browser"
+msgstr "Nelze spustit prohlížeč webových stránek·"
+
+#: ../lib/alexandria/ui/ui_manager.rb:535
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Zkontrolujte, zda je nastavený výchozí webový prohlížeč a zkuste to znovu."
+
+#: ../lib/alexandria/ui/ui_manager.rb:547
+msgid "Unable to launch the mail reader"
+msgstr "Nelze spustit program pro čtení pošty."
+
+#: ../lib/alexandria/ui/ui_manager.rb:548
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Zkontrolujete, zda je nastaven výchozí program pro čtení pošty, a zkuste to "
+"znovu."
+
+#: ../lib/alexandria/ui/ui_manager.rb:583
+msgid "Repair Book Data"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:584
+msgid ""
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:641
+msgid "Added '%s' to library '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:794
 #, fuzzy
 msgid "Loading '%s'..."
 msgstr "Přidávám '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:1010
+msgid "In '_%s'"
+msgstr "Do '_%s'"
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -996,7 +977,7 @@ msgstr "HTML webová stránka"
 msgid "Untitled"
 msgstr "Nepojmenovaná"
 
-#: ../lib/alexandria/models/library.rb:225
+#: ../lib/alexandria/models/library.rb:233
 msgid "My Library"
 msgstr "Moje knihovna"
 
@@ -1025,12 +1006,12 @@ msgid "Invalid search type."
 msgstr "Chybný druh hledání."
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:36
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:34
 msgid "Locale"
 msgstr "Pobočka"
 
 #: ../lib/alexandria/book_providers/amazon.rb:34
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:37
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:35
 msgid "Development token"
 msgstr "Vývojářský symbol"
 
@@ -1042,39 +1023,39 @@ msgstr "Přičleněné ID"
 msgid "Spanish Culture Ministry"
 msgstr "Španělské ministerstvo kultury"
 
-#: ../lib/alexandria/book_providers/z3950.rb:32
+#: ../lib/alexandria/book_providers/z3950.rb:33
 msgid "Hostname"
 msgstr "Jméno počítače"
 
-#: ../lib/alexandria/book_providers/z3950.rb:33
+#: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Port"
 msgstr "Port"
 
-#: ../lib/alexandria/book_providers/z3950.rb:34
+#: ../lib/alexandria/book_providers/z3950.rb:35
 msgid "Database"
 msgstr "Databáze"
 
-#: ../lib/alexandria/book_providers/z3950.rb:35
+#: ../lib/alexandria/book_providers/z3950.rb:36
 msgid "Record syntax"
 msgstr "Syntax záznamu"
 
-#: ../lib/alexandria/book_providers/z3950.rb:36
+#: ../lib/alexandria/book_providers/z3950.rb:37
 msgid "Username"
 msgstr "Uživatelské jméno"
 
-#: ../lib/alexandria/book_providers/z3950.rb:37
+#: ../lib/alexandria/book_providers/z3950.rb:38
 msgid "Password"
 msgstr "Heslo"
 
-#: ../lib/alexandria/book_providers/z3950.rb:38
+#: ../lib/alexandria/book_providers/z3950.rb:39
 msgid "Charset encoding"
 msgstr "Kódování"
 
-#: ../lib/alexandria/book_providers/z3950.rb:150
+#: ../lib/alexandria/book_providers/z3950.rb:180
 msgid "Library of Congress (Usa)"
 msgstr "Kongresová knihovna USA"
 
-#: ../lib/alexandria/book_providers/z3950.rb:178
+#: ../lib/alexandria/book_providers/z3950.rb:208
 msgid "British Library"
 msgstr "British Library"
 
@@ -1296,6 +1277,15 @@ msgstr "Správce sbírky knih"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Spravovat vaši sbírku knih"
+
+#~ msgid ""
+#~ "These books do not conform to the ISBN-13 standard. We will attempt to "
+#~ "replace them from the book providers. Otherwise, we will turn them into "
+#~ "manual entries.\n"
+#~ msgstr ""
+#~ "Tyto knihy neodpovídají standardu ISBN-13. Pokusíme se je nahradit daty "
+#~ "od poskytovatelů knižních dat. V opačném případě budou převedeny na "
+#~ "manuální položky.\n"
 
 #~ msgid "_Refresh"
 #~ msgstr "_Obnovit"

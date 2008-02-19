@@ -80,6 +80,14 @@ module Alexandria
 
           if not File.size? test[1]
             log.warn { "Book file #{test[1]} was empty"}
+            md = /([\dxX]{10,13})#{EXT[:book]}/.match(filename)
+            if md
+              file_isbn = md[1]
+              ruined_books << [nil, file_isbn, library]
+            else
+              log.warn { "Filename #{filename} does not contain an ISBN"}
+              #TODO delete this file...
+            end
             next
           end
           book = self.regularize_book_from_yaml(test[1])
@@ -420,7 +428,8 @@ module Alexandria
         notify_observers(self, BOOK_UPDATED, book) unless final
         book.saved_ident = book.ident
       end
-      already_there = (File.exists?(yaml(book)) and
+      ##was File.exists? but that returns true for empty files... CathalMagus
+      already_there = (File.size?(yaml(book)) and
                        !@deleted_books.include?(book))
       temp_book=book
       temp_book.library=nil
@@ -627,8 +636,8 @@ module Alexandria
       last = []
       all_regular_libraries.each {|library|
         ruined += library.ruined_books
-	#make deleted books from each library accessible so we don't crash on smart libraries	
-	deleted += library.deleted_books
+        #make deleted books from each library accessible so we don't crash on smart libraries
+        deleted += library.deleted_books
       }
       @ruined_books = ruined
       @deleted_books = deleted

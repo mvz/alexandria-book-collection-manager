@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-18 13:56+0000\n"
+"POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-02-18 23:40-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
@@ -15,145 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:110
-#: ../lib/alexandria/ui/ui_manager.rb:110
-msgid "Type here the search criterion"
-msgstr "検索する内容をここに入力してください"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:123
-#: ../lib/alexandria/ui/ui_manager.rb:123
-msgid "Match everything"
-msgstr "全検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:125
-#: ../lib/alexandria/ui/ui_manager.rb:125
-msgid "Title contains"
-msgstr "タイトル検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:126
-#: ../lib/alexandria/ui/ui_manager.rb:126
-msgid "Authors contain"
-msgstr "作者検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:127
-#: ../lib/alexandria/ui/ui_manager.rb:127
-msgid "ISBN contains"
-msgstr "ISBN検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:128
-#: ../lib/alexandria/ui/ui_manager.rb:128
-msgid "Publisher contains"
-msgstr "出版社検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:129
-#: ../lib/alexandria/ui/ui_manager.rb:129
-msgid "Notes contain"
-msgstr "ノート検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:130
-#: ../lib/alexandria/ui/ui_manager.rb:130
-msgid "Tags contain"
-msgstr "タグ検索"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:145
-#: ../lib/alexandria/ui/ui_manager.rb:145
-msgid "Change the search type"
-msgstr "検索タイプを変更します"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:150
-#: ../lib/alexandria/ui/ui_manager.rb:150
-msgid "View as Icons"
-msgstr "アイコン表示"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:151
-#: ../lib/alexandria/ui/ui_manager.rb:151
-msgid "View as List"
-msgstr "リスト表示"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:164
-#: ../lib/alexandria/ui/ui_manager.rb:164
-msgid "Choose how to show books"
-msgstr "本を表示する方法を選択してください"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:344
-#: ../lib/alexandria/ui/ui_manager.rb:347
-msgid "Library '%s' selected"
-msgstr "ライブラリ'%s'が選択されています。"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:351
-#: ../lib/alexandria/ui/ui_manager.rb:354
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "ライブラリ'%s'が選択されています。評価なしの本が%d冊あります。"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:356
-#: ../lib/alexandria/ui/ui_manager.rb:359
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があります。"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:363
-#: ../lib/alexandria/ui/ui_manager.rb:366
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] ""
-"ライブラリ'%s'が選択されています。%d冊の本があり、そのうち%d冊に評価がありま"
-"せん。"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:369
-#: ../lib/alexandria/ui/ui_manager.rb:378
-msgid "'%s' selected"
-msgstr "'%s'が選択されています"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:372
-#: ../lib/alexandria/ui/ui_manager.rb:381
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] "%d冊の本が選択されています"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:510
-#: ../lib/alexandria/ui/ui_manager.rb:528
-msgid "Unable to launch the web browser"
-msgstr "Webブラウザを起動できませんでした"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:511
-#: ../lib/alexandria/ui/ui_manager.rb:529
-msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"標準のWebブラウザの設定を確認してください (デスクトップの設定->拡張設定->お気"
-"に入りのアプリ)"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:523
-#: ../lib/alexandria/ui/ui_manager.rb:541
-msgid "Unable to launch the mail reader"
-msgstr "メールリーダを起動できませんでした"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:524
-#: ../lib/alexandria/ui/ui_manager.rb:542
-msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"標準のメールリーダの設定を確認してください (デスクトップの設定->拡張設定->お"
-"気に入りのアプリ)"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:560
-#: ../lib/alexandria/ui/ui_manager.rb:578
-msgid ""
-"These books do not conform to the ISBN-13 standard. We will attempt to "
-"replace them from the book providers. Otherwise, we will turn them into "
-"manual entries.\n"
-msgstr ""
-"これらの本はISBN-13に準拠していません。本のプロバイダーから得られたもので置き"
-"換えられます。そうでなければ手で入力してください\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:932
-#: ../lib/alexandria/ui/ui_manager.rb:944
-msgid "In '_%s'"
-msgstr "'_%s'へ"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -233,7 +94,7 @@ msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "'%s'から選択された全ての本を削除します。よろしいですか？"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandmria/ui/dialogs/book_properties_dialog_base.rb:59
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
 msgid "Properties for '%s'"
 msgstr "'%s'の設定"
 
@@ -281,27 +142,27 @@ msgstr "本を追加できません"
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s'はすでに'%s' (タイトル： '%s')に存在します。"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:93
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
 msgid "Preferences for %s"
 msgstr "'%s'の設定"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:118
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
 msgid "New Provider"
 msgstr "新プロバイダ"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:133
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
 msgid "_Name:"
 msgstr "名称(_N):"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:145
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
 msgid "_Type:"
 msgstr "種別(_T):"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:291
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "プロバイダ'%s'を削除します。よろしいですか？"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:307
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -525,9 +386,130 @@ msgstr "そのライブラリ名はすでに存在します。他の名前を指
 msgid "Library"
 msgstr "ライブラリ"
 
-#: ../lib/alexandria/ui/ui_manager.rb:728
+#: ../lib/alexandria/ui/ui_manager.rb:110
+msgid "Type here the search criterion"
+msgstr "検索する内容をここに入力してください"
+
+#: ../lib/alexandria/ui/ui_manager.rb:123
+msgid "Match everything"
+msgstr "全検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:125
+msgid "Title contains"
+msgstr "タイトル検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:126
+msgid "Authors contain"
+msgstr "作者検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:127
+msgid "ISBN contains"
+msgstr "ISBN検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:128
+msgid "Publisher contains"
+msgstr "出版社検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:129
+msgid "Notes contain"
+msgstr "ノート検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:130
+msgid "Tags contain"
+msgstr "タグ検索"
+
+#: ../lib/alexandria/ui/ui_manager.rb:145
+msgid "Change the search type"
+msgstr "検索タイプを変更します"
+
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "View as Icons"
+msgstr "アイコン表示"
+
+#: ../lib/alexandria/ui/ui_manager.rb:151
+msgid "View as List"
+msgstr "リスト表示"
+
+#: ../lib/alexandria/ui/ui_manager.rb:164
+msgid "Choose how to show books"
+msgstr "本を表示する方法を選択してください"
+
+#: ../lib/alexandria/ui/ui_manager.rb:350
+msgid "Library '%s' selected"
+msgstr "ライブラリ'%s'が選択されています。"
+
+#: ../lib/alexandria/ui/ui_manager.rb:357
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "ライブラリ'%s'が選択されています。評価なしの本が%d冊あります。"
+
+#: ../lib/alexandria/ui/ui_manager.rb:362
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "ライブラリ'%s'が選択されています。%d冊の本があります。"
+
+#: ../lib/alexandria/ui/ui_manager.rb:369
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] ""
+"ライブラリ'%s'が選択されています。%d冊の本があり、そのうち%d冊に評価がありま"
+"せん。"
+
+#: ../lib/alexandria/ui/ui_manager.rb:381
+msgid "'%s' selected"
+msgstr "'%s'が選択されています"
+
+#: ../lib/alexandria/ui/ui_manager.rb:384
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "%d冊の本が選択されています"
+
+#: ../lib/alexandria/ui/ui_manager.rb:534
+msgid "Unable to launch the web browser"
+msgstr "Webブラウザを起動できませんでした"
+
+#: ../lib/alexandria/ui/ui_manager.rb:535
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"標準のWebブラウザの設定を確認してください (デスクトップの設定->拡張設定->お気"
+"に入りのアプリ)"
+
+#: ../lib/alexandria/ui/ui_manager.rb:547
+msgid "Unable to launch the mail reader"
+msgstr "メールリーダを起動できませんでした"
+
+#: ../lib/alexandria/ui/ui_manager.rb:548
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"標準のメールリーダの設定を確認してください (デスクトップの設定->拡張設定->お"
+"気に入りのアプリ)"
+
+#: ../lib/alexandria/ui/ui_manager.rb:583
+msgid "Repair Book Data"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:584
+msgid ""
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:641
+msgid "Added '%s' to library '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:794
 msgid "Loading '%s'..."
 msgstr "'%s'を読み込んでいます..."
+
+#: ../lib/alexandria/ui/ui_manager.rb:1010
+msgid "In '_%s'"
+msgstr "'_%s'へ"
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -966,7 +948,7 @@ msgstr "HTMLウェブページ"
 msgid "Untitled"
 msgstr "タイトル未設定"
 
-#: ../lib/alexandria/models/library.rb:225
+#: ../lib/alexandria/models/library.rb:233
 msgid "My Library"
 msgstr "マイライブラリ"
 
@@ -993,12 +975,12 @@ msgid "Invalid search type."
 msgstr "検索種別が不正です。"
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:36
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:34
 msgid "Locale"
 msgstr "ロケール"
 
 #: ../lib/alexandria/book_providers/amazon.rb:34
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:37
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:35
 msgid "Development token"
 msgstr "デベロッパー・トークン"
 
@@ -1010,39 +992,39 @@ msgstr "アソシエイトID"
 msgid "Spanish Culture Ministry"
 msgstr "スペイン文化省"
 
-#: ../lib/alexandria/book_providers/z3950.rb:32
+#: ../lib/alexandria/book_providers/z3950.rb:33
 msgid "Hostname"
 msgstr "ホスト名"
 
-#: ../lib/alexandria/book_providers/z3950.rb:33
+#: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Port"
 msgstr "ポート番号"
 
-#: ../lib/alexandria/book_providers/z3950.rb:34
+#: ../lib/alexandria/book_providers/z3950.rb:35
 msgid "Database"
 msgstr "データベース"
 
-#: ../lib/alexandria/book_providers/z3950.rb:35
+#: ../lib/alexandria/book_providers/z3950.rb:36
 msgid "Record syntax"
 msgstr "レコードシンタックス"
 
-#: ../lib/alexandria/book_providers/z3950.rb:36
+#: ../lib/alexandria/book_providers/z3950.rb:37
 msgid "Username"
 msgstr "ユーザ名"
 
-#: ../lib/alexandria/book_providers/z3950.rb:37
+#: ../lib/alexandria/book_providers/z3950.rb:38
 msgid "Password"
 msgstr "パスワード"
 
-#: ../lib/alexandria/book_providers/z3950.rb:38
+#: ../lib/alexandria/book_providers/z3950.rb:39
 msgid "Charset encoding"
 msgstr "文字のエンコーディング"
 
-#: ../lib/alexandria/book_providers/z3950.rb:150
+#: ../lib/alexandria/book_providers/z3950.rb:180
 msgid "Library of Congress (Usa)"
 msgstr "米国国会図書館"
 
-#: ../lib/alexandria/book_providers/z3950.rb:178
+#: ../lib/alexandria/book_providers/z3950.rb:208
 msgid "British Library"
 msgstr "大英図書館"
 
@@ -1263,3 +1245,10 @@ msgstr "ブック・コレクション・マネージャ"
 msgid "Manage your book collection"
 msgstr "ブック・コレクション管理お手伝いプログラム"
 
+#~ msgid ""
+#~ "These books do not conform to the ISBN-13 standard. We will attempt to "
+#~ "replace them from the book providers. Otherwise, we will turn them into "
+#~ "manual entries.\n"
+#~ msgstr ""
+#~ "これらの本はISBN-13に準拠していません。本のプロバイダーから得られたもので"
+#~ "置き換えられます。そうでなければ手で入力してください\n"

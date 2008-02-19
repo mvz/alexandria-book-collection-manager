@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-18 13:56+0000\n"
+"POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-02-18 19:00+0100\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
@@ -11,148 +11,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n!=1;\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:110
-#: ../lib/alexandria/ui/ui_manager.rb:110
-msgid "Type here the search criterion"
-msgstr "Voer hier het zoekcriterium in"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:123
-#: ../lib/alexandria/ui/ui_manager.rb:123
-msgid "Match everything"
-msgstr "Toon alles"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:125
-#: ../lib/alexandria/ui/ui_manager.rb:125
-msgid "Title contains"
-msgstr "Titel bevat"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:126
-#: ../lib/alexandria/ui/ui_manager.rb:126
-msgid "Authors contain"
-msgstr "Auteurs bevat"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:127
-#: ../lib/alexandria/ui/ui_manager.rb:127
-msgid "ISBN contains"
-msgstr "ISBN bevat"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:128
-#: ../lib/alexandria/ui/ui_manager.rb:128
-msgid "Publisher contains"
-msgstr "Uitgever bevat"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:129
-#: ../lib/alexandria/ui/ui_manager.rb:129
-msgid "Notes contain"
-msgstr "Notities bevat"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:130
-#: ../lib/alexandria/ui/ui_manager.rb:130
-msgid "Tags contain"
-msgstr "Trefwoorden bevat"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:145
-#: ../lib/alexandria/ui/ui_manager.rb:145
-msgid "Change the search type"
-msgstr "Wijzig zoektype"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:150
-#: ../lib/alexandria/ui/ui_manager.rb:150
-msgid "View as Icons"
-msgstr "Toon als iconen"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:151
-#: ../lib/alexandria/ui/ui_manager.rb:151
-msgid "View as List"
-msgstr "Toon als lijst"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:164
-#: ../lib/alexandria/ui/ui_manager.rb:164
-msgid "Choose how to show books"
-msgstr "Bepaal hoe de boeken getoond moeten worden"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:344
-#: ../lib/alexandria/ui/ui_manager.rb:347
-msgid "Library '%s' selected"
-msgstr "Bibliotheek '%s' is geselecteerd"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:351
-#: ../lib/alexandria/ui/ui_manager.rb:354
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "Bibliotheek '%s' geselecteerd. %d ongewaardeerd boek"
-msgstr[1] "Bibliotheek '%s' geselecteerd. %d ongewaardeerde boeken"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:356
-#: ../lib/alexandria/ui/ui_manager.rb:359
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek"
-msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:363
-#: ../lib/alexandria/ui/ui_manager.rb:366
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek, %d zonder waardering"
-msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken, %d zonder waardering"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:369
-#: ../lib/alexandria/ui/ui_manager.rb:378
-msgid "'%s' selected"
-msgstr "'%s' geselecteerd"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:372
-#: ../lib/alexandria/ui/ui_manager.rb:381
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] "%d boek geselecteerd"
-msgstr[1] "%d boeken geselecteerd"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:510
-#: ../lib/alexandria/ui/ui_manager.rb:528
-msgid "Unable to launch the web browser"
-msgstr "Kon geen webbrowser starten"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:511
-#: ../lib/alexandria/ui/ui_manager.rb:529
-msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Controleer of een standaard webbrowser is ingesteld (Systeem -> Voorkeuren -"
-"> Voorkeursapplicaties) en probeer opnieuw."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:523
-#: ../lib/alexandria/ui/ui_manager.rb:541
-msgid "Unable to launch the mail reader"
-msgstr "Kon geen e-mailprogramma starten"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:524
-#: ../lib/alexandria/ui/ui_manager.rb:542
-msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Controleer of een standaard e-mailprogramma is ingesteld (Systeem -> "
-"Voorkeuren -> Voorkeursapplicaties) en probeer opnieuw."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:560
-#: ../lib/alexandria/ui/ui_manager.rb:578
-msgid ""
-"These books do not conform to the ISBN-13 standard. We will attempt to "
-"replace them from the book providers. Otherwise, we will turn them into "
-"manual entries.\n"
-msgstr ""
-"Deze boeken voldoen niet aan de ISBN-13 standaard. Er zal geprobeerd worden "
-"om ze te vervangen door gebruik te maken van de bronnen. Als dat niet lukt "
-"converteren we ze naar handmatige invoer.\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:932
-#: ../lib/alexandria/ui/ui_manager.rb:944
-msgid "In '_%s'"
-msgstr "Naar '_%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -286,27 +144,27 @@ msgstr "Kon het boek niet toevoegen"
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' bestaat al in '%s' (getiteld '%s')."
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:93
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
 msgid "Preferences for %s"
 msgstr "Voorkeuren voor %s"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:118
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
 msgid "New Provider"
 msgstr "Nieuwe bron"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:133
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
 msgid "_Name:"
 msgstr "_Naam:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:145
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
 msgid "_Type:"
 msgstr "_Type:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:291
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Weet u zeker dat u bron '%s' permanent wilt verwijderen?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:307
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -541,9 +399,132 @@ msgstr ""
 msgid "Library"
 msgstr "Bibliotheek"
 
-#: ../lib/alexandria/ui/ui_manager.rb:728
+#: ../lib/alexandria/ui/ui_manager.rb:110
+msgid "Type here the search criterion"
+msgstr "Voer hier het zoekcriterium in"
+
+#: ../lib/alexandria/ui/ui_manager.rb:123
+msgid "Match everything"
+msgstr "Toon alles"
+
+#: ../lib/alexandria/ui/ui_manager.rb:125
+msgid "Title contains"
+msgstr "Titel bevat"
+
+#: ../lib/alexandria/ui/ui_manager.rb:126
+msgid "Authors contain"
+msgstr "Auteurs bevat"
+
+#: ../lib/alexandria/ui/ui_manager.rb:127
+msgid "ISBN contains"
+msgstr "ISBN bevat"
+
+#: ../lib/alexandria/ui/ui_manager.rb:128
+msgid "Publisher contains"
+msgstr "Uitgever bevat"
+
+#: ../lib/alexandria/ui/ui_manager.rb:129
+msgid "Notes contain"
+msgstr "Notities bevat"
+
+#: ../lib/alexandria/ui/ui_manager.rb:130
+msgid "Tags contain"
+msgstr "Trefwoorden bevat"
+
+#: ../lib/alexandria/ui/ui_manager.rb:145
+msgid "Change the search type"
+msgstr "Wijzig zoektype"
+
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "View as Icons"
+msgstr "Toon als iconen"
+
+#: ../lib/alexandria/ui/ui_manager.rb:151
+msgid "View as List"
+msgstr "Toon als lijst"
+
+#: ../lib/alexandria/ui/ui_manager.rb:164
+msgid "Choose how to show books"
+msgstr "Bepaal hoe de boeken getoond moeten worden"
+
+#: ../lib/alexandria/ui/ui_manager.rb:350
+msgid "Library '%s' selected"
+msgstr "Bibliotheek '%s' is geselecteerd"
+
+#: ../lib/alexandria/ui/ui_manager.rb:357
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "Bibliotheek '%s' geselecteerd. %d ongewaardeerd boek"
+msgstr[1] "Bibliotheek '%s' geselecteerd. %d ongewaardeerde boeken"
+
+#: ../lib/alexandria/ui/ui_manager.rb:362
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek"
+msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken"
+
+#: ../lib/alexandria/ui/ui_manager.rb:369
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek, %d zonder waardering"
+msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken, %d zonder waardering"
+
+#: ../lib/alexandria/ui/ui_manager.rb:381
+msgid "'%s' selected"
+msgstr "'%s' geselecteerd"
+
+#: ../lib/alexandria/ui/ui_manager.rb:384
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "%d boek geselecteerd"
+msgstr[1] "%d boeken geselecteerd"
+
+#: ../lib/alexandria/ui/ui_manager.rb:534
+msgid "Unable to launch the web browser"
+msgstr "Kon geen webbrowser starten"
+
+#: ../lib/alexandria/ui/ui_manager.rb:535
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Controleer of een standaard webbrowser is ingesteld (Systeem -> Voorkeuren -"
+"> Voorkeursapplicaties) en probeer opnieuw."
+
+#: ../lib/alexandria/ui/ui_manager.rb:547
+msgid "Unable to launch the mail reader"
+msgstr "Kon geen e-mailprogramma starten"
+
+#: ../lib/alexandria/ui/ui_manager.rb:548
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Controleer of een standaard e-mailprogramma is ingesteld (Systeem -> "
+"Voorkeuren -> Voorkeursapplicaties) en probeer opnieuw."
+
+#: ../lib/alexandria/ui/ui_manager.rb:583
+msgid "Repair Book Data"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:584
+msgid ""
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:641
+msgid "Added '%s' to library '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:794
 msgid "Loading '%s'..."
 msgstr "'%s' wordt geladen..."
+
+#: ../lib/alexandria/ui/ui_manager.rb:1010
+msgid "In '_%s'"
+msgstr "Naar '_%s'"
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -984,7 +965,7 @@ msgstr "HTML webpagina"
 msgid "Untitled"
 msgstr "Naamloos"
 
-#: ../lib/alexandria/models/library.rb:225
+#: ../lib/alexandria/models/library.rb:233
 msgid "My Library"
 msgstr "Mijn bibliotheek"
 
@@ -1013,12 +994,12 @@ msgid "Invalid search type."
 msgstr "Ongeldig zoektype."
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:36
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:34
 msgid "Locale"
 msgstr "Taal"
 
 #: ../lib/alexandria/book_providers/amazon.rb:34
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:37
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:35
 msgid "Development token"
 msgstr "Ontwikkelaarssleutel"
 
@@ -1030,39 +1011,39 @@ msgstr "Geassocieerd ID"
 msgid "Spanish Culture Ministry"
 msgstr "Spaans Ministerie van Cultuur"
 
-#: ../lib/alexandria/book_providers/z3950.rb:32
+#: ../lib/alexandria/book_providers/z3950.rb:33
 msgid "Hostname"
 msgstr "Servernaam"
 
-#: ../lib/alexandria/book_providers/z3950.rb:33
+#: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Port"
 msgstr "Poort"
 
-#: ../lib/alexandria/book_providers/z3950.rb:34
+#: ../lib/alexandria/book_providers/z3950.rb:35
 msgid "Database"
 msgstr "Database"
 
-#: ../lib/alexandria/book_providers/z3950.rb:35
+#: ../lib/alexandria/book_providers/z3950.rb:36
 msgid "Record syntax"
 msgstr "Record syntax"
 
-#: ../lib/alexandria/book_providers/z3950.rb:36
+#: ../lib/alexandria/book_providers/z3950.rb:37
 msgid "Username"
 msgstr "Gebruikersnaam"
 
-#: ../lib/alexandria/book_providers/z3950.rb:37
+#: ../lib/alexandria/book_providers/z3950.rb:38
 msgid "Password"
 msgstr "Wachtwoord"
 
-#: ../lib/alexandria/book_providers/z3950.rb:38
+#: ../lib/alexandria/book_providers/z3950.rb:39
 msgid "Charset encoding"
 msgstr "Codering karakterset"
 
-#: ../lib/alexandria/book_providers/z3950.rb:150
+#: ../lib/alexandria/book_providers/z3950.rb:180
 msgid "Library of Congress (Usa)"
 msgstr "Library of Congress, V.S."
 
-#: ../lib/alexandria/book_providers/z3950.rb:178
+#: ../lib/alexandria/book_providers/z3950.rb:208
 msgid "British Library"
 msgstr "British Library, V.K."
 
@@ -1283,6 +1264,15 @@ msgstr "Boekcollectiebeheerder"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
+
+#~ msgid ""
+#~ "These books do not conform to the ISBN-13 standard. We will attempt to "
+#~ "replace them from the book providers. Otherwise, we will turn them into "
+#~ "manual entries.\n"
+#~ msgstr ""
+#~ "Deze boeken voldoen niet aan de ISBN-13 standaard. Er zal geprobeerd "
+#~ "worden om ze te vervangen door gebruik te maken van de bronnen. Als dat "
+#~ "niet lukt converteren we ze naar handmatige invoer.\n"
 
 #~ msgid "_Refresh"
 #~ msgstr "_Verversen"

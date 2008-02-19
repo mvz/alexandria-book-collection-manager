@@ -25,15 +25,15 @@ module Alexandria
         setup_window_icons
         setup_callbacks
         create_uimanager
-        add_menus_and_popups_from_xml 
+        add_menus_and_popups_from_xml
         setup_toolbar
         setup_move_actions
         setup_active_model
-        setup_dependents  
+        setup_dependents
         setup_accel_group
         setup_menus
         setup_popups
-        setup_window_events 
+        setup_window_events
         setup_dialog_hooks
         setup_books_iconview_sorting
         on_books_selection_changed
@@ -50,9 +50,9 @@ module Alexandria
       def setup_dependents
         @listview_model = Gtk::TreeModelSort.new(@filtered_model)
         @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
-        @listview_manager = ListViewManager.new @listview, self 
-        @iconview_manager = IconViewManager.new @iconview, self 
-        @sidepane_manager = SidePaneManager.new @library_listview, self 
+        @listview_manager = ListViewManager.new @listview, self
+        @iconview_manager = IconViewManager.new @iconview, self
+        @sidepane_manager = SidePaneManager.new @library_listview, self
         @library_listview = @sidepane_manager.library_listview
         @listview_manager.setup_listview_columns_visibility
         @listview_manager.setup_listview_columns_width
@@ -61,7 +61,7 @@ module Alexandria
       def setup_callbacks
         require 'alexandria/ui/callbacks'
         self.class.send(:include, Callbacks)
-        connect_signals 
+        connect_signals
       end
 
       def get_preferences
@@ -70,12 +70,12 @@ module Alexandria
 
       def setup_toolbar
         log.debug { "setup_toolbar" }
-        setup_book_providers 
-        add_main_toolbar_items 
+        setup_book_providers
+        add_main_toolbar_items
         @toolbar = @uimanager.get_widget("/MainToolbar")
         @toolbar.show_arrow = true
         @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
-        setup_toolbar_combobox 
+        setup_toolbar_combobox
         setup_toolbar_filter_entry
         @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
         setup_toolbar_viewas
@@ -102,7 +102,7 @@ module Alexandria
 
       def setup_toolbar_filter_entry
         @filter_entry = Gtk::Entry.new
-        @filter_entry.signal_connect('changed', &method(:on_toolbar_filter_entry_changed))        
+        @filter_entry.signal_connect('changed', &method(:on_toolbar_filter_entry_changed))
         @toolitem = Gtk::ToolItem.new
         @toolitem.expand = true
         @toolitem.border_width = 5
@@ -151,7 +151,7 @@ module Alexandria
         @toolbar_view_as.append_text(_("View as List"))
         @toolbar_view_as.active = 0
         @toolbar_view_as_signal_hid = \
-          @toolbar_view_as.signal_connect('changed', &method(:on_toolbar_view_as_changed))      
+          @toolbar_view_as.signal_connect('changed', &method(:on_toolbar_view_as_changed))
 
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
@@ -222,7 +222,7 @@ module Alexandria
       def setup_window_events
         log.debug { "setup_window_events" }
         @main_app.signal_connect('window-state-event', &method(:on_window_state_event))
-        @main_app.signal_connect('destroy', &method(:on_window_destroy))      
+        @main_app.signal_connect('destroy', &method(:on_window_destroy))
       end
 
       def setup_active_model
@@ -286,7 +286,7 @@ module Alexandria
         log.debug { "library_button_press_event" }
         # right click
 
-        if event_is_right_click event          
+        if event_is_right_click event
           log.debug { "library right click!" }
           if path = widget.get_path_at_pos(event.x, event.y)
             obj, path = widget.is_a?(Gtk::TreeView) \
@@ -324,7 +324,7 @@ module Alexandria
 
       def on_books_button_press_event(widget, event)
         log.debug { "books_button_press_event" }
-        if event_is_right_click event 
+        if event_is_right_click event
           widget.grab_focus
 
           if path = widget.get_path_at_pos(event.x.to_i, event.y.to_i)
@@ -454,7 +454,7 @@ module Alexandria
 
       def determine_delete_option
         sensitive = (@libraries.all_regular_libraries.length > 1 or selected_library.is_a?(SmartLibrary))
-        log.debug { "sensitive: #{sensitive}" } 
+        log.debug { "sensitive: #{sensitive}" }
         sensitive
       end
 
@@ -467,6 +467,9 @@ module Alexandria
         select_this_book = proc do |book, view|
           @filtered_model.refilter
           iter = iter_from_book book
+          if not iter
+            next
+          end
           path = iter.path
           path = view.model.convert_path_to_child_path(path)
           path = @filtered_model.convert_path_to_child_path(path)
@@ -476,9 +479,9 @@ module Alexandria
           selection.select_path(path)
         end
         log.info { "select_a_book: listview" }
-        select_this_book.call(book, @listview) 
+        select_this_book.call(book, @listview)
         log.info { "select_a_book: listview" }
-        select_this_book.call(book, @iconview) 
+        select_this_book.call(book, @iconview)
         # TODO: Figure out why this frequently selects the wrong book!
       end
 
@@ -568,7 +571,7 @@ module Alexandria
         else
           @libraries = Libraries.instance
           @libraries.reload
-          handle_ruined_libraries unless @libraries.ruined_books.empty?
+          handle_ruined_books unless @libraries.ruined_books.empty?
         end
         @libraries.all_regular_libraries.each do |library|
           library.add_observer(self)
@@ -577,34 +580,94 @@ module Alexandria
       end
 
       def handle_ruined_books
-        log.info { "Handling ruined books..." }
-        message = _("These books do not conform to the ISBN-13 standard. We will attempt to replace them from the book providers. Otherwise, we will turn them into manual entries.\n" )
-        @libraries.ruined_books.each {|bi| message += "\n#{bi[1] or bi[1].inspect}"}
-        bad_isbn_warn = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL, Gtk::MessageDialog::WARNING,  Gtk::MessageDialog::BUTTONS_CLOSE, message ).show
-        bad_isbn_warn.signal_connect('response') { log.debug { "bad_isbn" }; bad_isbn_warn.destroy }
-        books_to_add = []
-        #This is the restoration thread. We can come up with strategies for restoring 'bad' books here.
-        Thread.new do
-          #Needs a progress indicator.
-          @libraries.ruined_books.each {|book, isbn, library|
-            begin
-              books_to_add << [Alexandria::BookProviders.isbn_search(isbn.to_s), library].flatten
-              log.debug { book.title }
-            rescue
-              books_to_add << [book, nil, library]
-              log.debug { "#{book.title} didn't make it." }
+        title = _("Repair Book Data")
+        new_message = _("The data files for the following books are malformed or empty. Do you wish to attempt to download new information for them from the online book providers?\n")
+
+        #message = _("These books do not conform to the ISBN-13
+        #standard. We will attempt to replace them from the book
+        #providers. Otherwise, we will turn them into manual
+        #entries.\n" )
+
+        @libraries.ruined_books.each { |bi|
+          new_message += "\n#{bi[1] or bi[1].inspect}"
+        }
+        recovery_dialog = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL,
+                                                 Gtk::MessageDialog::WARNING,
+                                                 Gtk::MessageDialog::BUTTONS_OK_CANCEL,
+                                                 new_message ).show
+        recovery_dialog.signal_connect('response') do |dialog, response_type|
+          recovery_dialog.destroy
+          if response_type == Gtk::Dialog::RESPONSE_OK
+            books_to_add = []
+
+            # progress indicator...
+            @appbar.progress_percentage = 0
+            @appbar.children.first.visible = true   # show the progress bar
+
+            total_book_count = @libraries.ruined_books.size
+            fraction_per_book = 1.0 / total_book_count
+            prog_percentage = 0
+
+            @libraries.ruined_books.reverse!
+            Gtk.idle_add do
+              ruined_book = @libraries.ruined_books.pop
+              if ruined_book
+                book, isbn, library = ruined_book
+                begin
+                  book_rslt = Alexandria::BookProviders.isbn_search(isbn.to_s)
+                  book = book_rslt[0]
+                  cover_uri = book_rslt[1]
+
+                  # TODO if the book was saved okay, make sure the old
+                  # empty yaml file doesn't stick around esp if doing
+                  # isbn-10 --> isbn-13 conversion...
+                  if isbn.size == 10
+                    filename = library.yaml(isbn)
+                    log.debug { "removing old file #{filename}" }
+                    begin
+                      File.delete(filename)
+                    rescue Exception => ex
+                      log.warn { "Could not delete empty file #{filename}" }
+                    end
+                  end
+
+
+                  log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'"}
+                  unless cover_uri.nil?
+                    library.save_cover(book, cover_uri)
+                  end
+                  library << book
+                  library.save(book)
+                  @appbar.status = _("Added '%s' to library '%s'") % [book.title, library.name]
+
+                rescue Exception => ex
+                  log.error { "Couldn't add book #{isbn}: #{ex}" }
+                  log.error { ex.backtrace.join("\n") }
+                end
+
+                prog_percentage += fraction_per_book
+                @appbar.progress_percentage = prog_percentage
+
+                true
+              else
+                ## Totally copied and pasted from refresh_books...
+                ## call this the second strike... (CathalMagus)
+
+                # @iconview.unfreeze
+                # @filtered_model.refilter
+                # @listview.columns_autosize
+
+                @appbar.progress_percentage = 1
+                ## Hide the progress bar.
+                @appbar.children.first.visible = false
+                ## Refresh the status bar.
+                @appbar.status = ''
+                # on_books_selection_changed
+                false
+              end
             end
-          }
-          # Will crash here when it gets to it.
-          books_to_add.each do |book, cover_uri, library|
-            unless cover_uri.nil?
-              library.save_cover(book, cover_uri)
-            end
-            library << book
-            library.save(book)
           end
         end
-        log.debug { books_to_add }
       end
 
       def cache_scaled_icon(icon, width, height)
@@ -741,7 +804,7 @@ module Alexandria
             percent = n / coeff
             fraction = percent / 100
             log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
-            puts "======================================================"
+            #puts "======================================================"
             @appbar.progress_percentage = fraction
             n+= 1
             true
@@ -754,7 +817,7 @@ module Alexandria
             @appbar.children.first.visible = false
             # Refresh the status bar.
             on_books_selection_changed
-            false 
+            false
           end
         end
       end
@@ -804,10 +867,10 @@ module Alexandria
         iter_from_ident(book.ident)
       end
 
-      def collate_selected_books page 
+      def collate_selected_books page
         a = []
         library = selected_library
-        view = page == 0 ? @iconview : @listview 
+        view = page == 0 ? @iconview : @listview
         selection = page == 0 ? @iconview : @listview.selection
         selection.selected_each do |treeview, path|
           path = view.model.convert_path_to_child_path(path)
@@ -848,8 +911,8 @@ module Alexandria
         smart = library.is_a?(SmartLibrary)
         log.debug { "sensitize_library: smartlibrary = #{smart}" }
         @actiongroup["AddBook"].sensitive = !smart
-        @actiongroup["AddBookManual"].sensitive = !smart 
-        @actiongroup["Properties"].sensitive = true 
+        @actiongroup["AddBookManual"].sensitive = !smart
+        @actiongroup["Properties"].sensitive = true
         @actiongroup["Delete"].sensitive = true #(@libraries.all_regular_libraries.length > 1)
         log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }
       end
@@ -960,12 +1023,12 @@ module Alexandria
               end
         end
       end
-      def current_view        
+      def current_view
         case @notebook.page
         when 0
           @iconview
         when 1
-          @listview        
+          @listview
         end
       end
 

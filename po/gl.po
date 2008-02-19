@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-18 13:56+0000\n"
+"POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-01-08 15:54+0000\n"
 "Last-Translator: Adrián Chaves Fernández\n"
 "Language-Team: Galician\n"
@@ -14,150 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 0;\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:110
-#: ../lib/alexandria/ui/ui_manager.rb:110
-msgid "Type here the search criterion"
-msgstr "Escribe aquí os criterios da busca"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:123
-#: ../lib/alexandria/ui/ui_manager.rb:123
-msgid "Match everything"
-msgstr "Atopar todo"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:125
-#: ../lib/alexandria/ui/ui_manager.rb:125
-msgid "Title contains"
-msgstr "Título contén"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:126
-#: ../lib/alexandria/ui/ui_manager.rb:126
-msgid "Authors contain"
-msgstr "Autores contén"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:127
-#: ../lib/alexandria/ui/ui_manager.rb:127
-msgid "ISBN contains"
-msgstr "ISBN contén"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:128
-#: ../lib/alexandria/ui/ui_manager.rb:128
-msgid "Publisher contains"
-msgstr "Editorial contén"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:129
-#: ../lib/alexandria/ui/ui_manager.rb:129
-msgid "Notes contain"
-msgstr "Notas contén"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:130
-#: ../lib/alexandria/ui/ui_manager.rb:130
-msgid "Tags contain"
-msgstr "Etiquetas contén"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:145
-#: ../lib/alexandria/ui/ui_manager.rb:145
-msgid "Change the search type"
-msgstr "Cambiar o tipo de busca"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:150
-#: ../lib/alexandria/ui/ui_manager.rb:150
-msgid "View as Icons"
-msgstr "Ver coma iconas"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:151
-#: ../lib/alexandria/ui/ui_manager.rb:151
-msgid "View as List"
-msgstr "Ver coma unha lista"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:164
-#: ../lib/alexandria/ui/ui_manager.rb:164
-msgid "Choose how to show books"
-msgstr "Elixir como amosar os libros"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:344
-#: ../lib/alexandria/ui/ui_manager.rb:347
-msgid "Library '%s' selected"
-msgstr "Seleccionouse a biblioteca'%s'"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:351
-#: ../lib/alexandria/ui/ui_manager.rb:354
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "Seleccionouse a biblioteca '%s', %d libro sen ler"
-msgstr[1] "Seleccionouse a biblioteca '%s', %d libros sen ler"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:356
-#: ../lib/alexandria/ui/ui_manager.rb:359
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "Seleccionouse a biblioteca '%s', %d libro"
-msgstr[1] "Seleccionouse a biblioteca '%s', %d libros"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:363
-#: ../lib/alexandria/ui/ui_manager.rb:366
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Seleccionouse a biblioteca '%s', %d libro, %s sen ler"
-msgstr[1] "Seleccionouse a biblioteca '%s', %d libros, %s sen ler"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:369
-#: ../lib/alexandria/ui/ui_manager.rb:378
-msgid "'%s' selected"
-msgstr "Seleccionouse '%s'"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:372
-#: ../lib/alexandria/ui/ui_manager.rb:381
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] "Seleccionouse %d libro"
-msgstr[1] "Seleccionáronse %d libros"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:510
-#: ../lib/alexandria/ui/ui_manager.rb:528
-msgid "Unable to launch the web browser"
-msgstr "Non se puido iniciar o navegador web"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:511
-#: ../lib/alexandria/ui/ui_manager.rb:529
-msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Asegúrese de que ten un navegador web establecido como predeterminado "
-"(Preferencias de escritorio -> Avanzadas -> Aplicacións favoritas) e probe "
-"de novo."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:523
-#: ../lib/alexandria/ui/ui_manager.rb:541
-msgid "Unable to launch the mail reader"
-msgstr "Non se puido iniciar o lector de correo"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:524
-#: ../lib/alexandria/ui/ui_manager.rb:542
-msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
-msgstr ""
-"Asegúrese de que ten un lector de correo establecido como predeterminado "
-"(Preferencias de escritorio -> Avanzadas -> Aplicacións favoritas) e probe "
-"de novo."
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:560
-#: ../lib/alexandria/ui/ui_manager.rb:578
-msgid ""
-"These books do not conform to the ISBN-13 standard. We will attempt to "
-"replace them from the book providers. Otherwise, we will turn them into "
-"manual entries.\n"
-msgstr ""
-"Estes libros non forman parte do ISBN-13 estándar. Intentarase reemprazalos "
-"a través dos provedores de libros. Se non, convertiranse en entradas "
-"manuais.\n"
-
-#: ../lib/alexandria/ui/,wip/ui_manager.rb:932
-#: ../lib/alexandria/ui/ui_manager.rb:944
-msgid "In '_%s'"
-msgstr "En '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -289,27 +145,27 @@ msgstr "Non se puido engadir o libro"
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' xa existe en '%s' (co título de '%s')."
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:93
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
 msgid "Preferences for %s"
 msgstr "Preferencias de %s"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:118
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
 msgid "New Provider"
 msgstr "Novo provedor"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:133
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
 msgid "_Name:"
 msgstr "_Nome:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:145
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
 msgid "_Type:"
 msgstr "_Tipo:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:291
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Seguro que quere eliminar permanentemente o provedor '%s'?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:307
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -539,10 +395,135 @@ msgstr "Xa hai unha biblioteca chamada '%s'.  Elixa un nome distinto."
 msgid "Library"
 msgstr "Biblioteca"
 
-#: ../lib/alexandria/ui/ui_manager.rb:728
+#: ../lib/alexandria/ui/ui_manager.rb:110
+msgid "Type here the search criterion"
+msgstr "Escribe aquí os criterios da busca"
+
+#: ../lib/alexandria/ui/ui_manager.rb:123
+msgid "Match everything"
+msgstr "Atopar todo"
+
+#: ../lib/alexandria/ui/ui_manager.rb:125
+msgid "Title contains"
+msgstr "Título contén"
+
+#: ../lib/alexandria/ui/ui_manager.rb:126
+msgid "Authors contain"
+msgstr "Autores contén"
+
+#: ../lib/alexandria/ui/ui_manager.rb:127
+msgid "ISBN contains"
+msgstr "ISBN contén"
+
+#: ../lib/alexandria/ui/ui_manager.rb:128
+msgid "Publisher contains"
+msgstr "Editorial contén"
+
+#: ../lib/alexandria/ui/ui_manager.rb:129
+msgid "Notes contain"
+msgstr "Notas contén"
+
+#: ../lib/alexandria/ui/ui_manager.rb:130
+msgid "Tags contain"
+msgstr "Etiquetas contén"
+
+#: ../lib/alexandria/ui/ui_manager.rb:145
+msgid "Change the search type"
+msgstr "Cambiar o tipo de busca"
+
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "View as Icons"
+msgstr "Ver coma iconas"
+
+#: ../lib/alexandria/ui/ui_manager.rb:151
+msgid "View as List"
+msgstr "Ver coma unha lista"
+
+#: ../lib/alexandria/ui/ui_manager.rb:164
+msgid "Choose how to show books"
+msgstr "Elixir como amosar os libros"
+
+#: ../lib/alexandria/ui/ui_manager.rb:350
+msgid "Library '%s' selected"
+msgstr "Seleccionouse a biblioteca'%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:357
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "Seleccionouse a biblioteca '%s', %d libro sen ler"
+msgstr[1] "Seleccionouse a biblioteca '%s', %d libros sen ler"
+
+#: ../lib/alexandria/ui/ui_manager.rb:362
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "Seleccionouse a biblioteca '%s', %d libro"
+msgstr[1] "Seleccionouse a biblioteca '%s', %d libros"
+
+#: ../lib/alexandria/ui/ui_manager.rb:369
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] "Seleccionouse a biblioteca '%s', %d libro, %s sen ler"
+msgstr[1] "Seleccionouse a biblioteca '%s', %d libros, %s sen ler"
+
+#: ../lib/alexandria/ui/ui_manager.rb:381
+msgid "'%s' selected"
+msgstr "Seleccionouse '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:384
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "Seleccionouse %d libro"
+msgstr[1] "Seleccionáronse %d libros"
+
+#: ../lib/alexandria/ui/ui_manager.rb:534
+msgid "Unable to launch the web browser"
+msgstr "Non se puido iniciar o navegador web"
+
+#: ../lib/alexandria/ui/ui_manager.rb:535
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Asegúrese de que ten un navegador web establecido como predeterminado "
+"(Preferencias de escritorio -> Avanzadas -> Aplicacións favoritas) e probe "
+"de novo."
+
+#: ../lib/alexandria/ui/ui_manager.rb:547
+msgid "Unable to launch the mail reader"
+msgstr "Non se puido iniciar o lector de correo"
+
+#: ../lib/alexandria/ui/ui_manager.rb:548
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"Asegúrese de que ten un lector de correo establecido como predeterminado "
+"(Preferencias de escritorio -> Avanzadas -> Aplicacións favoritas) e probe "
+"de novo."
+
+#: ../lib/alexandria/ui/ui_manager.rb:583
+msgid "Repair Book Data"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:584
+msgid ""
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:641
+msgid "Added '%s' to library '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/ui_manager.rb:794
 #, fuzzy
 msgid "Loading '%s'..."
 msgstr "A engadir '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:1010
+msgid "In '_%s'"
+msgstr "En '%s'"
 
 #: ../lib/alexandria/ui/callbacks.rb:44
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -983,7 +964,7 @@ msgstr "Páxina web HTML"
 msgid "Untitled"
 msgstr "Sen título"
 
-#: ../lib/alexandria/models/library.rb:225
+#: ../lib/alexandria/models/library.rb:233
 msgid "My Library"
 msgstr "A miña biblioteca"
 
@@ -1012,12 +993,12 @@ msgid "Invalid search type."
 msgstr "Tipo de busca incorrecto"
 
 #: ../lib/alexandria/book_providers/amazon.rb:32
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:36
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:34
 msgid "Locale"
 msgstr "Local"
 
 #: ../lib/alexandria/book_providers/amazon.rb:34
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:37
+#: ../lib/alexandria/book_providers/amazon_ecs4.rb:35
 msgid "Development token"
 msgstr "En desenvolvemento"
 
@@ -1029,39 +1010,39 @@ msgstr "Asociar ID"
 msgid "Spanish Culture Ministry"
 msgstr "Ministerio de Cultura (España)"
 
-#: ../lib/alexandria/book_providers/z3950.rb:32
+#: ../lib/alexandria/book_providers/z3950.rb:33
 msgid "Hostname"
 msgstr "Nome do servidor"
 
-#: ../lib/alexandria/book_providers/z3950.rb:33
+#: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Port"
 msgstr "Porto"
 
-#: ../lib/alexandria/book_providers/z3950.rb:34
+#: ../lib/alexandria/book_providers/z3950.rb:35
 msgid "Database"
 msgstr "Base de datos"
 
-#: ../lib/alexandria/book_providers/z3950.rb:35
+#: ../lib/alexandria/book_providers/z3950.rb:36
 msgid "Record syntax"
 msgstr "Sintaxe de gravado"
 
-#: ../lib/alexandria/book_providers/z3950.rb:36
+#: ../lib/alexandria/book_providers/z3950.rb:37
 msgid "Username"
 msgstr "Nome de usuario"
 
-#: ../lib/alexandria/book_providers/z3950.rb:37
+#: ../lib/alexandria/book_providers/z3950.rb:38
 msgid "Password"
 msgstr "Contrasinal"
 
-#: ../lib/alexandria/book_providers/z3950.rb:38
+#: ../lib/alexandria/book_providers/z3950.rb:39
 msgid "Charset encoding"
 msgstr "Codificación de caracteres"
 
-#: ../lib/alexandria/book_providers/z3950.rb:150
+#: ../lib/alexandria/book_providers/z3950.rb:180
 msgid "Library of Congress (Usa)"
 msgstr "Biblioteca do Congreso (EE.UU.)"
 
-#: ../lib/alexandria/book_providers/z3950.rb:178
+#: ../lib/alexandria/book_providers/z3950.rb:208
 msgid "British Library"
 msgstr "Biblioteca Británica"
 
@@ -1282,6 +1263,15 @@ msgstr "Organizador de coleccións de libros"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Administra a túa colección de libros"
+
+#~ msgid ""
+#~ "These books do not conform to the ISBN-13 standard. We will attempt to "
+#~ "replace them from the book providers. Otherwise, we will turn them into "
+#~ "manual entries.\n"
+#~ msgstr ""
+#~ "Estes libros non forman parte do ISBN-13 estándar. Intentarase "
+#~ "reemprazalos a través dos provedores de libros. Se non, convertiranse en "
+#~ "entradas manuais.\n"
 
 #~ msgid "_Refresh"
 #~ msgstr "_Actualizar"
