@@ -27,6 +27,7 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class WorldcatProvider < GenericProvider
+      include Logging
       BASE_URI = "http://worldcat.org"
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.worldcat_cache')
       REFERER = BASE_URI
@@ -61,28 +62,35 @@ module Alexandria
         p req if $DEBUG
         data = transport.get(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          book_rslt = to_book(data) #rescue raise NoResultsError
+          isbn = Library.canonicalise_isbn(criterion)
+          begin
+            book_rslt = to_book(data, isbn) #rescue raise NoResultsError
+          rescue Exception => ex
+            puts "failed to_book #{ex}"
+            raise ex
+          end
+
           book = book_rslt[0]
 
           #require 'pp'    ##
           #puts "WorldCat" ##
-          #pp book    ##
+          #pp book_rslt    ##
 
           begin
             if book.isbn.nil?
+              log.info { "Re-setting isbn on WorldCat book" }
               ## this often happens because the html for a single book
               ## lists multiple ISBNs, so we add the one we searched by here
-              isbn = Library.canonicalise_isbn(criterion)
+              ###isbn = Library.canonicalise_isbn(criterion)
               ## This is amazing, we need to create a new book so that
               ## the broken saved_ident value doesn't persist!
               ## This domain model SO needs an overhaul...
               new_book = Book.new(book.title, book.authors, isbn,
                                   book.publisher, book.publishing_year,
                                   book.edition)
-              return [new_book]
-            else
-              return book_rslt
+              book_rslt[0] = new_book
             end
+            return book_rslt
           rescue Exception => ex
             puts ex
           end
@@ -107,7 +115,7 @@ module Alexandria
       private
       #######
 
-      def to_book(data)
+      def to_book(data, given_isbn=nil)
         raise NoResultsError if /<br><p>The page you tried was not found\./.match(data) != nil
 
         raise unless md = /<h1 class="item-title"> ?(<div class=vernacular lang="[^"]+">)?([^<]+)/.match(data)
@@ -133,41 +141,55 @@ module Alexandria
           isbn = nil
         end
 
+        if isbn.nil? and not given_isbn.nil?
+          isbn = given_isbn
+        end
         # The provider returns
         # City : Publisher[ ; City2 : Publisher2], *year? [&copy;year]
         # currently the match is not good in case of City2 : Publisher2 and in case of &copy;year
 
         # FIXME: if the field 'Publisher' contains "| Other Editions ..." (as for 9788441000469), then this regexp doesn't match;
         # if not (as for 9785941454136), it is OK.
-        if md = /<div class="item-publisher"><strong>Publisher: <\/strong>(<span class=vernacular lang="[^<]+<\/span>)?[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/div>/.match(data)
-          publisher = CGI.unescape(md[2].strip)
-          publish_year = CGI.unescape(md[3].strip)[-4 .. -1].to_i
-          publish_year = nil if publish_year == 0
-        else
-          publisher = nil
-          publish_year = nil
+        begin
+          if md = /<td class="label">Publisher:<\/td><td>[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/td>/.match(data)
+            publisher = CGI.unescape(md[1].strip)
+            publish_year = CGI.unescape(md[2].strip)[-4 .. -1].to_i
+            publish_year = nil if publish_year == 0
+          else
+            publisher = nil
+            publish_year = nil
+          end
+        rescue Exception => ex
+          puts "failed to match publisher data #{ex}"
         end
 
-        edition = nil
+        edition = nil ## urr... too hard to try just now (CathalMagus)
 
 
-        if md = /<td class="illustration"><img src="([^"]+)/.match(data)
-          cover_url = BASE_URI + md[1].strip
-          cover_filename = isbn + ".tmp"
-          Dir.chdir(CACHE_DIR) do
-            File.open(cover_filename, "w") do |file|
-              file.write open(cover_url, "Referer" => REFERER ).read
+        if md = /<div id="div-cover"><img src="([^"]+)/.match(data)
+          log.debug { "got image: #{md[1]}" }
+
+          begin
+            cover_url = BASE_URI + md[1].strip
+            cover_filename = isbn + ".tmp"
+            Dir.chdir(CACHE_DIR) do
+              File.open(cover_filename, "w") do |file|
+                file.write open(cover_url, "Referer" => REFERER ).read
+              end
             end
-          end
 
-          medium_cover = CACHE_DIR + "/" + cover_filename
-          if File.size(medium_cover) > 0
-            puts medium_cover + " has non-0 size" if $DEBUG
-            return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+            medium_cover = CACHE_DIR + "/" + cover_filename
+            if File.size(medium_cover) > 0
+              puts medium_cover + " has non-0 size" if $DEBUG
+              return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+            end
+            puts medium_cover + " has 0 size, removing ..." if $DEBUG
+            File.delete(medium_cover)
+          rescue Exception => ex
+            log.error { "Couldn't download image from WorldCat: #{ex}" }
           end
-          puts medium_cover + " has 0 size, removing ..." if $DEBUG
-          File.delete(medium_cover)
         end
+
         return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
       end
 
@@ -176,12 +198,15 @@ module Alexandria
       end
 
       def clean_cache
-        #FIXME begin ... rescue ... end?
-        Dir.chdir(CACHE_DIR) do
-          Dir.glob("*.tmp") do |file|
-            puts "removing " + file if $DEBUG
-            File.delete(file)
+        begin
+          Dir.chdir(CACHE_DIR) do
+            Dir.glob("*.tmp") do |file|
+              puts "removing " + file if $DEBUG
+              File.delete(file)
+            end
           end
+        rescue Exception => ex
+          log.error { "Error cleaning WorldCat cache: #{ex}" }
         end
       end
     end
