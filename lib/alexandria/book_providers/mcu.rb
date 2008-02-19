@@ -25,6 +25,7 @@ require 'net/http'
 module Alexandria
   class BookProviders
     class MCUProvider < GenericProvider
+      include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -155,6 +156,10 @@ module Alexandria
                         product['manufacturer'],
                         nil, # TODO: furnish publish year
                         product['media'])
+        if book.title.nil?
+          log.warn { "No title was returned for #{book.isbn}"}
+          book.title = ''
+        end
         return [ book ]
       end
 
