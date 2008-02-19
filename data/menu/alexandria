@@ -1,0 +1,7 @@
+?package(alexandria):\
+  needs="X11"\
+  section="Applications/Office"\
+  title="Alexandria"\
+  icon="/usr/share/icons/hicolor/scalable/apps/alexandria.svg"\
+  command="/usr/bin/alexandria"
+
