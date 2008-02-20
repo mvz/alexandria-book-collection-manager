@@ -22,8 +22,8 @@ module Alexandria
   extend GetText
   bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
   DESCRIPTION = _('A program to help you manage your book collection.')
-  COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" +
-    "Copyright (C) 2007 Alexandria Contributors"
+  COPYRIGHT = "Copyright (C) 2004,2005,2006 Laurent Sansonetti\n" +
+    "Copyright (C) 2007,2008 Alexandria Contributors"
     AUTHORS = [
              'Alexander McCormmach <alexander@tunicate.org>',
              'Aymeric Nys <aymeric@nnx.com>',
