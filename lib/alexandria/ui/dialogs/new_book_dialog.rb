@@ -101,9 +101,11 @@ module Alexandria
         @combo_search.active = 0
 
         # Re-select the last selected criterion.
+        # TODO let's do this from a Gconf setting instead, maybe?
         begin
           @title_radiobutton.active = @@last_criterion_was_not_isbn
         rescue NameError
+          log.debug { "initialize @@last_criterion_was_not_isbn as false" }
           @@last_criterion_was_not_isbn = false
         end
 
@@ -123,6 +125,7 @@ module Alexandria
       end
 
       def on_criterion_toggled(item)
+        log.debug { "on_criterion_toggled" }
         return unless item.active?
         if is_isbn = item == @isbn_radiobutton
           @latest_size = @new_book_dialog.size

@@ -1,0 +1,47 @@
+Announcing release of Alexandria 0.6.3
+
+* What is Alexandria?
+=====================
+
+Alexandria is a book library management application for Gnome, similar to
+Tellico or Delicious Library. Its main recommending feature is its clean,
+intuitive interface. Alexandria is able to retrieve book information and cover
+images from a wide variety of online data sources. 
+
+* Where can I get it?
+=====================
+
+A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
+An Ubuntu repository with project-supported packages is maintained at
+http://launchpad.net/alexandria-team/+archive
+
+* What's New?
+==========================
+
+-  Added export function for ipod notes.
+-  Removed refresh button from toolbar.
+-  Added asynchronous loading and visual feedback to make GUI feel more
+   responsive. 
+-  Switched to Amazon ECS 4.0 in the Amazon provider, as AWS 3.0 will be
+   deprecated on March 31 2008.
+-  Added tooltips to the icon view of books.
+
+0.6.3 contains a large number of bug fixes. These include fixes for:
+
+-  [#14163] Newly added book is not selected
+-  [#16708] Hitting refresh button makes deleted books reappear
+-  [#16619] When searching by isbn misses information
+-  [#16618] When you go back into properties program removes read it tag
+-  [#15329] Using & in library name is impossible
+-  [#14592] Fails to start: undefined method `isbn’
+-  [#18197] Setting book rating through right-click menu causes crash
+-  [#13302] z3950.bibsys.no does not support “search and retrieve” Z39.50 piggybacking
+
+New translations:
+
+Where can I find out more?
+==========================
+ * Website: http://alexandria.rubyforge.org/
+ * Screenshots/Screencast: http://alexandria.rubyforge.org/screenshots.html
+ * Mailing List: http://rubyforge.org/pipermail/alexandria-list/
+ * Bugs: http://rubyforge.org/tracker/?group_id=205	
