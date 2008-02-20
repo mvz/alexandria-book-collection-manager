@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
-"PO-Revision-Date: 2008-02-18 23:40-0900\n"
+"PO-Revision-Date: 2008-02-19 21:34-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
 "MIME-Version: 1.0\n"
@@ -94,7 +94,7 @@ msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "'%s'から選択された全ての本を削除します。よろしいですか？"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
+#: ../lib/alexandmria/ui/dialogs/book_properties_dialog_base.rb:59
 msgid "Properties for '%s'"
 msgstr "'%s'の設定"
 
@@ -490,7 +490,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/ui_manager.rb:583
 msgid "Repair Book Data"
-msgstr ""
+msgstr "本のデータを修復します"
 
 #: ../lib/alexandria/ui/ui_manager.rb:584
 msgid ""
@@ -498,10 +498,12 @@ msgid ""
 "to attempt to download new information for them from the online book "
 "providers?\n"
 msgstr ""
+"以下の本のデータファイルは壊れているかもしくは空っぽです。"
+"新しいデータをオンラインプロバイダーからダウンロードしますか？\n"
 
 #: ../lib/alexandria/ui/ui_manager.rb:641
 msgid "Added '%s' to library '%s'"
-msgstr ""
+msgstr "ライブラリ'%2$s'に'%1$s'を追加しました"
 
 #: ../lib/alexandria/ui/ui_manager.rb:794
 msgid "Loading '%s'..."
@@ -1245,10 +1247,3 @@ msgstr "ブック・コレクション・マネージャ"
 msgid "Manage your book collection"
 msgstr "ブック・コレクション管理お手伝いプログラム"
 
-#~ msgid ""
-#~ "These books do not conform to the ISBN-13 standard. We will attempt to "
-#~ "replace them from the book providers. Otherwise, we will turn them into "
-#~ "manual entries.\n"
-#~ msgstr ""
-#~ "これらの本はISBN-13に準拠していません。本のプロバイダーから得られたもので"
-#~ "置き換えられます。そうでなければ手で入力してください\n"
