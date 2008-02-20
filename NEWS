@@ -3,46 +3,59 @@ Announcing the release of Alexandria 0.6.3
 * What is Alexandria?
 =====================
 
-Alexandria is a book library management application for Gnome, similar to
+Alexandria is an application for managing a personal book library, similar to
 Tellico or Delicious Library. Its main recommending feature is its clean,
 intuitive interface. Alexandria is able to retrieve book information and cover
-images from a wide variety of online data sources. 
+images from a wide variety of online data sources. It also features extensive
+import and export options, a loan interface, and smart libraries. Alexandria is
+written in Ruby using ruby-gnome2.
 
 * Where can I get it?
 =====================
 
-A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
-An Ubuntu repository with project-supported packages is maintained at
-http://launchpad.net/alexandria-team/+archive
+- A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
+
+- An Ubuntu repository with project-supported packages is maintained at
+  http://launchpad.net/~alexandria-team/+archive
+
+- SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
 * What's New in 0.6.3?
 ======================
 
--  Added export function for iPod Notes.
--  Removed refresh button from toolbar.
--  Added asynchronous loading and visual feedback to make GUI feel more
-   responsive. 
--  Added Amazon ECS 4.0 support to replace the old AWS 3.x Amazon provider. 
-   AWS 3.x will be deprecated by Amazon on March 31 2008.
--  Added tooltips to the icon view of books.
+Special thanks to:
+
+- L.C. Karssen for important bug triage work
+- New contributor Timothy Malone for iPod Notes export feature
+
+Changes:
+
+- Added export function for iPod Notes
+- Removed refresh button from toolbar
+- Added asynchronous loading and visual feedback to make GUI feel more
+   responsive
+- Added Amazon ECS 4.0 support to replace the old AWS 3.x Amazon provider.
+  AWS 3.x will be deprecated by Amazon on March 31 2008
+- Added tooltips to the icon view of books
 
 0.6.3 contains a large number of bug fixes. These include fixes for:
 
--  [#14163] Newly added book is not selected
--  [#16708] Hitting refresh button makes deleted books reappear
--  [#16619] When searching by isbn misses information
--  [#16618] When you go back into properties program removes read it tag
--  [#15329] Using & in library name is impossible
--  [#14592] Fails to start: undefined method 'isbn'
--  [#18197] Setting book rating through right-click menu causes crash
--  [#13302] Fails with z39.50 providers which don't support 'piggybacking'
+- [#14163] Newly added book is not selected
+- [#16708] Hitting refresh button makes deleted books reappear
+- [#16619] When searching by isbn misses information
+- [#16618] When you go back into properties program removes read it tag
+- [#15329] Using & in library name is impossible
+- [#14592] Fails to start: undefined method 'isbn'
+- [#18197] Setting book rating through right-click menu causes crash
+- [#13302] Fails with z39.50 providers which don't support 'piggybacking'
 
 New translations:
 
-- Galician
-- Chinese (Traditional)
+- Galician (Adrián Chaves Fernández)
+- Chinese (Traditional) (Jos'e Ling)
+- Improved Czech translation (Petr Vaneck)
 
-- New Japanese translation of the Alexandria Manual
+- New Japanese translation of the Alexandria Manual (CHIKAMA Masaki)
 
 Where can I find out more?
 ==========================
