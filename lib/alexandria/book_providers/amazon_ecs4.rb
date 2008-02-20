@@ -70,7 +70,6 @@ module Alexandria
           case type
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
-            log.debug { "Amazon ECS search #{request_locale} for #{criterion}" }
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
             res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
             res.items.each do |item|
@@ -82,7 +81,6 @@ module Alexandria
             raise TooManyResultsError if products.length > 1
 
           when SEARCH_BY_TITLE
-            log.debug { "searching by title..." }
             res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
 
             res.items.each do |item|
@@ -93,7 +91,6 @@ module Alexandria
             ##req.keyword_search(criterion) do |product|
 
           when SEARCH_BY_AUTHORS
-            log.debug { "searching by author..." }
             criterion = "author:#{criterion}"
             res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale, :type => 'Power'})
             res.items.each do |item|
@@ -102,7 +99,6 @@ module Alexandria
             ##req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            log.debug { "searching by keyword..." }
             res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
 
             res.items.each do |item|
@@ -112,8 +108,12 @@ module Alexandria
           else
             raise InvalidSearchTypeError
           end
-          raise NoResultsError if products.empty?
-        rescue Amazon::Search::Request::SearchError
+          if products.empty?
+            raise Amazon::RequestError, "No products"
+          end
+          # raise NoResultsError if products.empty?
+        rescue Amazon::RequestError => re
+          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}"}
           retry unless locales.empty?
           raise NoResultsError
         end

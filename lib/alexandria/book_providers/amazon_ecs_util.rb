@@ -32,6 +32,8 @@ module Amazon
   class RequestError < StandardError; end
 
   class Ecs
+    include Alexandria::Logging
+
     SERVICE_URLS = {:us => 'http://webservices.amazon.com/onca/xml?Service=AWSECommerceService',
         :uk => 'http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService',
         :ca => 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
@@ -103,7 +105,7 @@ module Amazon
     def self.send_request(opts)
       opts = self.options.merge(opts) if self.options
       request_url = prepare_url(opts)
-      log "Request URL: #{request_url}"
+      log.debug { "Request URL: #{request_url}" }
 
       res = self.transport.get_response(URI::parse(request_url))
       unless res.kind_of? Net::HTTPSuccess
@@ -177,17 +179,17 @@ module Amazon
       end
     end
 
-    protected
-      def self.log(s)
-        return unless self.debug
-        if defined? RAILS_DEFAULT_LOGGER
-          RAILS_DEFAULT_LOGGER.error(s)
-        elsif defined? LOGGER
-          LOGGER.error(s)
-        else
-          puts s
-        end
-      end
+    #protected
+    #  def self.log(s)
+    #    return unless self.debug
+    #    if defined? RAILS_DEFAULT_LOGGER
+    #      RAILS_DEFAULT_LOGGER.error(s)
+    #    elsif defined? LOGGER
+    #      LOGGER.error(s)
+    #    else
+    #      puts s
+    #    end
+    #  end
 
     private
       def self.prepare_url(opts)

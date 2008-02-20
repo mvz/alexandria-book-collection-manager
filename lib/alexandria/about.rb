@@ -52,12 +52,12 @@ module Alexandria
   TRANSLATORS = [
                  'Adrián Chaves Fernández <adriyetichaves@gmail.com> (gl)',
                  'CHIKAMA Masaki <masaki.chikama@gmail.com> (ja)',
-                 'Cathal Mc Ginley <cathal.alexandria@gnostai.org> (ga)'
+                 'Cathal Mc Ginley <cathal.alexandria@gnostai.org> (ga)',
                  'Dafydd Harries <daf@muse.19inch.net> (cy)',
                  'David Weinehall <tao@debian.org> (sv)',
                  'Joachim Breitner <mail@joachim-breitner.de> (de)',
-                 'José Ling <jlgdot369@gmail.com> (zh_TW)'
-                 'L.C. Karssen <lennart@karssen.org>',
+                 'José Ling <jlgdot369@gmail.com> (zh_TW)',
+                 'L.C. Karssen <lennart@karssen.org> (nl)',
                  'Laurent Sansonetti <lrz@gnome.org> (fr)',
                  'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
                  'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
