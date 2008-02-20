@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
-"PO-Revision-Date: 2008-02-18 19:00+0100\n"
+"PO-Revision-Date: 2008-02-20 19:30+0100\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -505,18 +505,19 @@ msgstr ""
 
 #: ../lib/alexandria/ui/ui_manager.rb:583
 msgid "Repair Book Data"
-msgstr ""
+msgstr "Repareer boekgegevens"
 
 #: ../lib/alexandria/ui/ui_manager.rb:584
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
 "providers?\n"
-msgstr ""
+msgstr "De gegevensbestanden voor de volgende boeken zijn corrupt of leeg. "
+"Wilt u proberen om de informatie voor deze boeken opnieuw te downloaden?\n"
 
 #: ../lib/alexandria/ui/ui_manager.rb:641
 msgid "Added '%s' to library '%s'"
-msgstr ""
+msgstr "'%s' toegevoegd aan bibliotheek '%s'"
 
 #: ../lib/alexandria/ui/ui_manager.rb:794
 msgid "Loading '%s'..."
