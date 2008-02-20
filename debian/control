@@ -9,8 +9,8 @@ Package: alexandria
 Section: gnome
 Priority: extra
 Architecture: all
-Depends: ruby1.8, libgnome2-ruby (>= 0.12.0), libglade2-ruby (>= 0.12.0), libgconf2-ruby (>= 0.12.0), libyaml-ruby1.8, libgettext-ruby1.8, gconf2 (>= 2.12.1)
-Recommends: libamazon-ruby (>= 0.8.3), libwww-mechanize-ruby
+Depends: ruby1.8, libgnome2-ruby (>= 0.12.0), libglade2-ruby (>= 0.12.0), libgconf2-ruby (>= 0.12.0), libyaml-ruby1.8, libgettext-ruby1.8 (>= 1.10.0), gconf2 (>= 2.12.1)
+Recommends: libamazon-ruby (>= 0.9.2), libhpricot-ruby, libwww-mechanize-ruby
 Suggests: libimage-size-ruby, librevolution-ruby
 Description: a GNOME application for managing book collections
  Alexandria is a program for organising collections of books. It

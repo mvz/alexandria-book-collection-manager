@@ -1,4 +1,4 @@
-Announcing release of Alexandria 0.6.3
+Announcing the release of Alexandria 0.6.3
 
 * What is Alexandria?
 =====================
@@ -15,15 +15,15 @@ A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
 An Ubuntu repository with project-supported packages is maintained at
 http://launchpad.net/alexandria-team/+archive
 
-* What's New?
-==========================
+* What's New in 0.6.3?
+======================
 
--  Added export function for ipod notes.
+-  Added export function for iPod Notes.
 -  Removed refresh button from toolbar.
 -  Added asynchronous loading and visual feedback to make GUI feel more
    responsive. 
--  Switched to Amazon ECS 4.0 in the Amazon provider, as AWS 3.0 will be
-   deprecated on March 31 2008.
+-  Added Amazon ECS 4.0 support to replace the old AWS 3.x Amazon provider. 
+   AWS 3.x will be deprecated by Amazon on March 31 2008.
 -  Added tooltips to the icon view of books.
 
 0.6.3 contains a large number of bug fixes. These include fixes for:
@@ -33,15 +33,21 @@ http://launchpad.net/alexandria-team/+archive
 -  [#16619] When searching by isbn misses information
 -  [#16618] When you go back into properties program removes read it tag
 -  [#15329] Using & in library name is impossible
--  [#14592] Fails to start: undefined method `isbn’
+-  [#14592] Fails to start: undefined method 'isbn'
 -  [#18197] Setting book rating through right-click menu causes crash
--  [#13302] z3950.bibsys.no does not support “search and retrieve” Z39.50 piggybacking
+-  [#13302] Fails with z39.50 providers which don't support 'piggybacking'
 
 New translations:
+
+- Galician
+- Chinese (Traditional)
+
+- New Japanese translation of the Alexandria Manual
 
 Where can I find out more?
 ==========================
  * Website: http://alexandria.rubyforge.org/
+ * Wiki: http://wiki.alexandria-projects.org/
  * Screenshots/Screencast: http://alexandria.rubyforge.org/screenshots.html
  * Mailing List: http://rubyforge.org/pipermail/alexandria-list/
  * Bugs: http://rubyforge.org/tracker/?group_id=205	

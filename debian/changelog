@@ -1,3 +1,18 @@
+alexandria (0.6.3) stable; urgency=medium
+
+  * Stable release
+
+    Maintenance release. Adds iPod Notes export. Removes Refresh
+    button. Made library loading asynchronous, with feedback, for more
+    responsive GUI. Added tooltips to icon view of books. New Amazon
+    ECS 4.0 provider to replace the old AWS 3.x provider, as AWS 3.x
+    will be deprecated by Amazon on March 31 2008.
+
+  * Many bugs fixed, including these from the RubyForge tracker:
+    #14163, #16708, #16619, #16618, #15329, #14592, #18197, #13302
+
+ -- Cathal Mc Ginley <cathal.alexandria@gnostai.org>  Wed, 20 Feb 2008 13:45:00 +0000
+
 alexandria (0.6.2) stable; urgency=low
 
   * Stable release

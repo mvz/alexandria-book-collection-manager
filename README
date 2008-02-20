@@ -1,7 +1,7 @@
 = Alexandria
 
-Version:      0.6.2
-Release Date: 2007-12-20
+Version:      0.6.3
+Release Date: 2008-02-20
 Home Page:    http://alexandria.rubyforge.org/
 
 Alexandria is a GNOME application for managing collections of books.
@@ -45,28 +45,14 @@ keep track of books which are on loan.
     * supports CueCat barcode readers
     * includes translations for several languages
     * is documented in a complete manual (at the moment only in
-      English and French)
+      English and Japanese)
 
 Alexandria is not without problems. See doc/BUGS for a summary of issues.
 
-== 0.6.2 Release
 
-Alexandria 0.6.2 is the first official release of the program in over
-two years. (Alexandria 0.6.1 was released in 2005.)  The software is
-still slightly sketchy at the moment as the new maintainers are not
-fully experienced with the release process.
+== 0.6.3 Release
 
-Alexandria has been tested in beta for a few months now, and most
-issues to do with upgrading from earlier versions are believed to be
-resolved. However, you should still back up your library (the
-~/.alexandria directory) before you run the new version.
-
-If you encounter any problems, please leave a bug report on the
-Tracker at RubyForge <http://rubyforge.org/tracker/?group_id=205>
-
-If you want to help with the development of Alexandria, please join
-the alexandria-list mailing list.
-<http://rubyforge.org/mail/?group_id=205>
+For full release notes, see the file NEWS.
 
 
 == Installation
@@ -74,10 +60,10 @@ the alexandria-list mailing list.
 There are full instructions for installing Alexandria from source in the 
 file INSTALL, including information about all the dependencies.
 
-If you are installing on a Debian-based system, things should be easier as
-the dependencies are handled automatically (although, at the moment, there
-is no up-to-date Debian package for Ruby/ZOOM - you will have to install it
-from source, see INSTALL for details).
+If you are installing on a Debian-based system, things should be
+easier as the dependencies can be handled automatically (although, at
+the moment, there is no up-to-date Debian package for Ruby/ZOOM - you
+will have to install it from source, see INSTALL for details).
 
 To run the program, just type
     alexandria
