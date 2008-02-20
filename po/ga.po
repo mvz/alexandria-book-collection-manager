@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: alexandia 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
-"PO-Revision-Date: 2008-01-29 04:31+0000\n"
+"PO-Revision-Date: 2008-02-20 23:41+0000\n"
 "Last-Translator: Cathal Mc Ginley <cathal.alexandria@gnostai.org>\n"
 "Language-Team: Irish\n"
 "MIME-Version: 1.0\n"
@@ -115,10 +115,7 @@ msgid ""
 "The book titled '%s' has an invalid ISBN, but still exists in the providers "
 "libraries.  Do you want to keep the book but change the ISBN or cancel the "
 "add?"
-msgstr ""
-"Tá ISBN contráilte ar an leabhar dár tideal '%s', ach tá sé ar fáil ins na "
-"foinsí. An mian leat an leabhar a choinneail ach an ISBN a athrú, nó é "
-"chealadh?"
+msgstr "Tá ISBN contráilte ar an leabhar dár tideal '%s', ach tá sé ar fáil ins na foinsí. Ar mhaith leat an leabhar a choinneail ach an ISBN a athrú, nó é chealadh?"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:159
 msgid "A problem occurred while downloading images"
@@ -556,7 +553,7 @@ msgstr "Leabhar _Breise..."
 
 #: ../lib/alexandria/ui/callbacks.rb:235
 msgid "Add a new book from the Internet"
-msgstr "Cuir leabhar úr on Idirlíon isteach"
+msgstr "Cuir leabhar úr on Internet isteach"
 
 #: ../lib/alexandria/ui/callbacks.rb:236
 msgid "Add Book _Manually..."
@@ -720,7 +717,7 @@ msgstr "Cuir Íomhaighthe in _Ord"
 
 #: ../lib/alexandria/ui/callbacks.rb:262
 msgid "Display Online _Information"
-msgstr "Taispeáin eolas ar _idirlíon"
+msgstr "Taispeáin eolas ar an _Internet"
 
 #: ../lib/alexandria/ui/callbacks.rb:264
 msgid "_Help"
@@ -768,11 +765,11 @@ msgstr "Ord Tuathail"
 
 #: ../lib/alexandria/ui/callbacks.rb:303
 msgid "View as _Icons"
-msgstr "Taispeáin mar _Íomhaigh"
+msgstr "Taispeáin Leabhartaí mar _Íomhaigh"
 
 #: ../lib/alexandria/ui/callbacks.rb:304
 msgid "View as _List"
-msgstr "Taispeáin mar _Liosta"
+msgstr "Taispeáin Leabhartaí mar _Liosta"
 
 #: ../lib/alexandria/ui/callbacks.rb:308
 msgid "By _Title"
@@ -796,7 +793,7 @@ msgstr "De réir _Clúdaigh"
 
 #: ../lib/alexandria/ui/callbacks.rb:313
 msgid "By _Rating"
-msgstr "De réir _Measa"
+msgstr "De réir _Barúil"
 
 #: ../lib/alexandria/ui/callbacks.rb:317
 msgid "At _%s"
@@ -842,7 +839,7 @@ msgstr "In mo Sheilbh"
 
 #: ../lib/alexandria/smart_library.rb:115
 msgid "Wishlist"
-msgstr "Mian-Liosta"
+msgstr "Leabhartaí a ba mhaith liom"
 
 #: ../lib/alexandria/smart_library.rb:345
 #: ../data/alexandria/glade/book_properties_dialog.glade:1225
@@ -862,9 +859,8 @@ msgid "Loaning Person"
 msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:351
-#, fuzzy
 msgid "Date Read"
-msgstr "Léighte"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:360
 msgid "days"
