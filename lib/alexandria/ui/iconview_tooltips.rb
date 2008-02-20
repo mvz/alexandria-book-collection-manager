@@ -67,6 +67,36 @@ class IconViewTooltips
     nil
   end
 
+  def label_for_book(title, authors, publisher, year)
+    # This is much too complex... but it works for now!
+    html = ""
+    if title.size > 0
+      html += "<b>#{title}</b>"
+      if authors.size > 0
+        html += "\n"
+      end
+    end
+    if authors.size > 0
+      html += "<i>#{authors}</i>"
+    end
+    if (title.size > 0) or (authors.size > 0)
+      html += "\n"
+    end
+    if (publisher.size > 0) or (year.size > 0)
+      html += "<small>"
+      if publisher.size > 0
+        html += "#{publisher}"
+      end
+      if year.size > 0
+        if publisher.size > 0
+          html += " "
+        end
+        html += "(#{year})"
+      end
+      html += "</small>"
+    end
+  end
+
   def on_motion(view, event)
     tree_path = view.get_path(event.x, event.y)
     # TODO translate path a few times, for sorting & filtering...
@@ -83,7 +113,8 @@ class IconViewTooltips
             authors = iter[4]
             publisher = iter[6]
             year = iter[7]
-            @label.markup = "<b>#{title}</b>\n<i>#{authors}</i>\n<small>#{publisher} <i>(#{year})</i></small>"
+            @label.markup = label_for_book(title, authors, publisher, year)
+            ## "<b>#{title}</b>\n<i>#{authors}</i>\n<small>#{publisher} <i>(#{year})</i></small>"
             size = @tooltip_window.size_request
             @tooltip_window.move(event.x_root - size[0],
                                  event.y_root + 12)
