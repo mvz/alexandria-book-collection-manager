@@ -1,5 +1,5 @@
 # Alexandria italian translation
-# Copyright (C) 2005 Mirko Maischberger, All rights reserved
+# Copyright (C) 2005 Mirko Maischberger
 # This file is distributed under the same license as the Alexandria package.
 # Mirko Maischberger <mirko@lilik.it>, 2005.
 # Revision by Marco Costantini <costanti@science.unitn.it>, 2007-06-18

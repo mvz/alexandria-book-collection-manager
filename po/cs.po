@@ -1,10 +1,11 @@
-# translation of alexandria to czech
+# Translation of Alexandria to Czech
+# Copyright (C) 2005 Jiří Pejchal <jiri.pejchal@gmail.com>
+# Copyright (C) 2008 Petr Vanek <vanous@penguin.cz>
 # This file is distributed under the same license as the Alexandria package.
-# Jiří Pejchal <jiri.pejchal@gmail.com>, 2005.
-# Petr Vanek <vanous@penguin.cz>, 2008
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.2\n"
+"Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-01-05 21:48+0100\n"

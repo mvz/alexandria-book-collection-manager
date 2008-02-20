@@ -1,3 +1,21 @@
+# Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2008 Joseph Method
+#
+# Alexandria is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# Alexandria is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public
+# License along with Alexandria; see the file COPYING.  If not,
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
+
 module Alexandria
   module UI
     module Callbacks
@@ -172,7 +190,7 @@ module Alexandria
             books = selected_books
             library = selected_library
             books.each do |book|
-              log.debug { "set #{book.title} rating to #{rating}" } 
+              log.debug { "set #{book.title} rating to #{rating}" }
               book.rating = rating
               library.save(book)
             end
@@ -252,13 +270,13 @@ module Alexandria
           ["SetRating3", nil, _("Three Stars"), nil, nil, proc { on_set_rating[3].call }],
           ["SetRating4", nil, _("Four Stars"), nil, nil, proc { on_set_rating[4].call }],
           ["SetRating5", nil, _("Five Stars"), nil, nil, proc { on_set_rating[5].call } ],
-          ["Move", nil, _("_Move")], 
+          ["Move", nil, _("_Move")],
           ["Rename", nil, _("_Rename"), nil, nil, method(:on_rename)],
           ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", _("Delete the selected books or library"), method(:on_delete)],
           ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", _("Filter books"), method(:on_search)],
             ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", _("Clear the search results"), method(:on_clear_search_results)],
             ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), "<control>O", _("Change Alexandria's settings"), method(:on_preferences)],
-          ["ViewMenu", nil, _("_View")], 
+          ["ViewMenu", nil, _("_View")],
             ["ArrangeIcons", nil, _("Arran_ge Icons")],
             ["OnlineInformation", nil, _("Display Online _Information")],
 

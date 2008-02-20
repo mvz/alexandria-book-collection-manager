@@ -224,7 +224,7 @@ class AlexandriaBuild < Rake::TaskLib
         end
         desc "Profile slowest examples"
         Spec::Rake::SpecTask.new("profile") do |t|
-          t.spec_files = @files.specs 
+          t.spec_files = @files.specs
           t.spec_opts = ["--format", "profile"]
           t.rcov_opts = ["--exclude", "spec"]
         end
@@ -252,6 +252,7 @@ class AlexandriaBuild < Rake::TaskLib
       Rake::PackageTask.new(@name, @version) do |p|
         p.need_tar_gz = true
         p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
+                                "NEWS",
                                 "Rakefile", "TODO", "alexandria.desktop",
                                 "alexandria.desktop.in", "tasks.rb",
                                 "bin/**/*", "data/**/*", "debian/**/*",
@@ -379,7 +380,7 @@ class AlexandriaBuild < Rake::TaskLib
     end
 
     def menu_installation
-      menu_dir = File.join(sharedir, 'menu') 
+      menu_dir = File.join(sharedir, 'menu')
       [['data/menu', build.files.menu, menu_dir, 0644]]
     end
 

@@ -4,7 +4,7 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.2\n"
+"Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-01-31 22:55+0800\n"

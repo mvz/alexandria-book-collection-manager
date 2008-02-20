@@ -1,11 +1,10 @@
 # Alexandria en Español.
+# Copyright (C) 2004-2007 Miguel Ángel García <miguelangel.garcia@gmail.com>
 # This file is distributed under the same license as Alexandria.
-# Miguel Ángel García <miguelangel.garcia@gmail.com>, 2004-2007."
-# 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Alexandria\n"
+"Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2007-11-14 07:23+0100\n"

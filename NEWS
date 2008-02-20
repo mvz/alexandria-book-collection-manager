@@ -3,12 +3,12 @@ Announcing the release of Alexandria 0.6.3
 * What is Alexandria?
 =====================
 
-Alexandria is an application for managing a personal book library, similar to
-Tellico or Delicious Library. Its main recommending feature is its clean,
-intuitive interface. Alexandria is able to retrieve book information and cover
-images from a wide variety of online data sources. It also features extensive
-import and export options, a loan interface, and smart libraries. Alexandria is
-written in Ruby using ruby-gnome2.
+Alexandria is an application for managing a personal book library. 
+Its main recommending feature is its clean, intuitive interface. 
+Alexandria is able to retrieve book information and cover images from
+a wide variety of online data sources. It also features extensive
+import and export options, a loan interface, and smart libraries. 
+Alexandria is written in Ruby using ruby-gnome2.
 
 * Where can I get it?
 =====================
@@ -49,12 +49,13 @@ Changes:
 - [#18197] Setting book rating through right-click menu causes crash
 - [#13302] Fails with z39.50 providers which don't support 'piggybacking'
 
-New translations:
+Translations:
 
-- Galician (Adrián Chaves Fernández)
-- Chinese (Traditional) (Jos'e Ling)
+- New Galician translation (Adrian Chaves Fernandez)
+- New Chinese (Traditional) translation (Jose Ling)
+
+- Initial Irish (Gaelic) translation (Cathal Mc Ginley)
 - Improved Czech translation (Petr Vaneck)
-
 - New Japanese translation of the Alexandria Manual (CHIKAMA Masaki)
 
 Where can I find out more?

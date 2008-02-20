@@ -1,7 +1,7 @@
 # Japanese resources for Alexandria
+# Copyright (C) 2004, 2005 Masao Mutoh <mutoh@highway.ne.jp>
+# Copyright (C) 2007, 2008 CHIKAMA Masaki <masaki.chikama@gmail.com>
 # This file is distributed under the same license as the Alexandria package.
-# Masao Mutoh <mutoh@highway.ne.jp>, 2004, 2005
-# CHIKAMA Masaki <masaki.chikama@gmail.com>, 2007
 #
 msgid ""
 msgstr ""

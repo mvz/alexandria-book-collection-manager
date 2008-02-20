@@ -1,10 +1,10 @@
 # Irish translation for Alexandria.
-# Copyright (C) 2007 Cathal Mc Ginley <cathal.alexandria@gnostai.org>, 2008.
-# This file is distributed under the same license as the Alexandria package.
+# Copyright (C) 20007, 2008 Cathal Mc Ginley <cathal.alexandria@gnostai.org>
+# This file is distributed under the same license as the Alexandria package
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandia 0.6.2\n"
+"Project-Id-Version: alexandia 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
 "PO-Revision-Date: 2008-01-29 04:31+0000\n"

@@ -1,7 +1,7 @@
 # Alexandria en Français
+# Copyright (C) 2004, 2005 Laurent Sansonetti <lrz@gnome.org>
+# Copyright (C) 2006 Laurent Richard <laurent@dotbar.be>
 # This file is distributed under the same license as the Alexandria package.
-# Laurent Sansonetti <lrz@gnome.org>, 2004-2005
-# Laurent Richard <laurent@dotbar.be>, 2006
 #
 msgid ""
 msgstr ""

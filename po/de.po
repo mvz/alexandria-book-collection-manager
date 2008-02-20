@@ -1,3 +1,6 @@
+# German translation for Alexandria
+# Copyright (C) 2004, 2005, 2006, 2007, 2008 Joachim Breitner <mail@joachim-breitner.de>
+# This file is distributed under the same license as the Alexandria package.
 # 
 msgid ""
 msgstr ""

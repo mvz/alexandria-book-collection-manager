@@ -1,3 +1,21 @@
+# Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2008 Joseph Method
+#
+# Alexandria is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# Alexandria is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public
+# License along with Alexandria; see the file COPYING.  If not,
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
+
 module Alexandria
   module UI
     include Logging
@@ -44,13 +62,13 @@ module Alexandria
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         # Editable tree views are behaving strangely
         # make_renderer_editable renderer
-        
+
         column.pack_start(renderer, true)
 
         column.set_cell_data_func(renderer) do |column, cell, model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.text, cell.editable = iter[Columns::TITLE], false #true 
+          cell.text, cell.editable = iter[Columns::TITLE], false #true
         end
 
         column.sort_column_id = Columns::TITLE
@@ -104,14 +122,14 @@ module Alexandria
         CHECK_COLUMNS.each do |title, iterid|
           setup_check_column title, iterid
         end
-        setup_rating_column  
+        setup_rating_column
         @listview.selection.mode = Gtk::SELECTION_MULTIPLE
         @listview.selection.signal_connect('changed') do
           log.debug { "changed" }
           @parent.on_books_selection_changed
         end
         setup_tags_column
-        setup_listview_hack 
+        setup_listview_hack
         setup_view_source_dnd(@listview)
       end
 
@@ -172,7 +190,7 @@ module Alexandria
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { "Create listview column for %s..." % title }
-        setup_column = Proc.new do |iter, cell, column| 
+        setup_column = Proc.new do |iter, cell, column|
           state = iter[column]
           cell.set_active(state)
           cell.activatable = true

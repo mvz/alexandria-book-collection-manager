@@ -1,7 +1,7 @@
 # Translation of alexandria to Polish
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2005 Borys Musielak <michuk@jakilinux.org>
 # This file is distributed under the same license as the alexandria package.
-# Borys Musielak <michuk@jakilinux.org>, 2005.
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: alexandria\n"
