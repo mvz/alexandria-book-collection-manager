@@ -255,7 +255,7 @@ class AlexandriaBuild < Rake::TaskLib
                                 "NEWS",
                                 "Rakefile", "TODO", "alexandria.desktop",
                                 "alexandria.desktop.in", "tasks.rb",
-                                "bin/**/*", "data/**/*", "debian/**/*",
+                                "bin/**/*", "data/**/*",
                                 "doc/**/*", "lib/**/*", "po/**/*",
                                 "schemas/**/*", "spec/**/*", "tests/**/*")
       end
