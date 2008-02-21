@@ -11,7 +11,7 @@ alexandria (0.6.3) stable; urgency=medium
   * Many bugs fixed, including these from the RubyForge tracker:
     #14163, #16708, #16619, #16618, #15329, #14592, #18197, #13302
 
- -- Cathal Mc Ginley <cathal.alexandria@gnostai.org>  Wed, 20 Feb 2008 13:45:00 +0000
+ -- Cathal Mc Ginley <cathal.alexandria@gnostai.org>  Thu, 21 Feb 2008 00:05:00 +0000
 
 alexandria (0.6.2) stable; urgency=low
 
