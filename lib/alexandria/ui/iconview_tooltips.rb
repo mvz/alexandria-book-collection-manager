@@ -36,21 +36,21 @@ class IconViewTooltips
     @tooltip_window.signal_connect('expose_event') { |window, event|
       on_expose(window, event) }
 
-    @label = Gtk::Label.new('')
-    @label.wrap = true
-    @label.set_alignment(0.5, 0.5)
-    @label.use_markup = true
-    @label.show()
+      @label = Gtk::Label.new('')
+      @label.wrap = true
+      @label.set_alignment(0.5, 0.5)
+      @label.use_markup = true
+      @label.show()
 
-    @tooltip_window.add(@label)
-    set_view(view)
+      @tooltip_window.add(@label)
+      set_view(view)
   end
 
   def set_view(view)
     view.signal_connect('motion_notify_event') { |view, event|
       on_motion(view, event) }
-    view.signal_connect('leave_notify_event') { |view, event|
-      on_leave(view, event) }
+      view.signal_connect('leave_notify_event') { |view, event|
+        on_leave(view, event) }
   end
 
   def on_expose(window, event)
@@ -82,19 +82,20 @@ class IconViewTooltips
     if (title.size > 0) or (authors.size > 0)
       html += "\n"
     end
-    if (publisher.size > 0) or (year.size > 0)
-      html += "<small>"
-      if publisher.size > 0
-        html += "#{publisher}"
-      end
-      if year.size > 0
-        if publisher.size > 0
-          html += " "
-        end
-        html += "(#{year})"
-      end
-      html += "</small>"
+
+    html += "<small>"
+    if publisher and publisher.size > 0
+      html += "#{publisher}"
     end
+
+    if year and year.size > 0
+      if publisher and publisher.size > 0
+        html += " "
+      end
+      html += "(#{year})"
+    end
+
+    html += "</small>"
   end
 
   def on_motion(view, event)
