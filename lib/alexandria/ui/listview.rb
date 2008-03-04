@@ -236,10 +236,11 @@ module Alexandria
           @prefs.col_publisher_visible,
           @prefs.col_publish_date_visible,
           @prefs.col_edition_visible,
-          @prefs.col_rating_visible,
           @prefs.col_redd_visible,
+          @prefs.col_own_visible,
           @prefs.col_want_visible,
-          @prefs.col_own_visible
+          @prefs.col_rating_visible,
+          @prefs.col_tags_visible
         ]
         cols = @listview.columns[1..-1] # skip "Title"
         cols.each_index do |i|
