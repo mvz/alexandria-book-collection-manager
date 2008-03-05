@@ -30,7 +30,9 @@ module Alexandria
        self.new(_("Archived Tellico XML (*.bc, *.tc)"),
                 ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
        self.new(_("ISBN List (*.txt)"), ['*.txt'],
-                :import_as_isbn_list)
+                :import_as_isbn_list),
+	self.new(_("GoodReads CSV"), ['*.csv'],
+		:import_as_csv_file)
       ]
     end
 
@@ -73,6 +75,8 @@ module Alexandria
         rescue => e
           puts e.message
         end
+      elsif [".csv"].include? filename[-4..-1]
+	self.import_as_csv_file(*args)
       else
         puts "Bailing on this import!"
         raise "Not supported type"
@@ -158,6 +162,102 @@ module Alexandria
         end
       end
     end
+
+def self.import_as_csv_file(name, filename, on_iterate_cb,
+                                 on_error_cb)
+	require 'csv'
+	books = []
+	current_iteration=1
+
+	puts "Starting import_as_csv_file..."
+        csv_file =IO.readlines(filename).map
+	max_iterations=csv_file.length
+	puts max_iterations        
+	#check to make sure we can deal with this file.
+	#GoodReads doesn't provide a header of any sort to this file.
+	temp_line=CSV::parse_line(csv_file[0], ',')
+	if temp_line[2].include? "ISBN"
+		#if the ISBN is in column three, we can at least import as an ISBN list.		
+		puts "Looks good so far, lets give it a go" if $DEBUG
+	else
+		puts "not a goodreads file?" if $DEBUG
+		return
+	end
+	#the first line just contains the headers, get rid of it.
+	csv_file.shift	
+	begin	
+	csv_file.each do |line|
+		book_temp = []
+		@cover_temp = nil		
+		element = CSV::parse_line((line.delete '='), ',') 
+		
+		#why does it add strange CSV information when we don't just create a new string? Same thing happens with Amazon lookups I noticed.			
+		element[0]=String.new("unknown") if element[0]==nil
+		element[1]=String.new("unknown") if element[1]==nil
+		element[5]=String.new("unknown") if element[5]==nil
+		#we have to have a publishing year
+		element[7]=0000 if element[7] == nil
+		element[6]=String.new("unknown") if element[6]==nil
+		authors = [] #GoodReads only seems to support 1 author. Maybe add support for multiple authors if this gets expanded to a generic csv importer.
+		authors << String.new(element[1])
+		#element 2 is the ISBN.		
+		if element[2] != nil
+			puts element[2] if $DEBUG
+			Library.canonicalise_ean(element[2]) unless element[2]== nil # isbn			
+			#we have to search online for the cover image anyway, so we may as well get the most up to date data			
+			book_temp, @cover_temp = Alexandria::BookProviders.isbn_search(element[2])
+		else	
+			#if the book doesn't have an ISBN we'll just add the book manually.
+			puts "no ISBN"	if $DEBUG			
+			book_temp=Book.new(String.new(element[0]),authors,nil,String.new(element[5]),element[7].to_i,String.new(element[6]))
+		end
+		#some providers (the Belium provider for instance) seem to give bad binding information, so use the goodreads data if availalbe.
+		book_temp.edition=String.new(element[6]) unless element[6] == nil
+		#the fourth column of the file is the rating the user gave to the book, we should preserve that.						
+		if element[3] != nil			
+			begin
+			book_temp.rating=element[3].to_i
+			rescue
+			puts "Can't convert rating"
+			book_temp.rating=0
+			end
+		end
+		#preserve the date the user read the book
+		if element[9] != nil
+			book_temp.redd=true
+			begin
+			book_temp.redd_when=Time.parse(element[9])
+			rescue
+			puts "Couldn't parse Date Read, putting nil date"
+			end
+		end
+		#Save the bookshelves as tags
+		if element[11] != nil			
+			book_temp.tags=(String.new(element[11])).split(' ')
+		end
+		#also preserve any notes.			
+		if element[12] != nil
+			book_temp.notes=String.new(element[12])
+		end
+		books << [book_temp, @cover_temp]
+		on_iterate_cb.call(current_iteration += 1,
+                           max_iterations) if on_iterate_cb
+	end
+	library = Library.load(name)
+      	puts "Going with these #{books.length} books: #{books.inspect}" if $DEBUG
+      	books.each do |book, cover_uri|
+        	puts "Saving #{book.isbn} cover..." if $DEBUG
+        	library.save_cover(book, cover_uri) if cover_uri != nil
+        	puts "Saving #{book.isbn}..." if $DEBUG
+        	library << book
+        	library.save(book)
+	end
+	rescue => e
+		puts e.message		
+		return nil
+	end
+	return [library, []]
+   end
 
     def self.import_as_isbn_list(name, filename, on_iterate_cb,
                                  on_error_cb)
