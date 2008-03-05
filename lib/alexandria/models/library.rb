@@ -91,7 +91,6 @@ module Alexandria
             next
           end
           book = self.regularize_book_from_yaml(test[1])
-          book.library = library
           old_isbn = book.isbn
           old_pub_year = book.publishing_year
           begin
@@ -114,6 +113,7 @@ module Alexandria
             raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year
 
             # ruined_books << [book, book.isbn, library]
+            book.library = library.name
             library << book
           rescue => e
             book.version = VERSION
