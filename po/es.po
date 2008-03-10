@@ -1,19 +1,21 @@
+# translation of es.po to
 # Alexandria en Español.
 # Copyright (C) 2004-2007 Miguel Ángel García <miguelangel.garcia@gmail.com>
 # This file is distributed under the same license as Alexandria.
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.3\n"
+"Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
-"PO-Revision-Date: 2007-11-14 07:23+0100\n"
-"Last-Translator: Miguel Ángel García <miguelangel.garcia@gmail.com>\n"
-"Language-Team: Spanish <Project-Id-Version: esReport-Msgid-Bugs-To: POT>\n"
+"PO-Revision-Date: 2008-03-10 07:24+0100\n"
+"Last-Translator: \n"
+"Language-Team:  <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
@@ -206,8 +208,7 @@ msgstr "El fichero ya existe"
 msgid ""
 "A file named '%s' already exists.  Do you want to replace it with the one "
 "you are generating?"
-msgstr ""
-"El fichero '%s' ya existe. ¿Desea reemplazarlo con el que está generando?"
+msgstr "El fichero '%s' ya existe. ¿Desea reemplazarlo con el que está generando?"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
 msgid "Export '%s'"
@@ -368,9 +369,8 @@ msgid "Want"
 msgstr "Deseado"
 
 #: ../lib/alexandria/ui/listview.rb:120 ../lib/alexandria/smart_library.rb:346
-#, fuzzy
 msgid "Tags"
-msgstr "Palabras clave:"
+msgstr "Etiquetas"
 
 #: ../lib/alexandria/ui/listview.rb:145 ../lib/alexandria/smart_library.rb:344
 msgid "Rating"
@@ -394,8 +394,7 @@ msgstr "La biblioteca no puede renombrarse"
 
 #: ../lib/alexandria/ui/sidepane.rb:42
 msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr ""
-"Ya existe una biblioteca llamada '%s'. Por favor, elija un nombre diferente."
+msgstr "Ya existe una biblioteca llamada '%s'. Por favor, elija un nombre diferente."
 
 #: ../lib/alexandria/ui/sidepane.rb:68
 msgid "Library"
@@ -430,9 +429,8 @@ msgid "Notes contain"
 msgstr "Las notas contienen"
 
 #: ../lib/alexandria/ui/ui_manager.rb:130
-#, fuzzy
 msgid "Tags contain"
-msgstr "Las notas contienen"
+msgstr "Las etiquetas contienen"
 
 #: ../lib/alexandria/ui/ui_manager.rb:145
 msgid "Change the search type"
@@ -467,7 +465,6 @@ msgstr[0] "Biblioteca '%s' seleccionada, %d libro"
 msgstr[1] "Biblioteca '%s' seleccionada, %d libros"
 
 #: ../lib/alexandria/ui/ui_manager.rb:369
-#, fuzzy
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "Biblioteca '%s' seleccionada, %d libro, %d no valorado"
@@ -510,7 +507,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/ui_manager.rb:583
 msgid "Repair Book Data"
-msgstr ""
+msgstr "Reparar información de libros"
 
 #: ../lib/alexandria/ui/ui_manager.rb:584
 msgid ""
@@ -518,15 +515,17 @@ msgid ""
 "to attempt to download new information for them from the online book "
 "providers?\n"
 msgstr ""
+"Los fichecheros de datos de los libros siguientes se encuentra corrupta "
+"o errónea. ¿Desea tratar de descargar nueva información sobre ellos "
+"de los proveedores de libros en línea?\n"
 
 #: ../lib/alexandria/ui/ui_manager.rb:641
 msgid "Added '%s' to library '%s'"
-msgstr ""
+msgstr "Añadidos '%s' a la biblioteca '%s'"
 
 #: ../lib/alexandria/ui/ui_manager.rb:794
-#, fuzzy
 msgid "Loading '%s'..."
-msgstr "Añadiendo '_%s'"
+msgstr "Cargando '%s'..."
 
 #: ../lib/alexandria/ui/ui_manager.rb:1010
 msgid "In '_%s'"
@@ -813,15 +812,14 @@ msgid "New Library"
 msgstr "Nueva biblioteca"
 
 #: ../lib/alexandria/ui/init.rb:65
-#, fuzzy
 msgid "Unable to launch the help browser"
-msgstr "No es posible lanzar el navegador web"
+msgstr "No es posible lanzar el navegador de ayuda"
 
 #: ../lib/alexandria/ui/init.rb:66
 msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
-msgstr ""
+msgstr "No se pudo mostrar la ayuda de Alexandria. Ocurrió un error lanzando el sistema de navegación de ayuda."
 
 #: ../lib/alexandria/import_library.rb:29
 msgid "Autodetect"
@@ -869,9 +867,8 @@ msgid "Loaning Person"
 msgstr "Prestado a"
 
 #: ../lib/alexandria/smart_library.rb:351
-#, fuzzy
 msgid "Date Read"
-msgstr "Leer"
+msgstr "Leer fecha"
 
 #: ../lib/alexandria/smart_library.rb:360
 msgid "days"
@@ -958,9 +955,8 @@ msgid "ISBN List"
 msgstr "Lista ISBN"
 
 #: ../lib/alexandria/export_library.rb:108
-#, fuzzy
 msgid "iPod Notes"
-msgstr "Notas"
+msgstr "Notas iPod"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "HTML Web Page"
@@ -1270,37 +1266,3 @@ msgstr "Gestor de colecciones de libros"
 msgid "Manage your book collection"
 msgstr "Organiza tu colección de libros"
 
-#~ msgid ""
-#~ "These books do not conform to the ISBN-13 standard. We will attempt to "
-#~ "replace them from the book providers. Otherwise, we will turn them into "
-#~ "manual entries.\n"
-#~ msgstr ""
-#~ "Estos libros no cumplen el estándar ISBN-13. Se tratará de reemplazarlos "
-#~ "mediante los proveedores de libros. En otro caso, se cambiarán por "
-#~ "entradas de manual.\n"
-
-#~ msgid "_Refresh"
-#~ msgstr "_Actualizar"
-
-#~ msgid "Reload the selected library"
-#~ msgstr "Volver a cargar la biblioteca seleccionada"
-
-#~ msgid "n/a"
-#~ msgstr "n/a"
-
-#~ msgid "Library _name:"
-#~ msgstr "_Nombre de la biblioteca:"
-
-#~ msgid ""
-#~ "Are you sure you want to permanently delete '%s' which has %d book?Are "
-#~ "you sure you want to permanently delete '%s' which has %d books?"
-#~ msgstr ""
-#~ "¿Está seguro de que desea eliminar permanentemente '%s' que contiene %d "
-#~ "libro?¿Está seguro de que desea eliminar permanentemente '%s' que "
-#~ "contiene %d libros?"
-
-#~ msgid "_New"
-#~ msgstr "_Nuevo"
-
-#~ msgid "Couldn't validate the scanner input"
-#~ msgstr "No se pudo validar la entrada del escaner"
