@@ -1,3 +1,7 @@
+2008-03-26  Ligia Moreira <ligia.moreira@netvisao.pt >
+
+	* pt.po: Update
+
 2008-03-04  Piotr Drąg <piotrdrag@gmail.com>
 
 	* pl.po: Update
@@ -61,7 +65,7 @@
 2007-12-17  Cathal Mc Ginley <cathal.alexandria@gnostai.org>
 
 	* Pre-0.6.2 string freeze
-	 
+
 2007-11-21  CHIKAMA Masaki <masaki.chikama@gmail.com>
 
 	* ja.po: Update
@@ -186,7 +190,7 @@
 2005-07-18  Jiri Pejchal <jiri.pejchal@gmail.com>
 
 	* cs.po: Initial revision of Czech translation.
- 
+
 2005-06-21  Joachim Breitner <mail@joachim-breitner.de>
 
 	* de.po: typos found by Jens Seidel <jensseidel@users.sf.net>
@@ -284,7 +288,7 @@
 
 	* de.po: Minor typos
 
-2005-03-22  Joachim Breitner  <mail@joachim-breitner.de> 
+2005-03-22  Joachim Breitner  <mail@joachim-breitner.de>
 
 	* de.po: Update.
 
@@ -295,7 +299,7 @@
 2005-03-19  Mirko Maischberger <mirko@lilik.it>
 
 	* it.po: Added.
-	
+
 2005-03-19  Laurent Sansonetti  <lrz@gnome.org>
 
 	* genpot.sh: Fix path to alexandria.desktop.in and do not use the
@@ -307,34 +311,34 @@
 	* es.po: Update.
 
 2005-03-11  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* fr.po: Fix by Frederic Logier.
 
 2005-03-10  David Weinehall  <tao@acc.umu.se>
 
 	* sv.po: Update.
 
-2005-03-10  Masao Mutoh  <mutoh@highway.ne.jp> 
+2005-03-10  Masao Mutoh  <mutoh@highway.ne.jp>
 
 	* ja.po: Update.
-	
+
 2005-03-08  David Weinehall  <tao@acc.umu.se>
 
 	* sv.po: Initial revision.
 
-2005-03-07  Joachim Breitner  <mail@joachim-breitner.de> 
+2005-03-07  Joachim Breitner  <mail@joachim-breitner.de>
 
 	* de.po: Update.
 
 2005-03-07  Laurent Sansonetti  <lrz@gnome.org>
-	
+
 	* fr.po: Update.
 
-2005-03-07  Masao Mutoh  <mutoh@highway.ne.jp> 
+2005-03-07  Masao Mutoh  <mutoh@highway.ne.jp>
 
 	* ja.po: Update.
 
-2005-03-06  Joachim Breitner  <mail@joachim-breitner.de> 
+2005-03-06  Joachim Breitner  <mail@joachim-breitner.de>
 
 	* de.po: Update.
 
@@ -370,7 +374,7 @@
 
 	* de.po: Initial revision.
 
-2004-07-10  Masao Mutoh  <mutoh@highway.ne.jp> 
+2004-07-10  Masao Mutoh  <mutoh@highway.ne.jp>
 
 	* ja.po: Updated Japanese translation.
 
@@ -390,7 +394,7 @@
 
 	* fr.po: Updated.
 
-2004-06-27  Masao Mutoh  <mutoh@highway.ne.jp> 
+2004-06-27  Masao Mutoh  <mutoh@highway.ne.jp>
 
 	* ja.po: Updated.
 
