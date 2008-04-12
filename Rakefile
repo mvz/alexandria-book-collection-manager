@@ -30,7 +30,7 @@ build = AlexandriaBuild.new('alexandria', '0.6.3') do |b|
                             b.rdoc.main = 'doc/README'
                             b.doc.man_files = ['doc/alexandria.1']
                             b.doc.doc_files = ['README', 'NEWS', 'INSTALL', 'COPYING', 'TODO', 'doc/AUTHORS', 'doc/BUGS', 'doc/FAQ', 'doc/cuecat_support.rdoc']
-                            b.debinstall.staging_dir = 'debian/tmp'
+                            b.debinstall.staging_dir = 'debian/alexandria'
 end
 
 ##
@@ -112,6 +112,9 @@ def convert_with_type(value, type)
 end
 
 SCHEMA_PATH = 'schemas/alexandria.schemas'
+  
+# This generates default_preferences.rb by copying over values from 
+# providers_priority key in alexandria.schemas (necessary?)
 
 file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
   require 'rexml/document'
