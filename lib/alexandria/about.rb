@@ -55,16 +55,21 @@ module Alexandria
                  'Cathal Mc Ginley <cathal.alexandria@gnostai.org> (ga)',
                  'Dafydd Harries <daf@muse.19inch.net> (cy)',
                  'David Weinehall <tao@debian.org> (sv)',
+		 'Giacomo Margarito <giacomomargarito@gmail.com> (it)',
+		 'Jack Myrseh <jack@enkom.no> (nb)',
                  'Joachim Breitner <mail@joachim-breitner.de> (de)',
                  'José Ling <jlgdot369@gmail.com> (zh_TW)',
                  'L.C. Karssen <lennart@karssen.org> (nl)',
+		 'Laurent Richard <laurent@dotbar.be> (fr)',
                  'Laurent Sansonetti <lrz@gnome.org> (fr)',
+		 'Leandro Regueiro <leandro.regueiro@gmail.com> (gl)',
                  'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
                  'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
                  'Marco Costantini <costanti@science.unitn.it> (it)',
                  'Miguel Ángel García <magmax@ieee.org> (es)',
                  'Mirko Maischberger <mirko@lilik.it> (it)',
                  'Petr Vanek <vanous@penguin.cz> (cs)',
+		 'Piotr Drąg <piotrdrag@gmail.com> (pl)',
                  'Serhij Dubyk <dubyk@library.lviv.ua> (uk)'
   ]
   ARTISTS = [
