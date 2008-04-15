@@ -2,18 +2,19 @@
 # Copyright (C) 2004, 2005, 2006, 2007, 2008 Joachim Breitner <mail@joachim-breitner.de>
 # This file is distributed under the same license as the Alexandria package.
 # 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.3\n"
+"Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-02-19 18:06+0000\n"
-"PO-Revision-Date: 2008-02-19 22:34:40+01:00\n"
+"PO-Revision-Date: 2008-04-15 19:12+0200\n"
 "Last-Translator: Joachim Breitner <mail@joachim-breitner.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
