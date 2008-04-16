@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-19 18:06+0000\n"
+"POT-Creation-Date: 2008-04-16 17:29+0100\n"
 "PO-Revision-Date: 2008-02-25 20:29+0800\n"
 "Last-Translator: Jos'e Ling <jlgdot369@gmail.com>\n"
 "Language-Team: Chinese/Traditional\n"
@@ -53,7 +53,9 @@ msgid "Couldn't import the library"
 msgstr "無法匯入書庫"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
-msgid "The format of the file you provided is unknown.  Please retry with another file."
+msgid ""
+"The format of the file you provided is unknown.  Please retry with another "
+"file."
 msgstr "無法辨識檔案格式。  請再試別的檔案。"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:26
@@ -105,31 +107,38 @@ msgid "_Keep"
 msgstr "保留(_K)"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
-msgid "The book titled '%s' has an invalid ISBN, but still exists in the providers libraries.  Do you want to keep the book but change the ISBN or cancel the add?"
-msgstr "書名為 '%s' 有無效的 ISBN， 卻仍然存在提供者的書庫。 您想要保留書本並且改變 ISBN 或者是取消 新增?"
+msgid ""
+"The book titled '%s' has an invalid ISBN, but still exists in the providers "
+"libraries.  Do you want to keep the book but change the ISBN or cancel the "
+"add?"
+msgstr ""
+"書名為 '%s' 有無效的 ISBN， 卻仍然存在提供者的書庫。 您想要保留書本並且改變 "
+"ISBN 或者是取消 新增?"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:159
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:162
 msgid "A problem occurred while downloading images"
 msgstr "下載圖片時發生了一個問題"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:272
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:275
 msgid "Unable to find matches for your search"
 msgstr "找不到您的搜尋"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:278
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:281
 msgid "%s, by %s"
 msgstr "%s， 由 %s 撰寫"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:360
-msgid "Couldn't validate the EAN/ISBN you provided.  Make sure it is written correctly, and try again."
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:363
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correctly, and try again."
 msgstr "無法驗證您提供的 EAN/ISBN 。  請確定您有正確地填寫，然後再試一次。"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:408
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:411
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
 msgid "Couldn't add the book"
 msgstr "無法加入此書"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:466
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:469
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' 已經存在 '%s' 裏面(書名 '%s')。"
 
@@ -149,12 +158,14 @@ msgstr "姓名(_N)："
 msgid "_Type:"
 msgstr "種類(_T)："
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:299
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:303
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "您確定要永遠地刪除提供者 '%s' 嗎？"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:307
-msgid "If you continue, the provider and all of its preferences will be permanently deleted."
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:311
+msgid ""
+"If you continue, the provider and all of its preferences will be permanently "
+"deleted."
 msgstr "如果您繼續進行， 此提供者和它所有的偏好設定會被永久地刪除。"
 
 #: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
@@ -173,7 +184,9 @@ msgstr "您提供的 EAN/ISBN 在此書庫裡已經被使用了。"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:122
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
-msgid "Couldn't validate the EAN/ISBN you provided.  Make sure it is written correcty, and try again."
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
 msgstr "無法驗證您提供的 EAN/ISBN 。  請確定您有正確地填寫， 然後再試一次。"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
@@ -181,7 +194,9 @@ msgid "File already exists"
 msgstr "檔案已經存在"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:29
-msgid "A file named '%s' already exists.  Do you want to replace it with the one you are generating?"
+msgid ""
+"A file named '%s' already exists.  Do you want to replace it with the one "
+"you are generating?"
 msgstr "名為 '%s' 的檔案已經存在。 您想要用您產生的取代原先的嗎？"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
@@ -209,8 +224,12 @@ msgid "Export failed"
 msgstr "匯出失敗"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
-msgid "The target, named '%s', is a regular file.  A directory is needed for this operation.  Please select a directory and try again."
-msgstr "名為 '%s' 的目標， 是一個普通檔案。 此操作需要一個目錄。請選擇一個目錄然後在試一次。"
+msgid ""
+"The target, named '%s', is a regular file.  A directory is needed for this "
+"operation.  Please select a directory and try again."
+msgstr ""
+"名為 '%s' 的目標， 是一個普通檔案。 此操作需要一個目錄。請選擇一個目錄然後在"
+"試一次。"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
 msgid "Not a directory"
@@ -225,8 +244,13 @@ msgid "_Save However"
 msgstr "不論如何繼續儲存(_S)"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
-msgid "This smart library contains one or more conditions which are empty or conflict with each other. This is likely to result in never matching a book. Are you sure you want to save this library?"
-msgstr "此聰明書庫含有一個或多個互相衝突或空白的條件。這樣有可能會永遠找不到書。您希望就這樣儲存書庫嗎？"
+msgid ""
+"This smart library contains one or more conditions which are empty or "
+"conflict with each other. This is likely to result in never matching a book. "
+"Are you sure you want to save this library?"
+msgstr ""
+"此聰明書庫含有一個或多個互相衝突或空白的條件。這樣有可能會永遠找不到書。您希"
+"望就這樣儲存書庫嗎？"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
 msgid "Match"
@@ -295,59 +319,49 @@ msgid_plural "%d days"
 msgstr[0] "%d 天"
 msgstr[1] "%d 天"
 
-#: ../lib/alexandria/ui/listview.rb:32
-#: ../lib/alexandria/smart_library.rb:338
+#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:338
 msgid "Title"
 msgstr "書名"
 
-#: ../lib/alexandria/ui/listview.rb:85
-#: ../lib/alexandria/smart_library.rb:340
+#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:340
 msgid "Authors"
 msgstr "作者"
 
-#: ../lib/alexandria/ui/listview.rb:86
-#: ../lib/alexandria/smart_library.rb:339
+#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:339
 msgid "ISBN"
 msgstr "ISBN"
 
-#: ../lib/alexandria/ui/listview.rb:87
-#: ../lib/alexandria/smart_library.rb:341
+#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:341
 msgid "Publisher"
 msgstr "出版社"
 
-#: ../lib/alexandria/ui/listview.rb:88
-#: ../lib/alexandria/smart_library.rb:342
+#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:342
 msgid "Publish Year"
 msgstr "出版年"
 
-#: ../lib/alexandria/ui/listview.rb:89
-#: ../lib/alexandria/smart_library.rb:343
+#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:343
 msgid "Binding"
 msgstr "裝訂方式"
 
-#: ../lib/alexandria/ui/listview.rb:92
-#: ../lib/alexandria/smart_library.rb:100
+#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:100
 #: ../lib/alexandria/smart_library.rb:350
 msgid "Read"
 msgstr "閱讀"
 
-#: ../lib/alexandria/ui/listview.rb:93
-#: ../lib/alexandria/smart_library.rb:352
+#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:352
 msgid "Own"
 msgstr "擁有"
 
-#: ../lib/alexandria/ui/listview.rb:94
-#: ../lib/alexandria/smart_library.rb:353
+#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:353
 msgid "Want"
 msgstr "想要"
 
-#: ../lib/alexandria/ui/listview.rb:120
-#: ../lib/alexandria/smart_library.rb:346
+#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:346
+#: ../data/alexandria/glade/preferences_dialog.glade:48
 msgid "Tags"
 msgstr "標籤"
 
-#: ../lib/alexandria/ui/listview.rb:145
-#: ../lib/alexandria/smart_library.rb:344
+#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:344
 msgid "Rating"
 msgstr "評價"
 
@@ -375,395 +389,408 @@ msgstr "已經存在一個名為 '%s' 的書庫。 請重新選擇一個不同�
 msgid "Library"
 msgstr "書庫"
 
-#: ../lib/alexandria/ui/ui_manager.rb:110
+#: ../lib/alexandria/ui/ui_manager.rb:128
 msgid "Type here the search criterion"
 msgstr "在這裡鍵入搜尋尺度"
 
-#: ../lib/alexandria/ui/ui_manager.rb:123
+#: ../lib/alexandria/ui/ui_manager.rb:141
 msgid "Match everything"
 msgstr "匹對所有的"
 
-#: ../lib/alexandria/ui/ui_manager.rb:125
+#: ../lib/alexandria/ui/ui_manager.rb:143
 msgid "Title contains"
 msgstr "書名含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:126
+#: ../lib/alexandria/ui/ui_manager.rb:144
 msgid "Authors contain"
 msgstr "作者含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:127
+#: ../lib/alexandria/ui/ui_manager.rb:145
 msgid "ISBN contains"
 msgstr "ISBN 含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:128
+#: ../lib/alexandria/ui/ui_manager.rb:146
 msgid "Publisher contains"
 msgstr "出版社含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:129
+#: ../lib/alexandria/ui/ui_manager.rb:147
 msgid "Notes contain"
 msgstr "筆記含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:130
+#: ../lib/alexandria/ui/ui_manager.rb:148
 msgid "Tags contain"
 msgstr "標籤含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:145
+#: ../lib/alexandria/ui/ui_manager.rb:163
 msgid "Change the search type"
 msgstr "更改搜尋種類"
 
-#: ../lib/alexandria/ui/ui_manager.rb:150
+#: ../lib/alexandria/ui/ui_manager.rb:168
 msgid "View as Icons"
 msgstr "以圖案方式檢視"
 
-#: ../lib/alexandria/ui/ui_manager.rb:151
+#: ../lib/alexandria/ui/ui_manager.rb:169
 msgid "View as List"
 msgstr "以清單方式檢視"
 
-#: ../lib/alexandria/ui/ui_manager.rb:164
+#: ../lib/alexandria/ui/ui_manager.rb:182
 msgid "Choose how to show books"
 msgstr "選擇如何顯示書本"
 
-#: ../lib/alexandria/ui/ui_manager.rb:350
+#: ../lib/alexandria/ui/ui_manager.rb:368
 msgid "Library '%s' selected"
 msgstr "書庫 '%s' 被選取"
 
-#: ../lib/alexandria/ui/ui_manager.rb:357
+#: ../lib/alexandria/ui/ui_manager.rb:375
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "書庫 '%s' 被選取， %d 本書未被評價。"
 msgstr[1] "書庫 '%s' 被選取， %d 本書未被評價。"
 
-#: ../lib/alexandria/ui/ui_manager.rb:362
+#: ../lib/alexandria/ui/ui_manager.rb:380
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "書庫 '%s' 被選取， 共%d本書"
 msgstr[1] "書庫 '%s' 被選取， 共%d本書"
 
-#: ../lib/alexandria/ui/ui_manager.rb:369
+#: ../lib/alexandria/ui/ui_manager.rb:387
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "書庫 '%s' 被選取， 共%d本書，有%d本書未被評價"
 msgstr[1] "書庫 '%s' 被選取， 共%d本書，有%d本書未被評價"
 
-#: ../lib/alexandria/ui/ui_manager.rb:381
+#: ../lib/alexandria/ui/ui_manager.rb:399
 msgid "'%s' selected"
 msgstr "'%s' 被選取"
 
-#: ../lib/alexandria/ui/ui_manager.rb:384
+#: ../lib/alexandria/ui/ui_manager.rb:402
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d 本書被選取"
 msgstr[1] "%d 本書被選取"
 
-#: ../lib/alexandria/ui/ui_manager.rb:534
+#: ../lib/alexandria/ui/ui_manager.rb:552
 msgid "Unable to launch the web browser"
 msgstr "無法開啟網頁瀏覽器"
 
-#: ../lib/alexandria/ui/ui_manager.rb:535
-msgid "Check out that a web browser is configured as default (Desktop Preferences -> Advanced -> Preferred Applications) and try again."
-msgstr "請檢查有沒有設定一個預設的瀏覽器 (系統 -> 偏好設定 -> 首選應用程式) 然後再試一次。"
+#: ../lib/alexandria/ui/ui_manager.rb:553
+msgid ""
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"請檢查有沒有設定一個預設的瀏覽器 (系統 -> 偏好設定 -> 首選應用程式) 然後再試"
+"一次。"
 
-#: ../lib/alexandria/ui/ui_manager.rb:547
+#: ../lib/alexandria/ui/ui_manager.rb:565
 msgid "Unable to launch the mail reader"
 msgstr "無法開啟郵件閱讀器"
 
-#: ../lib/alexandria/ui/ui_manager.rb:548
-msgid "Check out that a mail reader is configured as default (Desktop Preferences -> Advanced -> Preferred Applications) and try again."
-msgstr "請檢查有沒有設定好一個預設的郵件閱讀器 (系統 -> 偏好設定 -> 首選應用程式) 然後再試一次。"
+#: ../lib/alexandria/ui/ui_manager.rb:566
+msgid ""
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
+msgstr ""
+"請檢查有沒有設定好一個預設的郵件閱讀器 (系統 -> 偏好設定 -> 首選應用程式) 然"
+"後再試一次。"
 
-#: ../lib/alexandria/ui/ui_manager.rb:583
+#: ../lib/alexandria/ui/ui_manager.rb:601
 msgid "Repair Book Data"
 msgstr "修復書本資料"
 
-#: ../lib/alexandria/ui/ui_manager.rb:584
-msgid "The data files for the following books are malformed or empty. Do you wish to attempt to download new information for them from the online book providers?\n"
-msgstr "下列書本的資料檔案是空的或不正常的。你希望嘗試從書本提供者那裡為它們下載新的資訊嗎？\n"
+#: ../lib/alexandria/ui/ui_manager.rb:602
+msgid ""
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
+msgstr ""
+"下列書本的資料檔案是空的或不正常的。你希望嘗試從書本提供者那裡為它們下載新的"
+"資訊嗎？\n"
 
-#: ../lib/alexandria/ui/ui_manager.rb:641
+#: ../lib/alexandria/ui/ui_manager.rb:659
 msgid "Added '%s' to library '%s'"
 msgstr "已增加 '%s' 到 '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:794
+#: ../lib/alexandria/ui/ui_manager.rb:812
 msgid "Loading '%s'..."
 msgstr "載入 '%s' 中..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:1010
+#: ../lib/alexandria/ui/ui_manager.rb:1028
 msgid "In '_%s'"
 msgstr "在 '_%s'"
 
-#: ../lib/alexandria/ui/callbacks.rb:44
+#: ../lib/alexandria/ui/callbacks.rb:62
 msgid "The following lines are not valid ISBNs and were not imported:"
 msgstr "下面幾行是無效的 ISBN ，因此沒被匯入："
 
-#: ../lib/alexandria/ui/callbacks.rb:232
+#: ../lib/alexandria/ui/callbacks.rb:252
 msgid "_Library"
 msgstr "書庫(_L)"
 
-#: ../lib/alexandria/ui/callbacks.rb:233
+#: ../lib/alexandria/ui/callbacks.rb:253
 msgid "_New Library"
 msgstr "新的書庫(_N)"
 
-#: ../lib/alexandria/ui/callbacks.rb:233
+#: ../lib/alexandria/ui/callbacks.rb:253
 msgid "Create a new library"
 msgstr "新增一個書庫"
 
-#: ../lib/alexandria/ui/callbacks.rb:234
+#: ../lib/alexandria/ui/callbacks.rb:254
 msgid "New _Smart Library..."
 msgstr "新的聰明書庫(_S)..."
 
-#: ../lib/alexandria/ui/callbacks.rb:234
+#: ../lib/alexandria/ui/callbacks.rb:254
 msgid "Create a new smart library"
 msgstr "新增一個聰明書庫"
 
-#: ../lib/alexandria/ui/callbacks.rb:235
+#: ../lib/alexandria/ui/callbacks.rb:255
 msgid "_Add Book..."
 msgstr "加入書本(_A)..."
 
-#: ../lib/alexandria/ui/callbacks.rb:235
+#: ../lib/alexandria/ui/callbacks.rb:255
 msgid "Add a new book from the Internet"
 msgstr "從網路加入一本新書"
 
-#: ../lib/alexandria/ui/callbacks.rb:236
+#: ../lib/alexandria/ui/callbacks.rb:256
 msgid "Add Book _Manually..."
 msgstr "手動加入書本(_M)..."
 
-#: ../lib/alexandria/ui/callbacks.rb:236
+#: ../lib/alexandria/ui/callbacks.rb:256
 msgid "Add a new book manually"
 msgstr "手動加入一本新書"
 
-#: ../lib/alexandria/ui/callbacks.rb:237
+#: ../lib/alexandria/ui/callbacks.rb:257
 msgid "_Import..."
 msgstr "匯入(_I)..."
 
-#: ../lib/alexandria/ui/callbacks.rb:237
+#: ../lib/alexandria/ui/callbacks.rb:257
 msgid "Import a library"
 msgstr "匯入一個書庫"
 
-#: ../lib/alexandria/ui/callbacks.rb:238
+#: ../lib/alexandria/ui/callbacks.rb:258
 msgid "_Export..."
 msgstr "匯出(_E)..."
 
-#: ../lib/alexandria/ui/callbacks.rb:238
+#: ../lib/alexandria/ui/callbacks.rb:258
 msgid "Export the selected library"
 msgstr "匯出被選取的書庫"
 
-#: ../lib/alexandria/ui/callbacks.rb:239
+#: ../lib/alexandria/ui/callbacks.rb:259
 msgid "_Acquire from Scanner..."
 msgstr "從掃描器取得(_A)..."
 
-#: ../lib/alexandria/ui/callbacks.rb:239
+#: ../lib/alexandria/ui/callbacks.rb:259
 msgid "Acquire books from a scanner"
 msgstr "從掃描器取得書本"
 
-#: ../lib/alexandria/ui/callbacks.rb:240
+#: ../lib/alexandria/ui/callbacks.rb:260
 msgid "_Properties"
 msgstr "屬性(_P)"
 
-#: ../lib/alexandria/ui/callbacks.rb:240
+#: ../lib/alexandria/ui/callbacks.rb:260
 msgid "Edit the properties of the selected book"
 msgstr "編輯被選取書本的屬性"
 
-#: ../lib/alexandria/ui/callbacks.rb:241
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "_Quit"
 msgstr "離開(_Q)"
 
-#: ../lib/alexandria/ui/callbacks.rb:241
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "Quit the program"
 msgstr "離開本程式"
 
-#: ../lib/alexandria/ui/callbacks.rb:242
+#: ../lib/alexandria/ui/callbacks.rb:262
 msgid "_Edit"
 msgstr "編輯(_E)"
 
-#: ../lib/alexandria/ui/callbacks.rb:243
+#: ../lib/alexandria/ui/callbacks.rb:263
 msgid "_Undo"
 msgstr "復原(_U)"
 
-#: ../lib/alexandria/ui/callbacks.rb:243
+#: ../lib/alexandria/ui/callbacks.rb:263
 msgid "Undo the last action"
 msgstr "回復上一個動作"
 
-#: ../lib/alexandria/ui/callbacks.rb:244
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "_Redo"
 msgstr "重做(_R)"
 
-#: ../lib/alexandria/ui/callbacks.rb:244
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "Redo the undone action"
 msgstr "重做未完成的動作"
 
-#: ../lib/alexandria/ui/callbacks.rb:245
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "_Select All"
 msgstr "全部選取(_S)"
 
-#: ../lib/alexandria/ui/callbacks.rb:245
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "Select all visible books"
 msgstr "選取所有可見書本"
 
-#: ../lib/alexandria/ui/callbacks.rb:246
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "Dese_lect All"
 msgstr "取消全部選取(_L)"
 
-#: ../lib/alexandria/ui/callbacks.rb:246
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "Deselect everything"
 msgstr "取消選取所有"
 
-#: ../lib/alexandria/ui/callbacks.rb:247
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "My _Rating"
 msgstr "我的評價(_R)"
 
-#: ../lib/alexandria/ui/callbacks.rb:248
+#: ../lib/alexandria/ui/callbacks.rb:268
 msgid "None"
 msgstr "無"
 
-#: ../lib/alexandria/ui/callbacks.rb:249
+#: ../lib/alexandria/ui/callbacks.rb:269
 msgid "One Star"
 msgstr "一顆星"
 
-#: ../lib/alexandria/ui/callbacks.rb:250
+#: ../lib/alexandria/ui/callbacks.rb:270
 msgid "Two Stars"
 msgstr "兩顆星"
 
-#: ../lib/alexandria/ui/callbacks.rb:251
+#: ../lib/alexandria/ui/callbacks.rb:271
 msgid "Three Stars"
 msgstr "三顆星"
 
-#: ../lib/alexandria/ui/callbacks.rb:252
+#: ../lib/alexandria/ui/callbacks.rb:272
 msgid "Four Stars"
 msgstr "四顆星"
 
-#: ../lib/alexandria/ui/callbacks.rb:253
+#: ../lib/alexandria/ui/callbacks.rb:273
 msgid "Five Stars"
 msgstr "五顆星"
 
-#: ../lib/alexandria/ui/callbacks.rb:254
+#: ../lib/alexandria/ui/callbacks.rb:274
 msgid "_Move"
 msgstr "移動(_M)"
 
-#: ../lib/alexandria/ui/callbacks.rb:255
+#: ../lib/alexandria/ui/callbacks.rb:275
 msgid "_Rename"
 msgstr "重新命名(_R)"
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:276
 msgid "_Delete"
 msgstr "刪除(_D)"
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:276
 msgid "Delete the selected books or library"
 msgstr "刪除被選取的書本或書庫"
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:277
 msgid "_Search"
 msgstr "搜尋(_S)"
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:277
 msgid "Filter books"
 msgstr "過濾書本"
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:278
 msgid "_Clear Results"
 msgstr "清除結果(_C)"
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:278
 msgid "Clear the search results"
 msgstr "清除搜尋結果"
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:279
 msgid "_Preferences"
 msgstr "偏好設定(_P)"
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:279
 msgid "Change Alexandria's settings"
 msgstr "改變 Alexandria 的設定"
 
-#: ../lib/alexandria/ui/callbacks.rb:260
+#: ../lib/alexandria/ui/callbacks.rb:280
 msgid "_View"
 msgstr "檢視(_V)"
 
-#: ../lib/alexandria/ui/callbacks.rb:261
+#: ../lib/alexandria/ui/callbacks.rb:281
 msgid "Arran_ge Icons"
 msgstr "編排圖示(_G)"
 
-#: ../lib/alexandria/ui/callbacks.rb:262
+#: ../lib/alexandria/ui/callbacks.rb:282
 msgid "Display Online _Information"
 msgstr "顯示線上資訊(_I)"
 
-#: ../lib/alexandria/ui/callbacks.rb:264
+#: ../lib/alexandria/ui/callbacks.rb:284
 msgid "_Help"
 msgstr "求助(_H)"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:285
 msgid "Submit _Bug Report"
 msgstr "送出程式臭蟲報告(_B)"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:285
 msgid "Submit a bug report to the developers"
 msgstr "送出程式臭蟲報告給開發者們"
 
-#: ../lib/alexandria/ui/callbacks.rb:266
+#: ../lib/alexandria/ui/callbacks.rb:286
 msgid "Contents"
 msgstr "內容"
 
-#: ../lib/alexandria/ui/callbacks.rb:266
+#: ../lib/alexandria/ui/callbacks.rb:286
 msgid "View Alexandria's manual"
 msgstr "閱讀 Alexandria 的手冊"
 
-#: ../lib/alexandria/ui/callbacks.rb:267
+#: ../lib/alexandria/ui/callbacks.rb:287
 msgid "_About"
 msgstr "關於(_A)"
 
-#: ../lib/alexandria/ui/callbacks.rb:267
+#: ../lib/alexandria/ui/callbacks.rb:287
 msgid "Show information about Alexandria"
 msgstr "秀出有關 Alexandria 的資訊"
 
-#: ../lib/alexandria/ui/callbacks.rb:292
+#: ../lib/alexandria/ui/callbacks.rb:312
 msgid "Side _Pane"
 msgstr "側邊窗格(_P)"
 
-#: ../lib/alexandria/ui/callbacks.rb:294
+#: ../lib/alexandria/ui/callbacks.rb:314
 msgid "_Toolbar"
 msgstr "工具列(_T)"
 
-#: ../lib/alexandria/ui/callbacks.rb:296
+#: ../lib/alexandria/ui/callbacks.rb:316
 msgid "_Statusbar"
 msgstr "狀態列(_S)"
 
-#: ../lib/alexandria/ui/callbacks.rb:298
+#: ../lib/alexandria/ui/callbacks.rb:318
 msgid "Re_versed Order"
 msgstr "相反次序(_V)"
 
-#: ../lib/alexandria/ui/callbacks.rb:303
+#: ../lib/alexandria/ui/callbacks.rb:323
 msgid "View as _Icons"
 msgstr "以圖示方式檢視(_I)"
 
-#: ../lib/alexandria/ui/callbacks.rb:304
+#: ../lib/alexandria/ui/callbacks.rb:324
 msgid "View as _List"
 msgstr "以清單方式檢視(_L)"
 
-#: ../lib/alexandria/ui/callbacks.rb:308
+#: ../lib/alexandria/ui/callbacks.rb:328
 msgid "By _Title"
 msgstr "根據書名(_T)"
 
-#: ../lib/alexandria/ui/callbacks.rb:309
+#: ../lib/alexandria/ui/callbacks.rb:329
 msgid "By _Authors"
 msgstr "根據作者(_A)"
 
-#: ../lib/alexandria/ui/callbacks.rb:310
+#: ../lib/alexandria/ui/callbacks.rb:330
 msgid "By _ISBN"
 msgstr "根據 _ISBN"
 
-#: ../lib/alexandria/ui/callbacks.rb:311
+#: ../lib/alexandria/ui/callbacks.rb:331
 msgid "By _Publisher"
 msgstr "根據出版社(_P)"
 
-#: ../lib/alexandria/ui/callbacks.rb:312
+#: ../lib/alexandria/ui/callbacks.rb:332
 msgid "By _Binding"
 msgstr "根據裝訂方式(_B)"
 
-#: ../lib/alexandria/ui/callbacks.rb:313
+#: ../lib/alexandria/ui/callbacks.rb:333
 msgid "By _Rating"
 msgstr "根據評價(_R)"
 
-#: ../lib/alexandria/ui/callbacks.rb:317
+#: ../lib/alexandria/ui/callbacks.rb:337
 msgid "At _%s"
 msgstr "在 _%s"
 
@@ -771,13 +798,16 @@ msgstr "在 _%s"
 msgid "New Library"
 msgstr "新的書庫"
 
-#: ../lib/alexandria/ui/init.rb:65
+#: ../lib/alexandria/ui/init.rb:83
 msgid "Unable to launch the help browser"
 msgstr "無法開啟求助文件瀏覽器"
 
-#: ../lib/alexandria/ui/init.rb:66
-msgid "Could not display help for Alexandria. There was an error launching the system help browser."
-msgstr "無法顯示 Alexandria 的求助文件。 開啟系統的求助文件瀏覽器時發生了一個錯誤。"
+#: ../lib/alexandria/ui/init.rb:84
+msgid ""
+"Could not display help for Alexandria. There was an error launching the "
+"system help browser."
+msgstr ""
+"無法顯示 Alexandria 的求助文件。 開啟系統的求助文件瀏覽器時發生了一個錯誤。"
 
 #: ../lib/alexandria/import_library.rb:29
 msgid "Autodetect"
@@ -790,6 +820,10 @@ msgstr "封裝成檔案的 Tellico XML (*.bc *.tc)"
 #: ../lib/alexandria/import_library.rb:32
 msgid "ISBN List (*.txt)"
 msgstr "ISBN 清單(*.txt)"
+
+#: ../lib/alexandria/import_library.rb:34
+msgid "GoodReads CSV"
+msgstr ""
 
 #: ../lib/alexandria/smart_library.rb:88
 msgid "Favorite"
@@ -888,7 +922,7 @@ msgstr "最後是在"
 msgid "is not in last"
 msgstr "最後不是在"
 
-#: ../lib/alexandria/about.rb:6
+#: ../lib/alexandria/about.rb:24
 msgid "A program to help you manage your book collection."
 msgstr "一個幫助你管理藏書的程式。"
 
@@ -937,7 +971,9 @@ msgid "Couldn't reach the provider '%s': socket error (%s)."
 msgstr "無法連結到提供者 '%s'： socket 錯誤 (%s)。"
 
 #: ../lib/alexandria/book_providers.rb:61
-msgid "No results were found.  Make sure your search criterion is spelled correctly, and try again."
+msgid ""
+"No results were found.  Make sure your search criterion is spelled "
+"correctly, and try again."
 msgstr "找不到任何結果。  請確定您的搜尋尺度有正確地拼字，然後再試一試。"
 
 #: ../lib/alexandria/book_providers.rb:66
@@ -962,7 +998,7 @@ msgstr "開發標記"
 msgid "Associate ID"
 msgstr "聯繫 ID"
 
-#: ../lib/alexandria/book_providers/mcu.rb:38
+#: ../lib/alexandria/book_providers/mcu.rb:39
 msgid "Spanish Culture Ministry"
 msgstr "西班牙文化局"
 
@@ -994,11 +1030,11 @@ msgstr "密碼"
 msgid "Charset encoding"
 msgstr "字元集編碼"
 
-#: ../lib/alexandria/book_providers/z3950.rb:180
+#: ../lib/alexandria/book_providers/z3950.rb:189
 msgid "Library of Congress (Usa)"
 msgstr "(美國)國會圖書館"
 
-#: ../lib/alexandria/book_providers/z3950.rb:208
+#: ../lib/alexandria/book_providers/z3950.rb:217
 msgid "British Library"
 msgstr "英國圖書館"
 
@@ -1142,63 +1178,68 @@ msgstr "偏好設定"
 msgid "<b>Visible Columns</b>"
 msgstr "<b>可見欄位</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:48
+#: ../data/alexandria/glade/preferences_dialog.glade:64
 msgid "Want?"
 msgstr "想要？"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:64
+#: ../data/alexandria/glade/preferences_dialog.glade:80
 msgid "Own?"
 msgstr "擁有？"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:80
+#: ../data/alexandria/glade/preferences_dialog.glade:96
 msgid "Read?"
 msgstr "閱讀？"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:96
+#: ../data/alexandria/glade/preferences_dialog.glade:112
 msgid "Publish _year"
 msgstr "出版年(_Y)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:112
+#: ../data/alexandria/glade/preferences_dialog.glade:128
 msgid "_Binding"
 msgstr "裝訂方式(_B)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:128
+#: ../data/alexandria/glade/preferences_dialog.glade:144
 msgid "_Rating"
 msgstr "評價(_R)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:144
+#: ../data/alexandria/glade/preferences_dialog.glade:160
 msgid "_Publisher"
 msgstr "出版社(_P)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:160
+#: ../data/alexandria/glade/preferences_dialog.glade:176
 msgid "_ISBN"
 msgstr "_ISBN"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:176
+#: ../data/alexandria/glade/preferences_dialog.glade:192
 msgid "_Authors"
 msgstr "作者(_A)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:199
+#: ../data/alexandria/glade/preferences_dialog.glade:215
 msgid "List View"
 msgstr "以清單方式檢視"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:216
+#: ../data/alexandria/glade/preferences_dialog.glade:232
 msgid "<b>_Providers</b>"
 msgstr "<b>提供者(_P)</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:283
+#: ../data/alexandria/glade/preferences_dialog.glade:299
 msgid "_Setup"
 msgstr "組態設定(_S)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:365
-msgid "Providers are libraries that supply information about books.  Some of them can be configured to get better results.  You can also customize the order in which they are queried."
-msgstr "提供者就是那些提供書本資訊的書庫或圖書館。他們裏面有些可以被設定來得到更好的結果。你也可以自訂他們被詢問的次序。"
+#: ../data/alexandria/glade/preferences_dialog.glade:381
+msgid ""
+"Providers are libraries that supply information about books.  Some of them "
+"can be configured to get better results.  You can also customize the order "
+"in which they are queried."
+msgstr ""
+"提供者就是那些提供書本資訊的書庫或圖書館。他們裏面有些可以被設定來得到更好的"
+"結果。你也可以自訂他們被詢問的次序。"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:378
+#: ../data/alexandria/glade/preferences_dialog.glade:394
 msgid "_Advanced Settings"
 msgstr "進階選項(_A)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:398
+#: ../data/alexandria/glade/preferences_dialog.glade:414
 msgid "Providers"
 msgstr "提供者"
 
@@ -1221,14 +1262,19 @@ msgstr "管理你的藏書"
 #~ msgstr ""
 #~ "這些書不符合 ISBN-13 標準。 我們會嘗試以書本提供者的取代它們。否則，我們會"
 #~ "將它們轉換成手動輸入項目。\n"
+
 #~ msgid "_Refresh"
 #~ msgstr "更新(_R)"
+
 #~ msgid "Reload the selected library"
 #~ msgstr "重新載入被選取的書庫"
+
 #~ msgid "n/a"
 #~ msgstr "n/a"
+
 #~ msgid "Library _name:"
 #~ msgstr "_Nombre de la biblioteca:"
+
 #~ msgid ""
 #~ "Are you sure you want to permanently delete '%s' which has %d book?Are "
 #~ "you sure you want to permanently delete '%s' which has %d books?"
@@ -1236,8 +1282,9 @@ msgstr "管理你的藏書"
 #~ "¿Está seguro de que desea eliminar permanentemente '%s' que contiene %d "
 #~ "libro?¿Está seguro de que desea eliminar permanentemente '%s' que "
 #~ "contiene %d libros?"
+
 #~ msgid "_New"
 #~ msgstr "_Nuevo"
+
 #~ msgid "Couldn't validate the scanner input"
 #~ msgstr "No se pudo validar la entrada del escaner"
-
