@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.3\n"
+"Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-16 17:29+0100\n"
-"PO-Revision-Date: 2008-03-10 07:24+0100\n"
+"PO-Revision-Date: 2008-04-17 00:03+0200\n"
 "Last-Translator: Miguel Ángel García <miguelangel.garcia@gmail.com>\n"
 "Language-Team: es\n"
 "MIME-Version: 1.0\n"
@@ -208,8 +208,7 @@ msgstr "El fichero ya existe"
 msgid ""
 "A file named '%s' already exists.  Do you want to replace it with the one "
 "you are generating?"
-msgstr ""
-"El fichero '%s' ya existe. ¿Desea reemplazarlo con el que está generando?"
+msgstr "El fichero '%s' ya existe. ¿Desea reemplazarlo con el que está generando?"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
 msgid "Export '%s'"
@@ -396,8 +395,7 @@ msgstr "La biblioteca no puede renombrarse"
 
 #: ../lib/alexandria/ui/sidepane.rb:42
 msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr ""
-"Ya existe una biblioteca llamada '%s'. Por favor, elija un nombre diferente."
+msgstr "Ya existe una biblioteca llamada '%s'. Por favor, elija un nombre diferente."
 
 #: ../lib/alexandria/ui/sidepane.rb:68
 msgid "Library"
@@ -1274,3 +1272,4 @@ msgstr "Gestor de colecciones de libros"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Organiza tu colección de libros"
+
