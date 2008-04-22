@@ -23,6 +23,9 @@ module Alexandria
       0]]
 
     module DragAndDropable
+
+      BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
+
       def setup_view_source_dnd(view)
         # better be Loggable!
         log.info { "setup_view_source_dnd for %s" % view }

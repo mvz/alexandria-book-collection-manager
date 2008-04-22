@@ -800,8 +800,6 @@ module Alexandria
         return iter
       end
 
-      BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
-
       def refresh_books
         log.debug { "refresh_books" }
         library = selected_library
