@@ -23,6 +23,8 @@
 
 # Modified by Cathal Mc Ginley 2008-02-18
 # added Amazon::Ecs.transport - to enable Alexandria's proxy support
+# Modified by Cathal Mc Ginley 2008-08-26
+# Amazon::Element.get now uses inner_text, not inner_html, fixing #21659
 
 require 'net/http'
 require 'hpricot'
@@ -265,7 +267,9 @@ module Amazon
     def self.get(element, path='')
       return unless element
       result = element.at(path)
-      result = result.inner_html if result
+      ## inner_html doesn't decode entities, hence bug #21659
+      # result = result.inner_html if result
+      result = result.inner_text if result
       result
     end
 
