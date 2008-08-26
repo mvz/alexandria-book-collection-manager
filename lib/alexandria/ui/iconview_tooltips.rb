@@ -25,6 +25,8 @@
 #
 # Ported to ruby-gtk2 (and modified for IconView) by Cathal Mc Ginley
 
+require 'cgi'
+
 class IconViewTooltips
   def initialize(view)
     @tooltip_window = Gtk::Window.new(Gtk::Window::POPUP)
@@ -71,13 +73,13 @@ class IconViewTooltips
     # This is much too complex... but it works for now!
     html = ""
     if title.size > 0
-      html += "<b>#{title}</b>"
+      html += "<b>#{CGI.escapeHTML(title)}</b>"
       if authors.size > 0
         html += "\n"
       end
     end
     if authors.size > 0
-      html += "<i>#{authors}</i>"
+      html += "<i>#{CGI.escapeHTML(authors)}</i>"
     end
     if (title.size > 0) or (authors.size > 0)
       html += "\n"
@@ -85,7 +87,7 @@ class IconViewTooltips
 
     html += "<small>"
     if publisher and publisher.size > 0
-      html += "#{publisher}"
+      html += "#{CGI.escapeHTML(publisher)}"
     end
 
     if year and year.size > 0
