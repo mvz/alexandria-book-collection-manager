@@ -19,6 +19,9 @@
 ##   added check for instances where cover image not available
 ##   fixes #16853
 
+### Modified by Simon Edwardsson 2008-09-01
+###  Updating the url
+
 # TODO:
 # fix едц
 
@@ -26,35 +29,34 @@
 require 'net/http'
 require 'cgi'
 
+
 module Alexandria
   class BookProviders
     class AdlibrisProvider < GenericProvider
-      BASE_URI = "http://www.adlibris.se/"
+      BASE_URI = "http://www.adlibris.com/se/"
       def initialize
         super("Adlibris", "Adlibris (Sweden)")
         # no preferences for the moment
       end
 
       def search(criterion, type)
-        criterion = criterion.convert("ISO-8859-1", "UTF-8")
+	#criterion = criterion.convert("windows-1252", "UTF-8")
+    	criterion = criterion.convert("ISO-8859-1", "UTF-8")
         req = BASE_URI
         if type == SEARCH_BY_ISBN
           req += "product.aspx?isbn="+criterion+"&checked=1"
         else
           search_criterions = {}
           search_criterions[type] = CGI.escape(criterion)
-          req = "http://www.adlibris.se/shop/search_result.asp?additem=&page=search%5Fresult%2Easp&search=advanced&format=&status=&ebook=&quickvalue=&quicktype=&isbn="+ search_criterions[SEARCH_BY_ISBN] + "&titleorauthor=&title="+search_criterions[SEARCH_BY_TITLE].to_s()+"&authorlast=&authorfirst=&keyword="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&publisher=&category=&language=&inventory1=1&inventory2=2&inventory4=4&inventory8=&get=&type=&sortorder=1&author="+search_criterions[SEARCH_BY_AUTHORS].to_s()+"&checked=1"
+          req = "http://www.adlibris.com/se/shop/search_result.asp?additem=&page=search%5Fresult%2Easp&search=advanced&format=&status=&ebook=&quickvalue=&quicktype=&isbn="+ search_criterions[SEARCH_BY_ISBN] + "&titleorauthor=&title="+search_criterions[SEARCH_BY_TITLE].to_s()+"&authorlast=&authorfirst=&keyword="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&publisher=&category=&language=&inventory1=1&inventory2=2&inventory4=4&inventory8=&get=&type=&sortorder=1&author="+search_criterions[SEARCH_BY_AUTHORS].to_s()+"&checked=1"
         end
-
-
+	
         results = []
 
         if type == SEARCH_BY_ISBN
           #puts "if type == SEARCH_BY_ISBN"
-          #puts URI.parse(req)
-          data = transport.get(URI.parse(req))
-
-          return to_book_isbn(data, criterion) #rescue raise NoResultsError
+	  data = transport.get(URI.parse(req))
+	  return to_book_isbn(data, criterion) #rescue raise NoResultsError
         else
           begin
             data = transport.get(URI.parse(req+"&row=1"))
@@ -132,8 +134,7 @@ module Alexandria
 
 
       def to_book_isbn(data, isbn)
-        #puts data
-        raise NoResultsError if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
+	raise NoResultsError if /Ingen titel med detta ISBN finns hos AdLibris/.match(data) != nil
         data = data.convert("UTF-8", "ISO-8859-1")
 
         product = {}
