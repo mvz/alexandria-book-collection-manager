@@ -22,6 +22,9 @@
 ### Modified by Simon Edwardsson 2008-09-01
 ###  Updating the url
 
+#### Modified by Martin Karlsson 2008-11-27
+#### Updated some regular expressions
+
 # TODO:
 # fix едц
 
@@ -45,10 +48,14 @@ module Alexandria
         req = BASE_URI
         if type == SEARCH_BY_ISBN
           req += "product.aspx?isbn="+criterion+"&checked=1"
-        else
+        elsif type == SEARCH_BY_KEYWORD
           search_criterions = {}
           search_criterions[type] = CGI.escape(criterion)
-          req = "http://www.adlibris.com/se/shop/search_result.asp?additem=&page=search%5Fresult%2Easp&search=advanced&format=&status=&ebook=&quickvalue=&quicktype=&isbn="+ search_criterions[SEARCH_BY_ISBN] + "&titleorauthor=&title="+search_criterions[SEARCH_BY_TITLE].to_s()+"&authorlast=&authorfirst=&keyword="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&publisher=&category=&language=&inventory1=1&inventory2=2&inventory4=4&inventory8=&get=&type=&sortorder=1&author="+search_criterions[SEARCH_BY_AUTHORS].to_s()+"&checked=1"
+	  req = "http://www.adlibris.com/se/searchresult.aspx?search=quickfirstpage&quickvalue="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&title="+search_criterions[SEARCH_BY_KEYWORD].to_s()+"&fromproduct=False"
+	else
+          search_criterions = {}
+          search_criterions[type] = CGI.escape(criterion)
+	  req = "http://www.adlibris.com/se/searchresult.aspx?search=advanced&title="+search_criterions[SEARCH_BY_TITLE].to_s()+"&author="+search_criterions[SEARCH_BY_AUTHORS].to_s()+"&fromproduct=False"
         end
 	
         results = []
@@ -61,25 +68,15 @@ module Alexandria
           begin
             data = transport.get(URI.parse(req+"&row=1"))
 
-            regx = /shop\/product\.asp\?isbn=([^&]+?)&[^>]+>([^<]+?)<\/a>([^>]*?>){10}([^<]+?)<\/b>[^\)]+?\);\"\)>[\s]+?([^<\s]+?)<\/a>/
+            regx = /<a id="ctl00_main_frame_ctrlsearchhit_rptSearchHit_ctl0\d+_hlkTitle" href="product\.aspx\?isbn=(\d{10,13})/
 
             begin
               data.scan(regx) do |md| next unless md[0] != md[1]
+                isbn = md[0]
+		req = BASE_URI + "product.aspx?isbn="+isbn
+		bookdata = transport.get(URI.parse(req))
 
-                isbn = md[0].to_s()
-
-                imageAddr = nil
-                imgAddrMatch = data.scan(isbn+'.jpg')
-                if imgAddrMatch.length() == 2
-                  imageAddr = 'http://www.adlibris.se/shop/images/'+isbn+'.jpg'
-                end
-
-                results << [Book.new(md[1].to_s(), # Title
-                                     [md[3].to_s()], # Authors
-                                     isbn,
-                                     nil, # Publisher
-                                     translate_stuff_stuff(md[4].to_s())), # Edition
-                            imageAddr]
+                results << to_book_isbn(bookdata,isbn)
               end
             rescue => e
               puts e.message
@@ -140,13 +137,13 @@ module Alexandria
         product = {}
 
 
-        raise "Title not found" unless md = /<a id="ctl00_main_frame_ctrlproduct_linkProductTitle" class="header15">(.+)<\/a>/.match(data)
+        raise "Title not found" unless md = /<span id="ctl00_main_frame_ctrlproduct_lblProductTitle" class="header15">(.+)<\/span>/.match(data)
 
         product["title"] = CGI.unescape(md[1])
 
 
         #                       regx = /<tr><td colspan="2" class="text">F&#246;rfattare:&nbsp;<b>([^<]*)<\/b><\/td><\/tr>/
-        regx = /<span id="ctl00_main_frame_ctrlproduct_rptAuthor_ctl0\d+_Label2">F.rfattare<\/span>:&nbsp;<a [^>]+>([^<]+)<\/a>/
+        regx = /<span id="ctl00_main_frame_ctrlproduct_rptAuthor_ctl0\d+_Label2">.+<\/span>:&nbsp;<a [^>]+>([^<]+)<\/a>/
         product["authors"] = []
         data.scan(regx) do |md| next unless md[0] != md[1]
           product["authors"] << translate_html_stuff(CGI.unescape(md[0]))
@@ -159,7 +156,7 @@ module Alexandria
 
 
         #raise "No edition" unless
-        md = /<span id="ctl00_main_frame_ctrlproduct_lblEditionAndWeight">([^<]*)i gram: .+<\/span>/.match(data)
+        md = /<span id="ctl00_main_frame_ctrlproduct_lblFormatAndLanguage">Bandtyp: ([^,]*).+<\/span>/.match(data)
 
         product["edition"] = md[1] or md
 
