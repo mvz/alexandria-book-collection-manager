@@ -401,9 +401,22 @@ module Alexandria
           # Do not destroy if there is no addition.
           return if books_to_add.empty?
 
-          # Now we can destroy the dialog and go back to the main
-          # application.
-          @new_book_dialog.destroy
+          if @keep_open.active?
+            # TODO reset and clear fields
+            if @@last_criterion_was_not_isbn
+              @entry_search.select_region(0, -1) # select all, ready to delete
+              @treeview_results.model.clear
+              @entry_search.grab_focus
+            else
+              @entry_isbn.text = '' # blank ISBN field
+              @entry_isbn.grab_focus
+            end
+
+          else
+            # Now we can destroy the dialog and go back to the main
+            # application.
+            @new_book_dialog.destroy
+          end
           @block.call(books_to_add.map { |x| x.first },
                       library,
                       new_library)
@@ -464,8 +477,9 @@ module Alexandria
 
       def assert_not_exist(library, isbn)
         # Check that the book doesn't already exist in the library.
-        canonical = Library.canonicalise_isbn(isbn)
-        if book = library.find { |book| book.isbn == canonical }
+        isbn13 = Library.canonicalise_ean(isbn)
+        puts isbn13
+        if book = library.find { |book| book.isbn == isbn13 }
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
             [ isbn, library.name, book.title.sub("&", "&amp;") ]
         end

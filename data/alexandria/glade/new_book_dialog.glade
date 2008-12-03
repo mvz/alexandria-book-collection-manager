@@ -20,65 +20,82 @@
           <widget class="GtkTable" id="table1">
             <property name="visible">True</property>
             <property name="border_width">6</property>
-            <property name="n_rows">4</property>
+            <property name="n_rows">5</property>
             <property name="n_columns">2</property>
             <property name="column_spacing">12</property>
             <property name="row_spacing">6</property>
             <child>
-              <widget class="GtkRadioButton" id="isbn_radiobutton">
+              <widget class="GtkCheckButton" id="keep_open">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="label" translatable="yes">_ISBN:</property>
+                <property name="label" translatable="yes">_Keep Dialog Open after Adding Book</property>
+                <property name="relief">GTK_RELIEF_NONE</property>
                 <property name="use_underline">True</property>
+                <property name="xalign">0</property>
                 <property name="response_id">0</property>
                 <property name="draw_indicator">True</property>
-                <signal name="toggled" handler="on_criterion_toggled"/>
               </widget>
               <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
                 <property name="x_options">GTK_FILL</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="combo_libraries">
+                <property name="visible">True</property>
+                <property name="items" translatable="yes"></property>
+              </widget>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
+                <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
                 <property name="y_options"></property>
               </packing>
             </child>
             <child>
-              <widget class="GtkRadioButton" id="title_radiobutton">
+              <widget class="GtkEventBox" id="eventbox_entry_isbn">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="label" translatable="yes">_Search:</property>
-                <property name="use_underline">True</property>
-                <property name="response_id">0</property>
-                <property name="draw_indicator">True</property>
-                <property name="group">isbn_radiobutton</property>
-                <signal name="toggled" handler="on_criterion_toggled"/>
-              </widget>
-              <packing>
-                <property name="top_attach">1</property>
-                <property name="bottom_attach">2</property>
-                <property name="x_options">GTK_FILL</property>
-                <property name="y_options"></property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkScrolledWindow" id="scrolledwindow">
-                <property name="can_focus">True</property>
-                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                <property name="visible_window">False</property>
+                <signal name="button_press_event" handler="on_clicked"/>
                 <child>
-                  <widget class="GtkTreeView" id="treeview_results">
-                    <property name="height_request">190</property>
+                  <widget class="GtkEntry" id="entry_isbn">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="headers_visible">False</property>
-                    <property name="rules_hint">True</property>
-                    <signal name="button_press_event" handler="on_results_button_press_event"/>
+                    <property name="max_length">70</property>
+                    <property name="width_chars">13</property>
+                    <signal name="changed" handler="on_changed"/>
+                    <signal name="activate" handler="on_add"/>
                   </widget>
                 </child>
               </widget>
               <packing>
+                <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
-                <property name="top_attach">2</property>
-                <property name="bottom_attach">3</property>
                 <property name="x_options">GTK_FILL</property>
+                <property name="y_options">GTK_FILL</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label3">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="label" translatable="yes">Save _in:</property>
+                <property name="use_underline">True</property>
+              </widget>
+              <packing>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
+                <property name="x_options">GTK_FILL</property>
+                <property name="y_options"></property>
+                <property name="y_padding">12</property>
               </packing>
             </child>
             <child>
@@ -117,7 +134,6 @@ by keyword</property>
                         <property name="sensitive">False</property>
                         <property name="can_focus">True</property>
                         <property name="events">GDK_EXPOSURE_MASK</property>
-                        <property name="invisible_char">*</property>
                         <property name="width_chars">30</property>
                         <signal name="changed" handler="on_changed"/>
                         <signal name="activate" handler="on_find"/>
@@ -155,55 +171,59 @@ by keyword</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label3">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="label" translatable="yes">Save _in:</property>
-                <property name="use_underline">True</property>
-              </widget>
-              <packing>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
-                <property name="x_options">GTK_FILL</property>
-                <property name="y_options"></property>
-                <property name="y_padding">12</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkEventBox" id="eventbox_entry_isbn">
-                <property name="visible">True</property>
-                <property name="visible_window">False</property>
-                <signal name="button_press_event" handler="on_clicked"/>
+              <widget class="GtkScrolledWindow" id="scrolledwindow">
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                 <child>
-                  <widget class="GtkEntry" id="entry_isbn">
+                  <widget class="GtkTreeView" id="treeview_results">
+                    <property name="height_request">190</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="max_length">70</property>
-                    <property name="invisible_char">*</property>
-                    <property name="width_chars">13</property>
-                    <signal name="changed" handler="on_changed"/>
-                    <signal name="activate" handler="on_add"/>
+                    <property name="headers_visible">False</property>
+                    <property name="rules_hint">True</property>
+                    <signal name="button_press_event" handler="on_results_button_press_event"/>
                   </widget>
                 </child>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
                 <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
                 <property name="x_options">GTK_FILL</property>
-                <property name="y_options">GTK_FILL</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkComboBox" id="combo_libraries">
+              <widget class="GtkRadioButton" id="title_radiobutton">
                 <property name="visible">True</property>
-                <property name="items" translatable="yes"></property>
+                <property name="can_focus">True</property>
+                <property name="label" translatable="yes">_Search:</property>
+                <property name="use_underline">True</property>
+                <property name="response_id">0</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">isbn_radiobutton</property>
+                <signal name="toggled" handler="on_criterion_toggled"/>
               </widget>
               <packing>
-                <property name="left_attach">1</property>
-                <property name="right_attach">2</property>
-                <property name="top_attach">3</property>
-                <property name="bottom_attach">4</property>
-                <property name="x_options">GTK_EXPAND | GTK_SHRINK | GTK_FILL</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+                <property name="x_options">GTK_FILL</property>
+                <property name="y_options"></property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkRadioButton" id="isbn_radiobutton">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="label" translatable="yes">_ISBN:</property>
+                <property name="use_underline">True</property>
+                <property name="response_id">0</property>
+                <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="on_criterion_toggled"/>
+              </widget>
+              <packing>
+                <property name="x_options">GTK_FILL</property>
                 <property name="y_options"></property>
               </packing>
             </child>
