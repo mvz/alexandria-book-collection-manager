@@ -17,6 +17,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 #require 'monitor'
+require 'alexandria/scanners/keyboard'
 require 'alexandria/scanners/cuecat'
 
 module Alexandria
@@ -171,6 +172,10 @@ module Alexandria
         @tid2 = nil
       end
 
+      def bg
+        @scanner_background
+      end
+
     end
 
 
@@ -266,7 +271,7 @@ module Alexandria
 
       def read_barcode_scan
         @animator.start
-        log.debug { "reading CueCat data #{@scanner_buffer}" }
+        log.debug { "reading scanner data #{@scanner_buffer}" }
         barcode_text = nil
         isbn = nil
         begin
@@ -368,7 +373,19 @@ module Alexandria
 
       def setup_scanner_area
         @scanner_buffer = ""
-        @scanner = Alexandria::Scanners::CueCat.new # HACK :: use Registry
+        scanner_name = Alexandria::Preferences.instance.barcode_scanner
+        @scanner = Alexandria::Scanners::Registry.first
+        Alexandria::Scanners::Registry.each do |scanner|
+          if scanner.name == scanner_name
+            @scanner = scanner
+          end
+        end
+        
+        log.debug { "Using #{@scanner.name} scanner" }
+
+        @prev_time = 0
+        @interval = 0
+
 
         @animator = BarcodeAnimation.new()
         @barcode_canvas.add(@animator)
@@ -402,6 +419,8 @@ module Alexandria
         @@debug_index = 0
         @scan_area.signal_connect("key-press-event") do |button, event|
           #log.debug { event.keyval }
+            # event.keyval == 65293 means Enter key
+          # HACK, this disallows numeric keypad entry of data...
           if event.keyval < 255
             if @scanner_buffer.empty?
               if event.keyval.chr == '`' # backtick key for devs
@@ -416,9 +435,49 @@ module Alexandria
             end
             @scanner_buffer << event.keyval.chr
 
-            # or get event.keyval == 65293 meaning Enter key
+            # calculating average interval between input characters
+            if @prev_time.zero?
+              @prev_time = Time.now.to_f
+            else
+              now = Time.now.to_f
+              if @interval.zero?
+                @interval = now - @prev_time
+              else
+                new_interval = now - @prev_time
+                @interval = (@interval + new_interval) / 2.0
+              end
+              @prev_time = now
+            end
+
+            # if average interval is greater than around 45 milliseconds,
+            # then it's probably a human typing characters
+
             if @scanner.match? @scanner_buffer
-              read_barcode_scan
+              
+              Thread.new(@interval, @scanner_buffer) do |interval, buffer|
+                log.debug { "Waiting for more scanner input..." }
+                Gtk.idle_add do
+                  @animator.bg.fill_color_rgba = 0xFFF8C0FF
+                  false
+                end
+                time_to_wait = [3, interval*4].min
+                sleep(time_to_wait)
+                if buffer == @scanner_buffer
+                  log.debug { "Buffer unchanged; scanning complete" }
+                  Gtk.idle_add do
+                    @animator.bg.fill_color_rgba = 0xFFFFFFFF
+                    false
+                  end
+                  read_barcode_scan
+                  log.debug { "Avg interval between chars: #{@interval}" }
+                  @prev_time = 0
+                  @interval = 0
+
+                else
+                  log.debug { "Buffer has changed while waiting, reading more characters..." }
+                end
+              end
+
             end
           end
         end

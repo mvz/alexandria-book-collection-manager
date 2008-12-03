@@ -104,6 +104,17 @@
         <long>Full path to the CueCat device driver (Linux only).</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/barcode_scanner</key>
+      <applyto>/apps/alexandria/barcode_scanner</applyto>
+      <owner>alexandria</owner>
+      <type>string</type>
+      <default>CueCat</default>
+      <locale name="C">
+        <short>Barcode Scanner</short>
+        <long>Name of barcode scanner interface to use.</long>
+      </locale>
+    </schema>
     <schema>        
       <key>/schemas/apps/alexandria/toolbar_visible</key>
       <applyto>/apps/alexandria/toolbar_visible</applyto>
