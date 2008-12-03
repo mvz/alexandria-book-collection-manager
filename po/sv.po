@@ -1,40 +1,38 @@
 # Swedish translation of Alexandria.
 # Svenska översättningar för paket Alexandria.
 # Copyright (C) 2005 David Weinehall
-# This file is distributed under the same license as the Alexandria package.
-# David Weinehall <tao@acc.umu.se>, 2005.
+# Copyright (C) 2008 Martin Karlsson
+# This file is distributed under the same license as the Alexandria package
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Alexandria 0.5.1\n"
+"Project-Id-Version: Alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-16 17:29+0100\n"
-"PO-Revision-Date: 2005-08-23 23:00+0300\n"
-"Last-Translator: David Weinehall <tao@acc.umu.se>\n"
+"PO-Revision-Date: 2008-11-30 20:12+0100\n"
+"Last-Translator: Martin Karlsson <martinkarlsson81@hotmail.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
-#, fuzzy
 msgid "New Smart Library"
-msgstr "Importera ett bibliotek"
+msgstr "Nytt intelligent bibliotek"
 
 #: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
-#, fuzzy
 msgid "Smart Library"
-msgstr "Importera ett bibliotek"
+msgstr "Intelligent bibliotek"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:381
 #: ../data/alexandria/glade/acquire_dialog.glade:25
 msgid "_Barcode Scanner Ready"
-msgstr ""
+msgstr "_Streckkodsläsaren redo"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:396
 msgid "Click below to scan _barcodes"
-msgstr ""
+msgstr "Klicka nedan för att scanna streckkoder"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
 msgid "Error while importing"
@@ -49,9 +47,8 @@ msgid "Import a Library"
 msgstr "Importera ett bibliotek"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:68
-#, fuzzy
 msgid "_Import"
-msgstr "Importera"
+msgstr "_Importera"
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:164
 msgid "Couldn't import the library"
@@ -80,37 +77,30 @@ msgstr "E_rsätt"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:31
 msgid "If you replace the existing book, its contents will be overwritten."
-msgstr ""
-"Om du ersätter den existerande boken, kommer dess innehåll att skrivas över."
+msgstr "Om du ersätter den existerande boken, kommer dess innehåll att skrivas över."
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:50
-#, fuzzy
 msgid "Are you sure you want to delete '%s'?"
 msgstr "Är du säker på att du permanent vill radera \"%s\"?"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:58
-#, fuzzy
 msgid "If you continue, %d book will be deleted."
 msgid_plural "If you continue, %d books will be deleted."
-msgstr[0] "Om du fortsätter kommer urvalet att raderas permanent."
-msgstr[1] "Om du fortsätter kommer urvalet att raderas permanent."
+msgstr[0] "Om du fortsätter kommer %d bok att raderas permanent."
+msgstr[1] "Om du fortsätter kommer %d böcker att raderas permanent."
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:63
-#, fuzzy
 msgid "Are you sure you want to delete '%s' from '%s'?"
-msgstr "Är du säker på att du permanent vill radera \"%s\" från \"%s\"?"
+msgstr "Är du säker på att du vill radera \"%s\" permanent från \"%s\"?"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
-#, fuzzy
 msgid "Are you sure you want to delete the selected books from '%s'?"
-msgstr ""
-"Är du säker på att du permanent vill radera de valda böckerna från \"%s\"?"
+msgstr "Är du säker på att du vill radera de valda böckerna permanent från \"%s\"?"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
-#, fuzzy
 msgid "Properties for '%s'"
-msgstr "Inställningar för %s"
+msgstr "Egenskaper för %s"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
 msgid "Invalid ISBN '%s'"
@@ -142,7 +132,6 @@ msgid "%s, by %s"
 msgstr "%s, av %s"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:363
-#, fuzzy
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correctly, and try again."
@@ -189,7 +178,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
 msgid "There's a problem"
-msgstr ""
+msgstr "Det uppstod ett problem"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:112
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:121
@@ -259,43 +248,42 @@ msgstr "Ej en katalog"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:82
 msgid "Empty or conflictive condition"
-msgstr ""
+msgstr "Tomt eller motstridigt tillstånd"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:85
 msgid "_Save However"
-msgstr ""
+msgstr "Spara ändå"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
 "Are you sure you want to save this library?"
-msgstr ""
+msgstr "Detta intelligenta bibliotek innehåller ett eller flera villkor som är tomma eller motstridiga. Detta innebär troligtvis att ingen bok kommer matchas. Är du säker på att du vill spara detta bibliotek?"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
 msgid "Match"
-msgstr ""
+msgstr "Matcha"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
 msgid "all"
-msgstr ""
+msgstr "alla"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
 msgid "any"
-msgstr ""
+msgstr "vilken som helst"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:118
 msgid "of the following rules:"
-msgstr ""
+msgstr "av följande regler:"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:126
 msgid "Match the following rule:"
-msgstr ""
+msgstr "Matcha följande regel:"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
-#, fuzzy
 msgid "Adding '%s'"
-msgstr "i \"_%s\""
+msgstr "till \"%s\""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
 #: ../data/alexandria/glade/new_book_dialog.glade:8
@@ -319,9 +307,8 @@ msgid "At least one author must be provided."
 msgstr "Minst en författare måste anges."
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
-#, fuzzy
 msgid "Properties"
-msgstr "_Egenskaper"
+msgstr "Egenskaper"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:67
 msgid "Author"
@@ -332,9 +319,8 @@ msgid "Select a cover image"
 msgstr "Välj en omslagsbild"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
-#, fuzzy
 msgid "No Cover"
-msgstr "_Omslag:"
+msgstr "Inget omslag"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
 msgid "%d day"
@@ -359,9 +345,8 @@ msgid "Publisher"
 msgstr "Förlag"
 
 #: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:342
-#, fuzzy
 msgid "Publish Year"
-msgstr "Förlag"
+msgstr "Publicerad år"
 
 #: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:343
 msgid "Binding"
@@ -370,20 +355,20 @@ msgstr "Bindning"
 #: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:100
 #: ../lib/alexandria/smart_library.rb:350
 msgid "Read"
-msgstr ""
+msgstr "Lästa"
 
 #: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:352
 msgid "Own"
-msgstr ""
+msgstr "Har"
 
 #: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:353
 msgid "Want"
-msgstr ""
+msgstr "Vill ha"
 
 #: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:346
 #: ../data/alexandria/glade/preferences_dialog.glade:48
 msgid "Tags"
-msgstr ""
+msgstr "Taggar"
 
 #: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:344
 msgid "Rating"
@@ -407,8 +392,7 @@ msgstr "Biblioteket kan ej döpas om"
 
 #: ../lib/alexandria/ui/sidepane.rb:42
 msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr ""
-"Det finns redan ett bibliotek med namnet \"%s\". Var god välj ett annat namn."
+msgstr "Det finns redan ett bibliotek med namnet \"%s\". Var god välj ett annat namn."
 
 #: ../lib/alexandria/ui/sidepane.rb:68
 msgid "Library"
@@ -416,7 +400,7 @@ msgstr "Bibliotek"
 
 #: ../lib/alexandria/ui/ui_manager.rb:128
 msgid "Type here the search criterion"
-msgstr ""
+msgstr "Skriv sökkriteriet här"
 
 #: ../lib/alexandria/ui/ui_manager.rb:141
 msgid "Match everything"
@@ -443,14 +427,12 @@ msgid "Notes contain"
 msgstr "Anteckningar innehåller"
 
 #: ../lib/alexandria/ui/ui_manager.rb:148
-#, fuzzy
 msgid "Tags contain"
-msgstr "Anteckningar innehåller"
+msgstr "Taggar innehåller"
 
 #: ../lib/alexandria/ui/ui_manager.rb:163
-#, fuzzy
 msgid "Change the search type"
-msgstr "Ogiltig söktyp."
+msgstr "Ändra söktyp"
 
 #: ../lib/alexandria/ui/ui_manager.rb:168
 msgid "View as Icons"
@@ -462,7 +444,7 @@ msgstr "Visa som lista"
 
 #: ../lib/alexandria/ui/ui_manager.rb:182
 msgid "Choose how to show books"
-msgstr ""
+msgstr "Välj hur böcker ska visas"
 
 #: ../lib/alexandria/ui/ui_manager.rb:368
 msgid "Library '%s' selected"
@@ -522,7 +504,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/ui_manager.rb:601
 msgid "Repair Book Data"
-msgstr ""
+msgstr "Reparera bokdata"
 
 #: ../lib/alexandria/ui/ui_manager.rb:602
 msgid ""
@@ -530,45 +512,43 @@ msgid ""
 "to attempt to download new information for them from the online book "
 "providers?\n"
 msgstr ""
+"Datafilerna för följande böcker är felaktigt formaterade eller tomma. Vill du försöka ladda ned ny information för dem från en förmedlare?\n"
 
 #: ../lib/alexandria/ui/ui_manager.rb:659
 msgid "Added '%s' to library '%s'"
-msgstr ""
+msgstr "Lade till \"%s\" till biblioteket \"%s\""
 
 #: ../lib/alexandria/ui/ui_manager.rb:812
-#, fuzzy
 msgid "Loading '%s'..."
-msgstr "i \"_%s\""
+msgstr "Laddar \"%s\"..."
 
 #: ../lib/alexandria/ui/ui_manager.rb:1028
 msgid "In '_%s'"
-msgstr "i \"_%s\""
+msgstr "till \"_%s\""
 
 #: ../lib/alexandria/ui/callbacks.rb:62
 msgid "The following lines are not valid ISBNs and were not imported:"
-msgstr ""
+msgstr "Följande rader är inte giltiga ISBN:er och importerades ej:"
 
 #: ../lib/alexandria/ui/callbacks.rb:252
 msgid "_Library"
 msgstr "_Bibliotek"
 
 #: ../lib/alexandria/ui/callbacks.rb:253
-#, fuzzy
 msgid "_New Library"
-msgstr "_Bibliotek"
+msgstr "_Nytt bibliotek"
 
 #: ../lib/alexandria/ui/callbacks.rb:253
-#, fuzzy
 msgid "Create a new library"
-msgstr "Importera ett bibliotek"
+msgstr "Skapa ett nytt bibliotek"
 
 #: ../lib/alexandria/ui/callbacks.rb:254
 msgid "New _Smart Library..."
-msgstr ""
+msgstr "Nytt _intelligent bibliotek"
 
 #: ../lib/alexandria/ui/callbacks.rb:254
 msgid "Create a new smart library"
-msgstr ""
+msgstr "Skapa ett nytt intelligent bibliotek"
 
 #: ../lib/alexandria/ui/callbacks.rb:255
 msgid "_Add Book..."
@@ -576,23 +556,21 @@ msgstr "_Lägg till bok..."
 
 #: ../lib/alexandria/ui/callbacks.rb:255
 msgid "Add a new book from the Internet"
-msgstr ""
+msgstr "Lägg till en ny bok från Internet"
 
 #: ../lib/alexandria/ui/callbacks.rb:256
 msgid "Add Book _Manually..."
 msgstr "Lägg till bok _manuellt..."
 
 #: ../lib/alexandria/ui/callbacks.rb:256
-#, fuzzy
 msgid "Add a new book manually"
-msgstr "Lägg till bok _manuellt..."
+msgstr "Lägg till en ny bok manuellt"
 
 #: ../lib/alexandria/ui/callbacks.rb:257
 msgid "_Import..."
 msgstr "_Importera..."
 
 #: ../lib/alexandria/ui/callbacks.rb:257
-#, fuzzy
 msgid "Import a library"
 msgstr "Importera ett bibliotek"
 
@@ -602,15 +580,15 @@ msgstr "E_xportera..."
 
 #: ../lib/alexandria/ui/callbacks.rb:258
 msgid "Export the selected library"
-msgstr ""
+msgstr "Exportera det valda biblioteket"
 
 #: ../lib/alexandria/ui/callbacks.rb:259
 msgid "_Acquire from Scanner..."
-msgstr ""
+msgstr "_Hämta från en streckkodsläsare"
 
 #: ../lib/alexandria/ui/callbacks.rb:259
 msgid "Acquire books from a scanner"
-msgstr ""
+msgstr "Hämta böcker från en streckkodsläsare"
 
 #: ../lib/alexandria/ui/callbacks.rb:260
 msgid "_Properties"
@@ -618,7 +596,7 @@ msgstr "_Egenskaper"
 
 #: ../lib/alexandria/ui/callbacks.rb:260
 msgid "Edit the properties of the selected book"
-msgstr ""
+msgstr "Redigera egenskaperna för den markerade boken"
 
 #: ../lib/alexandria/ui/callbacks.rb:261
 msgid "_Quit"
@@ -626,7 +604,7 @@ msgstr "_Avsluta"
 
 #: ../lib/alexandria/ui/callbacks.rb:261
 msgid "Quit the program"
-msgstr ""
+msgstr "Avsluta programmet"
 
 #: ../lib/alexandria/ui/callbacks.rb:262
 msgid "_Edit"
@@ -634,19 +612,19 @@ msgstr "_Redigera"
 
 #: ../lib/alexandria/ui/callbacks.rb:263
 msgid "_Undo"
-msgstr ""
+msgstr "_Ångra"
 
 #: ../lib/alexandria/ui/callbacks.rb:263
 msgid "Undo the last action"
-msgstr ""
+msgstr "Ångra det senaste kommandot"
 
 #: ../lib/alexandria/ui/callbacks.rb:264
 msgid "_Redo"
-msgstr ""
+msgstr "_Gör om"
 
 #: ../lib/alexandria/ui/callbacks.rb:264
 msgid "Redo the undone action"
-msgstr ""
+msgstr "Gör om det senaste ångrade kommandot"
 
 #: ../lib/alexandria/ui/callbacks.rb:265
 msgid "_Select All"
@@ -654,46 +632,43 @@ msgstr "Markera _alla"
 
 #: ../lib/alexandria/ui/callbacks.rb:265
 msgid "Select all visible books"
-msgstr ""
+msgstr "Markera alla synliga böcker"
 
 #: ../lib/alexandria/ui/callbacks.rb:266
 msgid "Dese_lect All"
 msgstr "A_vmarkera alla"
 
 #: ../lib/alexandria/ui/callbacks.rb:266
-#, fuzzy
 msgid "Deselect everything"
-msgstr "Matcha allting"
+msgstr "Avmarkera allting"
 
 #: ../lib/alexandria/ui/callbacks.rb:267
-#, fuzzy
 msgid "My _Rating"
-msgstr "Efter bet_yg"
+msgstr "Mitt bet_yg"
 
 #: ../lib/alexandria/ui/callbacks.rb:268
-#, fuzzy
 msgid "None"
-msgstr "Anteckningar"
+msgstr "Ingen"
 
 #: ../lib/alexandria/ui/callbacks.rb:269
 msgid "One Star"
-msgstr ""
+msgstr "En stjärna"
 
 #: ../lib/alexandria/ui/callbacks.rb:270
 msgid "Two Stars"
-msgstr ""
+msgstr "Två stjärnor"
 
 #: ../lib/alexandria/ui/callbacks.rb:271
 msgid "Three Stars"
-msgstr ""
+msgstr "Tre stjärnor"
 
 #: ../lib/alexandria/ui/callbacks.rb:272
 msgid "Four Stars"
-msgstr ""
+msgstr "Fyra stjärnor"
 
 #: ../lib/alexandria/ui/callbacks.rb:273
 msgid "Five Stars"
-msgstr ""
+msgstr "Fem stjärnor"
 
 #: ../lib/alexandria/ui/callbacks.rb:274
 msgid "_Move"
@@ -709,7 +684,7 @@ msgstr "_Ta bort"
 
 #: ../lib/alexandria/ui/callbacks.rb:276
 msgid "Delete the selected books or library"
-msgstr ""
+msgstr "Ta bort markerade böcker eller bibliotek"
 
 #: ../lib/alexandria/ui/callbacks.rb:277
 msgid "_Search"
@@ -717,16 +692,15 @@ msgstr "_Sök"
 
 #: ../lib/alexandria/ui/callbacks.rb:277
 msgid "Filter books"
-msgstr ""
+msgstr "Filtrera böcker"
 
 #: ../lib/alexandria/ui/callbacks.rb:278
 msgid "_Clear Results"
-msgstr "Töm _resultat"
+msgstr "Töm _sökresultat"
 
 #: ../lib/alexandria/ui/callbacks.rb:278
-#, fuzzy
 msgid "Clear the search results"
-msgstr "Töm _resultat"
+msgstr "Töm sökresultat"
 
 #: ../lib/alexandria/ui/callbacks.rb:279
 msgid "_Preferences"
@@ -734,7 +708,7 @@ msgstr "_Inställningar"
 
 #: ../lib/alexandria/ui/callbacks.rb:279
 msgid "Change Alexandria's settings"
-msgstr ""
+msgstr "Ändra Alexandrias inställningar"
 
 #: ../lib/alexandria/ui/callbacks.rb:280
 msgid "_View"
@@ -758,7 +732,7 @@ msgstr "Skicka _felrapport"
 
 #: ../lib/alexandria/ui/callbacks.rb:285
 msgid "Submit a bug report to the developers"
-msgstr ""
+msgstr "Skicka en bugg-rapport till utvecklarna"
 
 #: ../lib/alexandria/ui/callbacks.rb:286
 msgid "Contents"
@@ -766,7 +740,7 @@ msgstr "Innehåll"
 
 #: ../lib/alexandria/ui/callbacks.rb:286
 msgid "View Alexandria's manual"
-msgstr ""
+msgstr "Visa Alexandrias manual"
 
 #: ../lib/alexandria/ui/callbacks.rb:287
 msgid "_About"
@@ -774,7 +748,7 @@ msgstr "_Om"
 
 #: ../lib/alexandria/ui/callbacks.rb:287
 msgid "Show information about Alexandria"
-msgstr ""
+msgstr "Visa information om Alexandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:312
 msgid "Side _Pane"
@@ -782,7 +756,7 @@ msgstr "Sido_panel"
 
 #: ../lib/alexandria/ui/callbacks.rb:314
 msgid "_Toolbar"
-msgstr "_Verktygsrad"
+msgstr "_Verktygsfält"
 
 #: ../lib/alexandria/ui/callbacks.rb:316
 msgid "_Statusbar"
@@ -829,12 +803,10 @@ msgid "At _%s"
 msgstr "hos _%s"
 
 #: ../lib/alexandria/ui/libraries_combo.rb:44
-#, fuzzy
 msgid "New Library"
-msgstr "Bibliotek"
+msgstr "Nytt bibliotek"
 
 #: ../lib/alexandria/ui/init.rb:83
-#, fuzzy
 msgid "Unable to launch the help browser"
 msgstr "Kunde inte starta webbläsaren"
 
@@ -843,10 +815,11 @@ msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
 msgstr ""
+"Kunde inte visa hjälpen för Alexandria. Det uppstod ett fel när systemets hjälpläsare skulle startas."
 
 #: ../lib/alexandria/import_library.rb:29
 msgid "Autodetect"
-msgstr "Automatisk detektering"
+msgstr "Välj automatisk"
 
 #: ../lib/alexandria/import_library.rb:30
 msgid "Archived Tellico XML (*.bc, *.tc)"
@@ -858,24 +831,23 @@ msgstr "ISBN-lista (*.txt)"
 
 #: ../lib/alexandria/import_library.rb:34
 msgid "GoodReads CSV"
-msgstr ""
+msgstr "GoodReads CSV"
 
 #: ../lib/alexandria/smart_library.rb:88
 msgid "Favorite"
-msgstr ""
+msgstr "Favoriter"
 
 #: ../lib/alexandria/smart_library.rb:94
-#, fuzzy
 msgid "Loaned"
-msgstr "Lokal"
+msgstr "Utlånade"
 
 #: ../lib/alexandria/smart_library.rb:106
 msgid "Owned"
-msgstr ""
+msgstr "Ägda"
 
 #: ../lib/alexandria/smart_library.rb:115
 msgid "Wishlist"
-msgstr ""
+msgstr "Önskelista"
 
 #: ../lib/alexandria/smart_library.rb:345
 #: ../data/alexandria/glade/book_properties_dialog.glade:1225
@@ -883,86 +855,80 @@ msgid "Notes"
 msgstr "Anteckningar"
 
 #: ../lib/alexandria/smart_library.rb:347
-#, fuzzy
 msgid "Loaning State"
-msgstr "Utlånaning"
+msgstr "Utlåningsstatus"
 
 #: ../lib/alexandria/smart_library.rb:348
-#, fuzzy
 msgid "Loaning Date"
-msgstr "Utlånaning"
+msgstr "Utlåningsdatum"
 
 #: ../lib/alexandria/smart_library.rb:349
-#, fuzzy
 msgid "Loaning Person"
-msgstr "Utlånaning"
+msgstr "Låntagare"
 
 #: ../lib/alexandria/smart_library.rb:351
 msgid "Date Read"
-msgstr ""
+msgstr "Läsdatum"
 
 #: ../lib/alexandria/smart_library.rb:360
-#, fuzzy
 msgid "days"
-msgstr "%d dag"
+msgstr "dagarna"
 
 #: ../lib/alexandria/smart_library.rb:370
 msgid "is set"
-msgstr ""
+msgstr "är satt"
 
 #: ../lib/alexandria/smart_library.rb:374
 msgid "is not set"
-msgstr ""
+msgstr "är inte satt"
 
 #: ../lib/alexandria/smart_library.rb:378
 msgid "is"
-msgstr ""
+msgstr "är"
 
 #: ../lib/alexandria/smart_library.rb:382
 msgid "is not"
-msgstr ""
+msgstr "är inte"
 
 #: ../lib/alexandria/smart_library.rb:386
-#, fuzzy
 msgid "contains"
-msgstr "ISBN innehåller"
+msgstr "innehåller"
 
 #: ../lib/alexandria/smart_library.rb:390
-#, fuzzy
 msgid "does not contain"
-msgstr "Anteckningar innehåller"
+msgstr "innehåller inte"
 
 #: ../lib/alexandria/smart_library.rb:394
 msgid "starts with"
-msgstr ""
+msgstr "börjar med"
 
 #: ../lib/alexandria/smart_library.rb:398
 msgid "ends with"
-msgstr ""
+msgstr "slutar med"
 
 #: ../lib/alexandria/smart_library.rb:402
 msgid "is greater than"
-msgstr ""
+msgstr "är större än"
 
 #: ../lib/alexandria/smart_library.rb:406
 msgid "is less than"
-msgstr ""
+msgstr "är mindre än"
 
 #: ../lib/alexandria/smart_library.rb:410
 msgid "is after"
-msgstr ""
+msgstr "är efter"
 
 #: ../lib/alexandria/smart_library.rb:414
 msgid "is before"
-msgstr ""
+msgstr "är före"
 
 #: ../lib/alexandria/smart_library.rb:418
 msgid "is in last"
-msgstr ""
+msgstr "är i de sista"
 
 #: ../lib/alexandria/smart_library.rb:422
 msgid "is not in last"
-msgstr ""
+msgstr "är inte i de sista"
 
 #: ../lib/alexandria/about.rb:24
 msgid "A program to help you manage your book collection."
@@ -978,29 +944,27 @@ msgstr "Arkiverad Tellico-XML"
 
 #: ../lib/alexandria/export_library.rb:105
 msgid "BibTeX"
-msgstr ""
+msgstr "BibTeX"
 
 #: ../lib/alexandria/export_library.rb:106
 msgid "CSV list"
-msgstr ""
+msgstr "CSV-lista"
 
 #: ../lib/alexandria/export_library.rb:107
 msgid "ISBN List"
 msgstr "ISBN-lista"
 
 #: ../lib/alexandria/export_library.rb:108
-#, fuzzy
 msgid "iPod Notes"
-msgstr "Anteckningar"
+msgstr "iPod-anteckningar"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "HTML Web Page"
 msgstr "HTML-webbsida"
 
 #: ../lib/alexandria/models/library.rb:56
-#, fuzzy
 msgid "Untitled"
-msgstr "Icke namngivna %d"
+msgstr "Namnlös"
 
 #: ../lib/alexandria/models/library.rb:233
 msgid "My Library"
@@ -1012,7 +976,7 @@ msgstr "Kunde inte nå förmedlaren \"%s\": tidsbegränsningen överskriden."
 
 #: ../lib/alexandria/book_providers.rb:57
 msgid "Couldn't reach the provider '%s': socket error (%s)."
-msgstr "Kunde inte nå förmedlaren \"%s\": uttagsfel (socket error) (%s)."
+msgstr "Kunde inte nå förmedlaren \"%s\": sockelfel (eng. socket error) (%s)."
 
 #: ../lib/alexandria/book_providers.rb:61
 msgid ""
@@ -1033,7 +997,7 @@ msgstr "Ogiltig söktyp."
 #: ../lib/alexandria/book_providers/amazon.rb:32
 #: ../lib/alexandria/book_providers/amazon_ecs4.rb:34
 msgid "Locale"
-msgstr "Lokal"
+msgstr "Språkkonvention"
 
 #: ../lib/alexandria/book_providers/amazon.rb:34
 #: ../lib/alexandria/book_providers/amazon_ecs4.rb:35
@@ -1074,21 +1038,19 @@ msgstr "Lösenord"
 
 #: ../lib/alexandria/book_providers/z3950.rb:39
 msgid "Charset encoding"
-msgstr ""
+msgstr "Teckenkodning"
 
 #: ../lib/alexandria/book_providers/z3950.rb:189
-#, fuzzy
 msgid "Library of Congress (Usa)"
-msgstr "Library of Congress"
+msgstr "Library of Congress (USA)"
 
 #: ../lib/alexandria/book_providers/z3950.rb:217
 msgid "British Library"
 msgstr "British Library"
 
 #: ../lib/alexandria/book_providers/proxis.rb:35
-#, fuzzy
 msgid "Language"
-msgstr "Utlånaning"
+msgstr "Språk"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:31
 #: ../data/alexandria/glade/book_properties_dialog.glade:187
@@ -1111,18 +1073,16 @@ msgstr ""
 
 #: ../data/alexandria/glade/new_book_dialog.glade:161
 #: ../data/alexandria/glade/acquire_dialog.glade:85
-#, fuzzy
 msgid "Save _in:"
-msgstr "Spara i _bibliotek:"
+msgstr "Spara _i:"
 
 #: ../data/alexandria/glade/main_app.glade:17
 msgid "Main Window"
-msgstr ""
+msgstr "Huvudfönster"
 
 #: ../data/alexandria/glade/main_app.glade:32
-#, fuzzy
 msgid "Libraries listing."
-msgstr "_Bibliotek:"
+msgstr "Biblioteklista."
 
 #: ../data/alexandria/glade/main_app.glade:46
 msgid "_Libraries:"
@@ -1130,11 +1090,11 @@ msgstr "_Bibliotek:"
 
 #: ../data/alexandria/glade/main_app.glade:111
 msgid "Book listing."
-msgstr ""
+msgstr "Boklista"
 
 #: ../data/alexandria/glade/main_app.glade:194
 msgid "Status messages."
-msgstr ""
+msgstr "Statusmeddelanden."
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:86
 msgid "_Title:"
@@ -1142,16 +1102,15 @@ msgstr "_Titel:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:115
 msgid "_Publisher:"
-msgstr "_Förlag:"
+msgstr "F_örlag:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:279
-#, fuzzy
 msgid "Add an author"
-msgstr "Författare"
+msgstr "Lägg till en författare"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:307
 msgid "Remove an author"
-msgstr ""
+msgstr "Ta bort en författare"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:351
 msgid "_Authors:"
@@ -1162,13 +1121,12 @@ msgid "_Binding:"
 msgstr "_Bindning:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:430
-#, fuzzy
 msgid "Publish _year:"
-msgstr "_Förlag:"
+msgstr "P_ublicerad år:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:480
 msgid "Tags:"
-msgstr ""
+msgstr "Taggar:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:553
 msgid "_Cover:"
@@ -1176,23 +1134,23 @@ msgstr "_Omslag:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:579
 msgid "Click to pick a cover"
-msgstr ""
+msgstr "Klicka för att välja ett omslag"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:620
 msgid "Own it?"
-msgstr ""
+msgstr "Har den?"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:646
 msgid "Read it?"
-msgstr ""
+msgstr "Läst den?"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:695
 msgid "Want it?"
-msgstr ""
+msgstr "Vill ha den?"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:721
 msgid "Click on the stars to rate the book"
-msgstr ""
+msgstr "Klicka på stjärnorna för att betygsätta boken"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:927
 msgid "Rating:"
@@ -1208,19 +1166,19 @@ msgstr "Den här boken är ut_lånad"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:1076
 msgid "_To:"
-msgstr "_till:"
+msgstr "_Till:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:1106
 msgid "_Since:"
-msgstr "_sedan:"
+msgstr "_Sedan:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:1166
 msgid "Loaning"
-msgstr "Utlånaning"
+msgstr "Utlåningar"
 
 #: ../data/alexandria/glade/acquire_dialog.glade:9
 msgid "Acquire from Scanner"
-msgstr ""
+msgstr "Hämta från streckkodsläsare"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:7
 msgid "Preferences"
@@ -1232,20 +1190,19 @@ msgstr "<b>Synliga kolumner</b>"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:64
 msgid "Want?"
-msgstr ""
+msgstr "Vill ha?"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:80
 msgid "Own?"
-msgstr ""
+msgstr "Har den?"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:96
 msgid "Read?"
-msgstr ""
+msgstr "Läst den?"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:112
-#, fuzzy
 msgid "Publish _year"
-msgstr "Förlag"
+msgstr "P_ublicerad år"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:128
 msgid "_Binding"
@@ -1257,7 +1214,7 @@ msgstr "Bet_yg"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:160
 msgid "_Publisher"
-msgstr "_Förlag"
+msgstr "F_örlag"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:176
 msgid "_ISBN"
