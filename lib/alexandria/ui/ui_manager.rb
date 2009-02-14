@@ -438,7 +438,7 @@ module Alexandria
           if books.length == 1
             all_url = false
             BookProviders.each do |provider|
-              has_url = books.first.isbn and provider.url(books.first) != nil
+              has_url = books.first.isbn and (not books.first.isbn.strip.empty?) and provider.url(books.first) != nil
               @actiongroup[provider.action_name].sensitive = has_url
               all_url = true if has_url and !all_url
             end

@@ -391,7 +391,10 @@ module Alexandria
     def simple_save(book)
       # Let's initialize the saved identifier if not already
       # (backward compatibility from 0.4.0)
-      book.saved_ident ||= book.ident
+      # book.saved_ident ||= book.ident
+      if book.saved_ident.nil? or book.saved_ident.empty?
+        book.saved_ident = book.ident()
+      end
       if book.ident != book.saved_ident
         #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
         FileUtils.rm(yaml(book.saved_ident))
