@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2008 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -17,31 +18,33 @@
 
 # http://en.wikipedia.org/wiki/Amazon
 
-require 'amazon/search'
+require 'alexandria/book_providers/amazon_ecs_util'
 
 module Alexandria
   class BookProviders
     class AmazonProvider < GenericProvider
+      include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
-      CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
+      #CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
+
+      LOCALES = ['ca','de','fr','jp','uk','us']
 
       def initialize
-        super("Amazon", "Amazon (Usa)")
-        prefs.add("locale", _("Locale"), "us",
-                  Amazon::Search::LOCALES.keys)
+        super("Amazon", "Amazon")
+        prefs.add("locale", _("Locale"), "us", AmazonProvider::LOCALES)
         prefs.add("dev_token", _("Development token"),
-                  "142TF8CHT48WYPPS6J82")
-        prefs.add("associate", _("Associate ID"), "calibanorg-20", nil,
-                  false)
+                  "0J356Z09CN88KB743582")
+        #prefs.add("associate", _("Associate ID"), "calibanorg-20", nil,
+        #          false)
 
         # Backward compatibility hack - the previous developer token has
         # been revoked.
         prefs.read
         token = prefs.variable_named("dev_token")
-        if token and token.value == "D23XFCO2UKJY82"
-          token.new_value = "142TF8CHT48WYPPS6J82"
+        if token and token.value.size != 20
+          token.new_value = "0J356Z09CN88KB743582"
         end
       end
 
@@ -56,55 +59,72 @@ module Alexandria
           ENV['http_proxy'] = url
         end
 
-        req = Amazon::Search::Request.new(prefs["dev_token"])
-        req.cache = Amazon::Search::Cache.new(CACHE_DIR)
-        locales = Amazon::Search::LOCALES.keys
+        Amazon::Ecs.options = {:aWS_access_key_id => prefs["dev_token"] }
+        ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
+        locales = AmazonProvider::LOCALES.dup
         locales.delete prefs["locale"]
         locales.unshift prefs["locale"]
         locales.reverse!
 
         begin
-          req.locale = locales.pop
+          request_locale = locales.pop.intern
           products = []
           case type
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
-            req.asin_search(criterion) do |product|
-              products << product
+            # This isn't ideal : I'd like to do an ISBN/EAN-specific search
+            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res.items.each do |item|
+              products << item
             end
+            ##req.asin_search(criterion) do |product|
+
             # shouldn't happen
             raise TooManyResultsError if products.length > 1
 
           when SEARCH_BY_TITLE
-            req.keyword_search(criterion) do |product|
-              if /#{criterion}/i.match(product.product_name)
-                products << product
+            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+
+            res.items.each do |item|
+              if /#{criterion}/i.match(item.get('itemattributes/title'))
+                products << item
               end
             end
+            ##req.keyword_search(criterion) do |product|
 
           when SEARCH_BY_AUTHORS
-            req.author_search(criterion) do |product|
-              products << product
+            criterion = "author:#{criterion}"
+            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale, :type => 'Power'})
+            res.items.each do |item|
+              products << item
             end
+            ##req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            req.keyword_search(criterion) do |product|
-              products << product
+            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+
+            res.items.each do |item|
+              products << item
             end
 
           else
             raise InvalidSearchTypeError
           end
-          raise NoResultsError if products.empty?
-        rescue Amazon::Search::Request::SearchError
+          if products.empty?
+            raise Amazon::RequestError, "No products"
+          end
+          # raise NoResultsError if products.empty?
+        rescue Amazon::RequestError => re
+          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}"}
           retry unless locales.empty?
           raise NoResultsError
         end
 
         results = []
-        products.each do |product|
-          next unless product.catalog == 'Book'
-          title = product.product_name.squeeze(' ')
+        products.each do |item|
+          next unless item.get('itemattributes/productgroup') == 'Book'
+          atts = item.search_and_convert('itemattributes')
+          title = atts.get('title').squeeze(' ')
 
           # Work around Amazon US encoding bug. Amazon US apparently
           # interprets UTF-8 titles as ISO-8859 titles and then converts
@@ -114,29 +134,32 @@ module Alexandria
           #if req.locale == 'us'
           #    title = title.convert('ISO-8859-1','UTF-8')
           #end
+          # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!!
 
-          media = product.media.squeeze(' ')
+          media = atts.get('binding').squeeze(' ')
           media = nil if media == 'Unknown Binding'
 
-          isbn = product.isbn.squeeze(' ')
+          isbn = atts.get('isbn').squeeze(' ')
           if Library.valid_isbn?(isbn)
             isbn = Library.canonicalise_ean(isbn)
           else
             isbn = nil # it may be an ASIN which is not an ISBN
           end
           # hack, extract year by regexp (not Y10K compatible :-)
-          /([1-9][0-9]{3})/ =~ product.release_date
+          /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
           publishing_year = $1 ? $1.to_i : nil
           book = Book.new(title,
-                          (product.authors.map { |x| x.squeeze(' ') } \
+                          (atts.get_array('author').map { |x| x.squeeze(' ') } \
                          rescue [  ]),
                           isbn,
-                          (product.manufacturer.squeeze(' ') \
+                          (atts.get('manufacturer').squeeze(' ') \
                          rescue nil),
                           publishing_year,
                           media)
 
-          results << [ book, product.image_url_medium ]
+          image_url = item.get('mediumimage/url')
+          log.info { "Found at Amazon[#{request_locale}]: #{book.title}"}
+          results << [ book, image_url ]
         end
         type == SEARCH_BY_ISBN ? results.first : results
       end

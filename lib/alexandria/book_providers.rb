@@ -42,7 +42,7 @@ module Alexandria
         if results.length == 0
           raise NoResultsError
         else
-          puts "found at " + factory.fullname
+          log.info { "found at " + factory.fullname }
           return results
         end
       rescue Exception => boom
@@ -244,12 +244,6 @@ module Alexandria
     require 'alexandria/book_providers/webster_it'
     require 'alexandria/book_providers/worldcat'
 
-    begin
-      require 'alexandria/book_providers/amazon'
-    rescue LoadError
-      log.info { "Can't load Ruby/Amazon, hence provider Amazon not available" }
-    end
-
     # mechanize is optional
     begin
       require 'alexandria/book_providers/dea_store_it'
@@ -257,12 +251,11 @@ module Alexandria
       log.info { "Can't load mechanize, hence provider Deastore not available" }
     end
 
-    # new Amazon ECS 4 provider
+    # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     begin
-      require 'alexandria/book_providers/amazon_ecs_util'
-      require 'alexandria/book_providers/amazon_ecs4'
+      require 'alexandria/book_providers/amazon_aws'
     rescue LoadError
-      puts "Can't load hpricot, hence provider Amazon not available"
+      log.info { "Can't load hpricot, hence provider Amazon not available" }
     end
 
 
@@ -282,7 +275,6 @@ module Alexandria
     end
 
     def update_priority
-
       # This is weird code that sorts through the list of classes brought
       # in by requires and sorts through whether they are 'Abstract' or not,
       # adding their names to @prefs.
@@ -320,6 +312,7 @@ module Alexandria
         end
       end
       self.clear
+      rejig_providers_priority()
       priority = (@prefs.providers_priority or [])
       priority.map! { |x| x.strip }
       rest = providers.keys - priority
@@ -328,8 +321,22 @@ module Alexandria
       self.compact!
     end
 
+
+
     def self.method_missing(id, *args, &block)
       self.instance.method(id).call(*args, &block)
     end
+
+    private
+
+    def rejig_providers_priority
+      priority = (@prefs.providers_priority or [])
+      if ecs_index = priority.index("AmazonECS") 
+        priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
+        priority.uniq! # remove any other "Amazon" from the list
+        @prefs.providers_priority = priority
+      end
+    end
+
   end
 end
