@@ -1,5 +1,7 @@
+# -*- ruby -*-
+#
 # Copyright (C) 2007 kksou
-# Copyright (C) 2008 Cathal Mc Ginley
+# Copyright (C) 2008,2009 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -28,7 +30,12 @@
 require 'cgi'
 
 class IconViewTooltips
+
+  include Alexandria::Logging
+
   def initialize(view)
+    return unless workaround_safe_from_tooltip_crashes
+
     @tooltip_window = Gtk::Window.new(Gtk::Window::POPUP)
     @tooltip_window.name = 'gtk-tooltips'
     @tooltip_window.resizable = false
@@ -47,6 +54,46 @@ class IconViewTooltips
       @tooltip_window.add(@label)
       set_view(view)
   end
+
+  # Works around bug [#19042] 0.6.3 iconview_tooltips.rb on_motion
+  # crashes on x86_64 (ruby-gnome issue)
+  # http://rubyforge.org/tracker/?group_id=205&atid=863&func=detail&aid=19042
+  #
+  # The root cause is with versions of ruby-gtk2 < 0.17.0 on x86_64 platform,
+  # so this method will return false upon detecting this combination
+  # and iconview tooltips will be disabled
+  def workaround_safe_from_tooltip_crashes
+    begin
+      require 'rbconfig'
+      arch_is_x86_64 = Config::CONFIG['arch'] =~ /x86_64/i
+      ruby_gnome2_atleast017 = false
+      if Gtk::BINDING_VERSION and Gtk::BINDING_VERSION.instance_of? Array
+        major, minor, micro = Gtk::BINDING_VERSION
+        if (major == 0) and (minor >= 17)
+          ruby_gnome2_atleast017 = true
+        end
+      end
+
+      
+      log.debug { "arch_is_x86_64 #{arch_is_x86_64}" }
+      log.debug { "Gtk::BINDING_VERSION #{Gtk::BINDING_VERSION.join('.')}" }
+
+      if ((not arch_is_x86_64) or ruby_gnome2_atleast017)  
+        return true
+      else
+        log.warn { "Disabling iconview tooltips, " + 
+          "requires ruby-gtk2 0.17.0 at least on x86_64 architecture; " +
+          "found #{Gtk::BINDING_VERSION.join('.')} " +
+          "on #{Config::CONFIG['arch']}" }
+      end
+    rescue Exception => err
+      err_trace = err.message + "\n" + err.backtrace.join("\n> ")
+      log.warn { "Failed to check Gtk::BINDING_VERSION; #{err_trace}" }
+      
+    end
+    return false
+  end
+
 
   def set_view(view)
     view.signal_connect('motion_notify_event') { |view, event|
@@ -141,12 +188,14 @@ class IconViewTooltips
   end
 
   def hide_tooltip()
-    @tooltip_window.hide()
-    if @tooltip_timeout_id
-      Gtk.timeout_remove(@tooltip_timeout_id)
-      @tooltip_timeout_id = nil
+    unless @tooltip_window.nil?
+      @tooltip_window.hide()
+      if @tooltip_timeout_id
+        Gtk.timeout_remove(@tooltip_timeout_id)
+        @tooltip_timeout_id = nil
+      end
+      @latest_iter = nil
     end
-    @latest_iter = nil
   end
 
   def on_leave(view, event)
