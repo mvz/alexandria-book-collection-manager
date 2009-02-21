@@ -45,6 +45,9 @@ class IconViewTooltips
     @tooltip_window.signal_connect('expose_event') { |window, event|
       on_expose(window, event) }
 
+    @tooltip_window.signal_connect('leave_notify_event') { |view, event|
+      on_leave(view, event) }
+
       @label = Gtk::Label.new('')
       @label.wrap = true
       @label.set_alignment(0.5, 0.5)
