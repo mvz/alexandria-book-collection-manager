@@ -69,15 +69,17 @@ module Alexandria
       end
 
       def self.cover(library, book)
-        filename = library.cover(book)
-        if File.exists?(filename)
-          begin
+        begin
+          return BOOK_ICON if library.nil?
+          filename = library.cover(book)
+          if File.exists?(filename)
             return Gdk::Pixbuf.new(filename)
-          rescue Exception => err
-            # report load error; FIX should go to a Logger...
-            puts err.message
-            puts "Failed to load Gdk::Pixbuf, please ensure that from #{filename} is a valid image file"
           end
+        rescue Exception => err
+            # report load error; FIX should go to a Logger...
+          puts err.message
+          puts err.backtrace.join("\n> ")
+          puts "Failed to load Gdk::Pixbuf, please ensure that from #{filename} is a valid image file"
         end
         BOOK_ICON
       end
