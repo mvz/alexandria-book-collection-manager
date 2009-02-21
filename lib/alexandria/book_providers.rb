@@ -239,23 +239,37 @@ module Alexandria
     require 'alexandria/book_providers/ibs_it'
     require 'alexandria/book_providers/renaud'
     require 'alexandria/book_providers/adlibris'
-    require 'alexandria/book_providers/ls'
+    ## require 'alexandria/book_providers/ls' # obsolete, replaced by siciliano
     require 'alexandria/book_providers/bol_it'
     require 'alexandria/book_providers/webster_it'
     require 'alexandria/book_providers/worldcat'
 
     # mechanize is optional
     begin
+      begin
+        require 'mechanize'
+      rescue LoadError
+        require 'rubygems'
+        require 'mechanize'
+      end
       require 'alexandria/book_providers/dea_store_it'
     rescue LoadError
-      log.info { "Can't load mechanize, hence provider Deastore not available" }
+      log.warn { "Can't load mechanize, hence provider Deastore not available" }
     end
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     begin
+      begin
+        require 'hpricot'
+      rescue LoadError
+        require 'rubygems'
+        require 'hpricot'
+      end
       require 'alexandria/book_providers/amazon_aws'
+      require 'alexandria/book_providers/siciliano'
     rescue LoadError
-      log.info { "Can't load hpricot, hence provider Amazon not available" }
+      log.warn { "Can't load hpricot, hence provider Amazon not available" }
+      log.warn { "Can't load hpricot, hence provider Siciliano not available" }
     end
 
 
