@@ -56,7 +56,7 @@ module Alexandria
         setup_books_iconview_sorting
         on_books_selection_changed
         restore_preferences
-        log.info { "At the end of it all: #{@iconview.model.inspect}" }
+        log.debug { "UI Manager initialized: #{@iconview.model.inspect}" }
       end
 
       def create_uimanager
@@ -491,15 +491,20 @@ module Alexandria
           path = iter.path
           path = view.model.convert_path_to_child_path(path)
           path = @filtered_model.convert_path_to_child_path(path)
-          log.info { "Path for #{book.ident} is #{path}" }
+          log.debug { "Path for #{book.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
           selection.unselect_all
           selection.select_path(path)
         end
-        log.info { "select_a_book: listview" }
-        select_this_book.call(book, @listview)
-        log.info { "select_a_book: listview" }
-        select_this_book.call(book, @iconview)
+        begin
+          log.debug { "select_a_book: listview" }
+          select_this_book.call(book, @listview)
+          log.debug { "select_a_book: listview" }
+          select_this_book.call(book, @iconview)
+        rescue Exception => ex
+          trace = ex.backtrace.join("\n> ")
+          log.error { "Failed to automatically select book: #{ex.message} #{trace}" }
+        end
         # TODO: Figure out why this frequently selects the wrong book!
       end
 
@@ -545,6 +550,10 @@ module Alexandria
       #######
 
       def open_web_browser(url)
+        if url.nil?
+          log.warn("Attempt to open browser with nil url")
+          return
+        end
         unless (cmd = Preferences.instance.www_browser).nil?
           Thread.new { system(cmd % "\"" + url + "\"") }
         else
@@ -645,7 +654,7 @@ module Alexandria
                     begin
                       File.delete(filename)
                     rescue Exception => ex
-                      log.warn { "Could not delete empty file #{filename}" }
+                      log.error { "Could not delete empty file #{filename}" }
                     end
                   end
 
@@ -734,11 +743,10 @@ module Alexandria
           icon = icon.tag(Icons::FAVORITE_TAG)
         end
         iter[Columns::COVER_ICON] = icon
-        log.info { "Full iter: " + (0..15).collect {|num| iter[num].inspect }.join(", ") }
+        log.debug { "Full iter: " + (0..15).collect {|num| iter[num].inspect }.join(", ") }
       end
 
       def append_book(book, tail=nil)
-        log.debug { "append #{book.title}" }
         log.debug { @model.inspect }
         iter = @model.append
         log.debug { "iter == #{iter}" }
@@ -810,21 +818,28 @@ module Alexandria
         @appbar.children.first.visible = true   # show the progress bar
         @appbar.status = _("Loading '%s'...") % library.name
         total = library.length
-        n = 0
+        log.debug { "library #{library.name} length #{library.length}" }
+        n = 0       
+        
         Gtk.idle_add do
+
+          block_return = true
           book = library[n]
           if book
-            log.debug { "Running block at #{Time.now.strftime("%H:%M:%S")}" }
-            tail = append_book(book)
-            # convert to percents
+            begin
+              tail = append_book(book)
+            rescue Exception => ex
+              trace = ex.backtrace.join("\n > ")
+              log.error { "append_books failed #{ex.message} #{trace}" }
+            end
+              # convert to percents
             coeff = total / 100.0
             percent = n / coeff
             fraction = percent / 100
             log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
-            #puts "======================================================"
             @appbar.progress_percentage = fraction
             n+= 1
-            true
+              
           else
             @iconview.unfreeze
             @filtered_model.refilter
@@ -834,9 +849,11 @@ module Alexandria
             @appbar.children.first.visible = false
             # Refresh the status bar.
             on_books_selection_changed
-			@library_listview.set_sensitive(true)
-            false
+            @library_listview.set_sensitive(true)
+            block_return = false
           end
+          
+          block_return
         end
       end
 
@@ -1053,7 +1070,7 @@ module Alexandria
       # Gets the sort order of the current library, for use by export
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
-        log.info { "library_sort_order #{@notebook.page}: #{@iconview.model.inspect} #{@listview.model.inspect}" }
+        log.debug { "library_sort_order #{@notebook.page}: #{@iconview.model.inspect} #{@listview.model.inspect}" }
         sorted_on = current_view.model.sort_column_id
         if sorted_on
           sort_column = sorted_on[0]
@@ -1090,10 +1107,12 @@ module Alexandria
 
       def remove_library_iter
         old_iter = @library_listview.selection.selected
-        next_iter = @library_listview.selection.selected
-        next_iter.next!
+        # commenting out this code seems to fix #20681
+        # "crashes when switching to smart library mid-load"
+        #next_iter = @library_listview.selection.selected
+        #next_iter.next!
         @library_listview.model.remove(old_iter)
-        @library_listview.selection.select_iter(next_iter)
+        # @library_listview.selection.select_iter(next_iter)
       end
 
       def undoable_delete(library, books=nil)

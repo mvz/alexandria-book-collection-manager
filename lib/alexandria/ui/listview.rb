@@ -246,25 +246,25 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end
-        log.info { "Columns visibility: " + cols.collect {|col| "#{col.title} #{col.visible?.to_s}"}.join(", ") }
+        log.debug { "Columns visibility: " + cols.collect {|col| "#{col.title} #{col.visible?.to_s}"}.join(", ") }
       end
 
       # Sets the width of each column based on any respective
       # preference value stored.
       def setup_listview_columns_width
-        log.info { "setup_listview_columns_width #{@prefs.cols_width}" }
+        log.debug { "setup_listview_columns_width #{@prefs.cols_width}" }
         if @prefs.cols_width
           cols_width = YAML.load(@prefs.cols_width)
-          log.info { "cols_width: #{cols_width.inspect }" }
+          log.debug { "cols_width: #{cols_width.inspect }" }
           @listview.columns.each do |c|
             if cols_width.has_key?(c.title)
-              log.info { "#{c.title} : #{cols_width[c.title]}" }
+              log.debug { "#{c.title} : #{cols_width[c.title]}" }
               c.sizing = Gtk::TreeViewColumn::FIXED
               c.fixed_width = cols_width[c.title]
             end
           end
         end
-        log.info { "Columns width: " + @listview.columns.collect {|col| "#{col.title} #{col.width.to_s}"}.join(", ") }
+        log.debug { "Columns width: " + @listview.columns.collect {|col| "#{col.title} #{col.width.to_s}"}.join(", ") }
       end
     end
   end
