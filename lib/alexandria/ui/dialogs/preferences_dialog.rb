@@ -207,6 +207,7 @@ module Alexandria
     end
 
     class PreferencesDialog < GladeBase
+      include Alexandria::Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -216,19 +217,24 @@ module Alexandria
         @changed_block = changed_block
 
         @cols = {
-          @checkbutton_col_authors        => "col_authors_visible",
-          @checkbutton_col_isbn           => "col_isbn_visible",
-          @checkbutton_col_publisher      => "col_publisher_visible",
-          @checkbutton_col_publish_date   => "col_publish_date_visible",
-          @checkbutton_col_edition        => "col_edition_visible",
-          @checkbutton_col_redd                   => "col_redd_visible",
-          @checkbutton_col_own                    => "col_own_visible",
-          @checkbutton_col_want                   => "col_want_visible",
-          @checkbutton_col_rating         => "col_rating_visible",
+          @checkbutton_col_authors      => "col_authors_visible",
+          @checkbutton_col_isbn         => "col_isbn_visible",
+          @checkbutton_col_publisher    => "col_publisher_visible",
+          @checkbutton_col_publish_date => "col_publish_date_visible",
+          @checkbutton_col_edition      => "col_edition_visible",
+          @checkbutton_col_redd         => "col_redd_visible",
+          @checkbutton_col_own          => "col_own_visible",
+          @checkbutton_col_want         => "col_want_visible",
+          @checkbutton_col_rating       => "col_rating_visible",
           @checkbutton_col_tags         => "col_tags_visible"
         }
         @cols.each_pair do |checkbutton, pref_name|
-          checkbutton.active = Preferences.instance.send(pref_name)
+          if checkbutton
+            checkbutton.active = Preferences.instance.send(pref_name)
+          else
+            log.warn { "no CheckButton for property #{pref_name} " +
+              "(probably conflicting versions of GUI and lib code)" }
+          end
         end
 
         model = Gtk::ListStore.new(String, String)
