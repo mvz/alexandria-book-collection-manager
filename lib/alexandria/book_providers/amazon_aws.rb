@@ -124,7 +124,7 @@ module Alexandria
         products.each do |item|
           next unless item.get('itemattributes/productgroup') == 'Book'
           atts = item.search_and_convert('itemattributes')
-          title = atts.get('title').squeeze(' ')
+          title = normalize(atts.get('title'))
 
           # Work around Amazon US encoding bug. Amazon US apparently
           # interprets UTF-8 titles as ISO-8859 titles and then converts
@@ -136,10 +136,10 @@ module Alexandria
           #end
           # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!!
 
-          media = atts.get('binding').squeeze(' ')
+          media = normalize(atts.get('binding'))
           media = nil if media == 'Unknown Binding'
 
-          isbn = atts.get('isbn').squeeze(' ')
+          isbn = normalize(atts.get('isbn'))
           if Library.valid_isbn?(isbn)
             isbn = Library.canonicalise_ean(isbn)
           else
@@ -149,11 +149,9 @@ module Alexandria
           /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
           publishing_year = $1 ? $1.to_i : nil
           book = Book.new(title,
-                          (atts.get_array('author').map { |x| x.squeeze(' ') } \
-                         rescue [  ]),
+                          atts.get_array('author').map { |x| normalize(x) },
                           isbn,
-                          (atts.get('manufacturer').squeeze(' ') \
-                         rescue nil),
+                          normalize(atts.get('manufacturer')),
                           publishing_year,
                           media)
 
@@ -181,6 +179,14 @@ module Alexandria
               end
         url % Library.canonicalise_isbn(book.isbn)
       end
+
+      def normalize(str)
+        unless str.nil?
+          str = str.squeeze(' ').strip()
+        end
+        str
+      end
+
     end
   end
 end

@@ -16,6 +16,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'singleton'
+require 'alexandria/net'
 
 module Alexandria
   class BookProviders < Array
@@ -245,17 +246,17 @@ module Alexandria
     require 'alexandria/book_providers/worldcat'
 
     # mechanize is optional
-    begin
-      begin
-        require 'mechanize'
-      rescue LoadError
-        require 'rubygems'
-        require 'mechanize'
-      end
-      require 'alexandria/book_providers/dea_store_it'
-    rescue LoadError
-      log.warn { "Can't load mechanize, hence provider Deastore not available" }
-    end
+    #begin
+    #  begin
+    #    require 'mechanize'
+    #  rescue LoadError
+    #    require 'rubygems'
+    #    require 'mechanize'
+    #  end
+    #  require 'alexandria/book_providers/dea_store_it'
+    #rescue LoadError
+    #  log.warn { "Can't load mechanize, hence provider Deastore not available" }
+    #end
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     begin
@@ -266,6 +267,7 @@ module Alexandria
         require 'hpricot'
       end
       require 'alexandria/book_providers/amazon_aws'
+      require 'alexandria/book_providers/deastore'
       require 'alexandria/book_providers/siciliano'
     rescue LoadError
       log.warn { "Can't load hpricot, hence provider Amazon not available" }
@@ -348,6 +350,10 @@ module Alexandria
       if ecs_index = priority.index("AmazonECS") 
         priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
         priority.uniq! # remove any other "Amazon" from the list
+        @prefs.providers_priority = priority
+      end
+      if deastore_index = priority.index("DeaStore_it")
+        priority[deastore_index] = "DeaStore"
         @prefs.providers_priority = priority
       end
     end
