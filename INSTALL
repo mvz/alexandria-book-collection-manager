@@ -26,6 +26,14 @@ You should have GTK+ >= 2.8.0, and use Ruby-GNOME2 >= 0.16.0.
 <tt>ruby-gettext</tt>[http://ponx.s5.xrea.com/hiki/ruby-gettext.html]
 is required for the internationalisation of the user interface.
 
+=== Hpricot
+
+Alexandria uses +hpricot+[http://code.whytheluckystiff.net/hpricot] to
+parse the HTML from web pages for providers such as DeaStore and
+Siciliano. It is also used to parse the XML for the Amazon web
+service. You can install the +hpricot+ package natively or as a
+ruby gem.
+
 
 == Build Dependencies
 
@@ -51,13 +59,6 @@ available on all Debian-based systems through <tt>apt-get</tt>).
 
 == Optional Dependencies
 
-=== Ruby/Amazon
-
-For the <b>Amazon</b> book provider, you will need
-<tt>ruby-amazon</tt>[http://www.caliban.org/ruby/ruby-amazon.shtml],
-which provides a Ruby interface to Amazon Web Services (AWS) including
-book search.
-
 === Ruby/ZOOM and Yaz
 
 For Z39.50 support and and the <b>Library of Congress</b> and
@@ -72,17 +73,6 @@ ruby-zoom contained their own implementation of MARC.)
 The Z39.50 Object-Orientation Model (ZOOM) is an international
 standard for communication between computer systems, particularly
 libraries and information-related systems.
-
-=== Mechanize and Hpricot
-
-For the <b>Deastore</b> book provider, you will need
-+mechanize+[http://wwwsearch.sourceforge.net/mechanize], which in turn
-requires +hpricot+[http://code.whytheluckystiff.net/hpricot].
-
-Mechanize provides a Ruby package for stateful programmatic web
-browsing. It is used for "scraping" web sites, extracting data
-programatically from ordinary web pages. It uses Hpricot as its HTML
-parser.
 
 === image_size
 

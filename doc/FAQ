@@ -274,44 +274,6 @@ not with the books searched by ISBN.
 ########################################################################
 
 
-Question: I can't install mechanize. Where is provider Deastore
-
-Answer: For using the provider Deastore, mechanize is required.
-
-The following works for me with Ubuntu
-
-sudo apt-get -y install ruby1.8-dev make gcc libc6-dev rdoc ragel libopenssl-ruby
-
-wget http://rubyforge.org/frs/download.php/17190/rubygems-0.9.2.tgz
-tar xfz rubygems-0.9.2.tgz
-cd rubygems-0.9.2/
-sudo ruby setup.rb
-cd
-
-sudo gem install rake
-sudo gem install rake
-
-## either
-sudo gem install hpricot --source http://code.whytheluckystiff.net
-## or
-svn co https://code.whytheluckystiff.net/svn/hpricot/trunk hpricot
-cd hpricot
-rake
-sudo rake install
-sudo rake install
-cd
-## 
-
-wget http://rubyforge.org/frs/download.php/17883/mechanize-0.6.5.tgz
-tar xfz mechanize-0.6.5.tgz
-cd mechanize-0.6.5/
-sudo ruby setup.rb
-cd
-
-
-########################################################################
-
-
 Question: can I catalog other objects?
 
 Answer: Yes. Some kinds of object, such as illustrated calendars, or 
