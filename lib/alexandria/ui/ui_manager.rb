@@ -436,13 +436,14 @@ module Alexandria
 
           # Sensitize providers URL
           if books.length == 1
-            all_url = false
+            b = books.first
+            no_urls = true
             BookProviders.each do |provider|
-              has_url = books.first.isbn and (not books.first.isbn.strip.empty?) and provider.url(books.first) != nil
-              @actiongroup[provider.action_name].sensitive = has_url
-              all_url = true if has_url and !all_url
+              has_no_url = (b.isbn.nil? or b.isbn.strip.empty? or provider.url(b).nil?)
+              @actiongroup[provider.action_name].sensitive = (not has_no_url)
+              no_urls = false unless has_no_url
             end
-            unless all_url
+            if no_urls
               @actiongroup["OnlineInformation"].sensitive = false
             end
           end
