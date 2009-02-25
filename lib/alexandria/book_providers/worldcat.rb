@@ -1,5 +1,6 @@
-# Copyright (C) 2007 Marco Costantini
-# based on ibs_it.rb by Claudio Belotti
+# -*- ruby -*-
+#
+# Copyright (C) 2009 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -19,196 +20,177 @@
 # http://en.wikipedia.org/wiki/WorldCat
 # See http://www.oclc.org/worldcat/policies/terms/
 
-require 'fileutils'
-require 'net/http'
-require 'open-uri'
-#require 'cgi'
+# New WorldCat provider, taken from the Palatina MetaDataSource and
+# modified to fit the structure of Alexandria book providers.
+# (25 Feb 2009)
+
+require 'cgi'
+require 'alexandria/net'
 
 module Alexandria
   class BookProviders
-    class WorldcatProvider < GenericProvider
-      include Logging
-      BASE_URI = "http://worldcat.org"
-      CACHE_DIR = File.join(Alexandria::Library::DIR, '.worldcat_cache')
-      REFERER = BASE_URI
-      def initialize
-        super("Worldcat", "Worldcat")
-        FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)
-        # no preferences for the moment
-        at_exit { clean_cache }
+    class WorldCatProvider < GenericProvider
+      include Alexandria::Logging
+
+      SITE = "http://www.worldcat.org"
+      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
+
+      def initialize()
+        super("WorldCat", "WorldCat")
       end
 
       def search(criterion, type)
-        req = BASE_URI + "/"
-        req += case type
-               when SEARCH_BY_ISBN
-                 "isbn/"
+        puts create_search_uri(type, criterion)
+        req = create_search_uri(type, criterion)
+        html_data = transport.get_response(URI.parse(req))
+        # Note: I tried to use Alexandria::WWWAgent, 
+        #       but this caused failures here (empty pages...)
+        #       find out how the requests differ
 
-               when SEARCH_BY_TITLE
-                 "search?q=ti%3A"
-
-               when SEARCH_BY_AUTHORS
-                 "search?q=au%3A"
-
-               when SEARCH_BY_KEYWORD
-                 "search?q="
-
-               else
-                 raise InvalidSearchTypeError
-
-               end
-
-        req += CGI.escape(criterion)
-        p req if $DEBUG
-        data = transport.get(URI.parse(req))
+        puts html_data.class
         if type == SEARCH_BY_ISBN
-          isbn = Library.canonicalise_isbn(criterion)
-          begin
-            book_rslt = to_book(data, isbn) #rescue raise NoResultsError
-          rescue Exception => ex
-            puts "failed to_book #{ex}"
-            raise ex
-          end
-
-          book = book_rslt[0]
-
-          #require 'pp'    ##
-          #puts "WorldCat" ##
-          #pp book_rslt    ##
-
-          begin
-            if book.isbn.nil?
-              log.info { "Re-setting isbn on WorldCat book" }
-              ## this often happens because the html for a single book
-              ## lists multiple ISBNs, so we add the one we searched by here
-              ###isbn = Library.canonicalise_isbn(criterion)
-              ## This is amazing, we need to create a new book so that
-              ## the broken saved_ident value doesn't persist!
-              ## This domain model SO needs an overhaul...
-              new_book = Book.new(book.title, book.authors, isbn,
-                                  book.publisher, book.publishing_year,
-                                  book.edition)
-              book_rslt[0] = new_book
-            end
-            return book_rslt
-          rescue Exception => ex
-            puts ex
-          end
+          parse_result_data(html_data.body, criterion)
         else
-          begin
-            results = []
-            each_book_page(data) do |code, title|
-              results << to_book(transport.get(URI.parse(BASE_URI + "/oclc/" + code)))
-            end
-            return results
-          rescue
-            raise NoResultsError
-          end
+          results = parse_search_result_data(html_data.body)
+          raise NoResultsError if results.empty?
+
+          results.map {|result| get_book_from_search_result(result) }          
         end
+
       end
 
       def url(book)
-        BASE_URI + "/isbn/" + book.isbn
+        create_search_uri(SEARCH_BY_ISBN, book.isbn)
       end
 
-      #######
-      private
-      #######
 
-      def to_book(data, given_isbn=nil)
-        raise NoResultsError if /<br><p>The page you tried was not found\./.match(data) != nil
+      private 
 
-        raise unless md = /<h1 class="item-title"> ?(<div class=vernacular lang="[^"]+">)?([^<]+)/.match(data)
-        title = CGI.unescape(md[2].strip)
+      def create_search_uri(search_type, search_term)
+        search_type_code = {SEARCH_BY_ISBN => 'isbn:',
+          SEARCH_BY_AUTHORS => 'au:',
+          SEARCH_BY_TITLE => 'ti:',
+          SEARCH_BY_KEYWORD => ''
+        }[search_type] or ''
+        search_type_code = CGI.escape(search_type_code)
+        search_term_encoded = search_term # TODO, remove attack stuff
+        if search_type == SEARCH_BY_ISBN
+          search_term_encoded = Library.canonicalise_ean(search_term) # isbn-13
+        else
+          search_term_encoded = CGI.escape(search_term)
+        end
+        BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+      end
+
+      def get_book_from_search_result(result)
+        log.debug { "Fetching book from #{result[:url]}" }
+        html_data =  transport.get_response(URI.parse(result[:url]))
+        parse_result_data(html_data.body)
+      end
+
+
+
+      def parse_search_result_data(html)
+        doc = Hpricot(html)
+        book_search_results = []
+        begin
+          result_cells = doc/'td.result/div.name/..'
+          puts result_cells.length
+          result_cells.each do |td|
+            type_icon = (td%'div.type/img.icn')
+            next unless (type_icon and type_icon['src'] =~ /icon-bks/)
+            name_div = td%'div.name'
+            title = name_div.inner_text
+            anchor = name_div%:a
+            if anchor
+              url = anchor['href']
+            end
+            lookup_url = "#{SITE}#{url}"
+            result = {}
+            result[:title] = title
+            result[:url] = lookup_url
+
+            book_search_results << result
+          end
+        rescue Exception => ex
+          trace = ex.backtrace.join("\n> ")
+          log.warn {"Failed parsing search results for WorldCat " +
+            "#{ex.message} #{trace}" }
+        end
+        book_search_results  
+      end
+
+
+
+    def parse_result_data(html, search_isbn=nil)
+      doc = Hpricot(html)
+      
+      begin
+        if doc%'div#div-results-none'
+          log.debug { "WorldCat reports no results" }
+          raise NoResultsError
+        end
+
+        title_header = doc%'h1.item-title'
+        title = title_header.inner_text if title_header
+        unless title
+          log.warn { "Unexpected lack of title from WorldCat lookup" }
+          raise NoResultsError
+        end
+        log.info { "Found book #{title} at WorldCat" }
 
         authors = []
-        md = data.scan(/title="Search for more by this author">([^<]+)/)
-        #            raise "No authors" unless md.length > 0
-        md = md.collect {|match| match[0]}
-        md.each {|match|
-          CGI.unescape(match.strip)
-          authors << match
-        }
-        #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
+        authors_div = doc%'div.item-author'
+        if authors_div
+          (authors_div/:a).each do |a|
+            authors << a.inner_text
+          end
+        end
 
-        # FIXME: The provider returns the first ISBN found. When searching by
-        # ISBN, it should instead return the ISBN searched
-        # Example: http://worldcat.org/isbn/9780805335576
-
-        if md = /<strong>ISBN: <\/strong>\w+\W+(\d+)\D/.match(data)
-          isbn = md[1].strip
+        # can we do better? get the City name?? or multiple publishers?
+        publisher_row = doc%'td.label[text()*=Publisher]/..'
+        if publisher_row
+          publication_info = (publisher_row/'td').last.inner_text
+          publication_info =~ /:*([^;,]+)/
+          publisher = $1
+          publication_info =~ /([12][0-9]{3})/
+          year = $1.to_i if $1
         else
-          isbn = nil
+          publisher = nil
+          year = nil
         end
 
-        if isbn.nil? and not given_isbn.nil?
-          isbn = given_isbn
-        end
-        # The provider returns
-        # City : Publisher[ ; City2 : Publisher2], *year? [&copy;year]
-        # currently the match is not good in case of City2 : Publisher2 and in case of &copy;year
-
-        # FIXME: if the field 'Publisher' contains "| Other Editions ..." (as for 9788441000469), then this regexp doesn't match;
-        # if not (as for 9785941454136), it is OK.
-        begin
-          if md = /<td class="label">Publisher:<\/td><td>[^:<]+ : ([^<]+), [^,<]*(\d\d\d\d).?<\/td>/.match(data)
-            publisher = CGI.unescape(md[1].strip)
-            publish_year = CGI.unescape(md[2].strip)[-4 .. -1].to_i
-            publish_year = nil if publish_year == 0
+        isbn = search_isbn
+        unless isbn
+          isbn_row = doc%'td.label[text()*=ISBN]/..'
+          if isbn_row
+            isbns = (isbn_row/'td').last.inner_text.split
+            isbn = Library.canonicalise_isbn(isbns.first)
           else
-            publisher = nil
-            publish_year = nil
-          end
-        rescue Exception => ex
-          puts "failed to match publisher data #{ex}"
-        end
-
-        edition = nil ## urr... too hard to try just now (CathalMagus)
-
-
-        if md = /<div id="div-cover"><img src="([^"]+)/.match(data)
-          log.debug { "got image: #{md[1]}" }
-
-          begin
-            cover_url = BASE_URI + md[1].strip
-            cover_filename = isbn + ".tmp"
-            Dir.chdir(CACHE_DIR) do
-              File.open(cover_filename, "w") do |file|
-                file.write open(cover_url, "Referer" => REFERER ).read
-              end
-            end
-
-            medium_cover = CACHE_DIR + "/" + cover_filename
-            if File.size(medium_cover) > 0
-              puts medium_cover + " has non-0 size" if $DEBUG
-              return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
-            end
-            puts medium_cover + " has 0 size, removing ..." if $DEBUG
-            File.delete(medium_cover)
-          rescue Exception => ex
-            log.error { "Couldn't download image from WorldCat: #{ex}" }
+            log.warn { "No ISBN found on page" }            
           end
         end
 
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
-      end
+        binding = "" # not given on WorldCat website (as far as I can tell)
 
-      def each_book_page(data)
-        raise if data.scan(/<div class="name"><a href="\/oclc\/(\d+)&/) { |a| yield a}.empty?
-      end
+        book = Book.new(title, authors, isbn, publisher, year, binding)
 
-      def clean_cache
-        begin
-          Dir.chdir(CACHE_DIR) do
-            Dir.glob("*.tmp") do |file|
-              puts "removing " + file if $DEBUG
-              File.delete(file)
-            end
-          end
-        rescue Exception => ex
-          log.error { "Error cleaning WorldCat cache: #{ex}" }
-        end
+        image_url = nil # hm, it's on the website, but uses JavaScript...
+
+        return [book, image_url]
+        
+      rescue Exception => ex
+        raise ex if ex.instance_of? NoResultsError
+        trace = ex.backtrace.join("\n> ")
+        log.warn {"Failed parsing search results for WorldCat " +
+          "#{ex.message} #{trace}" }
+        raise NoResultsError
       end
+      
     end
-  end
-end
+
+
+    end # class WorldCatProvider
+  end # class BookProviders
+end # module Alexandria
+  

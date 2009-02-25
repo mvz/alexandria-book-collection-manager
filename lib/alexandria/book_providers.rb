@@ -260,7 +260,7 @@ module Alexandria
     ## require 'alexandria/book_providers/ls' # obsolete, replaced by siciliano
     require 'alexandria/book_providers/bol_it'
     require 'alexandria/book_providers/webster_it'
-    require 'alexandria/book_providers/worldcat'
+    #require 'alexandria/book_providers/worldcat' # new, now needs hpricot
 
     # mechanize is optional
     #begin
@@ -286,9 +286,12 @@ module Alexandria
       require 'alexandria/book_providers/amazon_aws'
       require 'alexandria/book_providers/deastore'
       require 'alexandria/book_providers/siciliano'
+      require 'alexandria/book_providers/worldcat'
     rescue LoadError
       log.warn { "Can't load hpricot, hence provider Amazon not available" }
+      log.warn { "Can't load hpricot, hence provider DeaStore not available" }
       log.warn { "Can't load hpricot, hence provider Siciliano not available" }
+      log.warn { "Can't load hpricot, hence provider WorldCat not available" }
     end
 
 
@@ -364,14 +367,23 @@ module Alexandria
 
     def rejig_providers_priority
       priority = (@prefs.providers_priority or [])
-      if ecs_index = priority.index("AmazonECS") 
-        priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
-        priority.uniq! # remove any other "Amazon" from the list
-        @prefs.providers_priority = priority
-      end
-      if deastore_index = priority.index("DeaStore_it")
-        priority[deastore_index] = "DeaStore"
-        @prefs.providers_priority = priority
+      unless priority.empty?
+        changed = false
+
+        if ecs_index = priority.index("AmazonECS") 
+          priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
+          priority.uniq! # remove any other "Amazon" from the list
+          changed = true
+        end
+        if deastore_index = priority.index("DeaStore_it")
+          priority[deastore_index] = "DeaStore"
+          changed = true
+        end
+        if worldcat_index = priority.index("Worldcat")
+          priority[worldcat_index] = "WorldCat"
+          changed = true
+        end
+        @prefs.providers_priority = priority if changed
       end
     end
 
