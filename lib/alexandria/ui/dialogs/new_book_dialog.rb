@@ -125,14 +125,20 @@ module Alexandria
       end
 
       def on_criterion_toggled(item)
+
+        # strange effect here, when item is first toggled to "Search"
+        # I have to click the dialog titlebar to focus the entry_search field...
+
         log.debug { "on_criterion_toggled" }
         return unless item.active?
         if is_isbn = item == @isbn_radiobutton
           @latest_size = @new_book_dialog.size
           @new_book_dialog.resizable = false
+          # @entry_isbn.grab_focus
         else
           @new_book_dialog.resizable = true
           @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
+          # @entry_search.grab_focus
         end
         @entry_isbn.sensitive = is_isbn
         @combo_search.sensitive = !is_isbn
@@ -234,15 +240,15 @@ module Alexandria
                  BookProviders::SEARCH_BY_KEYWORD
                end
 
-        @progressbar.show 
-        progress_pulsing = Gtk.timeout_add(100) do
-          unless @destroyed
-            @progressbar.pulse
-            true
-          else
-            false
-          end
-        end
+        # @progressbar.show 
+        #progress_pulsing = Gtk.timeout_add(100) do
+        #  unless @destroyed
+        #    @progressbar.pulse
+        #    true
+        #  else
+        #    false
+        #  end
+        #end
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
@@ -255,13 +261,19 @@ module Alexandria
         @find_thread.kill if @find_thread
         @image_thread.kill if @image_thread
 
+        notify_start_add_by_isbn
         @find_thread = Thread.new do
           log.info { "New @find_thread #{Thread.current}" }
           begin
+            Alexandria::BookProviders.instance.add_observer(self)
             @results = Alexandria::BookProviders.search(criterion, mode)
+            
             log.info { "got #{@results.length} results" }
           rescue => e
             @find_error = e.message
+          ensure
+            Alexandria::BookProviders.instance.delete_observer(self)
+            #   notify_end_add_by_isbn
           end
         end
 
@@ -313,8 +325,9 @@ module Alexandria
           unless continue
             unless @find_thread.alive? #This happens after find_thread is done
               unless @destroyed
-                Gtk.timeout_remove(progress_pulsing)
-                @progressbar.hide
+                # Gtk.timeout_remove(progress_pulsing)
+                # @progressbar.hide
+                notify_end_add_by_isbn
                 @button_add.sensitive = false
               end
             end
@@ -386,7 +399,6 @@ module Alexandria
             @button_add.sensitive = true
             notify_end_add_by_isbn
           ensure
-            puts "deleting observer..."
             Alexandria::BookProviders.instance.delete_observer(self)
           end          
         end
@@ -580,36 +592,3 @@ module Alexandria
   end
 end
 
-require 'observer'
-
-class FakeBookProviders
-
-  include Observable
-
-  def isbn_search(isbn)
-    ["Amazon", "Siciliano", "Waterstones"].each do |provider|
-      puts "#{provider} ..."
-      changed
-      notify_observers(:searching, provider)
-      Thread.new {sleep(1)}.join
-      changed
-      if provider == "Siciliano"
-        notify_observers(:error, provider)
-      else
-        notify_observers(:not_found, provider)
-      end
-      Thread.new {sleep(0.5)}.join
-    end
-    changed
-    notify_observers(:searching, "Palatina")
-    Thread.new {sleep(1.5)}.join
-    book = Alexandria::Book.new("Tito the Title",
-                                ["Anne Author", "A.N. Other"], 
-                                isbn, "Publication Press", 
-                                2009, "Paperback")
-    changed
-    notify_observers(:found, "Palatina")
-    return book    
-  end
-
-end
