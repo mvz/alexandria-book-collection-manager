@@ -19,21 +19,39 @@ module Alexandria
         x and x.name != @parent.selected_library.name
       end
 
-      def contains_illegal_character new_text
-        /(\/)/.match(new_text) 
-        # only forbid / character (since Library names become dir names)
+      # if new_text is invalid utf-8, returns true
+      # if new_text contains disallowed char (/), returns a MatchData object
+      # otherwise returns nil
+      def contains_illegal_character(new_text)
+        begin
+          new_text.unpack("U*") # attempt to unpack as UTF-8 characters
+          match = /(\/)/.match(new_text)
+          # only forbid / character (since Library names become dir names)
+          return match
+        rescue Exception => ex
+          log.warn { "New library name not valid UTF-8: #{ex.message}" }
+          return true
+        end
         # /([^\w\s'"()&?!:;.\-])/.match(new_text) # anglocentric!
       end
 
       def on_edited_library cell, path_string, new_text
-        log.debug { "edited" }
+        log.debug { "edited library name #{new_text}" }
+        ## new_text = new_text.reverse # for testing; 
+                                       # a great way to generate broken UTF-8
         if cell.text != new_text
           if match = contains_illegal_character(new_text)
-            log.debug { "Illegal character" }
-            puts match
-            ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
-              _("The name provided contains the " + "illegal character '<i>%s</i>'.") %
-            match[1].gsub(/&/, "&amp;"))
+            if match.instance_of? MatchData
+              chars = match[1].gsub(/&/, "&amp;")
+              ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
+                              _("The name provided contains the " +
+                                "disallowed character <b>%s</b> ") % chars)
+            else
+              ErrorDialog.new(@main_app, _("Invalid library name"),
+                              _("The name provided contains " + 
+                                "invalid characters."))
+            end
+
           elsif new_text.strip.empty?
             log.debug { "Empty text" }
             ErrorDialog.new(@main_app, _("The library name " +
