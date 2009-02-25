@@ -16,12 +16,14 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'singleton'
+require 'observer'
 require 'alexandria/net'
 
 module Alexandria
   class BookProviders < Array
     include Logging
     include Singleton
+    include Observable
     include GetText
     GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -35,18 +37,33 @@ module Alexandria
 
     def self.search(criterion, type)
       factory_n = 0
+      puts "book_providers search #{self.instance.count_observers}"
+
       begin
         factory = self.instance[factory_n]
         puts factory.fullname + " lookup" if $DEBUG
+        self.instance.changed
+        self.instance.notify_observers(:searching, factory.fullname) # new
         results = factory.search(criterion, type)
 
         if results.length == 0
+          self.instance.changed
+          self.instance.notify_observers(:not_found, factory.fullname) # new
           raise NoResultsError
         else
           log.info { "found at " + factory.fullname }
+          self.instance.changed
+          self.instance.notify_observers(:found, factory.fullname) # new
           return results
         end
       rescue Exception => boom
+        unless boom.instance_of? NoResultsError
+          self.instance.changed
+          self.instance.notify_observers(:error, factory.fullname) # new
+          Thread.new {sleep(0.5)}.join # hrmmmm, to make readable...
+          trace = boom.backtrace.join("\n> ")
+          log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
+        end
         if self.last == factory
           puts "Error while searching #{criterion}"
           raise case boom

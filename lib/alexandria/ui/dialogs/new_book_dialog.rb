@@ -324,7 +324,7 @@ module Alexandria
         end
       end
 
-      def decode_cuecat?(entry)
+      def decode_cuecat?(entry) # srsly? 
         if entry.text=~/^\..*?\..*?\.(.*?)\.$/
           tmp = $1.tr('a-zA-Z0-9+-', ' -_')
           tmp = ((32 + tmp.length * 3/4).to_i.chr << tmp).unpack('u')[0]
@@ -345,6 +345,115 @@ module Alexandria
         end
       end
 
+      def add_single_book_by_isbn(library, is_new)
+        # Perform the ISBN search via the providers.
+        isbn = begin
+                 Library.canonicalise_isbn(@entry_isbn.text)
+               rescue
+                 raise _("Couldn't validate the EAN/ISBN you " +
+                         "provided.  Make sure it is written " +
+                         "correctly, and try again.")
+               end
+        assert_not_exist(library, @entry_isbn.text)        
+        @button_add.sensitive = false  
+        notify_start_add_by_isbn
+        @find_thread = Thread.new do
+          log.info { "New @find_thread #{Thread.current}" }
+          begin
+            # MAJOR HACK, add this again...
+            Alexandria::BookProviders.instance.add_observer(self)
+            book, cover_url = Alexandria::BookProviders.isbn_search(isbn)
+            # prov = FakeBookProviders.new()
+            # prov.add_observer(self)
+            # book, cover_url = prov.isbn_search(isbn)
+
+            notify_end_add_by_isbn
+
+            if book
+
+              puts "adding book #{book} to library"
+              add_book_to_library(library, book, cover_url)
+              @entry_isbn.text = ''
+              
+              post_addition([book], library, is_new)
+            else
+              post_addition([], library, is_new)
+            end
+          rescue => e
+            puts e.message
+            puts e.backtrace.join("\n> ")
+            @find_error = e.message
+            @button_add.sensitive = true
+            notify_end_add_by_isbn
+          ensure
+            puts "deleting observer..."
+            Alexandria::BookProviders.instance.delete_observer(self)
+          end          
+        end
+      end
+
+      def add_selected_books(library, is_new)
+        books_to_add = []
+        @treeview_results.selection.selected_each do |model, path,
+          iter|
+          @results.each do |book, cover|
+            next unless book.ident == iter[1]
+            begin
+              next unless
+                assert_not_exist(library, book.isbn)
+              rescue Alexandria::Library::InvalidISBNError
+              next unless
+                KeepBadISBNDialog.new(@parent, book).keep?
+              book.isbn = book.saved_ident = nil
+            rescue Alexandria::Library::NoISBNError
+              book.isbn = book.saved_ident = nil
+              books_to_add << [book, cover]
+              next
+            end
+            books_to_add << [book, cover]
+          end
+
+        end
+        books_to_add.each do |book, cover_uri|
+          add_book_to_library(library, book, cover_uri)
+        end
+        return books_to_add.map {|x| x.first } # array of Books only
+      end
+
+      def add_book_to_library(library, book, cover_uri)
+        unless cover_uri.nil?
+          library.save_cover(book, cover_uri)
+        end
+        library << book
+        library.save(book)
+      end
+
+      def post_addition(books, library, is_new_library)
+        puts "post_addition #{books.size}" 
+        return if books.empty?
+        if @keep_open.active?
+          # TODO reset and clear fields
+          if @@last_criterion_was_not_isbn
+            @entry_search.select_region(0, -1) # select all, ready to delete
+            @treeview_results.model.clear
+            @entry_search.grab_focus
+          else
+            @button_add.sensitive = true #
+            @entry_isbn.text = '' # blank ISBN field
+            @entry_isbn.grab_focus
+          end
+          
+        else
+          # Now we can destroy the dialog and go back to the main
+          # application.
+          @new_book_dialog.destroy
+        end
+        
+        # books, a 1d array of Alexandria::Book
+        @block.call(books, library, is_new_library)
+
+      end
+
       def on_add
         return unless @button_add.sensitive?
         @find_thread.kill if @find_thread
@@ -352,84 +461,66 @@ module Alexandria
 
         begin
           libraries = Libraries.instance.all_libraries
-          library, new_library =
+          library, is_new_library =
             @combo_libraries.selection_from_libraries(libraries)
-          books_to_add = []
+
+          book_was_added = false
+
           if @isbn_radiobutton.active?
-            # Perform the ISBN search via the providers.
-            isbn = begin
-                     Library.canonicalise_isbn(@entry_isbn.text)
-                   rescue
-                     raise _("Couldn't validate the EAN/ISBN you " +
-                             "provided.  Make sure it is written " +
-                             "correctly, and try again.")
-                   end
-            assert_not_exist(library, @entry_isbn.text)
-            books_to_add << Alexandria::BookProviders.isbn_search(isbn)
+            add_single_book_by_isbn(library, is_new_library)
           else
-            @treeview_results.selection.selected_each do |model, path,
-              iter|
-            @results.each do |book, cover|
-              next unless book.ident == iter[1]
-              begin
-                next unless
-                assert_not_exist(library, book.isbn)
-              rescue Alexandria::Library::InvalidISBNError
-                next unless
-                KeepBadISBNDialog.new(@parent, book).keep?
-                book.isbn = book.saved_ident = nil
-              rescue Alexandria::Library::NoISBNError
-                book.isbn = book.saved_ident = nil
-                books_to_add << [book, cover]
-                next
-              end
-              books_to_add << [book, cover]
-
-            end
-            end
-          end
-
-          # Save the books in the library.
-          books_to_add.each do |book, cover_uri|
-            unless cover_uri.nil?
-              library.save_cover(book, cover_uri)
-            end
-            library << book
-            library.save(book)
+            books = add_selected_books(library, is_new_library)
+            post_addition(books, library, is_new_library)
           end
 
           # Do not destroy if there is no addition.
-          return if books_to_add.empty?
+          #          return unless book_was_added
 
-          if @keep_open.active?
-            # TODO reset and clear fields
-            if @@last_criterion_was_not_isbn
-              @entry_search.select_region(0, -1) # select all, ready to delete
-              @treeview_results.model.clear
-              @entry_search.grab_focus
-            else
-              @entry_isbn.text = '' # blank ISBN field
-              @entry_isbn.grab_focus
-            end
-
-          else
-            # Now we can destroy the dialog and go back to the main
-            # application.
-            @new_book_dialog.destroy
-          end
-          @block.call(books_to_add.map { |x| x.first },
-                      library,
-                      new_library)
+          
         rescue => e
           ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
         end
-        books_to_add
+        #books_to_add
       end
 
       def on_cancel
         @find_thread.kill if @find_thread
         @image_thread.kill if @image_thread
         @new_book_dialog.destroy
+      end
+
+      def notify_start_add_by_isbn
+        main_progress_bar = MainApp.instance.appbar.children.first
+        main_progress_bar.visible = true
+        @progress_pulsing = Gtk.timeout_add(100) do
+          unless @destroyed
+            main_progress_bar.pulse
+            true
+          else
+            false
+          end
+        end
+      end
+
+      def notify_end_add_by_isbn
+        MainApp.instance.appbar.children.first.visible = false
+        Gtk::timeout_remove(@progress_pulsing)
+      end
+
+      def update(status, provider)
+        Gtk.idle_add do
+          messages = {
+            :searching => _("Searching Provider '%s'..."),
+            :error => _("Error while Searching Provider '%s'"),
+            :not_found => _("Not Found at Provider '%s'"),
+            :found => _("Found at Provider '%s'")
+          }
+          message = messages[status] % provider
+          log.debug { "update message : #{message}" }
+          # @parent.appbar.status = message
+          MainApp.instance.appbar.status = message # HACKish
+          false
+        end
       end
 
       def on_focus
@@ -487,4 +578,38 @@ module Alexandria
       end
     end
   end
+end
+
+require 'observer'
+
+class FakeBookProviders
+
+  include Observable
+
+  def isbn_search(isbn)
+    ["Amazon", "Siciliano", "Waterstones"].each do |provider|
+      puts "#{provider} ..."
+      changed
+      notify_observers(:searching, provider)
+      Thread.new {sleep(1)}.join
+      changed
+      if provider == "Siciliano"
+        notify_observers(:error, provider)
+      else
+        notify_observers(:not_found, provider)
+      end
+      Thread.new {sleep(0.5)}.join
+    end
+    changed
+    notify_observers(:searching, "Palatina")
+    Thread.new {sleep(1.5)}.join
+    book = Alexandria::Book.new("Tito the Title",
+                                ["Anne Author", "A.N. Other"], 
+                                isbn, "Publication Press", 
+                                2009, "Paperback")
+    changed
+    notify_observers(:found, "Palatina")
+    return book    
+  end
+
 end
