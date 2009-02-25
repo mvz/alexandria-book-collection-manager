@@ -20,7 +20,9 @@ module Alexandria
       end
 
       def contains_illegal_character new_text
-        /([^\w\s'"()&?!:;.\-])/.match(new_text)
+        /(\/)/.match(new_text) 
+        # only forbid / character (since Library names become dir names)
+        # /([^\w\s'"()&?!:;.\-])/.match(new_text) # anglocentric!
       end
 
       def on_edited_library cell, path_string, new_text
@@ -28,6 +30,7 @@ module Alexandria
         if cell.text != new_text
           if match = contains_illegal_character(new_text)
             log.debug { "Illegal character" }
+            puts match
             ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
               _("The name provided contains the " + "illegal character '<i>%s</i>'.") %
             match[1].gsub(/&/, "&amp;"))
