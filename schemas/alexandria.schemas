@@ -267,7 +267,8 @@
       <owner>alexandria</owner>
       <type>list</type>
       <list_type>string</list_type>
-      <default>[AmazonECS, Amazon, Webster_it, Proxis, Thalia, IBS_it, BN, MCU]</default>
+      <default>[Amazon, Proxis, AdLibris, DeaStore, Siciliano, WorldCat]</default>
+      <!-- BROKEN [Webster_it, Thalia, IBS_it, BN, MCU] -->
       <locale name="C">
         <short>Providers priority</short>
         <long>A list of provider names sorted by priority.  They will be queried in that order.</long>
