@@ -256,7 +256,7 @@ module Alexandria
         @buttonbox_prov.set_child_secondary(@button_prov_remove, true)
 
         if BookProviders::abstract_classes.empty?
-          @checkbutton_prov_advanced.visible = false
+          @checkbutton_prov_advanced.sensitive = false
         end
         sensitize_providers
       end
