@@ -214,6 +214,11 @@ module Alexandria
           image_url = nil
           if cover_img = product_table%'img[@id$="ProductImageNotLinked"'
             image_url = cover_img['src'] # already absolute
+            if image_url =~ /noimage.gif$/
+              # no point downloading a "no image" graphic
+              # Alexandria has its own generic book icon...
+              image_url = nil
+            end
             #puts image_url
           end
           
