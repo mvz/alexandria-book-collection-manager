@@ -20,13 +20,16 @@ module Alexandria
       end
 
       # if new_text is invalid utf-8, returns true
-      # if new_text contains disallowed char (/), returns a MatchData object
+      # if new_text contains disallowed char (/ or initial .), returns a MatchData object
       # otherwise returns nil
       def contains_illegal_character(new_text)
         begin
           new_text.unpack("U*") # attempt to unpack as UTF-8 characters
-          match = /(\/)/.match(new_text)
-          # only forbid / character (since Library names become dir names)
+          match = /(^\.|\/)/.match(new_text)
+          # forbid / character (since Library names become dir names)
+          # also no initial . since that hides the Library (hidden file)
+          #      forbidding an initial dot also disallows "." and ".."
+          #      which are of course pre-existing directories.
           return match
         rescue Exception => ex
           log.warn { "New library name not valid UTF-8: #{ex.message}" }
