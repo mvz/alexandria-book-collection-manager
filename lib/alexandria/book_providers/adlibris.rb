@@ -69,7 +69,12 @@ module Alexandria
 
       ## url
       def url(book)
-        create_search_uri(SEARCH_BY_ISBN, book.isbn)
+        begin
+          create_search_uri(SEARCH_BY_ISBN, book.isbn)
+        rescue Exception => ex
+          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+          nil
+        end
       end
 
       private 

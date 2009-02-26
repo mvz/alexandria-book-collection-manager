@@ -439,7 +439,12 @@ module Alexandria
             b = books.first
             no_urls = true
             BookProviders.each do |provider|
-              has_no_url = (b.isbn.nil? or b.isbn.strip.empty? or provider.url(b).nil?)
+              has_no_url = true
+              begin
+                has_no_url = (b.isbn.nil? or b.isbn.strip.empty? or provider.url(b).nil?)
+              rescue Exception => ex
+                log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
+              end
               @actiongroup[provider.action_name].sensitive = (not has_no_url)
               no_urls = false unless has_no_url
             end

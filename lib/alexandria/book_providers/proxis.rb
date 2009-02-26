@@ -22,6 +22,7 @@ module Alexandria
   class BookProviders
     class ProxisProvider < GenericProvider
       include GetText
+      include Logging
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
       LANGUAGES = {
@@ -77,7 +78,12 @@ module Alexandria
       end
 
       def url(book)
-        "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + Library.canonicalise_isbn(book.isbn) + "&p_item=1"
+        begin
+          "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + Library.canonicalise_isbn(book.isbn) + "&p_item=1"
+        rescue Exception => ex
+          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+          nil
+        end 
       end
 
       #######

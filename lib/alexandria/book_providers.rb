@@ -250,16 +250,31 @@ module Alexandria
       unabstract
     end
 
-    require 'alexandria/book_providers/bn'
+    #require 'alexandria/book_providers/bn'
+    log.info { "Not loading Barnes and Noble (provider not functional)" }
+
     require 'alexandria/book_providers/proxis'
-    require 'alexandria/book_providers/mcu'
-    require 'alexandria/book_providers/thalia'
-    require 'alexandria/book_providers/ibs_it'
-    require 'alexandria/book_providers/renaud'
+
+    require 'alexandria/book_providers/mcu' #?
+
+    #require 'alexandria/book_providers/thalia'
+    log.info { "Not loading Thalia (provider not functional)" }
+
+    #require 'alexandria/book_providers/ibs_it'
+    log.info { "Not loading IBS (provider not functional)" }
+
+    #require 'alexandria/book_providers/renaud'
+    log.info { "Not loading Renaud (provider not functional)" }
+
+
     #require 'alexandria/book_providers/adlibris' # new, now needs other deps
     ## require 'alexandria/book_providers/ls' # obsolete, replaced by siciliano
-    require 'alexandria/book_providers/bol_it'
-    require 'alexandria/book_providers/webster_it'
+    #require 'alexandria/book_providers/bol_it'
+    log.info { "Not loading BOL (provider not functional)" }
+
+    #require 'alexandria/book_providers/webster_it'
+    log.info { "Not loading Webster (provider not functional)" }
+
     #require 'alexandria/book_providers/worldcat' # new, now needs hpricot
 
     # mechanize is optional

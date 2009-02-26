@@ -77,7 +77,13 @@ module Alexandria
       end
 
       def url(book)
-        "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=" + book.isbn + "&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+        begin
+          isbn = Library.canonicalise_isbn(book.isbn)
+          "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=#{isbn}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+        rescue Exception => ex
+          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+          nil
+        end
       end
 
       #######
