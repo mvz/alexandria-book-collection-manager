@@ -140,7 +140,7 @@ module Alexandria
           media = nil if media == 'Unknown Binding'
 
           isbn = normalize(atts.get('isbn'))
-          if Library.valid_isbn?(isbn)
+          if isbn and Library.valid_isbn?(isbn)
             isbn = Library.canonicalise_ean(isbn)
           else
             isbn = nil # it may be an ASIN which is not an ISBN

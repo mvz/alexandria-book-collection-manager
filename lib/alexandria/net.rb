@@ -29,7 +29,10 @@ module Alexandria
     def language=(lang)
       @extra_request_headers["Accept-Language"] = lang.to_s
     end
-    
+
+    def user_agent=(agent_string)      
+      @extra_request_headers = {"User-Agent", agent_string}
+    end
   end
   
 end

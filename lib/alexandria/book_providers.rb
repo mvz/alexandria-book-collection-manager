@@ -37,7 +37,7 @@ module Alexandria
 
     def self.search(criterion, type)
       factory_n = 0
-      puts "book_providers search #{self.instance.count_observers}"
+      #puts "book_providers search #{self.instance.count_observers}"
 
       begin
         factory = self.instance[factory_n]
@@ -65,7 +65,7 @@ module Alexandria
           log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
         end
         if self.last == factory
-          puts "Error while searching #{criterion}"
+          log.warn { "Error while searching #{criterion}" }
           raise case boom
                 when Timeout::Error
                   _("Couldn't reach the provider '%s': timeout " +
@@ -256,7 +256,7 @@ module Alexandria
     require 'alexandria/book_providers/thalia'
     require 'alexandria/book_providers/ibs_it'
     require 'alexandria/book_providers/renaud'
-    require 'alexandria/book_providers/adlibris'
+    #require 'alexandria/book_providers/adlibris' # new, now needs other deps
     ## require 'alexandria/book_providers/ls' # obsolete, replaced by siciliano
     require 'alexandria/book_providers/bol_it'
     require 'alexandria/book_providers/webster_it'
@@ -292,6 +292,21 @@ module Alexandria
       log.warn { "Can't load hpricot, hence provider DeaStore not available" }
       log.warn { "Can't load hpricot, hence provider Siciliano not available" }
       log.warn { "Can't load hpricot, hence provider WorldCat not available" }
+    end
+
+    # AdLibris (needs htmlentities and hpricot)
+    begin
+      begin
+        require 'htmlentities'
+        require 'hpricot'
+      rescue LoadError
+        require 'rubygems'
+        require 'htmlentities'
+        require 'hpricot'
+      end
+      require 'alexandria/book_providers/adlibris'
+    rescue LoadError
+      log.warn { "Can't load hpricot and hpricot, hence provider AdLibris not available" }
     end
 
 
@@ -381,6 +396,10 @@ module Alexandria
         end
         if worldcat_index = priority.index("Worldcat")
           priority[worldcat_index] = "WorldCat"
+          changed = true
+        end
+        if adlibris_index = priority.index("Adlibris")
+          priority[adlibris_index] = "AdLibris"
           changed = true
         end
         @prefs.providers_priority = priority if changed
