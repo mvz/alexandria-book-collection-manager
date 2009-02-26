@@ -25,6 +25,7 @@
 require 'net/http'
 require 'cgi'
 require 'hpricot'
+require 'iconv'
 
 module Alexandria
   class BookProviders
@@ -44,7 +45,7 @@ module Alexandria
       end
 
       def get_book_from_search_result(result)
-        log.debug { "Fetching book from #{result[:url]}" }
+        log.info { "Fetching book from #{result[:url]}" }
         html_data = transport.get(URI.parse(result[:url]))
         parse_result_data(html_data, result)
       end
@@ -122,6 +123,7 @@ module Alexandria
       #   br
       #   div[@class="vitrine_preco_por"] (price info)
 
+      html = Iconv.conv("UTF-8", "ISO-8859-1", html)
       doc = Hpricot(html)
       book_search_results = []
       # each result will be a dict with keys :title, :author, :publisher, :url
@@ -165,11 +167,16 @@ module Alexandria
 
       begin
 
-        html = html.convert('UTF-8', 'ISO-8859-1')
+        ## html = html.convert('UTF-8', 'ISO-8859-1')
+        html = Iconv.conv("UTF-8", "ISO-8859-1", html)
+
+        ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
+
         doc = Hpricot(html)
 
         # title
         title_td = doc%'td.produto_miolo'
+        raise NoResultsError unless title_td
         title = first_non_empty_text_node(title_td)
 
         author_spans = doc/'span.rotulo'

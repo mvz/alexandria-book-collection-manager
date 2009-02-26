@@ -50,6 +50,7 @@ module Alexandria
       def search(criterion, type)
         #puts create_search_uri(type, criterion)
         req = create_search_uri(type, criterion)
+        log.info { "Fetching #{req} " }
         html_data = transport.get_response(URI.parse(req))
 
         #puts html_data.class
@@ -154,7 +155,7 @@ module Alexandria
       def parse_result_data(html)
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
         html = Iconv.conv("UTF-8", "ISO-8859-1", html)
-        File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
+        ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
         doc = Hpricot(html)     
         product_table = doc%'table[@id$="ProductTable"]'
         raise NoResultsError unless product_table
