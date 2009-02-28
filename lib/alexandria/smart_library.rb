@@ -249,7 +249,14 @@ module Alexandria
     end
 
     def delete
-      raise if @@deleted_libraries.include?(self)
+      if @@deleted_libraries.include?(self)
+        puts "Already deleted a SmartLibrary with this name"
+        puts "(this might mess up undeletes...)"
+        FileUtils.rm_rf(self.yaml)
+        # so we just delete the old smart library, and 
+        # 'pending' delete the new one of the same name...
+        # urrr... yeah, that'll work!
+      end
       @@deleted_libraries << self
     end
 
