@@ -65,7 +65,7 @@ module Alexandria
         end
         @entry_edition.text = book.edition
         if book.tags
-          @entry_tags.text = book.tags.join(" ")
+          @entry_tags.text = book.tags.join(",") # tags are comma-separated
         end
 
         book.authors.each do |author|
@@ -148,7 +148,7 @@ module Alexandria
 	end
         @book.own = @checkbutton_own.active?
         @book.want = @checkbutton_want.active?
-        @book.tags = @entry_tags.text.split
+        @book.tags = @entry_tags.text.split(',') # tags are comma separated
         @library.save(@book)
         #@on_close_cb.call(@book)
         @book_properties_dialog.destroy
