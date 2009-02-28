@@ -357,7 +357,10 @@ module Alexandria
         code = "978" + code[0..8]
         return code + String( self.ean_checksum( self.extract_numbers( code ) ) )
       elsif self.valid_upc?(code)
-        raise "fix function Alexandria::Library.canonicalise_ean"
+        isbn10 =  self.canonicalise_isbn
+        code = "978" + isbn10[0..8]
+        return code + String( self.ean_checksum( self.extract_numbers( code ) ) )
+        ## raise "fix function Alexandria::Library.canonicalise_ean"
       else
         raise InvalidISBNError.new(code)
       end

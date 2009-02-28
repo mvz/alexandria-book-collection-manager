@@ -201,17 +201,54 @@ module Alexandria
         setup_scanner_area
         init_treeview
         @book_results = Hash.new
+        @search_threads_count = 0
+        
+      end
+
+      def book_in_library(isbn10, library)
+        begin
+          isbn13 = Library.canonicalise_ean(isbn10)
+          puts "new book #{isbn10} (or #{isbn13})"
+          match = library.find do |book|
+            puts "testing #{book.isbn}"
+            (book.isbn == isbn10 || book.isbn == isbn13)
+            #puts "book #{book.isbn}"
+            #book == new_book 
+          end
+          puts "book_in_library match #{match.inspect}"
+          (not match.nil?)
+        rescue Exception => ex
+          log.warn { "Failed to check for book #{isbn10} in library #{library}" }
+          true
+        end
       end
 
       def on_add
         model = @barcodes_treeview.model
+
+        libraries = Libraries.instance.all_libraries
+        library, is_new_library =
+          @combo_libraries.selection_from_libraries(libraries)
+
+        # NOTE at this stage, the ISBN is 10-digit...
+        #
+
         selection = @barcodes_treeview.selection
         isbns = []
+        isbn_duplicates = []
         if selection.count_selected_rows > 0
           model.freeze_notify do
             # capture isbns
             selection.selected_each do |model, path, iter|
-              isbns << iter[0]
+              isbn = iter[0]
+              if book_in_library(isbn, library)
+                isbn_duplicates << isbn
+              elsif isbns.include? isbn
+                log.info { "detected duplicate in scanned list #{isbn}" }
+                isbn_duplicates << isbn
+              else
+                isbns << isbn
+              end
             end
             # remove list items (complex, cf. tutorial...)
             # http://ruby-gnome2.sourceforge.jp/hiki.cgi?tut-treeview-model-remove
@@ -227,9 +264,25 @@ module Alexandria
             # try it this way... works because of persistent iters
             row_iters = []
             selection.selected_rows.each do |path|
-              row_iters << model.get_iter(path)
+              iter = model.get_iter(path)
+              isbn = iter[0]
+              if book_in_library(isbn, library)
+                log.info { "#{isbn} is a duplicate" }
+              ##elsif isbns.include? isbn
+                # this won't work since multiple scans of the same
+                # book have the same isbn (so we can't refrain from removing
+                # one, we'd end up not removing any)
+                ## TODO add another column in the iter, like "isbn/01"
+                # that would allow this kind of behaviour...
+
+                # good enough for now
+              else
+                log.info { "scheduling #{isbn} for removal from list" }
+                row_iters << iter
+              end
             end
             row_iters.each do |iter|
+              log.info { "removing iter #{iter[0]}" }
               model.remove(iter)
             end
 
@@ -237,17 +290,36 @@ module Alexandria
         else
           model.freeze_notify do
             # capture isbns
+            row_iters = []
             model.each do |model, path, iter|
-              isbns << iter[0]
+              isbn = iter[0]
+              if book_in_library(isbn, library)
+                log.info { "#{isbn} is a duplicate" }                
+                isbn_duplicates << isbn
+              elsif isbns.include? isbn
+                log.info { "detected duplicate in scanned list #{isbn}" }
+                isbn_duplicates << isbn
+              else
+                log.info { "scheduling #{isbn} for removal from list" }
+                isbns << isbn
+                row_iters << iter
+              end
             end
             # remove list items
-            model.clear
+            if isbn_duplicates.empty?
+              model.clear # TODO unless!!!
+              row_iters.clear
+            else
+              row_iters.each do |iter|
+                log.info { "removing iter #{iter[0]}" }
+                model.remove(iter)
+              end
+            end
           end
         end
 
-        libraries = Libraries.instance.all_libraries
-        library, new_library =
-          @combo_libraries.selection_from_libraries(libraries)
+        books = []
+
         isbns.each do |isbn|
           log.debug { "Adding #{isbn}" }
           result = @book_results[isbn]
@@ -257,9 +329,18 @@ module Alexandria
           unless cover_uri.nil?
             library.save_cover(book, cover_uri)
           end
+          books << book
           library << book
           library.save(book)
         end
+
+        unless isbn_duplicates.empty?
+          message = "There were #{isbn_duplicates.size} duplicates"
+          ErrorDialog.new(@parent, _("Couldn't add these books"), message)
+          # TODO pop up warning dialog, noting the number of duplicates...
+        end
+
+        @block.call(books, library, is_new_library)
       end
 
       def on_cancel
@@ -304,16 +385,79 @@ module Alexandria
         end
       end
 
-      private
+
+      # begin copy-n-paste from new_book_dialog
+
+      def notify_start_add_by_isbn
+        main_progress_bar = MainApp.instance.appbar.children.first
+        main_progress_bar.visible = true
+        @progress_pulsing = Gtk.timeout_add(100) do
+          unless @destroyed
+            main_progress_bar.pulse
+            true
+          else
+            false
+          end
+        end
+      end
+
+      def notify_end_add_by_isbn
+        MainApp.instance.appbar.children.first.visible = false
+        Gtk::timeout_remove(@progress_pulsing)
+      end
+
+      def update(status, provider)
+        Gtk.idle_add do
+          messages = {
+            :searching => _("Searching Provider '%s'..."),
+            :error => _("Error while Searching Provider '%s'"),
+            :not_found => _("Not Found at Provider '%s'"),
+            :found => _("Found at Provider '%s'")
+          }
+          message = messages[status] % provider
+          log.debug { "update message : #{message}" }
+          # @parent.appbar.status = message
+          MainApp.instance.appbar.status = message # HACKish
+          false
+        end
+      end
+
+      # end copy-n-paste
+
+      private 
+      
+      def set_searching(search)
+        # this is a real hack, there's a proper thread-ish way
+        # to deal with this kind of problem
+        if search
+          if (@search_threads_count == 0)
+            notify_start_add_by_isbn
+            Alexandria::BookProviders.instance.add_observer(self)
+          end
+          @search_threads_count += 1
+          log.debug { "New search: total threads #{@search_threads_count}" } 
+        else
+          @search_threads_count -= 1
+          log.debug { "Finishing search: total threads #{@search_threads_count}" } 
+          if (@search_threads_count == 0)
+            Alexandria::BookProviders.instance.delete_observer(self)
+            notify_end_add_by_isbn
+          end
+          
+        end
+      end
+
 
       def lookup_book(isbn)
         lookup_thread = Thread.new(isbn) do |isbn|
           begin
+            set_searching(true)
             results = Alexandria::BookProviders.isbn_search(isbn)
             book = results[0]
             cover_uri = results[1]
             @book_results[isbn] = results
             set_cover_image_async(isbn, cover_uri)
+            # TODO add this as a block to Gtk.queue (needs new overall gui design)
             @barcodes_treeview.model.freeze_notify do
               iter = @barcodes_treeview.model.each do |model, path, iter|
                 if iter[0] == isbn
@@ -327,6 +471,8 @@ module Alexandria
           rescue StandardError => err
             log.error { "Book Search failed: #{err.message}"}
             log << err if log.error?
+          ensure
+            set_searching(false)
           end
         end
       end

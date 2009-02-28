@@ -22,6 +22,8 @@ module Alexandria
 
     class CueCat
 
+      include Alexandria::Logging
+
       def name()
         return "CueCat"
       end
@@ -49,6 +51,16 @@ module Alexandria
         if type == 'IB5'
           type = 'IBN'
           code = code[0, 13]
+        end
+
+        begin
+          if Library.valid_upc? code
+            isbn13 = Library.canonicalise_ean(code)
+            code = isbn13
+            type = 'IBN'
+          end
+        rescue Exception => ex
+          log.debug { "Cannot translate UPC (#{type}) code #{code} to ISBN" }
         end
 
         return code if type == 'IBN'
