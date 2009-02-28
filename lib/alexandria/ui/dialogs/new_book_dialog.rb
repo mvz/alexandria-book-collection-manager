@@ -126,19 +126,30 @@ module Alexandria
 
       def on_criterion_toggled(item)
 
-        # strange effect here, when item is first toggled to "Search"
-        # I have to click the dialog titlebar to focus the entry_search field...
 
         log.debug { "on_criterion_toggled" }
         return unless item.active?
+
+        # There used to be a strange effect here (pre SVN r1022).
+        # When item is first toggled to "Search" the entry_search
+        # field was unselectable. One used to have to click the dialog
+        # title bar to be able to focus it again. Putting the GUI
+        # modifications in an Gtk.idle_add block fixed the problem.
+
         if is_isbn = item == @isbn_radiobutton
-          @latest_size = @new_book_dialog.size
-          @new_book_dialog.resizable = false
-          # @entry_isbn.grab_focus
+          Gtk.idle_add do
+            @latest_size = @new_book_dialog.size
+            @new_book_dialog.resizable = false            
+            @entry_isbn.grab_focus
+            false
+          end
         else
-          @new_book_dialog.resizable = true
-          @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
-          # @entry_search.grab_focus
+          Gtk.idle_add do
+            @new_book_dialog.resizable = true
+            @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
+            @entry_search.grab_focus
+            false
+          end
         end
         @entry_isbn.sensitive = is_isbn
         @combo_search.sensitive = !is_isbn
@@ -154,6 +165,9 @@ module Alexandria
         # Remember the last criterion selected (so that we can re-select
         # it when the dialog opens again).
         @@last_criterion_was_not_isbn = !is_isbn
+
+        # @new_book_dialog.present # attempted fix, bring dialog to foreground
+
       end
 
       def on_changed(entry)
