@@ -79,8 +79,17 @@ module Alexandria
             end
             ##req.asin_search(criterion) do |product|
 
-            # shouldn't happen
-            raise TooManyResultsError if products.length > 1
+            # Shouldn't happen.
+            # raise TooManyResultsError if products.length > 1
+
+            # Actually, some publishers bogusly publish multiple
+            # editions of a book with the same ISBN, and Amazon seems
+            # to be able to distinguish between them.
+            # So we'll log this case, and arbitrarily return the FIRST
+            # item
+            if products.length > 1
+              log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results; returning the first result only" }
+            end
 
           when SEARCH_BY_TITLE
             res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
