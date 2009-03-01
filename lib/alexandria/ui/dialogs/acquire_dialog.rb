@@ -178,6 +178,36 @@ module Alexandria
 
     end
 
+    require 'thread'
+    require 'monitor'
+
+    # assists in turning on progress bar when searching
+    # and turning it off when all search threads have completed...
+    class SearchThreadCounter < Monitor
+      
+      attr_reader :count
+
+      def initialize
+        @count = 0
+        super
+      end
+
+      def new_search
+        synchronize do
+          @count += 1
+        end
+      end
+
+      def end_search
+        synchronize do
+          @count -= 1 unless (@count == 0)
+        end
+      end
+
+    end
+
+
+
 
     class AcquireDialog < GladeBase
       include GetText
@@ -201,21 +231,24 @@ module Alexandria
         setup_scanner_area
         init_treeview
         @book_results = Hash.new
-        @search_threads_count = 0
+        # @search_threads_count = 0
         
+        @search_thread_counter = SearchThreadCounter.new
+        @search_threads_running = @search_thread_counter.new_cond
+
       end
 
       def book_in_library(isbn10, library)
         begin
           isbn13 = Library.canonicalise_ean(isbn10)
-          puts "new book #{isbn10} (or #{isbn13})"
+          # puts "new book #{isbn10} (or #{isbn13})"
           match = library.find do |book|
-            puts "testing #{book.isbn}"
+            # puts "testing #{book.isbn}"
             (book.isbn == isbn10 || book.isbn == isbn13)
             #puts "book #{book.isbn}"
             #book == new_book 
           end
-          puts "book_in_library match #{match.inspect}"
+          # puts "book_in_library match #{match.inspect}"
           (not match.nil?)
         rescue Exception => ex
           log.warn { "Failed to check for book #{isbn10} in library #{library}" }
@@ -389,21 +422,27 @@ module Alexandria
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
-        main_progress_bar = MainApp.instance.appbar.children.first
-        main_progress_bar.visible = true
-        @progress_pulsing = Gtk.timeout_add(100) do
-          unless @destroyed
-            main_progress_bar.pulse
-            true
-          else
-            false
+        Gtk.idle_add do
+          main_progress_bar = MainApp.instance.appbar.children.first
+          main_progress_bar.visible = true
+          @progress_pulsing = Gtk.timeout_add(100) do
+            unless @destroyed
+              main_progress_bar.pulse
+              true
+            else
+              false
+            end
           end
+          false
         end
       end
 
       def notify_end_add_by_isbn
-        MainApp.instance.appbar.children.first.visible = false
-        Gtk::timeout_remove(@progress_pulsing)
+        Gtk.idle_add do
+          MainApp.instance.appbar.children.first.visible = false
+          Gtk::timeout_remove(@progress_pulsing)
+          false
+        end
       end
 
       def update(status, provider)
@@ -426,23 +465,53 @@ module Alexandria
 
       private 
       
+      def start_search         
+        @search_thread_counter.synchronize do 
+          if @search_thread_counter.count == 0
+            @search_thread_counter.new_search
+            @progress_bar_thread = Thread.new do
+              notify_start_add_by_isbn
+              Alexandria::BookProviders.instance.add_observer(self)
+              # puts "A: ============= Progress bar is operating========="
+              @search_thread_counter.synchronize do
+                @search_threads_running.wait_while do
+                  # puts "...checking #{@search_thread_counter.count}"
+                  @search_thread_counter.count > 0
+                end
+              end
+              # puts "A: Stopping progress bar!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+              notify_end_add_by_isbn
+              Alexandria::BookProviders.instance.add_observer(self)
+            end
+          else
+            @search_thread_counter.new_search
+          end    
+        end
+      end
+
+
       def set_searching(search)
         # this is a real hack, there's a proper thread-ish way
         # to deal with this kind of problem
         if search
-          if (@search_threads_count == 0)
-            notify_start_add_by_isbn
-            Alexandria::BookProviders.instance.add_observer(self)
-          end
-          @search_threads_count += 1
-          log.debug { "New search: total threads #{@search_threads_count}" } 
+          start_search
+          #if (@search_threads_count == 0)
+          #  notify_start_add_by_isbn
+          #  Alexandria::BookProviders.instance.add_observer(self)
+          #end
+          # @search_threads_count += 1
+          #log.debug { "New search: total threads #{@search_threads_count}" } 
         else
-          @search_threads_count -= 1
-          log.debug { "Finishing search: total threads #{@search_threads_count}" } 
-          if (@search_threads_count == 0)
-            Alexandria::BookProviders.instance.delete_observer(self)
-            notify_end_add_by_isbn
+          @search_thread_counter.synchronize do
+            @search_thread_counter.end_search
+            @search_threads_running.signal
           end
+          # @search_threads_count -= 1
+          #log.debug { "Finishing search: total threads #{@search_threads_count}" } 
+          #if (@search_threads_count == 0)
+          #  Alexandria::BookProviders.instance.delete_observer(self)
+          #  notify_end_add_by_isbn
+          #end
           
         end
       end
