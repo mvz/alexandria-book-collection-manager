@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 23:26+0000\n"
+"POT-Creation-Date: 2009-03-01 10:35+0000\n"
 "PO-Revision-Date: 2008-01-05 21:48+0100\n"
 "Last-Translator: Petr Vanek <vanous@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -115,32 +115,32 @@ msgstr ""
 "Zadané EAN/ISBN je neplatné.  Přesvědčte se, zda je napsáno správně a zkuste "
 "to znovu."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:507
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:511
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
 msgid "Couldn't add the book"
 msgstr "Knihu nelze přidat"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:539
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:412
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:540
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:413
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:541
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:414
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:542
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:415
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:600
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' již existuje v '%s' (s názvem '%s')."
 
@@ -295,17 +295,31 @@ msgstr "Musí být vyplněna vazba."
 msgid "At least one author must be provided."
 msgstr "Musí být vyplněn alespoň jeden autor."
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:339
-#, fuzzy
-msgid "Couldn't add these books"
-msgstr "Knihu nelze přidat"
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
+msgid "There was %d duplicate"
+msgid_plural "There were %d duplicates"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:544
-#: ../data/alexandria/glade/acquire_dialog.glade:25
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
+#, fuzzy
+msgid "Couldn't add this book"
+msgid_plural "Couldn't add these books"
+msgstr[0] "Knihu nelze přidat"
+msgstr[1] "Knihu nelze přidat"
+msgstr[2] "Knihu nelze přidat"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
+msgid "Ready to use %s barcode scanner"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "Čtečka čárového kódu připravena k použití"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:559
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
 msgid "Click below to scan _barcodes"
 msgstr "Kliněte níže pro naskenování čárových kódů"
 
@@ -1103,7 +1117,7 @@ msgstr "Program, který vám pomůže spravovat vaši sbírku knih."
 msgid "Acquire from Scanner"
 msgstr "Získat ze skaneru"
 
-#: ../data/alexandria/glade/acquire_dialog.glade:85
+#: ../data/alexandria/glade/acquire_dialog.glade:87
 #: ../data/alexandria/glade/new_book_dialog.glade:90
 msgid "Save _in:"
 msgstr "Uložit do:"
@@ -1323,6 +1337,10 @@ msgstr "Správce sbírky knih"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Spravovat vaši sbírku knih"
+
+#, fuzzy
+#~ msgid "Couldn't add these books"
+#~ msgstr "Knihu nelze přidat"
 
 #~ msgid "Associate ID"
 #~ msgstr "Přičleněné ID"

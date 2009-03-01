@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 23:26+0000\n"
+"POT-Creation-Date: 2009-03-01 10:35+0000\n"
 "PO-Revision-Date: 2008-07-31 00:16+0100\n"
 "Last-Translator: Ligia Moreira <ligia.moreira@netvisao.pt >\n"
 "Language-Team: Lígia Moreira <ligia.moreira@netvisao.pt>\n"
@@ -117,32 +117,32 @@ msgstr ""
 "Impossible de valider la donnée EAN/ISBN que vous avez fournie.  Vérifiez "
 "qu'elle est écrite correctement, et ré-essayez."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:507
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:511
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
 msgid "Couldn't add the book"
 msgstr "Impossible d'ajouter le livre"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:539
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:412
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:540
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:413
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:541
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:414
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:542
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:415
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:600
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr " '%s' existe déjà dans '%s' (titré '%s' )."
 
@@ -298,17 +298,29 @@ msgstr "Une édition doit être fournie."
 msgid "At least one author must be provided."
 msgstr "Au moins un auteur doit être fourni."
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:339
-#, fuzzy
-msgid "Couldn't add these books"
-msgstr "Impossible d'ajouter le livre"
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
+msgid "There was %d duplicate"
+msgid_plural "There were %d duplicates"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:544
-#: ../data/alexandria/glade/acquire_dialog.glade:25
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
+#, fuzzy
+msgid "Couldn't add this book"
+msgid_plural "Couldn't add these books"
+msgstr[0] "Impossible d'ajouter le livre"
+msgstr[1] "Impossible d'ajouter le livre"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
+msgid "Ready to use %s barcode scanner"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "_Lecteur électronique de la barre de code prêt"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:559
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
 msgid "Click below to scan _barcodes"
 msgstr "Cliquez ci-dessous pour lire _la barre de code rapidement"
 
@@ -1106,7 +1118,7 @@ msgstr "Un programme pour vous aider à gérer votre collection de livres."
 msgid "Acquire from Scanner"
 msgstr "Utilisation de scanner"
 
-#: ../data/alexandria/glade/acquire_dialog.glade:85
+#: ../data/alexandria/glade/acquire_dialog.glade:87
 #: ../data/alexandria/glade/new_book_dialog.glade:90
 msgid "Save _in:"
 msgstr "Sauvegarder _dans :"
@@ -1326,6 +1338,10 @@ msgstr "Gestionnaire de collection de livres"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Gérez votre collection de livres"
+
+#, fuzzy
+#~ msgid "Couldn't add these books"
+#~ msgstr "Impossible d'ajouter le livre"
 
 #~ msgid "Associate ID"
 #~ msgstr "Identifiant d'associé"

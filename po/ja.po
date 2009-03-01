@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 23:26+0000\n"
+"POT-Creation-Date: 2009-03-01 10:35+0000\n"
 "PO-Revision-Date: 2008-02-19 21:34-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
@@ -111,32 +111,32 @@ msgid ""
 "correctly, and try again."
 msgstr "指定したEAN/ISBNプロバイダを有効にできません。再度確認してください。"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:507
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:511
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
 msgid "Couldn't add the book"
 msgstr "本を追加できません"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:539
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:412
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:540
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:413
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:541
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:414
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:542
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:415
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:600
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s'はすでに'%s' (タイトル： '%s')に存在します。"
 
@@ -281,17 +281,27 @@ msgstr "装丁を入力してください。"
 msgid "At least one author must be provided."
 msgstr "少なくとも一人の著者を入力してください。"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:339
-#, fuzzy
-msgid "Couldn't add these books"
-msgstr "本を追加できません"
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
+msgid "There was %d duplicate"
+msgid_plural "There were %d duplicates"
+msgstr[0] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:544
-#: ../data/alexandria/glade/acquire_dialog.glade:25
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
+#, fuzzy
+msgid "Couldn't add this book"
+msgid_plural "Couldn't add these books"
+msgstr[0] "本を追加できません"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
+msgid "Ready to use %s barcode scanner"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "バーコードスキャナ準備完了(_B)"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:559
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
 msgid "Click below to scan _barcodes"
 msgstr "バーコードをスキャンするには以下をクリックしてください(_b)"
 
@@ -1073,7 +1083,7 @@ msgstr "本のコレクション管理お手伝いプログラム"
 msgid "Acquire from Scanner"
 msgstr "スキャナから読み込み"
 
-#: ../data/alexandria/glade/acquire_dialog.glade:85
+#: ../data/alexandria/glade/acquire_dialog.glade:87
 #: ../data/alexandria/glade/new_book_dialog.glade:90
 msgid "Save _in:"
 msgstr "保存先ライブラリ(_i):"
@@ -1291,6 +1301,10 @@ msgstr "ブック・コレクション・マネージャ"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "ブック・コレクション管理お手伝いプログラム"
+
+#, fuzzy
+#~ msgid "Couldn't add these books"
+#~ msgstr "本を追加できません"
 
 #~ msgid "Associate ID"
 #~ msgstr "アソシエイトID"

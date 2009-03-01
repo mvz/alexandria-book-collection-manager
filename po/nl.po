@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-28 23:26+0000\n"
+"POT-Creation-Date: 2009-03-01 10:35+0000\n"
 "PO-Revision-Date: 2008-04-15 19:30+0100\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
@@ -113,32 +113,32 @@ msgstr ""
 "Kon het EAN/ISBN dat u invoerde niet valideren. Controleer of het goed "
 "geschreven is en probeer het nogmaals."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:507
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:511
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
 msgid "Couldn't add the book"
 msgstr "Kon het boek niet toevoegen"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:539
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:412
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:540
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:413
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:541
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:414
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:542
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:415
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:600
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' bestaat al in '%s' (getiteld '%s')."
 
@@ -291,17 +291,29 @@ msgstr "Er moet een band opgegeven worden."
 msgid "At least one author must be provided."
 msgstr "Er moet minstens één auteur opgegeven worden."
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:339
-#, fuzzy
-msgid "Couldn't add these books"
-msgstr "Kon het boek niet toevoegen"
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
+msgid "There was %d duplicate"
+msgid_plural "There were %d duplicates"
+msgstr[0] ""
+msgstr[1] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:544
-#: ../data/alexandria/glade/acquire_dialog.glade:25
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
+#, fuzzy
+msgid "Couldn't add this book"
+msgid_plural "Couldn't add these books"
+msgstr[0] "Kon het boek niet toevoegen"
+msgstr[1] "Kon het boek niet toevoegen"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
+msgid "Ready to use %s barcode scanner"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "_Streepjescodescanner klaar"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:559
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
 msgid "Click below to scan _barcodes"
 msgstr "Klik hieronder om _streepjescodes te scannen"
 
@@ -1095,7 +1107,7 @@ msgstr "Een programma dat u helpt om uw boekcollectie bij te houden."
 msgid "Acquire from Scanner"
 msgstr "Inlezen d.m.v. scanner"
 
-#: ../data/alexandria/glade/acquire_dialog.glade:85
+#: ../data/alexandria/glade/acquire_dialog.glade:87
 #: ../data/alexandria/glade/new_book_dialog.glade:90
 msgid "Save _in:"
 msgstr "Opslaan _in:"
@@ -1314,6 +1326,10 @@ msgstr "Boekcollectiebeheerder"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
+
+#, fuzzy
+#~ msgid "Couldn't add these books"
+#~ msgstr "Kon het boek niet toevoegen"
 
 #~ msgid "Associate ID"
 #~ msgstr "Geassocieerd ID"
