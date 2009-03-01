@@ -320,8 +320,8 @@ module Alexandria
         require 'hpricot'
       end
       require 'alexandria/book_providers/adlibris'
-    rescue LoadError
-      log.warn { "Can't load hpricot and hpricot, hence provider AdLibris not available" }
+    rescue LoadError => ex
+      log.warn { "Can't load provider AdLibris, requires both hpricot and htmlentities: #{ex.message}" }
     end
 
 
