@@ -16,6 +16,10 @@ cd alexandria-0.6.3
 # (Note: as a first step 'rake clobber' is automaticallly run, making
 #        the source tree even more pristine...)
 
+
+cp -a ~/software/projects/alexandria/svn/trunk/debian-gnusense/ ./debian
+# NOW edit the files in debian/ as needed
+
 dpkg-buildpackage -d -rfakeroot
 # you will be prompted for your GnuPG passphrase twice (it takes your
 # key id from the e-mail address of the most recent change in

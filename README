@@ -1,7 +1,7 @@
 = Alexandria
 
-Version:      0.6.3
-Release Date: 2008-02-21
+Version:      0.6.4b1
+Release Date: 2008-03-01
 Home Page:    http://alexandria.rubyforge.org/
 
 Alexandria is a GNOME application for managing collections of books.
@@ -21,10 +21,11 @@ keep track of books which are on loan.
       pictures) from several online libraries and bookshops, such as
           o Amazon
           o Proxis
-          o Barnes and Noble
+          o DeaStore
+          o AdLibris
           o Spanish Ministry of Culture
-          o Thalia
-          o Internet Bookshop Italia
+          o Livraria Siciliano
+          o WorldCat
           o US Library of Congress
           o British Library
     * allows books to be added and updated by hand
@@ -42,7 +43,7 @@ keep track of books which are on loan.
     * shows books in different views (standard list or icons list),
       that can be filtered and/or sorted
     * handles book rating and notes
-    * supports CueCat barcode readers
+    * supports CueCat and standard "keyboard wedge" barcode readers
     * includes translations for several languages
     * is documented in a complete manual (at the moment only in
       English and Japanese)
@@ -50,7 +51,7 @@ keep track of books which are on loan.
 Alexandria is not without problems. See doc/BUGS for a summary of issues.
 
 
-== 0.6.3 Release
+== 0.6.4b1 Release
 
 For full release notes, see the file NEWS.
 

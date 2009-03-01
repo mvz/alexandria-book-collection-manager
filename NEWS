@@ -1,4 +1,4 @@
-Announcing the release of Alexandria 0.6.3
+Announcing the beta release of Alexandria 0.6.4b1
 
 * What is Alexandria?
 =====================
@@ -15,53 +15,46 @@ Alexandria is written in Ruby using ruby-gnome2.
 
 - A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
 
-- An Ubuntu repository with project-supported packages is maintained at
-  http://launchpad.net/~alexandria-team/+archive
+- An ad-hoc deb file (for Debian, Ubuntu & gNewSense) can be downloaded from there too
 
 - SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
-* What's New in 0.6.3?
+* What's New in 0.6.4b1?
 ======================
 
-Special thanks to:
-
-- L.C. Karssen for important bug triage work
-- New contributor Timothy Malone for iPod Notes export feature
+New Dependencies:
+- All book providers now require Hpricot (a.k.a. libhpricot-ruby) for HTML parsing
+- DeaStore requires HTMLEntities (a.k.a. libhtmlentities-ruby)
 
 Changes:
 
-- Added export function for iPod Notes
-- Removed refresh button from toolbar
-- Added asynchronous loading and visual feedback to make GUI feel more
-   responsive
-- Added Amazon ECS 4.0 support to replace the old AWS 3.x Amazon provider.
-  AWS 3.x will be deprecated by Amazon on March 31 2008
-- Added tooltips to the icon view of books
+- Better GUI feedback when adding books by ISBN
+- Temporarily removed some broken providers, but completely rewrote others
+- Better (though not perfect) handling of character encoding
+- Improved stability (fewer crashes)
 
-0.6.3 contains a large number of bug fixes. These include fixes for:
+0.6.4 contains a large number of bug fixes. These include fixes for:
 
-- [#14163] Newly added book is not selected
-- [#16708] Hitting refresh button makes deleted books reappear
-- [#16619] When searching by isbn misses information
-- [#16618] When you go back into properties program removes read it tag
-- [#15329] Using & in library name is impossible
-- [#14592] Fails to start: undefined method 'isbn'
-- [#18197] Setting book rating through right-click menu causes crash
-- [#13302] Fails with z39.50 providers which don't support 'piggybacking'
+- [#19042] Icon view tooltips cause crashes on x86_64
+           [Work-around for an issue with ruby-gnome2 (pre 0.17.0)]
+- [#20080] Icon view tooltips cause crashes when publisher not defined
+- [#23908] Adding manually without ISBN is unstable
+- [#10929] Usability: advanced settings checkbox invisible without Ruby/ZOOM
 
 Translations:
 
-- New Galician translation (Adrian Chaves Fernandez)
-- New Chinese (Traditional) translation (Jose Ling)
+- New Greek translation ( Michael Kotsarinis)
+- New Macedonian translation (Damjan Dimitrioski)
+- New Norwegian (Bokmål) translation (Jack Myrseh)
 
-- Initial Irish (Gaelic) translation (Cathal Mc Ginley)
-- Improved Czech translation (Petr Vaneck)
-- New Japanese translation of the Alexandria Manual (CHIKAMA Masaki)
+- Improved Italian translation (Giacomo Margarito)
+- Improved Polish translation (Piotr Drąg)
+- Improved Portuguese (Brazil) and French translations (Lígia Moreira)
+- Improved Swedish translation (Martin Karlsson)
 
 Where can I find out more?
 ==========================
  * Website: http://alexandria.rubyforge.org/
- * Wiki: http://wiki.alexandria-projects.org/
  * Screenshots/Screencast: http://alexandria.rubyforge.org/screenshots.html
  * Mailing List: http://rubyforge.org/pipermail/alexandria-list/
  * Bugs: http://rubyforge.org/tracker/?group_id=205	

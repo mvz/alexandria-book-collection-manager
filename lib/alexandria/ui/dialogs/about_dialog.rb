@@ -41,7 +41,11 @@ EOL
       def initialize(parent)
         super()
         self.name = Alexandria::TITLE
-        self.version = Alexandria::VERSION
+        begin
+          self.version = Alexandria::DISPLAY_VERSION
+        rescue
+          self.version = Alexandria::VERSION
+        end
         self.copyright = Alexandria::COPYRIGHT
         self.comments = Alexandria::DESCRIPTION
         self.authors = Alexandria::AUTHORS

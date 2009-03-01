@@ -69,6 +69,8 @@ class AlexandriaBuild < Rake::TaskLib
   attr_accessor :name, :version, :rubyforge_name
   attr_accessor :author, :email, :summary, :description
 
+  attr_accessor :display_version
+
   # config objects
   attr_accessor :files
   attr_accessor :rdoc
@@ -249,7 +251,7 @@ class AlexandriaBuild < Rake::TaskLib
 
   def define_package_tasks
     namespace 'pkg' do
-      Rake::PackageTask.new(@name, @version) do |p|
+      Rake::PackageTask.new(@name, display_version) do |p| # HACK
         p.need_tar_gz = true
         p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
                                 "NEWS",

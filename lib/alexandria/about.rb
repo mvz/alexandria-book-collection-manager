@@ -23,7 +23,7 @@ module Alexandria
   bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
   DESCRIPTION = _('A program to help you manage your book collection.')
   COPYRIGHT = "Copyright (C) 2004,2005,2006 Laurent Sansonetti\n" +
-    "Copyright (C) 2007,2008 Alexandria Contributors"
+    "Copyright (C) 2007,2008,2009 Alexandria Contributors"
     AUTHORS = [
              'Alexander McCormmach <alexander@tunicate.org>',
              'Aymeric Nys <aymeric@nnx.com>',
@@ -51,24 +51,19 @@ module Alexandria
   ]
   TRANSLATORS = [
                  'Adrián Chaves Fernández <adriyetichaves@gmail.com> (gl)',
-                 'CHIKAMA Masaki <masaki.chikama@gmail.com> (ja)',
                  'Cathal Mc Ginley <cathal.alexandria@gnostai.org> (ga)',
+                 'CHIKAMA Masaki <masaki.chikama@gmail.com> (ja)',
                  'Dafydd Harries <daf@muse.19inch.net> (cy)',
-                 'David Weinehall <tao@debian.org> (sv)',
+                 'Damjan Dimitrioski <damjandimitrioski@gmail.com> (mk)',
                  'Giacomo Margarito <giacomomargarito@gmail.com> (it)',
                  'Jack Myrseh <jack@enkom.no> (nb)',
                  'Joachim Breitner <mail@joachim-breitner.de> (de)',
                  'José Ling <jlgdot369@gmail.com> (zh_TW)',
-                 'L.C. Karssen <lennart@karssen.org> (nl)',
-                 'Laurent Richard <laurent@dotbar.be> (fr)',
-                 'Laurent Sansonetti <lrz@gnome.org> (fr)',
-                 'Leandro Regueiro <leandro.regueiro@gmail.com> (gl)',
-                 'Ligia Moreira <ligia.moreira@netvisao.pt> (pt)',
-                 'Lucas Rocha <lucasr@im.ufba.br> (pt_BR)',
-                 'Marco Costantini <costanti@science.unitn.it> (it)',
+                 'Lennart Karssen <lennart@karssen.org> (nl)',
+                 'Lígia Moreira <ligia.moreira@netvisao.pt> (fr, pt, pt_BR)',
+                 'Martin Karlsson <martinkarlsson81@hotmail.com> (sv)',
                  'Michael Kotsarinis <mkotsari1@pre.forthnet.gr> (el)',
                  'Miguel Ángel García <magmax@ieee.org> (es)',
-                 'Mirko Maischberger <mirko@lilik.it> (it)',
                  'Petr Vanek <vanous@penguin.cz> (cs)',
                  'Piotr Drąg <piotrdrag@gmail.com> (pl)',
                  'Serhij Dubyk <dubyk@library.lviv.ua> (uk)'

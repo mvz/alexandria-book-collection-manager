@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-16 17:29+0100\n"
+"POT-Creation-Date: 2009-02-28 23:26+0000\n"
 "PO-Revision-Date: 2008-02-19 21:34-0900\n"
 "Last-Translator: CHIKAMA Masaki <masaki.chikama@gmail.com>\n"
 "Language-Team: Japanese Translators\n"
@@ -16,48 +16,129 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
-msgid "New Smart Library"
-msgstr "高機能ライブラリの新規作成"
+#: ../lib/alexandria/models/library.rb:56
+msgid "Untitled"
+msgstr "タイトル未設定"
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
-msgid "Smart Library"
-msgstr "高機能ライブラリ"
+#: ../lib/alexandria/models/library.rb:233
+msgid "My Library"
+msgstr "マイライブラリ"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:381
-#: ../data/alexandria/glade/acquire_dialog.glade:25
-msgid "_Barcode Scanner Ready"
-msgstr "バーコードスキャナ準備完了(_B)"
+#: ../lib/alexandria/book_providers/proxis.rb:36
+msgid "Language"
+msgstr "言語"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:396
-msgid "Click below to scan _barcodes"
-msgstr "バーコードをスキャンするには以下をクリックしてください(_b)"
+#: ../lib/alexandria/book_providers/mcu.rb:39
+msgid "Spanish Culture Ministry"
+msgstr "スペイン文化省"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
-msgid "Error while importing"
-msgstr "インポート中にエラーが発生しました"
+#: ../lib/alexandria/book_providers/z3950.rb:33
+msgid "Hostname"
+msgstr "ホスト名"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:39
-msgid "_Continue"
-msgstr "続ける(_C)"
+#: ../lib/alexandria/book_providers/z3950.rb:34
+msgid "Port"
+msgstr "ポート番号"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:61
-msgid "Import a Library"
-msgstr "ライブラリのインポート"
+#: ../lib/alexandria/book_providers/z3950.rb:35
+msgid "Database"
+msgstr "データベース"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:68
-msgid "_Import"
-msgstr "インポート(_I)"
+#: ../lib/alexandria/book_providers/z3950.rb:36
+msgid "Record syntax"
+msgstr "レコードシンタックス"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:164
-msgid "Couldn't import the library"
-msgstr "ライブラリをインポートできません"
+#: ../lib/alexandria/book_providers/z3950.rb:37
+msgid "Username"
+msgstr "ユーザ名"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
+#: ../lib/alexandria/book_providers/z3950.rb:38
+msgid "Password"
+msgstr "パスワード"
+
+#: ../lib/alexandria/book_providers/z3950.rb:39
+msgid "Charset encoding"
+msgstr "文字のエンコーディング"
+
+#: ../lib/alexandria/book_providers/z3950.rb:180
+msgid "Library of Congress (Usa)"
+msgstr "米国国会図書館"
+
+#: ../lib/alexandria/book_providers/z3950.rb:213
+msgid "British Library"
+msgstr "大英図書館"
+
+#: ../lib/alexandria/book_providers/amazon_aws.rb:36
+msgid "Locale"
+msgstr "ロケール"
+
+#: ../lib/alexandria/book_providers/amazon_aws.rb:37
+msgid "Development token"
+msgstr "デベロッパー・トークン"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
+msgid "Invalid ISBN '%s'"
+msgstr "ISBNが不正です '%s'"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:35
+msgid "_Keep"
+msgstr "追加する(_K)"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
 msgid ""
-"The format of the file you provided is unknown.  Please retry with another "
-"file."
-msgstr "ファイルフォーマットが不正です。他のファイルでリトライしてください。"
+"The book titled '%s' has an invalid ISBN, but still exists in the providers "
+"libraries.  Do you want to keep the book but change the ISBN or cancel the "
+"add?"
+msgstr ""
+"'%s'のISBNは不正ですが、プロバイダには存在しています。この本をISBNを無視して"
+"追加しますか？"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:182
+msgid "A problem occurred while downloading images"
+msgstr "イメージのダウンロード中に問題が発生しました"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:301
+msgid "Unable to find matches for your search"
+msgstr "検索結果がありませんでした。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:307
+msgid "%s, by %s"
+msgstr "%s, %s 著"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:380
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correctly, and try again."
+msgstr "指定したEAN/ISBNプロバイダを有効にできません。再度確認してください。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:507
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
+msgid "Couldn't add the book"
+msgstr "本を追加できません"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:539
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:412
+msgid "Searching Provider '%s'..."
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:540
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:413
+msgid "Error while Searching Provider '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:541
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:414
+msgid "Not Found at Provider '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:542
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:415
+msgid "Found at Provider '%s'"
+msgstr ""
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:600
+msgid "'%s' already exists in '%s' (titled '%s')."
+msgstr "'%s'はすでに'%s' (タイトル： '%s')に存在します。"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:26
 msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
@@ -92,102 +173,6 @@ msgstr "'%2$s'から'%1$s'を削除します。よろしいですか？"
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "'%s'から選択された全ての本を削除します。よろしいですか？"
-
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
-msgid "Properties for '%s'"
-msgstr "'%s'の設定"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
-msgid "Invalid ISBN '%s'"
-msgstr "ISBNが不正です '%s'"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:35
-msgid "_Keep"
-msgstr "追加する(_K)"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
-msgid ""
-"The book titled '%s' has an invalid ISBN, but still exists in the providers "
-"libraries.  Do you want to keep the book but change the ISBN or cancel the "
-"add?"
-msgstr ""
-"'%s'のISBNは不正ですが、プロバイダには存在しています。この本をISBNを無視して"
-"追加しますか？"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:162
-msgid "A problem occurred while downloading images"
-msgstr "イメージのダウンロード中に問題が発生しました"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:275
-msgid "Unable to find matches for your search"
-msgstr "検索結果がありませんでした。"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:281
-msgid "%s, by %s"
-msgstr "%s, %s 著"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:363
-msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correctly, and try again."
-msgstr "指定したEAN/ISBNプロバイダを有効にできません。再度確認してください。"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:411
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
-msgid "Couldn't add the book"
-msgstr "本を追加できません"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:469
-msgid "'%s' already exists in '%s' (titled '%s')."
-msgstr "'%s'はすでに'%s' (タイトル： '%s')に存在します。"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
-msgid "Preferences for %s"
-msgstr "'%s'の設定"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
-msgid "New Provider"
-msgstr "新プロバイダ"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
-msgid "_Name:"
-msgstr "名称(_N):"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
-msgid "_Type:"
-msgstr "種別(_T):"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:303
-msgid "Are you sure you want to permanently delete the provider '%s'?"
-msgstr "プロバイダ'%s'を削除します。よろしいですか？"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:311
-msgid ""
-"If you continue, the provider and all of its preferences will be permanently "
-"deleted."
-msgstr "一度削除するとそのプロバイダと全ての設定が元に戻せません。"
-
-#: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
-msgid "There's a problem"
-msgstr "問題が発生しました"
-
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:112
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:121
-msgid "Couldn't modify the book"
-msgstr "本を修正できません"
-
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:113
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
-msgid "The EAN/ISBN you provided is already used in this library."
-msgstr "そのEAN/ISBNはすでにこのライブラリで使用されています。"
-
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:122
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
-msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correcty, and try again."
-msgstr "指定したEAN/ISBNプロバイダを有効にできません。再度確認してください。"
 
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
 msgid "File already exists"
@@ -233,6 +218,83 @@ msgstr "'%s'はファイルです。ディレクトリを選択して再度実�
 msgid "Not a directory"
 msgstr "ディレクトリではありません"
 
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
+msgid "Properties for '%s'"
+msgstr "'%s'の設定"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
+msgid "Properties"
+msgstr "プロパティ"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:67
+msgid "Author"
+msgstr "作者"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:119
+msgid "Select a cover image"
+msgstr "表紙画像の選択"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
+msgid "No Cover"
+msgstr "表紙なし"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d 日"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
+msgid "Adding '%s'"
+msgstr "'%s'を追加"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
+#: ../data/alexandria/glade/new_book_dialog.glade:8
+msgid "Adding a Book"
+msgstr "本の追加"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:81
+msgid "A title must be provided."
+msgstr "タイトルを入力してください。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
+msgid "The EAN/ISBN you provided is already used in this library."
+msgstr "そのEAN/ISBNはすでにこのライブラリで使用されています。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr "指定したEAN/ISBNプロバイダを有効にできません。再度確認してください。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:102
+msgid "A publisher must be provided."
+msgstr "出版社を入力してください。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:109
+msgid "A binding must be provided."
+msgstr "装丁を入力してください。"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:115
+msgid "At least one author must be provided."
+msgstr "少なくとも一人の著者を入力してください。"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:339
+#, fuzzy
+msgid "Couldn't add these books"
+msgstr "本を追加できません"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:544
+#: ../data/alexandria/glade/acquire_dialog.glade:25
+msgid "_Barcode Scanner Ready"
+msgstr "バーコードスキャナ準備完了(_B)"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:559
+msgid "Click below to scan _barcodes"
+msgstr "バーコードをスキャンするには以下をクリックしてください(_b)"
+
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:82
 msgid "Empty or conflictive condition"
 msgstr "条件が空か、あるいは矛盾する条件が指定されています"
@@ -271,121 +333,362 @@ msgstr "の条件にあう本:"
 msgid "Match the following rule:"
 msgstr "以下の条件にあう本:"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
-msgid "Adding '%s'"
-msgstr "'%s'を追加"
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
+msgid "Preferences for %s"
+msgstr "'%s'の設定"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
-#: ../data/alexandria/glade/new_book_dialog.glade:8
-msgid "Adding a Book"
-msgstr "本の追加"
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
+msgid "New Provider"
+msgstr "新プロバイダ"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:81
-msgid "A title must be provided."
-msgstr "タイトルを入力してください。"
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
+msgid "_Name:"
+msgstr "名称(_N):"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:102
-msgid "A publisher must be provided."
-msgstr "出版社を入力してください。"
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
+msgid "_Type:"
+msgstr "種別(_T):"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:109
-msgid "A binding must be provided."
-msgstr "装丁を入力してください。"
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:306
+msgid "Are you sure you want to permanently delete the provider '%s'?"
+msgstr "プロバイダ'%s'を削除します。よろしいですか？"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:115
-msgid "At least one author must be provided."
-msgstr "少なくとも一人の著者を入力してください。"
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:314
+msgid ""
+"If you continue, the provider and all of its preferences will be permanently "
+"deleted."
+msgstr "一度削除するとそのプロバイダと全ての設定が元に戻せません。"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
-msgid "Properties"
-msgstr "プロパティ"
+#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
+msgid "New Smart Library"
+msgstr "高機能ライブラリの新規作成"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:67
-msgid "Author"
-msgstr "作者"
+#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
+msgid "Smart Library"
+msgstr "高機能ライブラリ"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:119
-msgid "Select a cover image"
-msgstr "表紙画像の選択"
+#: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
+msgid "There's a problem"
+msgstr "問題が発生しました"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
-msgid "No Cover"
-msgstr "表紙なし"
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:113
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:122
+msgid "Couldn't modify the book"
+msgstr "本を修正できません"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] "%d 日"
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
+msgid "Error while importing"
+msgstr "インポート中にエラーが発生しました"
 
-#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:338
-msgid "Title"
-msgstr "タイトル"
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:39
+msgid "_Continue"
+msgstr "続ける(_C)"
 
-#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:340
-msgid "Authors"
-msgstr "作者"
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:61
+msgid "Import a Library"
+msgstr "ライブラリのインポート"
 
-#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:339
-msgid "ISBN"
-msgstr "ISBN"
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:68
+msgid "_Import"
+msgstr "インポート(_I)"
 
-#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:341
-msgid "Publisher"
-msgstr "出版社"
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:164
+msgid "Couldn't import the library"
+msgstr "ライブラリをインポートできません"
 
-#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:342
-msgid "Publish Year"
-msgstr "出版年"
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
+msgid ""
+"The format of the file you provided is unknown.  Please retry with another "
+"file."
+msgstr "ファイルフォーマットが不正です。他のファイルでリトライしてください。"
 
-#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:343
-msgid "Binding"
-msgstr "装丁"
+#: ../lib/alexandria/ui/callbacks.rb:62
+msgid "The following lines are not valid ISBNs and were not imported:"
+msgstr "以下は無効なISBNなのでインポートされませんでした"
 
-#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:100
-#: ../lib/alexandria/smart_library.rb:350
-msgid "Read"
-msgstr "読んだ本"
+#: ../lib/alexandria/ui/callbacks.rb:251
+msgid "_Library"
+msgstr "ライブラリ(_L)"
 
-#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:352
-msgid "Own"
-msgstr "持ってる本"
+#: ../lib/alexandria/ui/callbacks.rb:252
+msgid "_New Library"
+msgstr "新規ライブラリの作成(_N)"
 
-#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:353
-msgid "Want"
-msgstr "欲しい本"
+#: ../lib/alexandria/ui/callbacks.rb:252
+msgid "Create a new library"
+msgstr "新しくライブラリを作成します"
 
-#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:346
-#: ../data/alexandria/glade/preferences_dialog.glade:48
-msgid "Tags"
-msgstr "タグ"
+#: ../lib/alexandria/ui/callbacks.rb:253
+msgid "New _Smart Library..."
+msgstr "新規高機能ライブラリの作成(_S)"
 
-#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:344
-msgid "Rating"
-msgstr "評価"
+#: ../lib/alexandria/ui/callbacks.rb:253
+msgid "Create a new smart library"
+msgstr "新しく高機能ライブラリを作成します"
 
-#: ../lib/alexandria/ui/sidepane.rb:31
-msgid "Invalid library name '%s'"
-msgstr "ライブラリ名が不正です '%s'"
+#: ../lib/alexandria/ui/callbacks.rb:254
+msgid "_Add Book..."
+msgstr "本を追加(_A)"
 
-#: ../lib/alexandria/ui/sidepane.rb:32
-msgid "The name provided contains the illegal character '<i>%s</i>'."
-msgstr "その名称は不正な文字を含んでいます '<i>%s</i>'"
+#: ../lib/alexandria/ui/callbacks.rb:254
+msgid "Add a new book from the Internet"
+msgstr "インターネットから本を追加します"
 
-#: ../lib/alexandria/ui/sidepane.rb:36
-msgid "The library name can not be empty"
-msgstr "ライブラリ名を入力してください"
+#: ../lib/alexandria/ui/callbacks.rb:255
+msgid "Add Book _Manually..."
+msgstr "本を手入力で追加(_M)..."
 
-#: ../lib/alexandria/ui/sidepane.rb:41
-msgid "The library can not be renamed"
-msgstr "ライブラリ名は変更できません"
+#: ../lib/alexandria/ui/callbacks.rb:255
+msgid "Add a new book manually"
+msgstr "本を手入力で追加します"
 
-#: ../lib/alexandria/ui/sidepane.rb:42
-msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr "そのライブラリ名はすでに存在します。他の名前を指定してください。"
+#: ../lib/alexandria/ui/callbacks.rb:256
+msgid "_Import..."
+msgstr "インポート(_I)..."
 
-#: ../lib/alexandria/ui/sidepane.rb:68
-msgid "Library"
-msgstr "ライブラリ"
+#: ../lib/alexandria/ui/callbacks.rb:256
+msgid "Import a library"
+msgstr "ライブラリのインポートします"
+
+#: ../lib/alexandria/ui/callbacks.rb:257
+msgid "_Export..."
+msgstr "エクスポート(_E)..."
+
+#: ../lib/alexandria/ui/callbacks.rb:257
+msgid "Export the selected library"
+msgstr "選択したライブラリをエクスポートします"
+
+#: ../lib/alexandria/ui/callbacks.rb:258
+msgid "_Acquire from Scanner..."
+msgstr "スキャナから読み込む(_A)..."
+
+#: ../lib/alexandria/ui/callbacks.rb:258
+msgid "Acquire books from a scanner"
+msgstr "スキャナから本を読み込みます"
+
+#: ../lib/alexandria/ui/callbacks.rb:259
+msgid "_Properties"
+msgstr "プロパティ(_P)"
+
+#: ../lib/alexandria/ui/callbacks.rb:259
+msgid "Edit the properties of the selected book"
+msgstr "選択した本のプロパティを編集します"
+
+#: ../lib/alexandria/ui/callbacks.rb:260
+msgid "_Quit"
+msgstr "終了(_Q)"
+
+#: ../lib/alexandria/ui/callbacks.rb:260
+msgid "Quit the program"
+msgstr "プログラムを終了します"
+
+#: ../lib/alexandria/ui/callbacks.rb:261
+msgid "_Edit"
+msgstr "編集(_E)"
+
+#: ../lib/alexandria/ui/callbacks.rb:262
+msgid "_Undo"
+msgstr "アンドゥ(_U)"
+
+#: ../lib/alexandria/ui/callbacks.rb:262
+msgid "Undo the last action"
+msgstr "最後の操作をアンドゥします"
+
+#: ../lib/alexandria/ui/callbacks.rb:263
+msgid "_Redo"
+msgstr "リドゥ(_R)"
+
+#: ../lib/alexandria/ui/callbacks.rb:263
+msgid "Redo the undone action"
+msgstr "アンドゥした操作を元に戻します"
+
+#: ../lib/alexandria/ui/callbacks.rb:264
+msgid "_Select All"
+msgstr "全て選択(_S)"
+
+#: ../lib/alexandria/ui/callbacks.rb:264
+msgid "Select all visible books"
+msgstr "見えている本をすべて選択します"
+
+#: ../lib/alexandria/ui/callbacks.rb:265
+msgid "Dese_lect All"
+msgstr "全て非選択(_l)"
+
+#: ../lib/alexandria/ui/callbacks.rb:265
+msgid "Deselect everything"
+msgstr "全てを非選択にします"
+
+#: ../lib/alexandria/ui/callbacks.rb:266
+msgid "My _Rating"
+msgstr "評価(_R)"
+
+#: ../lib/alexandria/ui/callbacks.rb:267
+msgid "None"
+msgstr "評価なし"
+
+#: ../lib/alexandria/ui/callbacks.rb:268
+msgid "One Star"
+msgstr "１つ星"
+
+#: ../lib/alexandria/ui/callbacks.rb:269
+msgid "Two Stars"
+msgstr "２つ星"
+
+#: ../lib/alexandria/ui/callbacks.rb:270
+msgid "Three Stars"
+msgstr "３つ星"
+
+#: ../lib/alexandria/ui/callbacks.rb:271
+msgid "Four Stars"
+msgstr "４つ星"
+
+#: ../lib/alexandria/ui/callbacks.rb:272
+msgid "Five Stars"
+msgstr "５つ星"
+
+#: ../lib/alexandria/ui/callbacks.rb:273
+msgid "_Move"
+msgstr "移動(_M)"
+
+#: ../lib/alexandria/ui/callbacks.rb:274
+msgid "_Rename"
+msgstr "名称変更(_R)"
+
+#: ../lib/alexandria/ui/callbacks.rb:275
+msgid "_Delete"
+msgstr "削除(_D)"
+
+#: ../lib/alexandria/ui/callbacks.rb:275
+msgid "Delete the selected books or library"
+msgstr "選択した本またはライブラリを削除します"
+
+#: ../lib/alexandria/ui/callbacks.rb:276
+msgid "_Search"
+msgstr "検索(_S)"
+
+#: ../lib/alexandria/ui/callbacks.rb:276
+msgid "Filter books"
+msgstr "本にフィルタをかけます"
+
+#: ../lib/alexandria/ui/callbacks.rb:277
+msgid "_Clear Results"
+msgstr "結果のクリア(_C)"
+
+#: ../lib/alexandria/ui/callbacks.rb:277
+msgid "Clear the search results"
+msgstr "結果をクリアします"
+
+#: ../lib/alexandria/ui/callbacks.rb:278
+msgid "_Preferences"
+msgstr "設定(_P)"
+
+#: ../lib/alexandria/ui/callbacks.rb:278
+msgid "Change Alexandria's settings"
+msgstr "Alexandriaの設定変更"
+
+#: ../lib/alexandria/ui/callbacks.rb:279
+msgid "_View"
+msgstr "表示(_V)"
+
+#: ../lib/alexandria/ui/callbacks.rb:280
+msgid "Arran_ge Icons"
+msgstr "アイコンの表示順(_g)"
+
+#: ../lib/alexandria/ui/callbacks.rb:281
+msgid "Display Online _Information"
+msgstr "オンライン情報の表示(_I)"
+
+#: ../lib/alexandria/ui/callbacks.rb:283
+msgid "_Help"
+msgstr "ヘルプ(_H)"
+
+#: ../lib/alexandria/ui/callbacks.rb:284
+msgid "Submit _Bug Report"
+msgstr "バグレポートを送る(_B)"
+
+#: ../lib/alexandria/ui/callbacks.rb:284
+msgid "Submit a bug report to the developers"
+msgstr "バグレポートを開発者に送ります"
+
+#: ../lib/alexandria/ui/callbacks.rb:285
+msgid "Contents"
+msgstr "内容"
+
+#: ../lib/alexandria/ui/callbacks.rb:285
+msgid "View Alexandria's manual"
+msgstr "Alexandriaのマニュアルを見る"
+
+#: ../lib/alexandria/ui/callbacks.rb:286
+msgid "_About"
+msgstr "Alexandriaについて(_A)"
+
+#: ../lib/alexandria/ui/callbacks.rb:286
+msgid "Show information about Alexandria"
+msgstr "Alexandriaに関する情報を表示します"
+
+#: ../lib/alexandria/ui/callbacks.rb:311
+msgid "Side _Pane"
+msgstr "サイドペイン(_P)"
+
+#: ../lib/alexandria/ui/callbacks.rb:313
+msgid "_Toolbar"
+msgstr "ツールバー(_T)"
+
+#: ../lib/alexandria/ui/callbacks.rb:315
+msgid "_Statusbar"
+msgstr "ステータスバー(_S)"
+
+#: ../lib/alexandria/ui/callbacks.rb:317
+msgid "Re_versed Order"
+msgstr "逆順(_v)"
+
+#: ../lib/alexandria/ui/callbacks.rb:322
+msgid "View as _Icons"
+msgstr "アイコン表示(_I)"
+
+#: ../lib/alexandria/ui/callbacks.rb:323
+msgid "View as _List"
+msgstr "リスト表示(_L)"
+
+#: ../lib/alexandria/ui/callbacks.rb:327
+msgid "By _Title"
+msgstr "タイトル順(_T)"
+
+#: ../lib/alexandria/ui/callbacks.rb:328
+msgid "By _Authors"
+msgstr "作者順(_A)"
+
+#: ../lib/alexandria/ui/callbacks.rb:329
+msgid "By _ISBN"
+msgstr "ISBN順(_I)"
+
+#: ../lib/alexandria/ui/callbacks.rb:330
+msgid "By _Publisher"
+msgstr "出版社順(_P)"
+
+#: ../lib/alexandria/ui/callbacks.rb:331
+msgid "By _Binding"
+msgstr "装丁順(_B)"
+
+#: ../lib/alexandria/ui/callbacks.rb:332
+msgid "By _Rating"
+msgstr "評価順(_R)"
+
+#: ../lib/alexandria/ui/callbacks.rb:336
+msgid "At _%s"
+msgstr "%sを開く"
+
+#: ../lib/alexandria/ui/init.rb:83
+msgid "Unable to launch the help browser"
+msgstr "ヘルプブラウザを起動できません"
+
+#: ../lib/alexandria/ui/init.rb:84
+msgid ""
+"Could not display help for Alexandria. There was an error launching the "
+"system help browser."
+msgstr ""
+"システムのヘルプブラウザを起動しようとしてエラーが発生したので、Alexandriaの"
+"ヘルプを開けませんでした。"
 
 #: ../lib/alexandria/ui/ui_manager.rb:128
 msgid "Type here the search criterion"
@@ -465,11 +768,11 @@ msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d冊の本が選択されています"
 
-#: ../lib/alexandria/ui/ui_manager.rb:552
+#: ../lib/alexandria/ui/ui_manager.rb:567
 msgid "Unable to launch the web browser"
 msgstr "Webブラウザを起動できませんでした"
 
-#: ../lib/alexandria/ui/ui_manager.rb:553
+#: ../lib/alexandria/ui/ui_manager.rb:568
 msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -477,11 +780,11 @@ msgstr ""
 "標準のWebブラウザの設定を確認してください (デスクトップの設定->拡張設定->お気"
 "に入りのアプリ)"
 
-#: ../lib/alexandria/ui/ui_manager.rb:565
+#: ../lib/alexandria/ui/ui_manager.rb:580
 msgid "Unable to launch the mail reader"
 msgstr "メールリーダを起動できませんでした"
 
-#: ../lib/alexandria/ui/ui_manager.rb:566
+#: ../lib/alexandria/ui/ui_manager.rb:581
 msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -489,11 +792,11 @@ msgstr ""
 "標準のメールリーダの設定を確認してください (デスクトップの設定->拡張設定->お"
 "気に入りのアプリ)"
 
-#: ../lib/alexandria/ui/ui_manager.rb:601
+#: ../lib/alexandria/ui/ui_manager.rb:616
 msgid "Repair Book Data"
 msgstr "本のデータを修復します"
 
-#: ../lib/alexandria/ui/ui_manager.rb:602
+#: ../lib/alexandria/ui/ui_manager.rb:617
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
@@ -502,309 +805,124 @@ msgstr ""
 "以下の本のデータファイルは壊れているかもしくは空っぽです。新しいデータをオン"
 "ラインプロバイダーからダウンロードしますか？\n"
 
-#: ../lib/alexandria/ui/ui_manager.rb:659
+#: ../lib/alexandria/ui/ui_manager.rb:674
 msgid "Added '%s' to library '%s'"
 msgstr "ライブラリ'%2$s'に'%1$s'を追加しました"
 
-#: ../lib/alexandria/ui/ui_manager.rb:812
+#: ../lib/alexandria/ui/ui_manager.rb:825
 msgid "Loading '%s'..."
 msgstr "'%s'を読み込んでいます..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:1028
+#: ../lib/alexandria/ui/ui_manager.rb:1051
 msgid "In '_%s'"
 msgstr "'_%s'へ"
 
-#: ../lib/alexandria/ui/callbacks.rb:62
-msgid "The following lines are not valid ISBNs and were not imported:"
-msgstr "以下は無効なISBNなのでインポートされませんでした"
-
-#: ../lib/alexandria/ui/callbacks.rb:252
-msgid "_Library"
-msgstr "ライブラリ(_L)"
-
-#: ../lib/alexandria/ui/callbacks.rb:253
-msgid "_New Library"
-msgstr "新規ライブラリの作成(_N)"
-
-#: ../lib/alexandria/ui/callbacks.rb:253
-msgid "Create a new library"
-msgstr "新しくライブラリを作成します"
-
-#: ../lib/alexandria/ui/callbacks.rb:254
-msgid "New _Smart Library..."
-msgstr "新規高機能ライブラリの作成(_S)"
-
-#: ../lib/alexandria/ui/callbacks.rb:254
-msgid "Create a new smart library"
-msgstr "新しく高機能ライブラリを作成します"
-
-#: ../lib/alexandria/ui/callbacks.rb:255
-msgid "_Add Book..."
-msgstr "本を追加(_A)"
-
-#: ../lib/alexandria/ui/callbacks.rb:255
-msgid "Add a new book from the Internet"
-msgstr "インターネットから本を追加します"
-
-#: ../lib/alexandria/ui/callbacks.rb:256
-msgid "Add Book _Manually..."
-msgstr "本を手入力で追加(_M)..."
-
-#: ../lib/alexandria/ui/callbacks.rb:256
-msgid "Add a new book manually"
-msgstr "本を手入力で追加します"
-
-#: ../lib/alexandria/ui/callbacks.rb:257
-msgid "_Import..."
-msgstr "インポート(_I)..."
-
-#: ../lib/alexandria/ui/callbacks.rb:257
-msgid "Import a library"
-msgstr "ライブラリのインポートします"
-
-#: ../lib/alexandria/ui/callbacks.rb:258
-msgid "_Export..."
-msgstr "エクスポート(_E)..."
-
-#: ../lib/alexandria/ui/callbacks.rb:258
-msgid "Export the selected library"
-msgstr "選択したライブラリをエクスポートします"
-
-#: ../lib/alexandria/ui/callbacks.rb:259
-msgid "_Acquire from Scanner..."
-msgstr "スキャナから読み込む(_A)..."
-
-#: ../lib/alexandria/ui/callbacks.rb:259
-msgid "Acquire books from a scanner"
-msgstr "スキャナから本を読み込みます"
-
-#: ../lib/alexandria/ui/callbacks.rb:260
-msgid "_Properties"
-msgstr "プロパティ(_P)"
-
-#: ../lib/alexandria/ui/callbacks.rb:260
-msgid "Edit the properties of the selected book"
-msgstr "選択した本のプロパティを編集します"
-
-#: ../lib/alexandria/ui/callbacks.rb:261
-msgid "_Quit"
-msgstr "終了(_Q)"
-
-#: ../lib/alexandria/ui/callbacks.rb:261
-msgid "Quit the program"
-msgstr "プログラムを終了します"
-
-#: ../lib/alexandria/ui/callbacks.rb:262
-msgid "_Edit"
-msgstr "編集(_E)"
-
-#: ../lib/alexandria/ui/callbacks.rb:263
-msgid "_Undo"
-msgstr "アンドゥ(_U)"
-
-#: ../lib/alexandria/ui/callbacks.rb:263
-msgid "Undo the last action"
-msgstr "最後の操作をアンドゥします"
-
-#: ../lib/alexandria/ui/callbacks.rb:264
-msgid "_Redo"
-msgstr "リドゥ(_R)"
-
-#: ../lib/alexandria/ui/callbacks.rb:264
-msgid "Redo the undone action"
-msgstr "アンドゥした操作を元に戻します"
-
-#: ../lib/alexandria/ui/callbacks.rb:265
-msgid "_Select All"
-msgstr "全て選択(_S)"
-
-#: ../lib/alexandria/ui/callbacks.rb:265
-msgid "Select all visible books"
-msgstr "見えている本をすべて選択します"
-
-#: ../lib/alexandria/ui/callbacks.rb:266
-msgid "Dese_lect All"
-msgstr "全て非選択(_l)"
-
-#: ../lib/alexandria/ui/callbacks.rb:266
-msgid "Deselect everything"
-msgstr "全てを非選択にします"
-
-#: ../lib/alexandria/ui/callbacks.rb:267
-msgid "My _Rating"
-msgstr "評価(_R)"
-
-#: ../lib/alexandria/ui/callbacks.rb:268
-msgid "None"
-msgstr "評価なし"
-
-#: ../lib/alexandria/ui/callbacks.rb:269
-msgid "One Star"
-msgstr "１つ星"
-
-#: ../lib/alexandria/ui/callbacks.rb:270
-msgid "Two Stars"
-msgstr "２つ星"
-
-#: ../lib/alexandria/ui/callbacks.rb:271
-msgid "Three Stars"
-msgstr "３つ星"
-
-#: ../lib/alexandria/ui/callbacks.rb:272
-msgid "Four Stars"
-msgstr "４つ星"
-
-#: ../lib/alexandria/ui/callbacks.rb:273
-msgid "Five Stars"
-msgstr "５つ星"
-
-#: ../lib/alexandria/ui/callbacks.rb:274
-msgid "_Move"
-msgstr "移動(_M)"
-
-#: ../lib/alexandria/ui/callbacks.rb:275
-msgid "_Rename"
-msgstr "名称変更(_R)"
-
-#: ../lib/alexandria/ui/callbacks.rb:276
-msgid "_Delete"
-msgstr "削除(_D)"
-
-#: ../lib/alexandria/ui/callbacks.rb:276
-msgid "Delete the selected books or library"
-msgstr "選択した本またはライブラリを削除します"
-
-#: ../lib/alexandria/ui/callbacks.rb:277
-msgid "_Search"
-msgstr "検索(_S)"
-
-#: ../lib/alexandria/ui/callbacks.rb:277
-msgid "Filter books"
-msgstr "本にフィルタをかけます"
-
-#: ../lib/alexandria/ui/callbacks.rb:278
-msgid "_Clear Results"
-msgstr "結果のクリア(_C)"
-
-#: ../lib/alexandria/ui/callbacks.rb:278
-msgid "Clear the search results"
-msgstr "結果をクリアします"
-
-#: ../lib/alexandria/ui/callbacks.rb:279
-msgid "_Preferences"
-msgstr "設定(_P)"
-
-#: ../lib/alexandria/ui/callbacks.rb:279
-msgid "Change Alexandria's settings"
-msgstr "Alexandriaの設定変更"
-
-#: ../lib/alexandria/ui/callbacks.rb:280
-msgid "_View"
-msgstr "表示(_V)"
-
-#: ../lib/alexandria/ui/callbacks.rb:281
-msgid "Arran_ge Icons"
-msgstr "アイコンの表示順(_g)"
-
-#: ../lib/alexandria/ui/callbacks.rb:282
-msgid "Display Online _Information"
-msgstr "オンライン情報の表示(_I)"
-
-#: ../lib/alexandria/ui/callbacks.rb:284
-msgid "_Help"
-msgstr "ヘルプ(_H)"
-
-#: ../lib/alexandria/ui/callbacks.rb:285
-msgid "Submit _Bug Report"
-msgstr "バグレポートを送る(_B)"
-
-#: ../lib/alexandria/ui/callbacks.rb:285
-msgid "Submit a bug report to the developers"
-msgstr "バグレポートを開発者に送ります"
-
-#: ../lib/alexandria/ui/callbacks.rb:286
-msgid "Contents"
-msgstr "内容"
-
-#: ../lib/alexandria/ui/callbacks.rb:286
-msgid "View Alexandria's manual"
-msgstr "Alexandriaのマニュアルを見る"
-
-#: ../lib/alexandria/ui/callbacks.rb:287
-msgid "_About"
-msgstr "Alexandriaについて(_A)"
-
-#: ../lib/alexandria/ui/callbacks.rb:287
-msgid "Show information about Alexandria"
-msgstr "Alexandriaに関する情報を表示します"
-
-#: ../lib/alexandria/ui/callbacks.rb:312
-msgid "Side _Pane"
-msgstr "サイドペイン(_P)"
-
-#: ../lib/alexandria/ui/callbacks.rb:314
-msgid "_Toolbar"
-msgstr "ツールバー(_T)"
-
-#: ../lib/alexandria/ui/callbacks.rb:316
-msgid "_Statusbar"
-msgstr "ステータスバー(_S)"
-
-#: ../lib/alexandria/ui/callbacks.rb:318
-msgid "Re_versed Order"
-msgstr "逆順(_v)"
-
-#: ../lib/alexandria/ui/callbacks.rb:323
-msgid "View as _Icons"
-msgstr "アイコン表示(_I)"
-
-#: ../lib/alexandria/ui/callbacks.rb:324
-msgid "View as _List"
-msgstr "リスト表示(_L)"
-
-#: ../lib/alexandria/ui/callbacks.rb:328
-msgid "By _Title"
-msgstr "タイトル順(_T)"
-
-#: ../lib/alexandria/ui/callbacks.rb:329
-msgid "By _Authors"
-msgstr "作者順(_A)"
-
-#: ../lib/alexandria/ui/callbacks.rb:330
-msgid "By _ISBN"
-msgstr "ISBN順(_I)"
-
-#: ../lib/alexandria/ui/callbacks.rb:331
-msgid "By _Publisher"
-msgstr "出版社順(_P)"
-
-#: ../lib/alexandria/ui/callbacks.rb:332
-msgid "By _Binding"
-msgstr "装丁順(_B)"
-
-#: ../lib/alexandria/ui/callbacks.rb:333
-msgid "By _Rating"
-msgstr "評価順(_R)"
-
-#: ../lib/alexandria/ui/callbacks.rb:337
-msgid "At _%s"
-msgstr "%sを開く"
+#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:345
+msgid "Title"
+msgstr "タイトル"
+
+#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:347
+msgid "Authors"
+msgstr "作者"
+
+#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:346
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:348
+msgid "Publisher"
+msgstr "出版社"
+
+#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:349
+msgid "Publish Year"
+msgstr "出版年"
+
+#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:350
+msgid "Binding"
+msgstr "装丁"
+
+#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:100
+#: ../lib/alexandria/smart_library.rb:357
+msgid "Read"
+msgstr "読んだ本"
+
+#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:359
+msgid "Own"
+msgstr "持ってる本"
+
+#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:360
+msgid "Want"
+msgstr "欲しい本"
+
+#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:353
+#: ../data/alexandria/glade/preferences_dialog.glade:199
+msgid "Tags"
+msgstr "タグ"
+
+#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:351
+msgid "Rating"
+msgstr "評価"
+
+#: ../lib/alexandria/ui/sidepane.rb:49
+msgid "Invalid library name '%s'"
+msgstr "ライブラリ名が不正です '%s'"
+
+#: ../lib/alexandria/ui/sidepane.rb:50
+#, fuzzy
+msgid "The name provided contains the disallowed character <b>%s</b> "
+msgstr "その名称は不正な文字を含んでいます '<i>%s</i>'"
+
+#: ../lib/alexandria/ui/sidepane.rb:53
+#, fuzzy
+msgid "Invalid library name"
+msgstr "ライブラリ名が不正です '%s'"
+
+#: ../lib/alexandria/ui/sidepane.rb:54
+#, fuzzy
+msgid "The name provided contains invalid characters."
+msgstr "その名称は不正な文字を含んでいます '<i>%s</i>'"
+
+#: ../lib/alexandria/ui/sidepane.rb:60
+msgid "The library name can not be empty"
+msgstr "ライブラリ名を入力してください"
+
+#: ../lib/alexandria/ui/sidepane.rb:65
+msgid "The library can not be renamed"
+msgstr "ライブラリ名は変更できません"
+
+#: ../lib/alexandria/ui/sidepane.rb:66
+msgid "There is already a library named '%s'.  Please choose a different name."
+msgstr "そのライブラリ名はすでに存在します。他の名前を指定してください。"
+
+#: ../lib/alexandria/ui/sidepane.rb:92
+msgid "Library"
+msgstr "ライブラリ"
 
 #: ../lib/alexandria/ui/libraries_combo.rb:44
 msgid "New Library"
 msgstr "新規ライブラリ"
 
-#: ../lib/alexandria/ui/init.rb:83
-msgid "Unable to launch the help browser"
-msgstr "ヘルプブラウザを起動できません"
+#: ../lib/alexandria/book_providers.rb:71
+msgid "Couldn't reach the provider '%s': timeout expired."
+msgstr "'%s'に接続できませんでした： タイムアウトです。"
 
-#: ../lib/alexandria/ui/init.rb:84
+#: ../lib/alexandria/book_providers.rb:75
+msgid "Couldn't reach the provider '%s': socket error (%s)."
+msgstr "'%s'に接続できませんでした： ソケットエラー(%s)。"
+
+#: ../lib/alexandria/book_providers.rb:79
 msgid ""
-"Could not display help for Alexandria. There was an error launching the "
-"system help browser."
-msgstr ""
-"システムのヘルプブラウザを起動しようとしてエラーが発生したので、Alexandriaの"
-"ヘルプを開けませんでした。"
+"No results were found.  Make sure your search criterion is spelled "
+"correctly, and try again."
+msgstr "結果がみつかりませんでした。入力文字を確認して再度トライしてください。"
+
+#: ../lib/alexandria/book_providers.rb:84
+msgid "Too many results for that search."
+msgstr "検索結果が多すぎます。"
+
+#: ../lib/alexandria/book_providers.rb:87
+msgid "Invalid search type."
+msgstr "検索種別が不正です。"
 
 #: ../lib/alexandria/import_library.rb:29
 msgid "Autodetect"
@@ -821,107 +939,6 @@ msgstr "ISBNリスト (*.txt)"
 #: ../lib/alexandria/import_library.rb:34
 msgid "GoodReads CSV"
 msgstr ""
-
-#: ../lib/alexandria/smart_library.rb:88
-msgid "Favorite"
-msgstr "好きな本"
-
-#: ../lib/alexandria/smart_library.rb:94
-msgid "Loaned"
-msgstr "貸し出し中"
-
-#: ../lib/alexandria/smart_library.rb:106
-msgid "Owned"
-msgstr "持っている"
-
-#: ../lib/alexandria/smart_library.rb:115
-msgid "Wishlist"
-msgstr "欲しい本"
-
-#: ../lib/alexandria/smart_library.rb:345
-#: ../data/alexandria/glade/book_properties_dialog.glade:1225
-msgid "Notes"
-msgstr "ノート"
-
-#: ../lib/alexandria/smart_library.rb:347
-msgid "Loaning State"
-msgstr "貸し出し状態"
-
-#: ../lib/alexandria/smart_library.rb:348
-msgid "Loaning Date"
-msgstr "貸し出し日"
-
-#: ../lib/alexandria/smart_library.rb:349
-msgid "Loaning Person"
-msgstr "貸し出した人"
-
-#: ../lib/alexandria/smart_library.rb:351
-msgid "Date Read"
-msgstr "読んだ日"
-
-#: ../lib/alexandria/smart_library.rb:360
-msgid "days"
-msgstr "日"
-
-#: ../lib/alexandria/smart_library.rb:370
-msgid "is set"
-msgstr "チェックをつけたもの"
-
-#: ../lib/alexandria/smart_library.rb:374
-msgid "is not set"
-msgstr "チェックをつけてないもの"
-
-#: ../lib/alexandria/smart_library.rb:378
-msgid "is"
-msgstr "が以下と同じもの"
-
-#: ../lib/alexandria/smart_library.rb:382
-msgid "is not"
-msgstr "が以下と同じでないもの"
-
-#: ../lib/alexandria/smart_library.rb:386
-msgid "contains"
-msgstr "が以下を含むもの"
-
-#: ../lib/alexandria/smart_library.rb:390
-msgid "does not contain"
-msgstr "が以下を含まないもの"
-
-#: ../lib/alexandria/smart_library.rb:394
-msgid "starts with"
-msgstr "が以下で始まるもの"
-
-#: ../lib/alexandria/smart_library.rb:398
-msgid "ends with"
-msgstr "が以下で終わるもの"
-
-#: ../lib/alexandria/smart_library.rb:402
-msgid "is greater than"
-msgstr "が以下より大きいもの"
-
-#: ../lib/alexandria/smart_library.rb:406
-msgid "is less than"
-msgstr "が以下より小さいもの"
-
-#: ../lib/alexandria/smart_library.rb:410
-msgid "is after"
-msgstr "が以下より後のもの"
-
-#: ../lib/alexandria/smart_library.rb:414
-msgid "is before"
-msgstr "が以下より前のもの"
-
-#: ../lib/alexandria/smart_library.rb:418
-msgid "is in last"
-msgstr "が以下の期間以内のもの"
-
-#: ../lib/alexandria/smart_library.rb:422
-msgid "is not in last"
-msgstr "が以下の期間以上のもの"
-
-#: ../lib/alexandria/about.rb:24
-msgid "A program to help you manage your book collection."
-msgstr "本のコレクション管理お手伝いプログラム"
 
 #: ../lib/alexandria/export_library.rb:101
 msgid "Archived ONIX XML"
@@ -951,115 +968,113 @@ msgstr "iPod用ノート"
 msgid "HTML Web Page"
 msgstr "HTMLウェブページ"
 
-#: ../lib/alexandria/models/library.rb:56
-msgid "Untitled"
-msgstr "タイトル未設定"
+#: ../lib/alexandria/smart_library.rb:88
+msgid "Favorite"
+msgstr "好きな本"
 
-#: ../lib/alexandria/models/library.rb:233
-msgid "My Library"
-msgstr "マイライブラリ"
+#: ../lib/alexandria/smart_library.rb:94
+msgid "Loaned"
+msgstr "貸し出し中"
 
-#: ../lib/alexandria/book_providers.rb:53
-msgid "Couldn't reach the provider '%s': timeout expired."
-msgstr "'%s'に接続できませんでした： タイムアウトです。"
+#: ../lib/alexandria/smart_library.rb:106
+msgid "Owned"
+msgstr "持っている"
 
-#: ../lib/alexandria/book_providers.rb:57
-msgid "Couldn't reach the provider '%s': socket error (%s)."
-msgstr "'%s'に接続できませんでした： ソケットエラー(%s)。"
+#: ../lib/alexandria/smart_library.rb:115
+msgid "Wishlist"
+msgstr "欲しい本"
 
-#: ../lib/alexandria/book_providers.rb:61
-msgid ""
-"No results were found.  Make sure your search criterion is spelled "
-"correctly, and try again."
-msgstr "結果がみつかりませんでした。入力文字を確認して再度トライしてください。"
+#: ../lib/alexandria/smart_library.rb:352
+#: ../data/alexandria/glade/book_properties_dialog.glade:1225
+msgid "Notes"
+msgstr "ノート"
 
-#: ../lib/alexandria/book_providers.rb:66
-msgid "Too many results for that search."
-msgstr "検索結果が多すぎます。"
+#: ../lib/alexandria/smart_library.rb:354
+msgid "Loaning State"
+msgstr "貸し出し状態"
 
-#: ../lib/alexandria/book_providers.rb:69
-msgid "Invalid search type."
-msgstr "検索種別が不正です。"
+#: ../lib/alexandria/smart_library.rb:355
+msgid "Loaning Date"
+msgstr "貸し出し日"
 
-#: ../lib/alexandria/book_providers/amazon.rb:32
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:34
-msgid "Locale"
-msgstr "ロケール"
+#: ../lib/alexandria/smart_library.rb:356
+msgid "Loaning Person"
+msgstr "貸し出した人"
 
-#: ../lib/alexandria/book_providers/amazon.rb:34
-#: ../lib/alexandria/book_providers/amazon_ecs4.rb:35
-msgid "Development token"
-msgstr "デベロッパー・トークン"
+#: ../lib/alexandria/smart_library.rb:358
+msgid "Date Read"
+msgstr "読んだ日"
 
-#: ../lib/alexandria/book_providers/amazon.rb:36
-msgid "Associate ID"
-msgstr "アソシエイトID"
+#: ../lib/alexandria/smart_library.rb:367
+msgid "days"
+msgstr "日"
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "スペイン文化省"
+#: ../lib/alexandria/smart_library.rb:377
+msgid "is set"
+msgstr "チェックをつけたもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:33
-msgid "Hostname"
-msgstr "ホスト名"
+#: ../lib/alexandria/smart_library.rb:381
+msgid "is not set"
+msgstr "チェックをつけてないもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:34
-msgid "Port"
-msgstr "ポート番号"
+#: ../lib/alexandria/smart_library.rb:385
+msgid "is"
+msgstr "が以下と同じもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:35
-msgid "Database"
-msgstr "データベース"
+#: ../lib/alexandria/smart_library.rb:389
+msgid "is not"
+msgstr "が以下と同じでないもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:36
-msgid "Record syntax"
-msgstr "レコードシンタックス"
+#: ../lib/alexandria/smart_library.rb:393
+msgid "contains"
+msgstr "が以下を含むもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:37
-msgid "Username"
-msgstr "ユーザ名"
+#: ../lib/alexandria/smart_library.rb:397
+msgid "does not contain"
+msgstr "が以下を含まないもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:38
-msgid "Password"
-msgstr "パスワード"
+#: ../lib/alexandria/smart_library.rb:401
+msgid "starts with"
+msgstr "が以下で始まるもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:39
-msgid "Charset encoding"
-msgstr "文字のエンコーディング"
+#: ../lib/alexandria/smart_library.rb:405
+msgid "ends with"
+msgstr "が以下で終わるもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:189
-msgid "Library of Congress (Usa)"
-msgstr "米国国会図書館"
+#: ../lib/alexandria/smart_library.rb:409
+msgid "is greater than"
+msgstr "が以下より大きいもの"
 
-#: ../lib/alexandria/book_providers/z3950.rb:217
-msgid "British Library"
-msgstr "大英図書館"
+#: ../lib/alexandria/smart_library.rb:413
+msgid "is less than"
+msgstr "が以下より小さいもの"
 
-#: ../lib/alexandria/book_providers/proxis.rb:35
-msgid "Language"
-msgstr "言語"
+#: ../lib/alexandria/smart_library.rb:417
+msgid "is after"
+msgstr "が以下より後のもの"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:31
-#: ../data/alexandria/glade/book_properties_dialog.glade:187
-msgid "_ISBN:"
-msgstr "ISBN(_I):"
+#: ../lib/alexandria/smart_library.rb:421
+msgid "is before"
+msgstr "が以下より前のもの"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:46
-msgid "_Search:"
-msgstr "検索(_S):"
+#: ../lib/alexandria/smart_library.rb:425
+msgid "is in last"
+msgstr "が以下の期間以内のもの"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:97
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"タイトル\n"
-"作者\n"
-"キーワード"
+#: ../lib/alexandria/smart_library.rb:429
+msgid "is not in last"
+msgstr "が以下の期間以上のもの"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:161
+#: ../lib/alexandria/about.rb:24
+msgid "A program to help you manage your book collection."
+msgstr "本のコレクション管理お手伝いプログラム"
+
+#: ../data/alexandria/glade/acquire_dialog.glade:9
+msgid "Acquire from Scanner"
+msgstr "スキャナから読み込み"
+
 #: ../data/alexandria/glade/acquire_dialog.glade:85
+#: ../data/alexandria/glade/new_book_dialog.glade:90
 msgid "Save _in:"
 msgstr "保存先ライブラリ(_i):"
 
@@ -1090,6 +1105,11 @@ msgstr "タイトル(_T):"
 #: ../data/alexandria/glade/book_properties_dialog.glade:115
 msgid "_Publisher:"
 msgstr "出版社(_P):"
+
+#: ../data/alexandria/glade/book_properties_dialog.glade:187
+#: ../data/alexandria/glade/new_book_dialog.glade:219
+msgid "_ISBN:"
+msgstr "ISBN(_I):"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:279
 msgid "Add an author"
@@ -1163,10 +1183,6 @@ msgstr "いつから(_S):"
 msgid "Loaning"
 msgstr "貸し出し"
 
-#: ../data/alexandria/glade/acquire_dialog.glade:9
-msgid "Acquire from Scanner"
-msgstr "スキャナから読み込み"
-
 #: ../data/alexandria/glade/preferences_dialog.glade:7
 msgid "Preferences"
 msgstr "設定"
@@ -1175,55 +1191,55 @@ msgstr "設定"
 msgid "<b>Visible Columns</b>"
 msgstr "<b>表示カラム</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:64
-msgid "Want?"
-msgstr "欲しい本"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:80
-msgid "Own?"
-msgstr "持っている本"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:96
-msgid "Read?"
-msgstr "読んだ本"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:112
-msgid "Publish _year"
-msgstr "出版年(_y)"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:128
-msgid "_Binding"
-msgstr "装丁(_B)"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:144
-msgid "_Rating"
-msgstr "評価(_R)"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:160
-msgid "_Publisher"
-msgstr "出版社(_P)"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:176
-msgid "_ISBN"
-msgstr "ISBN(_I)"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:192
+#: ../data/alexandria/glade/preferences_dialog.glade:48
 msgid "_Authors"
 msgstr "作者(_A)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:215
+#: ../data/alexandria/glade/preferences_dialog.glade:63
+msgid "_ISBN"
+msgstr "ISBN(_I)"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:80
+msgid "_Publisher"
+msgstr "出版社(_P)"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:97
+msgid "_Rating"
+msgstr "評価(_R)"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:114
+msgid "_Binding"
+msgstr "装丁(_B)"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:131
+msgid "Publish _year"
+msgstr "出版年(_y)"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:148
+msgid "Read?"
+msgstr "読んだ本"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:165
+msgid "Own?"
+msgstr "持っている本"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:182
+msgid "Want?"
+msgstr "欲しい本"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:222
 msgid "List View"
 msgstr "リスト表示"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:232
+#: ../data/alexandria/glade/preferences_dialog.glade:238
 msgid "<b>_Providers</b>"
 msgstr "<b>プロバイダ(_P)</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:299
+#: ../data/alexandria/glade/preferences_dialog.glade:306
 msgid "_Setup"
 msgstr "セットアップ(_S)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:381
+#: ../data/alexandria/glade/preferences_dialog.glade:392
 msgid ""
 "Providers are libraries that supply information about books.  Some of them "
 "can be configured to get better results.  You can also customize the order "
@@ -1232,13 +1248,37 @@ msgstr ""
 "プロバイダは本の情報を提供するライブラリです。より良い結果を得るためにそれら"
 "を設定することができます。また、それらの検索順序もカスタマイズできます。"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:394
+#: ../data/alexandria/glade/preferences_dialog.glade:405
+msgid ""
+"Add and remove your own Z39.50 providers.\n"
+"Requires the Ruby/ZOOM software library."
+msgstr ""
+
+#: ../data/alexandria/glade/preferences_dialog.glade:407
 msgid "_Advanced Settings"
 msgstr "詳細設定(_A)"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:414
+#: ../data/alexandria/glade/preferences_dialog.glade:427
 msgid "Providers"
 msgstr "プロバイダ"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:31
+msgid "_Keep Dialog Open after Adding Book"
+msgstr ""
+
+#: ../data/alexandria/glade/new_book_dialog.glade:114
+msgid ""
+"by title\n"
+"by authors\n"
+"by keyword"
+msgstr ""
+"タイトル\n"
+"作者\n"
+"キーワード"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:201
+msgid "_Search:"
+msgstr "検索(_S):"
 
 #: ../alexandria.desktop.in.h:1
 msgid "Alexandria Book Collection Manager"
@@ -1251,3 +1291,6 @@ msgstr "ブック・コレクション・マネージャ"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "ブック・コレクション管理お手伝いプログラム"
+
+#~ msgid "Associate ID"
+#~ msgstr "アソシエイトID"
