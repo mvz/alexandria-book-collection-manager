@@ -15,7 +15,8 @@ Alexandria is written in Ruby using ruby-gnome2.
 
 - A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
 
-- An ad-hoc deb file (for Debian, Ubuntu & gNewSense) can be downloaded from there too
+- An ad-hoc deb file (for Debian, Ubuntu & gNewSense) can be
+  downloaded from there too
 
 - SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
@@ -23,13 +24,21 @@ Alexandria is written in Ruby using ruby-gnome2.
 ======================
 
 New Dependencies:
-- All book providers now require Hpricot (a.k.a. libhpricot-ruby) for HTML parsing
+
+- All web-based book providers now require Hpricot
+  (a.k.a. libhpricot-ruby) for HTML and XML parsing
 - DeaStore requires HTMLEntities (a.k.a. libhtmlentities-ruby)
 
 Changes:
 
 - Better GUI feedback when adding books by ISBN
-- Temporarily removed some broken providers, but completely rewrote others
+- Removed the obsolete Amazon (ECS) provider and replaced it with the new
+  AWS-based Amazon provider
+- Fixed several book providers (DeaStore, Siciliano, AdLibris & WorldCat)
+- Temporarily removed some broken providers
+- Now supports non-CueCat "keyboard wedge" barcode scanners;
+  no settings interface yet, but you can run gconf-editor /apps/alexandria
+  and set barcode_scanner to KeyboardWedge
 - Better (though not perfect) handling of character encoding
 - Improved stability (fewer crashes)
 

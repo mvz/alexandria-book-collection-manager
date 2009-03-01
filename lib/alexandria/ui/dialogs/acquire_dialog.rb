@@ -17,8 +17,8 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 #require 'monitor'
-require 'alexandria/scanners/keyboard'
 require 'alexandria/scanners/cuecat'
+require 'alexandria/scanners/keyboard'
 
 module Alexandria
   module UI
@@ -231,7 +231,6 @@ module Alexandria
         setup_scanner_area
         init_treeview
         @book_results = Hash.new
-        # @search_threads_count = 0
         
         @search_thread_counter = SearchThreadCounter.new
         @search_threads_running = @search_thread_counter.new_cond
@@ -269,7 +268,13 @@ module Alexandria
         selection = @barcodes_treeview.selection
         isbns = []
         isbn_duplicates = []
+
+        adding_a_selection = false
+
         if selection.count_selected_rows > 0
+
+          adding_a_selection = true
+
           model.freeze_notify do
             # capture isbns
             selection.selected_each do |model, path, iter|
@@ -367,10 +372,16 @@ module Alexandria
           library.save(book)
         end
 
-        unless isbn_duplicates.empty?
-          message = "There were #{isbn_duplicates.size} duplicates"
-          ErrorDialog.new(@parent, _("Couldn't add these books"), message)
-          # TODO pop up warning dialog, noting the number of duplicates...
+        if isbn_duplicates.empty?
+          @acquire_dialog.destroy unless adding_a_selection
+        else
+          message = n_("There was %d duplicate",
+                       "There were %d duplicates",
+                       isbn_duplicates.size) % isbn_duplicates.size
+          title = n_("Couldn't add this book",
+                     "Couldn't add these books",
+                     isbn_duplicates.size)
+          ErrorDialog.new(@parent, title, message)
         end
 
         @block.call(books, library, is_new_library)
@@ -440,7 +451,7 @@ module Alexandria
       def notify_end_add_by_isbn
         Gtk.idle_add do
           MainApp.instance.appbar.children.first.visible = false
-          Gtk::timeout_remove(@progress_pulsing)
+          Gtk::timeout_remove(@progress_pulsing) if @progress_pulsing
           false
         end
       end
@@ -472,14 +483,11 @@ module Alexandria
             @progress_bar_thread = Thread.new do
               notify_start_add_by_isbn
               Alexandria::BookProviders.instance.add_observer(self)
-              # puts "A: ============= Progress bar is operating========="
               @search_thread_counter.synchronize do
                 @search_threads_running.wait_while do
-                  # puts "...checking #{@search_thread_counter.count}"
                   @search_thread_counter.count > 0
                 end
               end
-              # puts "A: Stopping progress bar!!!!!!!!!!!!!!!!!!!!!!!!!!!"
               notify_end_add_by_isbn
               Alexandria::BookProviders.instance.add_observer(self)
             end
@@ -490,29 +498,10 @@ module Alexandria
       end
 
 
-      def set_searching(search)
-        # this is a real hack, there's a proper thread-ish way
-        # to deal with this kind of problem
-        if search
-          start_search
-          #if (@search_threads_count == 0)
-          #  notify_start_add_by_isbn
-          #  Alexandria::BookProviders.instance.add_observer(self)
-          #end
-          # @search_threads_count += 1
-          #log.debug { "New search: total threads #{@search_threads_count}" } 
-        else
-          @search_thread_counter.synchronize do
-            @search_thread_counter.end_search
-            @search_threads_running.signal
-          end
-          # @search_threads_count -= 1
-          #log.debug { "Finishing search: total threads #{@search_threads_count}" } 
-          #if (@search_threads_count == 0)
-          #  Alexandria::BookProviders.instance.delete_observer(self)
-          #  notify_end_add_by_isbn
-          #end
-          
+      def stop_search
+        @search_thread_counter.synchronize do
+          @search_thread_counter.end_search
+          @search_threads_running.signal
         end
       end
 
@@ -520,7 +509,7 @@ module Alexandria
       def lookup_book(isbn)
         lookup_thread = Thread.new(isbn) do |isbn|
           begin
-            set_searching(true)
+            start_search
             results = Alexandria::BookProviders.isbn_search(isbn)
             book = results[0]
             cover_uri = results[1]
@@ -541,7 +530,7 @@ module Alexandria
             log.error { "Book Search failed: #{err.message}"}
             log << err if log.error?
           ensure
-            set_searching(false)
+            stop_search
           end
         end
       end
@@ -586,17 +575,25 @@ module Alexandria
         end
       end
 
+      def on_destroy
+        MainApp.instance.appbar.status = ""
+        notify_end_add_by_isbn
+        # TODO possibly make sure all threads have stopped running
+      end
+
       def setup_scanner_area
         @scanner_buffer = ""
         scanner_name = Alexandria::Preferences.instance.barcode_scanner
-        @scanner = Alexandria::Scanners::Registry.first
+        @scanner = Alexandria::Scanners::Registry.first # CueCat is default
         Alexandria::Scanners::Registry.each do |scanner|
           if scanner.name == scanner_name
             @scanner = scanner
           end
         end
-        
+
         log.debug { "Using #{@scanner.name} scanner" }
+        message = _("Ready to use %s barcode scanner") % @scanner.name
+        MainApp.instance.appbar.status = message 
 
         @prev_time = 0
         @interval = 0

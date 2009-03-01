@@ -94,17 +94,6 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/alexandria/cuecat_device</key>
-      <applyto>/apps/alexandria/cuecat_device</applyto>
-      <owner>alexandria</owner>
-      <type>string</type>
-      <default>/dev/scanners/cuecat</default>
-      <locale name="C">
-        <short>CueCat device</short>
-        <long>Full path to the CueCat device driver (Linux only).</long>
-      </locale>
-    </schema>
-    <schema>
       <key>/schemas/apps/alexandria/barcode_scanner</key>
       <applyto>/apps/alexandria/barcode_scanner</applyto>
       <owner>alexandria</owner>

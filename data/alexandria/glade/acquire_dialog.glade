@@ -10,6 +10,7 @@
     <property name="default_height">520</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="has_separator">False</property>
+    <signal name="close" handler="on_destroy"/>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog_vbox1">
         <property name="visible">True</property>
@@ -38,6 +39,7 @@
                 <child>
                   <widget class="GtkFrame" id="scan_frame">
                     <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
                     <property name="shadow_type">GTK_SHADOW_IN</property>
                     <child>
                       <widget class="GnomeCanvas" id="barcode_canvas">
@@ -67,7 +69,7 @@
                     <property name="height_request">211</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-		    <property name="headers_visible">False</property>
+                    <property name="headers_visible">False</property>
                   </widget>
                 </child>
               </widget>
