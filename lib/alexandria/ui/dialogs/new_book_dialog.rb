@@ -457,6 +457,10 @@ module Alexandria
       def post_addition(books, library, is_new_library)
         puts "post_addition #{books.size}" 
         return if books.empty?
+
+        # books, a 1d array of Alexandria::Book        
+        @block.call(books, library, is_new_library)
+
         if @keep_open.active?
           # TODO reset and clear fields
           if @@last_criterion_was_not_isbn
@@ -475,8 +479,8 @@ module Alexandria
           @new_book_dialog.destroy
         end
         
-        # books, a 1d array of Alexandria::Book
-        @block.call(books, library, is_new_library)
+        
+        
 
       end
 
