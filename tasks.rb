@@ -257,7 +257,7 @@ class AlexandriaBuild < Rake::TaskLib
                                 "NEWS",
                                 "Rakefile", "TODO", "alexandria.desktop",
                                 "alexandria.desktop.in", "tasks.rb",
-                                "bin/**/*", "data/**/*",
+                                "bin/**/*", "data/**/*", "misc/**/*",
                                 "doc/**/*", "lib/**/*", "po/**/*",
                                 "schemas/**/*", "spec/**/*", "tests/**/*")
       end
@@ -332,6 +332,7 @@ class AlexandriaBuild < Rake::TaskLib
       default_groups.push(*manpage_installation)
       default_groups.push(*menu_installation)
       default_groups.push(*documentation_installation)
+      default_groups.push(*sounds_installation)
       default_groups
     end
 
@@ -384,6 +385,15 @@ class AlexandriaBuild < Rake::TaskLib
     def menu_installation
       menu_dir = File.join(sharedir, 'menu')
       [['data/menu', build.files.menu, menu_dir, 0644]]
+    end
+
+    def sounds_installation
+      sound_files = []
+      Dir.glob('data/sounds/**/*.ogg') do |f|
+        sound_files << f       
+      end
+      sound_dir = File.join(sharedir, 'sounds')
+      [['data/sounds', sound_files, sound_dir, 0644]]
     end
 
     def manpage_installation

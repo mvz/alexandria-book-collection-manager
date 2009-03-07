@@ -99,7 +99,9 @@ file 'lib/alexandria/config.rb' => ['Rakefile'] do |f|
     <<EOS
 module Alexandria
   module Config
-    DATA_DIR = '#{build.install.prefix}/share/#{build.name}'
+    SHARE_DIR = '#{build.install.prefix}/share'
+    SOUNDS_DIR = "\#{SHARE_DIR}/sounds/#{build.name}"
+    DATA_DIR = "\#{SHARE_DIR}/#{build.name}"
     MAIN_DATA_DIR = DATA_DIR
     LIB_DIR = '#{build.install.rubylib}'
   end

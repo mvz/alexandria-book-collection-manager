@@ -1,0 +1,15 @@
+The sound files for Alexandria are generated using CSound, a free (GNU
+LGPL) "sound design, music synthesis, and signal processing system".
+http://www.csounds.com/
+
+Because most users won't have CSound installed, the generated audio
+files are also distributed as part of the source. You can find them
+under data/sounds/alexandria, and they will be installed in
+/usr/share/sounds/alexandria
+
+These sounds are released under the same license as Alexandria (GNU
+GPL v2+), (so if you redistribute the generated sound files, you must
+make the csd source available as specified under the GPL).
+
+   -   Cathal Mc Ginley
+       2009-03-07

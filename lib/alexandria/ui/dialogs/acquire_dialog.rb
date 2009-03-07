@@ -413,7 +413,7 @@ module Alexandria
         if isbn
           log.debug { "Got ISBN #{isbn}" }
           # TODO :: sound
-          play_sound("gnometris/turn")
+          play_sound("good_scan")
 
           @barcodes_treeview.model.freeze_notify do
             iter = @barcodes_treeview.model.append
@@ -425,7 +425,7 @@ module Alexandria
         else
           log.debug { "was not an ISBN barcode" }
           # TODO :: sound
-          play_sound("question")
+          play_sound("bad_scan")
         end
       end
 
@@ -643,7 +643,7 @@ module Alexandria
                 log.debug { "Scanning! Received first character." }
               end
               # TODO :: sound
-              play_sound("iagno/flip-piece")
+              play_sound("scanning")
             end
             @scanner_buffer << event.keyval.chr
 
@@ -766,8 +766,11 @@ module Alexandria
       end
 
       def play_sound(filename)
-        dir = "/usr/share/sounds"
-        Gnome::Sound.play("#{dir}/#{filename}.wav")
+        sound_file = "#{Config::SOUNDS_DIR}/#{filename}.ogg"
+        log.info { "playing #{sound_file}" }
+        Gnome::Sound.play(sound_file)
+        # HACK, if your GNOME "system sounds" don't work, uncomment this...
+        ## `ogg123 #{sound_file}`
       end
 
     end
