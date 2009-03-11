@@ -913,12 +913,21 @@ module Alexandria
         library = selected_library
         view = page == 0 ? @iconview : @listview
         selection = page == 0 ? @iconview : @listview.selection
-        selection.selected_each do |treeview, path|
-          path = view.model.convert_path_to_child_path(path)
+
+        selection.selected_each do |the_view, path|
+          path = the_view.model.convert_path_to_child_path(path)
           if path
             path = @filtered_model.convert_path_to_child_path(path)
-            iter = @model.get_iter(path)
-            a << book_from_iter(library, iter)
+            # FIX this sometimes returns a nil path for iconview...
+            if path
+              iter = @model.get_iter(path)
+              if iter
+                a << book_from_iter(library, iter)
+              end
+            end
+            # This used to cause a crash when manually adding the first
+            # book to a Library displayed in an Iconview
+            # TODO find root cause of this
           end
         end
         a
