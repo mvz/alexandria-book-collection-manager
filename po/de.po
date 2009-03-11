@@ -1,5 +1,5 @@
 # German translation for Alexandria
-# Copyright (C) 2004, 2005, 2006, 2007, 2008 Joachim Breitner <mail@joachim-breitner.de>
+# Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Joachim Breitner <mail@joachim-breitner.de>
 # This file is distributed under the same license as the Alexandria package.
 #
 #
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-01 10:35+0000\n"
-"PO-Revision-Date: 2008-04-15 19:12+0200\n"
+"PO-Revision-Date: 2009-03-11 20:29+0100\n"
 "Last-Translator: Joachim Breitner <mail@joachim-breitner.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -123,22 +123,22 @@ msgstr "Konnte das Buch nicht hinzufügen"
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
 msgid "Searching Provider '%s'..."
-msgstr ""
+msgstr "Suche Anbieter '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
 msgid "Error while Searching Provider '%s'"
-msgstr ""
+msgstr "Fehler beim Suchen des Anbieters '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
 msgid "Not Found at Provider '%s'"
-msgstr ""
+msgstr "Beim Anbeiter '%s' nicht gefunden"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
 msgid "Found at Provider '%s'"
-msgstr ""
+msgstr "Beim Anbieter '%s' gefunden"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
 msgid "'%s' already exists in '%s' (titled '%s')."
@@ -302,19 +302,18 @@ msgstr "Es muss mindestens ein Autor angegeben werden."
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Es gab %d Duplikat"
+msgstr[1] "Es gab %d Duplikate"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
-#, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
-msgstr[0] "Konnte das Buch nicht hinzufügen"
-msgstr[1] "Konnte das Buch nicht hinzufügen"
+msgstr[0] "Konnte dieses Buch nicht hinzufügen"
+msgstr[1] "Konnte diese Bücher nicht hinzufügen"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
 msgid "Ready to use %s barcode scanner"
-msgstr ""
+msgstr "Bereit, den Barcode-Scanner %s zu verwenden"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
 #: ../data/alexandria/glade/acquire_dialog.glade:26
@@ -440,8 +439,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/callbacks.rb:62
 msgid "The following lines are not valid ISBNs and were not imported:"
-msgstr ""
-"Die folgenden Zeilen sind keine gültigen ISBNs und wurden nicht importiert."
+msgstr "Die folgenden Zeilen sind keine gültigen ISBNs und wurden nicht importiert."
 
 #: ../lib/alexandria/ui/callbacks.rb:251
 msgid "_Library"
@@ -910,19 +908,16 @@ msgid "Invalid library name '%s'"
 msgstr "Ungültiger Bibliotheksname '%s'"
 
 #: ../lib/alexandria/ui/sidepane.rb:50
-#, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b> "
-msgstr "Der angegebene Name enthält das ungültige Zeichen '<i>%s</i>'"
+msgstr "Der angegebene Name enthält das ungültige Zeichen '<b>%s</b>'"
 
 #: ../lib/alexandria/ui/sidepane.rb:53
-#, fuzzy
 msgid "Invalid library name"
-msgstr "Ungültiger Bibliotheksname '%s'"
+msgstr "Ungültiger Bibliotheksname"
 
 #: ../lib/alexandria/ui/sidepane.rb:54
-#, fuzzy
 msgid "The name provided contains invalid characters."
-msgstr "Der angegebene Name enthält das ungültige Zeichen '<i>%s</i>'"
+msgstr "Der angegebene Name enthält ungültige Zeichen."
 
 #: ../lib/alexandria/ui/sidepane.rb:60
 msgid "The library name can not be empty"
@@ -984,7 +979,7 @@ msgstr "ISBN-Liste (*.txt)"
 
 #: ../lib/alexandria/import_library.rb:34
 msgid "GoodReads CSV"
-msgstr ""
+msgstr "GoodReads CSV"
 
 #: ../lib/alexandria/export_library.rb:101
 msgid "Archived ONIX XML"
@@ -1300,6 +1295,8 @@ msgid ""
 "Add and remove your own Z39.50 providers.\n"
 "Requires the Ruby/ZOOM software library."
 msgstr ""
+"Verwalte deine eigene Z39.50 providers.\n"
+"Benötigt die Ruby/ZOOM-Softwarebibliothek"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:407
 msgid "_Advanced Settings"
@@ -1311,7 +1308,7 @@ msgstr "Anbieter"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:31
 msgid "_Keep Dialog Open after Adding Book"
-msgstr ""
+msgstr "Dialog nach dem Hinzufügen offen _halten"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
 msgid ""
@@ -1339,7 +1336,6 @@ msgstr "Büchersammlungs-Manager"
 msgid "Manage your book collection"
 msgstr "Ordnen sie ihre Büchersammlung."
 
-#, fuzzy
 #~ msgid "Couldn't add these books"
 #~ msgstr "Konnte das Buch nicht hinzufügen"
 
