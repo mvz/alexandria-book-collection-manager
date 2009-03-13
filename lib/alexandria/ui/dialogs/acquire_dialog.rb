@@ -305,7 +305,7 @@ module Alexandria
               iter = model.get_iter(path)
               isbn = iter[0]
               if book_in_library(isbn, library)
-                log.info { "#{isbn} is a duplicate" }
+                log.debug { "#{isbn} is a duplicate" }
               ##elsif isbns.include? isbn
                 # this won't work since multiple scans of the same
                 # book have the same isbn (so we can't refrain from removing
@@ -313,14 +313,17 @@ module Alexandria
                 ## TODO add another column in the iter, like "isbn/01"
                 # that would allow this kind of behaviour...
 
+              elsif (not @book_results.has_key?(isbn)) #HAX
+                log.debug { "no book found for #{isbn}, not adding" }
+
                 # good enough for now
               else
-                log.info { "scheduling #{isbn} for removal from list" }
+                log.debug { "scheduling #{isbn} for removal from list" }
                 row_iters << iter
               end
             end
             row_iters.each do |iter|
-              log.info { "removing iter #{iter[0]}" }
+              log.debug { "removing iter #{iter[0]}" }
               model.remove(iter)
             end
 
@@ -331,7 +334,10 @@ module Alexandria
             row_iters = []
             model.each do |model, path, iter|
               isbn = iter[0]
-              if book_in_library(isbn, library)
+              if (not @book_results.has_key?(isbn))
+                log.debug { "no book found for #{isbn}, not adding" }
+                adding_a_selection = true
+              elsif book_in_library(isbn, library)
                 log.info { "#{isbn} is a duplicate" }                
                 isbn_duplicates << isbn
               elsif isbns.include? isbn
@@ -344,12 +350,12 @@ module Alexandria
               end
             end
             # remove list items
-            if isbn_duplicates.empty?
+            if (isbn_duplicates.empty? and (not adding_a_selection))
               model.clear # TODO unless!!!
               row_iters.clear
             else
               row_iters.each do |iter|
-                log.info { "removing iter #{iter[0]}" }
+                log.debug { "removing iter #{iter[0]}" }
                 model.remove(iter)
               end
             end
@@ -361,15 +367,24 @@ module Alexandria
         isbns.each do |isbn|
           log.debug { "Adding #{isbn}" }
           result = @book_results[isbn]
-          book = result[0]
-          cover_uri = result[1]
 
-          unless cover_uri.nil?
-            library.save_cover(book, cover_uri)
+          if result.nil?
+            # used to crash if book was not found in online lookup!
+            adding_a_selection = true
+            # ISBN not found, so keep it in the list
+            # TODO (for 0.6.5) should offer to add this book manually
+          else
+
+            book = result[0] 
+            cover_uri = result[1]
+            
+            unless cover_uri.nil?
+              library.save_cover(book, cover_uri)
+            end
+            books << book
+            library << book
+            library.save(book)
           end
-          books << book
-          library << book
-          library.save(book)
         end
 
         if isbn_duplicates.empty?
