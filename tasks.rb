@@ -389,7 +389,7 @@ class AlexandriaBuild < Rake::TaskLib
 
     def sounds_installation
       sound_files = []
-      Dir.glob('data/sounds/**/*.ogg') do |f|
+      Dir.glob('data/sounds/**/*.wav') do |f|
         sound_files << f       
       end
       sound_dir = File.join(sharedir, 'sounds')

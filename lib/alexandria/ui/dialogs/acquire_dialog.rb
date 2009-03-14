@@ -781,11 +781,12 @@ module Alexandria
       end
 
       def play_sound(filename)
-        sound_file = "#{Config::SOUNDS_DIR}/#{filename}.ogg"
+        ## sound_file = "#{Config::SOUNDS_DIR}/#{filename}.ogg"
+        sound_file = "#{Config::SOUNDS_DIR}/#{filename}.wav"
         log.info { "playing #{sound_file}" }
         Gnome::Sound.play(sound_file)
         # HACK, if your GNOME "system sounds" don't work, uncomment this...
-        ## `ogg123 #{sound_file}`
+        ## `aplay #{sound_file}`
       end
 
     end
