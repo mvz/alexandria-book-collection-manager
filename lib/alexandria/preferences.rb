@@ -23,6 +23,7 @@ require 'alexandria/default_preferences'
 module Alexandria
   class Preferences
     include Singleton
+    include Logging
 
     def initialize
       @client = GConf::Client.default
@@ -43,7 +44,12 @@ module Alexandria
         if new_value.is_a?(Array) and new_value.empty?
           remove_preference(variable_name)
         else
-          @client[APP_DIR + variable_name] = new_value
+          begin
+            @client[APP_DIR + variable_name] = new_value
+          rescue Exception => ex
+            trace = ex.backtrace.join("\n> ")
+            log.error { "Fix GConf handling #{ex.message} #{trace}" }
+          end
         end
       else
         unless args.empty?
