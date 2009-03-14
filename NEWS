@@ -1,33 +1,31 @@
-Announcing the beta release of Alexandria 0.6.4b1
+Announcing the release of Alexandria 0.6.4
 
 * What is Alexandria?
 =====================
 
-Alexandria is an application for managing a personal book library. 
-Its main recommending feature is its clean, intuitive interface. 
+Alexandria is an application for managing a personal book library.
+Its main recommending feature is its clean, intuitive interface.
 Alexandria is able to retrieve book information and cover images from
 a wide variety of online data sources. It also features extensive
-import and export options, a loan interface, and smart libraries. 
+import and export options, a loan interface, and smart libraries.
 Alexandria is written in Ruby using ruby-gnome2.
 
 * Where can I get it?
 =====================
 
 - A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
-
 - An ad-hoc deb file (for Debian, Ubuntu & gNewSense) can be
   downloaded from there too
-
 - SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
-* What's New in 0.6.4b1?
+* What's New in 0.6.4?
 ======================
 
 New Dependencies:
 
 - All web-based book providers now require Hpricot
   (a.k.a. libhpricot-ruby) for HTML and XML parsing
-- DeaStore requires HTMLEntities (a.k.a. libhtmlentities-ruby)
+- DeaStore also requires HTMLEntities (a.k.a. libhtmlentities-ruby)
 
 Changes:
 
@@ -49,12 +47,17 @@ Changes:
 - [#20080] Icon view tooltips cause crashes when publisher not defined
 - [#23908] Adding manually without ISBN is unstable
 - [#10929] Usability: advanced settings checkbox invisible without Ruby/ZOOM
+- [#20168] Cannot use non-western characters in Library names
+- [#16707] Cancelling image change in book properties not as expected
+- [#20201] Cannot export to ONIX or Tellico format
+ - [#9010] Crashes when cancelling a library import
 
 Translations:
 
 - New Greek translation ( Michael Kotsarinis)
 - New Macedonian translation (Damjan Dimitrioski)
 - New Norwegian (Bokmål) translation (Jack Myrseh)
+- New Slovakian translation (Peter Kovac)
 
 - Improved Italian translation (Giacomo Margarito)
 - Improved Polish translation (Piotr Drąg)

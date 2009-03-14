@@ -64,6 +64,7 @@ module Alexandria
                  'Martin Karlsson <martinkarlsson81@hotmail.com> (sv)',
                  'Michael Kotsarinis <mkotsari1@pre.forthnet.gr> (el)',
                  'Miguel Ángel García <magmax@ieee.org> (es)',
+                 'Peter Kováč <kovac.peter@fotopriestor.sk> (sk)',
                  'Petr Vanek <vanous@penguin.cz> (cs)',
                  'Piotr Drąg <piotrdrag@gmail.com> (pl)',
                  'Serhij Dubyk <dubyk@library.lviv.ua> (uk)'

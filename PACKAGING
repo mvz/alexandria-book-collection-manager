@@ -7,10 +7,10 @@ rake package
 # this creates tarball in pkg/ (doesn't contain everything yet)
 
 mkdir /tmp/build-alexandria-deb
-mv pkg/alexandria-0.6.3.tar.gz /tmp/build-alexandria-deb/alexandria-0.6.3.orig.tar.gz
+mv pkg/alexandria-0.6.4.tar.gz /tmp/build-alexandria-deb/alexandria-0.6.4.orig.tar.gz
 cd /tmp/build-alexandria-deb
-tar zxf alexandria-0.6.3.orig.tar.gz
-cd alexandria-0.6.3
+tar zxf alexandria-0.6.4.orig.tar.gz
+cd alexandria-0.6.4
 
 # this is where we build the deb packages from a pristine source tree
 # (Note: as a first step 'rake clobber' is automaticallly run, making
@@ -29,8 +29,8 @@ cd ..
 ls -l
 
 # this  should give you:
-# a source tarball:          alexandria_0.6.3-1.tar.gz
-# a source code description: alexandria_0.6.3-1.dsc
-# a binary deb:              alexandria_0.6.3-1_all.deb
-# a changes file:            alexandria_0.6.3-1_i386.changes
+# a source tarball:          alexandria_0.6.4-1.tar.gz
+# a source code description: alexandria_0.6.4-1.dsc
+# a binary deb:              alexandria_0.6.4-1_all.deb
+# a changes file:            alexandria_0.6.4-1_i386.changes
 # 

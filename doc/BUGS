@@ -5,23 +5,16 @@ Alexandria. These issues will, hopefully, be addressed in upcoming
 releases. There are also specific bugs tracked on RubyForge:
 <http://rubyforge.org/tracker/?group_id=205>
 
-== User-Interface Responsiveness
-
-Some long-running actions (particularly looking up book details from
-online providers) are not fully threaded. This means that the
-user-interface appears to "hang" when you enter an ISBN. 
-
-There is also insufficient feedback to tell the user that multiple
-providers are being searched.
-
 == Icon Display Spacing
 
 While the list view of books is naturally neat, the default icon view
 suffers from problematic icon spacing; often the book covers appear to
 be randomly scattered. They cannot even be adjusted afterwards. This
-is just an aesthetic concern, but a frustrating one. (It's frustrating
-for us as developers too! We don't know what causes it or how to fix
-it. Any help would be appreciated.)
+is just an aesthetic concern, but a frustrating one.
+
+It is probable that this is due to inconsistent use of the GTK+ thread
+dispatcher is at the root of these problems. Hopefully future
+development can clean up the code in this regard.
 
 == Multiple Copies of Books
 
@@ -33,4 +26,6 @@ in a single library.
 
 The user-interface becomes slow and unresponsive when dealing with
 libraries over about 100 books. This is quite a low threshold on
-scalability.
+scalability. The simple solution is to make a couple of new libraries
+to hold a hundred books each; a common approach is to split them up
+according to broad subject area.

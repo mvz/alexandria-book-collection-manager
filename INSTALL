@@ -74,6 +74,13 @@ The Z39.50 Object-Orientation Model (ZOOM) is an international
 standard for communication between computer systems, particularly
 libraries and information-related systems.
 
+=== htmlentities
+
+This is used by the <b>DeaStore</b> provider; DeaStore will not be
+available without it. In the future, all web-based providers will
+probably use +htmlentities+[http://htmlentities.rubyforge.org/] to
+provide more flexible HTML parsing.
+
 === image_size
 
 You will need
