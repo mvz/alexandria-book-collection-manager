@@ -155,12 +155,25 @@ module Alexandria
         @book.own = @checkbutton_own.active?
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split(',') # tags are comma separated
+
+
+        if @delete_cover_file
+          FileUtils.rm_f(@cover_file)
+        end        
+
+        if @original_cover_file
+          FileUtils.rm_f(@original_cover_file)
+        end
+
         @library.save(@book)
         # @on_close_cb.call(@book)
         @book_properties_dialog.destroy
       end
 
       def on_cancel
+        if @original_cover_file
+          FileUtils.mv(@original_cover_file, @cover_file)
+        end
         @book_properties_dialog.destroy
       end
 

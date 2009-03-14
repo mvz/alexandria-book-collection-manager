@@ -132,7 +132,7 @@ module Alexandria
 
             @library << book
             @library.save(book)
-            if File.exists?(TMP_COVER_FILE)
+            if (File.exists?(TMP_COVER_FILE) and (not @delete_cover_file))
               FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
             end
 

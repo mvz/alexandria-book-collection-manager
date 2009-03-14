@@ -28,6 +28,8 @@ module Alexandria
         super('book_properties_dialog.glade')
         @book_properties_dialog.transient_for = parent
         @parent, @cover_file = parent, cover_file
+        @original_cover_file = nil
+        @delete_cover_file = false # fixing bug #16707
 
         @entry_title.complete_titles
         @entry_title.grab_focus
@@ -130,8 +132,16 @@ module Alexandria
         response = dialog.run
         if response == Gtk::Dialog::RESPONSE_ACCEPT
           begin
+            @delete_cover_file = false
             cover = Gdk::Pixbuf.new(dialog.filename)
             # At this stage the file format is recognized.
+            if File.exists?(@cover_file)
+              unless @original_cover_file
+                # make a back up, but only of the original
+                @original_cover_file = "#{@cover_file}~"
+                FileUtils.cp(@cover_file, @original_cover_file)
+              end
+            end
             FileUtils.cp(dialog.filename, @cover_file)
             self.cover = cover
             @@latest_filechooser_directory = dialog.current_folder
@@ -139,7 +149,9 @@ module Alexandria
             ErrorDialog.new(@book_properties_dialog, e.message)
           end
         elsif response == Gtk::Dialog::RESPONSE_REJECT
-          FileUtils.rm_f(@cover_file)
+          ## FileUtils.rm_f(@cover_file) # fixing bug #16707
+          @delete_cover_file = true
+
           self.cover = Icons::BOOK_ICON
         end
         dialog.destroy
