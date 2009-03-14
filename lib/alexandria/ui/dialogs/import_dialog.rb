@@ -51,6 +51,8 @@ module Alexandria
 
     class ImportDialog < Gtk::FileChooserDialog
       include GetText
+      include Logging
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
       FILTERS = Alexandria::ImportFilter.all
@@ -58,6 +60,7 @@ module Alexandria
       def initialize(parent, &on_accept_cb)
         super()
         puts "ImportDialog opened." if $DEBUG
+        @destroyed = false
         self.title = _("Import a Library")
         self.action = Gtk::FileChooser::ACTION_OPEN
         self.transient_for = parent
@@ -69,7 +72,15 @@ module Alexandria
                                    Gtk::Dialog::RESPONSE_ACCEPT)
         import_button.sensitive = false
 
-        self.signal_connect('destroy') { self.destroy unless running }
+        self.signal_connect('destroy') { 
+          if running
+            @destroyed = true
+            
+          else
+            self.destroy
+          end
+          #self.destroy unless running 
+        }
 
         filters = {}
         FILTERS.each do |filter|
@@ -98,8 +109,12 @@ module Alexandria
         self.vbox.pack_start(pbar, false)
 
         on_progress = proc do |fraction|
-          pbar.show unless pbar.visible?
-          pbar.fraction = fraction
+          begin
+            pbar.show unless pbar.visible?
+            pbar.fraction = fraction
+          rescue => ex
+            # TODO check if destroyed instead...
+          end
         end
 
         on_error = proc do |message|
@@ -108,7 +123,8 @@ module Alexandria
 
         exec_queue = ExecutionQueue.new
 
-        while (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
+        while not @destroyed and 
+            (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 
           if response == Gtk::Dialog::RESPONSE_HELP
@@ -126,13 +142,15 @@ module Alexandria
           self.sensitive = false
 
           filter.on_iterate do |n, total|
-            # convert to percents
-            coeff = total / 100.0
-            percent = n / coeff
-            # fraction between 0 and 1
-            fraction = percent / 100
-            puts "#{self.inspect} Percentage: #{fraction}" if $DEBUG
-            exec_queue.call(on_progress, fraction)
+            unless @destroyed
+              # convert to percents
+              coeff = total / 100.0
+              percent = n / coeff
+              # fraction between 0 and 1
+              fraction = percent / 100
+              puts "#{self.inspect} Percentage: #{fraction}" if $DEBUG
+              exec_queue.call(on_progress, fraction)
+            end
           end
 
           not_cancelled = true
@@ -144,32 +162,41 @@ module Alexandria
           library = nil
           @bad_isbns = nil
           thread = Thread.start do
-            library, @bad_isbns = filter.invoke(new_library_name,
-                                                self.filename)
+            begin
+              library, @bad_isbns = filter.invoke(new_library_name,
+                                                  self.filename)
+            rescue => ex
+              trace = ex.backtrace.join("\n> ")
+              log.error { "Import failed: #{ex.message} #{trace}"}
+            end
           end
 
-          while thread.alive?
+          while thread.alive? and not @destroyed
             #puts "Thread #{thread} still alive."
             running = true
             exec_queue.iterate
             Gtk.main_iteration_do(false)
           end
 
-          if library
-            on_accept_cb.call(library, @bad_isbns)
-            break
-          elsif not_cancelled
-            puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
-            ErrorDialog.new(parent,
-                            _("Couldn't import the library"),
-                            _("The format of the file you " +
-                              "provided is unknown.  Please " +
-                              "retry with another file."))
+          unless @destroyed
+            if library
+              on_accept_cb.call(library, @bad_isbns)
+              break
+            elsif not_cancelled
+              puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
+              ErrorDialog.new(parent,
+                              _("Couldn't import the library"),
+                              _("The format of the file you " +
+                                "provided is unknown.  Please " +
+                                "retry with another file."))
+            end
+            pbar.hide
+            self.sensitive = true
           end
-          pbar.hide
-          self.sensitive = true
         end
-        destroy
+        unless @destroyed
+          destroy
+        end
       end
     end
   end
