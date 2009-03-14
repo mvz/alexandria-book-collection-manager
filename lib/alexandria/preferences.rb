@@ -41,15 +41,17 @@ module Alexandria
         variable_name = match[1]
         new_value = args.first
 
-        if new_value.is_a?(Array) and new_value.empty?
-          remove_preference(variable_name)
-        else
-          begin
+        
+        
+        begin
+          if new_value.is_a?(Array) and new_value.empty?
+            remove_preference(variable_name)
+          else
             @client[APP_DIR + variable_name] = new_value
-          rescue Exception => ex
-            trace = ex.backtrace.join("\n> ")
-            log.error { "Fix GConf handling #{ex.message} #{trace}" }
           end
+        rescue Exception => ex
+          trace = ex.backtrace.join("\n> ")
+          log.error { "Fix GConf handling #{ex.message} #{trace}" }
         end
       else
         unless args.empty?

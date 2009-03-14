@@ -74,6 +74,7 @@ module Alexandria
           self.import_as_tellico_xml_archive(*args)
         rescue => e
           puts e.message
+          puts e.backtrace.join("\n>> ")
         end
       elsif [".csv"].include? filename[-4..-1]
 	self.import_as_csv_file(*args)
@@ -82,6 +83,8 @@ module Alexandria
         raise "Not supported type"
       end
     end
+
+
 
     def self.import_as_tellico_xml_archive(name, filename,
                                            on_iterate_cb, on_error_cb)
@@ -113,10 +116,10 @@ module Alexandria
             #Feed an array in here, tomorrow.
             keys = ['isbn', 'publisher', 'pub_year', 'binding']
 
-            book_elements = [elements['title'].text]
+            book_elements = [neaten(elements['title'].text)]
             if elements['authors'] != nil
               book_elements += [elements['authors'].elements.to_a.map \
-                                { |x| x.text }]
+                                { |x| neaten(x.text) }]
             else
               book_elements += [[]]
             end
@@ -124,14 +127,27 @@ module Alexandria
               unless elements[key]
                 nil
               else
-                elements[key].text
+                neaten(elements[key].text)
               end
             }
-            book_elements[2] = Library.canonicalise_ean(book_elements[2]) unless book_elements[2]== nil # isbn
+            #isbn
+            if book_elements[2].nil? or book_elements[2].strip.empty?
+              book_elements[2] = nil
+            else              
+              begin
+                book_elements[2] = book_elements[2].strip
+                book_elements[2] = Library.canonicalise_ean(book_elements[2])
+              rescue Exception => ex
+                puts book_elements[2]
+                puts ex.message
+                puts ex.backtrace.join("\n> ")
+                raise ex
+              end
+            end
             book_elements[4] = book_elements[4].to_i unless book_elements[4]== nil # publishing_year
             puts book_elements.inspect
             if elements['cover']
-              cover = elements['cover'].text
+              cover = neaten(elements['cover'].text)
             else
               cover = nil
             end
@@ -140,7 +156,7 @@ module Alexandria
             if elements['rating'] and (0..UI::MainApp::MAX_RATING_STARS).map.member? elements['rating'].text.to_i
               book.rating = elements['rating'].text.to_i
             end
-            book.notes = elements['comments'].text if elements['comments']
+            book.notes = neaten(elements['comments'].text) if elements['comments']
             content << [ book, cover]
             on_iterate_cb.call(n+1, total) if on_iterate_cb
           end
@@ -309,5 +325,16 @@ def self.import_as_csv_file(name, filename, on_iterate_cb,
       end
       return [library, bad_isbns]
     end
+
+    private
+
+    def self.neaten(str)
+      if str
+        str.strip
+      else
+        str
+      end
+    end
+
   end
 end
