@@ -18,6 +18,7 @@
 module Alexandria
   module UI
     class BookPropertiesDialog < BookPropertiesDialogBase
+      include Logging
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -141,16 +142,21 @@ module Alexandria
         @book.loaned_since = Time.at(@date_loaned_since.time)
 
         @book.redd = @checkbutton_redd.active?
-	if @book.redd	
-		@book.redd_when = Time.at(@redd_date.time)
+	if @book.redd
+          begin
+            @book.redd_when = Time.at(@redd_date.time)
+          rescue Exception => ex
+            log.warn { "Could not get date from #{@redd_date.time} / invalid" }
+            @book.redd_when = nil
+          end
 	else
-		@book.redd_when = nil
+          @book.redd_when = nil
 	end
         @book.own = @checkbutton_own.active?
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split(',') # tags are comma separated
         @library.save(@book)
-        #@on_close_cb.call(@book)
+        # @on_close_cb.call(@book)
         @book_properties_dialog.destroy
       end
 

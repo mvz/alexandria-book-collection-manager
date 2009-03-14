@@ -15,8 +15,12 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+# require 'date'
+require 'time'
+
 module Alexandria
   class SmartLibrary < Array
+    include Logging
     include GetText
     extend GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -368,6 +372,7 @@ module Alexandria
       end
 
       module Operators
+        include Logging
         include GetText
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
@@ -423,11 +428,48 @@ module Alexandria
         IS_IN_LAST = Operator.new(
                                   :is_in_last_days,
                                   _("is in last"),
-                                  proc { |x, y| Time.now - x <= 3600*24*y })
+                                  proc { |x, y|
+                                    begin
+                                      unless x.nil? or x.empty?
+                                        log.debug { "Given Date: #{x.inspect} #{x.class}" }
+                                        given_date = Time.parse(x)
+                                        days = y.to_i * (24*60*60)
+                                        
+                                        Time.now - given_date <= days
+                                      else
+                                        false
+                                      end
+                                    rescue Exception => ex
+                                      trace = ex.backtrace.join("\n >")
+                                      log.warn { "Date matching failed #{ex} #{trace}" }
+                                      false
+                                    end
+                                  })
         IS_NOT_IN_LAST = Operator.new(
                                       :is_not_in_last_days,
                                       _("is not in last"),
-                                      proc { |x, y| Time.now - x > 3600*24*y })
+                                      proc { |x, y| 
+begin
+                                      unless x.nil? or x.empty?
+                                        log.debug { "Given Date: #{x.inspect} #{x.class}" }
+                                        given_date = Time.parse(x)
+                                        days = y.to_i * (24*60*60)
+                                        
+                                        Time.now - given_date > days
+                                      else
+                                        false
+                                      end
+                                    rescue Exception => ex
+                                      trace = ex.backtrace.join("\n >")
+                                      log.warn { "Date matching failed #{ex} #{trace}" }
+                                      false
+                                    end
+
+
+
+                                        #Time.now - x > 3600*24*y 
+
+                                      })
 
         ALL = self.constants.map \
         { |x| self.module_eval(x) }.select \

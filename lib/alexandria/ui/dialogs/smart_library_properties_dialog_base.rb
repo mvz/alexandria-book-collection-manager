@@ -18,6 +18,7 @@
 module Alexandria
   module UI
     class SmartLibraryPropertiesDialogBase < Gtk::Dialog
+      include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
 
@@ -279,11 +280,22 @@ module Alexandria
       def fill_smart_library_rules_values
         @rules_box.children.each_with_index do |box, i|
           entry, date = box.children[2..3]
-          @smart_library_rules[i].value = if entry.visible?
-                                            entry.text.strip
-                                          elsif date.visible?
-                                            Time.at(date.time)
-                                          end
+          value = nil
+          if entry.visible?
+            value = entry.text.strip
+          elsif date.visible?
+            begin
+              value = Time.at(date.time)
+            rescue Exception => ex
+              trace = ex.backtrace.join("\n > ")
+              log.warn { "Possibly invalid date entered #{ex.message}" } 
+              log.warn { "Date widget returned #{date.time} / #{trace}" }
+              # user entered some non-date... 
+              # default to current time, for the moment
+              value = Time.now()
+            end
+          end
+          @smart_library_rules[i].value = value
         end
       end
     end
