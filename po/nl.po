@@ -1,5 +1,5 @@
 # Dutch translation for Alexandria
-# Copyright (C) 2007, 2008 L.C. Karssen <lennart@karssen.org>
+# Copyright (C) 2007-2009 L.C. Karssen <lennart@karssen.org>
 # This file is distributed under the same license as the Alexandria package.
 #
 msgid ""
@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-01 10:35+0000\n"
-"PO-Revision-Date: 2008-04-15 19:30+0100\n"
+"PO-Revision-Date: 2009-03-14 14:25+0200\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -91,7 +91,7 @@ msgid ""
 msgstr ""
 "Het boek getiteld '%s' heeft een ongeldig ISBN, maar bestaat toch bij de "
 "bronbibliotheken. Wilt u het boek bewaren en het ISBN veranderen, of wilt u "
-"het toevoegen staken?"
+"het toevoegen annuleren?"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:182
 msgid "A problem occurred while downloading images"
@@ -121,22 +121,22 @@ msgstr "Kon het boek niet toevoegen"
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
 msgid "Searching Provider '%s'..."
-msgstr ""
+msgstr "Zoeken bij bronbibliotheek '%s'..."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
 msgid "Error while Searching Provider '%s'"
-msgstr ""
+msgstr "Fout tijdens het zoeken bij bronbibliotheek '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
 msgid "Not Found at Provider '%s'"
-msgstr ""
+msgstr "Niet gevonden bij bronbibliotheek '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
 msgid "Found at Provider '%s'"
-msgstr ""
+msgstr "Gevonden by bronbibliotheek '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
 msgid "'%s' already exists in '%s' (titled '%s')."
@@ -244,7 +244,7 @@ msgstr "Selecteer een afbeelding voor de voorkant"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
 msgid "No Cover"
-msgstr "Geen kaft:"
+msgstr "Geen kaft"
 
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
 msgid "%d day"
@@ -294,19 +294,18 @@ msgstr "Er moet minstens één auteur opgegeven worden."
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Er was %d duplikaat"
+msgstr[1] "Er waren %d duplikaten"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
-#, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "Kon het boek niet toevoegen"
-msgstr[1] "Kon het boek niet toevoegen"
+msgstr[1] "Kon deze boeken niet toevoegen"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
 msgid "Ready to use %s barcode scanner"
-msgstr ""
+msgstr "Klaar om de streepjescodescanner '%s' te gebruiken"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
 #: ../data/alexandria/glade/acquire_dialog.glade:26
@@ -337,7 +336,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
 msgid "Match"
-msgstr "Voldoen aan"
+msgstr "Voldoet aan"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
 msgid "all"
@@ -361,7 +360,7 @@ msgstr "Voorkeuren voor %s"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
 msgid "New Provider"
-msgstr "Nieuwe bron"
+msgstr "Nieuwe bronbibliotheek"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
 msgid "_Name:"
@@ -898,19 +897,16 @@ msgid "Invalid library name '%s'"
 msgstr "Ongeldige bibliotheeknaam '%s'"
 
 #: ../lib/alexandria/ui/sidepane.rb:50
-#, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b> "
-msgstr "The opgegeven naam bevat het ongeldige teken '<i>%s</i>'."
+msgstr "De opgegeven naam bevat het ongeldige teken '<i>%s</i>'."
 
 #: ../lib/alexandria/ui/sidepane.rb:53
-#, fuzzy
 msgid "Invalid library name"
-msgstr "Ongeldige bibliotheeknaam '%s'"
+msgstr "Ongeldige bibliotheeknaam"
 
 #: ../lib/alexandria/ui/sidepane.rb:54
-#, fuzzy
 msgid "The name provided contains invalid characters."
-msgstr "The opgegeven naam bevat het ongeldige teken '<i>%s</i>'."
+msgstr "De opgegeven naam bevat ongeldige tekens."
 
 #: ../lib/alexandria/ui/sidepane.rb:60
 msgid "The library name can not be empty"
@@ -1299,7 +1295,7 @@ msgstr "Bronnen"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:31
 msgid "_Keep Dialog Open after Adding Book"
-msgstr ""
+msgstr "_Houd dialoogvenster open na het toevoegen van een boek"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
 msgid ""
@@ -1327,9 +1323,8 @@ msgstr "Boekcollectiebeheerder"
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
 
-#, fuzzy
 #~ msgid "Couldn't add these books"
-#~ msgstr "Kon het boek niet toevoegen"
+#~ msgstr "Kon deze boeken niet toevoegen"
 
 #~ msgid "Associate ID"
 #~ msgstr "Geassocieerd ID"
