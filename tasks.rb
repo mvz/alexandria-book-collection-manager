@@ -69,7 +69,7 @@ class AlexandriaBuild < Rake::TaskLib
   attr_accessor :name, :version, :rubyforge_name
   attr_accessor :author, :email, :summary, :description
 
-  attr_accessor :display_version
+  attr_accessor :display_version, :data_version
 
   # config objects
   attr_accessor :files

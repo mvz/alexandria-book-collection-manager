@@ -106,8 +106,8 @@ module Alexandria
             # Or if isbn has changed
             raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
 
-            # Re-save book if VERSION changes
-            raise "#{test[1]} version is not okay" unless book.version == VERSION
+            # Re-save book if Alexandria::DATA_VERSION changes
+            raise "#{test[1]} version is not okay" unless book.version == Alexandria::DATA_VERSION
 
             # Or if publishing year has changed
             raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year
@@ -116,7 +116,7 @@ module Alexandria
             book.library = library.name
             library << book
           rescue => e
-            book.version = VERSION
+            book.version = Alexandria::DATA_VERSION
             savedfilename = library.simple_save(book)
             test[0] = test[0] + 1
             test[1] = savedfilename

@@ -32,19 +32,27 @@ end
 module Alexandria
 
   class LibrarySortOrder
+    include Logging
+
     def initialize(book_attribute, ascending=true)
       @book_attribute = book_attribute
       @ascending = ascending
     end
 
     def sort(library)
-      sorted = library.sort_by do |book|
-        book.send(@book_attribute)
+      begin
+        sorted = library.sort_by do |book|
+          book.send(@book_attribute)
+        end
+        if not @ascending
+          sorted.reverse!
+        end
+        sorted
+      rescue Exception => ex
+        trace = ex.backtrace.join("\n> ")
+        log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
+        library
       end
-      if not @ascending
-        sorted.reverse!
-      end
-      sorted
     end
 
     def to_s
@@ -152,7 +160,13 @@ module Alexandria
 
     def export_as_tellico_xml_archive(filename)
       File.open(File.join(Dir.tmpdir, "tellico.xml"), "w") do |io|
-        to_tellico_document.write(io, 0)
+        begin
+          to_tellico_document.write(io, 0)
+        rescue Exception => ex
+          puts ex.message
+          puts ex.backtrace
+          raise ex
+        end
       end
       copy_covers(File.join(Dir.tmpdir, "images"))
       Dir.chdir(Dir.tmpdir) do
@@ -166,7 +180,7 @@ module Alexandria
     def export_as_isbn_list(filename)
       File.open(filename, 'w') do |io|
         each do |book|
-          io.puts book.isbn
+          io.puts((book.isbn or ""))
         end
       end
     end
@@ -212,7 +226,7 @@ module Alexandria
           end
           io.puts book.authors.join(', ')
           io.puts book.edition
-          io.puts book.isbn
+          io.puts((book.isbn or ""))
           #we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria				
           io.close
         end
@@ -257,8 +271,8 @@ module Alexandria
         prod.add_element('RecordReference').text = idx
         prod.add_element('NotificationType').text = "03"  # confirmed
         prod.add_element('RecordSourceName').text =
-          "Alexandria " + VERSION
-        prod.add_element('ISBN').text = book.isbn
+          "Alexandria " + Alexandria::DISPLAY_VERSION
+        prod.add_element('ISBN').text = (book.isbn or "")
         prod.add_element('ProductForm').text = 'BA'       # book
         prod.add_element('DistinctiveTitle').text = book.title
         unless book.authors.empty?
@@ -324,10 +338,11 @@ module Alexandria
       images = collection.add_element('images')
       each_with_index do |book, idx|
         entry = collection.add_element('entry')
-        entry.add_attribute('id', idx+1)
+        new_index = (idx+1).to_s
+        entry.add_attribute('id', new_index)
         # translate the binding
         entry.add_element('title').text = book.title
-        entry.add_element('isbn').text = book.isbn
+        entry.add_element('isbn').text = (book.isbn or "")
         entry.add_element('pub_year').text = book.publishing_year
         entry.add_element('binding').text = book.edition
         entry.add_element('publisher').text = book.publisher
@@ -351,8 +366,8 @@ module Alexandria
           image.add_attribute('id', final_cover(book))
           if $IMAGE_SIZE_LOADED
             image_s = ImageSize.new(IO.read(cover(book)))
-            image.add_attribute('height', image_s.get_height)
-            image.add_attribute('width', image_s.get_width)
+            image.add_attribute('height', image_s.get_height.to_s)
+            image.add_attribute('width', image_s.get_width.to_s)
             image.add_attribute('format', image_s.get_type)
           else
             image.add_attribute('format',
@@ -375,7 +390,7 @@ module Alexandria
     end
 
     def to_xhtml(css)
-      generator = "Alexandria " + Alexandria::VERSION
+      generator = "Alexandria " + Alexandria::DISPLAY_VERSION
       xhtml = ""
       xhtml << <<EOS
 <?xml version="1.0" encoding="UTF-8"?>
@@ -464,7 +479,7 @@ EOS
     end
 
     def to_bibtex
-      generator = "Alexandria " + Alexandria::VERSION
+      generator = "Alexandria " + Alexandria::DISPLAY_VERSION
       bibtex = ""
       bibtex << "\%Generated on #{Date.today()} by: #{generator}\n"
       bibtex << "\%\n"
