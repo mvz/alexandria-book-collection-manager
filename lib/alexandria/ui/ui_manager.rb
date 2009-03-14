@@ -495,6 +495,9 @@ module Alexandria
             next
           end
           path = iter.path
+          unless view.model
+            next
+          end
           path = view.model.convert_path_to_child_path(path)
           path = @filtered_model.convert_path_to_child_path(path)
           log.debug { "Path for #{book.ident} is #{path}" }
@@ -915,6 +918,9 @@ module Alexandria
         selection = page == 0 ? @iconview : @listview.selection
 
         selection.selected_each do |the_view, path|
+          unless the_view.model
+            next
+          end
           path = the_view.model.convert_path_to_child_path(path)
           if path
             path = @filtered_model.convert_path_to_child_path(path)
