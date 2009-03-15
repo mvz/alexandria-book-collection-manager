@@ -2,9 +2,9 @@
 
 require './tasks.rb'
 
-build = AlexandriaBuild.new('alexandria', '0.6.4') do |b|
+build = AlexandriaBuild.new('alexandria', '0.6.4.1') do |b|
   b.data_version = '0.6.3' # YAML file compatibility
-  b.display_version = '0.6.4'
+  b.display_version = '0.6.4.1'
 
   b.author = 'Joseph Method'     # Maintainer
   b.email  = 'tristil@gmail.com' # Maintainer e-mail
