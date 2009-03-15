@@ -918,10 +918,13 @@ module Alexandria
         selection = page == 0 ? @iconview : @listview.selection
 
         selection.selected_each do |the_view, path|
-          unless the_view.model
+          # don't use the_view which is passed in by this block
+          # as it doesn't consider the filtering for some reason
+          # see bug #24568
+          unless view.model
             next
           end
-          path = the_view.model.convert_path_to_child_path(path)
+          path = view.model.convert_path_to_child_path(path)
           if path
             path = @filtered_model.convert_path_to_child_path(path)
             # FIX this sometimes returns a nil path for iconview...
