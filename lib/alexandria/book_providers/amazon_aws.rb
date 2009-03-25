@@ -25,7 +25,7 @@ module Alexandria
     class AmazonProvider < GenericProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       #CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 

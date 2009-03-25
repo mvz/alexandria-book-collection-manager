@@ -30,7 +30,7 @@ module Alexandria
   module UI
     class SkipEntryDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, message)
         super(parent, _("Error while importing"),
@@ -53,7 +53,7 @@ module Alexandria
       include GetText
       include Logging
 
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       FILTERS = Alexandria::ImportFilter.all
 

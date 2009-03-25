@@ -26,7 +26,7 @@ module Alexandria
     class Z3950Provider < AbstractProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(name="Z3950", fullname="Z39.50")
         super
@@ -174,7 +174,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize
         super("LOC", _("Library of Congress (Usa)"))
@@ -207,7 +207,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize
         super("BL", _("British Library"))
@@ -296,7 +296,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize
         super("SBN", "Servizio Bibliotecario Nazionale (Italy)")

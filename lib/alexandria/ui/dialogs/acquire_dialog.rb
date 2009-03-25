@@ -213,7 +213,7 @@ module Alexandria
       include GetText
       include Logging
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, selected_library=nil, &block)
         super('acquire_dialog.glade')

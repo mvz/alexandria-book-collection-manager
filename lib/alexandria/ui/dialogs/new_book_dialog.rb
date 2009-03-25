@@ -26,7 +26,7 @@ module Alexandria
   module UI
     class KeepBadISBNDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, book)
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
@@ -51,7 +51,7 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, selected_library=nil, &block)
         super('new_book_dialog.glade')

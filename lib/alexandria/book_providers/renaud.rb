@@ -24,7 +24,7 @@ module Alexandria
   class BookProviders
     class RENAUDProvider < GenericProvider
       include GetText
-      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
       BASE_URI = "http://www.renaud-bray.com/"
       ACCENTUATED_CHARS = "áàâäçéèêëíìîïóòôöúùûü"
 

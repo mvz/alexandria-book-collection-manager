@@ -24,7 +24,7 @@ module Alexandria
         :iconview_model, :filtered_model, :on_books_selection_changed
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       module Columns
         COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,

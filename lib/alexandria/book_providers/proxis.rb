@@ -23,7 +23,7 @@ module Alexandria
     class ProxisProvider < GenericProvider
       include GetText
       include Logging
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       LANGUAGES = {
         'nl' => '1',

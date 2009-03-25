@@ -102,7 +102,7 @@ module Alexandria
     include GetText
     include Logging
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
     def self.all
       [

@@ -20,7 +20,7 @@ module Alexandria
     class SmartLibraryPropertiesDialogBase < Gtk::Dialog
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       attr_reader :predicate_operator_rule
 

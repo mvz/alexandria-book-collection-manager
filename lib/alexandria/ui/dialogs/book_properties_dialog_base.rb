@@ -20,7 +20,7 @@ module Alexandria
     class BookPropertiesDialogBase < GladeBase
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       COVER_MAXWIDTH = 140    # pixels
 

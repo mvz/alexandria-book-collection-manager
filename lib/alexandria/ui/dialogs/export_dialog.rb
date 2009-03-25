@@ -19,7 +19,7 @@ module Alexandria
   module UI
     class ConfirmEraseDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, filename)
         super(parent, _("File already exists"),
@@ -42,7 +42,7 @@ module Alexandria
     class ExportDialog < Gtk::FileChooserDialog
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       FORMATS = Alexandria::ExportFormat.all
       THEMES = Alexandria::WebTheme.all

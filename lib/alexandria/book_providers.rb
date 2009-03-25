@@ -25,7 +25,7 @@ module Alexandria
     include Singleton
     include Observable
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
     SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS,
     SEARCH_BY_KEYWORD = (0..3).to_a

@@ -41,7 +41,7 @@ module Alexandria
 
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
     BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
     include Observable

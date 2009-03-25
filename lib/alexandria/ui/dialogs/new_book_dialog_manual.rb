@@ -20,7 +20,7 @@ module Alexandria
     class NewBookDialogManual < BookPropertiesDialogBase
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, nil, nil, "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       TMP_COVER_FILE = File.join(Dir.tmpdir, "tmp_cover")
       def initialize(parent, library, &on_add_cb)
