@@ -19,6 +19,9 @@
 module Alexandria
   module UI
     module Callbacks
+
+      include Logging
+
       def on_new widget, event
         name = Library.generate_new_name(@libraries.all_libraries)
         library = Library.load(name)
@@ -208,6 +211,11 @@ module Alexandria
       def on_delete widget, event
         library = selected_library
         books = @library_listview.focus? ? nil : selected_books
+        last_library = (@libraries.all_regular_libraries.length == 1)
+        if last_library
+          log.warn { "Attempted to delete last library, fix GUI" }
+          return
+        end
         if library.empty? or ReallyDeleteDialog.new(@main_app,
                                                     library,
                                                     books).ok?
