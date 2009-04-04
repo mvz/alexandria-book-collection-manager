@@ -306,6 +306,7 @@ module Alexandria
 
         if event_is_right_click event
           log.debug { "library right click!" }
+          library_already_selected = true
           if path = widget.get_path_at_pos(event.x, event.y)
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
@@ -313,6 +314,7 @@ module Alexandria
 
             unless obj.path_is_selected?(path)
               log.debug { "Select #{path}" }
+              library_already_selected = false
               widget.unselect_all
               obj.select_path(path)
             end
@@ -321,9 +323,30 @@ module Alexandria
           end
 
           menu = determine_library_popup widget, event
-          Gtk.idle_add do
-            menu.popup(nil, nil, event.button, event.time)
-            false
+
+          # Fixes part of bug #25021.
+          #
+          # If the library was not selected when it was right-clicked
+          # we should select the library first (we call on_focus
+          # manually, since the above call to obj.select_path(path) doesn't
+          # seem to suffice).
+          #
+          # Then we wait a while and only *then* pop up the menu.
+
+          Gtk.timeout_add(100) do # changed from idle_add
+            unless library_already_selected
+              # refocus manually
+              begin
+                on_focus(@library_listview, nil)
+              ensure
+                # very careful to avoid infinite loops here...
+                library_already_selected = true
+              end
+              true # loop again, but only once more
+            else
+              menu.popup(nil, nil, event.button, event.time)
+              false
+            end
           end
         end
       end
