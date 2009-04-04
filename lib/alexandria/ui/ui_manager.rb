@@ -333,21 +333,14 @@ module Alexandria
           #
           # Then we wait a while and only *then* pop up the menu.
 
-          Gtk.timeout_add(100) do # changed from idle_add
-            unless library_already_selected
-              # refocus manually
-              begin
-                on_focus(@library_listview, nil)
-              ensure
-                # very careful to avoid infinite loops here...
-                library_already_selected = true
-              end
-              true # loop again, but only once more
-            else
+          
+          if library_already_selected
+            Gtk.idle_add do
               menu.popup(nil, nil, event.button, event.time)
               false
             end
           end
+          
         end
       end
 
