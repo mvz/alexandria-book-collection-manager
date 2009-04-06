@@ -335,6 +335,7 @@ module Alexandria
 
           
           if library_already_selected
+            sensitize_library selected_library
             Gtk.idle_add do
               menu.popup(nil, nil, event.button, event.time)
               false
@@ -988,7 +989,8 @@ module Alexandria
         @actiongroup["AddBook"].sensitive = !smart
         @actiongroup["AddBookManual"].sensitive = !smart
         @actiongroup["Properties"].sensitive = true
-        @actiongroup["Delete"].sensitive = true #(@libraries.all_regular_libraries.length > 1)
+        can_delete = smart || (@libraries.all_regular_libraries.length > 1)
+        @actiongroup["Delete"].sensitive = can_delete ## true #(@libraries.all_regular_libraries.length > 1)
         log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }
       end
 
