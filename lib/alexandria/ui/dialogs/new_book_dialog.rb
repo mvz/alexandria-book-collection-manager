@@ -557,9 +557,17 @@ module Alexandria
         if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
           if text = clipboard.wait_for_text
-            @entry_isbn.text = text if
-            Library.valid_isbn?(text) or Library.valid_ean?(text) or
-            Library.valid_upc?(text)
+            if Library.valid_isbn?(text) or Library.valid_ean?(text) or
+                Library.valid_upc?(text)
+              Gtk.idle_add do
+                #puts "idly"
+                @entry_isbn.text = text
+                @button_add.grab_focus 
+                false
+              end
+              log.debug { "Setting ISBN field to #{text}" }
+              puts text # required, strangely, to prevent GUI strangeness
+             end
           end
         end
       end
