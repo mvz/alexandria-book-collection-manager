@@ -285,6 +285,10 @@ class AlexandriaBuild < Rake::TaskLib
 
     task :install_files do
       @install.groups.each do |src, files, dest, mode|
+        unless files.respond_to? :each
+          # String#each removed in ruby 1.9 (c.f. bug #25678)
+          files =  FileList[files]
+        end
         files.each do |file|
           install_file(src, file, dest, mode)
         end
@@ -351,14 +355,14 @@ class AlexandriaBuild < Rake::TaskLib
         filename =~ /.*\/(.+)\/.+/
           size = $1
         dest = File.join(icon_dir, size, 'apps')
-        icon_group << [File.dirname(filename), filename, dest, 0644]
+        icon_group << [File.dirname(filename), FileList[filename], dest, 0644]
       end
       icon_group
     end
 
     def desktop_installation
       desktop_dir = File.join(sharedir, 'applications')
-      [['.', build.files.desktop, desktop_dir, 0644]]
+      [['.', FileList[build.files.desktop], desktop_dir, 0644]]
     end
 
     def locale_installation
@@ -384,7 +388,7 @@ class AlexandriaBuild < Rake::TaskLib
 
     def menu_installation
       menu_dir = File.join(sharedir, 'menu')
-      [['data/menu', build.files.menu, menu_dir, 0644]]
+      [['data/menu', FileList[build.files.menu], menu_dir, 0644]]
     end
 
     def sounds_installation
