@@ -25,10 +25,16 @@
 # added Amazon::Ecs.transport - to enable Alexandria's proxy support
 # Modified by Cathal Mc Ginley 2008-08-26
 # Amazon::Element.get now uses inner_text, not inner_html, fixing #21659
+# Modified by Cathal Mc Ginley 2009-08-13
+# Added sign_request and hmac_sha256 methods for Authentication support
 
 require 'net/http'
 require 'hpricot'
 require 'cgi'
+
+require 'digest/sha2'
+require 'base64'
+
 
 module Amazon
   class RequestError < StandardError; end
@@ -47,9 +53,15 @@ module Amazon
     @@options = {}
     @@debug = false
 
+    @@secret_access_key = ''
+
     # Default search options
     def self.options
       @@options
+    end
+
+    def self.secret_access_key=(key)
+      @@secret_access_key = key
     end
 
     # Set default search options
@@ -206,12 +218,91 @@ module Amazon
           v = v.join(',') if v.is_a? Array
           qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
         }
-        "#{request_url}#{qs}"
+        url = "#{request_url}#{qs}"
+        #puts ">>> base url >> #{url}"
+        signed_url = sign_request(url)
+        #puts ">>> SIGNED >> #{signed_url}"
+        signed_url
       end
 
       def self.camelize(s)
         s.to_s.gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
       end
+
+
+
+    def self.hmac_sha256(message, key)
+      block_size = 64 
+      ipad = "\x36" * block_size
+      opad = "\x5c" * block_size
+      if key.size > block_size
+        d = Digest::SHA256.new
+        key = d.digest(key)
+      end
+      
+      for i in 0 .. key.size - 1
+        ipad[i] ^= key[i]
+        opad[i] ^= key[i]
+      end
+      
+      # inner hash
+      d1 = Digest::SHA256.new
+      d1.update(ipad)
+      d1.update(message)
+      msg_hash = d1.digest()
+      
+      # outer hash
+      d2 = Digest::SHA256.new
+      d2.update(opad)
+      d2.update(msg_hash)
+      d2.digest
+    end
+
+    def self.sign_request(request)
+      raise AmazonNotConfiguredError unless @@secret_access_key
+      # Step 0 : Split apart request string
+      url_pattern = /http:\/\/([^\/]+)(\/[^\?]+)\?(.*$)/ 
+      url_pattern =~ request
+      host = $1
+      path = $2
+      param_string = $3
+      
+      # Step 1: enter the timestamp
+      t = Time.now.getutc # MUST be in UTC
+      stamp = t.strftime('%Y-%m-%dT%H:%M:%SZ')
+      param_string = param_string + "&Timestamp=#{stamp}"
+      
+      # Step 2 : URL-encode
+      param_string = param_string.gsub(',', '%2C').gsub(':', '%3A')
+      #   NOTE : take care not to double-encode
+      
+      # Step 3 : Split the parameter/value pairs
+      params = param_string.split('&')
+      
+      # Step 4 : Sort params
+      params.sort!
+      
+      # Step 5 : Rejoin the param string
+      canonical_param_string = params.join('&')
+      
+      # Steps 6 & 7: Prepend HTTP request info
+      string_to_sign = "GET\n#{host}\n#{path}\n#{canonical_param_string}"
+      
+      #puts string_to_sign
+
+      # Step 8 : Calculate RFC 2104-compliant HMAC with SHA256 hash algorithm
+      sig = hmac_sha256(string_to_sign, @@secret_access_key)     
+      base64_sig = Base64.encode64(sig).strip
+      
+      # Step 9 : URL-encode + and = in sig
+      base64_sig = CGI.escape(base64_sig)
+      
+      # Step 10 : Add the URL encoded signature to your request
+      "http://#{host}#{path}?#{param_string}&Signature=#{base64_sig}"
+    end
+
+
+
   end
 
   # Internal wrapper class to provide convenient method to access Hpricot element value.

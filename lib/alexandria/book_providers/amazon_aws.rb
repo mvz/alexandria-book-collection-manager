@@ -34,22 +34,30 @@ module Alexandria
       def initialize
         super("Amazon", "Amazon")
         prefs.add("locale", _("Locale"), "us", AmazonProvider::LOCALES)
-        prefs.add("dev_token", _("Development token"),
-                  "0J356Z09CN88KB743582")
+        prefs.add("dev_token", _("Access key ID"), '')
+        prefs.add("secret_key", _("Secret access key"), '')
+
         #prefs.add("associate", _("Associate ID"), "calibanorg-20", nil,
         #          false)
+
+        puts "amazon provider init..."
 
         # Backward compatibility hack - the previous developer token has
         # been revoked.
         prefs.read
         token = prefs.variable_named("dev_token")
-        if token and token.value.size != 20
-          token.new_value = "0J356Z09CN88KB743582"
+        if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
+          token.new_value = '' # "0J356Z09CN88KB743582"
         end
       end
 
       def search(criterion, type)
         prefs.read
+
+        if prefs["secret_key"].empty?
+          raise Amazon::RequestError.new("Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account")
+        end
+
 
         if config = Alexandria::Preferences.instance.http_proxy_config
           host, port, user, pass = config
@@ -59,7 +67,8 @@ module Alexandria
           ENV['http_proxy'] = url
         end
 
-        Amazon::Ecs.options = {:aWS_access_key_id => prefs["dev_token"] }
+        Amazon::Ecs.options = {:aWS_access_key_id => prefs["dev_token"]}
+        Amazon::Ecs.secret_access_key = prefs["secret_key"]
         ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
         locales.delete prefs["locale"]
@@ -82,11 +91,16 @@ module Alexandria
             # Shouldn't happen.
             # raise TooManyResultsError if products.length > 1
 
-            # Actually, some publishers bogusly publish multiple
-            # editions of a book with the same ISBN, and Amazon seems
-            # to be able to distinguish between them.
-            # So we'll log this case, and arbitrarily return the FIRST
-            # item
+            # I had assumed that publishers were bogusly publishing
+            # multiple editions of a book with the same ISBN, and
+            # Amazon was distinguishing between them.  So we'll log
+            # this case, and arbitrarily return the FIRST item
+            
+            # Actually, this may be due to Amazon recommending a
+            # preferred later edition of a book, in spite of our
+            # searching on a single ISBN it can return more than one
+            # result with different ISBNs
+            
             if products.length > 1
               log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results; returning the first result only" }
             end
