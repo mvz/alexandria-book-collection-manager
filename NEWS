@@ -1,4 +1,4 @@
-Announcing the release of Alexandria 0.6.4
+Announcing the release of Alexandria 0.6.5
 
 * What is Alexandria?
 =====================
@@ -18,51 +18,17 @@ Alexandria is written in Ruby using ruby-gnome2.
   downloaded from there too
 - SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
-* What's New in 0.6.4?
+* What's New in 0.6.5?
 ======================
 
-New Dependencies:
+Implemented request authentication for Amazon provider. This means users
+must create their own AWS accounts to keep Amazon support.
+http://alexandria.rubyforge.org/site/news/2009-08-15--amazon-support.html
 
-- All web-based book providers now require Hpricot
-  (a.k.a. libhpricot-ruby) for HTML and XML parsing
-- DeaStore also requires HTMLEntities (a.k.a. libhtmlentities-ruby)
+Some bug fixes:
+[#7009] crash when adding a new Z39.50 provider
+[#26909] Alexandria doesn't save certain covers
 
-Changes:
-
-- Better GUI feedback when adding books by ISBN
-- Removed the obsolete Amazon (ECS) provider and replaced it with the new
-  AWS-based Amazon provider
-- Fixed several book providers (DeaStore, Siciliano, AdLibris & WorldCat)
-- Temporarily removed some broken providers
-- Now supports non-CueCat "keyboard wedge" barcode scanners;
-  no settings interface yet, but you can run gconf-editor /apps/alexandria
-  and set barcode_scanner to KeyboardWedge
-- Better (though not perfect) handling of character encoding
-- Improved stability (fewer crashes)
-
-0.6.4 contains a large number of bug fixes. These include fixes for:
-
-- [#19042] Icon view tooltips cause crashes on x86_64
-           [Work-around for an issue with ruby-gnome2 (pre 0.17.0)]
-- [#20080] Icon view tooltips cause crashes when publisher not defined
-- [#23908] Adding manually without ISBN is unstable
-- [#10929] Usability: advanced settings checkbox invisible without Ruby/ZOOM
-- [#20168] Cannot use non-western characters in Library names
-- [#16707] Cancelling image change in book properties not as expected
-- [#20201] Cannot export to ONIX or Tellico format
- - [#9010] Crashes when cancelling a library import
-
-Translations:
-
-- New Greek translation ( Michael Kotsarinis)
-- New Macedonian translation (Damjan Dimitrioski)
-- New Norwegian (Bokmål) translation (Jack Myrseh)
-- New Slovakian translation (Peter Kovac)
-
-- Improved Italian translation (Giacomo Margarito)
-- Improved Polish translation (Piotr Drąg)
-- Improved Portuguese (Brazil) and French translations (Lígia Moreira)
-- Improved Swedish translation (Martin Karlsson)
 
 Where can I find out more?
 ==========================

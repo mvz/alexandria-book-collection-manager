@@ -25,6 +25,7 @@ You should have GTK+ >= 2.8.0, and use Ruby-GNOME2 >= 0.16.0.
 
 <tt>ruby-gettext</tt>[http://ponx.s5.xrea.com/hiki/ruby-gettext.html]
 is required for the internationalisation of the user interface.
+Requires version 1.7.0 or higher.
 
 === Hpricot
 
