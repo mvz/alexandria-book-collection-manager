@@ -420,25 +420,25 @@ module Alexandria
 
       def add_selected_books(library, is_new)
         books_to_add = []
-        @treeview_results.selection.selected_each do |model, path,
-          iter|
+        @treeview_results.selection.selected_each do |model, path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
             begin
-              next unless
-                assert_not_exist(library, book.isbn)
-              rescue Alexandria::Library::InvalidISBNError
-              next unless
-                KeepBadISBNDialog.new(@parent, book).keep?
-              book.isbn = book.saved_ident = nil
+              next unless assert_not_exist(library, book.isbn)
             rescue Alexandria::Library::NoISBNError
+              puts "noisbn"
               book.isbn = book.saved_ident = nil
               books_to_add << [book, cover]
               next
+            rescue Alexandria::Library::InvalidISBNError
+              puts "invalidisbn #{book.isbn}"
+              next unless
+                KeepBadISBNDialog.new(@parent, book).keep?
+              book.isbn = book.saved_ident = nil
             end
             books_to_add << [book, cover]
           end
-
+          
         end
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)

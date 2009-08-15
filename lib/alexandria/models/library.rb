@@ -284,7 +284,7 @@ module Alexandria
     end
 
     def self.extract_numbers(isbn)
-      raise NoISBNError.new("Nil ISBN") if isbn == nil
+      raise NoISBNError.new("Nil ISBN") if isbn == nil || isbn.empty?
 
       isbn.delete('- ').upcase.split('').map do |x|
         raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
