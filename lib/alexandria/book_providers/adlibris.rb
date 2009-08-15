@@ -95,6 +95,11 @@ module Alexandria
       # TODO use Iconv to pre-convert the html.body to UTF-8 everywhere
       # before sending it to the parser methods
 
+      def get_book_from_search_result(rslt)
+        html_data = transport.get_response(URI.parse(rslt[:lookup_url]))
+        parse_result_data(html_data.body)
+      end
+
       def parse_search_result_data(html)
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
         html = Iconv.conv("UTF-8", "ISO-8859-1", html)
