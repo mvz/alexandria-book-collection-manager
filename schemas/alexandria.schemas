@@ -263,5 +263,16 @@
         <long>A list of provider names sorted by priority.  They will be queried in that order.</long>
       </locale>
     </schema>
+    <schema>        
+      <key>/schemas/apps/alexandria/view_advanced_settings</key>
+      <applyto>/apps/alexandria/view_advanced_settings</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>View advanced settings</short>
+        <long>Whether to display advanced book provider settings.</long>
+      </locale>
+    </schema>
   </schemalist>
 </gconfschemafile>

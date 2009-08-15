@@ -257,6 +257,11 @@ module Alexandria
 
         if BookProviders::abstract_classes.empty?
           @checkbutton_prov_advanced.sensitive = false
+        else
+          view_advanced = Preferences.instance.view_advanced_settings
+          if view_advanced
+            @checkbutton_prov_advanced.active = true
+          end
         end
         sensitize_providers
       end
@@ -289,6 +294,7 @@ module Alexandria
 
       def on_provider_advanced_toggled(checkbutton)
         on = checkbutton.active?
+        Preferences.instance.view_advanced_settings = on
         @button_prov_add.visible = @button_prov_remove.visible = on
       end
 

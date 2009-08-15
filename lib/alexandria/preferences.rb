@@ -44,13 +44,20 @@ module Alexandria
         
         
         begin
-          if new_value.is_a?(Array) and new_value.empty?
-            remove_preference(variable_name)
-          else
+          if new_value.is_a?(Array)
+            # when setting array, first remove nil elements (fixing #9007)
+            new_value.compact!
+            if new_value.empty?
+              remove_preference(variable_name)
+            else
+              @client[APP_DIR + variable_name] = new_value
+            end
+          else            
             @client[APP_DIR + variable_name] = new_value
           end
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
+          log.debug { new_value.inspect }
           log.error { "Fix GConf handling #{ex.message} #{trace}" }
         end
       else
