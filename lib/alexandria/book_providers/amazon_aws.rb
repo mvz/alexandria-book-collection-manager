@@ -37,17 +37,11 @@ module Alexandria
         prefs.add("dev_token", _("Access key ID"), '')
         prefs.add("secret_key", _("Secret access key"), '')
 
-        #prefs.add("associate", _("Associate ID"), "calibanorg-20", nil,
-        #          false)
-
-        puts "amazon provider init..."
-
-        # Backward compatibility hack - the previous developer token has
-        # been revoked.
         prefs.read
         token = prefs.variable_named("dev_token")
+        # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
         if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
-          token.new_value = '' # "0J356Z09CN88KB743582"
+          token.new_value = '' 
         end
       end
 

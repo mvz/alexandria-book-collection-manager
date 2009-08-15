@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-01 10:35+0000\n"
+"POT-Creation-Date: 2009-08-15 08:40+0100\n"
 "PO-Revision-Date: 2007-11-12 22:01+0200\n"
 "Last-Translator: Serhij Dubyk <dubyk@library.lviv.ua>\n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "Не названа"
 
-#: ../lib/alexandria/models/library.rb:233
+#: ../lib/alexandria/models/library.rb:245
 msgid "My Library"
 msgstr "Моя бібліотека"
 
@@ -72,8 +72,12 @@ msgid "Locale"
 msgstr "Локалізація"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:37
-msgid "Development token"
-msgstr "Талон розробника"
+msgid "Access key ID"
+msgstr ""
+
+#: ../lib/alexandria/book_providers/amazon_aws.rb:38
+msgid "Secret access key"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
 msgid "Invalid ISBN '%s'"
@@ -119,26 +123,26 @@ msgid "Couldn't add the book"
 msgstr "Не вдається додати книгу"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
 msgid "Searching Provider '%s'..."
 msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:612
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' вже існує у '%s' (з назвою '%s')."
 
@@ -225,28 +229,28 @@ msgstr ""
 msgid "Not a directory"
 msgstr "То не є тека"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
 msgid "Properties for '%s'"
 msgstr "Властивості для '%s'"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
 msgid "Properties"
 msgstr "Властивості"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:67
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:69
 msgid "Author"
 msgstr "Автор"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:119
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
 msgid "Select a cover image"
 msgstr "Виберіть зображення обкладинки"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
 msgid "No Cover"
 msgstr "Немає обкладинки"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:173
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d день"
@@ -267,12 +271,12 @@ msgid "A title must be provided."
 msgstr "Заголовок мусить бути поданий."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:115
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr "Поданий номер EAN/ISBN вже використовується у цій бібліотеці."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correcty, and try again."
@@ -292,14 +296,14 @@ msgstr "Дані про палітурку мусять бути подані."
 msgid "At least one author must be provided."
 msgstr "Необхідно подати хоча б одного автора."
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:395
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:398
 #, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
@@ -307,51 +311,51 @@ msgstr[0] "Не вдається додати книгу"
 msgstr[1] "Не вдається додати книгу"
 msgstr[2] "Не вдається додати книгу"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
 msgid "Ready to use %s barcode scanner"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
 #: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "Сканер _штрихкодів готовий"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:640
 msgid "Click below to scan _barcodes"
 msgstr "Клацніть нижче для сканування _штрихкодів"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:82
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:83
 msgid "Empty or conflictive condition"
 msgstr "Порожня або суперечлива умова"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:85
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
 msgid "_Save However"
 msgstr "Однак зберегти"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:87
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
 "Are you sure you want to save this library?"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:106
 msgid "Match"
 msgstr "Відповідність"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
 msgid "all"
 msgstr "усе"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
 msgid "any"
 msgstr "будь-що"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:118
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:119
 msgid "of the following rules:"
 msgstr "з наступних правил:"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:126
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:127
 msgid "Match the following rule:"
 msgstr "Відповідність наступному правилу:"
 
@@ -371,11 +375,11 @@ msgstr "_Назва:"
 msgid "_Type:"
 msgstr "_Тип:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:306
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:312
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Чи Ви впевнені, що хочете повністю вилучити постачальника '%s'?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:314
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:320
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -396,8 +400,8 @@ msgstr "Імпорт бібліотеки"
 msgid "There's a problem"
 msgstr "Є проблема"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:113
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:122
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
 msgid "Couldn't modify the book"
 msgstr "Не вдається змінити книгу"
 
@@ -409,299 +413,299 @@ msgstr "Помилка підчас імпорту"
 msgid "_Continue"
 msgstr "_Продовжити"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:61
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:64
 msgid "Import a Library"
 msgstr "Імпорт бібліотеки"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:68
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:71
 msgid "_Import"
 msgstr "_Імпорт"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:164
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:188
 msgid "Couldn't import the library"
 msgstr "Імпорт бібліотеки не вдався"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:189
 msgid ""
 "The format of the file you provided is unknown.  Please retry with another "
 "file."
 msgstr "Невідомий формат файлу. Спробуйте вибрати інший файл."
 
-#: ../lib/alexandria/ui/callbacks.rb:62
+#: ../lib/alexandria/ui/callbacks.rb:65
 msgid "The following lines are not valid ISBNs and were not imported:"
 msgstr ""
 "Наступні рядки не є првильними номерами ISBN і, відповідно, не були "
 "імпортовані:"
 
-#: ../lib/alexandria/ui/callbacks.rb:251
+#: ../lib/alexandria/ui/callbacks.rb:260
 msgid "_Library"
 msgstr "_Бібліотека"
 
-#: ../lib/alexandria/ui/callbacks.rb:252
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "_New Library"
 msgstr "_Нова бібліотека"
 
-#: ../lib/alexandria/ui/callbacks.rb:252
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "Create a new library"
 msgstr "Створити нову бібліотеку"
 
-#: ../lib/alexandria/ui/callbacks.rb:253
+#: ../lib/alexandria/ui/callbacks.rb:262
 msgid "New _Smart Library..."
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:253
+#: ../lib/alexandria/ui/callbacks.rb:262
 msgid "Create a new smart library"
 msgstr ""
 
-#: ../lib/alexandria/ui/callbacks.rb:254
+#: ../lib/alexandria/ui/callbacks.rb:263
 msgid "_Add Book..."
 msgstr "_Додати книгу..."
 
-#: ../lib/alexandria/ui/callbacks.rb:254
+#: ../lib/alexandria/ui/callbacks.rb:263
 msgid "Add a new book from the Internet"
 msgstr "Додати нову книгу з Інтернету"
 
-#: ../lib/alexandria/ui/callbacks.rb:255
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "Add Book _Manually..."
 msgstr "Додати книгу _вручну..."
 
-#: ../lib/alexandria/ui/callbacks.rb:255
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "Add a new book manually"
 msgstr "Додати нову книгу вручну"
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "_Import..."
 msgstr "_Імпорт..."
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "Import a library"
 msgstr "Імпорт бібліотеки"
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "_Export..."
 msgstr "_Експорт..."
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "Export the selected library"
 msgstr "Експортувати вибрану бібліотеку"
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "_Acquire from Scanner..."
 msgstr "_Отримання зі сканера..."
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "Acquire books from a scanner"
 msgstr "Отримати книги зі сканера"
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:268
 msgid "_Properties"
 msgstr "_Властивості"
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:268
 msgid "Edit the properties of the selected book"
 msgstr "Редагувати властивості відібраної книги"
 
-#: ../lib/alexandria/ui/callbacks.rb:260
+#: ../lib/alexandria/ui/callbacks.rb:269
 msgid "_Quit"
 msgstr "_Вихід"
 
-#: ../lib/alexandria/ui/callbacks.rb:260
+#: ../lib/alexandria/ui/callbacks.rb:269
 msgid "Quit the program"
 msgstr "Вийти з програми"
 
-#: ../lib/alexandria/ui/callbacks.rb:261
+#: ../lib/alexandria/ui/callbacks.rb:270
 msgid "_Edit"
 msgstr "_Редагування"
 
-#: ../lib/alexandria/ui/callbacks.rb:262
+#: ../lib/alexandria/ui/callbacks.rb:271
 msgid "_Undo"
 msgstr "_Відміна"
 
-#: ../lib/alexandria/ui/callbacks.rb:262
+#: ../lib/alexandria/ui/callbacks.rb:271
 msgid "Undo the last action"
 msgstr "Відмінит останню дію"
 
-#: ../lib/alexandria/ui/callbacks.rb:263
+#: ../lib/alexandria/ui/callbacks.rb:272
 msgid "_Redo"
 msgstr "_Повторити"
 
-#: ../lib/alexandria/ui/callbacks.rb:263
+#: ../lib/alexandria/ui/callbacks.rb:272
 msgid "Redo the undone action"
 msgstr "Повторити відмінену дію"
 
-#: ../lib/alexandria/ui/callbacks.rb:264
+#: ../lib/alexandria/ui/callbacks.rb:273
 msgid "_Select All"
 msgstr "_Позначити усе"
 
-#: ../lib/alexandria/ui/callbacks.rb:264
+#: ../lib/alexandria/ui/callbacks.rb:273
 msgid "Select all visible books"
 msgstr "Вибрати усі видимі книги"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:274
 msgid "Dese_lect All"
 msgstr "Зняти позначення"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:274
 msgid "Deselect everything"
 msgstr "Зняти виділення з усього"
 
-#: ../lib/alexandria/ui/callbacks.rb:266
+#: ../lib/alexandria/ui/callbacks.rb:275
 msgid "My _Rating"
 msgstr "Моя _оцінка"
 
-#: ../lib/alexandria/ui/callbacks.rb:267
+#: ../lib/alexandria/ui/callbacks.rb:276
 msgid "None"
 msgstr "Нічого"
 
-#: ../lib/alexandria/ui/callbacks.rb:268
+#: ../lib/alexandria/ui/callbacks.rb:277
 msgid "One Star"
 msgstr "Одна зірка"
 
-#: ../lib/alexandria/ui/callbacks.rb:269
+#: ../lib/alexandria/ui/callbacks.rb:278
 msgid "Two Stars"
 msgstr "Дві зірки"
 
-#: ../lib/alexandria/ui/callbacks.rb:270
+#: ../lib/alexandria/ui/callbacks.rb:279
 msgid "Three Stars"
 msgstr "Три зірки"
 
-#: ../lib/alexandria/ui/callbacks.rb:271
+#: ../lib/alexandria/ui/callbacks.rb:280
 msgid "Four Stars"
 msgstr "Чотири зірки"
 
-#: ../lib/alexandria/ui/callbacks.rb:272
+#: ../lib/alexandria/ui/callbacks.rb:281
 msgid "Five Stars"
 msgstr "П'ять зірок"
 
-#: ../lib/alexandria/ui/callbacks.rb:273
+#: ../lib/alexandria/ui/callbacks.rb:282
 msgid "_Move"
 msgstr "_Перемістити"
 
-#: ../lib/alexandria/ui/callbacks.rb:274
+#: ../lib/alexandria/ui/callbacks.rb:283
 msgid "_Rename"
 msgstr "_Перейменувати"
 
-#: ../lib/alexandria/ui/callbacks.rb:275
+#: ../lib/alexandria/ui/callbacks.rb:284
 msgid "_Delete"
 msgstr "_Вилучити"
 
-#: ../lib/alexandria/ui/callbacks.rb:275
+#: ../lib/alexandria/ui/callbacks.rb:284
 msgid "Delete the selected books or library"
 msgstr "Видалити відібрані книги або бібліотеку"
 
-#: ../lib/alexandria/ui/callbacks.rb:276
+#: ../lib/alexandria/ui/callbacks.rb:285
 msgid "_Search"
 msgstr "_Шукати"
 
-#: ../lib/alexandria/ui/callbacks.rb:276
+#: ../lib/alexandria/ui/callbacks.rb:285
 msgid "Filter books"
 msgstr "Фільтрувати книги"
 
-#: ../lib/alexandria/ui/callbacks.rb:277
+#: ../lib/alexandria/ui/callbacks.rb:286
 msgid "_Clear Results"
 msgstr "_Очистити результати"
 
-#: ../lib/alexandria/ui/callbacks.rb:277
+#: ../lib/alexandria/ui/callbacks.rb:286
 msgid "Clear the search results"
 msgstr "Очистити результати пошуку"
 
-#: ../lib/alexandria/ui/callbacks.rb:278
+#: ../lib/alexandria/ui/callbacks.rb:287
 msgid "_Preferences"
 msgstr "_Параметри"
 
-#: ../lib/alexandria/ui/callbacks.rb:278
+#: ../lib/alexandria/ui/callbacks.rb:287
 msgid "Change Alexandria's settings"
 msgstr "Змінити налаштування Аоександрії"
 
-#: ../lib/alexandria/ui/callbacks.rb:279
+#: ../lib/alexandria/ui/callbacks.rb:288
 msgid "_View"
 msgstr "_Вигляд"
 
-#: ../lib/alexandria/ui/callbacks.rb:280
+#: ../lib/alexandria/ui/callbacks.rb:289
 msgid "Arran_ge Icons"
 msgstr "В_порядкувати іконки"
 
-#: ../lib/alexandria/ui/callbacks.rb:281
+#: ../lib/alexandria/ui/callbacks.rb:290
 msgid "Display Online _Information"
 msgstr "Показати он-лайн-_інформацію"
 
-#: ../lib/alexandria/ui/callbacks.rb:283
+#: ../lib/alexandria/ui/callbacks.rb:292
 msgid "_Help"
 msgstr "_Допомога"
 
-#: ../lib/alexandria/ui/callbacks.rb:284
+#: ../lib/alexandria/ui/callbacks.rb:293
 msgid "Submit _Bug Report"
 msgstr "Передати звіт про _дефект"
 
-#: ../lib/alexandria/ui/callbacks.rb:284
+#: ../lib/alexandria/ui/callbacks.rb:293
 msgid "Submit a bug report to the developers"
 msgstr "Передати звіт про помилку розробникам"
 
-#: ../lib/alexandria/ui/callbacks.rb:285
+#: ../lib/alexandria/ui/callbacks.rb:294
 msgid "Contents"
 msgstr "Зміст"
 
-#: ../lib/alexandria/ui/callbacks.rb:285
+#: ../lib/alexandria/ui/callbacks.rb:294
 msgid "View Alexandria's manual"
 msgstr "Перегляд керівництва по Александрії"
 
-#: ../lib/alexandria/ui/callbacks.rb:286
+#: ../lib/alexandria/ui/callbacks.rb:295
 msgid "_About"
 msgstr "_Про нас"
 
-#: ../lib/alexandria/ui/callbacks.rb:286
+#: ../lib/alexandria/ui/callbacks.rb:295
 msgid "Show information about Alexandria"
 msgstr "Показати інформацію про Александрію"
 
-#: ../lib/alexandria/ui/callbacks.rb:311
+#: ../lib/alexandria/ui/callbacks.rb:320
 msgid "Side _Pane"
 msgstr "_Бічне панель"
 
-#: ../lib/alexandria/ui/callbacks.rb:313
+#: ../lib/alexandria/ui/callbacks.rb:322
 msgid "_Toolbar"
 msgstr "Панель _інструментів"
 
-#: ../lib/alexandria/ui/callbacks.rb:315
+#: ../lib/alexandria/ui/callbacks.rb:324
 msgid "_Statusbar"
 msgstr "Панель _статусу"
 
-#: ../lib/alexandria/ui/callbacks.rb:317
+#: ../lib/alexandria/ui/callbacks.rb:326
 msgid "Re_versed Order"
 msgstr "У зворотньому порядку"
 
-#: ../lib/alexandria/ui/callbacks.rb:322
+#: ../lib/alexandria/ui/callbacks.rb:331
 msgid "View as _Icons"
 msgstr "Переглядати як іконки"
 
-#: ../lib/alexandria/ui/callbacks.rb:323
+#: ../lib/alexandria/ui/callbacks.rb:332
 msgid "View as _List"
 msgstr "Переглядати як список"
 
-#: ../lib/alexandria/ui/callbacks.rb:327
+#: ../lib/alexandria/ui/callbacks.rb:336
 msgid "By _Title"
 msgstr "За _назвою"
 
-#: ../lib/alexandria/ui/callbacks.rb:328
+#: ../lib/alexandria/ui/callbacks.rb:337
 msgid "By _Authors"
 msgstr "За _авторами"
 
-#: ../lib/alexandria/ui/callbacks.rb:329
+#: ../lib/alexandria/ui/callbacks.rb:338
 msgid "By _ISBN"
 msgstr "За номером _ISBN"
 
-#: ../lib/alexandria/ui/callbacks.rb:330
+#: ../lib/alexandria/ui/callbacks.rb:339
 msgid "By _Publisher"
 msgstr "За _видавцем"
 
-#: ../lib/alexandria/ui/callbacks.rb:331
+#: ../lib/alexandria/ui/callbacks.rb:340
 msgid "By _Binding"
 msgstr "За _палітуркою"
 
-#: ../lib/alexandria/ui/callbacks.rb:332
+#: ../lib/alexandria/ui/callbacks.rb:341
 msgid "By _Rating"
 msgstr "За _оцінкою"
 
-#: ../lib/alexandria/ui/callbacks.rb:336
+#: ../lib/alexandria/ui/callbacks.rb:345
 msgid "At _%s"
 msgstr "На _%s"
 
@@ -765,47 +769,47 @@ msgstr "Переглядати як список"
 msgid "Choose how to show books"
 msgstr "Виберіть, як показати книги"
 
-#: ../lib/alexandria/ui/ui_manager.rb:368
+#: ../lib/alexandria/ui/ui_manager.rb:385
 msgid "Library '%s' selected"
 msgstr "Бібліотеку '%s' вибрано"
 
-#: ../lib/alexandria/ui/ui_manager.rb:375
+#: ../lib/alexandria/ui/ui_manager.rb:392
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "Вибрано бібліотеку '%s', %d книжка ще не має оцінки"
 msgstr[1] "Вибрано бібліотеку '%s', %d книжки ще не мають оцінки"
 msgstr[2] "Вибрано бібліотеку '%s', %d книжок ще не мають оцінки"
 
-#: ../lib/alexandria/ui/ui_manager.rb:380
+#: ../lib/alexandria/ui/ui_manager.rb:397
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "Вибрано бібліотеку '%s', %d книжка"
 msgstr[1] "Вибрано бібліотеку '%s', %d книжки"
 msgstr[2] "Вибрано бібліотеку '%s', %d книжок"
 
-#: ../lib/alexandria/ui/ui_manager.rb:387
+#: ../lib/alexandria/ui/ui_manager.rb:404
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "Вибрано бібліотеку '%s', %d книжка, %d книжка ще не має оцінки"
 msgstr[1] "Вибрано бібліотеку '%s', %d книжки, %d книжки ще не мають оцінки"
 msgstr[2] "Вибрано бібліотеку '%s', %d книжок, %d книжок ще не мають оцінки"
 
-#: ../lib/alexandria/ui/ui_manager.rb:399
+#: ../lib/alexandria/ui/ui_manager.rb:416
 msgid "'%s' selected"
 msgstr "Вибрано '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:402
+#: ../lib/alexandria/ui/ui_manager.rb:419
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "Вибрано %d книжку"
 msgstr[1] "Вибрано %d книжки"
 msgstr[2] "Вибрано %d книжок"
 
-#: ../lib/alexandria/ui/ui_manager.rb:567
+#: ../lib/alexandria/ui/ui_manager.rb:587
 msgid "Unable to launch the web browser"
 msgstr "Не вдалося запустити веб-броузер"
 
-#: ../lib/alexandria/ui/ui_manager.rb:568
+#: ../lib/alexandria/ui/ui_manager.rb:588
 msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -813,11 +817,11 @@ msgstr ""
 "Перевірте чи Ваш веб-броузер є добре сконфігурований (Desktop Preferences -> "
 "Advanced -> Preferred Applications) і спробуйте знову."
 
-#: ../lib/alexandria/ui/ui_manager.rb:580
+#: ../lib/alexandria/ui/ui_manager.rb:600
 msgid "Unable to launch the mail reader"
 msgstr "Не вдалося запусити читач пошти"
 
-#: ../lib/alexandria/ui/ui_manager.rb:581
+#: ../lib/alexandria/ui/ui_manager.rb:601
 msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -825,74 +829,74 @@ msgstr ""
 "Перевірте чи Ваш читач пошти є добре сконфіґурований (Desktop Preferences -> "
 "Advanced -> Preferred Applications) і спробуйте знову."
 
-#: ../lib/alexandria/ui/ui_manager.rb:616
+#: ../lib/alexandria/ui/ui_manager.rb:636
 msgid "Repair Book Data"
 msgstr ""
 
-#: ../lib/alexandria/ui/ui_manager.rb:617
+#: ../lib/alexandria/ui/ui_manager.rb:637
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
 "providers?\n"
 msgstr ""
 
-#: ../lib/alexandria/ui/ui_manager.rb:674
+#: ../lib/alexandria/ui/ui_manager.rb:694
 msgid "Added '%s' to library '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/ui_manager.rb:825
+#: ../lib/alexandria/ui/ui_manager.rb:845
 #, fuzzy
 msgid "Loading '%s'..."
 msgstr "Додавання '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:1051
+#: ../lib/alexandria/ui/ui_manager.rb:1087
 msgid "In '_%s'"
 msgstr "У '_%s'"
 
-#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:345
+#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:349
 msgid "Title"
 msgstr "Заголовок"
 
-#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:347
+#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:351
 msgid "Authors"
 msgstr "Автори"
 
-#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:346
+#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:350
 msgid "ISBN"
 msgstr "Номер ISBN"
 
-#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:348
+#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:352
 msgid "Publisher"
 msgstr "Видавець"
 
-#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:349
+#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:353
 msgid "Publish Year"
 msgstr "Рік видання"
 
-#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:350
+#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:354
 msgid "Binding"
 msgstr "Палітурка"
 
-#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:100
-#: ../lib/alexandria/smart_library.rb:357
+#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:104
+#: ../lib/alexandria/smart_library.rb:361
 msgid "Read"
 msgstr ""
 
-#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:359
+#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:363
 msgid "Own"
 msgstr ""
 
-#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:360
+#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:364
 msgid "Want"
 msgstr ""
 
-#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:353
+#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:357
 #: ../data/alexandria/glade/preferences_dialog.glade:199
 #, fuzzy
 msgid "Tags"
 msgstr "Ознаки:"
 
-#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:351
+#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:355
 msgid "Rating"
 msgstr "Оцінка"
 
@@ -975,129 +979,129 @@ msgstr "Список номерів ISBN (*.txt)"
 msgid "GoodReads CSV"
 msgstr ""
 
-#: ../lib/alexandria/export_library.rb:101
+#: ../lib/alexandria/export_library.rb:109
 msgid "Archived ONIX XML"
 msgstr "ONIX, архівований XML "
 
-#: ../lib/alexandria/export_library.rb:103
+#: ../lib/alexandria/export_library.rb:111
 msgid "Archived Tellico XML"
 msgstr "Tellico, архівований XML"
 
-#: ../lib/alexandria/export_library.rb:105
+#: ../lib/alexandria/export_library.rb:113
 msgid "BibTeX"
 msgstr "BibTeX"
 
-#: ../lib/alexandria/export_library.rb:106
+#: ../lib/alexandria/export_library.rb:114
 msgid "CSV list"
 msgstr "Список CSV"
 
-#: ../lib/alexandria/export_library.rb:107
+#: ../lib/alexandria/export_library.rb:115
 msgid "ISBN List"
 msgstr "Список ISBN"
 
-#: ../lib/alexandria/export_library.rb:108
+#: ../lib/alexandria/export_library.rb:116
 #, fuzzy
 msgid "iPod Notes"
 msgstr "Замітки"
 
-#: ../lib/alexandria/export_library.rb:109
+#: ../lib/alexandria/export_library.rb:117
 msgid "HTML Web Page"
 msgstr "Веб-сторінка HTML"
 
-#: ../lib/alexandria/smart_library.rb:88
+#: ../lib/alexandria/smart_library.rb:92
 msgid "Favorite"
 msgstr "Улюблене"
 
-#: ../lib/alexandria/smart_library.rb:94
+#: ../lib/alexandria/smart_library.rb:98
 msgid "Loaned"
 msgstr "Позичено"
 
-#: ../lib/alexandria/smart_library.rb:106
+#: ../lib/alexandria/smart_library.rb:110
 msgid "Owned"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:115
+#: ../lib/alexandria/smart_library.rb:119
 msgid "Wishlist"
 msgstr "Список побажань"
 
-#: ../lib/alexandria/smart_library.rb:352
+#: ../lib/alexandria/smart_library.rb:356
 #: ../data/alexandria/glade/book_properties_dialog.glade:1225
 msgid "Notes"
 msgstr "Замітки"
 
-#: ../lib/alexandria/smart_library.rb:354
+#: ../lib/alexandria/smart_library.rb:358
 msgid "Loaning State"
 msgstr "Стан позики"
 
-#: ../lib/alexandria/smart_library.rb:355
+#: ../lib/alexandria/smart_library.rb:359
 msgid "Loaning Date"
 msgstr "Дата позики"
 
-#: ../lib/alexandria/smart_library.rb:356
+#: ../lib/alexandria/smart_library.rb:360
 msgid "Loaning Person"
 msgstr "Особа що позичила"
 
-#: ../lib/alexandria/smart_library.rb:358
+#: ../lib/alexandria/smart_library.rb:362
 msgid "Date Read"
 msgstr ""
 
-#: ../lib/alexandria/smart_library.rb:367
+#: ../lib/alexandria/smart_library.rb:371
 msgid "days"
 msgstr "дні"
 
-#: ../lib/alexandria/smart_library.rb:377
+#: ../lib/alexandria/smart_library.rb:382
 msgid "is set"
 msgstr "встановлено"
 
-#: ../lib/alexandria/smart_library.rb:381
+#: ../lib/alexandria/smart_library.rb:386
 msgid "is not set"
 msgstr "не встановлено"
 
-#: ../lib/alexandria/smart_library.rb:385
+#: ../lib/alexandria/smart_library.rb:390
 msgid "is"
 msgstr "є"
 
-#: ../lib/alexandria/smart_library.rb:389
+#: ../lib/alexandria/smart_library.rb:394
 msgid "is not"
 msgstr "не є"
 
-#: ../lib/alexandria/smart_library.rb:393
+#: ../lib/alexandria/smart_library.rb:398
 msgid "contains"
 msgstr "містить"
 
-#: ../lib/alexandria/smart_library.rb:397
+#: ../lib/alexandria/smart_library.rb:402
 msgid "does not contain"
 msgstr "не містить"
 
-#: ../lib/alexandria/smart_library.rb:401
+#: ../lib/alexandria/smart_library.rb:406
 msgid "starts with"
 msgstr "починається на"
 
-#: ../lib/alexandria/smart_library.rb:405
+#: ../lib/alexandria/smart_library.rb:410
 msgid "ends with"
 msgstr "закінчується на"
 
-#: ../lib/alexandria/smart_library.rb:409
+#: ../lib/alexandria/smart_library.rb:414
 msgid "is greater than"
 msgstr "є більше аніж"
 
-#: ../lib/alexandria/smart_library.rb:413
+#: ../lib/alexandria/smart_library.rb:418
 msgid "is less than"
 msgstr "є менш аніж"
 
-#: ../lib/alexandria/smart_library.rb:417
+#: ../lib/alexandria/smart_library.rb:422
 msgid "is after"
 msgstr "є після"
 
-#: ../lib/alexandria/smart_library.rb:421
+#: ../lib/alexandria/smart_library.rb:426
 msgid "is before"
 msgstr "є перед"
 
-#: ../lib/alexandria/smart_library.rb:425
+#: ../lib/alexandria/smart_library.rb:430
 msgid "is in last"
 msgstr "є в кінці"
 
-#: ../lib/alexandria/smart_library.rb:429
+#: ../lib/alexandria/smart_library.rb:450
 msgid "is not in last"
 msgstr "не є в кінці"
 
@@ -1329,6 +1333,9 @@ msgstr "Менеджер книжкових зібрань"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Керуйте своїми книжковими зібраннями"
+
+#~ msgid "Development token"
+#~ msgstr "Талон розробника"
 
 #, fuzzy
 #~ msgid "Couldn't add these books"

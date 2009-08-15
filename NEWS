@@ -28,7 +28,7 @@ http://alexandria.rubyforge.org/site/news/2009-08-15--amazon-support.html
 Some bug fixes:
 [#7009] crash when adding a new Z39.50 provider
 [#26909] Alexandria doesn't save certain covers
-
+[#10972] No longer complains when providers return books with no ISBN
 
 Where can I find out more?
 ==========================

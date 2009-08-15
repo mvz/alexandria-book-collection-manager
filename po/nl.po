@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-01 10:35+0000\n"
+"POT-Creation-Date: 2009-08-15 08:40+0100\n"
 "PO-Revision-Date: 2009-03-14 14:25+0200\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Untitled"
 msgstr "Naamloos"
 
-#: ../lib/alexandria/models/library.rb:233
+#: ../lib/alexandria/models/library.rb:245
 msgid "My Library"
 msgstr "Mijn bibliotheek"
 
@@ -72,8 +72,12 @@ msgid "Locale"
 msgstr "Taal"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:37
-msgid "Development token"
-msgstr "Ontwikkelaarssleutel"
+msgid "Access key ID"
+msgstr ""
+
+#: ../lib/alexandria/book_providers/amazon_aws.rb:38
+msgid "Secret access key"
+msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
 msgid "Invalid ISBN '%s'"
@@ -119,26 +123,26 @@ msgid "Couldn't add the book"
 msgstr "Kon het boek niet toevoegen"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:462
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
 msgid "Searching Provider '%s'..."
 msgstr "Zoeken bij bronbibliotheek '%s'..."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:463
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
 msgid "Error while Searching Provider '%s'"
 msgstr "Fout tijdens het zoeken bij bronbibliotheek '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:464
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
 msgid "Not Found at Provider '%s'"
 msgstr "Niet gevonden bij bronbibliotheek '%s'"
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:465
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
 msgid "Found at Provider '%s'"
 msgstr "Gevonden by bronbibliotheek '%s'"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:604
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:612
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' bestaat al in '%s' (getiteld '%s')."
 
@@ -225,28 +229,28 @@ msgstr ""
 msgid "Not a directory"
 msgstr "Geen map"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:59
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
 msgid "Properties for '%s'"
 msgstr "Eigenschappen voor %s"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:67
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:69
 msgid "Author"
 msgstr "Auteur"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:119
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
 msgid "Select a cover image"
 msgstr "Selecteer een afbeelding voor de voorkant"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
 msgid "No Cover"
 msgstr "Geen kaft"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:161
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:173
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dag"
@@ -266,12 +270,12 @@ msgid "A title must be provided."
 msgstr "Er moet een titel opgegeven worden."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:115
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr "Het EAN/ISBN dat u invoerde wordt al gebruikt in deze bibliotheek."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correcty, and try again."
@@ -291,40 +295,40 @@ msgstr "Er moet een band opgegeven worden."
 msgid "At least one author must be provided."
 msgstr "Er moet minstens één auteur opgegeven worden."
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:380
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:395
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
 msgstr[0] "Er was %d duplikaat"
 msgstr[1] "Er waren %d duplikaten"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:383
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:398
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "Kon het boek niet toevoegen"
 msgstr[1] "Kon deze boeken niet toevoegen"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:595
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
 msgid "Ready to use %s barcode scanner"
 msgstr "Klaar om de streepjescodescanner '%s' te gebruiken"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
 #: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "_Streepjescodescanner klaar"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:640
 msgid "Click below to scan _barcodes"
 msgstr "Klik hieronder om _streepjescodes te scannen"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:82
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:83
 msgid "Empty or conflictive condition"
 msgstr "Lege of conflicterende voorwaarde"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:85
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
 msgid "_Save However"
 msgstr "Toch _opslaan"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:87
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
@@ -334,23 +338,23 @@ msgstr ""
 "voorwaarden. Er zal waarschijnlijk nooit een boek aan voldoen. Weet u zeker "
 "dat u deze bibliotheek op wilt slaan?"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:105
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:106
 msgid "Match"
 msgstr "Voldoet aan"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
 msgid "all"
 msgstr "alle"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:108
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
 msgid "any"
 msgstr "een"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:118
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:119
 msgid "of the following rules:"
 msgstr "van de volgende regels:"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:126
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:127
 msgid "Match the following rule:"
 msgstr "Voldoen aan de volgende regel:"
 
@@ -370,11 +374,11 @@ msgstr "_Naam:"
 msgid "_Type:"
 msgstr "_Type:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:306
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:312
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Weet u zeker dat u bron '%s' permanent wilt verwijderen?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:314
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:320
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -394,8 +398,8 @@ msgstr "Slimme bibliotheek"
 msgid "There's a problem"
 msgstr "Er is een probleem"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:113
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:122
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
 msgid "Couldn't modify the book"
 msgstr "Kon het boek niet aanpassen"
 
@@ -407,19 +411,19 @@ msgstr "Fout tijdens het importeren"
 msgid "_Continue"
 msgstr "_Doorgaan"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:61
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:64
 msgid "Import a Library"
 msgstr "Importeer een bibliotheek"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:68
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:71
 msgid "_Import"
 msgstr "_Importeren"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:164
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:188
 msgid "Couldn't import the library"
 msgstr "Kon de bibliotheek niet importeren"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:165
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:189
 msgid ""
 "The format of the file you provided is unknown.  Please retry with another "
 "file."
@@ -427,281 +431,281 @@ msgstr ""
 "Het bestandsformaat is onbekend. Gelieve opnieuw te proberen met een ander "
 "bestand."
 
-#: ../lib/alexandria/ui/callbacks.rb:62
+#: ../lib/alexandria/ui/callbacks.rb:65
 msgid "The following lines are not valid ISBNs and were not imported:"
 msgstr ""
 "De volgende regels bevatten geen geldige ISBNs en zijn daarom niet "
 "geïmporteerd:"
 
-#: ../lib/alexandria/ui/callbacks.rb:251
+#: ../lib/alexandria/ui/callbacks.rb:260
 msgid "_Library"
 msgstr "_Bibliotheek"
 
-#: ../lib/alexandria/ui/callbacks.rb:252
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "_New Library"
 msgstr "_Nieuwe bibliotheek"
 
-#: ../lib/alexandria/ui/callbacks.rb:252
+#: ../lib/alexandria/ui/callbacks.rb:261
 msgid "Create a new library"
 msgstr "Maak een nieuwe bibliotheek aan"
 
-#: ../lib/alexandria/ui/callbacks.rb:253
+#: ../lib/alexandria/ui/callbacks.rb:262
 msgid "New _Smart Library..."
 msgstr "Nieuwe _slimme bibliotheek..."
 
-#: ../lib/alexandria/ui/callbacks.rb:253
+#: ../lib/alexandria/ui/callbacks.rb:262
 msgid "Create a new smart library"
 msgstr "Maak een nieuwe slimme bibliotheek aan"
 
-#: ../lib/alexandria/ui/callbacks.rb:254
+#: ../lib/alexandria/ui/callbacks.rb:263
 msgid "_Add Book..."
 msgstr "Boek _toevoegen..."
 
-#: ../lib/alexandria/ui/callbacks.rb:254
+#: ../lib/alexandria/ui/callbacks.rb:263
 msgid "Add a new book from the Internet"
 msgstr "Voeg een nieuw boek toe vanaf het internet"
 
-#: ../lib/alexandria/ui/callbacks.rb:255
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "Add Book _Manually..."
 msgstr "Boek hand_matig toevoegen..."
 
-#: ../lib/alexandria/ui/callbacks.rb:255
+#: ../lib/alexandria/ui/callbacks.rb:264
 msgid "Add a new book manually"
 msgstr "Een nieuw boek handmatig toevoegen"
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "_Import..."
 msgstr "_Importeren..."
 
-#: ../lib/alexandria/ui/callbacks.rb:256
+#: ../lib/alexandria/ui/callbacks.rb:265
 msgid "Import a library"
 msgstr "Importeer een bibliotheek"
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "_Export..."
 msgstr "_Exporteren..."
 
-#: ../lib/alexandria/ui/callbacks.rb:257
+#: ../lib/alexandria/ui/callbacks.rb:266
 msgid "Export the selected library"
 msgstr "Exporteer de geselecteerde bibliotheek"
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "_Acquire from Scanner..."
 msgstr "_Inlezen d.m.v. scanner..."
 
-#: ../lib/alexandria/ui/callbacks.rb:258
+#: ../lib/alexandria/ui/callbacks.rb:267
 msgid "Acquire books from a scanner"
 msgstr "Boeken inlezen d.m.v. scanner"
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:268
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
-#: ../lib/alexandria/ui/callbacks.rb:259
+#: ../lib/alexandria/ui/callbacks.rb:268
 msgid "Edit the properties of the selected book"
 msgstr "Eigenschappen van het geselecteerde boek bewerken"
 
-#: ../lib/alexandria/ui/callbacks.rb:260
+#: ../lib/alexandria/ui/callbacks.rb:269
 msgid "_Quit"
 msgstr "_Afsluiten"
 
-#: ../lib/alexandria/ui/callbacks.rb:260
+#: ../lib/alexandria/ui/callbacks.rb:269
 msgid "Quit the program"
 msgstr "Het programma afsluiten"
 
-#: ../lib/alexandria/ui/callbacks.rb:261
+#: ../lib/alexandria/ui/callbacks.rb:270
 msgid "_Edit"
 msgstr "_Bewerken"
 
-#: ../lib/alexandria/ui/callbacks.rb:262
+#: ../lib/alexandria/ui/callbacks.rb:271
 msgid "_Undo"
 msgstr "_Ongedaan maken"
 
-#: ../lib/alexandria/ui/callbacks.rb:262
+#: ../lib/alexandria/ui/callbacks.rb:271
 msgid "Undo the last action"
 msgstr "De laatste actie ongedaan maken"
 
-#: ../lib/alexandria/ui/callbacks.rb:263
+#: ../lib/alexandria/ui/callbacks.rb:272
 msgid "_Redo"
 msgstr "_Opnieuw uitvoeren"
 
-#: ../lib/alexandria/ui/callbacks.rb:263
+#: ../lib/alexandria/ui/callbacks.rb:272
 msgid "Redo the undone action"
 msgstr "De ongedaan gemaakte handeling toch uitvoeren"
 
-#: ../lib/alexandria/ui/callbacks.rb:264
+#: ../lib/alexandria/ui/callbacks.rb:273
 msgid "_Select All"
 msgstr "_Alles selecteren"
 
-#: ../lib/alexandria/ui/callbacks.rb:264
+#: ../lib/alexandria/ui/callbacks.rb:273
 msgid "Select all visible books"
 msgstr "Selecteer alle zichtbare boeken"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:274
 msgid "Dese_lect All"
 msgstr "Alles _deselecteren"
 
-#: ../lib/alexandria/ui/callbacks.rb:265
+#: ../lib/alexandria/ui/callbacks.rb:274
 msgid "Deselect everything"
 msgstr "Alles deselecteren"
 
-#: ../lib/alexandria/ui/callbacks.rb:266
+#: ../lib/alexandria/ui/callbacks.rb:275
 msgid "My _Rating"
 msgstr "Mijn _waardering"
 
-#: ../lib/alexandria/ui/callbacks.rb:267
+#: ../lib/alexandria/ui/callbacks.rb:276
 msgid "None"
 msgstr "Geen"
 
-#: ../lib/alexandria/ui/callbacks.rb:268
+#: ../lib/alexandria/ui/callbacks.rb:277
 msgid "One Star"
 msgstr "Een ster"
 
-#: ../lib/alexandria/ui/callbacks.rb:269
+#: ../lib/alexandria/ui/callbacks.rb:278
 msgid "Two Stars"
 msgstr "Twee sterren"
 
-#: ../lib/alexandria/ui/callbacks.rb:270
+#: ../lib/alexandria/ui/callbacks.rb:279
 msgid "Three Stars"
 msgstr "Drie sterren"
 
-#: ../lib/alexandria/ui/callbacks.rb:271
+#: ../lib/alexandria/ui/callbacks.rb:280
 msgid "Four Stars"
 msgstr "Vier sterren"
 
-#: ../lib/alexandria/ui/callbacks.rb:272
+#: ../lib/alexandria/ui/callbacks.rb:281
 msgid "Five Stars"
 msgstr "Vijf sterren"
 
-#: ../lib/alexandria/ui/callbacks.rb:273
+#: ../lib/alexandria/ui/callbacks.rb:282
 msgid "_Move"
 msgstr "_Verplaatsen"
 
-#: ../lib/alexandria/ui/callbacks.rb:274
+#: ../lib/alexandria/ui/callbacks.rb:283
 msgid "_Rename"
 msgstr "_Hernoemen"
 
-#: ../lib/alexandria/ui/callbacks.rb:275
+#: ../lib/alexandria/ui/callbacks.rb:284
 msgid "_Delete"
 msgstr "_Verwijderen"
 
-#: ../lib/alexandria/ui/callbacks.rb:275
+#: ../lib/alexandria/ui/callbacks.rb:284
 msgid "Delete the selected books or library"
 msgstr "De geselecteerde boeken verwijderen"
 
-#: ../lib/alexandria/ui/callbacks.rb:276
+#: ../lib/alexandria/ui/callbacks.rb:285
 msgid "_Search"
 msgstr "_Zoeken"
 
-#: ../lib/alexandria/ui/callbacks.rb:276
+#: ../lib/alexandria/ui/callbacks.rb:285
 msgid "Filter books"
 msgstr "Boeken filteren"
 
-#: ../lib/alexandria/ui/callbacks.rb:277
+#: ../lib/alexandria/ui/callbacks.rb:286
 msgid "_Clear Results"
 msgstr "Resultaten _wissen"
 
-#: ../lib/alexandria/ui/callbacks.rb:277
+#: ../lib/alexandria/ui/callbacks.rb:286
 msgid "Clear the search results"
 msgstr "Zoekresultaten wissen"
 
-#: ../lib/alexandria/ui/callbacks.rb:278
+#: ../lib/alexandria/ui/callbacks.rb:287
 msgid "_Preferences"
 msgstr "_Voorkeuren"
 
-#: ../lib/alexandria/ui/callbacks.rb:278
+#: ../lib/alexandria/ui/callbacks.rb:287
 msgid "Change Alexandria's settings"
 msgstr "Alexandria's instellingen wijzigen"
 
-#: ../lib/alexandria/ui/callbacks.rb:279
+#: ../lib/alexandria/ui/callbacks.rb:288
 msgid "_View"
 msgstr "_Beeld"
 
-#: ../lib/alexandria/ui/callbacks.rb:280
+#: ../lib/alexandria/ui/callbacks.rb:289
 msgid "Arran_ge Icons"
 msgstr "Iconen _schikken"
 
-#: ../lib/alexandria/ui/callbacks.rb:281
+#: ../lib/alexandria/ui/callbacks.rb:290
 msgid "Display Online _Information"
 msgstr "Online _informatie tonen"
 
-#: ../lib/alexandria/ui/callbacks.rb:283
+#: ../lib/alexandria/ui/callbacks.rb:292
 msgid "_Help"
 msgstr "_Help"
 
-#: ../lib/alexandria/ui/callbacks.rb:284
+#: ../lib/alexandria/ui/callbacks.rb:293
 msgid "Submit _Bug Report"
 msgstr "_Foutenrapportage opsturen"
 
-#: ../lib/alexandria/ui/callbacks.rb:284
+#: ../lib/alexandria/ui/callbacks.rb:293
 msgid "Submit a bug report to the developers"
 msgstr "Stuur de ontwikkelaars een foutenrapportage"
 
-#: ../lib/alexandria/ui/callbacks.rb:285
+#: ../lib/alexandria/ui/callbacks.rb:294
 msgid "Contents"
 msgstr "Inhoud"
 
-#: ../lib/alexandria/ui/callbacks.rb:285
+#: ../lib/alexandria/ui/callbacks.rb:294
 msgid "View Alexandria's manual"
 msgstr "Alexandria's handleiding inzien"
 
-#: ../lib/alexandria/ui/callbacks.rb:286
+#: ../lib/alexandria/ui/callbacks.rb:295
 msgid "_About"
 msgstr "_Over"
 
-#: ../lib/alexandria/ui/callbacks.rb:286
+#: ../lib/alexandria/ui/callbacks.rb:295
 msgid "Show information about Alexandria"
 msgstr "Toon informatie over Alexandria"
 
-#: ../lib/alexandria/ui/callbacks.rb:311
+#: ../lib/alexandria/ui/callbacks.rb:320
 msgid "Side _Pane"
 msgstr "Zij_paneel"
 
-#: ../lib/alexandria/ui/callbacks.rb:313
+#: ../lib/alexandria/ui/callbacks.rb:322
 msgid "_Toolbar"
 msgstr "_Knoppenbalk"
 
-#: ../lib/alexandria/ui/callbacks.rb:315
+#: ../lib/alexandria/ui/callbacks.rb:324
 msgid "_Statusbar"
 msgstr "_Statusbalk"
 
-#: ../lib/alexandria/ui/callbacks.rb:317
+#: ../lib/alexandria/ui/callbacks.rb:326
 msgid "Re_versed Order"
 msgstr "_Omgekeerde volgorde"
 
-#: ../lib/alexandria/ui/callbacks.rb:322
+#: ../lib/alexandria/ui/callbacks.rb:331
 msgid "View as _Icons"
 msgstr "Toon als _iconen"
 
-#: ../lib/alexandria/ui/callbacks.rb:323
+#: ../lib/alexandria/ui/callbacks.rb:332
 msgid "View as _List"
 msgstr "Toon als _lijst"
 
-#: ../lib/alexandria/ui/callbacks.rb:327
+#: ../lib/alexandria/ui/callbacks.rb:336
 msgid "By _Title"
 msgstr "Op _titel"
 
-#: ../lib/alexandria/ui/callbacks.rb:328
+#: ../lib/alexandria/ui/callbacks.rb:337
 msgid "By _Authors"
 msgstr "Op _auteurs"
 
-#: ../lib/alexandria/ui/callbacks.rb:329
+#: ../lib/alexandria/ui/callbacks.rb:338
 msgid "By _ISBN"
 msgstr "Op _ISBN"
 
-#: ../lib/alexandria/ui/callbacks.rb:330
+#: ../lib/alexandria/ui/callbacks.rb:339
 msgid "By _Publisher"
 msgstr "Op _uitgever"
 
-#: ../lib/alexandria/ui/callbacks.rb:331
+#: ../lib/alexandria/ui/callbacks.rb:340
 msgid "By _Binding"
 msgstr "Op _band"
 
-#: ../lib/alexandria/ui/callbacks.rb:332
+#: ../lib/alexandria/ui/callbacks.rb:341
 msgid "By _Rating"
 msgstr "Op _waardering"
 
-#: ../lib/alexandria/ui/callbacks.rb:336
+#: ../lib/alexandria/ui/callbacks.rb:345
 msgid "At _%s"
 msgstr "Bij _%s"
 
@@ -765,43 +769,43 @@ msgstr "Toon als lijst"
 msgid "Choose how to show books"
 msgstr "Bepaal hoe de boeken getoond moeten worden"
 
-#: ../lib/alexandria/ui/ui_manager.rb:368
+#: ../lib/alexandria/ui/ui_manager.rb:385
 msgid "Library '%s' selected"
 msgstr "Bibliotheek '%s' is geselecteerd"
 
-#: ../lib/alexandria/ui/ui_manager.rb:375
+#: ../lib/alexandria/ui/ui_manager.rb:392
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "Bibliotheek '%s' geselecteerd. %d ongewaardeerd boek"
 msgstr[1] "Bibliotheek '%s' geselecteerd. %d ongewaardeerde boeken"
 
-#: ../lib/alexandria/ui/ui_manager.rb:380
+#: ../lib/alexandria/ui/ui_manager.rb:397
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek"
 msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken"
 
-#: ../lib/alexandria/ui/ui_manager.rb:387
+#: ../lib/alexandria/ui/ui_manager.rb:404
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "Bibliotheek '%s' geselecteerd, %d boek, %d zonder waardering"
 msgstr[1] "Bibliotheek '%s' geselecteerd, %d boeken, %d zonder waardering"
 
-#: ../lib/alexandria/ui/ui_manager.rb:399
+#: ../lib/alexandria/ui/ui_manager.rb:416
 msgid "'%s' selected"
 msgstr "'%s' geselecteerd"
 
-#: ../lib/alexandria/ui/ui_manager.rb:402
+#: ../lib/alexandria/ui/ui_manager.rb:419
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d boek geselecteerd"
 msgstr[1] "%d boeken geselecteerd"
 
-#: ../lib/alexandria/ui/ui_manager.rb:567
+#: ../lib/alexandria/ui/ui_manager.rb:587
 msgid "Unable to launch the web browser"
 msgstr "Kon geen webbrowser starten"
 
-#: ../lib/alexandria/ui/ui_manager.rb:568
+#: ../lib/alexandria/ui/ui_manager.rb:588
 msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -809,11 +813,11 @@ msgstr ""
 "Controleer of een standaard webbrowser is ingesteld (Systeem -> Voorkeuren -"
 "> Voorkeursapplicaties) en probeer opnieuw."
 
-#: ../lib/alexandria/ui/ui_manager.rb:580
+#: ../lib/alexandria/ui/ui_manager.rb:600
 msgid "Unable to launch the mail reader"
 msgstr "Kon geen e-mailprogramma starten"
 
-#: ../lib/alexandria/ui/ui_manager.rb:581
+#: ../lib/alexandria/ui/ui_manager.rb:601
 msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
@@ -821,11 +825,11 @@ msgstr ""
 "Controleer of een standaard e-mailprogramma is ingesteld (Systeem -> "
 "Voorkeuren -> Voorkeursapplicaties) en probeer opnieuw."
 
-#: ../lib/alexandria/ui/ui_manager.rb:616
+#: ../lib/alexandria/ui/ui_manager.rb:636
 msgid "Repair Book Data"
 msgstr "Repareer boekgegevens"
 
-#: ../lib/alexandria/ui/ui_manager.rb:617
+#: ../lib/alexandria/ui/ui_manager.rb:637
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
@@ -834,61 +838,61 @@ msgstr ""
 "De gegevensbestanden voor de volgende boeken zijn corrupt of leeg. Wilt u "
 "proberen om de informatie voor deze boeken opnieuw te downloaden?\n"
 
-#: ../lib/alexandria/ui/ui_manager.rb:674
+#: ../lib/alexandria/ui/ui_manager.rb:694
 msgid "Added '%s' to library '%s'"
 msgstr "'%s' toegevoegd aan bibliotheek '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:825
+#: ../lib/alexandria/ui/ui_manager.rb:845
 msgid "Loading '%s'..."
 msgstr "'%s' wordt geladen..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:1051
+#: ../lib/alexandria/ui/ui_manager.rb:1087
 msgid "In '_%s'"
 msgstr "Naar '_%s'"
 
-#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:345
+#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:349
 msgid "Title"
 msgstr "Titel"
 
-#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:347
+#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:351
 msgid "Authors"
 msgstr "Auteurs"
 
-#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:346
+#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:350
 msgid "ISBN"
 msgstr "ISBN"
 
-#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:348
+#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:352
 msgid "Publisher"
 msgstr "Uitgever"
 
-#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:349
+#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:353
 msgid "Publish Year"
 msgstr "Jaar van uitgifte"
 
-#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:350
+#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:354
 msgid "Binding"
 msgstr "Band"
 
-#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:100
-#: ../lib/alexandria/smart_library.rb:357
+#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:104
+#: ../lib/alexandria/smart_library.rb:361
 msgid "Read"
 msgstr "Gelezen"
 
-#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:359
+#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:363
 msgid "Own"
 msgstr "In bezit"
 
-#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:360
+#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:364
 msgid "Want"
 msgstr "Gewenst"
 
-#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:353
+#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:357
 #: ../data/alexandria/glade/preferences_dialog.glade:199
 msgid "Tags"
 msgstr "Trefwoorden"
 
-#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:351
+#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:355
 msgid "Rating"
 msgstr "Waardering"
 
@@ -970,128 +974,128 @@ msgstr "ISBN-lijst (*.txt)"
 msgid "GoodReads CSV"
 msgstr ""
 
-#: ../lib/alexandria/export_library.rb:101
+#: ../lib/alexandria/export_library.rb:109
 msgid "Archived ONIX XML"
 msgstr "Gearchiveerd ONIX XML"
 
-#: ../lib/alexandria/export_library.rb:103
+#: ../lib/alexandria/export_library.rb:111
 msgid "Archived Tellico XML"
 msgstr "Gearchiveerd Tellico XML"
 
-#: ../lib/alexandria/export_library.rb:105
+#: ../lib/alexandria/export_library.rb:113
 msgid "BibTeX"
 msgstr "BibTeX"
 
-#: ../lib/alexandria/export_library.rb:106
+#: ../lib/alexandria/export_library.rb:114
 msgid "CSV list"
 msgstr "CSV lijst"
 
-#: ../lib/alexandria/export_library.rb:107
+#: ../lib/alexandria/export_library.rb:115
 msgid "ISBN List"
 msgstr "ISBN-lijst"
 
-#: ../lib/alexandria/export_library.rb:108
+#: ../lib/alexandria/export_library.rb:116
 msgid "iPod Notes"
 msgstr "iPod notities"
 
-#: ../lib/alexandria/export_library.rb:109
+#: ../lib/alexandria/export_library.rb:117
 msgid "HTML Web Page"
 msgstr "HTML webpagina"
 
-#: ../lib/alexandria/smart_library.rb:88
+#: ../lib/alexandria/smart_library.rb:92
 msgid "Favorite"
 msgstr "Favoriet"
 
-#: ../lib/alexandria/smart_library.rb:94
+#: ../lib/alexandria/smart_library.rb:98
 msgid "Loaned"
 msgstr "Uitgeleend"
 
-#: ../lib/alexandria/smart_library.rb:106
+#: ../lib/alexandria/smart_library.rb:110
 msgid "Owned"
 msgstr "In bezit"
 
-#: ../lib/alexandria/smart_library.rb:115
+#: ../lib/alexandria/smart_library.rb:119
 msgid "Wishlist"
 msgstr "Verlanglijst"
 
-#: ../lib/alexandria/smart_library.rb:352
+#: ../lib/alexandria/smart_library.rb:356
 #: ../data/alexandria/glade/book_properties_dialog.glade:1225
 msgid "Notes"
 msgstr "Notities"
 
-#: ../lib/alexandria/smart_library.rb:354
+#: ../lib/alexandria/smart_library.rb:358
 msgid "Loaning State"
 msgstr "Uitleenstatus"
 
-#: ../lib/alexandria/smart_library.rb:355
+#: ../lib/alexandria/smart_library.rb:359
 msgid "Loaning Date"
 msgstr "Uitleendatum"
 
-#: ../lib/alexandria/smart_library.rb:356
+#: ../lib/alexandria/smart_library.rb:360
 msgid "Loaning Person"
 msgstr "Uitgeleend aan"
 
-#: ../lib/alexandria/smart_library.rb:358
+#: ../lib/alexandria/smart_library.rb:362
 msgid "Date Read"
 msgstr "Leesdatum"
 
-#: ../lib/alexandria/smart_library.rb:367
+#: ../lib/alexandria/smart_library.rb:371
 msgid "days"
 msgstr "dagen"
 
-#: ../lib/alexandria/smart_library.rb:377
+#: ../lib/alexandria/smart_library.rb:382
 msgid "is set"
 msgstr "is ingesteld"
 
-#: ../lib/alexandria/smart_library.rb:381
+#: ../lib/alexandria/smart_library.rb:386
 msgid "is not set"
 msgstr "is niet ingesteld"
 
-#: ../lib/alexandria/smart_library.rb:385
+#: ../lib/alexandria/smart_library.rb:390
 msgid "is"
 msgstr "is"
 
-#: ../lib/alexandria/smart_library.rb:389
+#: ../lib/alexandria/smart_library.rb:394
 msgid "is not"
 msgstr "is niet"
 
-#: ../lib/alexandria/smart_library.rb:393
+#: ../lib/alexandria/smart_library.rb:398
 msgid "contains"
 msgstr "bevat"
 
-#: ../lib/alexandria/smart_library.rb:397
+#: ../lib/alexandria/smart_library.rb:402
 msgid "does not contain"
 msgstr "bevat niet"
 
-#: ../lib/alexandria/smart_library.rb:401
+#: ../lib/alexandria/smart_library.rb:406
 msgid "starts with"
 msgstr "begint met"
 
-#: ../lib/alexandria/smart_library.rb:405
+#: ../lib/alexandria/smart_library.rb:410
 msgid "ends with"
 msgstr "eindigt met"
 
-#: ../lib/alexandria/smart_library.rb:409
+#: ../lib/alexandria/smart_library.rb:414
 msgid "is greater than"
 msgstr "is groter dan"
 
-#: ../lib/alexandria/smart_library.rb:413
+#: ../lib/alexandria/smart_library.rb:418
 msgid "is less than"
 msgstr "is kleiner dan"
 
-#: ../lib/alexandria/smart_library.rb:417
+#: ../lib/alexandria/smart_library.rb:422
 msgid "is after"
 msgstr "komt na"
 
-#: ../lib/alexandria/smart_library.rb:421
+#: ../lib/alexandria/smart_library.rb:426
 msgid "is before"
 msgstr "komt voor"
 
-#: ../lib/alexandria/smart_library.rb:425
+#: ../lib/alexandria/smart_library.rb:430
 msgid "is in last"
 msgstr "komt in de laatste"
 
-#: ../lib/alexandria/smart_library.rb:429
+#: ../lib/alexandria/smart_library.rb:450
 msgid "is not in last"
 msgstr "komt niet in de laatste"
 
@@ -1322,6 +1326,9 @@ msgstr "Boekcollectiebeheerder"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
+
+#~ msgid "Development token"
+#~ msgstr "Ontwikkelaarssleutel"
 
 #~ msgid "Couldn't add these books"
 #~ msgstr "Kon deze boeken niet toevoegen"
