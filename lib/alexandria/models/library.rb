@@ -96,7 +96,7 @@ module Alexandria
           begin
             begin
               book.isbn = self.canonicalise_ean(book.isbn).to_s unless book.isbn == nil
-              raise "Not a book: #{text.inspect}" unless book.is_a?(Book)
+              raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
             rescue InvalidISBNError => e
               book.isbn = old_isbn
             end
@@ -114,6 +114,17 @@ module Alexandria
 
             # ruined_books << [book, book.isbn, library]
             book.library = library.name
+
+            ## TODO copy cover image file, if necessary
+            # due to #26909 cover files for books without ISBN are re-saved as "g#{ident}.cover"
+            if book.isbn == nil || book.isbn.empty?
+              if File.exist? library.old_cover(book)
+                log.debug { "#{library.name}; book #{book.title} has no ISBN, fixing cover image" }
+                FileUtils::Verbose.mv(library.old_cover(book), library.cover(book))
+              end
+            end
+
+
             library << book
           rescue => e
             book.version = Alexandria::DATA_VERSION
@@ -146,6 +157,7 @@ module Alexandria
 
 
         Dir["*" + EXT[:cover]].each do |cover|
+          next if cover[0] == 'g'
           md = /(.+)\.cover/.match(cover)
           begin
             ean = self.canonicalise_ean(md[1])
@@ -551,10 +563,18 @@ module Alexandria
       return filtered_library
     end
 
+    def old_cover(book)
+      File.join(self.path, book.ident.to_s + EXT[:cover])
+    end
+
     def cover(something)
       ident = case something
               when Book
-                something.ident
+                if (something.isbn && (not something.isbn.empty?))
+                  something.ident
+                else
+                  "g#{something.ident}" # g is for generated id...
+                end
               when String
                 something
               when Bignum
@@ -615,6 +635,7 @@ module Alexandria
     end
 
     def final_cover(book)
+      # TODO what about PNG?
       book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
     end
 
