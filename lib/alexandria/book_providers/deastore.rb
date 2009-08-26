@@ -49,12 +49,18 @@ module Alexandria
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
         html_data = agent.get(result[:url])
+        #File.open("rsltflarn#{Time.now().usec()}.html", 'wb') do |f|
+        #  f.write(html_data.body)
+        #end
         parse_result_data(html_data.body)
       end
 
       def search(criterion, type)
         criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
         html_data = agent.get(create_search_uri(type, criterion))
+        #File.open("flarn#{Time.now().usec()}.html", 'wb') do |f|
+        #  f.write(html_data.body)
+        #end
         results = parse_search_result_data(html_data.body)
         raise NoResultsError if results.empty?
 
@@ -89,7 +95,9 @@ module Alexandria
           search_term_encoded = CGI.escape(search_term)
         end
 
-        BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+        uri = BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+        log.debug { uri }
+        uri
       end
 
       def parse_search_result_data(html)
@@ -109,13 +117,21 @@ module Alexandria
             #  p Data di pubblicazione: \n     2009
             #  p.prezzo (price)
             
-            cover_url = ''
-            cover_images = div/'a/img'
-            unless cover_images.empty?
-              img = cover_images.first
-              image_url = img['src']
-              cover_url = "#{SITE}#{image_url}"
-            end
+#             cover_url = ''
+#             cover_images = div/'a/img'
+#             unless cover_images.empty?
+#               img = cover_images.first
+#               image_url = img['src']
+#               if image_url =~ /^http/
+#                 cover_url = '' # image_url
+#               elsif image_url[0..0] != '/'
+#                 cover_url = "#{SITE}/#{image_url}"
+#               else
+#                 cover_url = "#{SITE}#{image_url}"
+#               end
+#               log.debug { "Search Cover Image URL #{cover_url}" }
+
+#             end
             
             content = div/'div.scheda_content'
             title_link = (content/:a).first
@@ -167,11 +183,16 @@ module Alexandria
           end
           
           # author(s)
-          author_span = data%'span.int_scheda[text()*=Autore]'
-          author_links = author_span/'a.info'
           authors = []
-          author_links.each do |link|
-            authors << normalize(link.inner_text)
+          author_span = data%'span.int_scheda[text()*=Autore]'
+          unless author_span
+            author_span = data%'span.int_scheda[text()*=cura]' # editor
+          end
+          if author_span
+            author_links = author_span/'a.info'
+            author_links.each do |link|
+              authors << normalize(link.inner_text)
+            end
           end
 
           # publisher
@@ -231,7 +252,19 @@ module Alexandria
           #cover
           image_url = nil
           if cover_link
-            image_url = "#{SITE}#{cover_link}"
+            if cover_link =~ /^http/
+              # e.g. http://images.btol.com/ContentCafe/Jacket.aspx?\
+              # Return=1&amp;Type=M&amp;Value=9788873641803&amp;password=\
+              # CC70580&amp;userID=DEA40305
+              # seems not to work, or to be blank anyway, so set to nil
+              image_url = nil
+            elsif cover_link[0..0] != '/'
+              image_url = "#{SITE}/#{cover_link}"
+            else
+              image_url = "#{SITE}#{cover_link}"
+            end
+
+            log.debug { "Cover Image URL:: #{image_url}" }
           end
 
           book = Book.new(title, authors, isbn, publisher, publish_year, binding)
@@ -239,7 +272,7 @@ module Alexandria
           return [book, image_url]
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
-          log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
+          log.error { "Failed parsing DeaStore product page #{ex.message}\n#{trace}" }
           return nil        
         end
       end
