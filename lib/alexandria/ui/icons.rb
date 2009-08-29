@@ -63,7 +63,9 @@ module Alexandria
       def self.load_icon_images
         Dir.entries(ICONS_DIR).each do |file|
           next unless file =~ /\.png$/    # skip non '.png' files
-            name = File.basename(file, ".png").upcase
+            # Don't use upcase and use tr instead
+            # For example in Turkish the upper case of 'i' is still 'i'.
+            name = File.basename(file, ".png").tr('a-z', 'A-Z')
           const_set(name, Gdk::Pixbuf.new(File.join(ICONS_DIR, file)))
         end
       end
