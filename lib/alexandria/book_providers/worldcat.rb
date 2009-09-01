@@ -23,6 +23,10 @@
 # New WorldCat provider, taken from the Palatina MetaDataSource and
 # modified to fit the structure of Alexandria book providers.
 # (25 Feb 2009)
+#
+# Updated from Palatina, to reflect changes in the worldcat website.
+# (1 Sep 2009)
+
 
 require 'cgi'
 require 'alexandria/net'
@@ -136,7 +140,17 @@ module Alexandria
           raise NoResultsError
         end
 
-        title_header = doc%'h1.item-title'
+
+        if doc % 'table.table-results'
+          log.info { "Found multiple results for lookup: fetching first result only" }
+          search_results = parse_search_result_data(html)
+          first = search_results.first
+          rslt2 = transport.get_response(URI.parse(first[:url]))
+          html2 = rslt2.body
+          doc = Hpricot(html2)
+        end
+
+        title_header = doc%'h1.title'
         title = title_header.inner_text if title_header
         unless title
           log.warn { "Unexpected lack of title from WorldCat lookup" }
@@ -145,18 +159,25 @@ module Alexandria
         log.info { "Found book #{title} at WorldCat" }
 
         authors = []
-        authors_div = doc%'div.item-author'
-        if authors_div
-          (authors_div/:a).each do |a|
+        authors_tr = doc%'tr#details-allauthors'
+        if authors_tr
+          (authors_tr/:a).each do |a|
             authors << a.inner_text
           end
         end
 
         # can we do better? get the City name?? or multiple publishers?
-        publisher_row = doc%'td.label[text()*=Publisher]/..'
+        bibdata = doc % 'div#bibdata'
+        bibdata_table = bibdata % :table
+        publisher_row = bibdata_table % 'th[text()*=Publisher]/..'
+
         if publisher_row
           publication_info = (publisher_row/'td').last.inner_text
-          publication_info =~ /:*([^;,]+)/
+          if publication_info.index(':')
+            publication_info =~ /:[\s]*([^;,]+)/
+          else
+            publication_info =~ /([^;,]+)/
+          end
           publisher = $1
           publication_info =~ /([12][0-9]{3})/
           year = $1.to_i if $1
@@ -167,7 +188,7 @@ module Alexandria
 
         isbn = search_isbn
         unless isbn
-          isbn_row = doc%'td.label[text()*=ISBN]/..'
+          isbn_row = doc % 'tr#details-standardno' ##bibdata_table % 'th[text()*=ISBN]/..'
           if isbn_row
             isbns = (isbn_row/'td').last.inner_text.split
             isbn = Library.canonicalise_isbn(isbns.first)
