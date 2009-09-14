@@ -114,7 +114,15 @@ module Alexandria
       end
 
       def on_export widget, event
-        ExportDialog.new(@main_app, selected_library, library_sort_order)
+        begin
+          ExportDialog.new(@main_app, selected_library, library_sort_order)
+        rescue Exception => ex
+          log.error { "problem with immediate export #{ex} try again" }
+
+          ErrorDialog.new(@main_app, _("Export failed"),
+                              _("Try letting this library load " + 
+                                "completely before exporting."))
+        end
       end
 
       def on_acquire widget, event
