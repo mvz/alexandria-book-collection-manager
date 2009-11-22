@@ -221,7 +221,7 @@ module Alexandria
         books = @library_listview.focus? ? nil : selected_books
         is_smart = library.is_a?(SmartLibrary)
         last_library = (@libraries.all_regular_libraries.length == 1)
-        if (!is_smart && last_library)
+        if (books.nil? && !is_smart && last_library)
           log.warn { "Attempted to delete last library, fix GUI" }
           return
         end
