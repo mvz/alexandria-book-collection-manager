@@ -625,7 +625,7 @@ module Alexandria
       FileUtils.mkdir(somewhere)
       each do |book|
         next unless File.exists?(cover(book))
-        FileUtils.cp(File.join(self.path, book.ident + EXT[:cover]),
+        FileUtils.cp(cover(book),
                      File.join(somewhere, final_cover(book)))
       end
     end
