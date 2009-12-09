@@ -133,7 +133,7 @@ module Alexandria
 
 
 
-    def parse_result_data(html, search_isbn=nil)
+    def parse_result_data(html, search_isbn=nil, recursing=false)
       doc = Hpricot(html)
       
       begin
@@ -144,12 +144,46 @@ module Alexandria
 
 
         if doc % 'table.table-results'
-          log.info { "Found multiple results for lookup: fetching first result only" }
+          if recursing
+            log.warn { "Infinite loop prevented redirecting through WorldCat" }
+            raise NoResultsError
+          end
+          log.info { "Found multiple results for lookup: checking each" }
           search_results = parse_search_result_data(html)
-          first = search_results.first
-          rslt2 = transport.get_response(URI.parse(first[:url]))
-          html2 = rslt2.body
-          doc = Hpricot(html2)
+          book = nil
+          cover_url = nil
+          first_result = nil
+          search_results.each do |rslt|
+            #rslt = search_results.rslt
+            log.debug { "checking #{rslt[:url]}" }
+            rslt2 = transport.get_response(URI.parse(rslt[:url]))
+            html2 = rslt2.body
+
+            book,cover_url = parse_result_data(html2, search_isbn, true)
+            if first_result.nil?
+              first_result = [book, cover_url]
+            end
+
+            log.debug { "got book #{book}" }
+
+            if search_isbn
+              search_isbn_canon = Library.canonicalise_ean(search_isbn)
+              rslt_isbn_canon = Library.canonicalise_ean(book.isbn)
+              if search_isbn_canon == rslt_isbn_canon
+                log.info { "book #{book} is a match"}
+                return [book, cover_url]
+              end
+              log.debug {"not a match, checking next"}
+            else
+              # no constraint to match isbn, just return first result
+              return [book, cover_url]
+            end
+          end
+          
+          # gone through all and no ISBN match, so just return first result
+          log.info {"no more results to check. Returning first result, just an approximation"}
+          return first_result
+
         end
 
         title_header = doc%'h1.title'
@@ -175,11 +209,15 @@ module Alexandria
 
         if publisher_row
           publication_info = (publisher_row/'td').last.inner_text
-          if publication_info.index(':')
-            publication_info =~ /:[\s]*([^;,]+)/
+
+          if publication_info.index(';')
+            publication_info =~ /;[\s]*([^\d]+)[\s]*[\d]*/
+          elsif publication_info.index(':')
+            publication_info =~ /:[\s]*([^;:,]+)/
           else
             publication_info =~ /([^;,]+)/
           end
+
           publisher = $1
           publication_info =~ /([12][0-9]{3})/
           year = $1.to_i if $1

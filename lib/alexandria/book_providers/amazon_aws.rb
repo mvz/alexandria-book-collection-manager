@@ -168,7 +168,7 @@ module Alexandria
           #if req.locale == 'us'
           #    title = title.convert('ISO-8859-1','UTF-8')
           #end
-          # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!!
+          # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!! Yep 2009-12-09!
 
           media = normalize(atts.get('binding'))
           media = nil if media == 'Unknown Binding'
@@ -193,7 +193,27 @@ module Alexandria
           log.info { "Found at Amazon[#{request_locale}]: #{book.title}"}
           results << [ book, image_url ]
         end
-        type == SEARCH_BY_ISBN ? results.first : results
+        if type == SEARCH_BY_ISBN
+          if results.size == 1
+            return results.first
+          else
+            log.info { "Found multiple results for lookup: checking each" }
+            query_isbn_canon = Library.canonicalise_ean(criterion)
+            results.each do |rslt|
+              book = rslt[0]
+              book_isbn_canon = Library.canonicalise_ean(book.isbn)
+              if query_isbn_canon == book_isbn_canon
+                return rslt
+              end
+              log.debug {"rejected possible result #{book}"}
+            end
+            # gone through all and no ISBN match, so just return first result
+            log.info {"no more results to check. Returning first result, just an approximation"}
+            return results.first
+          end
+        else
+          return results
+        end
       end
 
       def url(book)
