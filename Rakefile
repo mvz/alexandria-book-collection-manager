@@ -2,12 +2,12 @@
 
 require './tasks.rb'
 
-build = AlexandriaBuild.new('alexandria', '0.6.5') do |b|
+build = AlexandriaBuild.new('alexandria', '0.6.6') do |b|
   b.data_version = '0.6.3' # YAML file compatibility
-  b.display_version = '0.6.5'
+  b.display_version = '0.6.6'
 
-  b.author = 'Joseph Method'     # Maintainer
-  b.email  = 'tristil@gmail.com' # Maintainer e-mail
+  b.author = 'Cathal Mc Ginley'     # Maintainer
+  b.email  = 'cathal.alexandria@gnostai.org' # Maintainer e-mail
   b.summary = 'A book library manager for Gnome'
 
   # ... this next bit is from Hoe and may yet be implemented ....

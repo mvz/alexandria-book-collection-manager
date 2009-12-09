@@ -41,6 +41,8 @@ module Alexandria
 
       def initialize()
         super("WorldCat", "WorldCat")
+        #prefs.add("enabled", _("Enabled"), true, [true,false])
+        prefs.read
       end
 
       def search(criterion, type)

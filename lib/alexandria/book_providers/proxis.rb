@@ -35,6 +35,7 @@ module Alexandria
         super("Proxis", "Proxis (Belgium)")
         prefs.add("lang", _("Language"), "fr",
                   LANGUAGES.keys)
+        prefs.read
       end
 
       def search(criterion, type)

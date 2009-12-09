@@ -32,6 +32,8 @@ module Alexandria
 
     class SearchError < StandardError; end
     class NoResultsError < SearchError; end
+    class ProviderSkippedError < NoResultsError; end # not an error :^(
+    class SearchEmptyError < SearchError; end # sigh, again not really an error
     class TooManyResultsError < SearchError; end
     class InvalidSearchTypeError < SearchError; end
 
@@ -42,6 +44,10 @@ module Alexandria
       begin
         factory = self.instance[factory_n]
         puts factory.fullname + " lookup" if $DEBUG
+        if (not factory.enabled)
+          puts factory.fullname + " disabled!, skipping..." if $DEBUG
+          raise ProviderSkippedError
+        end
         self.instance.changed
         self.instance.notify_observers(:searching, factory.fullname) # new
         results = factory.search(criterion, type)
@@ -60,16 +66,21 @@ module Alexandria
           return results
         end
       rescue Exception => boom
-        unless boom.instance_of? NoResultsError
+        if boom.kind_of? NoResultsError
+          unless boom.instance_of? ProviderSkippedError
+            self.instance.changed
+            self.instance.notify_observers(:not_found, factory.fullname) # new
+            Thread.new {sleep(0.5)}.join
+          end
+        else        
           self.instance.changed
           self.instance.notify_observers(:error, factory.fullname) # new
           Thread.new {sleep(0.5)}.join # hrmmmm, to make readable...
-          trace = boom.backtrace.join("\n> ")
           log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
         end
         if self.last == factory
           log.warn { "Error while searching #{criterion}" }
-          raise case boom
+          message = case boom
                 when Timeout::Error
                   _("Couldn't reach the provider '%s': timeout " +
                     "expired.") % factory.name
@@ -83,6 +94,11 @@ module Alexandria
                     "search criterion is spelled correctly, and " +
                     "try again.")
 
+                when ProviderSkippedError
+                  _("No results were found.  Make sure your " +
+                    "search criterion is spelled correctly, and " +
+                    "try again.")
+
                 when TooManyResultsError
                   _("Too many results for that search.")
 
@@ -92,6 +108,8 @@ module Alexandria
                 else
                   boom.message
                 end
+          puts "raising empty error #{message}"
+          raise SearchEmptyError, message
         else
           factory_n += 1
           retry
@@ -172,6 +190,7 @@ module Alexandria
     end
 
     class AbstractProvider
+      include GetText
       attr_reader :prefs
       attr_accessor :name, :fullname
 
@@ -179,6 +198,16 @@ module Alexandria
         @name = name
         @fullname = (fullname or name)
         @prefs = Preferences.new(self)
+        @prefs.add("enabled", _("Enabled"), true, [true,false])
+      end
+      
+      def enabled()
+        @prefs['enabled']
+      end
+      
+      def toggle_enabled()
+        old_value = enabled()
+        @prefs.variable_named('enabled').new_value = (not old_value)
       end
 
       def reinitialize(fullname)
@@ -330,10 +359,19 @@ module Alexandria
 
     # Ruby/ZOOM is optional
     begin
+      begin
+        require 'zoom'
+        require 'marc'
+      rescue LoadError
+        require 'rubygems'
+        require 'zoom'
+        require 'marc'
+      end
       require 'alexandria/book_providers/z3950'
-    rescue LoadError
+    rescue
       log.info { "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available" }
     end
+
 
     attr_reader :abstract_classes
 

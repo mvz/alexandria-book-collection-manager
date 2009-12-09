@@ -34,6 +34,7 @@ module Alexandria
     
       def initialize()
         super("DeaStore", "DeaStore (Italy)")
+        prefs.read
         @agent = nil
       end
 

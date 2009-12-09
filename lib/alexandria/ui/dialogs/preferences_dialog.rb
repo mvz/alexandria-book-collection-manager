@@ -54,6 +54,11 @@ module Alexandria
             #    -   Cathal Mc Ginley 2008-02-18
           end
 
+          if variable.name == 'enabled'
+            # also don't display Enabled/Disabled
+            next
+          end
+
           label = Gtk::Label.new("_" + variable.description + ":")
           label.use_underline = true
           label.xalign = 0
@@ -237,13 +242,36 @@ module Alexandria
           end
         end
 
-        model = Gtk::ListStore.new(String, String)
+        model = Gtk::ListStore.new(String, String, TrueClass, Integer)
         @treeview_providers.model = model
         reload_providers
         model.signal_connect_after('row-changed') { update_priority }
+
+        renderer= Gtk::CellRendererToggle.new
+        renderer.activatable = true
+        #renderer.active = true
+        column = Gtk::TreeViewColumn.new("Enabled", renderer)
+        column.set_cell_data_func(renderer) do |col, renderer, model, iter|
+          value = iter[2]
+          renderer.active = value
+        end
+
+       
+
+        @treeview_providers.append_column(column)
+
+        renderer = Gtk::CellRendererText.new
         column = Gtk::TreeViewColumn.new("Providers",
-                                         Gtk::CellRendererText.new,
-                                         :text => 0)
+                                         renderer)
+                                         # :text => 0)
+        column.set_cell_data_func(renderer) do |col, renderer, model, iter|
+          renderer.markup = iter[0]
+          #enabled = iter[2]
+          #unless enabled
+          #  renderer.foreground = "gray"
+          #end
+          #renderer.active = value
+        end
         @treeview_providers.append_column(column)
         @treeview_providers.selection.signal_connect('changed') \
         { sensitize_providers }
@@ -263,12 +291,82 @@ module Alexandria
             @checkbutton_prov_advanced.active = true
           end
         end
+
+        
+        setup_enable_disable_popup
         sensitize_providers
+      end
+
+
+      def setup_enable_disable_popup
+        # New Enable/Disable pop-up menu...
+        @enable_disable_providers_menu = Gtk::Menu.new
+        @enable_item = Gtk::MenuItem.new(_("Disable Provider"))
+        @enable_item.signal_connect("activate") { 
+          selected_provider.toggle_enabled()
+          reload_providers
+          
+        }
+        @enable_disable_providers_menu.append(@enable_item)
+        @enable_disable_providers_menu.show_all
+        
+
+        @treeview_providers.signal_connect("button_press_event") do |widget, event|
+          if event_is_right_click(event)
+            if path = widget.get_path_at_pos(event.x, event.y)
+              widget.grab_focus
+              obj, path = widget.selection, path.first
+              unless obj.path_is_selected?(path)
+                widget.unselect_all
+                obj.select_path(path)
+              end
+              sel = widget.selection.selected
+              if sel
+                already_enabled = sel[2]
+                message = already_enabled ? _("Disable Provider") : _("Enable Provider")
+                @enable_item.label = message
+                Gtk.idle_add do
+                  @enable_disable_providers_menu.popup(nil, nil, event.button, event.time)
+                  false
+                end
+              end
+            else
+              puts "not on a path"
+            end
+          end
+        end
+
+        # Popup the menu on Shift-F10
+        @treeview_providers.signal_connect("popup_menu") { 
+          selected_prov = @treeview_providers.selection.selected
+          puts selected_prov.inspect
+          if selected_prov
+            Gtk.idle_add do
+              already_enabled = selected_prov[2]
+              message = already_enabled ? _("Disable Provider") : _("Enable Provider")
+              @enable_item.label = message
+
+              @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME) 
+              false
+            end
+          else
+            puts "no action"
+          end
+          }
+      end
+
+      def event_is_right_click(event)
+        event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+      end
+
+
+      def prefs_empty(prefs)
+        prefs.empty? or (prefs.size == 1 and prefs.first.name == "enabled")
       end
 
       def on_provider_setup
         provider = selected_provider
-        unless provider.prefs.empty?
+        unless prefs_empty(provider.prefs)
           ProviderPreferencesDialog.new(@preferences_dialog, provider)
         end
       end
@@ -362,10 +460,16 @@ module Alexandria
       def reload_providers
         model = @treeview_providers.model
         model.clear
-        BookProviders.each do |x|
+        BookProviders.each_with_index do |x, index|
           iter = model.append
-          iter[0] = x.fullname
+          if x.enabled
+            iter[0] = x.fullname
+          else
+            iter[0] = "<i>#{x.fullname}</i>"
+          end
           iter[1] = x.name
+          iter[2] = x.enabled
+          iter[3] = index
         end
       end
 
@@ -388,7 +492,7 @@ module Alexandria
           @button_prov_up.sensitive = sel_iter != model.iter_first
           @button_prov_down.sensitive = sel_iter != last_iter
           provider = BookProviders.find { |x| x.name == sel_iter[1] }
-          @button_prov_setup.sensitive = (not provider.prefs.empty?)
+          @button_prov_setup.sensitive = (not prefs_empty(provider.prefs))
           @button_prov_remove.sensitive = provider.abstract?
         end
       end

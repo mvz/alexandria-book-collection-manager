@@ -33,6 +33,7 @@ module Alexandria
 
       def initialize
         super("Amazon", "Amazon")
+        # prefs.add("enabled", _("Enabled"), true, [true,false])
         prefs.add("locale", _("Locale"), "us", AmazonProvider::LOCALES)
         prefs.add("dev_token", _("Access key ID"), '')
         prefs.add("secret_key", _("Secret access key"), '')

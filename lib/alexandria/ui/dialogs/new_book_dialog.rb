@@ -287,14 +287,14 @@ module Alexandria
             @find_error = e.message
           ensure
             Alexandria::BookProviders.instance.delete_observer(self)
-            #   notify_end_add_by_isbn
+            #notify_end_add_by_isbn
           end
         end
 
         Gtk.timeout_add(100) do
           # This block copies results into the tree view, or shows an
           # error if the search failed.
-
+          
           # Err... continue == false if @find_error
           continue = if @find_error
                        ErrorDialog.new(@parent,
@@ -407,13 +407,16 @@ module Alexandria
               post_addition([], library, is_new)
             end
           rescue => e
-            puts e.message
-            puts e.backtrace.join("\n> ")
+            unless e.kind_of? NoResultsError
+              puts e.message
+              puts e.backtrace.join("\n> ")
+            end
             @find_error = e.message
             @button_add.sensitive = true
             notify_end_add_by_isbn
           ensure
             Alexandria::BookProviders.instance.delete_observer(self)
+            notify_end_add_by_isbn
           end          
         end
       end
@@ -547,6 +550,7 @@ module Alexandria
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
+
           # @parent.appbar.status = message
           MainApp.instance.appbar.status = message # HACKish
           false
@@ -560,13 +564,18 @@ module Alexandria
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
                 Library.valid_upc?(text)
               Gtk.idle_add do
-                #puts "idly"
+
                 @entry_isbn.text = text
-                @button_add.grab_focus 
+                @entry_isbn.grab_focus
+                @entry_isbn.select_region(0, -1) # select all...
+                # @button_add.grab_focus 
                 false
               end
               log.debug { "Setting ISBN field to #{text}" }
               puts text # required, strangely, to prevent GUI strangeness
+              # above last checked with ruby-gnome2 0.17.1 2009-12-09
+              # if this puts is commented out, the cursor disappears
+              # from the @entry_isbn box... weird, ne? - CathalMagus
              end
           end
         end

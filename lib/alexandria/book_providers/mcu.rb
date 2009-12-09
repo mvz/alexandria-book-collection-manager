@@ -38,6 +38,7 @@ module Alexandria
       def initialize
         super("MCU", _("Spanish Culture Ministry"))
         # No preferences
+        prefs.read
       end
 
       def search(criterion, type)

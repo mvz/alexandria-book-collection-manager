@@ -40,6 +40,7 @@ module Alexandria
 
         # HACK : piggybacking support
         prefs.add("piggyback", "Piggyback", true, [true,false])
+        prefs.read
       end
 
       def search(criterion, type)
@@ -79,7 +80,11 @@ module Alexandria
           marc_txt = record.render(prefs['record_syntax'], 'USMARC')
           log.debug { marc_txt }
           marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
-          marc = MARC::Record.new(marc_txt)
+          begin
+            marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
+          rescue
+            marc = MARC::Record.new(marc_txt)
+          end
 
           log.debug {
             msg = "Parsing MARC"
@@ -183,6 +188,7 @@ module Alexandria
         prefs.variable_named("database").default_value = "Voyager"
         prefs.variable_named("record_syntax").default_value = "USMARC"
         prefs.variable_named("charset").default_value = "ISO_6937"
+        prefs.read
       end
 
       def url(book)
@@ -216,6 +222,7 @@ module Alexandria
         prefs.variable_named("database").default_value = "BLAC"
         prefs.variable_named("record_syntax").default_value = "SUTRS"
         prefs.variable_named("charset").default_value = "ISO-8859-1"
+        prefs.read
       end
 
       def search(criterion, type)
@@ -306,6 +313,7 @@ module Alexandria
         # supported 'USMARC', 'UNIMARC' , 'SUTRS'
         prefs.variable_named("record_syntax").default_value = "USMARC"
         prefs.variable_named("charset").default_value = "ISO-8859-1"
+        prefs.read
       end
 
       def search(criterion, type)

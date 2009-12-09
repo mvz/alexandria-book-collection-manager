@@ -43,6 +43,7 @@ module Alexandria
 
       def initialize()
         super("AdLibris", "AdLibris (Sweden)")
+        prefs.read
         @ent = HTMLEntities.new
       end
 

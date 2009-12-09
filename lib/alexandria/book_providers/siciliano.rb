@@ -42,6 +42,7 @@ module Alexandria
       def initialize
         super("Siciliano", "Livraria Siciliano (Brasil)")
         # no preferences for the moment
+        prefs.read
       end
 
       def get_book_from_search_result(result)
