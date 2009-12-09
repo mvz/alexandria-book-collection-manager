@@ -38,11 +38,25 @@ module Alexandria
         prefs.add("secret_key", _("Secret access key"), '')
 
         prefs.read
-        token = prefs.variable_named("dev_token")
+        token = prefs.variable_named("dev_token")        
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
-        if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
-          token.new_value = '' 
+
+        if token
+          if (token.value != token.value.strip)
+            token.new_value = token.value.strip
+          end
         end
+        if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
+          token.new_value = ''           
+        end
+
+        secret = prefs.variable_named("secret_key")
+        if secret
+          if (secret.value != secret.value.strip)
+            secret.new_value = secret.value.strip
+          end
+        end
+
       end
 
       def search(criterion, type)
@@ -61,7 +75,9 @@ module Alexandria
           ENV['http_proxy'] = url
         end
 
-        Amazon::Ecs.options = {:aWS_access_key_id => prefs["dev_token"]}
+        access_key_id = prefs["dev_token"]
+
+        Amazon::Ecs.options = {:aWS_access_key_id => access_key_id}
         Amazon::Ecs.secret_access_key = prefs["secret_key"]
         ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
