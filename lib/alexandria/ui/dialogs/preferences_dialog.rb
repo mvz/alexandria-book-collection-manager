@@ -249,6 +249,17 @@ module Alexandria
 
         renderer= Gtk::CellRendererToggle.new
         renderer.activatable = true
+        renderer.signal_connect('toggled') do |rndrr, path|
+          tree_path = Gtk::TreePath.new(path)
+          @treeview_providers.selection.select_path(tree_path)
+          prov = selected_provider
+          if prov
+            prov.toggle_enabled()
+            adjust_selected_provider(prov)
+            # reload_providers
+          end
+        end
+
         #renderer.active = true
         column = Gtk::TreeViewColumn.new("Enabled", renderer)
         column.set_cell_data_func(renderer) do |col, renderer, model, iter|
@@ -303,8 +314,9 @@ module Alexandria
         @enable_disable_providers_menu = Gtk::Menu.new
         @enable_item = Gtk::MenuItem.new(_("Disable Provider"))
         @enable_item.signal_connect("activate") { 
-          selected_provider.toggle_enabled()
-          reload_providers
+          prov = selected_provider
+          prov.toggle_enabled()
+          adjust_selected_provider(prov)
           
         }
         @enable_disable_providers_menu.append(@enable_item)
@@ -475,7 +487,19 @@ module Alexandria
 
       def selected_provider
         iter = @treeview_providers.selection.selected
-        BookProviders.find { |x| x.name == iter[1] }
+        unless iter.nil?
+          BookProviders.find { |x| x.name == iter[1] }
+        end
+      end
+
+      def adjust_selected_provider(prov)
+        iter = @treeview_providers.selection.selected
+        if prov.enabled
+          iter[0] = prov.fullname
+        else
+          iter[0] = "<i>#{prov.fullname}</i>"
+        end
+        iter[2] = prov.enabled
       end
 
       def sensitize_providers
