@@ -218,7 +218,13 @@ module Alexandria
 
       def on_delete widget, event
         library = selected_library
-        books = @library_listview.focus? ? nil : selected_books
+
+        if selected_books.empty?
+          books = nil
+        else
+          books = selected_books
+        end
+        #books = @library_listview.focus? ? nil : selected_books
         is_smart = library.is_a?(SmartLibrary)
         last_library = (@libraries.all_regular_libraries.length == 1)
         if (books.nil? && !is_smart && last_library)

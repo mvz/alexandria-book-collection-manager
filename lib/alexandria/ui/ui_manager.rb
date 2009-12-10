@@ -57,6 +57,12 @@ module Alexandria
         on_books_selection_changed
         restore_preferences
         log.debug { "UI Manager initialized: #{@iconview.model.inspect}" }
+        @clicking_on_sidepane = false
+
+        @library_listview.signal_connect('cursor-changed') do 
+          @clicking_on_sidepane = true
+        end
+
       end
 
       def create_uimanager
@@ -302,21 +308,41 @@ module Alexandria
 
       def on_library_button_press_event(widget, event)
         log.debug { "library_button_press_event" }
-        # right click
 
+        # right click
         if event_is_right_click event
           log.debug { "library right click!" }
           library_already_selected = true
           if path = widget.get_path_at_pos(event.x, event.y)
+            @clicking_on_sidepane = true
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
-            widget.has_focus = true
+            #widget.has_focus = true
 
             unless obj.path_is_selected?(path)
+
               log.debug { "Select #{path}" }
               library_already_selected = false
               widget.unselect_all
               obj.select_path(path)
+              sensitize_library selected_library
+
+              if widget.is_a?(Gtk::TreeView)
+                Gtk.idle_add do
+                  cur_path, focus_col = widget.cursor
+                  
+                  widget.focus = true
+
+
+                  widget.set_cursor(path, nil, false)
+                  widget.grab_focus
+                  widget.has_focus = true
+                  false
+                end
+                #widget.has_focus = true
+              end
+
+              #library_already_selected = true
             end
           else
             widget.unselect_all
@@ -336,17 +362,40 @@ module Alexandria
           
           if library_already_selected
             sensitize_library selected_library
+
             Gtk.idle_add do
               menu.popup(nil, nil, event.button, event.time)
+              # @clicking_on_sidepane = false
+              false
+            end
+          else
+            Gtk.idle_add do
+              menu.popup(nil, nil, event.button, event.time)
+              # @clicking_on_sidepane = false
+
               false
             end
           end
+        
+        else
+          # not a right click
+          if path = widget.get_path_at_pos(event.x, event.y)
+            @clicking_on_sidepane = true
+            obj, path = widget.is_a?(Gtk::TreeView) \
+              ? [widget.selection, path.first] : [widget, path]
+            obj.select_path(path)
+            sensitize_library selected_library
+
+          end
           
+  
         end
+
+
       end
 
       def determine_library_popup widget, event
-        log.debug { "determine_library_popup" }
+        # widget.grab_focus
         widget.get_path_at_pos(event.x, event.y) == nil \
           ? @nolibrary_popup \
           : selected_library.is_a?(SmartLibrary) \
@@ -421,14 +470,17 @@ module Alexandria
       end
 
       def on_books_selection_changed
-        log.debug { "on_books_selection_changed" }
         library = selected_library
         books = selected_books
         @appbar.status = get_appbar_status library, books
         #selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
+
         # Focus is the wrong idiom here.
-        unless @main_app.focus == @library_listview
+        unless (@clicking_on_sidepane or (@main_app.focus == @library_listview))
+          # unless @main_app.focus == @library_listview
+
+
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}"}
           log.debug { "@library_listview: #{@library_listview.has_focus?} or @library_popup:#{@library_popup.has_focus?}" } #or selection: #{selection}"}
@@ -439,10 +491,12 @@ module Alexandria
             books.length == 1
           @actiongroup["SelectAll"].sensitive = \
             books.length < library.length
+
           @actiongroup["Delete"].sensitive = \
             @actiongroup["DeselectAll"].sensitive = \
             @actiongroup["Move"].sensitive =
             @actiongroup["SetRating"].sensitive = !books.empty?
+
 
           log.debug { "on_books_selection_changed Delete: #{@actiongroup["Delete"].sensitive?}" }
 
@@ -470,6 +524,7 @@ module Alexandria
             end
           end
         end
+        @clicking_on_sidepane = false        
       end
 
       def on_switch_page
@@ -479,15 +534,16 @@ module Alexandria
       end
 
       def on_focus(widget, event_focus)
-        log.debug { "******on_focus******" }
         if widget == @library_listview
           log.debug { "on_focus: @library_listview" }
-          %w{OnlineInformation SelectAll DeselectAll}.each do |action|
-            @actiongroup[action].sensitive = false
+          Gtk.idle_add do
+            %w{OnlineInformation SelectAll DeselectAll}.each do |action|
+              @actiongroup[action].sensitive = false
+            end
+            @actiongroup["Properties"].sensitive = selected_library.is_a?(SmartLibrary)
+            @actiongroup["Delete"].sensitive = determine_delete_option
+            false
           end
-          @actiongroup["Properties"].sensitive = selected_library.is_a?(SmartLibrary)
-          @actiongroup["Delete"].sensitive = determine_delete_option
-          log.debug { "on_focus delete: #{@actiongroup["Delete"].sensitive?}" }
         else
           on_books_selection_changed
         end
@@ -495,7 +551,6 @@ module Alexandria
 
       def determine_delete_option
         sensitive = (@libraries.all_regular_libraries.length > 1 or selected_library.is_a?(SmartLibrary))
-        log.debug { "sensitive: #{sensitive}" }
         sensitive
       end
 
@@ -529,7 +584,7 @@ module Alexandria
           select_this_book.call(book, @iconview)
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
-          log.error { "Failed to automatically select book: #{ex.message} #{trace}" }
+          log.warn { "Failed to automatically select book: #{ex.message} #{trace}" }
         end
         # TODO: Figure out why this frequently selects the wrong book!
       end
@@ -871,7 +926,7 @@ module Alexandria
             @filtered_model.refilter
             @listview.columns_autosize
             @appbar.progress_percentage = 1
-            # Hide the progress bar.
+            # Hide the progress bar. 
             @appbar.children.first.visible = false
             # Refresh the status bar.
             on_books_selection_changed
@@ -986,12 +1041,15 @@ module Alexandria
       def sensitize_library library
         smart = library.is_a?(SmartLibrary)
         log.debug { "sensitize_library: smartlibrary = #{smart}" }
-        @actiongroup["AddBook"].sensitive = !smart
-        @actiongroup["AddBookManual"].sensitive = !smart
-        @actiongroup["Properties"].sensitive = true
-        can_delete = smart || (@libraries.all_regular_libraries.length > 1)
-        @actiongroup["Delete"].sensitive = can_delete ## true #(@libraries.all_regular_libraries.length > 1)
-        log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }
+        Gtk.idle_add do
+          @actiongroup["AddBook"].sensitive = !smart
+          @actiongroup["AddBookManual"].sensitive = !smart
+          @actiongroup["Properties"].sensitive = true
+          can_delete = smart || (@libraries.all_regular_libraries.length > 1)
+          @actiongroup["Delete"].sensitive = can_delete ## true #(@libraries.all_regular_libraries.length > 1)
+          log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }
+          false
+        end
       end
 
       def get_view_actiongroup
