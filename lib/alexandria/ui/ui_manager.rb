@@ -317,7 +317,7 @@ module Alexandria
             @clicking_on_sidepane = true
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
-            #widget.has_focus = true
+            widget.has_focus = true
 
             unless obj.path_is_selected?(path)
 

@@ -138,7 +138,11 @@ module Alexandria
       end
 
       def on_properties widget, event
-        if @library_listview.focus?
+        puts "on properties #{@library_listview.focus?}"
+        if selected_books.empty?
+          puts "probly a LibraryListview thing..."
+        end
+        if @library_listview.focus? or selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
             SmartLibraryPropertiesDialog.new(@main_app, library) do
