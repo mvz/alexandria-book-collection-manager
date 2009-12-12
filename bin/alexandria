@@ -2,7 +2,12 @@
 
 $KCODE = 'U'
 
-require 'gettext'
+begin
+  require 'gettext'
+rescue LoadError
+  require 'rubygems'
+  require 'gettext'
+end
 require 'alexandria'
 require 'optparse'
 require 'ostruct'
