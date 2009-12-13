@@ -94,7 +94,26 @@
     
     <sect3 id="alexandria-z3950-prefs">
       <title>Adding Z39.50 providers</title>
-      <para>To add or remove a Z39.50 provider, you must first enable the advanced preferences options by clicking on the <guilabel>Advanced Settings</guilabel> checkbox. Two new buttons will appear: <guibutton>Add</guibutton> and <guibutton>Remove</guibutton>. Clicking Add will open the Z39.50 provider dialogue:</para>
+
+	  
+
+      <para>To add or remove a Z39.50 provider, you must first enable
+      the advanced preferences options by selecting
+      the <guilabel>Custom Z39.50 Providers</guilabel> checkbox. Two new
+      buttons will appear: <guibutton>Add</guibutton>
+      and <guibutton>Remove</guibutton>.</para>
+
+      <note>
+	<para>Z39.50 support is optional in &app;, and requires that
+	  you <ulink url="http://alexandria.rubyforge.org/faq.html#ruby-zoom-marc">install
+	  Ruby/ZOOM and marc</ulink>. If the <guilabel>Custom Z39.50
+	  Providers</guilabel> checkbox is greyed-out, it means that
+	  Ruby/ZOOM and marc are not correctly installed.</para>
+	</note>
+
+
+
+      <para>Clicking Add will open the New Z39.50 Provider dialogue:</para>
       <figure id="add-z3950">
 	<title>Adding a new Z39.50 information provider</title>
 	<screenshot>
