@@ -76,6 +76,7 @@ module Alexandria
           self.instance.changed
           self.instance.notify_observers(:error, factory.fullname) # new
           Thread.new {sleep(0.5)}.join # hrmmmm, to make readable...
+          trace = boom.backtrace.join("\n >")
           log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
         end
         if self.last == factory
@@ -368,7 +369,7 @@ module Alexandria
         require 'marc'
       end
       require 'alexandria/book_providers/z3950'
-    rescue
+    rescue LoadError
       log.info { "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available" }
     end
 

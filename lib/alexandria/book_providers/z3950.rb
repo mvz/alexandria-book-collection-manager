@@ -80,10 +80,23 @@ module Alexandria
           marc_txt = record.render(prefs['record_syntax'], 'USMARC')
           log.debug { marc_txt }
           marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
+          if $DEBUG
+            File.open(',marc.txt', 'wb') do |f|
+              f.write(marc_txt)
+            end
+          end
           begin
             marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
-          rescue
-            marc = MARC::Record.new(marc_txt)
+          rescue Exception => ex
+            log.error { ex.message }
+            log.error { ex.backtrace.join("> \n") }
+            begin
+              marc = MARC::Record.new(marc_txt)
+            rescue Exception => ex2
+              log.error { ex2.message }
+              log.error { ex2.backtrace.join("> \n") }
+              raise ex2
+            end
           end
 
           log.debug {

@@ -407,7 +407,7 @@ module Alexandria
               post_addition([], library, is_new)
             end
           rescue => e
-            unless e.kind_of? NoResultsError
+            unless e.kind_of? Alexandria::BookProviders::NoResultsError
               puts e.message
               puts e.backtrace.join("\n> ")
             end
