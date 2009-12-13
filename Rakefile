@@ -1,11 +1,16 @@
 # -*- ruby -*-
 
 begin
-  require 'rake/clean'
+  require 'rake'
 rescue LoadError
   require 'rubygems'
-  require 'rake/clean'
+  require 'rake'
 end
+
+require 'rake/clean'
+require 'rake/rdoctask'
+require 'rake/packagetask'
+
 $:.unshift(File.join(File.dirname(__FILE__), 'util/rake'))
 require 'fileinstall'
 require 'gettextgenerate'
@@ -209,6 +214,22 @@ task :clobber => [:autogen_clobber]
 task :build => [:autogen, :gettext, :omf]
 
 task :default => [:build]
+
+## # # # package task # # # ##
+
+Rake::PackageTask.new(PROJECT, PROJECT_VERSION) do |p|
+  p.need_tar_gz = true
+  p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
+                          "NEWS", "Rakefile", "TODO", "alexandria.desktop",
+                          "alexandria.desktop.in", "tasks.rb",
+                          "bin/**/*", "data/**/*", "misc/**/*",
+                          "doc/**/*", "lib/**/*", "po/**/*",
+                          "schemas/**/*", "spec/**/*", "tests/**/*")
+end
+
+task :tgz => [:build, :package] do 
+  puts "Sigh... probably no .mo files in the tgz; run again!"
+end
 
 ## # # # system installation # # # ##
 
