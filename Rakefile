@@ -1,110 +1,112 @@
 # -*- ruby -*-
 
-require './tasks.rb'
+begin
+  require 'rake/clean'
+rescue LoadError
+  require 'rubygems'
+  require 'rake/clean'
+end
+$:.unshift(File.join(File.dirname(__FILE__), 'util/rake'))
+require 'fileinstall'
+require 'gettextgenerate'
+require 'omfgenerate'
 
-build = AlexandriaBuild.new('alexandria', '0.6.6') do |b|
-  b.data_version = '0.6.3' # YAML file compatibility
-  b.display_version = '0.6.6'
 
-  b.author = 'Cathal Mc Ginley'     # Maintainer
-  b.email  = 'cathal.alexandria@gnostai.org' # Maintainer e-mail
-  b.summary = 'A book library manager for Gnome'
+stage_dir = ENV['DESTDIR'] || 'tmp'
 
-  # ... this next bit is from Hoe and may yet be implemented ....
-  # b.description = b.paragraphs_of('doc/README', 2..5).join("\n\n")
-  # b.url = b.paragraphs_of('README.txt', 0).first.split(/\n/)[1..-1]
-  # p.changes = p.paragraphs_of('History.txt', 0..1).join("\n\n")
+PROJECT='alexandria'
+PREFIX='/usr'
+SHARE = "#{PREFIX}/share"
 
-  b.files.source = FileList['lib/**/*.rb',
-                            'bin/alexandria',
-                            'spec/**/*.rb']
-                            b.files.data = FileList['data/alexandria/**/*.*',
-                          'data/gnome/**/*.*',
-                          'data/omf/alexandria/*.omf']
-                            b.files.icons = FileList['data/app-icon/**/*.png',
-                           'data/app-icon/scalable/*.svg']
-                            b.files.rdoc = FileList['doc/*',
-                          'INSTALL',
-                          'COPYING',
-                          'ChangeLog',
-                          'TODO'],
-                            b.files.menu = 'data/menu/alexandria'
-                            b.rdoc.main = 'doc/README'
-                            b.doc.man_files = ['doc/alexandria.1']
-                            b.doc.doc_files = ['README', 'NEWS', 'INSTALL', 'COPYING', 'TODO', 'doc/AUTHORS', 'doc/BUGS', 'doc/FAQ', 'doc/cuecat_support.rdoc']
-                            b.debinstall.staging_dir = 'debian/alexandria'
+DATA_VERSION = '0.6.3'
+PROJECT_VERSION = '0.6.6'
+DISPLAY_VERSION = '0.6.6-svn'
+
+gettext = GettextGenerateTask.new(PROJECT) do |g|
+  g.generate_po_files('po', 'po/*.po', 'data/locale')
+  g.generate_desktop('alexandria.desktop.in', 'alexandria.desktop')
 end
 
-##
-## Extra tasks (not yet part of AlexandriaBuild tasks)
-##
 
-task :website do
-  puts "Building website..."
-  system 'staticmatic build website'
-  puts "Website built."
+omf = OmfGenerateTask.new(PROJECT) do |o|
+  o.gnome_helpfiles_dir = "#{SHARE}/gnome/help"
+  o.generate_omf('data/omf/alexandria', 'data/omf/alexandria/*.in') 
 end
 
-# rsync upload technique is from newgem (tasks/website.rake)
-desc 'Upload website files to rubyforge'
-task :website_upload => [:docs, 'spec:rcov'] do
-  sh 'cp -rf coverage/* website/site/rcov'
-  sh 'cp -rf doc/* website/site/rdoc'
-  sh 'rake spec:html > website/site/spec_report.html'
-  host = ENV["ADMIN_USER"] ? "#{ENV['ADMIN_USER']}@rubyforge.org" : "method@rubyforge.org"
-  remote_dir = "/var/www/gforge-projects/alexandria/"
-  local_dir = 'website/site'
-  sh %{rsync -aCv #{local_dir}/ #{host}:#{remote_dir}}
-end
+debinstall = FileInstallTask.new(:debian_install, stage_dir, true) do |i|
 
-namespace 'debian' do
+  i.install_exe('bin', 'bin/*', "#{PREFIX}/bin")
+  i.install('lib', 'lib/**/*.rb', i.rubylib)
 
-    task :gzip_manpage do |t|
-        sh "gzip -9 #{build.debinstall.staging_dir}/usr/share/man/man1/alexandria.1"
-    end
+  share_files = ['data/alexandria/**/*', 'data/gnome/**/*.*',
+                 'data/locale/**/*.mo', 'data/omf/**/*.omf', 
+                 'data/sounds/**/*.wav', 'data/menu/*']
+  i.install('data', share_files, SHARE)
 
-    task :gzip_changelog do |t|
-        sh "gzip -9 #{build.debinstall.staging_dir}/usr/share/doc/alexandria/changelog"
-    end
+  icon_files = ['data/app-icon/**/*.png', 'data/app-icon/scalable/*.svg']
+  i.install_icons(icon_files, "#{SHARE}/icons")
 
-    task :stage_post_install => [:gzip_manpage, :gzip_changelog]
+  i.install('','schemas/alexandria.schemas', "#{SHARE}/gconf")
+  i.install('', 'alexandria.desktop', "#{SHARE}/applications")
+  i.install('doc','doc/alexandria.1', "#{SHARE}/man/man1")
+
 
 end
 
-# for releases
+debinstall.similar(:install_files) do |j|
+  docs = ['README', 'NEWS', 'INSTALL', 'COPYING', 'TODO']
+  devel_docs = ['doc/AUTHORS', 'doc/BUGS', 'doc/FAQ', 
+                'doc/cuecat_support.rdoc']
+  j.install('', docs, "#{SHARE}/doc/#{PROJECT}") 
+  j.install('doc', devel_docs, "#{SHARE}/doc/#{PROJECT}")
 
-file 'ChangeLog' do
-  sh "svn2cl -r HEAD:700 -o ChangeLog.tmp"
-  # Revision r703 is on the date of the last ChangeLog.0 entry
-  if File.exists?('ChangeLog.tmp')
-    # fix up file (remove blank lines beginning with tabs)
-    File.open('ChangeLog', 'wb') do |change_log|
-      File.open('ChangeLog.tmp').each_line do |line|
-        if line.chomp =~ /(^[\t][\s]+$)/
-          change_log.write("\n")
-        else
-          change_log.write(line)
-        end
-      end
-    end
-    File.delete('ChangeLog.tmp')
-  end
+  j.uninstall_empty_dirs(["#{SHARE}/**/#{PROJECT}",
+                          "#{j.rubylib}/#{PROJECT}"
+                         ])
+=begin
+  j.uninstall_empty_dirs(["#{SHARE}/sounds/#{PROJECT}",
+                          "#{SHARE}/gnome/help/#{PROJECT}",
+                          "#{SHARE}/omf/#{PROJECT}",
+                          "#{SHARE}/doc/#{PROJECT}",
+                          "#{SHARE}/#{PROJECT}",
+                          "#{j.rubylib}/#{PROJECT}"
+                         ])
+=end
 end
-CLOBBER << "ChangeLog"
+
+
+task :clobberp do
+  puts CLOBBER
+end
 
 ## autogenerated files
 
+def autogen_comment
+  autogenerated_warning = "This file is automatically generated by the #{PROJECT} installer.\nDo not edit it directly."
+  lines = autogenerated_warning.split("\n")
+  result = lines.map { |line| "# #{line}"}
+  result.join("\n") + "\n\n"
+end
+
+def generate(filename)
+  File.open(filename, 'w') do |file|
+    puts "Generating #{filename}"
+    file.print autogen_comment
+    file_contents = yield
+    file.print file_contents.to_s
+  end
+end
+
 # generate lib/alexandria/config.rb
 file 'lib/alexandria/config.rb' => ['Rakefile'] do |f|
-  build.generate f.name do
+  generate(f.name) do
     <<EOS
 module Alexandria
   module Config
-    SHARE_DIR = '#{build.install.prefix}/share'
-    SOUNDS_DIR = "\#{SHARE_DIR}/sounds/#{build.name}"
-    DATA_DIR = "\#{SHARE_DIR}/#{build.name}"
+    SHARE_DIR = '#{PREFIX}/share'
+    SOUNDS_DIR = "\#{SHARE_DIR}/sounds/#{PROJECT}"
+    DATA_DIR = "\#{SHARE_DIR}/#{PROJECT}"
     MAIN_DATA_DIR = DATA_DIR
-    LIB_DIR = '#{build.install.rubylib}'
   end
 end
 EOS
@@ -113,12 +115,12 @@ end
 
 # generate lib/alexandria/version.rb
 file 'lib/alexandria/version.rb' => ['Rakefile'] do |f|
-  build.generate f.name do
+  generate(f.name) do
     <<EOS
 module Alexandria
-  VERSION = "#{build.version}"
-  DATA_VERSION = "#{build.data_version}"
-  DISPLAY_VERSION = "#{build.display_version}"
+  VERSION = "#{PROJECT_VERSION}"
+  DATA_VERSION = "#{DATA_VERSION}"
+  DISPLAY_VERSION = "#{DISPLAY_VERSION}"
 end
 EOS
   end
@@ -175,7 +177,7 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
     generated_lines << varname.inspect + ' => ' + default
   end
 
-  build.generate f.name do
+  generate(f.name) do
     <<EOS
 module Alexandria
   class Preferences
@@ -208,23 +210,7 @@ task :build => [:autogen, :gettext, :omf]
 
 task :default => [:build]
 
-## # # # building source package # # # ##
-
-task :pre_package => ['pkg:clobber_package', 'lib/alexandria/version.rb', :gettext]
-
-desc "Build a source package for distribution"
-task :package => [:pre_package, 'pkg:package'] do
-  found_mo_files = false
-  require 'find'
-  Find.find('pkg') do |path|
-  if /.+\.mo/ =~ path
-      found_mo_files = true
-  end
-  end
-  puts "Run package task again to include .mo files" unless found_mo_files
-end
-
-## # # # installation # # # ##
+## # # # system installation # # # ##
 
 task :pre_install => [:build]
 task :scrollkeeper do
@@ -253,5 +239,8 @@ end
 
 task :post_install => [:scrollkeeper, :gconf, :update_icon_cache]
 
+desc "Install Alexandria"
+task :install => [:pre_install, :install_files, :post_install]
 
-#vim: filetype=ruby syntax=Ruby
+desc "Uninstall Alexandria"
+task :uninstall => [:un_install_files, :un_install_files_empty_dirs]
