@@ -57,7 +57,7 @@ module Alexandria
         on_books_selection_changed
         restore_preferences
         log.debug { "UI Manager initialized: #{@iconview.model.inspect}" }
-        @clicking_on_sidepane = false
+        @clicking_on_sidepane = true
 
         @library_listview.signal_connect('cursor-changed') do 
           @clicking_on_sidepane = true
