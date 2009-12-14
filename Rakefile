@@ -45,11 +45,12 @@ debinstall = FileInstallTask.new(:debian_install, stage_dir, true) do |i|
 
   share_files = ['data/alexandria/**/*', 'data/gnome/**/*.*',
                  'data/locale/**/*.mo', 'data/omf/**/*.omf', 
-                 'data/sounds/**/*.wav', 'data/menu/*']
+                 'data/sounds/**/*.wav'] #, 'data/menu/*']
   i.install('data', share_files, SHARE)
 
   icon_files = ['data/app-icon/**/*.png', 'data/app-icon/scalable/*.svg']
   i.install_icons(icon_files, "#{SHARE}/icons")
+  i.install('data/app-icon/32x32', 'data/app-icon/32x32/*.xpm', "#{SHARE}/pixmaps")
 
   i.install('','schemas/alexandria.schemas', "#{SHARE}/gconf")
   i.install('', 'alexandria.desktop', "#{SHARE}/applications")
@@ -215,12 +216,46 @@ task :build => [:autogen, :gettext, :omf]
 
 task :default => [:build]
 
+# pre-release tasks
+
+ULTRA_CLOBBER = []
+task :ultra_clobber => :clobber do
+  ULTRA_CLOBBER.each do |file|
+    FileUtils::Verbose.rm_f(file)
+  end
+end
+
+file 'ChangeLog' do
+  unless `svn2cl --version`
+    raise Exception, "Unable to generate ChangeLog; install svn2cl"
+  end
+  sh "svn2cl -r HEAD:700 -o ChangeLog.tmp"
+  # Revision r703 is on the date of the last ChangeLog.0 entry
+  if File.exists?('ChangeLog.tmp')
+    # fix up file (remove blank lines beginning with tabs)
+    File.open('ChangeLog', 'wb') do |change_log|
+      File.open('ChangeLog.tmp').each_line do |line|
+        if line.chomp =~ /(^[\t][\s]+$)/
+          change_log.write("\n")
+        else
+          change_log.write(line)
+        end
+      end
+    end
+    File.delete('ChangeLog.tmp')
+  end
+end
+ULTRA_CLOBBER << "ChangeLog"
+
+
+
 ## # # # package task # # # ##
 
 Rake::PackageTask.new(PROJECT, PROJECT_VERSION) do |p|
   p.need_tar_gz = true
   p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
-                          "NEWS", "Rakefile", "TODO", "alexandria.desktop",
+                          "NEWS", "Rakefile", "util/**/*",
+                          "TODO", "alexandria.desktop",
                           "alexandria.desktop.in", "tasks.rb",
                           "bin/**/*", "data/**/*", "misc/**/*",
                           "doc/**/*", "lib/**/*", "po/**/*",
