@@ -256,7 +256,7 @@ Rake::PackageTask.new(PROJECT, PROJECT_VERSION) do |p|
   p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
                           "NEWS", "Rakefile", "util/**/*",
                           "TODO", "alexandria.desktop",
-                          "alexandria.desktop.in", "tasks.rb",
+                          "alexandria.desktop.in",
                           "bin/**/*", "data/**/*", "misc/**/*",
                           "doc/**/*", "lib/**/*", "po/**/*",
                           "schemas/**/*", "spec/**/*", "tests/**/*")
