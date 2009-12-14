@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-15 08:40+0100\n"
+"POT-Creation-Date: 2009-12-14 20:04+0000\n"
 "PO-Revision-Date: 2009-03-07 20:25+0200\n"
 "Last-Translator: Michael Kotsarinis <mk73628@hotmail.com>\n"
 "Language-Team: Greek\n"
@@ -16,6 +16,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-Language: Greek\n"
 
+#: ../lib/alexandria/import_library.rb:29
+msgid "Autodetect"
+msgstr "Αυτόματη ανίχνευση"
+
+#: ../lib/alexandria/import_library.rb:30
+msgid "Archived Tellico XML (*.bc, *.tc)"
+msgstr "Αρχειοθετημένο Tellico XML (*.bc, *.tc)"
+
+#: ../lib/alexandria/import_library.rb:32
+msgid "ISBN List (*.txt)"
+msgstr "Λίστα ISBN (*.txt)"
+
+#: ../lib/alexandria/import_library.rb:34
+msgid "GoodReads CSV"
+msgstr "GoodReads CSV"
+
 #: ../lib/alexandria/models/library.rb:56
 msgid "Untitled"
 msgstr "Χωρίς τίτλο"
@@ -24,279 +40,427 @@ msgstr "Χωρίς τίτλο"
 msgid "My Library"
 msgstr "Η Βιβλιοθήκη μου"
 
-#: ../lib/alexandria/book_providers/proxis.rb:36
-msgid "Language"
-msgstr "Γλώσσα"
-
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Spanish Culture Ministry"
-
-#: ../lib/alexandria/book_providers/z3950.rb:33
-msgid "Hostname"
-msgstr "Όνομα Host"
-
-#: ../lib/alexandria/book_providers/z3950.rb:34
-msgid "Port"
-msgstr "Θύρα"
-
-#: ../lib/alexandria/book_providers/z3950.rb:35
-msgid "Database"
-msgstr "Βάση δεδομένων"
-
-#: ../lib/alexandria/book_providers/z3950.rb:36
-msgid "Record syntax"
-msgstr "Συντακτικό Εγγραφής"
-
-#: ../lib/alexandria/book_providers/z3950.rb:37
-msgid "Username"
-msgstr "Όνομα χρήστη"
-
-#: ../lib/alexandria/book_providers/z3950.rb:38
-msgid "Password"
-msgstr "Κωδικός πρόσβασης"
-
-#: ../lib/alexandria/book_providers/z3950.rb:39
-msgid "Charset encoding"
-msgstr "Κωδικοποίηση χαρακτήρων"
-
-#: ../lib/alexandria/book_providers/z3950.rb:180
-msgid "Library of Congress (Usa)"
-msgstr "Library of Congress (ΗΠΑ)"
-
-#: ../lib/alexandria/book_providers/z3950.rb:213
-msgid "British Library"
-msgstr "British Library"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:36
-msgid "Locale"
-msgstr "Τοποθεσία"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:37
-msgid "Access key ID"
+#: ../lib/alexandria/about.rb:24
+msgid "A program to help you manage your book collection."
 msgstr ""
+"Ένα πρόγραμμα για να σας βοηθήσει να οργανώσετε τη συλλογή βιβλίων σας."
 
-#: ../lib/alexandria/book_providers/amazon_aws.rb:38
-msgid "Secret access key"
-msgstr ""
+#: ../lib/alexandria/ui/ui_manager.rb:134
+msgid "Type here the search criterion"
+msgstr "Πληκτρολογήστε εδώ το κριτήριο αναζήτησης"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
-msgid "Invalid ISBN '%s'"
-msgstr "Μη έγκυρο ISBN '%s'"
+#: ../lib/alexandria/ui/ui_manager.rb:147
+msgid "Match everything"
+msgstr "Ταίριασμα όλων"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:35
-msgid "_Keep"
-msgstr "_Διατήρηση"
+#: ../lib/alexandria/ui/ui_manager.rb:149
+msgid "Title contains"
+msgstr "Τίτλος περιέχει"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "Authors contain"
+msgstr "Συγγραφείς περιέχουν"
+
+#: ../lib/alexandria/ui/ui_manager.rb:151
+msgid "ISBN contains"
+msgstr "ISBN περιέχει"
+
+#: ../lib/alexandria/ui/ui_manager.rb:152
+msgid "Publisher contains"
+msgstr "Εκδότης περιέχει"
+
+#: ../lib/alexandria/ui/ui_manager.rb:153
+msgid "Notes contain"
+msgstr "Σημειώσεις περιέχουν"
+
+#: ../lib/alexandria/ui/ui_manager.rb:154
+msgid "Tags contain"
+msgstr "Ετικέτες περιέχουν"
+
+#: ../lib/alexandria/ui/ui_manager.rb:169
+msgid "Change the search type"
+msgstr "Αλλαγή του τύπου αναζήτησης"
+
+#: ../lib/alexandria/ui/ui_manager.rb:174
+msgid "View as Icons"
+msgstr "Προβολή ως Εικονίδια"
+
+#: ../lib/alexandria/ui/ui_manager.rb:175
+msgid "View as List"
+msgstr "Προβολή ως Λίστα"
+
+#: ../lib/alexandria/ui/ui_manager.rb:188
+msgid "Choose how to show books"
+msgstr "Επιλέξτε πως θα εμφανισθούν τα βιβλία"
+
+#: ../lib/alexandria/ui/ui_manager.rb:434
+msgid "Library '%s' selected"
+msgstr "Επιλεγμένη βιβλιοθήκη '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:441
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "Επιλεγμένη βιβλιοθήκη '%s', %d μη βαθμολογημένο βιβλίο"
+msgstr[1] "Επιλεγμένη βιβλιοθήκη '%s', %d μη βαθμολογημένα βιβλία"
+
+#: ../lib/alexandria/ui/ui_manager.rb:446
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλίο"
+msgstr[1] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλία"
+
+#: ../lib/alexandria/ui/ui_manager.rb:453
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλίο, %d μη βαθμολογημένο"
+msgstr[1] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλία, %d μη βαθμολογημένα"
+
+#: ../lib/alexandria/ui/ui_manager.rb:465
+msgid "'%s' selected"
+msgstr "'%s' επιλέχθηκε"
+
+#: ../lib/alexandria/ui/ui_manager.rb:468
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "%d βιβλίο επιλεγμένο"
+msgstr[1] "%d βιβλία επιλεγμένα"
+
+#: ../lib/alexandria/ui/ui_manager.rb:642
+msgid "Unable to launch the web browser"
+msgstr "Δεν ήταν δυνατή η εκκίνηση του περιηγητή ιστοσελίδων"
+
+#: ../lib/alexandria/ui/ui_manager.rb:643
 msgid ""
-"The book titled '%s' has an invalid ISBN, but still exists in the providers "
-"libraries.  Do you want to keep the book but change the ISBN or cancel the "
-"add?"
+"Check out that a web browser is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
 msgstr ""
-"Το βιβλίο με τίτλο '%s' δεν έχει έγκυρο ISBN, αλλά υπάρχει στις βιβλιοθήκες "
-"των παροχέων. Θέλετε να κρατήσετε το βιβλίο αλλά να αλλάξετε το ISBN ή να "
-"ακυρώσετε την προσθήκη;"
+"Ελέγξτε ότι υπάρχει προεπιλεγμένος περιηγητής ιστοσελίδων (Προτιμήσεις "
+"επιφάνειας εργασίας -> Για προχωρημένους -> Προτιμώμενες εφαρμογές) και "
+"δοκιμάστε ξανά."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:182
-msgid "A problem occurred while downloading images"
-msgstr "Υπήρξε ένα πρόβλημα κατά τη λήψη των εικόνων."
+#: ../lib/alexandria/ui/ui_manager.rb:655
+msgid "Unable to launch the mail reader"
+msgstr "Δεν ήταν δυνατή η εκκίνηση του προγράμματος αλληλογραφίας"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:301
-msgid "Unable to find matches for your search"
-msgstr "Δεν ήταν δυνατό να βρεθούν αντιστοιχίσεις για την αναζήτησή σας."
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:307
-msgid "%s, by %s"
-msgstr "%s, κατά %s"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:380
+#: ../lib/alexandria/ui/ui_manager.rb:656
 msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correctly, and try again."
+"Check out that a mail reader is configured as default (Desktop Preferences -"
+"> Advanced -> Preferred Applications) and try again."
 msgstr ""
-"Δεν ήταν δυνατή η επικύρωση του EAN/ISBN που δώσατε. Ελέγξτε ότι είναι "
-"γραμμένο σωστά και προσπαθήστε ξανά."
+"Ελέγξτε ότι υπάρχει προεπιλεγμένο πρόγραμμα αλληλογραφίας (Προτιμήσεις "
+"επιφάνειας εργασίας -> Για προχωρημένους -> Προτιμώμενες εφαρμογές) και "
+"δοκιμάστε ξανά."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:511
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
-msgid "Couldn't add the book"
-msgstr "Δεν ήταν δυνατή η προσθήκη του βιβλίου."
+#: ../lib/alexandria/ui/ui_manager.rb:691
+msgid "Repair Book Data"
+msgstr "Επιδιόρθωση Δεδομένων Βιβλίων"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:543
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
-msgid "Searching Provider '%s'..."
-msgstr "Αναζήτηση παρόχου '%s'..."
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:544
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
-msgid "Error while Searching Provider '%s'"
-msgstr "Σφάλμα κατά την αναζήτηση του παρόχου '%s'"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:545
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
-msgid "Not Found at Provider '%s'"
-msgstr "Δεν βρέθηκε στον πάροχο '%s'"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
-msgid "Found at Provider '%s'"
-msgstr "Βρέθηκε στον πάροχο '%s'"
-
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:612
-msgid "'%s' already exists in '%s' (titled '%s')."
-msgstr "Το '%s' υπάρχει ήδη στη '%s' (με τίτλο '%s')."
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:26
-msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
-msgstr "Το βιβλίο '%s' υπάρχει ήδη στο '%s'. Θέλετε να το αντικαστήσετε;"
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:29
-msgid "_Skip"
-msgstr "_Παράβλεψη"
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:30
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:28
-msgid "_Replace"
-msgstr "_Αντικατάσταση"
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:31
-msgid "If you replace the existing book, its contents will be overwritten."
-msgstr ""
-"Αν αντικαταστήσετε το υπάρχον βιβλίο, τα περιεχόμενά του θα διαγραφούν."
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:50
-msgid "Are you sure you want to delete '%s'?"
-msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε το '%s';"
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:58
-msgid "If you continue, %d book will be deleted."
-msgid_plural "If you continue, %d books will be deleted."
-msgstr[0] "Αν συνεχίσετε, το %d βιβλίο θα διαγραφεί."
-msgstr[1] "Αν συνεχίσετε, τα %d βιβλία θα διαγραφούν."
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:63
-msgid "Are you sure you want to delete '%s' from '%s'?"
-msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε  '%s' από το '%s';"
-
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
-msgid "Are you sure you want to delete the selected books from '%s'?"
-msgstr ""
-"Είστε σίγουροι ότι θέλετε να διαγράψετε τα επιλεγμένα βιβλία από το '%s';"
-
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
-msgid "File already exists"
-msgstr "Το αρχείο υπάρχει ήδη"
-
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:29
+#: ../lib/alexandria/ui/ui_manager.rb:692
 msgid ""
-"A file named '%s' already exists.  Do you want to replace it with the one "
-"you are generating?"
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
 msgstr ""
-"Υπάρχει ήδη ένα αρχείο με όνομα '%s'. Θέλετε να το αντικαταστήσετε με αυτό "
-"που δημιουργείτε;"
+"Τα αρχεία δεδομένων για τα ακόλουθα βιβλία είναι ελλιπή ή κενά. Θέλετε να "
+"προσπαθήσετε να λάβετε καινούριες πληροφορίες για αυτά από τους "
+"διαδικτυακούς παροχείς βιβλίων;\n"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
-msgid "Export '%s'"
-msgstr "Εξαγωγή '%s'"
+#: ../lib/alexandria/ui/ui_manager.rb:749
+msgid "Added '%s' to library '%s'"
+msgstr "Το '%s' προστέθηκε στη βιβλιοθήκη '%s'"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:58
-msgid "_Export"
-msgstr "_Εξαγωγή"
+#: ../lib/alexandria/ui/ui_manager.rb:900
+msgid "Loading '%s'..."
+msgstr "Φόρτωση '%s'..."
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:77
-msgid "_Theme:"
-msgstr "_Θέμα:"
+#: ../lib/alexandria/ui/ui_manager.rb:1145
+msgid "In '_%s'"
+msgstr "Σε '_%s'"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:87
-msgid "directory"
-msgstr "κατάλογος"
+#: ../lib/alexandria/ui/callbacks.rb:65
+msgid "The following lines are not valid ISBNs and were not imported:"
+msgstr "Οι ακόλουθες γραμμές δεν είναι έγκυρα ISBN και δεν εισήχθησαν:"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:100
-msgid "Export for_mat:"
-msgstr "_Μορφή εξαγωγής:"
-
+#: ../lib/alexandria/ui/callbacks.rb:122
 #: ../lib/alexandria/ui/dialogs/export_dialog.rb:128
 msgid "Export failed"
 msgstr "Αποτυχία εξαγωγής"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
-msgid ""
-"The target, named '%s', is a regular file.  A directory is needed for this "
-"operation.  Please select a directory and try again."
+#: ../lib/alexandria/ui/callbacks.rb:123
+msgid "Try letting this library load completely before exporting."
 msgstr ""
-"Ο στόχος με το όνομα '%s' είναι κανονικό αρχείο. Χρειάζεται ένας κατάλογος "
-"για αυτή την ενέργεια. Παρακαλώ επιλέξτε ένα κατάλογο και δοκιμάστε ξανά."
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
-msgid "Not a directory"
-msgstr "Δεν είναι κατάλογος"
+#: ../lib/alexandria/ui/callbacks.rb:274
+msgid "_Library"
+msgstr "_Βιβλιοθήκη"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-msgid "Properties for '%s'"
-msgstr "Ιδιότητες του '%s'"
+#: ../lib/alexandria/ui/callbacks.rb:275
+msgid "_New Library"
+msgstr "_Νέα Βιβλιοθήκη"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
-msgid "Properties"
-msgstr "Ιδιότητες"
+#: ../lib/alexandria/ui/callbacks.rb:275
+msgid "Create a new library"
+msgstr "Δημιουργία νέας βιβλιοθήκης"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:69
-msgid "Author"
-msgstr "Συγγραφέας"
+#: ../lib/alexandria/ui/callbacks.rb:276
+msgid "New _Smart Library..."
+msgstr "Νέα Έξ_υπνη Βιβλιοθήκη..."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
-msgid "Select a cover image"
-msgstr "Επιλέξτε εικόνα εξώφυλλου"
+#: ../lib/alexandria/ui/callbacks.rb:276
+msgid "Create a new smart library"
+msgstr "Δημιουργία νέας έξυπνης βιβλιοθήκης"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
-msgid "No Cover"
-msgstr "Χωρίς εξώφυλλο"
+#: ../lib/alexandria/ui/callbacks.rb:277
+msgid "_Add Book..."
+msgstr "_Προσθήκη Βιβλίου..."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:173
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] "%d ημέρα"
-msgstr[1] "%d ημέρες"
+#: ../lib/alexandria/ui/callbacks.rb:277
+msgid "Add a new book from the Internet"
+msgstr "Προσθήκη νέου βιβλίου από το Διαδίκτυο"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
-msgid "Adding '%s'"
-msgstr "Προσθήκη '%s'"
+#: ../lib/alexandria/ui/callbacks.rb:278
+msgid "Add Book _Manually..."
+msgstr "Προσθήκη Βιβλίου _Χειροκίνητα..."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
-#: ../data/alexandria/glade/new_book_dialog.glade:8
-msgid "Adding a Book"
-msgstr "Προσθήκη βιβλίου"
+#: ../lib/alexandria/ui/callbacks.rb:278
+msgid "Add a new book manually"
+msgstr "Προσθήκη νέου βιβλίου χειροκίνητα"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:81
-msgid "A title must be provided."
-msgstr "Πρέπει να δίδεται τίτλος."
+#: ../lib/alexandria/ui/callbacks.rb:279
+msgid "_Import..."
+msgstr "_Εισαγωγή..."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:115
-msgid "The EAN/ISBN you provided is already used in this library."
-msgstr "Το EAN/ISBN που δώσατε χρησιμοποείται ήδη σε αυτή τη βιβλιοθήκη."
+#: ../lib/alexandria/ui/callbacks.rb:279
+msgid "Import a library"
+msgstr "Εισαγωγή βιβλιοθήκης"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
-msgid ""
-"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
-"correcty, and try again."
-msgstr ""
-"Δεν ήταν δυνατή η επικύρωση του  EAN/ISBN που δώσατε. Επαληθεύστε ότι είναι "
-"γραμμένο σωστά και προσπαθήστε ξανά."
+#: ../lib/alexandria/ui/callbacks.rb:280
+msgid "_Export..."
+msgstr "Ε_ξαγωγή..."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:102
-msgid "A publisher must be provided."
-msgstr "Πρέπει να δοθεί εκδότης."
+#: ../lib/alexandria/ui/callbacks.rb:280
+msgid "Export the selected library"
+msgstr "Εξαγωγή επιλεγμένης βιβλιοθήκης"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:109
-msgid "A binding must be provided."
-msgstr "Πρέπει να δοθεί βιβλιοδεσία."
+#: ../lib/alexandria/ui/callbacks.rb:281
+msgid "_Acquire from Scanner..."
+msgstr "_Από Σαρωτή..."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:115
-msgid "At least one author must be provided."
-msgstr "Πρέπει να δίδεται τουλάχιστον ένας συγγραφέας."
+#: ../lib/alexandria/ui/callbacks.rb:281
+msgid "Acquire books from a scanner"
+msgstr "Εισάγετε βιβλία από σαρωτή"
+
+#: ../lib/alexandria/ui/callbacks.rb:282
+msgid "_Properties"
+msgstr "_Ιδιότητες"
+
+#: ../lib/alexandria/ui/callbacks.rb:282
+msgid "Edit the properties of the selected book"
+msgstr "Επεξεργασθείτε τις ιδιότητες του επιλεγμένου βιβλίου"
+
+#: ../lib/alexandria/ui/callbacks.rb:283
+msgid "_Quit"
+msgstr "Έ_ξοδος"
+
+#: ../lib/alexandria/ui/callbacks.rb:283
+msgid "Quit the program"
+msgstr "Έξοδος από το πρόγραμμα"
+
+#: ../lib/alexandria/ui/callbacks.rb:284
+msgid "_Edit"
+msgstr "_Επεξεργασία"
+
+#: ../lib/alexandria/ui/callbacks.rb:285
+msgid "_Undo"
+msgstr "Α_ναίρεση"
+
+#: ../lib/alexandria/ui/callbacks.rb:285
+msgid "Undo the last action"
+msgstr "Αναιρέστε την τελευταία ενέργεια"
+
+#: ../lib/alexandria/ui/callbacks.rb:286
+msgid "_Redo"
+msgstr "Ε_πανάληψη"
+
+#: ../lib/alexandria/ui/callbacks.rb:286
+msgid "Redo the undone action"
+msgstr "Επαναλάβετε την αναιρεθείσα ενέργεια"
+
+#: ../lib/alexandria/ui/callbacks.rb:287
+msgid "_Select All"
+msgstr "Επιλογή ό_λων"
+
+#: ../lib/alexandria/ui/callbacks.rb:287
+msgid "Select all visible books"
+msgstr "Επιλέξτε όλα τα ορατά βιβλία"
+
+#: ../lib/alexandria/ui/callbacks.rb:288
+msgid "Dese_lect All"
+msgstr "Αποεπιλο_γή όλων"
+
+#: ../lib/alexandria/ui/callbacks.rb:288
+msgid "Deselect everything"
+msgstr "Αποεπιλέξτε τα πάντα"
+
+#: ../lib/alexandria/ui/callbacks.rb:289
+msgid "My _Rating"
+msgstr "Η _Βαθμολογία μου"
+
+#: ../lib/alexandria/ui/callbacks.rb:290
+msgid "None"
+msgstr "Τίποτα"
+
+#: ../lib/alexandria/ui/callbacks.rb:291
+msgid "One Star"
+msgstr "Ένα Αστέρι"
+
+#: ../lib/alexandria/ui/callbacks.rb:292
+msgid "Two Stars"
+msgstr "Δύο Αστέρια"
+
+#: ../lib/alexandria/ui/callbacks.rb:293
+msgid "Three Stars"
+msgstr "Τρία Αστέρια"
+
+#: ../lib/alexandria/ui/callbacks.rb:294
+msgid "Four Stars"
+msgstr "Τέσσερα Αστέρια"
+
+#: ../lib/alexandria/ui/callbacks.rb:295
+msgid "Five Stars"
+msgstr "Πέντε Αστέρια"
+
+#: ../lib/alexandria/ui/callbacks.rb:296
+msgid "_Move"
+msgstr "_Μετακίνηση"
+
+#: ../lib/alexandria/ui/callbacks.rb:297
+msgid "_Rename"
+msgstr "Με_τονομασία"
+
+#: ../lib/alexandria/ui/callbacks.rb:298
+msgid "_Delete"
+msgstr "_Διαγραφή"
+
+#: ../lib/alexandria/ui/callbacks.rb:298
+msgid "Delete the selected books or library"
+msgstr "Διαγράψτε τα επιλεγμένα βιβλία ή βιβλιοθήκη"
+
+#: ../lib/alexandria/ui/callbacks.rb:299
+msgid "_Search"
+msgstr "_Αναζήτηση"
+
+#: ../lib/alexandria/ui/callbacks.rb:299
+msgid "Filter books"
+msgstr "Φιλτράρισμα βιβλίων"
+
+#: ../lib/alexandria/ui/callbacks.rb:300
+msgid "_Clear Results"
+msgstr "Ε_κκαθάριση Αποτελεσμάτων"
+
+#: ../lib/alexandria/ui/callbacks.rb:300
+msgid "Clear the search results"
+msgstr "Καθαρίζει τα αποτελέσματα της αναζήτησης"
+
+#: ../lib/alexandria/ui/callbacks.rb:301
+msgid "_Preferences"
+msgstr "_Προτιμήσεις"
+
+#: ../lib/alexandria/ui/callbacks.rb:301
+msgid "Change Alexandria's settings"
+msgstr "Αλλαγή των ρυθμίσων της Alexandria"
+
+#: ../lib/alexandria/ui/callbacks.rb:302
+msgid "_View"
+msgstr "Π_ροβολή"
+
+#: ../lib/alexandria/ui/callbacks.rb:303
+msgid "Arran_ge Icons"
+msgstr "_Τακτοποίηση Εικονιδίων"
+
+#: ../lib/alexandria/ui/callbacks.rb:304
+msgid "Display Online _Information"
+msgstr "Απεικόνιση Δικτυακών Π_ληροφοριών"
+
+#: ../lib/alexandria/ui/callbacks.rb:306
+msgid "_Help"
+msgstr "_Βοήθεια"
+
+#: ../lib/alexandria/ui/callbacks.rb:307
+msgid "Submit _Bug Report"
+msgstr "Υποβολή Αναφοράς Σ_φάλματος"
+
+#: ../lib/alexandria/ui/callbacks.rb:307
+msgid "Submit a bug report to the developers"
+msgstr "Υποβάλετε μια αναφορά σφάλματος στην ομάδα ανάπτυξης"
+
+#: ../lib/alexandria/ui/callbacks.rb:308
+msgid "Contents"
+msgstr "Περιεχόμενα"
+
+#: ../lib/alexandria/ui/callbacks.rb:308
+msgid "View Alexandria's manual"
+msgstr "Δείτε το εγχειρίδιο της Alexandria"
+
+#: ../lib/alexandria/ui/callbacks.rb:309
+msgid "_About"
+msgstr "Πε_ρί"
+
+#: ../lib/alexandria/ui/callbacks.rb:309
+msgid "Show information about Alexandria"
+msgstr "Δείχνει πληροφορίες για την Alexandria"
+
+#: ../lib/alexandria/ui/callbacks.rb:334
+msgid "Side _Pane"
+msgstr "Πλευρική Σ_τήλη"
+
+#: ../lib/alexandria/ui/callbacks.rb:336
+msgid "_Toolbar"
+msgstr "Γραμμή Ερ_γαλείων"
+
+#: ../lib/alexandria/ui/callbacks.rb:338
+msgid "_Statusbar"
+msgstr "Γραμμή _Κατάστασης"
+
+#: ../lib/alexandria/ui/callbacks.rb:340
+msgid "Re_versed Order"
+msgstr "Α_νάστροφη Σειρά"
+
+#: ../lib/alexandria/ui/callbacks.rb:345
+msgid "View as _Icons"
+msgstr "Προβολή ως Ε_ικονίδια"
+
+#: ../lib/alexandria/ui/callbacks.rb:346
+msgid "View as _List"
+msgstr "Προβολή ως _Λίστα"
+
+#: ../lib/alexandria/ui/callbacks.rb:350
+msgid "By _Title"
+msgstr "Κατά _Τίτλο"
+
+#: ../lib/alexandria/ui/callbacks.rb:351
+msgid "By _Authors"
+msgstr "Κατά _Συγγραφείς"
+
+#: ../lib/alexandria/ui/callbacks.rb:352
+msgid "By _ISBN"
+msgstr "Κατά IS_BN"
+
+#: ../lib/alexandria/ui/callbacks.rb:353
+msgid "By _Publisher"
+msgstr "Κατά Εκ_δότη"
+
+#: ../lib/alexandria/ui/callbacks.rb:354
+msgid "By _Binding"
+msgstr "Κατά Βιβλι_οδεσία"
+
+#: ../lib/alexandria/ui/callbacks.rb:355
+msgid "By _Rating"
+msgstr "Κατά Βα_θμολογία"
+
+#: ../lib/alexandria/ui/callbacks.rb:359
+msgid "At _%s"
+msgstr "Σε _%s"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:395
 msgid "There was %d duplicate"
@@ -310,6 +474,26 @@ msgid_plural "Couldn't add these books"
 msgstr[0] "Δεν ήταν δυνατή η προσθήκη του βιβλίου."
 msgstr[1] "Δεν ήταν δυνατή η προσθήκη των βιβλίων."
 
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
+msgid "Searching Provider '%s'..."
+msgstr "Αναζήτηση παρόχου '%s'..."
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:547
+msgid "Error while Searching Provider '%s'"
+msgstr "Σφάλμα κατά την αναζήτηση του παρόχου '%s'"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:548
+msgid "Not Found at Provider '%s'"
+msgstr "Δεν βρέθηκε στον πάροχο '%s'"
+
+#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:549
+msgid "Found at Provider '%s'"
+msgstr "Βρέθηκε στον πάροχο '%s'"
+
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
 msgid "Ready to use %s barcode scanner"
 msgstr "Έτοιμο για χρήση του %s σαρωτή γραμμωτού κώδικα"
@@ -322,6 +506,91 @@ msgstr "_Σαρωτής Γραμμωτού Κώδικα Έτοιμος"
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:640
 msgid "Click below to scan _barcodes"
 msgstr "Κάντε κλικ παρακάτω για να σαρώσετε _γραμμωτό κώδικα"
+
+#: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
+msgid "There's a problem"
+msgstr "Υπάρχει πρόβλημα"
+
+#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
+msgid "New Smart Library"
+msgstr "Καινούρια Έξυπνη Βιβλιοθήκη"
+
+#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
+msgid "Smart Library"
+msgstr "Έξυπνη Βιβλιοθήκη"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:106
+msgid "Preferences for %s"
+msgstr "Προτιμήσεις για %s"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:131
+msgid "New Provider"
+msgstr "Νέος Πάροχος"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:146
+msgid "_Name:"
+msgstr "Ό_νομα"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:158
+msgid "_Type:"
+msgstr "_Τύπος:"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:315
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
+#, fuzzy
+msgid "Disable Provider"
+msgstr "Νέος Πάροχος"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
+#, fuzzy
+msgid "Enable Provider"
+msgstr "Νέος Πάροχος"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:422
+msgid "Are you sure you want to permanently delete the provider '%s'?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε μόνιμα τον πάροχο '%s';"
+
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:430
+msgid ""
+"If you continue, the provider and all of its preferences will be permanently "
+"deleted."
+msgstr ""
+"Αν συνεχίσετε, ο πάροχος και όλες οι προτιμήσεις για αυτόν θα διαγραφούν "
+"οριστικά."
+
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
+msgid "Error while importing"
+msgstr "Σφάλμα κατά την εισαγωγή"
+
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:39
+msgid "_Continue"
+msgstr "_Συνέχεια"
+
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:64
+msgid "Import a Library"
+msgstr "Εισαγωγή Βιβλιοθήκης"
+
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:71
+msgid "_Import"
+msgstr "_Εισαγωγή"
+
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:188
+msgid "Couldn't import the library"
+msgstr "Δεν ήταν δυνατή η εισαγωγή της βιβλιοθήκης"
+
+#: ../lib/alexandria/ui/dialogs/import_dialog.rb:189
+msgid ""
+"The format of the file you provided is unknown.  Please retry with another "
+"file."
+msgstr ""
+"Η μορφή του αρχείου είναι άγνωστη. Παρακαλώ προσπαθήστε ξανά με άλλο αρχείο."
+
+#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
+msgid "Properties for '%s'"
+msgstr "Ιδιότητες του '%s'"
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:83
 msgid "Empty or conflictive condition"
@@ -362,497 +631,236 @@ msgstr "από τους ακόλουθους κανόνες:"
 msgid "Match the following rule:"
 msgstr "Ταίριασμα του ακόλουθου κανόνα:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:101
-msgid "Preferences for %s"
-msgstr "Προτιμήσεις για %s"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:126
-msgid "New Provider"
-msgstr "Νέος Πάροχος"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:141
-msgid "_Name:"
-msgstr "Ό_νομα"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:153
-msgid "_Type:"
-msgstr "_Τύπος:"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:312
-msgid "Are you sure you want to permanently delete the provider '%s'?"
-msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε μόνιμα τον πάροχο '%s';"
-
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:320
-msgid ""
-"If you continue, the provider and all of its preferences will be permanently "
-"deleted."
-msgstr ""
-"Αν συνεχίσετε, ο πάροχος και όλες οι προτιμήσεις για αυτόν θα διαγραφούν "
-"οριστικά."
-
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
-msgid "New Smart Library"
-msgstr "Καινούρια Έξυπνη Βιβλιοθήκη"
-
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
-msgid "Smart Library"
-msgstr "Έξυπνη Βιβλιοθήκη"
-
-#: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
-msgid "There's a problem"
-msgstr "Υπάρχει πρόβλημα"
-
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
 #: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
 msgid "Couldn't modify the book"
 msgstr "Δεν ήταν δυνατή η τροποποίηση του βιβλίου"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
-msgid "Error while importing"
-msgstr "Σφάλμα κατά την εισαγωγή"
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:115
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
+msgid "The EAN/ISBN you provided is already used in this library."
+msgstr "Το EAN/ISBN που δώσατε χρησιμοποείται ήδη σε αυτή τη βιβλιοθήκη."
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:39
-msgid "_Continue"
-msgstr "_Συνέχεια"
-
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:64
-msgid "Import a Library"
-msgstr "Εισαγωγή Βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:71
-msgid "_Import"
-msgstr "_Εισαγωγή"
-
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:188
-msgid "Couldn't import the library"
-msgstr "Δεν ήταν δυνατή η εισαγωγή της βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:189
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
 msgid ""
-"The format of the file you provided is unknown.  Please retry with another "
-"file."
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
 msgstr ""
-"Η μορφή του αρχείου είναι άγνωστη. Παρακαλώ προσπαθήστε ξανά με άλλο αρχείο."
-
-#: ../lib/alexandria/ui/callbacks.rb:65
-msgid "The following lines are not valid ISBNs and were not imported:"
-msgstr "Οι ακόλουθες γραμμές δεν είναι έγκυρα ISBN και δεν εισήχθησαν:"
-
-#: ../lib/alexandria/ui/callbacks.rb:260
-msgid "_Library"
-msgstr "_Βιβλιοθήκη"
-
-#: ../lib/alexandria/ui/callbacks.rb:261
-msgid "_New Library"
-msgstr "_Νέα Βιβλιοθήκη"
-
-#: ../lib/alexandria/ui/callbacks.rb:261
-msgid "Create a new library"
-msgstr "Δημιουργία νέας βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/callbacks.rb:262
-msgid "New _Smart Library..."
-msgstr "Νέα Έξ_υπνη Βιβλιοθήκη..."
-
-#: ../lib/alexandria/ui/callbacks.rb:262
-msgid "Create a new smart library"
-msgstr "Δημιουργία νέας έξυπνης βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/callbacks.rb:263
-msgid "_Add Book..."
-msgstr "_Προσθήκη Βιβλίου..."
-
-#: ../lib/alexandria/ui/callbacks.rb:263
-msgid "Add a new book from the Internet"
-msgstr "Προσθήκη νέου βιβλίου από το Διαδίκτυο"
-
-#: ../lib/alexandria/ui/callbacks.rb:264
-msgid "Add Book _Manually..."
-msgstr "Προσθήκη Βιβλίου _Χειροκίνητα..."
-
-#: ../lib/alexandria/ui/callbacks.rb:264
-msgid "Add a new book manually"
-msgstr "Προσθήκη νέου βιβλίου χειροκίνητα"
-
-#: ../lib/alexandria/ui/callbacks.rb:265
-msgid "_Import..."
-msgstr "_Εισαγωγή..."
-
-#: ../lib/alexandria/ui/callbacks.rb:265
-msgid "Import a library"
-msgstr "Εισαγωγή βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/callbacks.rb:266
-msgid "_Export..."
-msgstr "Ε_ξαγωγή..."
-
-#: ../lib/alexandria/ui/callbacks.rb:266
-msgid "Export the selected library"
-msgstr "Εξαγωγή επιλεγμένης βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/callbacks.rb:267
-msgid "_Acquire from Scanner..."
-msgstr "_Από Σαρωτή..."
-
-#: ../lib/alexandria/ui/callbacks.rb:267
-msgid "Acquire books from a scanner"
-msgstr "Εισάγετε βιβλία από σαρωτή"
-
-#: ../lib/alexandria/ui/callbacks.rb:268
-msgid "_Properties"
-msgstr "_Ιδιότητες"
-
-#: ../lib/alexandria/ui/callbacks.rb:268
-msgid "Edit the properties of the selected book"
-msgstr "Επεξεργασθείτε τις ιδιότητες του επιλεγμένου βιβλίου"
-
-#: ../lib/alexandria/ui/callbacks.rb:269
-msgid "_Quit"
-msgstr "Έ_ξοδος"
-
-#: ../lib/alexandria/ui/callbacks.rb:269
-msgid "Quit the program"
-msgstr "Έξοδος από το πρόγραμμα"
-
-#: ../lib/alexandria/ui/callbacks.rb:270
-msgid "_Edit"
-msgstr "_Επεξεργασία"
-
-#: ../lib/alexandria/ui/callbacks.rb:271
-msgid "_Undo"
-msgstr "Α_ναίρεση"
-
-#: ../lib/alexandria/ui/callbacks.rb:271
-msgid "Undo the last action"
-msgstr "Αναιρέστε την τελευταία ενέργεια"
-
-#: ../lib/alexandria/ui/callbacks.rb:272
-msgid "_Redo"
-msgstr "Ε_πανάληψη"
-
-#: ../lib/alexandria/ui/callbacks.rb:272
-msgid "Redo the undone action"
-msgstr "Επαναλάβετε την αναιρεθείσα ενέργεια"
-
-#: ../lib/alexandria/ui/callbacks.rb:273
-msgid "_Select All"
-msgstr "Επιλογή ό_λων"
-
-#: ../lib/alexandria/ui/callbacks.rb:273
-msgid "Select all visible books"
-msgstr "Επιλέξτε όλα τα ορατά βιβλία"
-
-#: ../lib/alexandria/ui/callbacks.rb:274
-msgid "Dese_lect All"
-msgstr "Αποεπιλο_γή όλων"
-
-#: ../lib/alexandria/ui/callbacks.rb:274
-msgid "Deselect everything"
-msgstr "Αποεπιλέξτε τα πάντα"
-
-#: ../lib/alexandria/ui/callbacks.rb:275
-msgid "My _Rating"
-msgstr "Η _Βαθμολογία μου"
-
-#: ../lib/alexandria/ui/callbacks.rb:276
-msgid "None"
-msgstr "Τίποτα"
-
-#: ../lib/alexandria/ui/callbacks.rb:277
-msgid "One Star"
-msgstr "Ένα Αστέρι"
-
-#: ../lib/alexandria/ui/callbacks.rb:278
-msgid "Two Stars"
-msgstr "Δύο Αστέρια"
-
-#: ../lib/alexandria/ui/callbacks.rb:279
-msgid "Three Stars"
-msgstr "Τρία Αστέρια"
-
-#: ../lib/alexandria/ui/callbacks.rb:280
-msgid "Four Stars"
-msgstr "Τέσσερα Αστέρια"
-
-#: ../lib/alexandria/ui/callbacks.rb:281
-msgid "Five Stars"
-msgstr "Πέντε Αστέρια"
-
-#: ../lib/alexandria/ui/callbacks.rb:282
-msgid "_Move"
-msgstr "_Μετακίνηση"
-
-#: ../lib/alexandria/ui/callbacks.rb:283
-msgid "_Rename"
-msgstr "Με_τονομασία"
-
-#: ../lib/alexandria/ui/callbacks.rb:284
-msgid "_Delete"
-msgstr "_Διαγραφή"
-
-#: ../lib/alexandria/ui/callbacks.rb:284
-msgid "Delete the selected books or library"
-msgstr "Διαγράψτε τα επιλεγμένα βιβλία ή βιβλιοθήκη"
-
-#: ../lib/alexandria/ui/callbacks.rb:285
-msgid "_Search"
-msgstr "_Αναζήτηση"
-
-#: ../lib/alexandria/ui/callbacks.rb:285
-msgid "Filter books"
-msgstr "Φιλτράρισμα βιβλίων"
-
-#: ../lib/alexandria/ui/callbacks.rb:286
-msgid "_Clear Results"
-msgstr "Ε_κκαθάριση Αποτελεσμάτων"
-
-#: ../lib/alexandria/ui/callbacks.rb:286
-msgid "Clear the search results"
-msgstr "Καθαρίζει τα αποτελέσματα της αναζήτησης"
-
-#: ../lib/alexandria/ui/callbacks.rb:287
-msgid "_Preferences"
-msgstr "_Προτιμήσεις"
-
-#: ../lib/alexandria/ui/callbacks.rb:287
-msgid "Change Alexandria's settings"
-msgstr "Αλλαγή των ρυθμίσων της Alexandria"
-
-#: ../lib/alexandria/ui/callbacks.rb:288
-msgid "_View"
-msgstr "Π_ροβολή"
-
-#: ../lib/alexandria/ui/callbacks.rb:289
-msgid "Arran_ge Icons"
-msgstr "_Τακτοποίηση Εικονιδίων"
-
-#: ../lib/alexandria/ui/callbacks.rb:290
-msgid "Display Online _Information"
-msgstr "Απεικόνιση Δικτυακών Π_ληροφοριών"
-
-#: ../lib/alexandria/ui/callbacks.rb:292
-msgid "_Help"
-msgstr "_Βοήθεια"
-
-#: ../lib/alexandria/ui/callbacks.rb:293
-msgid "Submit _Bug Report"
-msgstr "Υποβολή Αναφοράς Σ_φάλματος"
-
-#: ../lib/alexandria/ui/callbacks.rb:293
-msgid "Submit a bug report to the developers"
-msgstr "Υποβάλετε μια αναφορά σφάλματος στην ομάδα ανάπτυξης"
-
-#: ../lib/alexandria/ui/callbacks.rb:294
-msgid "Contents"
-msgstr "Περιεχόμενα"
-
-#: ../lib/alexandria/ui/callbacks.rb:294
-msgid "View Alexandria's manual"
-msgstr "Δείτε το εγχειρίδιο της Alexandria"
-
-#: ../lib/alexandria/ui/callbacks.rb:295
-msgid "_About"
-msgstr "Πε_ρί"
-
-#: ../lib/alexandria/ui/callbacks.rb:295
-msgid "Show information about Alexandria"
-msgstr "Δείχνει πληροφορίες για την Alexandria"
-
-#: ../lib/alexandria/ui/callbacks.rb:320
-msgid "Side _Pane"
-msgstr "Πλευρική Σ_τήλη"
-
-#: ../lib/alexandria/ui/callbacks.rb:322
-msgid "_Toolbar"
-msgstr "Γραμμή Ερ_γαλείων"
-
-#: ../lib/alexandria/ui/callbacks.rb:324
-msgid "_Statusbar"
-msgstr "Γραμμή _Κατάστασης"
-
-#: ../lib/alexandria/ui/callbacks.rb:326
-msgid "Re_versed Order"
-msgstr "Α_νάστροφη Σειρά"
-
-#: ../lib/alexandria/ui/callbacks.rb:331
-msgid "View as _Icons"
-msgstr "Προβολή ως Ε_ικονίδια"
-
-#: ../lib/alexandria/ui/callbacks.rb:332
-msgid "View as _List"
-msgstr "Προβολή ως _Λίστα"
-
-#: ../lib/alexandria/ui/callbacks.rb:336
-msgid "By _Title"
-msgstr "Κατά _Τίτλο"
-
-#: ../lib/alexandria/ui/callbacks.rb:337
-msgid "By _Authors"
-msgstr "Κατά _Συγγραφείς"
-
-#: ../lib/alexandria/ui/callbacks.rb:338
-msgid "By _ISBN"
-msgstr "Κατά IS_BN"
-
-#: ../lib/alexandria/ui/callbacks.rb:339
-msgid "By _Publisher"
-msgstr "Κατά Εκ_δότη"
-
-#: ../lib/alexandria/ui/callbacks.rb:340
-msgid "By _Binding"
-msgstr "Κατά Βιβλι_οδεσία"
-
-#: ../lib/alexandria/ui/callbacks.rb:341
-msgid "By _Rating"
-msgstr "Κατά Βα_θμολογία"
-
-#: ../lib/alexandria/ui/callbacks.rb:345
-msgid "At _%s"
-msgstr "Σε _%s"
-
-#: ../lib/alexandria/ui/init.rb:83
-msgid "Unable to launch the help browser"
-msgstr "Δεν ήταν δυνατή η εκκίνηση της Βοήθειας"
-
-#: ../lib/alexandria/ui/init.rb:84
+"Δεν ήταν δυνατή η επικύρωση του  EAN/ISBN που δώσατε. Επαληθεύστε ότι είναι "
+"γραμμένο σωστά και προσπαθήστε ξανά."
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
+msgid "Properties"
+msgstr "Ιδιότητες"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:69
+msgid "Author"
+msgstr "Συγγραφέας"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
+msgid "Select a cover image"
+msgstr "Επιλέξτε εικόνα εξώφυλλου"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
+msgid "No Cover"
+msgstr "Χωρίς εξώφυλλο"
+
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:173
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d ημέρα"
+msgstr[1] "%d ημέρες"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
+msgid "Adding '%s'"
+msgstr "Προσθήκη '%s'"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
+#: ../data/alexandria/glade/new_book_dialog.glade:8
+msgid "Adding a Book"
+msgstr "Προσθήκη βιβλίου"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:81
+msgid "A title must be provided."
+msgstr "Πρέπει να δίδεται τίτλος."
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:102
+msgid "A publisher must be provided."
+msgstr "Πρέπει να δοθεί εκδότης."
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:109
+msgid "A binding must be provided."
+msgstr "Πρέπει να δοθεί βιβλιοδεσία."
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:115
+msgid "At least one author must be provided."
+msgstr "Πρέπει να δίδεται τουλάχιστον ένας συγγραφέας."
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:514
+msgid "Couldn't add the book"
+msgstr "Δεν ήταν δυνατή η προσθήκη του βιβλίου."
+
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
+msgid "File already exists"
+msgstr "Το αρχείο υπάρχει ήδη"
+
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:28
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:30
+msgid "_Replace"
+msgstr "_Αντικατάσταση"
+
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:29
 msgid ""
-"Could not display help for Alexandria. There was an error launching the "
-"system help browser."
+"A file named '%s' already exists.  Do you want to replace it with the one "
+"you are generating?"
 msgstr ""
-"Δεν ήταν δυνατή η εμφάνιση της βοήθειας για την Alexandria. Προέκυψε σφάλμα "
-"κατά την εκκίνηση του περιηγητή βοήθειας του συστήματος."
+"Υπάρχει ήδη ένα αρχείο με όνομα '%s'. Θέλετε να το αντικαταστήσετε με αυτό "
+"που δημιουργείτε;"
 
-#: ../lib/alexandria/ui/ui_manager.rb:128
-msgid "Type here the search criterion"
-msgstr "Πληκτρολογήστε εδώ το κριτήριο αναζήτησης"
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
+msgid "Export '%s'"
+msgstr "Εξαγωγή '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:141
-msgid "Match everything"
-msgstr "Ταίριασμα όλων"
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:58
+msgid "_Export"
+msgstr "_Εξαγωγή"
 
-#: ../lib/alexandria/ui/ui_manager.rb:143
-msgid "Title contains"
-msgstr "Τίτλος περιέχει"
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:77
+msgid "_Theme:"
+msgstr "_Θέμα:"
 
-#: ../lib/alexandria/ui/ui_manager.rb:144
-msgid "Authors contain"
-msgstr "Συγγραφείς περιέχουν"
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:87
+msgid "directory"
+msgstr "κατάλογος"
 
-#: ../lib/alexandria/ui/ui_manager.rb:145
-msgid "ISBN contains"
-msgstr "ISBN περιέχει"
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:100
+msgid "Export for_mat:"
+msgstr "_Μορφή εξαγωγής:"
 
-#: ../lib/alexandria/ui/ui_manager.rb:146
-msgid "Publisher contains"
-msgstr "Εκδότης περιέχει"
-
-#: ../lib/alexandria/ui/ui_manager.rb:147
-msgid "Notes contain"
-msgstr "Σημειώσεις περιέχουν"
-
-#: ../lib/alexandria/ui/ui_manager.rb:148
-msgid "Tags contain"
-msgstr "Ετικέτες περιέχουν"
-
-#: ../lib/alexandria/ui/ui_manager.rb:163
-msgid "Change the search type"
-msgstr "Αλλαγή του τύπου αναζήτησης"
-
-#: ../lib/alexandria/ui/ui_manager.rb:168
-msgid "View as Icons"
-msgstr "Προβολή ως Εικονίδια"
-
-#: ../lib/alexandria/ui/ui_manager.rb:169
-msgid "View as List"
-msgstr "Προβολή ως Λίστα"
-
-#: ../lib/alexandria/ui/ui_manager.rb:182
-msgid "Choose how to show books"
-msgstr "Επιλέξτε πως θα εμφανισθούν τα βιβλία"
-
-#: ../lib/alexandria/ui/ui_manager.rb:385
-msgid "Library '%s' selected"
-msgstr "Επιλεγμένη βιβλιοθήκη '%s'"
-
-#: ../lib/alexandria/ui/ui_manager.rb:392
-msgid "Library '%s' selected, %d unrated book"
-msgid_plural "Library '%s' selected, %d unrated books"
-msgstr[0] "Επιλεγμένη βιβλιοθήκη '%s', %d μη βαθμολογημένο βιβλίο"
-msgstr[1] "Επιλεγμένη βιβλιοθήκη '%s', %d μη βαθμολογημένα βιβλία"
-
-#: ../lib/alexandria/ui/ui_manager.rb:397
-msgid "Library '%s' selected, %d book"
-msgid_plural "Library '%s' selected, %d books"
-msgstr[0] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλίο"
-msgstr[1] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλία"
-
-#: ../lib/alexandria/ui/ui_manager.rb:404
-msgid "Library '%s' selected, %d book, %d unrated"
-msgid_plural "Library '%s' selected, %d books, %d unrated"
-msgstr[0] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλίο, %d μη βαθμολογημένο"
-msgstr[1] "Επιλεγμένη βιβλιοθήκη '%s', %d βιβλία, %d μη βαθμολογημένα"
-
-#: ../lib/alexandria/ui/ui_manager.rb:416
-msgid "'%s' selected"
-msgstr "'%s' επιλέχθηκε"
-
-#: ../lib/alexandria/ui/ui_manager.rb:419
-msgid "%d book selected"
-msgid_plural "%d books selected"
-msgstr[0] "%d βιβλίο επιλεγμένο"
-msgstr[1] "%d βιβλία επιλεγμένα"
-
-#: ../lib/alexandria/ui/ui_manager.rb:587
-msgid "Unable to launch the web browser"
-msgstr "Δεν ήταν δυνατή η εκκίνηση του περιηγητή ιστοσελίδων"
-
-#: ../lib/alexandria/ui/ui_manager.rb:588
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
 msgid ""
-"Check out that a web browser is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
+"The target, named '%s', is a regular file.  A directory is needed for this "
+"operation.  Please select a directory and try again."
 msgstr ""
-"Ελέγξτε ότι υπάρχει προεπιλεγμένος περιηγητής ιστοσελίδων (Προτιμήσεις "
-"επιφάνειας εργασίας -> Για προχωρημένους -> Προτιμώμενες εφαρμογές) και "
-"δοκιμάστε ξανά."
+"Ο στόχος με το όνομα '%s' είναι κανονικό αρχείο. Χρειάζεται ένας κατάλογος "
+"για αυτή την ενέργεια. Παρακαλώ επιλέξτε ένα κατάλογο και δοκιμάστε ξανά."
 
-#: ../lib/alexandria/ui/ui_manager.rb:600
-msgid "Unable to launch the mail reader"
-msgstr "Δεν ήταν δυνατή η εκκίνηση του προγράμματος αλληλογραφίας"
+#: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
+msgid "Not a directory"
+msgstr "Δεν είναι κατάλογος"
 
-#: ../lib/alexandria/ui/ui_manager.rb:601
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
+msgid "Invalid ISBN '%s'"
+msgstr "Μη έγκυρο ISBN '%s'"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:35
+msgid "_Keep"
+msgstr "_Διατήρηση"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
 msgid ""
-"Check out that a mail reader is configured as default (Desktop Preferences -"
-"> Advanced -> Preferred Applications) and try again."
+"The book titled '%s' has an invalid ISBN, but still exists in the providers "
+"libraries.  Do you want to keep the book but change the ISBN or cancel the "
+"add?"
 msgstr ""
-"Ελέγξτε ότι υπάρχει προεπιλεγμένο πρόγραμμα αλληλογραφίας (Προτιμήσεις "
-"επιφάνειας εργασίας -> Για προχωρημένους -> Προτιμώμενες εφαρμογές) και "
-"δοκιμάστε ξανά."
+"Το βιβλίο με τίτλο '%s' δεν έχει έγκυρο ISBN, αλλά υπάρχει στις βιβλιοθήκες "
+"των παροχέων. Θέλετε να κρατήσετε το βιβλίο αλλά να αλλάξετε το ISBN ή να "
+"ακυρώσετε την προσθήκη;"
 
-#: ../lib/alexandria/ui/ui_manager.rb:636
-msgid "Repair Book Data"
-msgstr "Επιδιόρθωση Δεδομένων Βιβλίων"
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:182
+msgid "A problem occurred while downloading images"
+msgstr "Υπήρξε ένα πρόβλημα κατά τη λήψη των εικόνων."
 
-#: ../lib/alexandria/ui/ui_manager.rb:637
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:301
+msgid "Unable to find matches for your search"
+msgstr "Δεν ήταν δυνατό να βρεθούν αντιστοιχίσεις για την αναζήτησή σας."
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:307
+msgid "%s, by %s"
+msgstr "%s, κατά %s"
+
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:380
 msgid ""
-"The data files for the following books are malformed or empty. Do you wish "
-"to attempt to download new information for them from the online book "
-"providers?\n"
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correctly, and try again."
 msgstr ""
-"Τα αρχεία δεδομένων για τα ακόλουθα βιβλία είναι ελλιπή ή κενά. Θέλετε να "
-"προσπαθήσετε να λάβετε καινούριες πληροφορίες για αυτά από τους "
-"διαδικτυακούς παροχείς βιβλίων;\n"
+"Δεν ήταν δυνατή η επικύρωση του EAN/ISBN που δώσατε. Ελέγξτε ότι είναι "
+"γραμμένο σωστά και προσπαθήστε ξανά."
 
-#: ../lib/alexandria/ui/ui_manager.rb:694
-msgid "Added '%s' to library '%s'"
-msgstr "Το '%s' προστέθηκε στη βιβλιοθήκη '%s'"
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:621
+msgid "'%s' already exists in '%s' (titled '%s')."
+msgstr "Το '%s' υπάρχει ήδη στη '%s' (με τίτλο '%s')."
 
-#: ../lib/alexandria/ui/ui_manager.rb:845
-msgid "Loading '%s'..."
-msgstr "Φόρτωση '%s'..."
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:26
+msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
+msgstr "Το βιβλίο '%s' υπάρχει ήδη στο '%s'. Θέλετε να το αντικαστήσετε;"
 
-#: ../lib/alexandria/ui/ui_manager.rb:1087
-msgid "In '_%s'"
-msgstr "Σε '_%s'"
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:29
+msgid "_Skip"
+msgstr "_Παράβλεψη"
+
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:31
+msgid "If you replace the existing book, its contents will be overwritten."
+msgstr ""
+"Αν αντικαταστήσετε το υπάρχον βιβλίο, τα περιεχόμενά του θα διαγραφούν."
+
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:50
+msgid "Are you sure you want to delete '%s'?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε το '%s';"
+
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:58
+msgid "If you continue, %d book will be deleted."
+msgid_plural "If you continue, %d books will be deleted."
+msgstr[0] "Αν συνεχίσετε, το %d βιβλίο θα διαγραφεί."
+msgstr[1] "Αν συνεχίσετε, τα %d βιβλία θα διαγραφούν."
+
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:63
+msgid "Are you sure you want to delete '%s' from '%s'?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε  '%s' από το '%s';"
+
+#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
+msgid "Are you sure you want to delete the selected books from '%s'?"
+msgstr ""
+"Είστε σίγουροι ότι θέλετε να διαγράψετε τα επιλεγμένα βιβλία από το '%s';"
+
+#: ../lib/alexandria/ui/sidepane.rb:49
+msgid "Invalid library name '%s'"
+msgstr "Μη έγκυρο όνομα βιβλιοθήκης '%s'"
+
+#: ../lib/alexandria/ui/sidepane.rb:50
+msgid "The name provided contains the disallowed character <b>%s</b> "
+msgstr "Το όνομα που δόθηκε περιέχει τον μη επιτρεπτό χαρακτήρα <b>%s</b>"
+
+#: ../lib/alexandria/ui/sidepane.rb:53
+msgid "Invalid library name"
+msgstr "Μη έγκυρο όνομα βιβλιοθήκης"
+
+#: ../lib/alexandria/ui/sidepane.rb:54
+msgid "The name provided contains invalid characters."
+msgstr "Το όνομα που δόθηκε περιέχει μη επιτρεπτoύς χαρακτήρες."
+
+#: ../lib/alexandria/ui/sidepane.rb:60
+msgid "The library name can not be empty"
+msgstr "Το όνομα της βιβλιοθήκης δεν μπορεί να είναι κενό"
+
+#: ../lib/alexandria/ui/sidepane.rb:65
+msgid "The library can not be renamed"
+msgstr "Η βιβλιοθήκη δεν είναι δυνατό να μετονομασθεί"
+
+#: ../lib/alexandria/ui/sidepane.rb:66
+msgid "There is already a library named '%s'.  Please choose a different name."
+msgstr ""
+"Υπάρχει ήδη βιβλιοθήκη με όνομα '%s'. Παρακαλώ επιλέξτε διαφορετικό όνομα."
+
+#: ../lib/alexandria/ui/sidepane.rb:92
+msgid "Library"
+msgstr "Βιβλιοθήκη"
+
+#: ../lib/alexandria/ui/libraries_combo.rb:44
+msgid "New Library"
+msgstr "Νέα Βιβλιοθήκη"
 
 #: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:349
 msgid "Title"
@@ -892,7 +900,7 @@ msgid "Want"
 msgstr "Επιθυμητό"
 
 #: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:357
-#: ../data/alexandria/glade/preferences_dialog.glade:199
+#: ../data/alexandria/glade/preferences_dialog.glade:421
 msgid "Tags"
 msgstr "Ετικέτες"
 
@@ -900,82 +908,73 @@ msgstr "Ετικέτες"
 msgid "Rating"
 msgstr "Βαθμολογία"
 
-#: ../lib/alexandria/ui/sidepane.rb:49
-msgid "Invalid library name '%s'"
-msgstr "Μη έγκυρο όνομα βιβλιοθήκης '%s'"
+#: ../lib/alexandria/ui/init.rb:83
+msgid "Unable to launch the help browser"
+msgstr "Δεν ήταν δυνατή η εκκίνηση της Βοήθειας"
 
-#: ../lib/alexandria/ui/sidepane.rb:50
-msgid "The name provided contains the disallowed character <b>%s</b> "
-msgstr "Το όνομα που δόθηκε περιέχει τον μη επιτρεπτό χαρακτήρα <b>%s</b>"
-
-#: ../lib/alexandria/ui/sidepane.rb:53
-msgid "Invalid library name"
-msgstr "Μη έγκυρο όνομα βιβλιοθήκης"
-
-#: ../lib/alexandria/ui/sidepane.rb:54
-msgid "The name provided contains invalid characters."
-msgstr "Το όνομα που δόθηκε περιέχει μη επιτρεπτoύς χαρακτήρες."
-
-#: ../lib/alexandria/ui/sidepane.rb:60
-msgid "The library name can not be empty"
-msgstr "Το όνομα της βιβλιοθήκης δεν μπορεί να είναι κενό"
-
-#: ../lib/alexandria/ui/sidepane.rb:65
-msgid "The library can not be renamed"
-msgstr "Η βιβλιοθήκη δεν είναι δυνατό να μετονομασθεί"
-
-#: ../lib/alexandria/ui/sidepane.rb:66
-msgid "There is already a library named '%s'.  Please choose a different name."
-msgstr ""
-"Υπάρχει ήδη βιβλιοθήκη με όνομα '%s'. Παρακαλώ επιλέξτε διαφορετικό όνομα."
-
-#: ../lib/alexandria/ui/sidepane.rb:92
-msgid "Library"
-msgstr "Βιβλιοθήκη"
-
-#: ../lib/alexandria/ui/libraries_combo.rb:44
-msgid "New Library"
-msgstr "Νέα Βιβλιοθήκη"
-
-#: ../lib/alexandria/book_providers.rb:71
-msgid "Couldn't reach the provider '%s': timeout expired."
-msgstr "Δεν προσεγγίσθηκε ο πάροχος '%s': έληξε ο χρόνος."
-
-#: ../lib/alexandria/book_providers.rb:75
-msgid "Couldn't reach the provider '%s': socket error (%s)."
-msgstr "Δεν προσεγγίσθηκε ο πάροχος '%s': σφάλμα υποδοχής (socket) (%s)."
-
-#: ../lib/alexandria/book_providers.rb:79
+#: ../lib/alexandria/ui/init.rb:84
 msgid ""
-"No results were found.  Make sure your search criterion is spelled "
-"correctly, and try again."
+"Could not display help for Alexandria. There was an error launching the "
+"system help browser."
 msgstr ""
-"Δεν βρέθηκαν αποτελέσματα. Βεβαιωθείτε ότι το κριτήριο αναζήτησης έχει σωστή "
-"ορθογραφία και δοκιμάστε ξανά."
+"Δεν ήταν δυνατή η εμφάνιση της βοήθειας για την Alexandria. Προέκυψε σφάλμα "
+"κατά την εκκίνηση του περιηγητή βοήθειας του συστήματος."
 
-#: ../lib/alexandria/book_providers.rb:84
-msgid "Too many results for that search."
-msgstr "Πάρα πολλά αποτελέσματα για αυτή την αναζήτηση."
+#: ../lib/alexandria/book_providers/amazon_aws.rb:37
+msgid "Locale"
+msgstr "Τοποθεσία"
 
-#: ../lib/alexandria/book_providers.rb:87
-msgid "Invalid search type."
-msgstr "Μη έγκυρος τύπος αναζήτησης."
+#: ../lib/alexandria/book_providers/amazon_aws.rb:38
+msgid "Access key ID"
+msgstr ""
 
-#: ../lib/alexandria/import_library.rb:29
-msgid "Autodetect"
-msgstr "Αυτόματη ανίχνευση"
+#: ../lib/alexandria/book_providers/amazon_aws.rb:39
+msgid "Secret access key"
+msgstr ""
 
-#: ../lib/alexandria/import_library.rb:30
-msgid "Archived Tellico XML (*.bc, *.tc)"
-msgstr "Αρχειοθετημένο Tellico XML (*.bc, *.tc)"
+#: ../lib/alexandria/book_providers/mcu.rb:39
+msgid "Spanish Culture Ministry"
+msgstr "Spanish Culture Ministry"
 
-#: ../lib/alexandria/import_library.rb:32
-msgid "ISBN List (*.txt)"
-msgstr "Λίστα ISBN (*.txt)"
+#: ../lib/alexandria/book_providers/z3950.rb:33
+msgid "Hostname"
+msgstr "Όνομα Host"
 
-#: ../lib/alexandria/import_library.rb:34
-msgid "GoodReads CSV"
-msgstr "GoodReads CSV"
+#: ../lib/alexandria/book_providers/z3950.rb:34
+msgid "Port"
+msgstr "Θύρα"
+
+#: ../lib/alexandria/book_providers/z3950.rb:35
+msgid "Database"
+msgstr "Βάση δεδομένων"
+
+#: ../lib/alexandria/book_providers/z3950.rb:36
+msgid "Record syntax"
+msgstr "Συντακτικό Εγγραφής"
+
+#: ../lib/alexandria/book_providers/z3950.rb:37
+msgid "Username"
+msgstr "Όνομα χρήστη"
+
+#: ../lib/alexandria/book_providers/z3950.rb:38
+msgid "Password"
+msgstr "Κωδικός πρόσβασης"
+
+#: ../lib/alexandria/book_providers/z3950.rb:39
+msgid "Charset encoding"
+msgstr "Κωδικοποίηση χαρακτήρων"
+
+#: ../lib/alexandria/book_providers/z3950.rb:198
+msgid "Library of Congress (Usa)"
+msgstr "Library of Congress (ΗΠΑ)"
+
+#: ../lib/alexandria/book_providers/z3950.rb:232
+msgid "British Library"
+msgstr "British Library"
+
+#: ../lib/alexandria/book_providers/proxis.rb:36
+msgid "Language"
+msgstr "Γλώσσα"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "Archived ONIX XML"
@@ -1102,10 +1101,34 @@ msgstr "είναι στα τελευταία"
 msgid "is not in last"
 msgstr "δεν είναι στα τελευταία"
 
-#: ../lib/alexandria/about.rb:24
-msgid "A program to help you manage your book collection."
+#: ../lib/alexandria/book_providers.rb:86
+msgid "Couldn't reach the provider '%s': timeout expired."
+msgstr "Δεν προσεγγίσθηκε ο πάροχος '%s': έληξε ο χρόνος."
+
+#: ../lib/alexandria/book_providers.rb:90
+msgid "Couldn't reach the provider '%s': socket error (%s)."
+msgstr "Δεν προσεγγίσθηκε ο πάροχος '%s': σφάλμα υποδοχής (socket) (%s)."
+
+#: ../lib/alexandria/book_providers.rb:94
+#: ../lib/alexandria/book_providers.rb:99
+msgid ""
+"No results were found.  Make sure your search criterion is spelled "
+"correctly, and try again."
 msgstr ""
-"Ένα πρόγραμμα για να σας βοηθήσει να οργανώσετε τη συλλογή βιβλίων σας."
+"Δεν βρέθηκαν αποτελέσματα. Βεβαιωθείτε ότι το κριτήριο αναζήτησης έχει σωστή "
+"ορθογραφία και δοκιμάστε ξανά."
+
+#: ../lib/alexandria/book_providers.rb:104
+msgid "Too many results for that search."
+msgstr "Πάρα πολλά αποτελέσματα για αυτή την αναζήτηση."
+
+#: ../lib/alexandria/book_providers.rb:107
+msgid "Invalid search type."
+msgstr "Μη έγκυρος τύπος αναζήτησης."
+
+#: ../lib/alexandria/book_providers.rb:202
+msgid "Enabled"
+msgstr ""
 
 #: ../data/alexandria/glade/acquire_dialog.glade:9
 msgid "Acquire from Scanner"
@@ -1136,6 +1159,29 @@ msgstr "Λίστα Βιβλίων."
 msgid "Status messages."
 msgstr "Μηνύματα κατάστασης."
 
+#: ../data/alexandria/glade/new_book_dialog.glade:31
+msgid "_Keep Dialog Open after Adding Book"
+msgstr "_Να μείνει ανοιχτός ο διάλογος μετά την προσθήκη βιβλίου"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:114
+msgid ""
+"by title\n"
+"by authors\n"
+"by keyword"
+msgstr ""
+"κατά τίτλο\n"
+"κατά συγγραφείς\n"
+"κατά λέξη"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:201
+msgid "_Search:"
+msgstr "_Αναζήτηση:"
+
+#: ../data/alexandria/glade/new_book_dialog.glade:219
+#: ../data/alexandria/glade/book_properties_dialog.glade:187
+msgid "_ISBN:"
+msgstr "_ISBN:"
+
 #: ../data/alexandria/glade/book_properties_dialog.glade:86
 msgid "_Title:"
 msgstr "_Τίτλος:"
@@ -1143,11 +1189,6 @@ msgstr "_Τίτλος:"
 #: ../data/alexandria/glade/book_properties_dialog.glade:115
 msgid "_Publisher:"
 msgstr "_Εκδότης:"
-
-#: ../data/alexandria/glade/book_properties_dialog.glade:187
-#: ../data/alexandria/glade/new_book_dialog.glade:219
-msgid "_ISBN:"
-msgstr "_ISBN:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:279
 msgid "Add an author"
@@ -1226,58 +1267,15 @@ msgid "Preferences"
 msgstr "Προτιμήσεις"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:27
-msgid "<b>Visible Columns</b>"
-msgstr "<b>Ορατές Στήλες</b>"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:48
-msgid "_Authors"
-msgstr "_Συγγραφείς"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:63
-msgid "_ISBN"
-msgstr "_ISBN"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:80
-msgid "_Publisher"
-msgstr "Ε_κδότης"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:97
-msgid "_Rating"
-msgstr "Βα_θμολογία"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:114
-msgid "_Binding"
-msgstr "Βιβλιο_δεσία"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:131
-msgid "Publish _year"
-msgstr "Έ_τος Έκδοσης"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:148
-msgid "Read?"
-msgstr "Αναγνωσμένο;"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:165
-msgid "Own?"
-msgstr "Ιδιόκτητο;"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:182
-msgid "Want?"
-msgstr "Επθυμητό;"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:222
-msgid "List View"
-msgstr "Προβολή Λίστας"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:238
-msgid "<b>_Providers</b>"
+#, fuzzy
+msgid "<b>Book Data Providers</b>"
 msgstr "<b>_Παροχείς</b>"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:306
+#: ../data/alexandria/glade/preferences_dialog.glade:99
 msgid "_Setup"
 msgstr "_Ρύθμιση"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:392
+#: ../data/alexandria/glade/preferences_dialog.glade:198
 msgid ""
 "Providers are libraries that supply information about books.  Some of them "
 "can be configured to get better results.  You can also customize the order "
@@ -1287,7 +1285,11 @@ msgstr ""
 "από αυτούς μπορούν να ρυθμισθούν για να πάρετε καλύτερα αποτελέσματα. "
 "Μπορείτε επίσης να καθορίσετε τη σειρά με την οποία ερωτώνται."
 
-#: ../data/alexandria/glade/preferences_dialog.glade:405
+#: ../data/alexandria/glade/preferences_dialog.glade:209
+msgid "Custom _Z39.50 Providers"
+msgstr ""
+
+#: ../data/alexandria/glade/preferences_dialog.glade:213
 msgid ""
 "Add and remove your own Z39.50 providers.\n"
 "Requires the Ruby/ZOOM software library."
@@ -1295,31 +1297,55 @@ msgstr ""
 "Προσθέστε και αφαιρέστε τους δικούς σας Ζ39.50 παρόχους.\n"
 " Απαιτεί τη βιβλιοθήκη λογισμικού Ruby/ZOOM."
 
-#: ../data/alexandria/glade/preferences_dialog.glade:407
-msgid "_Advanced Settings"
-msgstr "Ρυθμίσεις για Προ_χωρημένους"
-
-#: ../data/alexandria/glade/preferences_dialog.glade:427
-msgid "Providers"
+#: ../data/alexandria/glade/preferences_dialog.glade:235
+#, fuzzy
+msgid "_Providers"
 msgstr "Παροχείς"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:31
-msgid "_Keep Dialog Open after Adding Book"
-msgstr "_Να μείνει ανοιχτός ο διάλογος μετά την προσθήκη βιβλίου"
+#: ../data/alexandria/glade/preferences_dialog.glade:252
+msgid "<b>Visible Columns</b>"
+msgstr "<b>Ορατές Στήλες</b>"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:114
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"κατά τίτλο\n"
-"κατά συγγραφείς\n"
-"κατά λέξη"
+#: ../data/alexandria/glade/preferences_dialog.glade:270
+msgid "_Authors"
+msgstr "_Συγγραφείς"
 
-#: ../data/alexandria/glade/new_book_dialog.glade:201
-msgid "_Search:"
-msgstr "_Αναζήτηση:"
+#: ../data/alexandria/glade/preferences_dialog.glade:285
+msgid "_ISBN"
+msgstr "_ISBN"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:302
+msgid "_Publisher"
+msgstr "Ε_κδότης"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:319
+msgid "_Rating"
+msgstr "Βα_θμολογία"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:336
+msgid "_Binding"
+msgstr "Βιβλιο_δεσία"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:353
+msgid "Publish _year"
+msgstr "Έ_τος Έκδοσης"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:370
+msgid "Read?"
+msgstr "Αναγνωσμένο;"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:387
+msgid "Own?"
+msgstr "Ιδιόκτητο;"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:404
+msgid "Want?"
+msgstr "Επθυμητό;"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:448
+#, fuzzy
+msgid "_List View"
+msgstr "Προβολή Λίστας"
 
 #: ../alexandria.desktop.in.h:1
 msgid "Alexandria Book Collection Manager"
@@ -1332,6 +1358,9 @@ msgstr "Διαχειριστής Συλλογής Βιβλίων"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Διαχειριστείτε τη συλλογή βιβλίων σας"
+
+#~ msgid "_Advanced Settings"
+#~ msgstr "Ρυθμίσεις για Προ_χωρημένους"
 
 #~ msgid "Development token"
 #~ msgstr "Ενδεικτικό Ανάπτυξης"
