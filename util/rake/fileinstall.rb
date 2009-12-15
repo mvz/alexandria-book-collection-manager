@@ -2,7 +2,7 @@
 #--
 # Copyright (C) 2009 Cathal Mc Ginley
 #
-# This file is part of the Palatina build system.
+# This file is part of the Alexandria build system.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -58,21 +58,17 @@ class FileInstallTask < Rake::TaskLib
   # Debian, set +dirname+ to 'debian/packagename' and
   # +install_to_rubylibdir+ to true so that files are stage-installed
   # to 'debian/packagename/usr/lib/ruby/1.8'
-  def initialize(taskname=nil, dirname=nil, install_to_rubylibdir=false)
+  def initialize(taskname, dirname=nil, install_to_rubylibdir=false)
     @taskname = taskname
     @install_to_rubylibdir = install_to_rubylibdir
     calculate_ruby_dir
     @stage_dir = dirname # || @prefix
     @file_groups = []
+    @dirs_to_remove_globs
     if block_given?
       yield self
     end
-    if taskname
-      # taskname will be nil for newly cloned tasked (c.f. #similar)
-      # so we don't make the new task yet...
-      make_tasks
-    end
-
+    make_tasks
   end
 
   protected
@@ -80,47 +76,71 @@ class FileInstallTask < Rake::TaskLib
   # Creates the install and uninstall tasks based on the contents
   # of the @file_groups list
   def make_tasks
+    tasknames = {}
+    tasknames[:install] = "install_#{@taskname}".intern
+    tasknames[:uninstall] = "uninstall_#{@taskname}".intern
+    tasknames[:uninstall_files] = "uninstall_#{@taskname}_files".intern
+    tasknames[:uninstall_dirs] = "uninstall_#{@taskname}_dirs".intern
+
+    # INSTALL TASK
+
     description = "Install package files"
     if @stage_dir
       description += " to staging directory"
     end
     desc description
-    task @taskname do
+    task tasknames[:install] do
       @file_groups.each {|g| g.install(@stage_dir) }
     end    
 
+    # UNINSTALL TASKS
+
+    task tasknames[:uninstall_files] do
+      @file_groups.each {|g| g.uninstall(@stage_dir) }
+    end    
+
+    task tasknames[:uninstall_dirs] => tasknames[:uninstall_files] do
+      all_dirs = Set.new
+      @file_groups.each {|g| g.get_installation_dirs(@stage_dir, all_dirs) }
+      
+
+      #all_dirs.sort.each {|dir| puts dir }
+      to_delete = Set.new
+      @dirs_to_remove_globs.each do |glob|
+        regex = glob2regex(glob)
+        all_dirs.each do |dir|
+          unless dir =~ /\/$/
+            dir += '/'
+          end
+          if regex =~ dir            
+            #puts "SHOULD DELETE #{dir} #{$1} ; "             
+            to_delete << $1
+          end
+        end
+      end
+      to_delete.each do |dirname|
+        dir = dirname
+        if @stage_dir
+          dir = File.join(@stage_dir, dirname)
+        end
+        delete_empty(dir)
+      end
+    end
+
     uninstall_description = "Uninstall package files"
     if @stage_dir
-      description += " from staging directory"
-    end
-    
-    #desc uninstall_description
-    task "un_#{@taskname}".intern do
-      @dirs = Set.new
-      @file_groups.each {|g| g.uninstall(@stage_dir, @dirs) }
-    end    
-  end
+      uninstall_description += " from staging directory"
+    end   
+    desc uninstall_description
+    task tasknames[:uninstall] => [tasknames[:uninstall_files], 
+                                   tasknames[:uninstall_dirs]]
 
-  attr_accessor :file_groups, :stage_dir, :taskname
+  end
+  
+
 
   public
 
-
-  # Makes a copy of this install task, with the same file groups
-  # already set, but to which more file groups can be added without
-  # interference.
-  def similar(taskname, dirname=nil, install_to_rubylibdir=false)
-    newtask = self.dup
-    newtask.taskname = taskname
-    newtask.stage_dir = dirname
-    if block_given?
-      yield newtask 
-    end   
-    newtask.make_tasks
-    newtask
-  end
-    
-  
   # Include the files specified in the +file_glob+ to be installed in
   # +dest_dir+, but noting that the prefix +src_dir+ is to be
   # disregarded in the installation.
@@ -151,7 +171,9 @@ class FileInstallTask < Rake::TaskLib
         icon_dir = icon_file.dirname
         icon_size = Pathname.new(icon_dir).basename
         icon_dest_dir = "#{dest_dir}/#{theme}/#{icon_size}/#{icon_type}"
-        @file_groups << FileGroup.new(icon_dir, f, icon_dest_dir)
+        group = FileGroup.new(icon_dir, f, icon_dest_dir)
+        group.description = "icons"
+        @file_groups << group
       end
     end
   end
@@ -159,12 +181,7 @@ class FileInstallTask < Rake::TaskLib
   # Specify which directories should be deleted by the uninstall task
   # if they are empty (or only contain more empty directories).
   def uninstall_empty_dirs(dir_globs)
-    task "un_#{@taskname}_empty_dirs".intern => "un_#{@taskname}".intern do
-      puts "TODO implement uninstall_empty_dirs"
-      #FileList.new(dir_globs).each do |f|
-      #  puts f
-      #end
-    end
+    @dirs_to_remove_globs = dir_globs
   end
 
   private
@@ -190,14 +207,53 @@ class FileInstallTask < Rake::TaskLib
     end
   end
 
+  def glob2regex(pathglob)
+    if pathglob =~ /\*\*$/
+      pathglob += "/"
+    end
+    real_parts = pathglob.split("**/")
+    real_parts.each do |part|
+      part.gsub!(".", "\\.")
+      part.gsub!("*", "[^\\/]*")
+      part.gsub!("?", "[^\\/]")
+      #puts part
+    end
+    pattern = real_parts.join("([^\/]+\/)*")
+    return /(#{pattern})/
+  end
+
+  # For each of the directories named in the list +dirs+, delete the
+  # tree if is empty except for further empty directories.
+  def delete_empty(dirs)
+    dirs.each do |d|
+      p = Pathname.new(d)
+      if p.exist?
+        delete_if_empty(p.realpath)
+      end
+    end
+  end
+
+  
+  # Delete the directory at the given Pathname +p+ if all its children
+  # can be similarly deleted, and if it is then empty.
+  def delete_if_empty(p)
+    p.children.each do |c|
+      delete_if_empty(c)
+    end
+    if p.children.empty?
+      p.delete # TODO optional verbose output here
+    end
+  end
 
   class FileGroup
     attr_reader :mode
+    attr_accessor :description
     def initialize(src_dir, file_glob, dest_dir, mode=0644)
       @src_dir = src_dir
       @file_glob = file_glob
       @dest_dir = dest_dir
       @mode = mode
+      @description = "files"
     end
     def to_s
       "FileGroup[#{@src_dir}]"
@@ -224,26 +280,36 @@ class FileInstallTask < Rake::TaskLib
     end
 
     def install(base_dir)
+      puts "Installing #{@description} to #{@dest_dir}"
       files.each do |f|
         dest = self.dest_dir(f, base_dir)
         FileUtils.mkdir_p(dest) unless test(?d, dest)
         if test(?f, f)
-          FileUtils::Verbose.install(f, dest, :mode => self.mode)
+          FileUtils.install(f, dest, :mode => self.mode)
         end
       end
     end
 
-    def uninstall(base_dir, dirs)
+    def uninstall(base_dir)
       files.each do |f|
         dest = self.dest_dir(f, base_dir)
         filename = File.basename(f)
         file = File.join(dest, filename)
         if test(?f, file)
-          FileUtils::Verbose.rm_f(file) #, :noop => true)
-          dirs << File.dirname(file)
+          FileUtils.rm_f(file) #, :noop => true)
         end
       end
     end
+
+    def get_installation_dirs(base_dir, all_dirs_set)
+      files.each do |f|
+        dest = self.dest_dir(f, base_dir)
+        filename = File.basename(f)
+        file = File.join(dest, filename)
+        all_dirs_set << File.dirname(file)
+      end
+    end
+      
 
   end # class FileGroup
 

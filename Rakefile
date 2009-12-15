@@ -1,4 +1,28 @@
 # -*- ruby -*-
+#--
+# Copyright (C) 2009 Cathal Mc Ginley
+#
+# This file is part of the Alexandria build system.
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#++
 
 begin
   require 'rake'
@@ -38,46 +62,44 @@ omf = OmfGenerateTask.new(PROJECT) do |o|
   o.generate_omf('data/omf/alexandria', 'data/omf/alexandria/*.in') 
 end
 
-debinstall = FileInstallTask.new(:debian_install, stage_dir, true) do |i|
-
-  i.install_exe('bin', 'bin/*', "#{PREFIX}/bin")
-  i.install('lib', 'lib/**/*.rb', i.rubylib)
+def install_common(install_task)
+  install_task.install_exe('bin', 'bin/*', "#{PREFIX}/bin")
+  install_task.install('lib', 'lib/**/*.rb', install_task.rubylib)
 
   share_files = ['data/alexandria/**/*', 'data/gnome/**/*.*',
                  'data/locale/**/*.mo', 'data/omf/**/*.omf', 
                  'data/sounds/**/*.wav'] #, 'data/menu/*']
-  i.install('data', share_files, SHARE)
+  install_task.install('data', share_files, SHARE)
 
   icon_files = ['data/app-icon/**/*.png', 'data/app-icon/scalable/*.svg']
-  i.install_icons(icon_files, "#{SHARE}/icons")
-  i.install('data/app-icon/32x32', 'data/app-icon/32x32/*.xpm', "#{SHARE}/pixmaps")
+  install_task.install_icons(icon_files, "#{SHARE}/icons")
+  install_task.install('data/app-icon/32x32', 'data/app-icon/32x32/*.xpm', "#{SHARE}/pixmaps")
 
-  i.install('','schemas/alexandria.schemas', "#{SHARE}/gconf")
-  i.install('', 'alexandria.desktop', "#{SHARE}/applications")
-  i.install('doc','doc/alexandria.1', "#{SHARE}/man/man1")
-
+  install_task.install('','schemas/alexandria.schemas', "#{SHARE}/gconf")
+  install_task.install('', 'alexandria.desktop', "#{SHARE}/applications")
+  install_task.install('doc','doc/alexandria.1', "#{SHARE}/man/man1")
 
 end
 
-debinstall.similar(:install_files) do |j|
+debinstall = FileInstallTask.new(:debian_staging, stage_dir, true) do |i|
+  install_common(i)
+
+end
+
+task :debian_install => :install_debian_staging
+
+packageinstall = FileInstallTask.new(:package) do |j|
+  install_common(j)
+
   docs = ['README', 'NEWS', 'INSTALL', 'COPYING', 'TODO']
   devel_docs = ['doc/AUTHORS', 'doc/BUGS', 'doc/FAQ', 
                 'doc/cuecat_support.rdoc']
   j.install('', docs, "#{SHARE}/doc/#{PROJECT}") 
   j.install('doc', devel_docs, "#{SHARE}/doc/#{PROJECT}")
 
-  j.uninstall_empty_dirs(["#{SHARE}/**/#{PROJECT}",
-                          "#{j.rubylib}/#{PROJECT}"
+  j.uninstall_empty_dirs(["#{SHARE}/**/#{PROJECT}/",
+                          "#{j.rubylib}/#{PROJECT}/"
                          ])
-=begin
-  j.uninstall_empty_dirs(["#{SHARE}/sounds/#{PROJECT}",
-                          "#{SHARE}/gnome/help/#{PROJECT}",
-                          "#{SHARE}/omf/#{PROJECT}",
-                          "#{SHARE}/doc/#{PROJECT}",
-                          "#{SHARE}/#{PROJECT}",
-                          "#{j.rubylib}/#{PROJECT}"
-                         ])
-=end
 end
 
 
@@ -296,7 +318,7 @@ end
 task :post_install => [:scrollkeeper, :gconf, :update_icon_cache]
 
 desc "Install Alexandria"
-task :install => [:pre_install, :install_files, :post_install]
+task :install => [:pre_install, :install_package, :post_install]
 
 desc "Uninstall Alexandria"
-task :uninstall => [:un_install_files, :un_install_files_empty_dirs]
+task :uninstall => [:uninstall_package] # TODO gconf etc...
