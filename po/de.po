@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.4\n"
+"Project-Id-Version: alexandria 0.6.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 20:04+0000\n"
-"PO-Revision-Date: 2009-03-11 20:29+0100\n"
+"PO-Revision-Date: 2009-12-16 11:47+0100\n"
 "Last-Translator: Joachim Breitner <mail@joachim-breitner.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -188,7 +188,7 @@ msgstr "Exportieren fehlgeschlagen"
 
 #: ../lib/alexandria/ui/callbacks.rb:123
 msgid "Try letting this library load completely before exporting."
-msgstr ""
+msgstr "Versuchen Sie diese Bibliothek vollständig zu laden, bevor sie exportieren."
 
 #: ../lib/alexandria/ui/callbacks.rb:274
 msgid "_Library"
@@ -538,15 +538,13 @@ msgstr "_Typ:"
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:315
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
-#, fuzzy
 msgid "Disable Provider"
-msgstr "Neuer Anbieter"
+msgstr "Anbieter deaktivieren"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
-#, fuzzy
 msgid "Enable Provider"
-msgstr "Neuer Anbieter"
+msgstr "Anbieter aktivieren"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:422
 msgid "Are you sure you want to permanently delete the provider '%s'?"
@@ -934,11 +932,11 @@ msgstr "Sprache"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:38
 msgid "Access key ID"
-msgstr ""
+msgstr "Zugriffs-Schlüssel-ID"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:39
 msgid "Secret access key"
-msgstr ""
+msgstr "Privater Zugriffsschlüssel"
 
 #: ../lib/alexandria/book_providers/mcu.rb:39
 msgid "Spanish Culture Ministry"
@@ -1136,7 +1134,7 @@ msgstr "Ungültiger Suchtyp."
 
 #: ../lib/alexandria/book_providers.rb:202
 msgid "Enabled"
-msgstr ""
+msgstr "Aktiviert"
 
 #: ../data/alexandria/glade/acquire_dialog.glade:9
 msgid "Acquire from Scanner"
@@ -1275,9 +1273,8 @@ msgid "Preferences"
 msgstr "Einstellungen"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:27
-#, fuzzy
 msgid "<b>Book Data Providers</b>"
-msgstr "<b>_Anbieter</b>"
+msgstr "<b>Buchinformations-Anbieter</b>"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:99
 msgid "_Setup"
@@ -1295,7 +1292,7 @@ msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:209
 msgid "Custom _Z39.50 Providers"
-msgstr ""
+msgstr "Eigener _Z39.50-Anbieter"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:213
 msgid ""
@@ -1306,9 +1303,8 @@ msgstr ""
 "Benötigt die Ruby/ZOOM-Softwarebibliothek"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:235
-#, fuzzy
 msgid "_Providers"
-msgstr "Anbieter"
+msgstr "_Anbieter"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:252
 msgid "<b>Visible Columns</b>"
@@ -1351,9 +1347,8 @@ msgid "Want?"
 msgstr "Gewünscht?"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:448
-#, fuzzy
 msgid "_List View"
-msgstr "Listenansicht"
+msgstr "_Listenansicht"
 
 #: ../alexandria.desktop.in.h:1
 msgid "Alexandria Book Collection Manager"
