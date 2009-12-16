@@ -534,7 +534,7 @@ module Alexandria
       end
 
       def on_focus(widget, event_focus)
-        if widget == @library_listview
+        if @clicking_on_sidepane or widget == @library_listview
           log.debug { "on_focus: @library_listview" }
           Gtk.idle_add do
             %w{OnlineInformation SelectAll DeselectAll}.each do |action|
@@ -1044,7 +1044,7 @@ module Alexandria
         Gtk.idle_add do
           @actiongroup["AddBook"].sensitive = !smart
           @actiongroup["AddBookManual"].sensitive = !smart
-          @actiongroup["Properties"].sensitive = true
+          @actiongroup["Properties"].sensitive = smart
           can_delete = smart || (@libraries.all_regular_libraries.length > 1)
           @actiongroup["Delete"].sensitive = can_delete ## true #(@libraries.all_regular_libraries.length > 1)
           log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }

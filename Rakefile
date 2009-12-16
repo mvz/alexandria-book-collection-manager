@@ -81,12 +81,12 @@ def install_common(install_task)
 
 end
 
-debinstall = FileInstallTask.new(:debian_staging, stage_dir, true) do |i|
+debinstall = FileInstallTask.new(:package_staging, stage_dir, true) do |i|
   install_common(i)
 
 end
 
-task :debian_install => :install_debian_staging
+task :debian_install => :install_package_staging
 
 packageinstall = FileInstallTask.new(:package) do |j|
   install_common(j)
