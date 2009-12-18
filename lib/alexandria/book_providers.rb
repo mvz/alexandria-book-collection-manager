@@ -283,9 +283,6 @@ module Alexandria
       unabstract
     end
 
-    #require 'alexandria/book_providers/bn'
-    log.info { "Not loading Barnes and Noble (provider not functional)" }
-
     require 'alexandria/book_providers/proxis'
 
     require 'alexandria/book_providers/mcu' #?
@@ -332,6 +329,7 @@ module Alexandria
         require 'hpricot'
       end
       require 'alexandria/book_providers/amazon_aws'
+      require 'alexandria/book_providers/barnes_and_noble'
       require 'alexandria/book_providers/deastore'
       require 'alexandria/book_providers/siciliano'
       require 'alexandria/book_providers/worldcat'
