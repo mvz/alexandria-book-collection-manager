@@ -24,6 +24,8 @@ module Alexandria
 
       COVER_MAXWIDTH = 140    # pixels
 
+      COVER_ABSOLUTE_MAXHEIGHT = 250 # pixels, above this we scale down...
+
       def initialize(parent, cover_file)
         super('book_properties_dialog.glade')
         @book_properties_dialog.transient_for = parent
@@ -135,6 +137,7 @@ module Alexandria
             @delete_cover_file = false
             cover = Gdk::Pixbuf.new(dialog.filename)
             # At this stage the file format is recognized.
+            
             if File.exists?(@cover_file)
               unless @original_cover_file
                 # make a back up, but only of the original
@@ -142,7 +145,17 @@ module Alexandria
                 FileUtils.cp(@cover_file, @original_cover_file)
               end
             end
-            FileUtils.cp(dialog.filename, @cover_file)
+            if cover.height > COVER_ABSOLUTE_MAXHEIGHT
+              FileUtils.cp(dialog.filename, "#{@cover_file}.orig")
+              new_width = cover.width / (cover.height / COVER_ABSOLUTE_MAXHEIGHT.to_f)
+              puts "Scaling large cover image to #{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
+              cover = cover.scale(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT)
+              cover.save(@cover_file, "jpeg")
+            else
+              FileUtils.cp(dialog.filename, @cover_file)              
+            end
+
+
             self.cover = cover
             @@latest_filechooser_directory = dialog.current_folder
           rescue RuntimeError => e
