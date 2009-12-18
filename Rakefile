@@ -42,14 +42,42 @@ require 'omfgenerate'
 
 
 stage_dir = ENV['DESTDIR'] || 'tmp'
+prefix_dir = ENV['PREFIX'] || '/usr'
 
 PROJECT='alexandria'
-PREFIX='/usr'
-SHARE = "#{PREFIX}/share"
+PREFIX = prefix_dir
+share_dir = ENV['SHARE'] || "#{PREFIX}/share"
+SHARE = share_dir
 
 DATA_VERSION = '0.6.3'
 PROJECT_VERSION = '0.6.6'
 DISPLAY_VERSION = '0.6.6-svn'
+
+
+# Write a .config file if the configuration data has changed
+# (e.g. new DESTDIR or PREFIX)
+# This is so new installations will regenerate files like config.rb
+config_data =<<EOS
+PREFIX=#{ENV['PREFIX']}
+SHARE=#{ENV['SHARE']}
+RUBYLIBDIR=#{ENV['RUBYLIBDIR']}
+EOS
+old_config_data = ""
+if File.exists?(".config") 
+  old_config_data = File.open(".config").read
+  if config_data != old_config_data
+    File.open(".config", 'wb') do |cfg|
+      cfg.write(config_data)
+    end
+  end
+else
+  # duplicated code...
+  File.open(".config", 'wb') do |cfg|
+    cfg.write(config_data)
+  end
+end
+
+
 
 gettext = GettextGenerateTask.new(PROJECT) do |g|
   g.generate_po_files('po', 'po/*.po', 'data/locale')
@@ -126,12 +154,12 @@ def generate(filename)
 end
 
 # generate lib/alexandria/config.rb
-file 'lib/alexandria/config.rb' => ['Rakefile'] do |f|
+file 'lib/alexandria/config.rb' => ['Rakefile', '.config'] do |f|
   generate(f.name) do
     <<EOS
 module Alexandria
   module Config
-    SHARE_DIR = '#{PREFIX}/share'
+    SHARE_DIR = '#{SHARE}'
     SOUNDS_DIR = "\#{SHARE_DIR}/sounds/#{PROJECT}"
     DATA_DIR = "\#{SHARE_DIR}/#{PROJECT}"
     MAIN_DATA_DIR = DATA_DIR

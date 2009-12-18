@@ -64,7 +64,7 @@ class FileInstallTask < Rake::TaskLib
     calculate_ruby_dir
     @stage_dir = dirname # || @prefix
     @file_groups = []
-    @dirs_to_remove_globs
+    @dirs_to_remove_globs = []
     if block_given?
       yield self
     end
@@ -104,7 +104,6 @@ class FileInstallTask < Rake::TaskLib
       @file_groups.each {|g| g.get_installation_dirs(@stage_dir, all_dirs) }
       
 
-      #all_dirs.sort.each {|dir| puts dir }
       to_delete = Set.new
       @dirs_to_remove_globs.each do |glob|
         regex = glob2regex(glob)
@@ -113,7 +112,6 @@ class FileInstallTask < Rake::TaskLib
             dir += '/'
           end
           if regex =~ dir            
-            #puts "SHOULD DELETE #{dir} #{$1} ; "             
             to_delete << $1
           end
         end
@@ -200,10 +198,12 @@ class FileInstallTask < Rake::TaskLib
 
     @prefix = ENV['PREFIX'] || ruby_prefix
     if @prefix == ruby_prefix
-      @rubylib = ruby_libdir
-    else
+      @rubylib = ruby_libdir      
+    elsif ruby_libdir.index(ruby_prefix) == 0
       libpart = ruby_libdir[ruby_prefix.size .. -1]
       @rubylib = File.join(@prefix, libpart)
+    else
+      @rubylib = ruby_libdir
     end
   end
 
@@ -216,7 +216,6 @@ class FileInstallTask < Rake::TaskLib
       part.gsub!(".", "\\.")
       part.gsub!("*", "[^\\/]*")
       part.gsub!("?", "[^\\/]")
-      #puts part
     end
     pattern = real_parts.join("([^\/]+\/)*")
     return /(#{pattern})/
@@ -237,11 +236,17 @@ class FileInstallTask < Rake::TaskLib
   # Delete the directory at the given Pathname +p+ if all its children
   # can be similarly deleted, and if it is then empty.
   def delete_if_empty(p)
+    unless p.directory?
+      return false
+    end
     p.children.each do |c|
       delete_if_empty(c)
     end
     if p.children.empty?
       p.delete # TODO optional verbose output here
+      true
+    else
+      false
     end
   end
 
@@ -256,7 +261,7 @@ class FileInstallTask < Rake::TaskLib
       @description = "files"
     end
     def to_s
-      "FileGroup[#{@src_dir}]"
+      "FileGroup[#{@src_dir}] => #{@dest_dir}"
     end
     def dest_dir(file, staging_dir=nil)
       source_basedir = Pathname.new(@src_dir)
@@ -280,7 +285,7 @@ class FileInstallTask < Rake::TaskLib
     end
 
     def install(base_dir)
-      puts "Installing #{@description} to #{@dest_dir}"
+      puts "Installing #{@description} to #{base_dir}#{@dest_dir}"
       files.each do |f|
         dest = self.dest_dir(f, base_dir)
         FileUtils.mkdir_p(dest) unless test(?d, dest)
