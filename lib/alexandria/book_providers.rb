@@ -329,7 +329,7 @@ module Alexandria
         require 'hpricot'
       end
       require 'alexandria/book_providers/amazon_aws'
-      #require 'alexandria/book_providers/barnes_and_noble'
+      require 'alexandria/book_providers/barnes_and_noble'
       require 'alexandria/book_providers/deastore'
       require 'alexandria/book_providers/siciliano'
       require 'alexandria/book_providers/worldcat'
