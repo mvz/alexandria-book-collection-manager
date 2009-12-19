@@ -26,8 +26,7 @@
 
 require 'cgi'
 require 'alexandria/net'
-require 'iconv' # part of ruby-gettext
-
+require 'iconv'
 
 module Alexandria
   class BookProviders
@@ -49,12 +48,10 @@ module Alexandria
 
       ## search (copied from new WorldCat search)
       def search(criterion, type)
-        #puts create_search_uri(type, criterion)
         req = create_search_uri(type, criterion)
         log.info { "Fetching #{req} " }
         html_data = transport.get_response(URI.parse(req))
 
-        #puts html_data.class
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body)
         else
@@ -106,41 +103,22 @@ module Alexandria
         html = Iconv.conv("UTF-8", "ISO-8859-1", html)
         doc = Hpricot(html)
         book_search_results = []
-
-        searchHit = doc%'table[@id$="SearchHit"]'
+	
+        searchHit = doc.search("div'searchResult")[0]
         return [] unless searchHit
-
-        (searchHit/'table[@id$="Table1"]').each do |t|
-
+	
+        (searchHit/'ul.ulSearch table').each do |t|
+	  
           result = {}
-          if title_row = (t%'tr[@id$="trTitle"]')
-            td = title_row%:td
-            result[:title] = (td%:a).inner_text
-            #binding = (td%'span[@id$=Label4]').inner_text # " (...)"
-            #author = (td%'span[@id$=Label2]').inner_text # " surname, forename"
-          end
-          #authors = [author]
+          if title_data = (t%'div.divTitle')
+	    result[:title] = (title_data%:a).inner_text
+	    lookup_url = (title_data%:a)['href']
+	  end
+	  result[:lookup_url] = "#{SITE}#{lookup_url}"
 
-          #isbn_text = (t%'span[@id$=Label5]').inner_text
-          #isbn_text =~ /([0-9]{13}|[0-9]{10}|[0-9]{9}X)/i
-          #isbn = $1
+	  book_search_results << result
 
-          #book = Book.new(title, ISBN.get(isbn), authors)
-          # book.binding
-
-          if link = t%'a[@id$="linkProduct"]'
-            result[:lookup_url] = "#{SITE}#{link['href']}"
-            #if img = (link%'img[@id$="ProductImageLinked"]')
-            #  cover_url = "#{SITE}#{img['src']}"#
-            #end
-          end
-
-
-
-
-          book_search_results << result
-
-        end
+	end
         book_search_results
       end
       
@@ -158,7 +136,7 @@ module Alexandria
 
       def normalize(text)
         unless text.nil?
-          text = @ent.decode(text)
+          text = @ent.decode(text).strip
         end
         text
       end
@@ -168,50 +146,61 @@ module Alexandria
         html = Iconv.conv("UTF-8", "ISO-8859-1", html)
         ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
         doc = Hpricot(html)     
-        product_table = doc%'table[@id$="ProductTable"]'
-        raise NoResultsError unless product_table
         begin
           
           title = nil
-          if h1 = product_table%:h1
+          if h1 = doc.at('div.productTitleFormat h1')
             title = normalize(h1.inner_text)
+	  else
+	    raise NoResultsError, "title not found on page"
           end
 
+	  product = doc.at('div.product')
+	  ul_info = doc.at('ul.info') # NOTE, two of these
 
-
-          author_cells = product_table/'td/h2/a[@id*="Author"]/../..'
+          author_cells = ul_info.search('li.liAuthor') #css-like search
           authors = []
-          author_cells.each do |td|
-            author_role = (td%:span).inner_text # first span contains author_role
-            author_name = (td%:a).inner_text # link contains author_name
+          author_cells.each do |li|
+            author_role = (li % :strong).inner_text # first strong contains author_role
+	    if author_role =~ /([^:]+):/
+	      author_role = $1
+	    end
+	    author_name = (li.search('h2 > a')[0]).inner_text
+
             authors << normalize(author_name)
           end
 
           publisher = nil
-          if publisher_elem = product_table%'span[@id$="PublisherName"]'
+          if publisher_elem = product.search('li[@id$="liPublisher"] a').first
             publisher = normalize(publisher_elem.inner_text)
           end
 
           binding = nil
-          if format_elem = product_table%'span[@id$="FormatAndLanguage"]'
-            binding = format_elem.inner_text
-            if binding =~ /:[\s]*([^,]+),/
-              binding = normalize($1)
-            end
-          end
+	  if format = doc.search('div.productTitleFormat span').first
+	    binding = normalize(format.inner_text)
+	    if binding =~ /\(([^\)]+)\)/
+	      binding = $1
+	    end
+	  end
 
-          year = nil
-          if publication_elem = product_table%'span[@id$="PublishedAndPages"]'
-            publication = publication_elem.inner_text
-            if publication =~ /([12][0-9]{3})/
-              year = $1.to_i
-            end
-          end
+	  year = nil
+	  if published = product.search('span[@id$="Published"]').first
+	    publication = published.inner_text
+	    if publication =~ /([12][0-9]{3})/
+	      year = $1.to_i
+	    end
+	  end
+
           
           isbns = []
-          isbn_elems = product_table/'span[@id$="Isbn"]' # or Isbn13
-          isbn_elems.each do |isbn_elem|
-            isbn = isbn_elem.inner_text
+          isbn_tds = doc.search("li[@id *= 'liISBN'] td[text()]")
+
+          isbn_tds.each do |isbn_td|
+            isbn = isbn_td.inner_text
+	    unless isbn =~ /[0-9x]{10,13}/i
+	      next
+	    end
+	    isbn.gsub(/(\n|\r)/, " ")
             if isbn =~ /:[\s]*([0-9x]+)/i
               isbn = $1
             end
@@ -222,30 +211,22 @@ module Alexandria
             isbn = Library.canonicalise_isbn(isbn)
           end
 
-          #cover
-          image_url = nil
-          if cover_img = product_table%'img[@id$="ProductImageNotLinked"'
-            image_url = cover_img['src'] # already absolute
-            if image_url =~ /noimage.gif$/
+          
+	  #cover
+	  image_url = nil
+	  if cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
+	    if cover_img['src'] =~ /^http\:\/\//
+	      image_url = cover_img['src']
+	    else
+	      image_url = "#{SITE}/#{cover_img['src']}" # HACK use html base
+	    end
+	    if image_url =~ /noimage.gif$/
               # no point downloading a "no image" graphic
               # Alexandria has its own generic book icon...
               image_url = nil
             end
-            #puts image_url
-          end
-          
-          #book = Book.new(title, ISBN.get(isbns.first), authors)
-          
-          #if publisher
-          #  book.publisher = Publisher.new(publisher)
-          #end
-          #if binding
-          #  book.binding = CoverBinding.new(binding, binding_type(binding))
-          #end
-          
-          #if year
-          #  book.publication_year = year
-          #end
+	    
+	  end
 
           book = Book.new(title, authors, isbn, publisher, year, binding)
 

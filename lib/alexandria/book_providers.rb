@@ -329,11 +329,13 @@ module Alexandria
         require 'hpricot'
       end
       require 'alexandria/book_providers/amazon_aws'
-      require 'alexandria/book_providers/barnes_and_noble'
+      #require 'alexandria/book_providers/barnes_and_noble'
       require 'alexandria/book_providers/deastore'
       require 'alexandria/book_providers/siciliano'
       require 'alexandria/book_providers/worldcat'
-    rescue LoadError
+    rescue LoadError => ex
+      log.error { ex }
+      log.error { ex.backtrace.join("\n> ") }
       log.warn { "Can't load hpricot, hence provider Amazon not available" }
       log.warn { "Can't load hpricot, hence provider DeaStore not available" }
       log.warn { "Can't load hpricot, hence provider Siciliano not available" }
