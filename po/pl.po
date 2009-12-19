@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.4\n"
+"Project-Id-Version: alexandria 0.6.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 20:04+0000\n"
-"PO-Revision-Date: 2009-03-05 17:48+0100\n"
+"PO-Revision-Date: 2009-12-19 11:49+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "Notatki zawierają"
 
 #: ../lib/alexandria/ui/ui_manager.rb:154
 msgid "Tags contain"
-msgstr "Znaczniki zawierają"
+msgstr "Etykiety zawierają"
 
 #: ../lib/alexandria/ui/ui_manager.rb:169
 msgid "Change the search type"
@@ -197,6 +197,7 @@ msgstr "Eksport nie powiódł się"
 #: ../lib/alexandria/ui/callbacks.rb:123
 msgid "Try letting this library load completely before exporting."
 msgstr ""
+"Należy spróbować poczekać na wczytanie się biblioteki przed eksportowaniem."
 
 #: ../lib/alexandria/ui/callbacks.rb:274
 msgid "_Library"
@@ -272,7 +273,7 @@ msgstr "Za_kończ"
 
 #: ../lib/alexandria/ui/callbacks.rb:283
 msgid "Quit the program"
-msgstr "Wyłącza program"
+msgstr "Kończy działanie programu"
 
 #: ../lib/alexandria/ui/callbacks.rb:284
 msgid "_Edit"
@@ -284,7 +285,7 @@ msgstr "Cof_nij"
 
 #: ../lib/alexandria/ui/callbacks.rb:285
 msgid "Undo the last action"
-msgstr "Cofa ostatnią operację"
+msgstr "Cofa ostatnią czynność"
 
 #: ../lib/alexandria/ui/callbacks.rb:286
 msgid "_Redo"
@@ -292,7 +293,7 @@ msgstr "P_onów"
 
 #: ../lib/alexandria/ui/callbacks.rb:286
 msgid "Redo the undone action"
-msgstr "Ponawia cofniętą operację"
+msgstr "Ponawia cofniętą czynność"
 
 #: ../lib/alexandria/ui/callbacks.rb:287
 msgid "_Select All"
@@ -356,7 +357,7 @@ msgstr "Usuwa wybrane książki lub bibliotekę"
 
 #: ../lib/alexandria/ui/callbacks.rb:299
 msgid "_Search"
-msgstr "_Znajdź"
+msgstr "Wy_szukaj"
 
 #: ../lib/alexandria/ui/callbacks.rb:299
 msgid "Filter books"
@@ -408,7 +409,7 @@ msgstr "Zawartość"
 
 #: ../lib/alexandria/ui/callbacks.rb:308
 msgid "View Alexandria's manual"
-msgstr "Wyświetla podręcznik Aleksandrii"
+msgstr "Wyświetla podręcznik programu Aleksandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:309
 msgid "_About"
@@ -416,11 +417,11 @@ msgstr "_O programie"
 
 #: ../lib/alexandria/ui/callbacks.rb:309
 msgid "Show information about Alexandria"
-msgstr "Wyświetla informacje o Aleksandrii"
+msgstr "Wyświetla informacje o programie Aleksandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
 msgid "Side _Pane"
-msgstr "Pasek _boczny"
+msgstr "_Panel boczny"
 
 #: ../lib/alexandria/ui/callbacks.rb:336
 msgid "_Toolbar"
@@ -548,19 +549,17 @@ msgstr "_Typ:"
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:315
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
-#, fuzzy
 msgid "Disable Provider"
-msgstr "Nowy dostawca"
+msgstr "Wyłączenie dostawcy"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
-#, fuzzy
 msgid "Enable Provider"
-msgstr "Nowy dostawca"
+msgstr "Włączenie dostawcy"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:422
 msgid "Are you sure you want to permanently delete the provider '%s'?"
-msgstr "Trwale usunąć dostawcę \"%s\"?"
+msgstr "Na pewno trwale usunąć dostawcę \"%s\"?"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:430
 msgid ""
@@ -817,7 +816,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:50
 msgid "Are you sure you want to delete '%s'?"
-msgstr "Usunąć \"%s\"?"
+msgstr "Na pewno usunąć \"%s\"?"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:58
 msgid "If you continue, %d book will be deleted."
@@ -828,11 +827,11 @@ msgstr[2] "Kontynuując, %d książek zostanie usuniętych."
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:63
 msgid "Are you sure you want to delete '%s' from '%s'?"
-msgstr "Usunąć \"%s\"' z \"%s\"?"
+msgstr "Na pewno usunąć \"%s\"' z \"%s\"?"
 
 #: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
 msgid "Are you sure you want to delete the selected books from '%s'?"
-msgstr "Usunąć wybrane książki z \"%s\"?"
+msgstr "Na pewno usunąć wybrane książki z \"%s\"?"
 
 #: ../lib/alexandria/ui/sidepane.rb:49
 msgid "Invalid library name '%s'"
@@ -910,7 +909,7 @@ msgstr "Pożądana"
 #: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:357
 #: ../data/alexandria/glade/preferences_dialog.glade:421
 msgid "Tags"
-msgstr "Znaczniki"
+msgstr "Etykiety"
 
 #: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:355
 msgid "Rating"
@@ -925,8 +924,8 @@ msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
 msgstr ""
-"Nie można wyświetlić pomocy Aleksandrii. Wystąpił błąd podczas uruchamiania "
-"systemowej przeglądarki pomocy."
+"Nie można wyświetlić pomocy programu Aleksandria. Wystąpił błąd podczas "
+"uruchamiania systemowej przeglądarki pomocy."
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:37
 msgid "Locale"
@@ -934,11 +933,11 @@ msgstr "Lokalizacja"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:38
 msgid "Access key ID"
-msgstr ""
+msgstr "Identyfikator klucza dostępu"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:39
 msgid "Secret access key"
-msgstr ""
+msgstr "Tajny klucz dostępu"
 
 #: ../lib/alexandria/book_providers/mcu.rb:39
 msgid "Spanish Culture Ministry"
@@ -1136,7 +1135,7 @@ msgstr "Nieprawidłowy typ wyszukiwania."
 
 #: ../lib/alexandria/book_providers.rb:202
 msgid "Enabled"
-msgstr ""
+msgstr "Włączone"
 
 #: ../data/alexandria/glade/acquire_dialog.glade:9
 msgid "Acquire from Scanner"
@@ -1183,7 +1182,7 @@ msgstr ""
 
 #: ../data/alexandria/glade/new_book_dialog.glade:201
 msgid "_Search:"
-msgstr "_Znajdź:"
+msgstr "Wy_szukaj:"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:219
 #: ../data/alexandria/glade/book_properties_dialog.glade:187
@@ -1220,7 +1219,7 @@ msgstr "_Rok wydania:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:480
 msgid "Tags:"
-msgstr "Znaczniki:"
+msgstr "Etykiety:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:553
 msgid "_Cover:"
@@ -1228,7 +1227,7 @@ msgstr "_Okładka:"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:579
 msgid "Click to pick a cover"
-msgstr "Proszę nacisnąć, aby wybrać okładkę"
+msgstr "Naciśnięcie wybiera okładkę"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:620
 msgid "Own it?"
@@ -1244,7 +1243,7 @@ msgstr "Chcesz ją mieć?"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:721
 msgid "Click on the stars to rate the book"
-msgstr "Proszę nacisnąć na gwiazdkę, aby ocenić książkę"
+msgstr "Naciśnięcie gwiazdki ocenia książkę"
 
 #: ../data/alexandria/glade/book_properties_dialog.glade:927
 msgid "Rating:"
@@ -1275,9 +1274,8 @@ msgid "Preferences"
 msgstr "Preferencje"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:27
-#, fuzzy
 msgid "<b>Book Data Providers</b>"
-msgstr "<b>_Dostawcy</b>"
+msgstr "<b>Dostawcy danych o książkach</b>"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:99
 msgid "_Setup"
@@ -1295,7 +1293,7 @@ msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:209
 msgid "Custom _Z39.50 Providers"
-msgstr ""
+msgstr "Właśni dostawcy _Z39.50"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:213
 msgid ""
@@ -1306,9 +1304,8 @@ msgstr ""
 "Wymaga biblioteki oprogramowania Ruby/ZOOM."
 
 #: ../data/alexandria/glade/preferences_dialog.glade:235
-#, fuzzy
 msgid "_Providers"
-msgstr "Dostawcy"
+msgstr "_Dostawcy"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:252
 msgid "<b>Visible Columns</b>"
@@ -1351,9 +1348,8 @@ msgid "Want?"
 msgstr "Chcesz ją mieć?"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:448
-#, fuzzy
 msgid "_List View"
-msgstr "Widok listy"
+msgstr "Widok _listy"
 
 #: ../alexandria.desktop.in.h:1
 msgid "Alexandria Book Collection Manager"
@@ -1366,9 +1362,3 @@ msgstr "Menedżer domowej biblioteki"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Zarządzanie domową biblioteką"
-
-#~ msgid "_Advanced Settings"
-#~ msgstr "_Zaawansowane ustawienia"
-
-#~ msgid "Development token"
-#~ msgstr "Token programowania"
