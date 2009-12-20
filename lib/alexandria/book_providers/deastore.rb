@@ -172,8 +172,10 @@ module Alexandria
           doc = Hpricot(html)
           data = doc%'div#dati_scheda'
 
+          sotto_data_hdr = doc%'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
+          
           # title
-          title_span = data%'span.titolo_scheda'
+          title_span = data%'h1.titolo_scheda'
           title = normalize(title_span.inner_text)
 
           # cover
@@ -191,10 +193,18 @@ module Alexandria
           end
           if author_span
             author_links = author_span/'a.info'
+            authors = []
             author_links.each do |link|
-              authors << normalize(link.inner_text)
+              authors << normalize(link.inner_html)
             end
           end
+
+          #if author_span
+          #  author_links = author_span/'a.info'
+          #  author_links.each do |link|
+          #    authors << normalize(link.inner_text)
+          #  end
+          #end
 
           # publisher
           publisher_par = data%'span.int_scheda[text()*=Editore]/..'

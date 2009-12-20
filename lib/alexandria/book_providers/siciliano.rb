@@ -149,7 +149,11 @@ module Alexandria
           link = td%'a'
           result[:title] = link.inner_text.strip
           link_to_description = link['href']
-          result[:url] =  "http://www.siciliano.com.br/#{link_to_description}"
+          slash = ''
+          unless link_to_description =~ /^\//
+            slash = '/'
+          end
+          result[:url] =  "#{SITE}#{slash}#{link_to_description}"
 
           book_search_results << result
         rescue Exception => ex
@@ -218,10 +222,16 @@ module Alexandria
         #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
         image_urls = []
         (doc/"script").each do |script|
+          next if script.children.nil? 
           script.children.each do |ch|
             ch_text = ch.to_s
             if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
-              image_urls << "#{SITE}/#{$1}"
+              slash = ''
+              img_link = $1
+              unless img_link =~ /^\//
+                slash = '/'
+              end
+              image_urls << "#{SITE}#{slash}#{img_link}"
             end
           end
         end

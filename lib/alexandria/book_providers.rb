@@ -256,7 +256,7 @@ module Alexandria
       def transport
         config = Alexandria::Preferences.instance.http_proxy_config
         config ? Net::HTTP.Proxy(*config) : Net::HTTP
-      end
+      end    
 
       def abstract?
         self.class.abstract?

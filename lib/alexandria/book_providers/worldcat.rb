@@ -46,14 +46,15 @@ module Alexandria
       end
 
       def search(criterion, type)
-        puts create_search_uri(type, criterion)
+        #puts create_search_uri(type, criterion)
         req = create_search_uri(type, criterion)
+        puts req if $DEBUG
         html_data = transport.get_response(URI.parse(req))
         # Note: I tried to use Alexandria::WWWAgent, 
         #       but this caused failures here (empty pages...)
         #       find out how the requests differ
 
-        puts html_data.class
+        #puts html_data.class
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)
         else
@@ -106,7 +107,7 @@ module Alexandria
         book_search_results = []
         begin
           result_cells = doc/'td.result/div.name/..'
-          puts result_cells.length
+          #puts result_cells.length
           result_cells.each do |td|
             type_icon = (td%'div.type/img.icn')
             next unless (type_icon and type_icon['src'] =~ /icon-bks/)
