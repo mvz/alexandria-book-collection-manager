@@ -15,125 +15,196 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+# New Proxis provider, taken from Palatina MetaDataSource and modified
+# for Alexandria. (20 Dec 2009)
+
 require 'cgi'
-require 'net/http'
+require 'alexandria/net'
 
 module Alexandria
   class BookProviders
     class ProxisProvider < GenericProvider
-      include GetText
-      include Logging
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      #include GetText
+      include Alexandria::Logging
+      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-      LANGUAGES = {
-        'nl' => '1',
-        'en' => '2',
-        'fr' => '3'
-      }
+      # Proxis essentially has three book databases, NL, FR and EN.
+      # Currently, this provider only searches the NL database, since
+      # it adds most to Alexandria (Amazon already has French and
+      # English titles).
+
+      SITE = "http://www.proxis.nl"
+      BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" +
+        "&shop=100001NL&SelRubricLevel1Id=100001NL"
+      ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" +
+        "&shop=100001NL&SelRubricLevel1Id=100001NL"
+
 
       def initialize
         super("Proxis", "Proxis (Belgium)")
-        prefs.add("lang", _("Language"), "fr",
-                  LANGUAGES.keys)
+        #prefs.add("lang", _("Language"), "fr",
+        #          LANGUAGES.keys)
         prefs.read
       end
 
+      ## criterion = criterion.convert("windows-1252", "UTF-8")
+      ## is the above still needed??
+      ## current pages are returned in UTF-8, so I think probably not!
+
       def search(criterion, type)
-        prefs.read
+        req = create_search_uri(type, criterion)
+        puts req if $DEBUG
+        html_data = transport.get_response(URI.parse(req))
 
-        criterion = criterion.convert("windows-1252", "UTF-8")
-        req = case type
-              when SEARCH_BY_ISBN
-                "p_isbn=#{Library.canonicalise_isbn(criterion)}&p_title=&p_author="
-
-              when SEARCH_BY_TITLE
-                "p_isbn=&p_title=#{CGI::escape(criterion)}&p_author="
-
-              when SEARCH_BY_AUTHORS
-                "p_isbn=&p_title=&p_author=#{CGI::escape(criterion)}"
-
-              when SEARCH_BY_KEYWORD
-                "p_isbn=&p_title=&p_author=&p_keyword=#{CGI::escape(criterion)}"
-
-              else
-                raise InvalidSearchTypeError
-
-              end
-
-        products = {}
-        results_page = "http://oas2000.proxis.be/gate/jabba.search.submit_search?#{req}&p_item=#{LANGUAGES[prefs['lang']]}&p_order=1&p_operator=K&p_filter=1"
-        transport.get(URI.parse(results_page)).each do |line|
-          if line =~ /br>.*DETAILS&mi=([^&]*)&si=/ #and (!products[$1]) and (book = parseBook($1)) then
-            book = parseBook($1)
-            products[$1] = book
-          end
-        end
-
-        # Workaround Proxis returning all editions of a book when searching on ISBN
+        results = parse_search_result_data(html_data.body)
+        raise NoResultsError if results.empty?
         if type == SEARCH_BY_ISBN
-          products.delete_if {|n, p| p.first.isbn != Library.canonicalise_ean(criterion)}
+          get_book_from_search_result(results.first)
+        else          
+          results.map {|result| get_book_from_search_result(result) }          
         end
 
-        raise NoResultsError if products.values.empty?
-        type == SEARCH_BY_ISBN ? products.values.first : products.values
+      end
+
+      def create_search_uri(search_type, search_term)
+        if search_type == SEARCH_BY_ISBN
+          BASE_SEARCH_URL % Library.canonicalise_ean(search_term) 
+        else
+          BASE_SEARCH_URL % CGI.escape(search_term)
+        end
+      end
+
+      def get_book_from_search_result(result)
+        log.debug { "Fetching book from #{result[:url]}" }
+        html_data =  transport.get_response(URI.parse(result[:lookup_url]))
+        parse_result_data(html_data.body)
       end
 
       def url(book)
-        begin
-          "http://oas2000.proxis.be/gate/jabba.search.submit_search?p_isbn=" + Library.canonicalise_isbn(book.isbn) + "&p_item=1"
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        unless book.isbn.nil? or book.isbn.empty?
+          ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn)
+        else
           nil
-        end 
+        end
       end
 
-      #######
-      private
-      #######
 
-      def parseBook(product_id)
-        conv = proc { |str| str.convert("UTF-8", "windows-1252") if str != nil }
-        detailspage='http://oas2000.proxis.be/gate/jabba.coreii.g_p?bi=4&sp=DETAILS&mi='+product_id
-        product = {}
-        product['authors'] = []
-        nextline = nil
-        transport.get(URI.parse(detailspage)).each do |line|
-          if line =~ /span class="?AUTHOR"?>([^<]*)&nbsp; &nbsp;/i
-            author = $1.gsub('&nbsp;',' ').sub(/ +$/,'')
-            product['authors'] << author
-          elsif line =~ /SRC="(http:\/\/www.proxis.be\/IMG.\/.*)M\.jpg"/i
-            product['image_url_small'] = $1+'S.jpg'
-            product['image_url_medium'] = $1+'M.jpg'
-            product['image_url_large'] = $1+'L.jpg'
-            #                elsif line =~ /class="?TITLECOLOR"?>([^<]*)</i
-          elsif line =~ /<tr width="?100%"?><td valign="?middle"? width="?100%"? class="?verd_13_b"?>([^<]*)</i
-            product['name'] = $1.sub(/ +$/,'')
-          elsif line =~ /Barcode \(EAN\)<\/TD><TD class="?INFO"?> : ([^<]*)</i
-            product['isbn'] = $1
-          elsif line =~ /Publication date<\/TD><TD class="?INFO"?> : ..\/..\/([[:digit:]]{4})/i
-            product['year'] = $1.to_i
-          elsif line =~ /Type<\/TD>/i
-            nextline = "media"
-          elsif line =~ /(Publisher|Editeur|Uitgever)<\/TD><TD CLASS="?INFO"?>: ([^<]*)</i
-            product['manufacturer'] = $2
-          elsif line =~ /TD CLASS="?INFO"?>: ([^<]*)</i and nextline
-            product[nextline] = $1
+      ## from Palatina
+      def text_of(node)
+        if node.nil?
+          nil
+        else
+          if node.text?
+            node.to_html
+          elsif node.elem?
+            if node.children.nil?
+              return nil
+            else
+              node_text = node.children.map {|n| text_of(n) }.join
+              node_text.strip.squeeze(' ')
+            end
+          end
+          #node.inner_html.strip
+        end
+      end
+      
+      def parse_search_result_data(html)
+        doc = Hpricot(html)
+        book_search_results = []
+        items = (doc.search('table.searchResult tr'))
+        items.each do |item|
+          result = {}
+          title_link = item % 'h5 a'
+          if title_link
+            result[:title] = text_of(title_link)
+            result[:lookup_url] = title_link['href']
+            unless result[:lookup_url] =~ /^http/
+              result[:lookup_url] = "#{SITE}#{result[:lookup_url]}"
+            end
+          end
+          book_search_results << result
+        end
+        #require 'pp'
+        #pp book_search_results
+        #raise :Ruckus
+        book_search_results
+      end
+
+      def data_for_header(th)
+        tr = th.parent
+        td = tr.at('td')
+        if td
+          text_of(td)
+        else
+          nil
+        end
+      end
+
+      def parse_result_data(html)
+        doc = Hpricot(html)
+        book_data = {}
+        book_data[:authors] = []
+        # TITLE
+        title = nil
+        if (title_header = doc.search('div.detailBlock h3'))
+          header_spans = title_header.first.search('span')        
+          title = text_of(header_spans.first)
+          if title =~ /(.+)-$/
+            title = $1.strip
+          end
+          book_data[:title] = title
+        end
+
+        info_headers = doc.search('table.productInfoTable th')
+
+        isbns = []
+        unless info_headers.empty?
+          info_headers.each do |th|
+            if th.inner_text =~ /(ISBN|EAN)/
+              isbns << data_for_header(th)
+            end
+          end
+          book_data[:isbn] = Library.canonicalise_ean(isbns.first)
+        end
+        
+        #book = Book.new(title, ISBN.get(isbns.first))
+
+        unless info_headers.empty?
+          info_headers.each do |th|
+            header_text = th.inner_text 
+            if header_text =~ /Type/
+              book_data[:binding] = data_for_header(th)
+            elsif header_text =~ /Verschijningsdatum/
+              date = data_for_header(th)
+              date =~ /\/([\d]{4})/
+              book_data[:publish_year] = $1.to_i
+            elsif header_text =~ /Auteur/
+              book_data[:authors] << data_for_header(th)
+            elsif header_text =~ /Uitgever/
+              book_data[:publisher] = data_for_header(th)
+            end
           end
         end
 
-        #            %w{name isbn media manufacturer}.each do |field|
-        #                product[field] = "" if product[field].nil?
-        #            end
+        image_url = nil
+        if cover_img = doc.at("img[@id$='imgProduct']")
+          if cover_img['src'] =~ /^http/
+            image_url = cover_img['src']
+          else
+            image_url = "#{SITE}/#{cover_img['src']}" # TODO use html <base>
+          end
+          if image_url =~ /ProductNoCover/
+            image_url = nil
+          end
+        end
 
-        book = Book.new(conv.call(product['name']),
-                        (product['authors'].map { |x| conv.call(x) } rescue [  ]),
-                        conv.call(product['isbn']),
-                        conv.call(product['manufacturer']),
-                        product['year'],
-                        conv.call(product['media']))
-
-        return [ book, product['image_url_medium'] ]
+        book = Book.new(book_data[:title], book_data[:authors],
+                        book_data[:isbn], book_data[:publisher],
+                        book_data[:publish_year], book_data[:binding])
+        return [book, image_url]
       end
+      
+
     end
   end
 end
