@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2009 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -284,40 +285,18 @@ module Alexandria
     end
 
 
-    require 'alexandria/book_providers/mcu' #?
-
-    #require 'alexandria/book_providers/thalia'
-    #log.info { "Not loading Thalia (provider not functional)" }
+    require 'alexandria/book_providers/mcu' # yep, still mostly works !
 
     #require 'alexandria/book_providers/ibs_it'
     log.info { "Not loading IBS (provider not functional)" }
-
     #require 'alexandria/book_providers/renaud'
     log.info { "Not loading Renaud (provider not functional)" }
-
-
-    #require 'alexandria/book_providers/adlibris' # new, now needs other deps
-    ## require 'alexandria/book_providers/ls' # obsolete, replaced by siciliano
     #require 'alexandria/book_providers/bol_it'
     log.info { "Not loading BOL (provider not functional)" }
-
     #require 'alexandria/book_providers/webster_it'
     log.info { "Not loading Webster (provider not functional)" }
 
-    #require 'alexandria/book_providers/worldcat' # new, now needs hpricot
 
-    # mechanize is optional
-    #begin
-    #  begin
-    #    require 'mechanize'
-    #  rescue LoadError
-    #    require 'rubygems'
-    #    require 'mechanize'
-    #  end
-    #  require 'alexandria/book_providers/dea_store_it'
-    #rescue LoadError
-    #  log.warn { "Can't load mechanize, hence provider Deastore not available" }
-    #end
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     begin
@@ -337,10 +316,7 @@ module Alexandria
     rescue LoadError => ex
       log.error { ex }
       log.error { ex.backtrace.join("\n> ") }
-      log.warn { "Can't load hpricot, hence provider Amazon not available" }
-      log.warn { "Can't load hpricot, hence provider DeaStore not available" }
-      log.warn { "Can't load hpricot, hence provider Siciliano not available" }
-      log.warn { "Can't load hpricot, hence provider WorldCat not available" }
+      log.warn { "Can't load hpricot, hence Amazon, Barnes & Noble, DeaStore, Proxis, Siciliano, Thalia and Worldcat book providers will not be available" }
     end
 
     # AdLibris (needs htmlentities and hpricot)

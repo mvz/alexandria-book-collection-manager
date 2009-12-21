@@ -1,5 +1,4 @@
-# Copyright (C) 2005-2006 Rene Samselnig
-# Copyright (C) 2007 Rene Samselnig and Marco Costantini
+# Copyright (C) 2009 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -18,6 +17,9 @@
 
 # http://de.wikipedia.org/wiki/Thalia_%28Buchhandel%29
 # Thalia.de bought the Austrian book trade chain Amadeus
+
+# New Tlalia provider, taken from Palatina MetaDataSource and modified
+# for Alexandria. (21 Dec 2009)
 
 require 'net/http'
 require 'cgi'
