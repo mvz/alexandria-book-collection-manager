@@ -57,7 +57,12 @@ module Alexandria
       end
 
       def search(criterion, type)
-        criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+        begin
+          criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+        rescue GLib::ConvertError
+          log.info { "Cannot search for non-ISO-8859-1 terms at DeaStore : #{criterion}" }
+          raise NoResultsError
+        end
         html_data = agent.get(create_search_uri(type, criterion))
         #File.open("flarn#{Time.now().usec()}.html", 'wb') do |f|
         #  f.write(html_data.body)

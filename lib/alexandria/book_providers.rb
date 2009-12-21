@@ -284,17 +284,13 @@ module Alexandria
       unabstract
     end
 
-
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
 
     #require 'alexandria/book_providers/ibs_it'
-    log.info { "Not loading IBS (provider not functional)" }
     #require 'alexandria/book_providers/renaud'
-    log.info { "Not loading Renaud (provider not functional)" }
     #require 'alexandria/book_providers/bol_it'
-    log.info { "Not loading BOL (provider not functional)" }
     #require 'alexandria/book_providers/webster_it'
-    log.info { "Not loading Webster (provider not functional)" }
+    log.info { "Not loading IBS, Renaud, BOL, Webster (providers not functional)" }
 
 
 
@@ -307,16 +303,10 @@ module Alexandria
         require 'hpricot'
       end
       require 'alexandria/book_providers/amazon_aws'
-      require 'alexandria/book_providers/barnes_and_noble'
-      require 'alexandria/book_providers/deastore'
-      require 'alexandria/book_providers/proxis'
-      require 'alexandria/book_providers/siciliano'
-      require 'alexandria/book_providers/thalia'
-      require 'alexandria/book_providers/worldcat'
     rescue LoadError => ex
       log.error { ex }
       log.error { ex.backtrace.join("\n> ") }
-      log.warn { "Can't load hpricot, hence Amazon, Barnes & Noble, DeaStore, Proxis, Siciliano, Thalia and Worldcat book providers will not be available" }
+      log.warn { "Can't load 'hpricot', hence Amazon book provider will not be available" }
     end
 
     # AdLibris (needs htmlentities and hpricot)
@@ -329,9 +319,18 @@ module Alexandria
         require 'htmlentities'
         require 'hpricot'
       end
+      
+      require 'alexandria/book_providers/web'
       require 'alexandria/book_providers/adlibris'
+      require 'alexandria/book_providers/barnes_and_noble'
+      require 'alexandria/book_providers/deastore'
+      require 'alexandria/book_providers/proxis'
+      require 'alexandria/book_providers/siciliano'
+      require 'alexandria/book_providers/thalia'
+      require 'alexandria/book_providers/worldcat'
+
     rescue LoadError => ex
-      log.warn { "Can't load provider AdLibris, requires both hpricot and htmlentities: #{ex.message}" }
+      log.warn { "Can't load 'hpricot' and 'htmlentities', hence AdLibris, Barnes & Noble, DeaStore, Proxis, Siciliano, Thalia and Worldcat book providers will not be available" }
     end
 
 

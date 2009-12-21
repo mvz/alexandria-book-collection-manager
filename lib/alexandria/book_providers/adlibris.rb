@@ -30,7 +30,7 @@ require 'iconv'
 
 module Alexandria
   class BookProviders
-    class AdLibrisProvider < GenericProvider
+    class AdLibrisProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
       SITE = "http://www.adlibris.com/se/"
@@ -43,7 +43,7 @@ module Alexandria
       def initialize()
         super("AdLibris", "AdLibris (Sweden)")
         prefs.read
-        @ent = HTMLEntities.new
+        # @ent = HTMLEntities.new
       end
 
       ## search (copied from new WorldCat search)
@@ -100,8 +100,9 @@ module Alexandria
 
       def parse_search_result_data(html)
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
-        html = Iconv.conv("UTF-8", "ISO-8859-1", html)
-        doc = Hpricot(html)
+        #html = Iconv.conv("UTF-8", "ISO-8859-1", html)
+        #doc = Hpricot(html)
+        doc = html_to_doc(html)
         book_search_results = []
 	
         searchHit = doc.search("div'searchResult")[0]
@@ -135,22 +136,23 @@ module Alexandria
       #end
 
       def normalize(text)
-        unless text.nil?
-          text = @ent.decode(text).strip
-        end
+        #unless text.nil?
+        #  text = @ent.decode(text).strip
+        #end
         text
       end
 
       def parse_result_data(html)
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
-        html = Iconv.conv("UTF-8", "ISO-8859-1", html)
+        #html = Iconv.conv("UTF-8", "ISO-8859-1", html)
         ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
-        doc = Hpricot(html)     
+        #doc = Hpricot(html)     
+        doc = html_to_doc(html)
         begin
           
           title = nil
           if h1 = doc.at('div.productTitleFormat h1')
-            title = normalize(h1.inner_text)
+            title = text_of(h1)
 	  else
 	    raise NoResultsError, "title not found on page"
           end
@@ -165,19 +167,19 @@ module Alexandria
 	    if author_role =~ /([^:]+):/
 	      author_role = $1
 	    end
-	    author_name = (li.search('h2 > a')[0]).inner_text
+	    author_name = text_of(li.search('h2 > a')[0])
 
-            authors << normalize(author_name)
+            authors << author_name
           end
 
           publisher = nil
           if publisher_elem = product.search('li[@id$="liPublisher"] a').first
-            publisher = normalize(publisher_elem.inner_text)
+            publisher = text_of(publisher_elem)
           end
 
           binding = nil
 	  if format = doc.search('div.productTitleFormat span').first
-	    binding = normalize(format.inner_text)
+	    binding = text_of(format)
 	    if binding =~ /\(([^\)]+)\)/
 	      binding = $1
 	    end
