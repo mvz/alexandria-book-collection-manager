@@ -19,6 +19,7 @@
 ## $Z3950_DEBUG = $DEBUG
 
 require 'zoom'
+require 'alexandria/book_providers/pseudomarc'
 require 'marc'
 
 module Alexandria
@@ -73,55 +74,77 @@ module Alexandria
       #######
 
 
+      def marc_to_book(marc_txt)
+        begin
+          marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
+        rescue Exception => ex
+          log.error { ex.message }
+          log.error { ex.backtrace.join("> \n") }
+          begin
+            marc = MARC::Record.new(marc_txt)
+            rescue Exception => ex2
+            log.error { ex2.message }
+            log.error { ex2.backtrace.join("> \n") }
+            raise ex2
+          end
+        end
+
+        log.debug {
+          msg = "Parsing MARC"
+          msg += "\n title: #{marc.title}"
+          msg += "\n authors: #{marc.authors.join(', ')}"
+          msg += "\n isbn: #{marc.isbn}, #{isbn}"
+          msg += "\n publisher: #{marc.publisher}"
+          msg += "\n publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
+          msg += "\n edition: #{marc.edition}"
+          msg
+        }
+        
+        next if marc.title.nil? # or marc.authors.empty?
+        
+        isbn = isbn or marc.isbn
+        isbn = Library.canonicalise_ean(isbn)
+        
+        book = Book.new(marc.title, marc.authors,
+                        isbn,
+                        (marc.publisher or ""),
+                        marc.respond_to?(:publish_year) \
+                        ? marc.publish_year.to_i : nil,
+                        (marc.edition or ""))
+        book
+      end
+
       def books_from_marc(resultset, isbn)
 
         results = []
         resultset[0..9].each do |record|
-          marc_txt = record.render(prefs['record_syntax'], 'USMARC')
+          marc_txt = record.render(prefs['charset'], "UTF-8") # (prefs['record_syntax'], 'USMARC')
           log.debug { marc_txt }
-          marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
+          #marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
           if $DEBUG
-            File.open(',marc.txt', 'wb') do |f|
+            File.open(',marc.txt', 'wb') do |f| #DEBUG
               f.write(marc_txt)
             end
           end
+          book = nil
           begin
-            marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
-          rescue Exception => ex
-            log.error { ex.message }
-            log.error { ex.backtrace.join("> \n") }
-            begin
-              marc = MARC::Record.new(marc_txt)
-            rescue Exception => ex2
-              log.error { ex2.message }
-              log.error { ex2.backtrace.join("> \n") }
-              raise ex2
+            mappings = Alexandria::PseudoMarcParser::USMARC_MAPPINGS
+            if prefs['hostname'] == 'z3950.bnf.fr'
+              mappings = Alexandria::PseudoMarcParser::BNF_FR_MAPPINGS
             end
+            # try pseudo-marc parser first (it seems to have more luck)
+            book = Alexandria::PseudoMarcParser.marc_text_to_book(marc_txt,
+                                                                  mappings)
+            if book.nil?
+              # failing that, try the genuine MARC parser
+              book = marc_to_book(marc_txt)
+            end
+          rescue Exception => ex 
+            log.warn { ex }
+            log.warn { ex.backtrace }
           end
-
-          log.debug {
-            msg = "Parsing MARC"
-            msg += "\n title: #{marc.title}"
-            msg += "\n authors: #{marc.authors.join(', ')}"
-            msg += "\n isbn: #{marc.isbn}, #{isbn}"
-            msg += "\n publisher: #{marc.publisher}"
-            msg += "\n publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
-            msg += "\n edition: #{marc.edition}"
-            msg
-          }
-
-          next if marc.title.nil? # or marc.authors.empty?
-
-          isbn = isbn or marc.isbn
-          isbn = Library.canonicalise_ean(isbn)
-
-          book = Book.new(marc.title, marc.authors,
-                          isbn,
-                          (marc.publisher or ""),
-                          marc.respond_to?(:publish_year) \
-                          ? marc.publish_year.to_i : nil,
-                          (marc.edition or ""))
-          results << [book]
+          
+          results << [book] unless book.nil?
         end
         return results
       end
@@ -267,9 +290,10 @@ module Alexandria
       def books_from_sutrs(resultset)
         results = []
         resultset[0..9].each do |record|
-          text = record.render
+          text = record.render(prefs['charset'], "UTF-8")
+          #File.open(',bl.marc', 'wb') {|f| f.write(text) }
           log.debug { text }
-          text = text.convert("UTF-8", prefs['charset'])
+          # text = text.convert("UTF-8", prefs['charset'])
 
           title = isbn = publisher = publish_year = edition = nil
           authors = []
