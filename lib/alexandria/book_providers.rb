@@ -287,7 +287,7 @@ module Alexandria
     require 'alexandria/book_providers/mcu' #?
 
     #require 'alexandria/book_providers/thalia'
-    log.info { "Not loading Thalia (provider not functional)" }
+    #log.info { "Not loading Thalia (provider not functional)" }
 
     #require 'alexandria/book_providers/ibs_it'
     log.info { "Not loading IBS (provider not functional)" }
@@ -332,6 +332,7 @@ module Alexandria
       require 'alexandria/book_providers/deastore'
       require 'alexandria/book_providers/proxis'
       require 'alexandria/book_providers/siciliano'
+      require 'alexandria/book_providers/thalia'
       require 'alexandria/book_providers/worldcat'
     rescue LoadError => ex
       log.error { ex }

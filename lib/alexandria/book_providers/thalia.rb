@@ -25,118 +25,171 @@ require 'cgi'
 module Alexandria
   class BookProviders
     class ThaliaProvider < GenericProvider
+      include Alexandria::Logging
 
-      BASE_URI = "http://www.thalia.de/"
+      SITE = "http://www.thalia.de"
+      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" #type,term
+
       def initialize
         super("Thalia", "Thalia (Germany)")
         # no preferences for the moment
+        prefs.read
       end
 
       def search(criterion, type)
-        criterion = criterion.convert("ISO-8859-1", "UTF-8")
-        req = BASE_URI + "shop/bde_bu_hg_startseite/schnellsuche/buch/?"
-        #if type == SEARCH_BY_ISBN
-        #    req += ""
-        #else
-        #    req += "act=suchen&"
-        #end
-        req += case type
-               when SEARCH_BY_ISBN
-                 "fqbi="
-
-               when SEARCH_BY_TITLE
-                 "fqbt="
-
-               when SEARCH_BY_AUTHORS
-                 "fqba="
-
-               when SEARCH_BY_KEYWORD
-                 "fqbs="
-
-               else
-                 raise InvalidSearchTypeError
-
-               end
-
-        req += CGI.escape(criterion)
-        p req if $DEBUG
-        data = transport.get(URI.parse(req))
+        req = create_search_uri(type, criterion)
+        puts req if $DEBUG
+        html_data = transport.get_response(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          to_book(data) #rescue raise NoResultsError
+          parse_result_data(html_data.body, criterion)
+        else          
+          results = parse_search_result_data(html_data.body)
+          raise NoResultsError if results.empty?
+          results.map {|result| get_book_from_search_result(result) }          
+        end
+      end
+
+      def create_search_uri(search_type, search_term)
+        search_type_code = {SEARCH_BY_ISBN => 'sq',
+          SEARCH_BY_AUTHORS => 'sa', #Autor
+          SEARCH_BY_TITLE => 'st', # Titel
+          SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
+        }[search_type] or ''
+        search_type_code = CGI.escape(search_type_code)
+        search_term_encoded = search_term
+        if search_type == SEARCH_BY_ISBN
+          #search_term_encoded = search_term.as_isbn_13
+          search_term_encoded = Library.canonicalise_isbn(search_term) # check this!
         else
-          begin
-            results = []
-            each_book_page(data) do |page, title|
-              results << to_book(transport.get(URI.parse(BASE_URI + page)))
+          search_term_encoded = CGI.escape(search_term)
+        end
+        BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+      end
+
+      def parse_search_result_data(html)
+        doc = Hpricot(html)
+        book_search_results = []
+        results_divs = doc / 'div.articlePresentationSearchCH'
+        results_divs.each do |div|
+          result = {}
+          title_link = div % 'div.articleText/h2/a'
+          result[:title] = title_link.inner_html
+          result[:lookup_url] = title_link['href']
+          book_search_results << result
+       end
+       book_search_results
+      end
+
+
+      def data_from_label(node, label_text)
+        label_node = node % "strong[text()*='#{label_text}']"      
+        if (item_node = label_node.parent)
+          data = ""
+          item_node.children.each do |n|
+            if n.text?
+              data = data + n.to_html
             end
-            return results
-          rescue
-            raise NoResultsError
           end
-        end
-      end
-
-      def url(book)
-        BASE_URI + "shop/bde_bu_hg_startseite/schnellsuche/buch/?fqbi=" + book.isbn
-      end
-
-      #######
-      private
-      #######
-
-      def to_book(data)
-        puts data if $DEBUG
-        raise NoResultsError if /Leider f&uuml;hrte Ihre Suche zu keinen Ergebnissen\./.match(data) != nil
-        #                                               data = data.convert("UTF-8", "ISO-8859-1")
-        data = CGI::unescapeHTML(data)
-        product = {}
-        # title
-        if md = /<span id="_artikel_titel">([^<]+)<\/span>/.match(data)
-          product["title"] = md[1].strip.unpack("C*").pack("U*")
-        elsif md = /<div class="standard">\n<h3>\s*(<a title=".+"><\/a>\s+)?([^<]+)<span/.match(data)
-          product["title"] = md[2].strip.unpack("C*").pack("U*")
+          data.strip
         else
-          product["title"] = ""
+          ""
         end
-        # authors
-        product["authors"] = []
-        data.scan(/\/fq\w+\/([^"]+)" title="Mehr von\.\.\."><u[^>]*>([^<]+)<\/u>/) do |md|
-          #                next unless CGI.unescape(md[0]) == md[1]
-          product["authors"] << md[1].unpack("C*").pack("U*")
-        end
-        #raise if product["authors"].empty?
-        # isbn
-        raise "No isbn" unless md = /<strong>(ISBN-13|EAN|ISBN-13\/EAN):<\/strong>\D*(\d+)<\/li>/.match(data)
-        product["isbn"] = md[2].strip.gsub(/-/, "")
-        # edition
-        md = /<strong>Einband:<\/strong> ([^<]+)/.match(data)
-        product["edition"] = md[1].strip.unpack("C*").pack("U*") if md != nil
-        # publisher
-        md = /<strong>Ersch(ienen|eint) +bei:<\/strong>(\&nbsp;| )(<[^>]+>)?([^<]+)/.match(data)
-        product["publisher"] = md[4].strip.unpack("C*").pack("U*").split(/ /).each { |e| e.capitalize! }.join(" ") if md != nil
-        # publish_year
-        md = /<strong>Ersch(ienen|eint)( voraussichtlich)?:<\/strong> ([^<]+)/.match(data)
-        product["publish_year"] = md[3].strip.unpack("C*").pack("U*")[-4 .. -1].to_i if md != nil
-        product["publish_year"] = nil if product["publish_year"] == 0
-        # cover
-        if md = /<td valign="top"( nowrap)?>\n<div align="center">\n(<a href="[^>]+>)?<img (id="_artikel_mediumthumbnail" )?src="http:\/\/images\.thalia([^"]+)jpg/.match(data)
-          product["cover"] = "http://images.thalia" + md[4] + "jpg"
-        else
-          product["cover"] = nil
-        end
-
-        book = Book.new(product["title"],
-                        product["authors"],
-                        product["isbn"],
-                        product["publisher"],
-                        product["publish_year"],
-                        product["edition"])
-        return [ book, product["cover"] ]
       end
 
-      def each_book_page(data)
-        raise if data.scan(/<a href="#{BASE_URI}(shop\/bde_bu_hg_startseite\/artikeldetails\/[^\.]+\.html)\;jsessionid=[^"]+" title="Details zu diesem Produkt sehen..."><img class="left" width="40" height="60" src="[^"]+" alt="([^"]+)" border="0">/) { |a| yield a }.empty?
+      def get_book_from_search_result(result)
+        log.debug { "Fetching book from #{result[:lookup_url]}" }
+        html_data =  transport.get_response(URI.parse(result[:lookup_url]))
+        parse_result_data(html_data.body, "noisbn", true)
       end
+
+      def parse_result_data(html, isbn, recursing=false)
+        doc = Hpricot(html)
+
+        results_divs = doc / 'div.articlePresentationSearchCH'
+        unless (results_divs.empty?)
+          if recursing
+            # already recursing, avoid doing so endlessly second time
+            # around *should* lead to a book description, not a result
+            # list
+            return 
+          end
+          # ISBN-lookup results in multiple results (trying to be
+          # useful, such as for new editions e.g. 9780974514055
+          # "Programming Ruby" )
+          results = parse_search_result_data(html)
+          isbn10 = Library.canonicalise_isbn(isbn)
+          # e.g. .../dave_thomas/ISBN0-9745140-5-5/ID6017044.html
+          chosen = results.first # fallback!
+          results.each do |rslt|
+            if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
+              if $1.gsub('-','') == isbn10
+                chosen = rslt
+                break
+              end
+            end
+          end
+          html_data = transport.get_response(URI.parse(chosen[:lookup_url]))
+          return parse_result_data(html_data.body, isbn, true)
+        end
+          
+        begin
+          if div = doc % 'div#contentFull'
+            title_img = ((div % :h2) / :img).first
+            title = title_img["alt"]
+
+            # note, the following img also has alt="von Author, Author..."
+            
+            if author_h = doc % 'h3[text()*="Mehr von"]' # "More from..." links 
+              authors = []
+              author_links = author_h.parent / :a
+              author_links.each do |a|
+                if a['href'] =~ /BUCH\/sa/
+                  # 'sa' means search author, there may also be 'ssw' (search keyword) links
+                  authors << a.inner_text[0..-2].strip 
+                  # NOTE stripping the little >> character here...
+                end
+              end
+            end
+            
+            item_details = doc % 'ul.itemDataList'
+            isbns = []
+            isbns << data_from_label(item_details, 'EAN')
+            isbns << data_from_label(item_details, 'ISBN')           
+            
+            year = nil
+            date = data_from_label(item_details, 'Erschienen:')
+            if (date =~ /([\d]{4})/)
+              year = $1.to_i
+            end
+            
+            binding = data_from_label(item_details, 'Einband')
+              
+            publisher = data_from_label(item_details, 'Erschienen bei:')
+
+
+            book = Book.new(title, authors, isbns.first, 
+                            publisher, year, binding)
+
+            image_url = nil
+            if (image_link = doc % 'a[@id=itemPicStart]')
+              image_url = image_link['href']
+            end
+
+            return [book, image_url]
+
+          end
+        rescue Exception => ex
+          trace = ex.backtrace.join("\n> ")
+          log.warn {"Failed parsing search results for Thalia " +
+            "#{ex.message} #{trace}" }
+           raise NoResultsError
+        end
+
+      end
+
+
+
+
     end
   end
 end
