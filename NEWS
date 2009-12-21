@@ -1,4 +1,4 @@
-Announcing the release of Alexandria 0.6.5
+Announcing the release of Alexandria 0.6.6-beta1
 
 * What is Alexandria?
 =====================
@@ -18,17 +18,19 @@ Alexandria is written in Ruby using ruby-gnome2.
   downloaded from there too
 - SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
-* What's New in 0.6.5?
+* What's New in 0.6.6?
 ======================
 
-Implemented request authentication for Amazon provider. This means users
-must create their own AWS accounts to keep Amazon support.
-http://alexandria.rubyforge.org/site/news/2009-08-15--amazon-support.html
+- Fixed providers WorldCat (#27145), Proxis (#25730), Thalia (#27134),
+  DeaStore (#27000) and BarnesAndNoble
+- Made providers turn-off-and-onable in Preferences (#26931)
+- Implemented an ad-hoc MARC parser to fix some Z39.50 providers (#27471)
+- All incoming data converted to UTF-8 in a consistent fashion (#26968)
 
 Some bug fixes:
-[#7009] crash when adding a new Z39.50 provider
-[#26909] Alexandria doesn't save certain covers
-[#10972] No longer complains when providers return books with no ISBN
+[#27470] couldn't delete books if only one Library present
+[#27515] covers for books without ISBN don't show up in export
+[#25021] libraries and smart libraries context menus inconsistent
 
 Where can I find out more?
 ==========================

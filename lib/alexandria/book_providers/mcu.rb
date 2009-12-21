@@ -43,7 +43,12 @@ module Alexandria
 
       def search(criterion, type)
         prefs.read
-        criterion = criterion.convert("ISO-8859-1", "UTF-8")
+         begin
+          criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+        rescue GLib::ConvertError
+          log.info { "Cannot search for non-ISO-8859-1 terms at MCU : #{criterion}" }
+          raise NoResultsError
+        end
         print "Doing search with MCU #{criterion}, type: #{type}\n" if $DEBUG # for DEBUGing
         req = BASE_URI + "CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
         req += case type

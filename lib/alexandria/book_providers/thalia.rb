@@ -38,6 +38,10 @@ module Alexandria
         prefs.read
       end
 
+      def url(book)
+        create_search_uri(SEARCH_BY_ISBN, book.isbn)
+      end
+
       def search(criterion, type)
         req = create_search_uri(type, criterion)
         puts req if $DEBUG

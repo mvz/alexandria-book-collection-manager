@@ -37,6 +37,11 @@ Siciliano. It is also used to parse the XML for the Amazon web
 service. You can install the +hpricot+ package natively or as a
 ruby gem.
 
+== HTMLEntities
+
+This is used by all website-based providers except MCU. 
+ +htmlentities+[http://htmlentities.rubyforge.org/] is used to
+provide more flexible HTML parsing.
 
 == Build Dependencies
 
@@ -77,13 +82,6 @@ ruby-zoom contained their own implementation of MARC.)
 The Z39.50 Object-Orientation Model (ZOOM) is an international
 standard for communication between computer systems, particularly
 libraries and information-related systems.
-
-=== htmlentities
-
-This is used by the <b>DeaStore</b> provider; DeaStore will not be
-available without it. In the future, all web-based providers will
-probably use +htmlentities+[http://htmlentities.rubyforge.org/] to
-provide more flexible HTML parsing.
 
 === image_size
 

@@ -1,6 +1,6 @@
 = Alexandria
 
-Version:      0.6.5
+Version:      0.6.6-beta1
 Release Date: 2008-08-15
 Home Page:    http://alexandria.rubyforge.org/
 
@@ -50,7 +50,7 @@ keep track of books which are on loan.
 Alexandria is not without problems. See doc/BUGS for a summary of issues.
 
 
-== 0.6.5 Release
+== 0.6.6-beta1 Release
 
 For full release notes, see the file NEWS.
 
@@ -61,9 +61,7 @@ There are full instructions for installing Alexandria from source in the
 file INSTALL, including information about all the dependencies.
 
 If you are installing on a Debian-based system, things should be
-easier as the dependencies can be handled automatically (although, at
-the moment, there is no up-to-date Debian package for Ruby/ZOOM - you
-will have to install it from source, see INSTALL for details).
+easier as the dependencies can be handled automatically.
 
 To run the program, just type
     alexandria

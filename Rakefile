@@ -51,7 +51,7 @@ SHARE = share_dir
 
 DATA_VERSION = '0.6.3'
 PROJECT_VERSION = '0.6.6'
-DISPLAY_VERSION = '0.6.6-svn'
+DISPLAY_VERSION = '0.6.6-beta1'
 
 
 # Write a .config file if the configuration data has changed
@@ -301,7 +301,7 @@ ULTRA_CLOBBER << "ChangeLog"
 
 ## # # # package task # # # ##
 
-Rake::PackageTask.new(PROJECT, PROJECT_VERSION) do |p|
+Rake::PackageTask.new(PROJECT, DISPLAY_VERSION) do |p|
   p.need_tar_gz = true
   p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
                           "NEWS", "Rakefile", "util/**/*",
