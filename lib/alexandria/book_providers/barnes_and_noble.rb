@@ -32,7 +32,7 @@ require 'alexandria/net'
 module Alexandria
   class BookProviders
 
-    class BarnesAndNobleProvider < GenericProvider
+    class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
       SITE = "http://www.barnesandnoble.com"
@@ -93,7 +93,7 @@ module Alexandria
       end
 
      def parse_search_result_data(html)
-       doc = Hpricot(html)
+       doc = html_to_doc(html)
        book_search_results = []
        begin
          result_divs = doc / 'div[@class^="book-container"]'
@@ -117,7 +117,7 @@ module Alexandria
       end
 
      def parse_result_data(html, search_isbn=nil, recursing=false)
-       doc = Hpricot(html)
+       doc = html_to_doc(html)
        begin
          book_data = {}
          title_header = doc % '//div.wrapL0/h1'
@@ -179,8 +179,12 @@ module Alexandria
            if images.size == 1
              book_data[:image_url] = images.first['src']
            else
-             # the first image is the "See Inside!" label
-             book_data[:image_url] = images.last['src']
+             if images.first['src'] =~ /see_inside.gif/
+               # the first image is the "See Inside!" label               
+               book_data[:image_url] = images[1]['src']
+             else
+               book_data[:image_url] = images.first['src']
+             end
            end
          end
 

@@ -33,7 +33,7 @@ require 'alexandria/net'
 
 module Alexandria
   class BookProviders
-    class WorldCatProvider < GenericProvider
+    class WorldCatProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
       SITE = "http://www.worldcat.org"
@@ -103,7 +103,7 @@ module Alexandria
 
 
       def parse_search_result_data(html)
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
         book_search_results = []
         begin
           result_cells = doc/'td.result/div.name/..'
@@ -135,7 +135,7 @@ module Alexandria
 
 
     def parse_result_data(html, search_isbn=nil, recursing=false)
-      doc = Hpricot(html)
+      doc = html_to_doc(html)
       
       begin
         if doc%'div#div-results-none'

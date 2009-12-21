@@ -337,6 +337,7 @@ task :gconf do
   Dir["schemas/*.schemas"].each do |schema|
     system("gconftool-2 --makefile-install-rule '#{schema}'")
   end
+  #system("killall -HUP gconfd-2")
 end
 
 task :update_icon_cache do

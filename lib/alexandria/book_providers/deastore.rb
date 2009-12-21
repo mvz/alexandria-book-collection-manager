@@ -26,7 +26,7 @@ require 'alexandria/net'
 
 module Alexandria
   class BookProviders
-    class DeaStoreProvider < GenericProvider
+    class DeaStoreProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
       SITE = "http://www.deastore.com"
@@ -107,7 +107,7 @@ module Alexandria
       end
 
       def parse_search_result_data(html)
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
         book_search_results = []
         
         result_divs = doc.search('div.scheda_prodotto')
@@ -173,8 +173,7 @@ module Alexandria
       
       def parse_result_data(html)
         begin
-          html = html.convert('UTF-8', 'ISO-8859-1') # HACK, still needed?
-          doc = Hpricot(html)
+          doc = html_to_doc(html)
           data = doc%'div#dati_scheda'
 
           sotto_data_hdr = doc%'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'

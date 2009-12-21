@@ -26,7 +26,7 @@ require 'cgi'
 
 module Alexandria
   class BookProviders
-    class ThaliaProvider < GenericProvider
+    class ThaliaProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
       SITE = "http://www.thalia.de"
@@ -69,7 +69,7 @@ module Alexandria
       end
 
       def parse_search_result_data(html)
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
         book_search_results = []
         results_divs = doc / 'div.articlePresentationSearchCH'
         results_divs.each do |div|
@@ -105,7 +105,7 @@ module Alexandria
       end
 
       def parse_result_data(html, isbn, recursing=false)
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
 
         results_divs = doc / 'div.articlePresentationSearchCH'
         unless (results_divs.empty?)

@@ -23,7 +23,7 @@ require 'alexandria/net'
 
 module Alexandria
   class BookProviders
-    class ProxisProvider < GenericProvider
+    class ProxisProvider < WebsiteBasedProvider
       #include GetText
       include Alexandria::Logging
       #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
@@ -109,7 +109,7 @@ module Alexandria
       end
       
       def parse_search_result_data(html)
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
         book_search_results = []
         items = (doc.search('table.searchResult tr'))
         items.each do |item|
@@ -141,7 +141,7 @@ module Alexandria
       end
 
       def parse_result_data(html)
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
         book_data = {}
         book_data[:authors] = []
         # TITLE

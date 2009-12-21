@@ -24,12 +24,10 @@
 
 require 'net/http'
 require 'cgi'
-require 'hpricot'
-require 'iconv'
 
 module Alexandria
   class BookProviders
-    class SicilianoProvider < GenericProvider
+    class SicilianoProvider < WebsiteBasedProvider
       include Logging
 
       SITE = "http://www.siciliano.com.br"
@@ -53,7 +51,12 @@ module Alexandria
 
 
       def search(criterion, type)
-        criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+        begin
+          criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+        rescue GLib::ConvertError
+          log.info { "Cannot search for non-ISO-8859-1 terms at Siciliano : #{criterion}" }
+          raise NoResultsError
+        end
         trying_again = false
         begin
           req = create_search_uri(type, criterion, trying_again)
@@ -124,8 +127,7 @@ module Alexandria
       #   br
       #   div[@class="vitrine_preco_por"] (price info)
 
-      html = Iconv.conv("UTF-8", "ISO-8859-1", html)
-      doc = Hpricot(html)
+      doc = html_to_doc(html)
       book_search_results = []
       # each result will be a dict with keys :title, :author, :publisher, :url
 
@@ -169,15 +171,8 @@ module Alexandria
 
     def parse_result_data(html, search_result)
       # checked against Siciliano website 21 Feb 2009
-
       begin
-
-        ## html = html.convert('UTF-8', 'ISO-8859-1')
-        html = Iconv.conv("UTF-8", "ISO-8859-1", html)
-
-        ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
-
-        doc = Hpricot(html)
+        doc = html_to_doc(html)
 
         # title
         title_td = doc%'td.produto_miolo'

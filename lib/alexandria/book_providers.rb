@@ -370,6 +370,7 @@ module Alexandria
         klass = self.class.module_eval(constant)
         if klass.ancestors.include?(AbstractProvider) and
             klass != GenericProvider and
+            klass != WebsiteBasedProvider and
             klass != AbstractProvider
 
           if klass.abstract?
