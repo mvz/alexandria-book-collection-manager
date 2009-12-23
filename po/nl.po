@@ -489,7 +489,7 @@ msgstr "Niet gevonden bij bronbibliotheek '%s'"
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
 #: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:549
 msgid "Found at Provider '%s'"
-msgstr "Gevonden by bronbibliotheek '%s'"
+msgstr "Gevonden bij bronbibliotheek '%s'"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
 msgid "Ready to use %s barcode scanner"
