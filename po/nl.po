@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: alexandria 0.6.4\n"
+"Project-Id-Version: alexandria 0.6.6\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-12-14 20:04+0000\n"
-"PO-Revision-Date: 2009-03-14 14:25+0200\n"
+"PO-Revision-Date: 2009-12-23 12:55+0200\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgstr "ISBN-lijst (*.txt)"
 
 #: ../lib/alexandria/import_library.rb:34
 msgid "GoodReads CSV"
-msgstr ""
+msgstr "GoodReads CSV"
 
 #: ../lib/alexandria/models/library.rb:56
 msgid "Untitled"
@@ -77,7 +77,7 @@ msgstr "Trefwoorden bevat"
 
 #: ../lib/alexandria/ui/ui_manager.rb:169
 msgid "Change the search type"
-msgstr "Wijzig zoektype"
+msgstr "Wijzig het zoektype"
 
 #: ../lib/alexandria/ui/ui_manager.rb:174
 msgid "View as Icons"
@@ -185,7 +185,7 @@ msgstr "Het exporteren is mislukt"
 
 #: ../lib/alexandria/ui/callbacks.rb:123
 msgid "Try letting this library load completely before exporting."
-msgstr ""
+msgstr "Probeer voor het exporteren deze bibliotheek volledig te laten laden"
 
 #: ../lib/alexandria/ui/callbacks.rb:274
 msgid "_Library"
@@ -535,15 +535,13 @@ msgstr "_Type:"
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:315
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
-#, fuzzy
 msgid "Disable Provider"
-msgstr "Nieuwe bronbibliotheek"
+msgstr "Schakel bronbibliotheek uit"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
-#, fuzzy
 msgid "Enable Provider"
-msgstr "Nieuwe bronbibliotheek"
+msgstr "Schakel bronbibliotheek in"
 
 #: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:422
 msgid "Are you sure you want to permanently delete the provider '%s'?"
@@ -554,7 +552,7 @@ msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
 msgstr ""
-"Als u doorgaat worden de bron en alle bijbehorende voorkeuren permanent "
+"Als u doorgaat worden de bronbibliotheek en alle bijbehorende voorkeuren permanent "
 "verwijderd."
 
 #: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
@@ -922,11 +920,11 @@ msgstr "Taal"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:38
 msgid "Access key ID"
-msgstr ""
+msgstr "Toegangssleutel ID"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:39
 msgid "Secret access key"
-msgstr ""
+msgstr "Geheime toegangssleutel"
 
 #: ../lib/alexandria/book_providers/mcu.rb:39
 msgid "Spanish Culture Ministry"
@@ -1099,11 +1097,11 @@ msgstr "komt niet in de laatste"
 
 #: ../lib/alexandria/book_providers.rb:86
 msgid "Couldn't reach the provider '%s': timeout expired."
-msgstr "Kon bron '%s' niet bereiken: timeout verlopen."
+msgstr "Kon bronbibliotheek '%s' niet bereiken: timeout verlopen."
 
 #: ../lib/alexandria/book_providers.rb:90
 msgid "Couldn't reach the provider '%s': socket error (%s)."
-msgstr "Kon bron '%s' niet bereiken: socket fout (%s)."
+msgstr "Kon bronbibliotheek '%s' niet bereiken: socket fout (%s)."
 
 #: ../lib/alexandria/book_providers.rb:94
 #: ../lib/alexandria/book_providers.rb:99
@@ -1124,7 +1122,7 @@ msgstr "Ongeldig zoektype."
 
 #: ../lib/alexandria/book_providers.rb:202
 msgid "Enabled"
-msgstr ""
+msgstr "Geactiveerd"
 
 #: ../data/alexandria/glade/acquire_dialog.glade:9
 msgid "Acquire from Scanner"
@@ -1263,9 +1261,8 @@ msgid "Preferences"
 msgstr "Voorkeuren"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:27
-#, fuzzy
 msgid "<b>Book Data Providers</b>"
-msgstr "<b>_Bronnen</b>"
+msgstr "<b>_Bronbibliotheek van boekgegevens</b>"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:99
 msgid "_Setup"
@@ -1277,13 +1274,13 @@ msgid ""
 "can be configured to get better results.  You can also customize the order "
 "in which they are queried."
 msgstr ""
-"Bronnen zijn bibliotheken die informatie over boeken verschaffen. Sommigen "
-"kunnen geconfigureerd worden om betere resultaten te geven. U kunt ook de "
-"volgorde waarin ze geraadpleegd worden aanpassen."
+"Bronbibliotheken zijn bibliotheken die informatie over boeken verschaffen. "
+"Sommigen kunnen geconfigureerd worden om betere resultaten te geven. U kunt "
+"ook de volgorde waarin ze geraadpleegd worden aanpassen."
 
 #: ../data/alexandria/glade/preferences_dialog.glade:209
 msgid "Custom _Z39.50 Providers"
-msgstr ""
+msgstr "Eigen _Z39.50 aanbieders"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:213
 msgid ""
@@ -1292,9 +1289,8 @@ msgid ""
 msgstr ""
 
 #: ../data/alexandria/glade/preferences_dialog.glade:235
-#, fuzzy
 msgid "_Providers"
-msgstr "Bronnen"
+msgstr "Bronbibliotheken"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:252
 msgid "<b>Visible Columns</b>"
@@ -1337,9 +1333,8 @@ msgid "Want?"
 msgstr "Gewenst?"
 
 #: ../data/alexandria/glade/preferences_dialog.glade:448
-#, fuzzy
 msgid "_List View"
-msgstr "Toon Lijst"
+msgstr "Toon _Lijst"
 
 #: ../alexandria.desktop.in.h:1
 msgid "Alexandria Book Collection Manager"
