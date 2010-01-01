@@ -284,6 +284,11 @@ module Alexandria
       unabstract
     end
 
+    class WebsiteBasedProvider < GenericProvider
+      # further defined in alexandria/book_providers/web.rb
+      # its implementation requires Hpricot and HTMLEntities
+    end
+
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
 
     #require 'alexandria/book_providers/ibs_it'
