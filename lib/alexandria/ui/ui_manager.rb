@@ -608,6 +608,7 @@ module Alexandria
         library, kind, book = ary
         if library == selected_library
           @iconview.freeze # This makes @iconview.model == nil
+          @listview.freeze # NEW
           case kind
           when Library::BOOK_ADDED
             append_book(book)
@@ -620,6 +621,7 @@ module Alexandria
             @model.remove(iter_from_book(book))
           end
           @iconview.unfreeze
+          @listview.unfreeze # NEW
           select_a_book(book) if [Library::BOOK_ADDED, Library::BOOK_UPDATED].include? kind
         elsif selected_library.is_a?(SmartLibrary)
           refresh_books
@@ -895,6 +897,7 @@ module Alexandria
         library = selected_library
         @model.clear
         @iconview.freeze
+        @listview.freeze # NEW / bdewey
         @appbar.progress_percentage = 0
         @appbar.children.first.visible = true   # show the progress bar
         @appbar.status = _("Loading '%s'...") % library.name
@@ -923,6 +926,7 @@ module Alexandria
               
           else
             @iconview.unfreeze
+            @listview.unfreeze # NEW / bdewey
             @filtered_model.refilter
             @listview.columns_autosize
             @appbar.progress_percentage = 1
