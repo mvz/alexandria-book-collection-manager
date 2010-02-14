@@ -1,4 +1,5 @@
 # Copyright (C) 2009 Cathal Mc Ginley
+# Copyright (C) 2010 Martin Sucha
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -29,7 +30,7 @@ module Alexandria
       :notes => ["520", 'a']
     }
 
-    USMARC_MAPPINGS = {:title => ["245", 'a'],
+    USMARC_MAPPINGS = {:title => ["245", 'a', 'b'],
       :authors => ["100", 'a'],
       :isbn => ["020", 'a'],
       :publisher => ["490", 'a'],
@@ -38,15 +39,36 @@ module Alexandria
       :notes => ["520", 'a']
     }
 
+    def self.get_fields(data, type, stripping, m=USMARC_MAPPINGS)
+      field = ''
+      m[type][1..m[type].length-1].each do |part|
+        if data.first[part]
+          part_data = data.first[part].strip
+          if part_data =~ stripping
+            part_data = $1
+            part_data = part_data.strip
+          end
+          if field != ''
+            field += ': '
+          end
+          field += part_data
+        end
+      end
+      if field == ''
+        field = nil
+      end
+      field
+    end
+
     def self.marc_text_to_book(marc, m=USMARC_MAPPINGS)
       details = marc_text_to_details(marc)
       unless details.empty?
         title = nil
         title_data = details[m[:title][0]]
-        if title_data and title_data.first[m[:title][1]]
-          title = title_data.first[m[:title][1]].strip
-          if title =~ /(.*)\/$/
-            title = $1
+        if title_data
+          title_data_all = get_fields(title_data, :title, /(.*)[\/:]$/, m)
+          if title_data_all
+              title = title_data_all
           end
         end
 
@@ -69,7 +91,7 @@ module Alexandria
         binding = nil
         isbn_data = details[m[:isbn][0]]
         if isbn_data
-          if (isbn_data.first[m[:isbn][1]] =~ /([-0-9x]+)/)
+          if (isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/)
             isbn = $1
           end
         end
