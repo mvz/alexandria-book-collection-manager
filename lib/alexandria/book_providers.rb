@@ -290,6 +290,7 @@ module Alexandria
     end
 
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
+    require 'alexandria/book_providers/douban' # only requires YAML
 
     #require 'alexandria/book_providers/ibs_it'
     #require 'alexandria/book_providers/renaud'
@@ -314,6 +315,7 @@ module Alexandria
       log.warn { "Can't load 'hpricot', hence Amazon book provider will not be available" }
     end
 
+    
     # AdLibris (needs htmlentities and hpricot)
     begin
       begin
