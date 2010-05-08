@@ -41,6 +41,7 @@ module Alexandria
              'Pascal Terjan <pterjan@linuxfr.org>',
              'Rene Samselnig <sandman@sdm-net.org>',
              'Robby Stephenson <robby@periapsis.org>',
+             'Sun Ning <classicning@gmail.com>',
              'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
              'Timothy Malone <timothy.malone@gmail.com>',
              'Zachary P. Landau <kapheine@hypa.net>'

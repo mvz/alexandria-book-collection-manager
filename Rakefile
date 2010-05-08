@@ -51,7 +51,7 @@ SHARE = share_dir
 
 DATA_VERSION = '0.6.3'
 PROJECT_VERSION = '0.6.6'
-DISPLAY_VERSION = '0.6.6-beta1'
+DISPLAY_VERSION = '0.6.6-beta2'
 
 
 # Write a .config file if the configuration data has changed

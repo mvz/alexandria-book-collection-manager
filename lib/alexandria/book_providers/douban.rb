@@ -74,7 +74,8 @@ module Alexandria
       # dependency.
       def json2yaml(json)
         # insert spaces after : and , except within strings
-        yaml = json.gsub(/(\:|\,)([^A-Za-z\/\\])/) do |match|
+        # i.e. when followed by numeral, quote, { or [
+        yaml = json.gsub(/(\:|\,)([0-9'"{\[])/) do |match|
           "#{$1} #{$2}"
         end        
         yaml.gsub!(/\\\//, '/') # unescape forward slashes
@@ -89,6 +90,7 @@ module Alexandria
         begin
           #dbresult = JSON.parse(response)          
           dbresult = YAML::load(json2yaml(response))
+          File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
           if(dbresult['opensearch:totalResults']['$t'].to_i > 0)
             for item in dbresult['entry']
               name = item['title']['$t']
@@ -110,7 +112,11 @@ module Alexandria
                     binding = av['$t']
                 end
               end
-              authors = item['author'].map{ |a| a['name']['$t'] }
+              if item['author']
+                authors = item['author'].map{ |a| a['name']['$t'] }
+              else
+                authors = []
+              end
               image_url = nil
               for av in item['link']
                 if av['@rel'] == 'image'
