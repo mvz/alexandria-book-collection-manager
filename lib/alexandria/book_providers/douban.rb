@@ -90,7 +90,7 @@ module Alexandria
         begin
           #dbresult = JSON.parse(response)          
           dbresult = YAML::load(json2yaml(response))
-          File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
+          #File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
           if(dbresult['opensearch:totalResults']['$t'].to_i > 0)
             for item in dbresult['entry']
               name = item['title']['$t']

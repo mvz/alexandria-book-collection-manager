@@ -1,4 +1,4 @@
-Announcing the release of Alexandria 0.6.6-beta1
+Announcing the release of Alexandria 0.6.6-beta2
 
 * What is Alexandria?
 =====================
@@ -16,6 +16,7 @@ Alexandria is written in Ruby using ruby-gnome2.
 - A source package can be downloaded at http://rubyforge.org/frs/?group_id=205
 - An ad-hoc deb file (for Debian, Ubuntu & gNewSense) can be
   downloaded from there too
+- For Ubuntu, there is a PPA at https://launchpad.net/~alexandria-team
 - SVN can be accessed here: http://alexandria.rubyforge.org/svn/trunk/alexandria
 
 * What's New in 0.6.6?
@@ -23,8 +24,10 @@ Alexandria is written in Ruby using ruby-gnome2.
 
 - Fixed providers WorldCat (#27145), Proxis (#25730), Thalia (#27134),
   DeaStore (#27000) and BarnesAndNoble
+- New provider Douban (China) thanks to Sun Ning
 - Made providers turn-off-and-onable in Preferences (#26931)
 - Implemented an ad-hoc MARC parser to fix some Z39.50 providers (#27471)
+- Fixed Goodreads CSV import and added LibraryThing CSV import
 - All incoming data converted to UTF-8 in a consistent fashion (#26968)
 
 Some bug fixes:
