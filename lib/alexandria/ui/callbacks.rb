@@ -333,12 +333,12 @@ module Alexandria
         toggle_actions = [
           ["Sidepane", nil, _("Side _Pane"), "F9", nil,
             on_view_sidepane, true],
-            ["Toolbar", nil, _("_Toolbar"), nil, nil,
-              on_view_toolbar, true],
-              ["Statusbar", nil, _("_Statusbar"), nil, nil,
-                on_view_statusbar, true],
-                ["ReversedOrder", nil, _("Re_versed Order"), nil, nil,
-                  on_reverse_order],
+          ["Toolbar", nil, _("_Toolbar"), nil, nil,
+            on_view_toolbar, true],
+          ["Statusbar", nil, _("_Statusbar"), nil, nil,
+            on_view_statusbar, true],
+          ["ReversedOrder", nil, _("Re_versed Order"), nil, nil,
+            on_reverse_order],
         ]
 
         view_as_actions = [
@@ -375,6 +375,7 @@ module Alexandria
         end
         @actiongroup.add_radio_actions(arrange_icons_actions) do |action, current|
           @prefs.arrange_icons_mode = current.current_value
+          setup_books_iconview_sorting
         end
       end
     end
