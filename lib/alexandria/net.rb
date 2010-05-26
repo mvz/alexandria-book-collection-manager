@@ -6,7 +6,7 @@ module Alexandria
   class WWWAgent
     def initialize()
       user_agent = "Ruby #{RUBY_VERSION} #{Alexandria::TITLE}/#{Alexandria::VERSION}"
-      @extra_request_headers = {"User-Agent", user_agent}
+      @extra_request_headers = {"User-Agent" => user_agent}
     end
 
     def self.transport
@@ -31,7 +31,7 @@ module Alexandria
     end
 
     def user_agent=(agent_string)      
-      @extra_request_headers = {"User-Agent", agent_string}
+      @extra_request_headers["User-Agent"] = agent_string
     end
   end
   

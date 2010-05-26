@@ -33,7 +33,6 @@ require 'hpricot'
 require 'cgi'
 
 require 'digest/sha2'
-require 'base64'
 
 
 module Amazon
@@ -240,11 +239,19 @@ module Amazon
         key = d.digest(key)
       end
       
-      for i in 0 .. key.size - 1
-        ipad[i] ^= key[i]
-        opad[i] ^= key[i]
+      ipad_bytes = ipad.bytes.collect {|b| b }
+      opad_bytes = opad.bytes.collect {|b| b }
+      key_bytes = key.bytes.collect {|b| b}
+      ipad_xor = ""
+      opad_xor = ""
+      for i in 0 .. key.size - 1       
+        ipad_xor << (ipad_bytes[i] ^ key_bytes[i])
+        opad_xor << (opad_bytes[i] ^ key_bytes[i])
       end
       
+      ipad = ipad_xor + ipad[key.size..-1]
+      opad = opad_xor + opad[key.size..-1]
+
       # inner hash
       d1 = Digest::SHA256.new
       d1.update(ipad)
@@ -292,7 +299,7 @@ module Amazon
 
       # Step 8 : Calculate RFC 2104-compliant HMAC with SHA256 hash algorithm
       sig = hmac_sha256(string_to_sign, @@secret_access_key)     
-      base64_sig = Base64.encode64(sig).strip
+      base64_sig = [sig].pack('m').strip
       
       # Step 9 : URL-encode + and = in sig
       base64_sig = CGI.escape(base64_sig)
