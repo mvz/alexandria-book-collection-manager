@@ -38,6 +38,7 @@ module Alexandria
 
       def initialize()
         super("Douban", "Douban (China)")
+        prefs.read
       end
 
       def url(book)
