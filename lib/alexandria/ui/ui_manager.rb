@@ -912,32 +912,35 @@ module Alexandria
           block_return = true
           book = library[n]
           if book
-            begin
-              tail = append_book(book)
-            rescue Exception => ex
-              trace = ex.backtrace.join("\n > ")
-              log.error { "append_books failed #{ex.message} #{trace}" }
-            end
+            Gtk.queue do
+              begin
+                tail = append_book(book)
+              rescue Exception => ex
+                trace = ex.backtrace.join("\n > ")
+                log.error { "append_books failed #{ex.message} #{trace}" }
+              end
               # convert to percents
-            coeff = total / 100.0
-            percent = n / coeff
-            fraction = percent / 100
-            log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
-            @appbar.progress_percentage = fraction
-            n+= 1
-              
+              coeff = total / 100.0
+              percent = n / coeff
+              fraction = percent / 100
+              log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
+              @appbar.progress_percentage = fraction
+              n+= 1
+            end
           else
-            @iconview.unfreeze
-            @listview.unfreeze # NEW / bdewey
-            @filtered_model.refilter
-            @listview.columns_autosize
-            @appbar.progress_percentage = 1
-            # Hide the progress bar. 
-            @appbar.children.first.visible = false
-            # Refresh the status bar.
-            on_books_selection_changed
-            @library_listview.set_sensitive(true)
-            block_return = false
+            Gtk.queue do
+              @iconview.unfreeze
+              @listview.unfreeze # NEW / bdewey
+              @filtered_model.refilter
+              @listview.columns_autosize
+              @appbar.progress_percentage = 1
+              # Hide the progress bar. 
+              @appbar.children.first.visible = false
+              # Refresh the status bar.
+              on_books_selection_changed
+              @library_listview.set_sensitive(true)
+              block_return = false
+            end
           end
           
           block_return
