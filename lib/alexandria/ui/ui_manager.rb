@@ -597,7 +597,9 @@ module Alexandria
           @actiongroup["Redo"].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
           unless caller.updating?
-            handle_update_caller_library ary
+            Gtk.queue do
+              handle_update_caller_library ary
+            end
           end
         else
           raise "unrecognized update event"

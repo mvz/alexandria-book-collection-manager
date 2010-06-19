@@ -276,19 +276,22 @@ module Alexandria
         @image_thread.kill if @image_thread
 
         notify_start_add_by_isbn
-        @find_thread = Thread.new do
-          log.info { "New @find_thread #{Thread.current}" }
-          begin
-            Alexandria::BookProviders.instance.add_observer(self)
-            @results = Alexandria::BookProviders.search(criterion, mode)
-            
-            log.info { "got #{@results.length} results" }
-          rescue => e
-            @find_error = e.message
-          ensure
-            Alexandria::BookProviders.instance.delete_observer(self)
-            #notify_end_add_by_isbn
+        Gtk.idle_add do
+          @find_thread = Thread.new do
+            log.info { "New @find_thread #{Thread.current}" }
+            begin
+              Alexandria::BookProviders.instance.add_observer(self)
+              @results = Alexandria::BookProviders.search(criterion, mode)
+              
+              log.info { "got #{@results.length} results" }
+            rescue => e
+              @find_error = e.message
+            ensure
+              Alexandria::BookProviders.instance.delete_observer(self)
+              #notify_end_add_by_isbn
+            end
           end
+          false
         end
 
         Gtk.timeout_add(100) do
@@ -384,41 +387,47 @@ module Alexandria
         assert_not_exist(library, @entry_isbn.text)        
         @button_add.sensitive = false  
         notify_start_add_by_isbn
-        @find_thread = Thread.new do
-          log.info { "New @find_thread #{Thread.current}" }
-          begin
-            # MAJOR HACK, add this again...
-            Alexandria::BookProviders.instance.add_observer(self)
-            book, cover_url = Alexandria::BookProviders.isbn_search(isbn)
-            # prov = FakeBookProviders.new()
-            # prov.add_observer(self)
-            # book, cover_url = prov.isbn_search(isbn)
+        Gtk.idle_add do
 
-            notify_end_add_by_isbn
+          @find_thread = Thread.new do
+            log.info { "New @find_thread #{Thread.current}" }
+            begin
+              # MAJOR HACK, add this again...
+              Alexandria::BookProviders.instance.add_observer(self)
+              book, cover_url = Alexandria::BookProviders.isbn_search(isbn)
+              # prov = FakeBookProviders.new()
+              # prov.add_observer(self)
+              # book, cover_url = prov.isbn_search(isbn)
 
-            if book
+              notify_end_add_by_isbn
 
-              puts "adding book #{book} to library"
-              add_book_to_library(library, book, cover_url)
-              @entry_isbn.text = ''
-              
-              post_addition([book], library, is_new)
-            else
-              post_addition([], library, is_new)
-            end
-          rescue => e
-            unless e.kind_of? Alexandria::BookProviders::NoResultsError
-              puts e.message
-              puts e.backtrace.join("\n> ")
-            end
-            @find_error = e.message
-            @button_add.sensitive = true
-            notify_end_add_by_isbn
-          ensure
-            Alexandria::BookProviders.instance.delete_observer(self)
-            notify_end_add_by_isbn
-          end          
+              if book
+
+                puts "adding book #{book} to library"
+                add_book_to_library(library, book, cover_url)
+                @entry_isbn.text = ''
+                
+                post_addition([book], library, is_new)
+              else
+                post_addition([], library, is_new)
+              end
+            rescue => e
+              unless e.kind_of? Alexandria::BookProviders::NoResultsError
+                puts e.message
+                puts e.backtrace.join("\n> ")
+              end
+              @find_error = e.message
+              @button_add.sensitive = true
+              notify_end_add_by_isbn
+            ensure
+              Alexandria::BookProviders.instance.delete_observer(self)
+              notify_end_add_by_isbn
+            end          
+          end
+
+          false
         end
+
       end
 
       def add_selected_books(library, is_new)
@@ -541,7 +550,7 @@ module Alexandria
       end
 
       def update(status, provider)
-        Gtk.idle_add do
+        Gtk.queue do
           messages = {
             :searching => _("Searching Provider '%s'..."),
             :error => _("Error while Searching Provider '%s'"),
@@ -553,7 +562,7 @@ module Alexandria
 
           # @parent.appbar.status = message
           MainApp.instance.appbar.status = message # HACKish
-          false
+          #false
         end
       end
 

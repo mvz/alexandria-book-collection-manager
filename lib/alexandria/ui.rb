@@ -19,6 +19,7 @@ require 'gdk_pixbuf2'
 require 'libglade2'
 require 'gnome2'
 
+require 'alexandria/ui/gtk_thread_help'
 require 'alexandria/ui/icons'
 require 'alexandria/ui/glade_base'
 require 'alexandria/ui/completion_models'
@@ -48,7 +49,7 @@ module Alexandria
       puts "====================================" if $DEBUG
       log.info { "Starting Gtk..." }
       puts "====================================" if $DEBUG
-      Gtk.main
+      Gtk.main_with_queue
     end
     def self.main
       start_gnome_program
