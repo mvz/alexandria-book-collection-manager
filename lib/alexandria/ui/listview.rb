@@ -1,8 +1,9 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
+# Copyright (C) 2010 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
+# modify it under the terms of the GNU General Public License aso
 # published by the Free Software Foundation; either version 2 of the
 # License, or (at your option) any later version.
 #
@@ -42,6 +43,7 @@ module Alexandria
         @listview = @parent.listview
         @listview_model = @parent.listview_model
         @filtered_model = @parent.filtered_model
+        @model = @parent.model
         @actiongroup = @parent.actiongroup
         setup_books_listview
       end
@@ -185,6 +187,44 @@ module Alexandria
 
       def setup_check_column title, iterid
         renderer= CellRendererToggle.new
+        renderer.activatable = true
+        renderer.signal_connect('toggled') do |rndrr, path|
+          begin
+            tree_path = Gtk::TreePath.new(path)
+            child_path = @listview_model.convert_path_to_child_path(tree_path)
+            if child_path
+              unfiltered_path = @filtered_model.convert_path_to_child_path(child_path)
+              # FIX this sometimes returns a nil path for iconview...
+              if unfiltered_path
+                iter = @model.get_iter(unfiltered_path)
+                if iter
+                  book = @parent.book_from_iter(@parent.selected_library, iter)
+                  toggle_state = case iterid
+                                 when Columns::REDD then book.redd
+                                 when Columns::OWN then book.own
+                                 when Columns::WANT then book.want
+                                 end
+                  # invert toggle_state
+                  unless (iterid==Columns::WANT && book.own)
+                    toggle_state = !toggle_state
+                    case iterid
+                    when Columns::REDD then book.redd = toggle_state
+                    when Columns::OWN then book.own = toggle_state
+                    when Columns::WANT then book.want = toggle_state
+                    end
+                    iter[iterid] = toggle_state    
+                    lib = @parent.selected_library
+                    lib.save(book)
+                  end
+                end
+              end
+              
+            end
+          rescue ::Exception => e
+            log.error { "toggle failed for path #{path} #{e}\n" + e.backtrace.join("\n") }
+          end
+
+        end
         column = Gtk::TreeViewColumn.new(title, renderer, :text => iterid)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid

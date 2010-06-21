@@ -22,6 +22,7 @@ Alexandria is written in Ruby using ruby-gnome2.
 * What's New in 0.6.6?
 ======================
 
+- Edit Read/Owned/Want properties directly from list view 
 - Fixed providers WorldCat (#27145), Proxis (#25730), Thalia (#27134),
   DeaStore (#27000) and BarnesAndNoble
 - New provider Douban (China) thanks to Sun Ning

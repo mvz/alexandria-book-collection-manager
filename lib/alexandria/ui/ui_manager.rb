@@ -22,6 +22,7 @@ module Alexandria
     class UIManager < GladeBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
         :iconview_model, :filtered_model, :on_books_selection_changed
+      attr_reader :model
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")

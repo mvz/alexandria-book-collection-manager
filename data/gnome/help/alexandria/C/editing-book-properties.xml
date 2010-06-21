@@ -50,7 +50,23 @@
     name, click twice on the name.</para>
     <tip><para>You can rate a book by clicking on the stars. To clear the rating, click on the space immediately to the left of the first star. Your favourite books - those with five stars - will have a small heart icon in the Icon view of the main window.</para></tip>
   </section>
-  
+
+  <!-- ======== Editing from list view ========= -->
+  <section id="editing-from-list-view">
+    <title>Editing from the List View</title>
+
+    <para>You can change the properties for Read, Own and Want from
+    the List View by clicking on the check box for the given
+    property. As in the book properties dialog, however, clicking on
+    Want will have no effect if Own is selected.</para>
+
+    <para>A book's Rating is not editable directly from the List View
+    simply by clicking on the rating stars. However, right-clicking
+    from either the List or Icon View will bring up a popup menu, from
+    which you can change the Rating of a book. </para>
+
+  </section>
+
   <!-- ======== Changing cover images ========= -->
   <section id="changing-cover-image">
     <title>Changing cover images</title>
