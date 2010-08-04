@@ -103,7 +103,7 @@ module Alexandria
 
 
       def parse_search_result_data(html)
-        doc = html_to_doc(html)
+        doc = html_to_doc(html, "UTF-8")
         book_search_results = []
         begin
           result_cells = doc/'td.result/div.name/..'
@@ -135,7 +135,7 @@ module Alexandria
 
 
     def parse_result_data(html, search_isbn=nil, recursing=false)
-      doc = html_to_doc(html)
+      doc = html_to_doc(html, "UTF-8")
       
       begin
         if doc%'div#div-results-none'

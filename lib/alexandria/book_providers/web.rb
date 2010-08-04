@@ -14,7 +14,11 @@ module Alexandria
       end
 
       def html_to_doc(html, source_data_charset="ISO-8859-1")
-        utf8_html = Iconv.conv("UTF-8", source_data_charset, html)        
+        if source_data_charset == "UTF-8"
+          utf8_html = html
+        else
+          utf8_html = Iconv.conv("UTF-8", source_data_charset, html)
+        end
         normalized_html = @htmlentities.decode(utf8_html)
         Hpricot(normalized_html)
       end 
