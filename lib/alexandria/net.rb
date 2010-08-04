@@ -16,7 +16,7 @@ module Alexandria
 
     def get(url)
       uri = URI.parse(url)
-      req = Net::HTTP::Get.new(uri.path)
+      req = Net::HTTP::Get.new(uri.request_uri)
       @extra_request_headers.each_pair do |header_name, value|
         req.add_field(header_name, value)
       end          

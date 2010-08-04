@@ -37,21 +37,48 @@ module Alexandria
 
       SITE = "http://www.barnesandnoble.com"
 
-      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" +
-        "/isbnInquiry.asp?ISBSRC=Y&ISBN=%s"
+      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/books" +
+        "/product.aspx?ISBSRC=Y&ISBN=%s"
 
       BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" +
         "/results.asp?%s=%s" # type, term
 
       def initialize()
         super("BarnesAndNoble", "BarnesAndNoble")
+        @agent = nil
         prefs.read
+      end
+
+      def agent      
+        unless @agent
+          @agent = Alexandria::WWWAgent.new
+        end        
+        @agent
+      end
+
+
+      def fetch_redirectly(uri_str, limit = 5)
+        raise NoResultsError, 'HTTP redirect too deep' if limit == 0       
+        response = agent.get(uri_str)
+        if limit < 10
+          sleep 0.1
+          puts "Redirectly :: #{uri_str}"
+        else
+          puts "Fetching   :: #{uri_str}"
+        end
+        puts response.inspect
+        case response
+        when Net::HTTPSuccess     then response
+        when Net::HTTPRedirection then fetch_redirectly(response['Location'], (limit - 1))
+        else
+          response.error!
+        end
       end
 
       def search(criterion, type)
         req = create_search_uri(type, criterion)
         puts "Requesting #{req}" if $DEBUG
-        html_data = transport.get_response(URI.parse(req))
+        html_data = fetch_redirectly(req)
 
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)
@@ -96,7 +123,7 @@ module Alexandria
        doc = html_to_doc(html)
        book_search_results = []
        begin
-         result_divs = doc / 'div[@class^="book-container"]'
+         result_divs = doc / 'div[@class*="book-container"]'
          result_divs.each do |div|
            result = {}
            #img = div % 'div.book-image/a/img'
@@ -120,7 +147,7 @@ module Alexandria
        doc = html_to_doc(html)
        begin
          book_data = {}
-         title_header = doc % '//div.wrapL0/h1'
+         title_header = doc % '//div.wgt-productTitle/h1'
          if title_header
            title = ""
            title_header.children.each do |node|
@@ -128,6 +155,7 @@ module Alexandria
                title += " " + node.to_s
              end
            end
+           title.strip!
            if title.empty?
              log.warn { "Unexpectedly found no title in BarnesAndNoble lookup" }
              raise NoResultsError
@@ -139,7 +167,7 @@ module Alexandria
            end
          end
 
-         isbn_links = doc / 'a.isbn-a'
+         isbn_links = doc / '//a.isbn-a'
          isbns = isbn_links.map{|a| a.inner_text}
          book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
 
