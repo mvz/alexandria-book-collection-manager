@@ -131,14 +131,14 @@ module Alexandria
       book_search_results = []
       # each result will be a dict with keys :title, :author, :publisher, :url
 
-      td_cells = doc.search('td[@class=normal]/span[@class="vitrine_nome_produto"]/..')
-      td_cells.each do |td|
+      list_items = doc.search('div.pesquisa-item-lista-conteudo')
+      list_items.each do |item|
         begin
           result = {}
 
           # author & publisher
           author_publisher = ''
-          td.children.each do |node|
+          item.children.each do |node|
             author_publisher += node.to_s if node.text?
             author_publisher.strip!
             break unless author_publisher.empty?
@@ -148,7 +148,7 @@ module Alexandria
           result[:publisher] = publisher.strip if publisher
 
           # title & url
-          link = td%'a'
+          link = item%'a'
           result[:title] = link.inner_text.strip
           link_to_description = link['href']
           slash = ''
@@ -175,19 +175,22 @@ module Alexandria
         doc = html_to_doc(html)
 
         # title
-        title_td = doc%'td.produto_miolo'
-        raise NoResultsError unless title_td
-        title = first_non_empty_text_node(title_td)
+        title_div = doc % 'div#conteudo//div.titulo'
+        raise NoResultsError unless title_div
+        title_h = title_div%'h2'
+        title = title_h.inner_text if title_h
+        #title = first_non_empty_text_node(title_div)
 
-        author_spans = doc/'span.rotulo'
+        #author_spans = doc/'span.rotulo'
+        author_hs = title_div/'h3.autor'
         authors = []
-        author_spans.each do |span|
-          authors << span.inner_text.strip
+        author_hs.each do |h|
+          authors << h.inner_text.strip
         end
 
         ## synopsis_div = doc%'div#sinopse'
 
-        details_div = doc%'div#caracteristica'
+        details_div = doc%'div#tab-caracteristica'
         details = string_array_to_map(lines_of_text_as_array(details_div))
 
         # ISBN
@@ -274,7 +277,9 @@ module Alexandria
       arr.each do |str|
         key, val = str.split(':')
         # a real hack for not handling encoding properly :^)
-        map[key.gsub(/[^a-zA-z]/, '')] = val.strip()
+        if val
+          map[key.gsub(/[^a-zA-z]/, '')] = val.strip()
+        end
       end
       map
     end
