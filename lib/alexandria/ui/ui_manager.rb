@@ -30,7 +30,7 @@ module Alexandria
       module Columns
         COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
           ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT,
-          NOTES, REDD, OWN, WANT, TAGS = (0..16).to_a
+          NOTES, REDD, OWN, WANT, TAGS, LOANED_TO = (0..17).to_a # duplicated from listview.rb
       end
 
       # The maximum number of rating stars displayed.
@@ -269,7 +269,8 @@ module Alexandria
           TrueClass,      #REDD
           TrueClass,      #OWN
           TrueClass,      #WANT
-          String          # TAGS
+          String,         # TAGS
+          String          # LOANED TO 
         ]
 
         @model = Gtk::ListStore.new(*list)
@@ -805,6 +806,7 @@ module Alexandria
         iter[Columns::PUBLISH_DATE] = (book.publishing_year.to_s rescue "")
         iter[Columns::EDITION] = book.edition
         iter[Columns::NOTES] = (book.notes or "")
+        iter[Columns::LOANED_TO] = (book.loaned_to or "")
         rating = (book.rating or Book::DEFAULT_RATING)
         iter[Columns::RATING] = MAX_RATING_STARS - rating # ascending order is the default
         iter[Columns::OWN] = book.own?

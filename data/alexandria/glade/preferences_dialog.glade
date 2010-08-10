@@ -433,6 +433,23 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="y_options"></property>
                       </packing>
                     </child>
+                    <child>
+                      <widget class="GtkCheckButton" id="checkbutton_col_loaned_to">
+                        <property name="label" translatable="yes">Loaned to</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_column_toggled"/>
+                      </widget>
+                      <packing>
+                        <property name="top_attach">10</property>
+                        <property name="bottom_attach">11</property>
+                        <property name="x_options">GTK_FILL</property>
+                        <property name="y_options"></property>
+                      </packing>
+                    </child>
                   </widget>
                   <packing>
                     <property name="position">1</property>

@@ -34,7 +34,7 @@ module Alexandria
       module Columns
         COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
           ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT,
-          NOTES, REDD, OWN, WANT, TAGS = (0..16).to_a
+          NOTES, REDD, OWN, WANT, TAGS, LOANED_TO = (0..17).to_a
       end
 
       def initialize listview, parent
@@ -106,7 +106,8 @@ module Alexandria
         [ _("ISBN"), Columns::ISBN ],
         [ _("Publisher"), Columns::PUBLISHER ],
         [ _("Publish Year"), Columns::PUBLISH_DATE ],
-        [ _("Binding"), Columns::EDITION ]
+        [ _("Binding"), Columns::EDITION ],
+        [ _("Loaned To"), Columns::LOANED_TO ]
       ]
       CHECK_COLUMNS = [
         [ _("Read"), Columns::REDD],
@@ -276,6 +277,7 @@ module Alexandria
           @prefs.col_publisher_visible,
           @prefs.col_publish_date_visible,
           @prefs.col_edition_visible,
+          @prefs.col_loaned_to_visible,
           @prefs.col_redd_visible,
           @prefs.col_own_visible,
           @prefs.col_want_visible,

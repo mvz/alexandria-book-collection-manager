@@ -231,7 +231,8 @@ module Alexandria
           @checkbutton_col_own          => "col_own_visible",
           @checkbutton_col_want         => "col_want_visible",
           @checkbutton_col_rating       => "col_rating_visible",
-          @checkbutton_col_tags         => "col_tags_visible"
+          @checkbutton_col_tags         => "col_tags_visible",
+          @checkbutton_col_loaned_to    => "col_loaned_to_visible"
         }
         @cols.each_pair do |checkbutton, pref_name|
           if checkbutton
@@ -444,6 +445,7 @@ module Alexandria
         raise if @cols[checkbutton].nil?
         Preferences.instance.send("#{@cols[checkbutton]}=",
                                   checkbutton.active?)
+
         @changed_block.call
       end
 
