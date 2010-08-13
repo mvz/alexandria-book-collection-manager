@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-14 20:04+0000\n"
+"POT-Creation-Date: 2010-08-13 04:41+0100\n"
 "PO-Revision-Date: 2008-02-27 21:35+0100\n"
 "Last-Translator: Jack Myrseh <jack@enkom.no>\n"
 "Language-Team: Norwegian\n"
@@ -15,19 +15,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../lib/alexandria/import_library.rb:29
+#: ../lib/alexandria/import_library.rb:30
 msgid "Autodetect"
 msgstr "Automatisk detektering"
 
-#: ../lib/alexandria/import_library.rb:30
+#: ../lib/alexandria/import_library.rb:31
 msgid "Archived Tellico XML (*.bc, *.tc)"
 msgstr "Arkivert Tellico-XML (*.bc, *.tc)"
 
-#: ../lib/alexandria/import_library.rb:32
+#: ../lib/alexandria/import_library.rb:33
 msgid "ISBN List (*.txt)"
 msgstr "ISBN-liste (*.txt)"
 
-#: ../lib/alexandria/import_library.rb:34
+#: ../lib/alexandria/import_library.rb:35
 msgid "GoodReads CSV"
 msgstr ""
 
@@ -43,111 +43,111 @@ msgstr "Mitt bibliotek"
 msgid "A program to help you manage your book collection."
 msgstr "Ett program for å ordne boksamlinger"
 
-#: ../lib/alexandria/ui/ui_manager.rb:134
+#: ../lib/alexandria/ui/ui_manager.rb:135
 msgid "Type here the search criterion"
 msgstr "Tast inn søkekriteriet"
 
-#: ../lib/alexandria/ui/ui_manager.rb:147
+#: ../lib/alexandria/ui/ui_manager.rb:148
 msgid "Match everything"
 msgstr "Match alt."
 
-#: ../lib/alexandria/ui/ui_manager.rb:149
+#: ../lib/alexandria/ui/ui_manager.rb:150
 msgid "Title contains"
 msgstr "Tittel inneholder"
 
-#: ../lib/alexandria/ui/ui_manager.rb:150
+#: ../lib/alexandria/ui/ui_manager.rb:151
 msgid "Authors contain"
 msgstr "Forfatter(e) inneholder"
 
-#: ../lib/alexandria/ui/ui_manager.rb:151
+#: ../lib/alexandria/ui/ui_manager.rb:152
 msgid "ISBN contains"
 msgstr "ISBN inneholder"
 
-#: ../lib/alexandria/ui/ui_manager.rb:152
+#: ../lib/alexandria/ui/ui_manager.rb:153
 msgid "Publisher contains"
 msgstr "Utgiver inneholder"
 
-#: ../lib/alexandria/ui/ui_manager.rb:153
+#: ../lib/alexandria/ui/ui_manager.rb:154
 msgid "Notes contain"
 msgstr "Notater inneholder"
 
-#: ../lib/alexandria/ui/ui_manager.rb:154
+#: ../lib/alexandria/ui/ui_manager.rb:155
 msgid "Tags contain"
 msgstr "Merknader inneholder"
 
-#: ../lib/alexandria/ui/ui_manager.rb:169
+#: ../lib/alexandria/ui/ui_manager.rb:170
 msgid "Change the search type"
 msgstr "Vennligst endre søkemåten"
 
-#: ../lib/alexandria/ui/ui_manager.rb:174
+#: ../lib/alexandria/ui/ui_manager.rb:175
 msgid "View as Icons"
 msgstr "Vis som ikoner"
 
-#: ../lib/alexandria/ui/ui_manager.rb:175
+#: ../lib/alexandria/ui/ui_manager.rb:176
 msgid "View as List"
 msgstr "Vis som liste"
 
-#: ../lib/alexandria/ui/ui_manager.rb:188
+#: ../lib/alexandria/ui/ui_manager.rb:189
 msgid "Choose how to show books"
 msgstr "Velg hvordan du vil vise bøkene"
 
-#: ../lib/alexandria/ui/ui_manager.rb:434
+#: ../lib/alexandria/ui/ui_manager.rb:436
 msgid "Library '%s' selected"
 msgstr "Biblioteket \"%s\" valgt"
 
-#: ../lib/alexandria/ui/ui_manager.rb:441
+#: ../lib/alexandria/ui/ui_manager.rb:443
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "Biblioteket \"%s\" valgt, %d bok uten rating"
 msgstr[1] "Biblioteket \"%s\" valgt, %d bøker uten rating"
 
-#: ../lib/alexandria/ui/ui_manager.rb:446
+#: ../lib/alexandria/ui/ui_manager.rb:448
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "Biblioteket \"%s\" valgt, %d bok"
 msgstr[1] "Biblioteket \"%s\" valgt, %d bøker"
 
-#: ../lib/alexandria/ui/ui_manager.rb:453
+#: ../lib/alexandria/ui/ui_manager.rb:455
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "Biblioteket \"%s\" valgt, %d bok, %d uten rating"
 msgstr[1] "Biblioteket \"%s\" valt, %d bøker, %d uten rating"
 
-#: ../lib/alexandria/ui/ui_manager.rb:465
+#: ../lib/alexandria/ui/ui_manager.rb:467
 msgid "'%s' selected"
 msgstr "\"%s\" valgt"
 
-#: ../lib/alexandria/ui/ui_manager.rb:468
+#: ../lib/alexandria/ui/ui_manager.rb:470
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d bok valgt"
 msgstr[1] "%d bøker valgt"
 
-#: ../lib/alexandria/ui/ui_manager.rb:642
+#: ../lib/alexandria/ui/ui_manager.rb:648
 msgid "Unable to launch the web browser"
 msgstr "Kunde ikke starte nettleseren"
 
-#: ../lib/alexandria/ui/ui_manager.rb:643
+#: ../lib/alexandria/ui/ui_manager.rb:649
 msgid ""
 "Check out that a web browser is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
 msgstr "Kontroller et en nettleser er satt som standard og forsøk igjen."
 
-#: ../lib/alexandria/ui/ui_manager.rb:655
+#: ../lib/alexandria/ui/ui_manager.rb:661
 msgid "Unable to launch the mail reader"
 msgstr "Kunde ikke starte e-postleseren."
 
-#: ../lib/alexandria/ui/ui_manager.rb:656
+#: ../lib/alexandria/ui/ui_manager.rb:662
 msgid ""
 "Check out that a mail reader is configured as default (Desktop Preferences -"
 "> Advanced -> Preferred Applications) and try again."
 msgstr "Kontroller at det er satt opp en e-postleser og forsøk igjen ."
 
-#: ../lib/alexandria/ui/ui_manager.rb:691
+#: ../lib/alexandria/ui/ui_manager.rb:697
 msgid "Repair Book Data"
 msgstr "Reparer bok-data"
 
-#: ../lib/alexandria/ui/ui_manager.rb:692
+#: ../lib/alexandria/ui/ui_manager.rb:698
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
@@ -156,15 +156,15 @@ msgstr ""
 "Datafilene for de følgende bøkene er ødelagt eller tomme. Ønsker du å laste "
 "ned ny informasjon for dem fra de tilbyderne som er online?\n"
 
-#: ../lib/alexandria/ui/ui_manager.rb:749
+#: ../lib/alexandria/ui/ui_manager.rb:755
 msgid "Added '%s' to library '%s'"
 msgstr "Lagt '%s' til bibliotek '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:900
+#: ../lib/alexandria/ui/ui_manager.rb:908
 msgid "Loading '%s'..."
 msgstr "Laster \"_%s\""
 
-#: ../lib/alexandria/ui/ui_manager.rb:1145
+#: ../lib/alexandria/ui/ui_manager.rb:1157
 msgid "In '_%s'"
 msgstr "I \"_%s\""
 
@@ -467,22 +467,22 @@ msgstr[0] "Kunne ikke legge til boken"
 msgstr[1] "Kunne ikke legge til boken"
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:546
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:555
 msgid "Searching Provider '%s'..."
 msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:547
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:556
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:548
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:557
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
 #: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:549
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:558
 msgid "Found at Provider '%s'"
 msgstr ""
 
@@ -527,24 +527,24 @@ msgstr "_Navn:"
 msgid "_Type:"
 msgstr "_Type:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:315
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:316
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:339
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:359
 #, fuzzy
 msgid "Disable Provider"
 msgstr "Ny tilbyder"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:338
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:358
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:339
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:359
 #, fuzzy
 msgid "Enable Provider"
 msgstr "Ny tilbyder"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:422
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:423
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Er du sikker på at du ønsker å slette tilbyder  \"%s\" for godt?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:430
+#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:431
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -581,7 +581,7 @@ msgstr ""
 "fil."
 
 #: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:61
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
 msgid "Properties for '%s'"
 msgstr "Innstillinger for '%s'"
 
@@ -642,23 +642,23 @@ msgstr ""
 "Kunde ikke bekrefte det EAN/ISBN du anga. Kontroller at det er korrekt "
 "angitt og forsøk igjen"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:65
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:69
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:71
 msgid "Author"
 msgstr "Forfatter"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:121
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
 msgid "Select a cover image"
 msgstr "Velg et omslagsbilde"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:125
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:127
 msgid "No Cover"
 msgstr "Ikke noe omslag"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:173
+#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:186
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d dag"
@@ -690,7 +690,7 @@ msgid "At least one author must be provided."
 msgstr "Minst en forfatter må angis."
 
 #: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:514
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:523
 msgid "Couldn't add the book"
 msgstr "Kunne ikke legge til boken"
 
@@ -765,15 +765,15 @@ msgstr ""
 msgid "A problem occurred while downloading images"
 msgstr "Det oppsto et problem ved nedlastingen av bilder"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:301
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:304
 msgid "Unable to find matches for your search"
 msgstr "Søket ga ingen treff"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:307
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:310
 msgid "%s, by %s"
 msgstr "%s, av %s"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:380
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:383
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correctly, and try again."
@@ -781,7 +781,7 @@ msgstr ""
 "Kunne ikke bekrefte det EAN/ISBN du anga. Kontroller at det er angitt riktig "
 "og forsøk igjen."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:621
+#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:630
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "\"%s\" eksisterer allerede i \"%s\" (med tittel \"%s\")."
 
@@ -858,49 +858,54 @@ msgstr "Bibliotek"
 msgid "New Library"
 msgstr "Nytt bibliotek"
 
-#: ../lib/alexandria/ui/listview.rb:50 ../lib/alexandria/smart_library.rb:349
+#: ../lib/alexandria/ui/listview.rb:52 ../lib/alexandria/smart_library.rb:349
 msgid "Title"
 msgstr "Tittel"
 
-#: ../lib/alexandria/ui/listview.rb:103 ../lib/alexandria/smart_library.rb:351
+#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:351
 msgid "Authors"
 msgstr "Forfattere"
 
-#: ../lib/alexandria/ui/listview.rb:104 ../lib/alexandria/smart_library.rb:350
+#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:350
 msgid "ISBN"
 msgstr "ISBN"
 
-#: ../lib/alexandria/ui/listview.rb:105 ../lib/alexandria/smart_library.rb:352
+#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:352
 msgid "Publisher"
 msgstr "Utgiver"
 
-#: ../lib/alexandria/ui/listview.rb:106 ../lib/alexandria/smart_library.rb:353
+#: ../lib/alexandria/ui/listview.rb:108 ../lib/alexandria/smart_library.rb:353
 msgid "Publish Year"
 msgstr "Utgitt år"
 
-#: ../lib/alexandria/ui/listview.rb:107 ../lib/alexandria/smart_library.rb:354
+#: ../lib/alexandria/ui/listview.rb:109 ../lib/alexandria/smart_library.rb:354
 msgid "Binding"
 msgstr "Innbinding"
 
-#: ../lib/alexandria/ui/listview.rb:110 ../lib/alexandria/smart_library.rb:104
+#: ../lib/alexandria/ui/listview.rb:110
+#, fuzzy
+msgid "Loaned To"
+msgstr "Utlånt"
+
+#: ../lib/alexandria/ui/listview.rb:113 ../lib/alexandria/smart_library.rb:104
 #: ../lib/alexandria/smart_library.rb:361
 msgid "Read"
 msgstr "Lest"
 
-#: ../lib/alexandria/ui/listview.rb:111 ../lib/alexandria/smart_library.rb:363
+#: ../lib/alexandria/ui/listview.rb:114 ../lib/alexandria/smart_library.rb:363
 msgid "Own"
 msgstr "Egne"
 
-#: ../lib/alexandria/ui/listview.rb:112 ../lib/alexandria/smart_library.rb:364
+#: ../lib/alexandria/ui/listview.rb:115 ../lib/alexandria/smart_library.rb:364
 msgid "Want"
 msgstr "Ønsket"
 
-#: ../lib/alexandria/ui/listview.rb:138 ../lib/alexandria/smart_library.rb:357
+#: ../lib/alexandria/ui/listview.rb:141 ../lib/alexandria/smart_library.rb:357
 #: ../data/alexandria/glade/preferences_dialog.glade:421
 msgid "Tags"
 msgstr "Merknader"
 
-#: ../lib/alexandria/ui/listview.rb:163 ../lib/alexandria/smart_library.rb:355
+#: ../lib/alexandria/ui/listview.rb:166 ../lib/alexandria/smart_library.rb:355
 msgid "Rating"
 msgstr "Rating"
 
@@ -932,45 +937,41 @@ msgstr ""
 msgid "Spanish Culture Ministry"
 msgstr "Det spanske kulturministeriet"
 
-#: ../lib/alexandria/book_providers/z3950.rb:33
+#: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Vertsnavn"
 
-#: ../lib/alexandria/book_providers/z3950.rb:34
+#: ../lib/alexandria/book_providers/z3950.rb:35
 msgid "Port"
 msgstr "Port"
 
-#: ../lib/alexandria/book_providers/z3950.rb:35
+#: ../lib/alexandria/book_providers/z3950.rb:36
 msgid "Database"
 msgstr "Database"
 
-#: ../lib/alexandria/book_providers/z3950.rb:36
+#: ../lib/alexandria/book_providers/z3950.rb:37
 msgid "Record syntax"
 msgstr "Syntaks"
 
-#: ../lib/alexandria/book_providers/z3950.rb:37
+#: ../lib/alexandria/book_providers/z3950.rb:38
 msgid "Username"
 msgstr "Brukernavn"
 
-#: ../lib/alexandria/book_providers/z3950.rb:38
+#: ../lib/alexandria/book_providers/z3950.rb:39
 msgid "Password"
 msgstr "Passord"
 
-#: ../lib/alexandria/book_providers/z3950.rb:39
+#: ../lib/alexandria/book_providers/z3950.rb:40
 msgid "Charset encoding"
 msgstr "Tegnsett"
 
-#: ../lib/alexandria/book_providers/z3950.rb:198
+#: ../lib/alexandria/book_providers/z3950.rb:221
 msgid "Library of Congress (Usa)"
 msgstr "Library of Congress (USA)"
 
-#: ../lib/alexandria/book_providers/z3950.rb:232
+#: ../lib/alexandria/book_providers/z3950.rb:255
 msgid "British Library"
 msgstr "British Library"
-
-#: ../lib/alexandria/book_providers/proxis.rb:36
-msgid "Language"
-msgstr "Språk"
 
 #: ../lib/alexandria/export_library.rb:109
 msgid "Archived ONIX XML"
@@ -1097,17 +1098,17 @@ msgstr "er i siste"
 msgid "is not in last"
 msgstr "er ikke i siste"
 
-#: ../lib/alexandria/book_providers.rb:86
+#: ../lib/alexandria/book_providers.rb:87
 msgid "Couldn't reach the provider '%s': timeout expired."
 msgstr ""
 "Oppnådde ikke kontakt med tilbyder  \"%s\": overskred tidsbegrensningen."
 
-#: ../lib/alexandria/book_providers.rb:90
+#: ../lib/alexandria/book_providers.rb:91
 msgid "Couldn't reach the provider '%s': socket error (%s)."
 msgstr "Oppnådde ikke kontakt med tilbyder \"%s\":  (socket error) (%s)."
 
-#: ../lib/alexandria/book_providers.rb:94
-#: ../lib/alexandria/book_providers.rb:99
+#: ../lib/alexandria/book_providers.rb:95
+#: ../lib/alexandria/book_providers.rb:100
 msgid ""
 "No results were found.  Make sure your search criterion is spelled "
 "correctly, and try again."
@@ -1115,15 +1116,15 @@ msgstr ""
 "Ingen resultat funnet, Sjekk at søkekriteriet er skrevet korrekt, og forsøk "
 "igjen."
 
-#: ../lib/alexandria/book_providers.rb:104
+#: ../lib/alexandria/book_providers.rb:105
 msgid "Too many results for that search."
 msgstr "Søket ga for mange treff."
 
-#: ../lib/alexandria/book_providers.rb:107
+#: ../lib/alexandria/book_providers.rb:108
 msgid "Invalid search type."
 msgstr "Ugyldig søkemetode."
 
-#: ../lib/alexandria/book_providers.rb:202
+#: ../lib/alexandria/book_providers.rb:203
 msgid "Enabled"
 msgstr ""
 
@@ -1337,7 +1338,12 @@ msgstr "Egen?"
 msgid "Want?"
 msgstr "Ønsket?"
 
-#: ../data/alexandria/glade/preferences_dialog.glade:448
+#: ../data/alexandria/glade/preferences_dialog.glade:438
+#, fuzzy
+msgid "Loaned to"
+msgstr "Utlånt"
+
+#: ../data/alexandria/glade/preferences_dialog.glade:465
 #, fuzzy
 msgid "_List View"
 msgstr "Vis som liste"
@@ -1353,6 +1359,9 @@ msgstr "Boksamlingsverktøy"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Ordne boksamlingen din"
+
+#~ msgid "Language"
+#~ msgstr "Språk"
 
 #~ msgid "_Advanced Settings"
 #~ msgstr "_Avanserte innstillinger"
