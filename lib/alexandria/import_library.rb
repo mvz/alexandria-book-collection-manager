@@ -268,7 +268,7 @@ module Alexandria
         # Let's preserve the failing isbns so we can report them later.
         begin
           [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
-        rescue => e
+        rescue Exception => e
           puts e.message
           [line.chomp, nil]
         end
@@ -280,6 +280,7 @@ module Alexandria
       current_iteration = 1
       books = []
       bad_isbns = []
+      failed_lookup_isbns = []
       isbn_list.each do |isbn|
         begin
           unless isbn[1]
@@ -287,10 +288,12 @@ module Alexandria
           else
             books << Alexandria::BookProviders.isbn_search(isbn[1])
           end
-        rescue => e
+        rescue Exception => e
           puts e.message
-          return nil unless
-            (on_error_cb and on_error_cb.call(e.message))
+          failed_lookup_isbns << isbn[1]
+          puts "NOTE : ignoring on_error_cb #{on_error_cb}"
+          #return nil unless
+          #  (on_error_cb and on_error_cb.call(e.message))
         end
 
         on_iterate_cb.call(current_iteration += 1,
@@ -308,7 +311,7 @@ module Alexandria
         on_iterate_cb.call(current_iteration += 1,
                            max_iterations) if on_iterate_cb
       end
-      return [library, bad_isbns]
+      return [library, bad_isbns, failed_lookup_isbns]
     end
 
     private

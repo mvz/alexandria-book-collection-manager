@@ -161,9 +161,10 @@ module Alexandria
 
           library = nil
           @bad_isbns = nil
+          @failed_isbns = nil
           thread = Thread.start do
             begin
-              library, @bad_isbns = filter.invoke(new_library_name,
+              library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
                                                   self.filename)
             rescue => ex
               trace = ex.backtrace.join("\n> ")
@@ -180,7 +181,7 @@ module Alexandria
 
           unless @destroyed
             if library
-              on_accept_cb.call(library, @bad_isbns)
+              on_accept_cb.call(library, @bad_isbns, @failed_isbns)
               break
             elsif not_cancelled
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG

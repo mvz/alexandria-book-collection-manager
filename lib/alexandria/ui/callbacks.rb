@@ -60,11 +60,16 @@ module Alexandria
       end
 
       def on_import widget, event
-        ImportDialog.new(@main_app) do |library, bad_isbns|
+        ImportDialog.new(@main_app) do |library, bad_isbns, failed_isbns|
           unless bad_isbns.empty?
             message = _("The following lines are not valid ISBNs and were not imported:")
             bad_isbn_warn = BadIsbnsDialog.new(@main_app, message, bad_isbns)
             bad_isbn_warn.signal_connect('response') { log.debug { "bad_isbn" }; bad_isbn_warn.destroy }
+          end
+          unless failed_isbns.nil? || failed_isbns.empty?
+            message= _("Books could not be found for the following ISBNs:")
+            failed_lookup = BadIsbnsDialog.new(@main_app, message, failed_isbns)
+            failed_lookup.signal_connect('response') { log.debug { "failed lookup of #{failed_isbns.size} ISBNs" }; failed_lookup.destroy }
           end
           @libraries.add_library(library)
           append_library(library, true)
