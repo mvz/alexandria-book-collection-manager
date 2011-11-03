@@ -39,6 +39,8 @@ module Alexandria
         @entry_edition.complete_editions
         @entry_loaned_to.complete_borrowers
 
+        @entry_tags.complete_tags
+
         @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
         @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
         renderer = Gtk::CellRendererText.new

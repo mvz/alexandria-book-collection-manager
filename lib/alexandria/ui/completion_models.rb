@@ -36,6 +36,37 @@ class Gtk::Entry
     complete(Alexandria::UI::CompletionModels::BORROWER)
   end
 
+  def complete_tags
+    complete(Alexandria::UI::CompletionModels::TAG)
+    #min = self.completion.minimum_key_length
+    min = 2
+    self.completion.signal_connect('match-selected') do |c, model, iter|
+      cur_text = c.entry.text
+      new_tag = model.get_value(iter, 0)
+      cur_text_split = cur_text.split(",")
+      cur_text_split.delete_at -1
+      cur_text_split << new_tag
+      c.entry.text = cur_text_split.join(",")      
+      true
+    end
+    self.completion.set_match_func do |comp, key, iter|
+      cur_tag = key.split(",").last.strip
+      if cur_tag.size >= min
+        begin
+          if (iter[0] =~ /^#{cur_tag}/)
+            true
+          else
+            false
+          end
+        rescue
+          false
+        end
+      else
+        false
+      end
+    end
+  end
+
   #######
   private
   #######
@@ -81,11 +112,12 @@ module Alexandria
     class CompletionModels
       include Singleton
 
-      TITLE, AUTHOR, PUBLISHER, EDITION, BORROWER = (0..5).to_a
+      TITLE, AUTHOR, PUBLISHER, EDITION, BORROWER, TAG = (0..6).to_a
 
       def initialize
         @models, @libraries = [], []
         5.times { @models << Gtk::ListStore.new(String) }
+        @models <<Gtk::ListStore.new(String)
         touch
       end
 
@@ -136,6 +168,11 @@ module Alexandria
         @models[BORROWER]
       end
 
+      def tag_model
+        rebuilds_models if dirty?
+        @models[TAG]
+      end
+
       #######
       private
       #######
@@ -150,6 +187,7 @@ module Alexandria
 
       def rebuild_models
         titles, authors, publishers, editions, borrowers = [],[],[],[],[]
+        tags = []
         @libraries.each do |library|
           library.each do |book|
             titles << book.title
@@ -157,17 +195,21 @@ module Alexandria
             publishers << book.publisher
             editions << book.edition
             borrowers << book.loaned_to
+            book.tags.each {|tag| tags << tag }
           end
         end
 
         borrowers.concat(EVOLUTION_CONTACTS)
         borrowers.uniq!
 
+        tags.uniq!
+
         fill_model(@models[TITLE], titles)
         fill_model(@models[AUTHOR], authors)
         fill_model(@models[EDITION], editions)
         fill_model(@models[PUBLISHER], publishers)
         fill_model(@models[BORROWER], borrowers)
+        fill_model(@models[TAG], tags)
         @dirty = false
       end
 
