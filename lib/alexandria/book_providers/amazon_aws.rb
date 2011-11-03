@@ -37,6 +37,7 @@ module Alexandria
         prefs.add("locale", _("Locale"), "us", AmazonProvider::LOCALES)
         prefs.add("dev_token", _("Access key ID"), '')
         prefs.add("secret_key", _("Secret access key"), '')
+        prefs.add("associate_tag", _("Associate Tag"), '')
 
         prefs.read
         token = prefs.variable_named("dev_token")        
@@ -58,6 +59,17 @@ module Alexandria
           end
         end
 
+        associate = prefs.variable_named("associate_tag")
+        if associate
+          if associate.value.strip.empty?
+            associate.new_value = 'rubyalexa-20'
+          end
+          if (associate.value != associate.value.strip)
+            associate.new_value = associate.value.strip
+          end          
+        end
+
+
       end
 
       def search(criterion, type)
@@ -66,8 +78,7 @@ module Alexandria
         if prefs["secret_key"].empty?
           raise Amazon::RequestError.new("Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account")
         end
-
-
+        
         if config = Alexandria::Preferences.instance.http_proxy_config
           host, port, user, pass = config
           url = "http://"
@@ -78,7 +89,8 @@ module Alexandria
 
         access_key_id = prefs["dev_token"]
 
-        Amazon::Ecs.options = {:aWS_access_key_id => access_key_id}
+        Amazon::Ecs.options = {:aWS_access_key_id => access_key_id,
+                               :associateTag => prefs["associate_tag"]}
         Amazon::Ecs.secret_access_key = prefs["secret_key"]
         ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
