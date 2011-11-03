@@ -312,8 +312,8 @@ Rake::PackageTask.new(PROJECT, DISPLAY_VERSION) do |p|
                           "schemas/**/*", "spec/**/*", "tests/**/*")
 end
 
-task :tgz => [:build, :package] do 
-  puts "Sigh... probably no .mo files in the tgz; run again!"
+task :tgz => [:build] do 
+  `rake package`
 end
 
 ## # # # system installation # # # ##
