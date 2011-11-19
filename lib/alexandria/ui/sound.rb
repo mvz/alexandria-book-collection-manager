@@ -29,19 +29,16 @@ module Alexandria
     class SoundEffectsPlayer
 
       def initialize
-        puts "SoundEffectsPlayer"
         @sounds_dir = Alexandria::Config::SOUNDS_DIR
         @ogg_vorbis_pipeline = Gst::Pipeline.new
         set_up_pipeline
         @playing = false
+        set_up_glib_loop
       end
 
       def play(effect)
         file = File.join(@sounds_dir,"#{effect}.ogg")
-        puts "play #{file}"
-        if @playing
-          puts "skipping #{effect} - currently playing"
-        else
+        unless @playing
           @filesrc.location = file
           start_playback
         end
@@ -69,27 +66,30 @@ module Alexandria
         decoder >> converter >> audiosink
       end
 
-      def start_playback
+      def set_up_glib_loop
         unless @loop
-          puts "start_playback : setting up @loop ONCE"
           @loop = GLib::MainLoop.new(nil, false)
           
           @bus = @ogg_vorbis_pipeline.bus
           @bus.add_watch do |bus, message|
             case message.type
             when Gst::Message::EOS
-              puts "EOS loop.quit"
               @playing = false
               @loop.quit
             when Gst::Message::ERROR
-              puts "ERROR loop.quit"
-              p message.parse
+              if $DEBUG
+                puts "ERROR loop.quit"
+                p message.parse
+              end
               @playing = false
               @loop.quit
             end
             true
           end
         end
+      end
+
+      def start_playback
         @playing = true
         @ogg_vorbis_pipeline.play
         begin

@@ -283,7 +283,7 @@ module Alexandria
           ["AddBookManual", nil, _("Add Book _Manually..."), "<control><shift>N", _("Add a new book manually"), method(:on_add_book_manual)],
           ["Import", nil, _("_Import..."), "<control>I", _("Import a library"), method(:on_import)],
           ["Export", nil, _("_Export..."), "<control><shift>E", _("Export the selected library"), method(:on_export)],
-          ["Acquire", nil, _("_Acquire from Scanner..."), nil, _("Acquire books from a scanner"), method(:on_acquire)],
+          ["Acquire", nil, _("A_cquire from Scanner..."), "<control><shift>S", _("Acquire books from a scanner"), method(:on_acquire)],
           ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, _("Edit the properties of the selected book"), method(:on_properties)],
           ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", _("Quit the program"), method(:on_quit)],
           ["EditMenu", nil, _("_Edit")],
