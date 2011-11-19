@@ -35,7 +35,7 @@ Alexandria is written in Ruby using ruby-gnome2.
 - Removed dependencies on deprecated Ruby/GNOME2 libraries, to get
   Alexandria working on Ubuntu 11.10.
 - Added dependencies on ruby-gst and ruby-goocanvas
-
+- Added Barcode Scanner tab to Preferences dialog
 
 Where can I find out more?
 ==========================
