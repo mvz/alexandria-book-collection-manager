@@ -59,6 +59,7 @@ module Alexandria
 
         main_box.pack_start(@rules_header_box, false, false, 0)
         main_box << scrollview
+        setup_calendar_widgets
       end
 
       #########
@@ -151,7 +152,11 @@ module Alexandria
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
         date_entry.primary_icon_activatable = true
-
+        date_entry.signal_connect('icon-press') do |entry, primary, icon|
+          if primary.nick == 'primary'
+            display_calendar_popup(entry)
+          end
+        end
 
         # Really hide the time part of the date entry, as the constructor
         # does not seem to do it...
@@ -308,6 +313,113 @@ module Alexandria
       end
 
       # COPIED and PASTED from book_properties_dialog_base
+
+
+      def setup_calendar_widgets
+        @popup_displayed = false
+        @calendar_popup = Gtk::Window.new()# Gtk::Window::POPUP)
+        # @calendar_popup.modal = true
+        @calendar_popup.decorated = false
+        @calendar_popup.skip_taskbar_hint = true
+        @calendar_popup.skip_pager_hint = true
+        @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
+        
+        @calendar_popup.set_transient_for( self )
+        @calendar_popup.set_type_hint( Gdk::Window::TYPE_HINT_DIALOG )
+        @calendar_popup.name = 'calendar-popup'
+        @calendar_popup.resizable = false
+        # @calendar_popup.border_width = 4
+        # @calendar_popup.app_paintable = true
+
+        @calendar_popup.signal_connect("focus-out-event") do |popup, event|
+          hide_calendar_popup
+          false
+        end
+
+        @calendar = Gtk::Calendar.new
+        @calendar_popup.add(@calendar)
+
+        @calendar.signal_connect("day-selected") do
+          date_arr = @calendar.date
+          year = date_arr[0]
+          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          day = date_arr[2]
+          if @calendar_popup_for_entry
+            time = Time.gm(year, month, day)
+            @calendar_popup_for_entry.text = format_date(time)
+          end
+
+        end
+        
+        @calendar.signal_connect("day-selected-double-click") do
+          date_arr = @calendar.date
+          year = date_arr[0]
+          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          day = date_arr[2]
+          if @calendar_popup_for_entry
+            time = Time.gm(year, month, day)
+            @calendar_popup_for_entry.text = format_date(time)
+          end
+          hide_calendar_popup
+        end
+
+      end
+
+     def hide_calendar_popup
+       @calendar_popup_for_entry = nil
+
+       @calendar_popup.hide_all
+       self.modal = true
+
+        Gtk.timeout_add(150) do
+
+          # If we set @popup_displayed=false immediately, then a click
+          # event on the primary icon of the Entry simultaneous with
+          # the focus-out-event of the Calendar causes the Calendar to
+          # pop up again milliseconds after being closed.
+          #
+          # This is never what the user intends.
+          #
+          # So we add a small delay before the primary icon's event
+          # handler is told to pop up the calendar in response to
+          # clicks.
+
+          @popup_displayed = false
+          false
+        end
+      end
+
+      def display_calendar_popup(entry)
+        if @popup_displayed
+          hide_calendar_popup
+        else
+          @calendar_popup_for_entry = entry
+          unless entry.text.strip.empty?
+            time = parse_date(entry.text)
+            unless time.nil?
+              @calendar.year = time.year
+              @calendar.month = time.month - 1
+              @calendar.day = time.day
+            end
+          end
+          self.modal = false
+          @calendar_popup.move(*get_entry_popup_coords(entry))
+          @calendar_popup.show_all
+          @popup_displayed = true      
+        end
+      end
+
+      def get_entry_popup_coords(entry)
+        gdk_win = entry.parent_window
+        x,y = gdk_win.origin
+        alloc = entry.allocation
+        x += alloc.x
+        y += alloc.y
+        y += alloc.height
+        #x = [0, x].max
+        #y = [0, y].max
+        [x, y]
+      end
 
       def parse_date(datestring)
         date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
