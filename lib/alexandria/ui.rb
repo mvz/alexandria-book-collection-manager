@@ -16,12 +16,10 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gdk_pixbuf2'
-require 'libglade2'
-require 'gnome2'
 
 require 'alexandria/ui/gtk_thread_help'
 require 'alexandria/ui/icons'
-require 'alexandria/ui/glade_base'
+require 'alexandria/ui/builder_base'
 require 'alexandria/ui/completion_models'
 require 'alexandria/ui/libraries_combo'
 require 'alexandria/ui/multi_drag_treeview'
@@ -30,11 +28,6 @@ require 'alexandria/ui/main_app'
 module Alexandria
   module UI
     include Logging
-    def self.start_gnome_program
-      log.info { "Initializing app_datadir..." }
-      Gnome::Program.new('alexandria', VERSION).app_datadir =
-        Config::MAIN_DATA_DIR
-    end
     def self.init_icons
       log.info { "Initializing Icons..." }
       Icons.init
@@ -52,7 +45,6 @@ module Alexandria
       Gtk.main_with_queue
     end
     def self.main
-      start_gnome_program
       init_icons
       start_main_app
       start_gtk

@@ -309,7 +309,7 @@ module Alexandria
             ["OnlineInformation", nil, _("Display Online _Information")],
 
           ["HelpMenu", nil, _("_Help")],
-            ["SubmitBugReport", Gnome::Stock::MAIL_NEW, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
+            ["SubmitBugReport", Gtk::Stock::EDIT, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
             ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
             ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)],
         ]

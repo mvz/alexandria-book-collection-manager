@@ -16,6 +16,8 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+require 'gnome2' # for launching Gnome::Help
+
 class CellRendererToggle < Gtk::CellRendererToggle
   attr_accessor :text
   type_register

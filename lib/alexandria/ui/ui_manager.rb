@@ -19,7 +19,7 @@
 module Alexandria
   module UI
     MAX_RATING_STARS = 5
-    class UIManager < GladeBase
+    class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
         :iconview_model, :filtered_model, :on_books_selection_changed
       attr_reader :model
@@ -37,20 +37,20 @@ module Alexandria
       MAX_RATING_STARS = 5
 
       def initialize parent
-        super("main_app.glade")
+        super("main_app__builder.glade",  widget_names)
         @parent = parent
         get_preferences
         load_libraries
         setup_window_icons
         setup_callbacks
         create_uimanager
-        add_menus_and_popups_from_xml
+        add_menus_and_popups_from_xml       
+        setup_menus
         setup_toolbar
         setup_move_actions
         setup_active_model
         setup_dependents
         setup_accel_group
-        setup_menus
         setup_popups
         setup_window_events
         setup_dialog_hooks
@@ -64,6 +64,16 @@ module Alexandria
           @clicking_on_sidepane = true
         end
 
+      end
+
+      def show
+        @main_app.show
+      end
+
+      def widget_names 
+        [:main_app, :paned, :vbox1, :library_listview,
+         :notebook, :iconview, :listview, :status_label, :appbar,
+         :progressbar ] 
       end
 
       def create_uimanager
@@ -107,8 +117,7 @@ module Alexandria
         @toolbar.show_all
         @actiongroup["Undo"].sensitive = @actiongroup["Redo"].sensitive = false
         UndoManager.instance.add_observer(self)
-        log.debug { "Connect ui elements to mainapp." }
-        @main_app.toolbar = @toolbar
+        @vbox1.add(@toolbar, {:position => 1, :expand => false, :fill => false})
       end
 
       def add_main_toolbar_items
@@ -219,8 +228,8 @@ module Alexandria
       end
 
       def setup_menus
-        log.debug { "setup_menus" }
-        @main_app.menus = @uimanager.get_widget("/MainMenubar")
+        @menubar = @uimanager.get_widget("/MainMenubar")
+        @vbox1.add(@menubar, {:position => 0, :expand => false, :fill => false})
       end
 
       def setup_dialog_hooks
@@ -471,10 +480,14 @@ module Alexandria
         end
       end
 
+      def set_status_label(txt)
+        @status_label.text = txt
+      end
+
       def on_books_selection_changed
         library = selected_library
         books = selected_books
-        @appbar.status = get_appbar_status library, books
+        set_status_label(get_appbar_status(library, books))
         #selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
 
@@ -715,7 +728,7 @@ module Alexandria
             books_to_add = []
 
             # progress indicator...
-            @appbar.progress_percentage = 0
+            @progressbar.fraction = 0
             @appbar.children.first.visible = true   # show the progress bar
 
             total_book_count = @libraries.ruined_books.size
@@ -752,7 +765,7 @@ module Alexandria
                   end
                   library << book
                   library.save(book)
-                  @appbar.status = _("Added '%s' to library '%s'") % [book.title, library.name]
+                  set_status_label(_("Added '%s' to library '%s'") % [book.title, library.name])
 
                 rescue Exception => ex
                   log.error { "Couldn't add book #{isbn}: #{ex}" }
@@ -760,7 +773,7 @@ module Alexandria
                 end
 
                 prog_percentage += fraction_per_book
-                @appbar.progress_percentage = prog_percentage
+                @progressbar.fraction = prog_percentage
 
                 true
               else
@@ -771,11 +784,11 @@ module Alexandria
                 # @filtered_model.refilter
                 # @listview.columns_autosize
 
-                @appbar.progress_percentage = 1
+                @progressbar.fraction = 1
                 ## Hide the progress bar.
                 @appbar.children.first.visible = false
                 ## Refresh the status bar.
-                @appbar.status = ''
+                set_status_label('')
                 # on_books_selection_changed
                 false
               end
@@ -903,9 +916,9 @@ module Alexandria
         @model.clear
         @iconview.freeze
         @listview.freeze # NEW / bdewey
-        @appbar.progress_percentage = 0
+        @progressbar.fraction = 0
         @appbar.children.first.visible = true   # show the progress bar
-        @appbar.status = _("Loading '%s'...") % library.name
+        set_status_label(_("Loading '%s'...") % library.name)
         total = library.length
         log.debug { "library #{library.name} length #{library.length}" }
         n = 0       
@@ -927,7 +940,7 @@ module Alexandria
               percent = n / coeff
               fraction = percent / 100
               log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
-              @appbar.progress_percentage = fraction
+              @progressbar.fraction = fraction
               n+= 1
             end
           else
@@ -936,7 +949,7 @@ module Alexandria
               @listview.unfreeze # NEW / bdewey
               @filtered_model.refilter
               @listview.columns_autosize
-              @appbar.progress_percentage = 1
+              @progressbar.fraction = 1
               # Hide the progress bar. 
               @appbar.children.first.visible = false
               # Refresh the status bar.

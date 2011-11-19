@@ -17,8 +17,11 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 #require 'monitor'
+require 'alexandria/ui/glade_base'
 require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
+
+require 'gnome2' # for Gnome::Canvas and Gnome::Sound...
 
 module Alexandria
   module UI

@@ -57,6 +57,7 @@ module Alexandria
         @actiongroup = @ui_manager.actiongroup
         @appbar = @ui_manager.appbar
         @prefs = @ui_manager.prefs
+        @ui_manager.show
       end
     end
   end
