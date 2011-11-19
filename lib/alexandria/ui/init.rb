@@ -16,8 +16,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'gnome2' # for launching Gnome::Help
-
 class CellRendererToggle < Gtk::CellRendererToggle
   attr_accessor :text
   type_register
@@ -79,7 +77,26 @@ module Alexandria
   module UI
     def self.display_help(parent=nil, section=nil)
       begin
-        Gnome::Help.display('alexandria', section)
+        ## Gnome::Help.display('alexandria', section)
+        # The above is now deprecated, so we have to do this by hand
+        # (added by Cathal Mc Ginley, 8th Nov 2011)
+        section_index = ''
+        if section
+          section_index = "##{section}"
+        end
+        lang = 'C'
+        if ENV['LANG'] =~ /^fr/
+          lang = 'fr'
+        elsif ENV['LANG'] =~ /^ja/
+          lang = 'ja'
+        end
+        filename = File.join(Alexandria::Config::SHARE_DIR,
+                             'gnome','help','alexandria',
+                             lang,
+                             "alexandria.xml#{section_index}")
+        puts filename
+        exec("gnome-help #{filename}") if fork.nil?
+
       rescue Exception => e
         log.error(self) { "Unable to load help browser" }
         ErrorDialog.new(parent, _("Unable to launch the help browser"),
