@@ -90,7 +90,12 @@ module Alexandria
 
         @checkbutton_own.active = book.own?
         if @checkbutton_redd.active = book.redd?
-	  self.redd_when = (book.redd_when or Time.now)
+          if book.redd_when.nil?
+            puts "no redd_when"
+          else
+            @redd_date.text = format_date(book.redd_when)
+          end
+	  #self.redd_when = (book.redd_when or Time.now)
 	end
         @checkbutton_want.active = book.want?
 
@@ -139,15 +144,30 @@ module Alexandria
 
         @book.loaned = @checkbutton_loaned.active?
         @book.loaned_to = @entry_loaned_to.text
-        @book.loaned_since = Time.at(@date_loaned_since.time)
+        loaned_since = @date_loaned_since.text
+        if loaned_since.strip.empty?
+          @book.loaned_since = nil
+        else
+          begin
+            t = parse_date(loaned_since)
+            @book.loaned_since = t
+          rescue
+          end
+        end
 
         @book.redd = @checkbutton_redd.active?
 	if @book.redd
-          begin
-            @book.redd_when = Time.at(@redd_date.time)
-          rescue Exception => ex
-            log.warn { "Could not get date from #{@redd_date.time} / invalid" }
+          redd_date = @redd_date.text
+          if redd_date.strip.empty?
             @book.redd_when = nil
+          else
+            begin
+              t =  parse_date(redd_date)
+              @book.redd_when = t
+            rescue => err
+              puts err
+              puts err.backtrace
+            end
           end
 	else
           @book.redd_when = nil

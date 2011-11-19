@@ -15,7 +15,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'gnome2' # for DateEdit field
+##require 'gnome2' # for DateEdit field
 
 module Alexandria
   module UI
@@ -147,10 +147,14 @@ module Alexandria
 
         value_entry = Gtk::Entry.new
         date_entry = Gnome::DateEdit.new(0, false, false)
+        
+        date_entry = Gtk::Calendar.new
+
+
         # Really hide the time part of the date entry, as the constructor
         # does not seem to do it...
-        date_entry.children[2..3].each { |x| date_entry.remove(x) }
-        date_entry.spacing = 8
+        ###date_entry.children[2..3].each { |x| date_entry.remove(x) }
+        ###date_entry.spacing = 8
         entry_label = Gtk::Label.new("")
 
         add_button = Gtk::Button.new("")
