@@ -25,16 +25,58 @@ module Alexandria
     include Singleton
     include Logging
 
-    def exec_gconf_set_list(var_path, new_value)
-      list_type = "string"
-      list = new_value.inspect # this produces e.g. "[\"a\", \"b\", \"c\"]"
-      ##ret = `gconftool-2 --type list --list-type #{list_type} --set #{var_path} #{list}`
+    def get_gconf_type(value) 
+      if value.is_a?(String)
+        "string"
+      elsif value.is_a?(Fixnum)
+        "int"
+      elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+        "bool"
+      else
+        "string"
+      end
+    end
+
+    def exec_gconf_set_list(var_path, new_list)
+      # NOTE we must check between list and pair...
+
+      list_type = get_gconf_type(new_list.first)
+      if list_type == 'int' && new_list.size == 2
+        # treat this as a pair of int
+        a = new_list[0]
+        b = new_list[1]
+        pair = "(#{a},#{b})"
+        `gconftool-2 --type pair --car-type int --cdr-type int --set #{var_path} "#{pair}"`
+      else
+        list = make_list_string(new_list)
+        `gconftool-2 --type list --list-type #{list_type} --set #{var_path} "#{list}"`
+      end
+    end
+
+    def make_list_string(list)
+      if get_gconf_type(list.first) == "string"
+        list.map! {|x| x.gsub /\"/, "\\\"" }
+      end
+      contents = list.join(",")
+      "[" + contents + "]"
     end
 
     def exec_gconf_set(var_path, new_value)
-      type = "string"
-      list = new_value.inspect # this produces e.g. "[\"a\", \"b\", \"c\"]"
-      ##ret = `gconftool-2 --type #{type} --set #{var_path} #{new_value.inspect}`
+      if /cols_width/ =~ var_path
+        puts new_value
+
+        #new_value = {}
+      end
+      type = get_gconf_type(new_value)
+      value_str = new_value
+      if new_value.is_a? String
+        new_value.gsub! /\"/, "\\\""
+        value_str = "\"#{new_value}\""
+      end
+      if /cols_width/ =~ var_path
+        puts value_str
+      end
+      ret = `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
     def initialize
@@ -109,32 +151,46 @@ module Alexandria
       elsif type == "float"
         value.to_f
       elsif type == "bool"
-        value == "true"
+        (value == "true")
       elsif type == "list"
-        value =~ /\[[^\]]\]/
-        $1.split(",")
+        if value =~ /\[(.*)\]/
+          $1.split(",")
+        else
+          #puts value
+          nil
+        end
       elsif type == "pair"
         # dunno! # TODO fix this
-        value.split(",")
+        if value =~ /\((.*)\)/
+          
+          vals = $1.split(",")
+          [vals[0].to_i, vals[1].to_i]
+        else
+          #puts value
+          nil
+        end
       end
     end
 
     def exec_gconf_get(method, var_path)
-      if method != :blah
-        return DEFAULT_VALUES[method]
-      end
-      puts "gconftool-2 --get-type #{var_path}"
+      #if method != :blah
+      #  return DEFAULT_VALUES[method]
+      #end
+      #puts "gconftool-2 --get-type #{var_path}"
       type = `gconftool-2 --get-type #{var_path}`
       type.chomp!
-      puts "type #{type}"
-      puts "gconftool-2 --get #{var_path}"
+      #puts "type #{type}"
+      #puts "gconftool-2 --get #{var_path}"
       value = `gconftool-2 --get #{var_path}`
       if value.empty?
         value = DEFAULT_VALUES[method]
       else
         value.chomp!
         value = convert_for_type(type, value)
-        puts value.inspect
+        if value.nil?
+          value = DEFAULT_VALUES[method]
+        end
+        #puts value.inspect
       end
       value
     end
