@@ -15,6 +15,9 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+require 'alexandria/scanners/cuecat'
+require 'alexandria/scanners/keyboard'
+
 class Gtk::Entry
   attr_writer :mandatory
   def mandatory?
@@ -307,6 +310,7 @@ module Alexandria
         
         setup_enable_disable_popup
         sensitize_providers
+        setup_barcode_scanner_tab
       end
 
 
@@ -319,10 +323,32 @@ module Alexandria
          :checkbutton_col_publisher, :checkbutton_col_rating,
          :checkbutton_col_redd, :checkbutton_col_tags,
          :checkbutton_col_want, :checkbutton_prov_advanced,
-         :preferences_dialog,
-         :treeview_providers
+         :preferences_dialog, :treeview_providers,
+         :scanner_device_type, :use_scanning_sound, :use_scan_sound]
+      end
 
-        ]
+      def setup_barcode_scanner_tab
+        @scanner_device_model = Gtk::ListStore.new(String, String)
+        chosen_scanner_name = Preferences.instance.barcode_scanner
+        index = 0
+        @scanner_device_type.model = @scanner_device_model
+        renderer = Gtk::CellRendererText.new
+        @scanner_device_type.pack_start(renderer, true)
+        @scanner_device_type.add_attribute(renderer, 'text', 0)
+        
+        Alexandria::Scanners::Registry.each do |scanner|
+          iter = @scanner_device_model.append
+          iter[0] = scanner.display_name
+          iter[1] = scanner.name
+          if (chosen_scanner_name == scanner.name)
+            @scanner_device_type.active = index
+          end
+          index += 1
+        end
+
+
+        @use_scanning_sound.active = Preferences.instance.play_scanning_sound
+        @use_scan_sound.active = Preferences.instance.play_scan_sound
       end
 
       def setup_enable_disable_popup
@@ -431,6 +457,24 @@ module Alexandria
           reload_providers
         end
       end
+
+
+
+      def on_scanner_device_type(combo)
+        iter = @scanner_device_type.active_iter
+        if iter && iter[1]
+          Preferences.instance.barcode_scanner = iter[1]
+        end
+      end
+
+      def on_use_scanning_sound(checkbox)
+        Preferences.instance.play_scanning_sound = checkbox.active?
+      end
+
+      def on_use_scan_sound(checkbox)
+        Preferences.instance.play_scan_sound = checkbox.active?
+      end
+
 
       def on_provider_remove
         provider = selected_provider

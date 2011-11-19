@@ -63,8 +63,8 @@ module Alexandria
       end
 
       def destroy
-        @barcode_bars.each {|rect| rect.destroy }
         @canvas.destroy
+        @canvas = nil
       end
 
       def set_active
@@ -73,9 +73,11 @@ module Alexandria
       end
       
       def set_passive
-        passive_bg = "#F4F4F4"
-        @canvas.set_property(:background_color, passive_bg)
-        @barcode_bars.each {|rect| rect.set_property(:fill_color, passive_bg) }
+        if @canvas
+          passive_bg = "#F4F4F4"
+          @canvas.set_property(:background_color, passive_bg)
+          @barcode_bars.each {|rect| rect.set_property(:fill_color, passive_bg) }
+        end
       end
 
 

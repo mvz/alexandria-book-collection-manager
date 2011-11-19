@@ -74,6 +74,7 @@ module Alexandria
                                                  selected_library)
 
         @add_button.sensitive = false
+        @prefs = Alexandria::Preferences.instance
         setup_scanner_area
         init_treeview
         @book_results = Hash.new
@@ -289,7 +290,7 @@ module Alexandria
             iter[1] = Icons::BOOK
             iter[2] = ""
           end
-          lookup_book(isbn) unless ENV['HACKETY']
+          lookup_book(isbn)
         else
           log.debug { "was not an ISBN barcode" }
           play_sound("bad_scan")
@@ -446,12 +447,12 @@ module Alexandria
         MainApp.instance.ui_manager.set_status_label( "" )
         notify_end_add_by_isbn
         # TODO possibly make sure all threads have stopped running
-        @animator.destroy
+        @animation.destroy
       end
 
       def setup_scanner_area
         @scanner_buffer = ""
-        scanner_name = Alexandria::Preferences.instance.barcode_scanner
+        scanner_name = @prefs.barcode_scanner
         @scanner = Alexandria::Scanners::Registry.first # CueCat is default
         Alexandria::Scanners::Registry.each do |scanner|
           if scanner.name == scanner_name
@@ -475,7 +476,7 @@ module Alexandria
           @scan_area.grab_focus
         end
         @scan_area.signal_connect("focus-in-event") do |widget, event|
-          @barcode_label.label = _("\"%s\" _Barcode Scanner Ready" % @scanner.name)
+          @barcode_label.label = _("%s _Barcode Scanner Ready" % _(@scanner.display_name))
           @scanner_buffer = ""
           begin
             @animation.set_active
@@ -565,12 +566,18 @@ module Alexandria
 
       def play_sound(effect)
         # HACK, do some thread waiting, if possible
+        puts "scanning sound : #{@prefs.play_scanning_sound}"
+        puts "scan sound:      #{ @prefs.play_scan_sound}"
         if effect == "scanning"
+          puts effect
+          return unless  @prefs.play_scanning_sound
           Gtk.idle_add do
             @sound_players["scanning"].play("scanning")
             false
           end
         else
+          puts effect
+          return unless @prefs.play_scan_sound
           Gtk.idle_add do
             #sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
             @sound_players[effect].play(effect)

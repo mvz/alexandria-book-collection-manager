@@ -104,6 +104,28 @@
         <long>Name of barcode scanner interface to use.</long>
       </locale>
     </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/play_scanning_sound</key>
+      <applyto>/apps/alexandria/play_scanning_sound</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Play Scanning Sound</short>
+        <long>Play a sound when start of barcode scanning is detected.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/play_scan_sound</key>
+      <applyto>/apps/alexandria/play_scan_sound</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Play Scan Sound</short>
+        <long>Play a sound when a good or bad scan is completed.</long>
+      </locale>
+    </schema>
     <schema>        
       <key>/schemas/apps/alexandria/toolbar_visible</key>
       <applyto>/apps/alexandria/toolbar_visible</applyto>

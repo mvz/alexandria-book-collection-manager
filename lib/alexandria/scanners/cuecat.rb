@@ -28,6 +28,10 @@ module Alexandria
         return "CueCat"
       end
 
+      def display_name()
+        return "CueCat"
+      end
+
       # Checks if data looks like cuecat input
       def match?(data)
         data.chomp!
