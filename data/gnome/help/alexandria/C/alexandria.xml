@@ -92,7 +92,7 @@ Template last modified Apr 11, 2002
 	<surname>Davison</surname>
 	<affiliation>
 	  <orgname>&app; documentation writing</orgname>
-	  <address> carnegie@liamjdavison.info<email>carnegie@liamjdavison.info</email> </address>
+	  <address format="linespecific"><email>carnegie@liamjdavison.info</email></address>
 	</affiliation>
       </author>
       <othercredit role="maintainer">
@@ -100,7 +100,7 @@ Template last modified Apr 11, 2002
 	<surname>Mc Ginley</surname> 
 	<affiliation> 
 	  <orgname>&app; developers</orgname> 
-	  <address> <email>cathal.alexandria@gnostai.org</email> </address> 
+	  <address format="linespecific"><email>cathal.alexandria@gnostai.org</email></address> 
 	</affiliation>
 	<contrib>Maintenance</contrib>
       </othercredit>
@@ -162,7 +162,7 @@ Template last modified Apr 11, 2002
 
   </articleinfo>
 
-  <indexterm zone="index">
+  <indexterm zone="index" significance="preferred">
     <primary>Alexandria</primary>
   </indexterm>
 
