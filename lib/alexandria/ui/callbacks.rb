@@ -332,6 +332,7 @@ module Alexandria
         on_reverse_order = proc do |actiongroup, action|
           log.debug { "on_reverse_order" }
           Preferences.instance.reverse_icons = action.active?
+          Preferences.instance.save!
           setup_books_iconview_sorting
         end
 

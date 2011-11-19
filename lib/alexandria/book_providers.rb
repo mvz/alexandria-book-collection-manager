@@ -240,6 +240,7 @@ module Alexandria
         end
         name = variable_name('name')
         prefs.remove_preference(name)
+        prefs.save!
       end
 
       def variable_name(object)

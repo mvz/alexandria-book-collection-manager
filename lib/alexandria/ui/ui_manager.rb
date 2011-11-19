@@ -655,7 +655,13 @@ module Alexandria
           return
         end
         unless (cmd = Preferences.instance.www_browser).nil?
-          Thread.new { system(cmd % "\"" + url + "\"") }
+          launch_command = cmd
+          if cmd.downcase.index("%u")
+            launch_command = cmd.gsub(/%U/i, "\"" + url + "\"")
+          else
+            launch_command = cmd + " \"" + url + "\""
+          end
+          Thread.new { system(launch_command) }
         else
           ErrorDialog.new(@main_app,
                           _("Unable to launch the web browser"),
@@ -668,7 +674,13 @@ module Alexandria
 
       def open_email_client(url)
         unless (cmd = Preferences.instance.email_client).nil?
-          Thread.new { system(cmd % "\"" + url + "\"") }
+          launch_command = cmd
+          if cmd.downcase.index("%u")
+            launch_command = cmd.gsub(/%u/i, "\"" + url + "\"")
+          else
+            launch_command = cmd + " \"" + url +"\""
+          end
+          Thread.new { system(launch_command) }
         else
           ErrorDialog.new(@main_app,
                           _("Unable to launch the mail reader"),
@@ -1140,6 +1152,7 @@ module Alexandria
             '"' + t + '": ' + v.to_s
         end.join(', ') + '}'
         log.debug { "cols_width: #{@prefs.cols_width} " }
+        @prefs.save!
       end
 
       def undoable_move(source, dest, books)

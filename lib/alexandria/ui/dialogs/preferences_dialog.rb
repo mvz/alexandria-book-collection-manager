@@ -475,6 +475,7 @@ module Alexandria
 
       def on_close
         @preferences_dialog.destroy
+        Alexandria::Preferences.instance.save!
       end
 
       def on_help

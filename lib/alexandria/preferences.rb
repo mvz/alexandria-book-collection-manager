@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2011 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -16,14 +17,172 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'singleton'
-
-## require 'gconf2'
+require 'set'
 require 'alexandria/default_preferences'
 
 module Alexandria
   class Preferences
     include Singleton
     include Logging
+
+    APP_DIR = "/apps/alexandria"
+    HTTP_PROXY_DIR = "/system/http_proxy"
+    HTTP_PROXY_MODE = "/system/proxy/mode"
+    URL_HANDLERS_DIR = "/desktop/gnome/url-handlers"
+
+    GCONFTOOL = "gconftool-2"
+
+    def initialize()
+      @alexandria_settings = {}
+      @changed_settings = Set.new
+
+      @url_handlers_loaded = false
+      @http_command = nil
+      @mailto_command = nil
+
+      @proxy_settings_loaded = false
+      @use_http_proxy = false
+      @proxy_host = nil
+      @proxy_port = nil
+      @proxy_user = nil
+      @proxy_password = nil
+
+      load_alexandria_settings
+      # load_system_settings
+    end
+
+
+    def www_browser
+      unless @url_handlers_loaded
+        load_url_handler_settings
+      end
+      puts @http_command
+      @http_command
+    end
+
+
+    def email_client
+      unless @url_handlers_loaded
+        load_url_handler_settings
+      end
+      puts @mailto_command
+      @mailto_command
+    end
+
+    def http_proxy_config
+      unless @http_proxy_loaded
+        load_http_proxy_settings
+      end
+      if (@use_http_proxy && @proxy_host && @proxy_port)
+        [@proxy_host, @proxy_port, @proxy_user, @proxy_password]
+      end
+    end
+
+
+
+    def save!
+      log.debug { "preferences save!" }
+      @changed_settings.each do |variable_name|
+        log.debug {"saving preference #{variable_name} / #{@alexandria_settings[variable_name].class}" }
+        generic_save_setting(variable_name, @alexandria_settings[variable_name])
+      end
+      @changed_settings.clear
+    end
+
+
+    def method_missing(id, *args)
+      method = id.id2name
+      if match = /(.*)=$/.match(method)
+        if args.length != 1
+          raise "Set method #{method} should be called with " +
+            "only one argument (was called with #{args.length})"
+        end
+        variable_name = match[1]
+        new_value = args.first
+        generic_setter(variable_name, new_value)
+      else
+        unless args.empty?
+          raise "Get method #{method} should be called " +
+            "without argument (was called with #{args.length})"
+        end
+        generic_getter(method)
+      end
+    end
+    
+    def remove_preference(variable_name)
+      @alexandria_settings.delete(variable_name)
+      @changed_settings << variable_name
+    end
+
+
+
+    private
+
+
+
+    ##
+    ## GENERIC GETTER and SETTER CODE
+    ##
+
+
+    def generic_getter(variable_name)
+      value = @alexandria_settings[variable_name]
+      if value.nil?
+        value = DEFAULT_VALUES[variable_name]          
+        unless value.nil?
+          @alexandria_settings[variable_name] = value
+          @changed_settings << variable_name
+        end
+      end
+      value
+    end
+    
+    def generic_setter(variable_name, new_value)
+      if new_value.is_a?(Array)
+        # when setting array, first remove nil elements (fixing #9007)
+        new_value.compact!
+      end
+      old_value = @alexandria_settings[variable_name]
+      @alexandria_settings[variable_name] = new_value
+      unless new_value == old_value 
+        @changed_settings << variable_name
+      end
+    end
+
+    def generic_save_setting(variable_name, new_value)
+      begin
+        var_path = APP_DIR + "/" + variable_name
+        if new_value.is_a?(Array)
+          # when setting array, first remove nil elements (fixing #9007)
+          new_value.compact!
+          if new_value.empty?
+            exec_gconf_unset(variable_name)
+          else
+            # set list value
+            exec_gconf_set_list(var_path, new_value)
+          end
+        else            
+          # set non-list value
+          if new_value.nil?
+            exec_gconf_unset(variable_name)
+          else
+            exec_gconf_set(var_path, new_value)
+          end
+        end
+      rescue Exception => ex
+        log.debug { new_value.inspect }
+        log.error { "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}" }
+        log << ex.message
+        log << ex
+      end
+    end
+
+
+
+    ##
+    ## GCONFTOOL SET and SET LIST and SET PAIR and UNSET
+    ##
+
 
     def get_gconf_type(value) 
       if value.is_a?(String)
@@ -79,168 +238,109 @@ module Alexandria
       ret = `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
-    def initialize
-      ## @client = GConf::Client.default
-    end
-
-    APP_DIR = "/apps/alexandria/"
-    def method_missing(id, *args)
-      method = id.id2name
-      if match = /(.*)=$/.match(method)
-        if args.length != 1
-          raise "Set method #{method} should be called with " +
-            "only one argument (was called with #{args.length})"
-        end
-
-        variable_name = match[1]
-        new_value = args.first
- 
-        var_path = APP_DIR + variable_name
-       
-        begin
-          if new_value.is_a?(Array)
-            # when setting array, first remove nil elements (fixing #9007)
-            new_value.compact!
-            if new_value.empty?
-              remove_preference(variable_name)
-            else
-              # set list value
-              exec_gconf_set_list(var_path, new_value)
-              # @client[APP_DIR + variable_name] = new_value
-            end
-          else            
-            # set non-list value
-            exec_gconf_set(var_path, new_value)
-            # @client[APP_DIR + variable_name] = new_value
-          end
-        rescue Exception => ex
-          trace = ex.backtrace.join("\n> ")
-          log.debug { new_value.inspect }
-          log.error { "Fix GConf handling #{ex.message} #{trace}" }
-        end
-      else
-        unless args.empty?
-          raise "Get method #{method} should be called " +
-            "without argument (was called with #{args.length})"
-        end
-        var_path = APP_DIR + method
-
-        #value = @client[APP_DIR + method]
-        exec_gconf_get(method, var_path)
-        # value == nil ? DEFAULT_VALUES[method] : value
-      end
-    end
-
-    def remove_preference(name)
-      var_path = APP_DIR + name
-      exec_gconf_unset(var_path)      
-    end
     
-
-    def exec_gconf_unset(var_path)
-      `gconftool-2 --unset #{var_path}`
+    def exec_gconf_unset(variable_name)
+      `#{GCONFTOOL} --unset #{APP_DIR + "/" + variable_name}`
     end
 
-    # type is one of int|bool|float|string|list|pair
-    def convert_for_type(type, value)
 
-      if type == "string"
-        value
-      elsif type == "int"
-        value.to_i
-      elsif type == "float"
-        value.to_f
-      elsif type == "bool"
-        (value == "true")
-      elsif type == "list"
-        if value =~ /\[(.*)\]/
-          $1.split(",")
-        else
-          #puts value
-          nil
+
+
+
+    ##
+    ## GCONFTOOL LOAD RECURSIVE...
+    ##
+
+    # Since the ruby library 'gconf2' is deprecated, we call the
+    # 'gconftool' executable.  Doing so one --get at a time is slow,
+    # so we use --recursive-list to get everything at once.
+    def load_alexandria_settings 
+      all_vals = `#{GCONFTOOL} --recursive-list #{APP_DIR}`
+      @alexandria_settings.merge!(gconftool_values_to_hash(all_vals))
+    end
+
+
+    # May be useful to pre-load these settings
+    def load_system_settings
+      load_url_handler_settingss
+      load_http_proxy_settings
+    end
+
+
+    # Called at most once, by #web_browser or #email_client
+    def load_url_handler_settings
+      # /desktop/gnome/url-handlers/http
+      http_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + "/http"}`
+      http_handler = gconftool_values_to_hash(http_handler_vars)
+      if http_handler['enabled']
+        @http_command = http_handler['command']
+      end
+
+      mailto_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + "/mailto"}`
+      mailto_handler = gconftool_values_to_hash(mailto_handler_vars)
+      if mailto_handler['enabled']
+        @mailto_command = mailto_handler['command']
+      end
+      @url_handlers_loaded = true
+    end
+
+    # Called at most once, by #http_proxy_config
+    def load_http_proxy_settings
+      http_proxy_vars = `#{GCONFTOOL} --recursive-list #{HTTP_PROXY_DIR}`
+      http_proxy = gconftool_values_to_hash(http_proxy_vars)
+      if http_proxy['use_http_proxy']
+        proxy_mode = `#{GCONFTOOL} --get #{HTTP_PROXY_MODE}`.chomp
+        if proxy_mode == "manual"
+          @use_http_proxy = true
+          @proxy_host = http_proxy['host']
+          @proxy_port = http_proxy['port']
+          @proxy_user = http_proxy['authentication_user']
+          @proxy_password = http_proxy['authentication_n_password']
         end
-      elsif type == "pair"
-        # dunno! # TODO fix this
-        if value =~ /\((.*)\)/
-          
-          vals = $1.split(",")
-          [vals[0].to_i, vals[1].to_i]
-        else
-          #puts value
-          nil
+      end
+      @http_proxy_loaded = true
+    end
+
+
+
+    # 'gconftool -R' returns keys and values, one per line, with one
+    # leading space, separated with " = " This method parses the keys
+    # and values (guessing the type of the value using the
+    # #discriminate method) and returns them in a Hash.
+    def gconftool_values_to_hash(all_vals)
+      hash = {}
+      vals = all_vals.split(/$/)
+      vals.each do |val|
+        if /([a-z_]+) = (.*)/ =~ val
+          hash[$1] = discriminate($2)
         end
       end
+      hash
     end
 
-    def exec_gconf_get(method, var_path)
-      #if method != :blah
-      #  return DEFAULT_VALUES[method]
-      #end
-      #puts "gconftool-2 --get-type #{var_path}"
-      type = `gconftool-2 --get-type #{var_path}`
-      type.chomp!
-      #puts "type #{type}"
-      #puts "gconftool-2 --get #{var_path}"
-      value = `gconftool-2 --get #{var_path}`
-      if value.empty?
-        value = DEFAULT_VALUES[method]
-      else
-        value.chomp!
-        value = convert_for_type(type, value)
-        if value.nil?
-          value = DEFAULT_VALUES[method]
+    # Make a judgement about the type of the settings we get back from
+    # gconftool. This is not fool-proof, but it *does* work for the
+    # range of values used by Alexandria.
+    def discriminate(value)
+      if value == "true"        # bool
+        return true
+      elsif value == "false"    # bool 
+        return false
+      elsif value =~ /^[0-9]+$/   # int
+        return value.to_i
+      elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
+        return $1.split(",")
+      elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
+        begin
+          pair = $1.split(",")
+          return [discriminate(pair.first), discriminate(pair.last)]
+        rescue
+          return [0,0]
         end
-        #puts value.inspect
-      end
-      value
-    end
-
-    def exec_gconf_system(type, var_path)
-      value = `gconftool-2 --get #{var_path}`
-      if value.empty?
-        value = nil
       else
-        value.chomp!
-        value = convert_for_type(type, value)
-      end
-      value
-    end
-
-    URL_HANDLERS_DIR = "/desktop/gnome/url-handlers/"
-    def www_browser
-      dir = URL_HANDLERS_DIR + "http/"
-      http_enabled = exec_gconf_system("bool", dir + "enabled")
-      if http_enabled
-        http_command = exec_gconf_system("string", dir + "command")
-        http_command
-      else
-        nil
+        return value           # string
       end
     end
 
-    def email_client
-      dir = URL_HANDLERS_DIR + "mailto/"
-      mailto_enabled = exec_gconf_system("bool", dir + "enabled")
-      if mailto_enabled
-        mailto_command = exec_gconf_system("string", dir + "command")
-        mailto_command
-      else
-        nil
-      end
-    end
-
-    def http_proxy_config
-      use_http_proxy = exec_gconf_system("bool", "/system/http_proxy/use_http_proxy")
-      proxy_mode = exec_gconf_system("string", "/system/proxy/mode") 
-      if use_http_proxy && (proxy_mode == "manual")
-        proxy = "/system/http_proxy/"
-        host = exec_gconf_system("string", proxy + "host")
-        port = exec_gconf_system("int", proxy + "port")
-        user = exec_gconf_system("string", proxy + "authentication_user")
-        pass = exec_gconf_system("string", proxy + "authentication_n_password")
-
-        [ host, port, user, pass ] if (host && port)
-      end
-    end
   end
 end
