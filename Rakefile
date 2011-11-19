@@ -50,8 +50,8 @@ share_dir = ENV['SHARE'] || "#{PREFIX}/share"
 SHARE = share_dir
 
 DATA_VERSION = '0.6.3'
-PROJECT_VERSION = '0.6.7'
-DISPLAY_VERSION = '0.6.7'
+PROJECT_VERSION = '0.6.8'
+DISPLAY_VERSION = '0.6.8'
 
 
 # Write a .config file if the configuration data has changed
