@@ -85,17 +85,23 @@ module Alexandria
 
         if @checkbutton_loaned.active = book.loaned?
           @entry_loaned_to.text = (book.loaned_to or "")
-          self.loaned_since = (book.loaned_since or Time.now)
+          self.loaned_since = book.loaned_since
+          @date_loaned_since.sensitive = true
+        else
+          @date_loaned_since.sensitive = false          
         end
 
         @checkbutton_own.active = book.own?
         if @checkbutton_redd.active = book.redd?
+          @redd_date.sensitive = true
           if book.redd_when.nil?
             puts "no redd_when"
           else
             @redd_date.text = format_date(book.redd_when)
           end
 	  #self.redd_when = (book.redd_when or Time.now)
+        else
+          @redd_date.sensitive = false
 	end
         @checkbutton_want.active = book.want?
 

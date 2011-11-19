@@ -100,9 +100,9 @@ module Alexandria
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
-            puts time
             @calendar_popup_for_entry.text = format_date(time)
           end
+
         end
         
         @calendar.signal_connect("day-selected-double-click") do
@@ -112,7 +112,6 @@ module Alexandria
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
-            puts time
             @calendar_popup_for_entry.text = format_date(time)
           end
           hide_calendar_popup
@@ -122,10 +121,19 @@ module Alexandria
           if primary.nick == 'primary'
             display_calendar_popup(entry)
           elsif primary.nick == 'secondary'
-            clear_date_entry(@redd_date)
+            clear_date_entry(entry)
           end
-
         end
+
+        @date_loaned_since.signal_connect('icon-press') do |entry, primary, icon|
+          if primary.nick == 'primary'
+            display_calendar_popup(entry)
+          elsif primary.nick == 'secondary'
+            clear_date_entry(entry)
+            @label_loaning_duration.label = ""
+          end                                               
+        end
+
       end
 
       def clear_date_entry(entry)
@@ -161,6 +169,14 @@ module Alexandria
           hide_calendar_popup
         else
           @calendar_popup_for_entry = entry
+          unless entry.text.strip.empty?
+            time = parse_date(entry.text)
+            unless time.nil?
+              @calendar.year = time.year
+              @calendar.month = time.month - 1
+              @calendar.day = time.day
+            end
+          end
           @book_properties_dialog.modal = false
           @calendar_popup.move(*get_entry_popup_coords(entry))
           @calendar_popup.show_all
@@ -322,14 +338,34 @@ module Alexandria
       end
 
       def on_loaned_date_changed
+        date_regexes =  [/[0123]?[0-9]\/[0123]?[0-9]\/[0-9]{4}/,
+                        /[0-9]{4}-[0123]?[0-9]-[0123]?[0-9]}/]
+        matches_regex = false
+        date_regexes.each do |regex|
+          if matches_regex = regex.match(@date_loaned_since.text)
+            break
+          end
+        end
+        unless matches_regex
+          return
+        end
         t = parse_date(@date_loaned_since.text)
+        if t.nil?
+          @label_loaning_duration.label = ""
+          return
+        end
         loaned_time = Time.at(t)
         n_days = ((Time.now - loaned_time) / (3600*24)).to_i
+        if n_days > 365250 # 1,000 years
+          @label_loaning_duration.label = ""
+          return
+        end
         @label_loaning_duration.label = if n_days > 0
                                           n_("%d day", "%d days", n_days) % n_days
                                         else
                                           ""
                                         end
+        
       end
       def redd_toggled
 	redd_yes=@checkbutton_redd.active?
@@ -371,20 +407,33 @@ module Alexandria
       end
 
       def loaned_since=(time)
-        @date_loaned_since.text = format_date(time)
+        if time.nil?
+          @date_loaned_since.text = ""
+          @label_loaning_duration.label = ""
+        else
+          @date_loaned_since.text = format_date(time)
+          on_loaned_date_changed
+        end
         # XXX 'date_changed' signal not automatically called after #time=.
-        on_loaned_date_changed
       end
       def redd_when=(time)
 	@redd_date.text = format_date(time)
       end
 
       def parse_date(datestring)
-        Time.parse(datestring)
+        date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
+        ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
+        begin
+          d = Date.strptime(datestring, date_format)          
+          Time.gm(d.year, d.month, d.day)
+        rescue => er
+          nil
+        end
       end
 
       def format_date(datetime)
-        datetime.strftime("%d/%m/%Y")
+         date_format = '%d/%m/%Y'
+        datetime.strftime( date_format = '%d/%m/%Y')
       end
 
     end

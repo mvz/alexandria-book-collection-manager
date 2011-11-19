@@ -8,6 +8,7 @@
     <property name="modal">True</property>
     <property name="type_hint">dialog</property>
     <property name="has_resize_grip">False</property>
+    <signal name="destroy" handler="on_destroy" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog_vbox1">
         <property name="visible">True</property>
@@ -835,6 +836,7 @@
                         <property name="secondary_icon_activatable">True</property>
                         <property name="primary_icon_sensitive">True</property>
                         <property name="secondary_icon_sensitive">True</property>
+                        <signal name="changed" handler="on_loaned_date_changed" swapped="no"/>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
