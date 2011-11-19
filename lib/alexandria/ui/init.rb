@@ -84,19 +84,9 @@ module Alexandria
         if section
           section_index = "##{section}"
         end
-        lang = 'C'
-        if ENV['LANG'] =~ /^fr/
-          lang = 'fr'
-        elsif ENV['LANG'] =~ /^ja/
-          lang = 'ja'
-        end
-        filename = File.join(Alexandria::Config::SHARE_DIR,
-                             'gnome','help','alexandria',
-                             lang,
-                             "alexandria.xml#{section_index}")
-        puts filename
-        exec("gnome-help #{filename}") if fork.nil?
-
+        exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
+        # TODO this should call gtk_show_uri, but it's not included
+        #      in ruby-gnome2 yet
       rescue Exception => e
         log.error(self) { "Unable to load help browser" }
         ErrorDialog.new(parent, _("Unable to launch the help browser"),
