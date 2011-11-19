@@ -77,16 +77,13 @@ module Alexandria
   module UI
     def self.display_help(parent=nil, section=nil)
       begin
-        ## Gnome::Help.display('alexandria', section)
-        # The above is now deprecated, so we have to do this by hand
-        # (added by Cathal Mc Ginley, 8th Nov 2011)
+        # TODO this should call Gtk.show_uri, but it's not included
+        # in ruby-gnome2 yet
         section_index = ''
         if section
           section_index = "##{section}"
         end
         exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
-        # TODO this should call gtk_show_uri, but it's not included
-        #      in ruby-gnome2 yet
       rescue Exception => e
         log.error(self) { "Unable to load help browser" }
         ErrorDialog.new(parent, _("Unable to launch the help browser"),

@@ -15,8 +15,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-##require 'gnome2' # for DateEdit field
-
 module Alexandria
   module UI
     class SmartLibraryPropertiesDialogBase < Gtk::Dialog
@@ -147,7 +145,6 @@ module Alexandria
         operator_combo.model = operator_model
 
         value_entry = Gtk::Entry.new
-        # date_entry = Gnome::DateEdit.new(0, false, false)
         
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
