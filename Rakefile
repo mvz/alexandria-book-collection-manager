@@ -96,7 +96,7 @@ def install_common(install_task)
 
   share_files = ['data/alexandria/**/*', 'data/gnome/**/*.*',
                  'data/locale/**/*.mo', 'data/omf/**/*.omf', 
-                 'data/sounds/**/*.wav'] #, 'data/menu/*']
+                 'data/sounds/**/*.ogg'] #, 'data/menu/*']
   install_task.install('data', share_files, SHARE)
 
   icon_files = ['data/app-icon/**/*.png', 'data/app-icon/scalable/*.svg']
