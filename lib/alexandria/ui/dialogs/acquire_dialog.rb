@@ -21,7 +21,8 @@ require 'alexandria/ui/glade_base'
 require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
 
-require 'gnome2' # for Gnome::Canvas and Gnome::Sound...
+require 'gnome2' # for Gnome::Canvas
+require 'alexandria/ui/sound'
 
 module Alexandria
   module UI
@@ -430,8 +431,7 @@ module Alexandria
         end
         if isbn
           log.debug { "Got ISBN #{isbn}" }
-          # TODO :: sound
-          play_sound("good_scan")
+          @sound_player.play("good_scan")
 
           @barcodes_treeview.model.freeze_notify do
             iter = @barcodes_treeview.model.append
@@ -439,11 +439,10 @@ module Alexandria
             iter[1] = Icons::BOOK
             iter[2] = ""
           end
-          lookup_book(isbn)
+          lookup_book(isbn) unless ENV['HACKETY'] # XXX remove before release
         else
           log.debug { "was not an ISBN barcode" }
-          # TODO :: sound
-          play_sound("bad_scan")
+          @sound_player.play("bad_scan")
         end
       end
 
@@ -485,7 +484,7 @@ module Alexandria
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
           # @parent.appbar.status = message
-          MainApp.instance.appbar.status = message # HACKish
+          MainApp.instance.ui_manager.set_status_label( message )
           false
         end
       end
@@ -594,7 +593,7 @@ module Alexandria
       end
 
       def on_destroy
-        MainApp.instance.appbar.status = ""
+        MainApp.instance.ui_manager.set_status_label( "" )
         notify_end_add_by_isbn
         # TODO possibly make sure all threads have stopped running
       end
@@ -611,7 +610,7 @@ module Alexandria
 
         log.debug { "Using #{@scanner.name} scanner" }
         message = _("Ready to use %s barcode scanner") % @scanner.name
-        MainApp.instance.appbar.status = message 
+        MainApp.instance.ui_manager.set_status_label( message )
 
         @prev_time = 0
         @interval = 0
@@ -660,8 +659,7 @@ module Alexandria
                 # this is our first character, notify user
                 log.debug { "Scanning! Received first character." }
               end
-              # TODO :: sound
-              play_sound("scanning")
+              @sound_player.play("scanning")
             end
             @scanner_buffer << event.keyval.chr
 
@@ -712,10 +710,7 @@ module Alexandria
           end
         end
 
-
-        # TODO :: sound
-        Gnome::Sound.init("localhost")
-
+        @sound_player = SoundEffectsPlayer.new
       end
 
       def developer_test_scan
@@ -731,6 +726,7 @@ module Alexandria
                  ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3n6CNr6DxvYDa."]
         @scanner_buffer = scans[@@debug_index % scans.size]
         @@debug_index += 1
+        @sound_player.play("scanning")
         read_barcode_scan
       end
 
@@ -781,15 +777,6 @@ module Alexandria
           end
         end
 
-      end
-
-      def play_sound(filename)
-        ## sound_file = "#{Config::SOUNDS_DIR}/#{filename}.ogg"
-        sound_file = "#{Config::SOUNDS_DIR}/#{filename}.wav"
-        log.info { "playing #{sound_file}" }
-        Gnome::Sound.play(sound_file)
-        # HACK, if your GNOME "system sounds" don't work, uncomment this...
-        ## `aplay #{sound_file}`
       end
 
     end
