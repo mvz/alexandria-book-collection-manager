@@ -339,7 +339,7 @@ module Alexandria
 
       def on_loaned_date_changed
         date_regexes =  [/[0123]?[0-9]\/[0123]?[0-9]\/[0-9]{4}/,
-                        /[0-9]{4}-[0123]?[0-9]-[0123]?[0-9]}/]
+                        /[0-9]{4}-[0123]?[0-9]-[0123]?[0-9]/]
         matches_regex = false
         date_regexes.each do |regex|
           if matches_regex = regex.match(@date_loaned_since.text)

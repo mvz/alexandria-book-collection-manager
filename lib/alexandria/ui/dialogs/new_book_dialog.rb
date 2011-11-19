@@ -49,14 +49,14 @@ module Alexandria
       end
     end
 
-    class NewBookDialog < GladeBase
+    class NewBookDialog < BuilderBase
       include Logging
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, selected_library=nil, &block)
-        super('new_book_dialog.glade')
+        super('new_book_dialog__builder.glade', widget_names)
         log.info { "New Book Dialog" }
         @new_book_dialog.transient_for = @parent = parent
         @block = block
@@ -64,6 +64,19 @@ module Alexandria
         @selected_library = selected_library
         setup_dialog_gui
         @progressbar.hide
+      end
+
+      def widget_names
+
+        [:liststore1, :liststore2, :new_book_dialog, :dialog_vbox1,
+         :dialog_action_area1, :button_help, :button_cancel,
+         :button_add, :table1, :keep_open, :combo_libraries,
+         :cellrenderertext1, :eventbox_entry_isbn, :entry_isbn,
+         :label3, :hbox2, :eventbox_combo_search, :combo_search,
+         :cellrenderertext2, :eventbox_entry_search, :entry_search,
+         :button_find, :scrolledwindow, :treeview_results,
+         :title_radiobutton, :isbn_radiobutton, :progressbar]
+
       end
 
       def setup_dialog_gui
