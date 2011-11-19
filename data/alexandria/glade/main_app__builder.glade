@@ -57,6 +57,7 @@
                             <property name="receives_default">True</property>
                             <property name="use_action_appearance">False</property>
                             <property name="relief">none</property>
+                            <signal name="clicked" handler="on_close_sidepane" swapped="no"/>
                             <child>
                               <object class="GtkImage" id="image1">
                                 <property name="visible">True</property>
@@ -93,6 +94,8 @@
                       <object class="GtkTreeView" id="library_listview">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <signal name="button-press-event" handler="on_library_button_press_event" swapped="no"/>
+                        <signal name="focus-in-event" handler="on_focus" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -113,6 +116,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="show_tabs">False</property>
+                <signal name="switch-page" handler="on_switch_page" swapped="no"/>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow5">
                     <property name="visible">True</property>
@@ -123,6 +127,8 @@
                       <object class="GtkIconView" id="iconview">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <signal name="button-press-event" handler="on_books_button_press_event" swapped="no"/>
+                        <signal name="focus-in-event" handler="on_focus" swapped="no"/>
                       </object>
                     </child>
                   </object>
@@ -147,6 +153,8 @@
                       <object class="GtkTreeView" id="listview">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <signal name="button-press-event" handler="on_books_button_press_event" swapped="no"/>
+                        <signal name="focus-in-event" handler="on_focus" swapped="no"/>
                       </object>
                     </child>
                   </object>
