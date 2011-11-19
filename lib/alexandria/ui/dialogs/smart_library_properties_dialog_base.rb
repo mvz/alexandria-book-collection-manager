@@ -146,9 +146,11 @@ module Alexandria
         operator_combo.model = operator_model
 
         value_entry = Gtk::Entry.new
-        date_entry = Gnome::DateEdit.new(0, false, false)
+        # date_entry = Gnome::DateEdit.new(0, false, false)
         
-        date_entry = Gtk::Calendar.new
+        date_entry = Gtk::Entry.new
+        date_entry.primary_icon_name = Gtk::Stock::EDIT
+        date_entry.primary_icon_activatable = true
 
 
         # Really hide the time part of the date entry, as the constructor
@@ -259,7 +261,7 @@ module Alexandria
               when String
                 value_entry.text = rule.value
               when Time
-                date_entry.time = rule.value.tv_sec
+                date_entry.text = format_date(rule.value)
               end
             end
           end
@@ -291,11 +293,11 @@ module Alexandria
             value = entry.text.strip
           elsif date.visible?
             begin
-              value = Time.at(date.time)
+              value = parse_date(date.text)
             rescue Exception => ex
               trace = ex.backtrace.join("\n > ")
               log.warn { "Possibly invalid date entered #{ex.message}" } 
-              log.warn { "Date widget returned #{date.time} / #{trace}" }
+              log.warn { "Date widget returned #{date.text} / #{trace}" }
               # user entered some non-date... 
               # default to current time, for the moment
               value = Time.now()
@@ -304,6 +306,25 @@ module Alexandria
           @smart_library_rules[i].value = value
         end
       end
+
+      # COPIED and PASTED from book_properties_dialog_base
+
+      def parse_date(datestring)
+        date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
+        ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
+        begin
+          d = Date.strptime(datestring, date_format)          
+          Time.gm(d.year, d.month, d.day)
+        rescue => er
+          nil
+        end
+      end
+
+      def format_date(datetime)
+         date_format = '%d/%m/%Y'
+        datetime.strftime( date_format = '%d/%m/%Y')
+      end
+
     end
   end
 end
