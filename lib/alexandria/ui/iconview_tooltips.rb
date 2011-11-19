@@ -74,6 +74,8 @@ class IconViewTooltips
         major, minor, micro = Gtk::BINDING_VERSION
         if (major == 0) and (minor >= 17)
           ruby_gnome2_atleast017 = true
+        elsif (major > 0)
+          ruby_gnome2_atleast017 = true          
         end
       end
 

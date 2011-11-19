@@ -123,7 +123,8 @@ module Alexandria
             book.notes = @textview_notes.buffer.text
             book.loaned = @checkbutton_loaned.active?
             book.loaned_to = @entry_loaned_to.text
-            book.loaned_since = Time.at(@date_loaned_since.time)
+            # book.loaned_since = Time.at(@date_loaned_since.time)
+            book.loaned_since = parse_date(@date_loaned_since.text)
 
             book.redd = @checkbutton_redd.active?
             book.own = @checkbutton_own.active?
@@ -141,6 +142,17 @@ module Alexandria
           rescue AddError => e
             ErrorDialog.new(@parent, _("Couldn't add the book"),
                             e.message)
+          end
+        end
+
+        # COPIED from book_properties_dialog_base
+        def parse_date(datestring)
+          date_format = '%d/%m/%Y'
+          begin
+            d = Date.strptime(datestring, date_format)          
+            Time.gm(d.year, d.month, d.day)
+          rescue => er
+            nil
           end
         end
 

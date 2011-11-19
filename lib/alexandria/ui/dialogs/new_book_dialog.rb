@@ -16,8 +16,6 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gdk_pixbuf2'
-require 'alexandria/ui/glade_base'
-
 
 module Alexandria
 

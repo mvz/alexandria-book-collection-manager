@@ -17,7 +17,7 @@
 
 require 'singleton'
 
-require 'gconf2'
+## require 'gconf2'
 require 'alexandria/default_preferences'
 
 module Alexandria
@@ -25,8 +25,20 @@ module Alexandria
     include Singleton
     include Logging
 
+    def exec_gconf_set_list(var_path, new_value)
+      list_type = "string"
+      list = new_value.inspect # this produces e.g. "[\"a\", \"b\", \"c\"]"
+      ##ret = `gconftool-2 --type list --list-type #{list_type} --set #{var_path} #{list}`
+    end
+
+    def exec_gconf_set(var_path, new_value)
+      type = "string"
+      list = new_value.inspect # this produces e.g. "[\"a\", \"b\", \"c\"]"
+      ##ret = `gconftool-2 --type #{type} --set #{var_path} #{new_value.inspect}`
+    end
+
     def initialize
-      @client = GConf::Client.default
+      ## @client = GConf::Client.default
     end
 
     APP_DIR = "/apps/alexandria/"
@@ -40,9 +52,9 @@ module Alexandria
 
         variable_name = match[1]
         new_value = args.first
-
-        
-        
+ 
+        var_path = APP_DIR + variable_name
+       
         begin
           if new_value.is_a?(Array)
             # when setting array, first remove nil elements (fixing #9007)
@@ -50,10 +62,14 @@ module Alexandria
             if new_value.empty?
               remove_preference(variable_name)
             else
-              @client[APP_DIR + variable_name] = new_value
+              # set list value
+              exec_gconf_set_list(var_path, new_value)
+              # @client[APP_DIR + variable_name] = new_value
             end
           else            
-            @client[APP_DIR + variable_name] = new_value
+            # set non-list value
+            exec_gconf_set(var_path, new_value)
+            # @client[APP_DIR + variable_name] = new_value
           end
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
@@ -65,109 +81,110 @@ module Alexandria
           raise "Get method #{method} should be called " +
             "without argument (was called with #{args.length})"
         end
+        var_path = APP_DIR + method
 
-        value = @client[APP_DIR + method]
-        value == nil ? DEFAULT_VALUES[method] : value
+        #value = @client[APP_DIR + method]
+        exec_gconf_get(method, var_path)
+        # value == nil ? DEFAULT_VALUES[method] : value
       end
     end
 
     def remove_preference(name)
-      @client.unset(APP_DIR + name)
+      var_path = APP_DIR + name
+      exec_gconf_unset(var_path)      
+    end
+    
+
+    def exec_gconf_unset(var_path)
+      `gconftool-2 --unset #{var_path}`
+    end
+
+    # type is one of int|bool|float|string|list|pair
+    def convert_for_type(type, value)
+
+      if type == "string"
+        value
+      elsif type == "int"
+        value.to_i
+      elsif type == "float"
+        value.to_f
+      elsif type == "bool"
+        value == "true"
+      elsif type == "list"
+        value =~ /\[[^\]]\]/
+        $1.split(",")
+      elsif type == "pair"
+        # dunno! # TODO fix this
+        value.split(",")
+      end
+    end
+
+    def exec_gconf_get(method, var_path)
+      if method != :blah
+        return DEFAULT_VALUES[method]
+      end
+      puts "gconftool-2 --get-type #{var_path}"
+      type = `gconftool-2 --get-type #{var_path}`
+      type.chomp!
+      puts "type #{type}"
+      puts "gconftool-2 --get #{var_path}"
+      value = `gconftool-2 --get #{var_path}`
+      if value.empty?
+        value = DEFAULT_VALUES[method]
+      else
+        value.chomp!
+        value = convert_for_type(type, value)
+        puts value.inspect
+      end
+      value
+    end
+
+    def exec_gconf_system(type, var_path)
+      value = `gconftool-2 --get #{var_path}`
+      if value.empty?
+        value = nil
+      else
+        value.chomp!
+        value = convert_for_type(type, value)
+      end
+      value
     end
 
     URL_HANDLERS_DIR = "/desktop/gnome/url-handlers/"
     def www_browser
       dir = URL_HANDLERS_DIR + "http/"
-      @client[dir + "command"] if @client[dir + "enabled"]
+      http_enabled = exec_gconf_system("bool", dir + "enabled")
+      if http_enabled
+        http_command = exec_gconf_system("string", dir + "command")
+        http_command
+      else
+        nil
+      end
     end
 
     def email_client
       dir = URL_HANDLERS_DIR + "mailto/"
-      @client[dir + "command"] if @client[dir + "enabled"]
+      mailto_enabled = exec_gconf_system("bool", dir + "enabled")
+      if mailto_enabled
+        mailto_command = exec_gconf_system("string", dir + "command")
+        mailto_command
+      else
+        nil
+      end
     end
 
     def http_proxy_config
-      if @client["/system/http_proxy/use_http_proxy"] and
-          @client["/system/proxy/mode"] == "manual"
+      use_http_proxy = exec_gconf_system("bool", "/system/http_proxy/use_http_proxy")
+      proxy_mode = exec_gconf_system("string", "/system/proxy/mode") 
+      if use_http_proxy && (proxy_mode == "manual")
+        proxy = "/system/http_proxy/"
+        host = exec_gconf_system("string", proxy + "host")
+        port = exec_gconf_system("int", proxy + "port")
+        user = exec_gconf_system("string", proxy + "authentication_user")
+        pass = exec_gconf_system("string", proxy + "authentication_n_password")
 
-        host, port, user, pass = %w{host port authentication_user
-                                            authentication_password}.map do |x|
-
-          case y = @client["/system/http_proxy/" + x]
-          when Integer
-            y == 0 ? nil : y
-          when String
-            (y.strip.empty?) ? nil : y
-          end
-        end
-
-        [ host, port, user, pass ] if host and port
+        [ host, port, user, pass ] if (host && port)
       end
     end
   end
 end
-
-=begin
-rescue LoadError
-
-module Alexandria
-    class Preferences
-        include Singleton
-        include OSX
-
-        def initialize
-            @userDefaults = NSUserDefaults.standardUserDefaults
-            # register defaults here
-        end
-
-        def method_missing(id, *args)
-            method = id.id2name
-            if match = /(.*)=$/.match(method)
-                if args.length != 1
-                    raise "Set method #{method} should be called with " +
-                          "only one argument (was called with #{args.length})"
-                end
-                puts "#{match[1]} -> #{args.first}"
-                _sync { @userDefaults.setObject_forKey(args.first, match[1]) }
-            else
-                unless args.empty?
-                    raise "Get method #{method} should be called " +
-                          "without argument (was called with #{args.length})"
-                end
-                _convertToRubyObject(_sync { @userDefaults.objectForKey(method) })
-            end
-        end
-
-        def remove_preference(name)
-            @userDefaults.removeObjectForKey(name)
-        end
-
-        #######
-        private
-        #######
-
-        def _sync(&p)
-            if ExecutionQueue.current != nil
-                ExecutionQueue.current.sync_call(p)
-            else
-                p.call
-            end
-        end
-
-        def _convertToRubyObject(object)
-            if object.nil?
-                nil
-            elsif object.isKindOfClass?(NSString.oc_class)
-                object.to_s
-            elsif object.isKindOfClass?(NSNumber.oc_class)
-                object.intValue
-            elsif object.isKindOfClass?(NSArray.oc_class)
-                object.to_a.map { |x| _convertToRubyObject(x) }
-            else
-                nil
-            end
-        end
-    end
-end
-end
-=end
