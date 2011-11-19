@@ -229,7 +229,7 @@ module Alexandria
               unless img_link =~ /^\//
                 slash = '/'
               end
-              image_urls << "#{SITE}#{slash}#{img_link}"
+              image_urls << img_link
             end
           end
         end
