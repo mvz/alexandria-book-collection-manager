@@ -15,8 +15,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'alexandria/ui/glade_base'
-
 class Gtk::Entry
   attr_writer :mandatory
   def mandatory?
@@ -213,13 +211,13 @@ module Alexandria
       end
     end
 
-    class PreferencesDialog < GladeBase
+    class PreferencesDialog < BuilderBase
       include Alexandria::Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       def initialize(parent, &changed_block)
-        super('preferences_dialog.glade')
+        super('preferences_dialog__builder.glade', widget_names)
         @preferences_dialog.transient_for = parent
         @changed_block = changed_block
 
@@ -311,6 +309,21 @@ module Alexandria
         sensitize_providers
       end
 
+
+      def widget_names
+        [:button_prov_add, :button_prov_down, :button_prov_remove,
+         :button_prov_setup, :button_prov_up, :buttonbox_prov,
+         :checkbutton_col_authors, :checkbutton_col_edition,
+         :checkbutton_col_isbn, :checkbutton_col_loaned_to,
+         :checkbutton_col_own, :checkbutton_col_publish_date,
+         :checkbutton_col_publisher, :checkbutton_col_rating,
+         :checkbutton_col_redd, :checkbutton_col_tags,
+         :checkbutton_col_want, :checkbutton_prov_advanced,
+         :preferences_dialog,
+         :treeview_providers
+
+        ]
+      end
 
       def setup_enable_disable_popup
         # New Enable/Disable pop-up menu...
