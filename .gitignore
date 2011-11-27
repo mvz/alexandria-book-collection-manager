@@ -4,3 +4,4 @@ config.save
 alexandria.desktop
 alexandria.desktop.in.h
 ChangeLog
+.svn-authors
