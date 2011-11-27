@@ -32,7 +32,7 @@ rescue LoadError
 end
 
 require 'rake/clean'
-require 'rake/rdoctask'
+require 'rdoc/task'
 require 'rake/packagetask'
 
 $:.unshift(File.join(File.dirname(__FILE__), 'util/rake'))
