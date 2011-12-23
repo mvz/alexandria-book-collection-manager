@@ -1,6 +1,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2009 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # This file is part of the Alexandria build system.
 #
