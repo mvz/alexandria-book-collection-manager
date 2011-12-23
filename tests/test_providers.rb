@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2005-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 
 require 'test/unit'
 require 'gettext'
@@ -32,30 +33,36 @@ class TestProviders < Test::Unit::TestCase
 
   #  providers depending on optional libraries
 
+  # XXX: Amazon requires an API key. Perhaps remove it altogether as a
+  # provider?
   def test_amazon_isbn
+    return true
     __test_provider(Alexandria::BookProviders::AmazonProvider,
                     '9780385504201')
   end
 
   def test_amazon_title
+    return true
     __test_provider(Alexandria::BookProviders::AmazonProvider,
                     'A Confederacy of Dunces', Alexandria::BookProviders::SEARCH_BY_TITLE)
   end
 
   def test_amazon_author
+    return true
     __test_provider(Alexandria::BookProviders::AmazonProvider,
                     'John Kennedy Toole', Alexandria::BookProviders::SEARCH_BY_AUTHORS)
   end
 
   def test_amazon_keyword
+    return true
     __test_provider(Alexandria::BookProviders::AmazonProvider,
                     'Confederacy Dunces', Alexandria::BookProviders::SEARCH_BY_KEYWORD)
   end
 
   def test_dea
-    __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
+    __test_provider(Alexandria::BookProviders::DeaStoreProvider,
                     '9788817012980')
-    __test_provider(Alexandria::BookProviders::DeaStore_itProvider,
+    __test_provider(Alexandria::BookProviders::DeaStoreProvider,
                     '9788806134747')
   end
 
@@ -99,7 +106,7 @@ class TestProviders < Test::Unit::TestCase
   # providers supposed to be always working
 
   def test_bn
-    __test_provider(Alexandria::BookProviders::BNProvider,
+    __test_provider(Alexandria::BookProviders::BarnesAndNobleProvider,
                     '9780961328917')   # see #1433
   end
 
@@ -134,7 +141,9 @@ class TestProviders < Test::Unit::TestCase
                     '0094638203520')
   end
 
+  # XXX: Marked in code as not working; remove implementation entirely.
   def test_ibs_it
+    return true
     # this tests a book without image but with author
     __test_provider(Alexandria::BookProviders::IBS_itProvider,
                     '9788886973816')
@@ -144,7 +153,7 @@ class TestProviders < Test::Unit::TestCase
   end
 
   def test_adlibris
-    __test_provider(Alexandria::BookProviders::AdlibrisProvider,
+    __test_provider(Alexandria::BookProviders::AdLibrisProvider,
                     '9789100109332')
   end
 
@@ -153,12 +162,16 @@ class TestProviders < Test::Unit::TestCase
                     '9788599170380')
   end
 
+  # XXX: Marked in code as not working; remove implementation entirely.
   def test_bol
+    return true
     __test_provider(Alexandria::BookProviders::BOL_itProvider,
                     '9788817012980')
   end
 
+  # XXX: Marked in code as not working; remove implementation entirely.
   def test_webster
+    return true
     # BIT
     __test_provider(Alexandria::BookProviders::Webster_itProvider,
                     '9788817012980')
@@ -181,7 +194,9 @@ class TestProviders < Test::Unit::TestCase
     assert(this_book.authors.length == 3, "Wrong number of authors for this book!")
   end
 
+  # XXX: Marked in code as not working; remove implementation entirely.
   def test_renaud
+    return true
     # adultes
     __test_provider(Alexandria::BookProviders::RENAUDProvider,
                     '9782894723388')
@@ -191,15 +206,15 @@ class TestProviders < Test::Unit::TestCase
   end
 
   def test_worldcat
-    __test_provider(Alexandria::BookProviders::WorldcatProvider,
+    __test_provider(Alexandria::BookProviders::WorldCatProvider,
                     '9780521247108')
     # this one is with <div class=vernacular lang="[^"]+">)
-    __test_provider(Alexandria::BookProviders::WorldcatProvider,
+    __test_provider(Alexandria::BookProviders::WorldCatProvider,
                     '9785941454136')
   end
 
   def test_worldcat_multiple_authors
-    this_book = __test_provider(Alexandria::BookProviders::WorldcatProvider,
+    this_book = __test_provider(Alexandria::BookProviders::WorldCatProvider,
                                 '9785941454136')
     assert_kind_of(Array, this_book.authors, "Not an array!")
     #puts this_book.authors
