@@ -16,6 +16,10 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gettext'
+
+# XXX: Gettext hotfix
+module Gem;def self.all_load_paths;[];end;end
+
 require 'logger'
 require 'alexandria/logging'
 require 'alexandria/about'
