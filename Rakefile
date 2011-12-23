@@ -24,13 +24,6 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-begin
-  require 'rake'
-rescue LoadError
-  require 'rubygems'
-  require 'rake'
-end
-
 load 'tasks/setup.rb'
 
 require 'rake/packagetask'
