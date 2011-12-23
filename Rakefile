@@ -31,7 +31,8 @@ rescue LoadError
   require 'rake'
 end
 
-require 'rake/clean'
+load 'tasks/setup.rb'
+
 require 'rdoc/task'
 require 'rake/packagetask'
 
