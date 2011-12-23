@@ -33,7 +33,6 @@ end
 
 load 'tasks/setup.rb'
 
-require 'rdoc/task'
 require 'rake/packagetask'
 
 $:.unshift(File.join(File.dirname(__FILE__), 'util/rake'))
