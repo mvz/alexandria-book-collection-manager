@@ -150,7 +150,7 @@ module Alexandria
 
     def update(*params)
       if params.first.is_a?(Libraries)
-        libraries, action, library = params
+        libraries, _, library = params
         unless library.is_a?(self.class)
           self.libraries = libraries.all_libraries
           refilter
@@ -446,26 +446,22 @@ module Alexandria
                                       :is_not_in_last_days,
                                       _("is not in last"),
                                       proc { |x, y| 
-begin
-                                      unless x.nil? or x.empty?
-                                        log.debug { "Given Date: #{x.inspect} #{x.class}" }
-                                        given_date = Time.parse(x)
-                                        days = y.to_i * (24*60*60)
-                                        
-                                        Time.now - given_date > days
-                                      else
-                                        false
-                                      end
-                                    rescue Exception => ex
-                                      trace = ex.backtrace.join("\n >")
-                                      log.warn { "Date matching failed #{ex} #{trace}" }
-                                      false
-                                    end
-
-
-
+                                        begin
+                                          unless x.nil? or x.empty?
+                                            log.debug { "Given Date: #{x.inspect} #{x.class}" }
+                                            given_date = Time.parse(x)
+                                            days = y.to_i * (24*60*60)
+                                            
+                                            Time.now - given_date > days
+                                          else
+                                            false
+                                          end
+                                        rescue Exception => ex
+                                          trace = ex.backtrace.join("\n >")
+                                          log.warn { "Date matching failed #{ex} #{trace}" }
+                                          false
+                                        end
                                         #Time.now - x > 3600*24*y 
-
                                       })
 
         ALL = self.constants.map \

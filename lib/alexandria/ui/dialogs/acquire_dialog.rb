@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -103,7 +104,7 @@ module Alexandria
           end
           # puts "book_in_library match #{match.inspect}"
           (not match.nil?)
-        rescue Exception => ex
+        rescue
           log.warn { "Failed to check for book #{isbn10} in library #{library}" }
           true
         end
@@ -131,7 +132,7 @@ module Alexandria
 
           model.freeze_notify do
             # capture isbns
-            selection.selected_each do |model, path, iter|
+            selection.selected_each do |mod, path, iter|
               isbn = iter[0]
               if book_in_library(isbn, library)
                 isbn_duplicates << isbn
@@ -186,7 +187,7 @@ module Alexandria
           model.freeze_notify do
             # capture isbns
             row_iters = []
-            model.each do |model, path, iter|
+            model.each do |mod, path, iter|
               isbn = iter[0]
               if (not @book_results.has_key?(isbn))
                 log.debug { "no book found for #{isbn}, not adding" }
@@ -375,7 +376,7 @@ module Alexandria
 
 
       def lookup_book(isbn)
-        lookup_thread = Thread.new(isbn) do |isbn|
+        Thread.new do
           begin
             start_search
             results = Alexandria::BookProviders.isbn_search(isbn)
@@ -385,7 +386,7 @@ module Alexandria
             set_cover_image_async(isbn, cover_uri)
             # TODO add this as a block to Gtk.queue (needs new overall gui design)
             @barcodes_treeview.model.freeze_notify do
-              iter = @barcodes_treeview.model.each do |model, path, iter|
+              @barcodes_treeview.model.each do |model, path, iter|
                 if iter[0] == isbn
                   iter[2] = book.title
                   model.row_changed(path, iter)
@@ -404,14 +405,14 @@ module Alexandria
       end
 
       def set_cover_image_async(isbn, cover_uri)
-        image_thread = Thread.new(isbn, cover_uri) do |isbn, cover_uri|
+        Thread.new do
           begin
             pixbuf = nil
             if cover_uri
               image_data = nil
               if URI.parse(cover_uri).scheme.nil?
                 File.open(cover_uri, "r") do |io|
-                  image = io.read
+                  image_data = io.read
                 end
               else
                 image_data = URI.parse(cover_uri).read
@@ -424,7 +425,7 @@ module Alexandria
             end
 
             @barcodes_treeview.model.freeze_notify do
-              iter = @barcodes_treeview.model.each do |model, path, iter|
+              @barcodes_treeview.model.each do |model, path, iter|
                 if iter[0] == isbn
                   iter[1] = pixbuf
                   model.row_changed(path, iter)

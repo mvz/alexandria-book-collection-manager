@@ -1,8 +1,9 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2010 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
-# This file is part of GNotions, a GTK+ client for Notions.
+# This file is part of Alexandria, a GNOME book collection manager.
 #
 # Alexandria is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -78,7 +79,7 @@ module Gtk
     Gtk.main
   end
 
- end
+end
 
 # Usage is very simple:
 

@@ -236,7 +236,7 @@ module Alexandria
       if /cols_width/ =~ var_path
         puts value_str
       end
-      ret = `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
+      `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
     

@@ -1,6 +1,7 @@
 # Copyright (C) 2004 Laurent Sansonetti
 # Copyright (C) 2007 Laurent Sansonetti and Marco Costantini
 # Copyright (C) 2009 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -278,7 +279,7 @@ module Alexandria
         key, val = str.split(':')
         # a real hack for not handling encoding properly :^)
         if val
-          map[key.gsub(/[^a-zA-z]/, '')] = val.strip()
+          map[key.gsub(/[^a-zA-Z]/, '')] = val.strip()
         end
       end
       map

@@ -662,7 +662,6 @@ module Alexandria
       
       ruined = []
       deleted = []
-      last = []
       all_regular_libraries.each {|library|
         ruined += library.ruined_books
         #make deleted books from each library accessible so we don't crash on smart libraries

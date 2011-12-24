@@ -46,8 +46,8 @@ class IconViewTooltips
     @tooltip_window.signal_connect('expose_event') { |window, event|
       on_expose(window, event) }
 
-    @tooltip_window.signal_connect('leave_notify_event') { |view, event|
-      on_leave(view, event) }
+    @tooltip_window.signal_connect('leave_notify_event') { |vw, event|
+      on_leave(vw, event) }
 
       @label = Gtk::Label.new('')
       @label.wrap = true
@@ -72,7 +72,7 @@ class IconViewTooltips
       arch_is_x86_64 = Config::CONFIG['arch'] =~ /x86_64/i
       ruby_gnome2_atleast017 = false
       if Gtk::BINDING_VERSION and Gtk::BINDING_VERSION.instance_of? Array
-        major, minor, micro = Gtk::BINDING_VERSION
+        major, minor, _ = Gtk::BINDING_VERSION
         if (major == 0) and (minor >= 17)
           ruby_gnome2_atleast017 = true
         elsif (major > 0)
@@ -102,10 +102,10 @@ class IconViewTooltips
 
 
   def set_view(view)
-    view.signal_connect('motion_notify_event') { |view, event|
-      on_motion(view, event) }
-      view.signal_connect('leave_notify_event') { |view, event|
-        on_leave(view, event) }
+    view.signal_connect('motion_notify_event') { |vw, event|
+      on_motion(vw, event) }
+      view.signal_connect('leave_notify_event') { |vw, event|
+        on_leave(vw, event) }
   end
 
   def on_expose(window, event)

@@ -341,7 +341,7 @@ module Alexandria
 
               if widget.is_a?(Gtk::TreeView)
                 Gtk.idle_add do
-                  cur_path, focus_col = widget.cursor
+                  #cur_path, focus_col = widget.cursor
                   
                   widget.focus = true
 
@@ -576,9 +576,9 @@ module Alexandria
       end
 
       def select_a_book book
-        select_this_book = proc do |book, view|
+        select_this_book = proc do |bk, view|
           @filtered_model.refilter
-          iter = iter_from_book book
+          iter = iter_from_book bk
           if not iter
             next
           end
@@ -588,7 +588,7 @@ module Alexandria
           end
           path = view.model.convert_path_to_child_path(path)
           path = @filtered_model.convert_path_to_child_path(path)
-          log.debug { "Path for #{book.ident} is #{path}" }
+          log.debug { "Path for #{bk.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
           selection.unselect_all
           selection.select_path(path)
@@ -679,7 +679,7 @@ module Alexandria
           if cmd.downcase.index("%u")
             launch_command = cmd.gsub(/%u/i, "\"" + url + "\"")
           else
-            launch_command = cmd + " \"" + url +"\""
+            launch_command = cmd + " \"" + url + "\""
           end
           Thread.new { system(launch_command) }
         else
@@ -720,7 +720,6 @@ module Alexandria
       end
 
       def handle_ruined_books
-        title = _("Repair Book Data")
         new_message = _("The data files for the following books are malformed or empty. Do you wish to attempt to download new information for them from the online book providers?\n")
 
         #message = _("These books do not conform to the ISBN-13
@@ -738,8 +737,6 @@ module Alexandria
         recovery_dialog.signal_connect('response') do |dialog, response_type|
           recovery_dialog.destroy
           if response_type == Gtk::Dialog::RESPONSE_OK
-            books_to_add = []
-
             # progress indicator...
             @progressbar.fraction = 0
             @appbar.children.first.visible = true   # show the progress bar
@@ -943,7 +940,7 @@ module Alexandria
           if book
             Gtk.queue do
               begin
-                tail = append_book(book)
+                append_book(book)
               rescue Exception => ex
                 trace = ex.backtrace.join("\n > ")
                 log.error { "append_books failed #{ex.message} #{trace}" }

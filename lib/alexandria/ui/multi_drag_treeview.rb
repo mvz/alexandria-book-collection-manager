@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -84,7 +85,7 @@ class Gtk::TreeView
   end
 
   def button_release_event(event)
-    @context.events.each { |event| Gtk.propagate_event(self, event) }
+    @context.events.each { |evnt| Gtk.propagate_event(self, evnt) }
     stop_drag_check
     return false
   end
@@ -115,7 +116,7 @@ class Gtk::TreeView
 
     return false if event.event_type == Gdk::Event::BUTTON2_PRESS
 
-    path, column, cell_x, cell_y = get_path_at_pos(event.x, event.y)
+    path, _, cell_x, cell_y = get_path_at_pos(event.x, event.y)
     return false if path.nil?
 
     #call_parent = (event.state.control_mask? or event.state.shift_mask?) or !selected or event.button != 1
@@ -136,13 +137,13 @@ class Gtk::TreeView
       @context.cell_x = cell_x
       @context.cell_y = cell_y
       @context.motion_notify_handler =
-        signal_connect('motion_notify_event') do |widget, event, data|
-        motion_notify_event(event)
-      end
+        signal_connect('motion_notify_event') do |widget, evnt, data|
+          motion_notify_event(evnt)
+        end
       @context.button_release_handler =
-        signal_connect('button_release_event') do |widget, event, data|
-        button_release_event(event)
-      end
+        signal_connect('button_release_event') do |widget, evnt, data|
+          button_release_event(evnt)
+        end
       @context.events << event unless call_parent
     end
 

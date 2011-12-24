@@ -1,6 +1,7 @@
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -176,7 +177,7 @@ module Alexandria
           doc = html_to_doc(html)
           data = doc%'div#dati_scheda'
 
-          sotto_data_hdr = doc%'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
+          # sotto_data_hdr = doc%'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
           
           # title
           title_span = data%'h1.titolo_scheda'

@@ -1,6 +1,7 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
 # Copyright (C) 2010 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License aso
@@ -55,7 +56,7 @@ module Alexandria
         column.widget = Gtk::Label.new(title).show
         renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |column, cell, model, iter|
+        column.set_cell_data_func(renderer) do |col, cell, model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           cell.pixbuf = iter[Columns::COVER_LIST]
@@ -67,7 +68,7 @@ module Alexandria
 
         column.pack_start(renderer, true)
 
-        column.set_cell_data_func(renderer) do |column, cell, model, iter|
+        column.set_cell_data_func(renderer) do |col, cell, model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           cell.text, cell.editable = iter[Columns::TITLE], false #true
@@ -173,7 +174,7 @@ module Alexandria
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
           column.pack_start(renderer, false)
-          column.set_cell_data_func(renderer) do |column, cell,model, iter|
+          column.set_cell_data_func(renderer) do |col, cell, model, iter|
             iter = @listview_model.convert_iter_to_child_iter(iter)
             iter = @filtered_model.convert_iter_to_child_iter(iter)
             rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
@@ -231,13 +232,13 @@ module Alexandria
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { "Create listview column for %s..." % title }
-        setup_column = Proc.new do |iter, cell, column|
-          state = iter[column]
+        setup_column = Proc.new do |iter, cell, col|
+          state = iter[col]
           cell.set_active(state)
           cell.activatable = true
         end
         log.debug { "Setting cell_data_func for #{renderer}" }
-        column.set_cell_data_func(renderer) do |column, cell, model, iter|
+        column.set_cell_data_func(renderer) do |col, cell, model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           case iterid

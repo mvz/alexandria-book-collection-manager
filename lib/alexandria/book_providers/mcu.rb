@@ -1,5 +1,6 @@
 # Copyright (C) 2004 Javier Fernandez-Sanguino
 # Copyright (C) 2007 Javier Fernandez-Sanguino and Marco Costantini
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -43,7 +44,7 @@ module Alexandria
 
       def search(criterion, type)
         prefs.read
-         begin
+        begin
           criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
         rescue GLib::ConvertError
           log.info { "Cannot search for non-ISO-8859-1 terms at MCU : #{criterion}" }
@@ -101,7 +102,6 @@ module Alexandria
         print "Looking at detailspage: #{detailspage}\n" if $DEBUG # for DEBUGing
         product = {}
         product['authors'] = []
-        nextline = nil
         robotstate = 0
         transport.get(URI.parse(detailspage)).each do |line|
           # This is a very crude robot interpreter

@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -519,7 +520,7 @@ module Alexandria
           library, is_new_library =
             @combo_libraries.selection_from_libraries(libraries)
 
-          book_was_added = false
+          # book_was_added = false
 
           if @isbn_radiobutton.active?
             add_single_book_by_isbn(library, is_new_library)
@@ -598,7 +599,7 @@ module Alexandria
               # above last checked with ruby-gnome2 0.17.1 2009-12-09
               # if this puts is commented out, the cursor disappears
               # from the @entry_isbn box... weird, ne? - CathalMagus
-             end
+            end
           end
         end
       end
@@ -639,7 +640,7 @@ module Alexandria
         # Check that the book doesn't already exist in the library.
         isbn13 = Library.canonicalise_ean(isbn)
         puts isbn13
-        if book = library.find { |book| book.isbn == isbn13 }
+        if book = library.find { |bk| bk.isbn == isbn13 }
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
             [ isbn, library.name, book.title.sub("&", "&amp;") ]
         end

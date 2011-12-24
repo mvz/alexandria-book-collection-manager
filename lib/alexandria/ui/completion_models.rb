@@ -118,7 +118,7 @@ module Alexandria
       def initialize
         @models, @libraries = [], []
         5.times { @models << Gtk::ListStore.new(String) }
-        @models <<Gtk::ListStore.new(String)
+        @models << Gtk::ListStore.new(String)
         touch
       end
 

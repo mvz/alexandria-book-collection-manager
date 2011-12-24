@@ -1,6 +1,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2011 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
 #
@@ -123,7 +124,6 @@ module Alexandria
           if @index < 0
             @index = 0
           end
-          rect = @barcode_bars[@index]
           alpha = 7 * (@index+1)
           @barcode_bars.each_with_index do |rect, i|
             rect.set_property(:fill_color_rgba, 0xFF000000 + alpha)

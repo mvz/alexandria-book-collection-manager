@@ -1,3 +1,4 @@
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 module Alexandria
   module UI
     class SidePaneManager
@@ -91,14 +92,14 @@ module Alexandria
         renderer = Gtk::CellRendererPixbuf.new
         column = Gtk::TreeViewColumn.new(_("Library"))
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |column, cell, model, iter|
-          #log.debug { "sidepane: cell_data_func #{column}, #{cell}, #{iter}" }
+        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+          #log.debug { "sidepane: cell_data_func #{col}, #{cell}, #{iter}" }
           cell.pixbuf = iter[0]
         end
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column.pack_start(renderer, true)
-        column.set_cell_data_func(renderer) do |column, cell, model, iter|
+        column.set_cell_data_func(renderer) do |col, cell, model, iter|
           #log.debug { "sidepane: editable #{cell}, #{iter} #{iter[1]}: #{iter[2]}" }
           cell.text, cell.editable = iter[1], iter[2]
           #log.debug { "exit sidepane: editable #{cell}, #{iter}" }
@@ -126,7 +127,7 @@ module Alexandria
             |widget, drag_context, x, y, time, data|
             log.debug { "drag-motion" }
 
-            path, column, cell_x, cell_y =
+            path, column, _, _ =
               @library_listview.get_path_at_pos(x, y)
 
             if path
@@ -138,8 +139,8 @@ module Alexandria
                 if iter[3]  # separator?
                   path = nil
                 else
-                  library = @libraries.all_libraries.find do |x|
-                    x.name == iter[1]
+                  library = @libraries.all_libraries.find do |lib|
+                    lib.name == iter[1]
                   end
                   path = nil if library.is_a?(SmartLibrary)
                 end
@@ -172,13 +173,13 @@ module Alexandria
 
             success = false
             if selection_data.type == Gdk::Selection::TYPE_STRING
-              path, position =
+              path, _ =
                 @library_listview.get_dest_row_at_pos(x, y)
 
               if path
                 iter = @library_listview.model.get_iter(path)
-                library = @libraries.all_libraries.find do |x|
-                  x.name == iter[1]
+                library = @libraries.all_libraries.find do |lib|
+                  lib.name == iter[1]
                 end
                 @parent.move_selected_books_to_library(library)
                 success = true

@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -266,9 +267,9 @@ module Alexandria
 
         #renderer.active = true
         column = Gtk::TreeViewColumn.new("Enabled", renderer)
-        column.set_cell_data_func(renderer) do |col, renderer, model, iter|
+        column.set_cell_data_func(renderer) do |col, rndr, mod, iter|
           value = iter[2]
-          renderer.active = value
+          rndr.active = value
         end
 
        
@@ -279,13 +280,13 @@ module Alexandria
         column = Gtk::TreeViewColumn.new("Providers",
                                          renderer)
                                          # :text => 0)
-        column.set_cell_data_func(renderer) do |col, renderer, model, iter|
-          renderer.markup = iter[0]
+        column.set_cell_data_func(renderer) do |col, rndr, mod, iter|
+          rndr.markup = iter[0]
           #enabled = iter[2]
           #unless enabled
-          #  renderer.foreground = "gray"
+          #  rndr.foreground = "gray"
           #end
-          #renderer.active = value
+          #rndr.active = value
         end
         @treeview_providers.append_column(column)
         @treeview_providers.selection.signal_connect('changed') \
@@ -452,7 +453,7 @@ module Alexandria
 
       def on_provider_add
         dialog = NewProviderDialog.new(@preferences_dialog)
-        if new_provider = dialog.instance
+        if dialog.instance
           BookProviders.update_priority
           reload_providers
         end

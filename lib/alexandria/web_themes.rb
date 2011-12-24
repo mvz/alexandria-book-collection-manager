@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -52,8 +53,8 @@ module Alexandria
 
           css_file = File.join(path, file + ".css")
           preview_file = File.join(path, "preview.jpg")
-          [css_file, preview_file].each do |file|
-            raise "#{file} not found" unless File.exists?(file)
+          [css_file, preview_file].each do |helper_file|
+            raise "#{helper_file} not found" unless File.exists?(helper_file)
           end
           themes << WebTheme.new(css_file, preview_file,
                                  File.join(path, file, "pixmaps"))

@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -426,7 +427,7 @@ module Alexandria
         begin
           d = Date.strptime(datestring, date_format)          
           Time.gm(d.year, d.month, d.day)
-        rescue => er
+        rescue
           nil
         end
       end

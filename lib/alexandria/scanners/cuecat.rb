@@ -1,4 +1,5 @@
 # Copyright (C) 2005-2006 Christopher Cyll
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -63,7 +64,7 @@ module Alexandria
             code = isbn13
             type = 'IBN'
           end
-        rescue Exception => ex
+        rescue
           log.debug { "Cannot translate UPC (#{type}) code #{code} to ISBN" }
         end
 

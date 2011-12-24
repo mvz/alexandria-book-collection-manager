@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -84,7 +85,7 @@ module Alexandria
           section_index = "##{section}"
         end
         exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
-      rescue Exception => e
+      rescue
         log.error(self) { "Unable to load help browser" }
         ErrorDialog.new(parent, _("Unable to launch the help browser"),
                         _("Could not display help for Alexandria. " +
