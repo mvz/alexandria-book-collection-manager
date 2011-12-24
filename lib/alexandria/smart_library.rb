@@ -469,7 +469,7 @@ begin
                                       })
 
         ALL = self.constants.map \
-        { |x| self.module_eval(x) }.select \
+        { |x| self.module_eval(x.to_s) }.select \
         { |x| x.is_a?(Operator) }
       end
 
