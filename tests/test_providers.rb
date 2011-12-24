@@ -10,23 +10,23 @@ $KCODE = "U"
 
 class TestProviders < Test::Unit::TestCase
   def __test_provider(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
-    results = nil
-    assert_nothing_raised("Something wrong here.") do
-      results = provider.instance.search(query, search_type)
-    end
+    results = provider.instance.search(query, search_type)
+
     puts results.inspect if $DEBUG
-    assert_kind_of(Array, results, "Results are not an array")
-    assert(!results.empty?, "Results are empty")
+
+    assert_kind_of(Array, results, "Results are not an array for #{provider}")
+    assert(!results.empty?, "Results are empty for #{provider}")
+
     if search_type == Alexandria::BookProviders::SEARCH_BY_ISBN
-      assert(results.length <= 2, "Results are greater than 2")
+      assert(results.length <= 2, "Results are greater than 2 for #{provider}")
       if results.length == 2
-        assert_kind_of(String, results.last, "Result is not a String")
+        assert_kind_of(String, results.last, "Second result is not a String for #{provider}")
       end
-      assert(results.first.isbn == query, "Result's isbn #{results.first.isbn} is not the same as requested isbn #{query}")
-      assert_kind_of(Alexandria::Book, results.first, "Result is not a Book")
-      results.first
+      assert_kind_of(Alexandria::Book, results.first, "Result is not a Book for #{provider}")
+      assert_equal(query, results.first.isbn,
+                   "Result's isbn #{results.first.isbn} is not the same as requested isbn #{query} for #{provider}")
     else
-      assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book")
+      assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book for #{provider}")
     end
   end
 
