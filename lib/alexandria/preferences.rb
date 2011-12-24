@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2011 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -214,7 +215,7 @@ module Alexandria
 
     def make_list_string(list)
       if get_gconf_type(list.first) == "string"
-        list.map! {|x| x.gsub /\"/, "\\\"" }
+        list.map! {|x| x.gsub(/\"/, "\\\"") }
       end
       contents = list.join(",")
       "[" + contents + "]"
@@ -229,7 +230,7 @@ module Alexandria
       type = get_gconf_type(new_value)
       value_str = new_value
       if new_value.is_a? String
-        new_value.gsub! /\"/, "\\\""
+        new_value.gsub!(/\"/, "\\\"")
         value_str = "\"#{new_value}\""
       end
       if /cols_width/ =~ var_path

@@ -1,4 +1,5 @@
 # Copyright (C) 2005-2006 Laurent Sansonetti
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -44,7 +45,7 @@ class Gtk::Entry
       cur_text = c.entry.text
       new_tag = model.get_value(iter, 0)
       cur_text_split = cur_text.split(",")
-      cur_text_split.delete_at -1
+      cur_text_split.delete_at(-1)
       cur_text_split << new_tag
       c.entry.text = cur_text_split.join(",")      
       true

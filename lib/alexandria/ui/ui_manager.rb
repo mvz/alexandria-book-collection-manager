@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -21,7 +22,7 @@ module Alexandria
     MAX_RATING_STARS = 5
     class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
-        :iconview_model, :filtered_model, :on_books_selection_changed
+        :iconview_model, :filtered_model
       attr_reader :model
       include Logging
       include GetText

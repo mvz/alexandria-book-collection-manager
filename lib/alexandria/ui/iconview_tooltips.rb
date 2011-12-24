@@ -2,6 +2,7 @@
 #
 # Copyright (C) 2007 kksou
 # Copyright (C) 2008,2009 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -177,7 +178,6 @@ class IconViewTooltips
             # don't run again
             false
           else
-            false
             @tooltip_timeout_id = nil
           end
         end

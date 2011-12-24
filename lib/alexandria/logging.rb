@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -119,10 +120,7 @@ module Alexandria
 
     module ClassMethods
       def log
-        if not @log_wrapper
-          @log_wrapper = LogWrapper.new(Alexandria.log, self)
-        end
-        @log_wrapper
+        @log_wrapper ||= LogWrapper.new(Alexandria.log, self)
       end
     end
 
@@ -131,10 +129,7 @@ module Alexandria
     end
 
     def log
-      if not @log_wrapper
-        @log_wrapper = LogWrapper.new(Alexandria.log, self)
-      end
-      @log_wrapper
+      @log_wrapper ||= LogWrapper.new(Alexandria.log, self)
     end
   end
 

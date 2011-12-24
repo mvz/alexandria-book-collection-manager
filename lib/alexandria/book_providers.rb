@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2009 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -129,7 +130,7 @@ module Alexandria
       end
 
       class Variable
-        attr_reader :provider_name, :name, :description,
+        attr_reader :name, :description,
         :possible_values
         attr_accessor :value
 
