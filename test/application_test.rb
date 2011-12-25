@@ -1,36 +1,28 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2005-2006 Laurent Sansonetti
 # Modifications Copyright (C) 2011 Matijs van Zuijlen
+#
+# This file is part of Alexandria, a GNOME book collection manager.
+#
+# Alexandria is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# Alexandria is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public
+# License along with Alexandria; see the file COPYING.  If not,
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'test/unit'
-require 'gettext'
-
-require 'alexandria'
+require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
 ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
 and URI.parse(ENV['http_proxy']).userinfo.nil?
-
-require 'gdk_pixbuf2'
-
-require 'alexandria/ui/icons'
-require 'alexandria/ui/completion_models'
-require 'alexandria/ui/libraries_combo'
-require 'alexandria/ui/dialogs/alert_dialog'
-require 'alexandria/ui/dialogs/about_dialog'
-require 'alexandria/ui/dialogs/book_properties_dialog_base'
-require 'alexandria/ui/dialogs/book_properties_dialog'
-require 'alexandria/ui/dialogs/new_book_dialog_manual'
-require 'alexandria/ui/dialogs/new_book_dialog'
-require 'alexandria/ui/dialogs/preferences_dialog'
-require 'alexandria/ui/dialogs/export_dialog'
-require 'alexandria/ui/dialogs/import_dialog'
-require 'alexandria/ui/dialogs/acquire_dialog'
-require 'alexandria/ui/dialogs/smart_library_properties_dialog_base'
-require 'alexandria/ui/dialogs/smart_library_properties_dialog'
-require 'alexandria/ui/dialogs/new_smart_library_dialog'
-require 'alexandria/ui/multi_drag_treeview'
-require 'alexandria/ui/main_app'
-require 'logger'
 
 $KCODE = "U"
 

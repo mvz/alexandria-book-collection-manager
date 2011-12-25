@@ -27,35 +27,13 @@
 require 'rake/testtask'
 
 namespace :test do
-
   Rake::TestTask.new(:run) do |t|
     t.libs = ['lib']
-    t.test_files = FileList['tests/*_test.rb']
+    t.test_files = FileList['test/*_test.rb']
     t.ruby_opts += ["-w"]
   end
-
-  Rake::TestTask.new(:ui) do |t|
-    t.libs = ['lib']
-    t.test_files = FileList['tests/test_application.rb']
-    t.ruby_opts += ["-w"]
-  end
-
-  Rake::TestTask.new(:isbn) do |t|
-    t.libs = ['lib']
-    t.test_files = FileList['tests/test_isbn.rb']
-    t.ruby_opts += ["-w"]
-  end
-
-  Rake::TestTask.new(:providers) do |t|
-    t.libs = ['lib']
-    t.test_files = FileList['tests/test_providers.rb']
-    t.ruby_opts += ["-w"]
-  end
-
-  desc 'Run default tests'
-  task :default => [:isbn, :providers, :run]
 end
 
-desc 'Alias for test:default'
-task :test => 'test:default'
+desc 'Alias for test:run'
+task :test => 'test:run'
 
