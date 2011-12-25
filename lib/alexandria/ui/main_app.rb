@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -58,6 +59,7 @@ module Alexandria
         @actiongroup = @ui_manager.actiongroup
         @appbar = @ui_manager.appbar
         @prefs = @ui_manager.prefs
+        @main_app = @ui_manager.main_app
         @ui_manager.show
       end
     end
