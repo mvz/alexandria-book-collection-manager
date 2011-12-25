@@ -24,7 +24,7 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
 $KCODE = "U"
 
-describe Alexandria do
+describe Alexandria::BookProviders do
   def assert_correct_search_result(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
     results = provider.instance.search(query, search_type)
 
@@ -35,12 +35,19 @@ describe Alexandria do
 
     if search_type == Alexandria::BookProviders::SEARCH_BY_ISBN
       assert(results.length <= 2, "Results are greater than 2 for #{provider}")
+
+      book = results.first
+
+      assert_kind_of(Alexandria::Book, book, "Result is not a Book for #{provider}")
+
+      canonical_query = Alexandria::Library.canonicalise_ean(query)
+      canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
+      assert_equal(canonical_query, canonical_result,
+                   "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}")
+
       if results.length == 2
         assert_kind_of(String, results.last, "Second result is not a String for #{provider}")
       end
-      assert_kind_of(Alexandria::Book, results.first, "Result is not a Book for #{provider}")
-      assert_equal(query, results.first.isbn,
-                   "Result's isbn #{results.first.isbn} is not the same as requested isbn #{query} for #{provider}")
     else
       assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book for #{provider}")
     end
