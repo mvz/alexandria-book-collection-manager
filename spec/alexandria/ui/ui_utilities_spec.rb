@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Joseph Method
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -28,7 +29,7 @@ end
 
 #from glade_base
 
-describe Alexandria::UI::GladeBase do
+describe Alexandria::UI::BuilderBase do
   it "should be revisited"
 end
 
