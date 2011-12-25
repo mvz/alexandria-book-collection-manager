@@ -46,7 +46,8 @@ describe Alexandria::BookProviders do
                    "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}")
 
       if results.length == 2
-        assert_kind_of(String, results.last, "Second result is not a String for #{provider}")
+        cover_url = results.last
+        assert(cover_url.nil? || cover_url.is_a?(String), "Unexpected cover_url #{cover_url.inspect} for #{provider}")
       end
     else
       assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book for #{provider}")
