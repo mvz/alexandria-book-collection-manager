@@ -14,6 +14,9 @@ module Alexandria
       end
 
       def html_to_doc(html, source_data_charset="ISO-8859-1")
+        if html.respond_to? :encoding
+          html.force_encoding source_data_charset
+        end
         if source_data_charset == "UTF-8"
           utf8_html = html
         else
