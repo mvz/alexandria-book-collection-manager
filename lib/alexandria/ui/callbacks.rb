@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -270,7 +271,7 @@ module Alexandria
 
       def on_about widget, event
         ad = AboutDialog.new(@main_app)
-        ad.signal_connect('response'){ log.debug { "destroy about"; ad.destroy } }
+        ad.signal_connect('response'){ log.debug { "destroy about" }; ad.destroy }
         ad.show
       end
 
