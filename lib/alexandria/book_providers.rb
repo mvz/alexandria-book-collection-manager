@@ -415,10 +415,13 @@ module Alexandria
       self.compact!
     end
 
-
-
+    # FIXME: Define the handful of methods that use this.
     def self.method_missing(id, *args, &block)
-      self.instance.method(id).call(*args, &block)
+      if instance.respond_to? id
+        instance.method(id).call(*args, &block)
+      else
+        super
+      end
     end
 
     private
