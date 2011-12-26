@@ -22,8 +22,6 @@
 
 require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
-$KCODE = "U"
-
 describe Alexandria::BookProviders do
   def assert_correct_search_result(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
     results = provider.instance.search(query, search_type)

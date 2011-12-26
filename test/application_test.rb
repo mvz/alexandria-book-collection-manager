@@ -24,8 +24,6 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
 and URI.parse(ENV['http_proxy']).userinfo.nil?
 
-$KCODE = "U"
-
 class TestAlexandriaApplication < MiniTest::Unit::TestCase
   def test_application_runs
     Alexandria::UI::Icons.init
