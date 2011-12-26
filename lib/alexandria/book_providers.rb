@@ -22,6 +22,7 @@ require 'observer'
 require 'alexandria/net'
 
 module Alexandria
+  # FIXME: Use delegation instead of inheritance.
   class BookProviders < Array
     include Logging
     include Singleton
