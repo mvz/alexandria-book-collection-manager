@@ -376,7 +376,7 @@ module Alexandria
       providers = {}
       self.class.constants.each do |constant|
         next unless md = /(.+)Provider$/.match(constant)
-        klass = self.class.module_eval(constant)
+        klass = self.class.module_eval(constant.to_s)
         if klass.ancestors.include?(AbstractProvider) and
             klass != GenericProvider and
             klass != WebsiteBasedProvider and
