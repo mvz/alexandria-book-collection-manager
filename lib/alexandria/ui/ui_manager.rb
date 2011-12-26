@@ -40,6 +40,12 @@ module Alexandria
       def initialize parent
         super("main_app__builder.glade",  widget_names)
         @parent = parent
+
+        @library_separator_iter = nil
+        @libraries = nil
+        @move_mid = nil
+        @clicking_on_sidepane = true
+
         get_preferences
         load_libraries
         setup_window_icons
@@ -64,7 +70,6 @@ module Alexandria
         @library_listview.signal_connect('cursor-changed') do 
           @clicking_on_sidepane = true
         end
-
       end
 
       def show

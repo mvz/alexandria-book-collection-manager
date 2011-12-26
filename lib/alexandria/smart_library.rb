@@ -275,7 +275,8 @@ module Alexandria
     #######
 
     def libraries=(ary)
-      @libraries.each { |x| x.delete_observer(self) } if @libraries
+      @libraries ||= []
+      @libraries.each { |x| x.delete_observer(self) }
       @libraries = ary.select { |x| x.is_a?(Library) }
       @libraries.each { |x| x.add_observer(self) }
     end

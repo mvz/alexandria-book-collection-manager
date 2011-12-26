@@ -41,7 +41,7 @@ module Alexandria
       @http_command = nil
       @mailto_command = nil
 
-      @proxy_settings_loaded = false
+      @http_proxy_loaded = false
       @use_http_proxy = false
       @proxy_host = nil
       @proxy_port = nil
@@ -269,6 +269,7 @@ module Alexandria
 
 
     # Called at most once, by #web_browser or #email_client
+    # TODO: Enforce this.
     def load_url_handler_settings
       # /desktop/gnome/url-handlers/http
       http_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + "/http"}`
@@ -286,6 +287,7 @@ module Alexandria
     end
 
     # Called at most once, by #http_proxy_config
+    # TODO: Enforce this.
     def load_http_proxy_settings
       http_proxy_vars = `#{GCONFTOOL} --recursive-list #{HTTP_PROXY_DIR}`
       http_proxy = gconftool_values_to_hash(http_proxy_vars)
