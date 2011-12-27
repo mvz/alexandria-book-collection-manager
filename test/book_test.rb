@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Joseph Method
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -15,8 +16,18 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
-describe Alexandria::BookProviders do
-  it "should be less clever"
+describe Alexandria::Book do
+  it "should be a thing" do
+    an_artist_of_the_floating_world
+  end
+
+  it "should establish equality only with books with the same identity" do
+    an_artist_of_the_floating_world.must_equal an_artist_of_the_floating_world
+    different_book = an_artist_of_the_floating_world
+    different_book.isbn = "9780571147999"
+    an_artist_of_the_floating_world.wont_equal different_book
+  end
 end
+
