@@ -24,10 +24,12 @@ describe Alexandria::Book do
   end
 
   it "should establish equality only with books with the same identity" do
-    an_artist_of_the_floating_world.must_equal an_artist_of_the_floating_world
+    book = an_artist_of_the_floating_world
+    same_book = an_artist_of_the_floating_world
+    same_book.must_equal book
     different_book = an_artist_of_the_floating_world
     different_book.isbn = "9780571147999"
-    an_artist_of_the_floating_world.wont_equal different_book
+    different_book.wont_equal book
   end
 end
 
