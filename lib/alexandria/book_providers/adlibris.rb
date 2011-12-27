@@ -111,9 +111,9 @@ module Alexandria
         (searchHit/'ul.ulSearch table').each do |t|
 	  
           result = {}
-          if title_data = (t%'div.divTitle')
-	    result[:title] = (title_data%:a).inner_text
-	    lookup_url = (title_data%:a)['href']
+          if title_data = (t % 'div.divTitle')
+	    result[:title] = (title_data % :a).inner_text
+	    lookup_url = (title_data % :a)['href']
 	  end
 	  result[:lookup_url] = "#{SITE}#{lookup_url}"
 

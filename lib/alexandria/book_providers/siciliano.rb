@@ -149,7 +149,7 @@ module Alexandria
           result[:publisher] = publisher.strip if publisher
 
           # title & url
-          link = item%'a'
+          link = item % 'a'
           result[:title] = link.inner_text.strip
           link_to_description = link['href']
           slash = ''
@@ -178,7 +178,7 @@ module Alexandria
         # title
         title_div = doc % 'div#conteudo//div.titulo'
         raise NoResultsError unless title_div
-        title_h = title_div%'h2'
+        title_h = title_div % 'h2'
         title = title_h.inner_text if title_h
         #title = first_non_empty_text_node(title_div)
 
@@ -189,9 +189,9 @@ module Alexandria
           authors << h.inner_text.strip
         end
 
-        ## synopsis_div = doc%'div#sinopse'
+        ## synopsis_div = doc % 'div#sinopse'
 
-        details_div = doc%'div#tab-caracteristica'
+        details_div = doc % 'div#tab-caracteristica'
         details = string_array_to_map(lines_of_text_as_array(details_div))
 
         # ISBN

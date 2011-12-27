@@ -1,6 +1,7 @@
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
+# Modifications Copyright (C) 2011 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -109,11 +110,11 @@ module Alexandria
           result_cells = doc/'td.result/div.name/..'
           #puts result_cells.length
           result_cells.each do |td|
-            type_icon = (td%'div.type/img.icn')
+            type_icon = (td % 'div.type/img.icn')
             next unless (type_icon and type_icon['src'] =~ /icon-bks/)
-            name_div = td%'div.name'
+            name_div = td % 'div.name'
             title = name_div.inner_text
-            anchor = name_div%:a
+            anchor = name_div % :a
             if anchor
               url = anchor['href']
             end
@@ -138,7 +139,7 @@ module Alexandria
       doc = html_to_doc(html, "UTF-8")
       
       begin
-        if doc%'div#div-results-none'
+        if doc % 'div#div-results-none'
           log.debug { "WorldCat reports no results" }
           raise NoResultsError
         end
@@ -187,7 +188,7 @@ module Alexandria
 
         end
 
-        title_header = doc%'h1.title'
+        title_header = doc % 'h1.title'
         title = title_header.inner_text if title_header
         unless title
           log.warn { "Unexpected lack of title from WorldCat lookup" }
@@ -196,7 +197,7 @@ module Alexandria
         log.info { "Found book #{title} at WorldCat" }
 
         authors = []
-        authors_tr = doc%'tr#details-allauthors'
+        authors_tr = doc % 'tr#details-allauthors'
         if authors_tr
           (authors_tr/:a).each do |a|
             authors << a.inner_text

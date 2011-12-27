@@ -175,12 +175,12 @@ module Alexandria
       def parse_result_data(html)
         begin
           doc = html_to_doc(html)
-          data = doc%'div#dati_scheda'
+          data = doc % 'div#dati_scheda'
 
-          # sotto_data_hdr = doc%'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
+          # sotto_data_hdr = doc % 'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
           
           # title
-          title_span = data%'h1.titolo_scheda'
+          title_span = data % 'h1.titolo_scheda'
           title = normalize(title_span.inner_text)
 
           # cover
@@ -192,9 +192,9 @@ module Alexandria
           
           # author(s)
           authors = []
-          author_span = data%'span.int_scheda[text()*=Autore]'
+          author_span = data % 'span.int_scheda[text()*=Autore]'
           unless author_span
-            author_span = data%'span.int_scheda[text()*=cura]' # editor
+            author_span = data % 'span.int_scheda[text()*=cura]' # editor
           end
           if author_span
             author_links = author_span/'a.info'
@@ -212,20 +212,20 @@ module Alexandria
           #end
 
           # publisher
-          publisher_par = data%'span.int_scheda[text()*=Editore]/..'
-          publisher_link = publisher_par%'a.info'
+          publisher_par = data % 'span.int_scheda[text()*=Editore]/..'
+          publisher_link = publisher_par % 'a.info'
           publisher = normalize(publisher_link.inner_text)
 
           # skip 'Collana', (ummm, possibly genre information, Babelfish
           # says "Necklace")
           
           # format
-          format_par = data%'span.int_scheda[text()*=Formato]/..'
+          format_par = data % 'span.int_scheda[text()*=Formato]/..'
           format_par.inner_text =~ /:[\s]*(.+)[\s]*$/
           binding = normalize($1)
 
           # year
-          date_par = data%'span.int_scheda[text()*=Data di pubblicazione]/..'
+          date_par = data % 'span.int_scheda[text()*=Data di pubblicazione]/..'
           date_par.inner_text =~ /:[\s]*([12][0-9]{3})[\s]*$/
           publish_year = nil
           if $1
@@ -247,13 +247,13 @@ module Alexandria
           # Editore & Imprint : as publisher info above...
 
           # pages
-          #page_par = data%'span.int_scheda[text()*=Pagine]/..'
+          #page_par = data % 'span.int_scheda[text()*=Pagine]/..'
           #if page_par
           #  page_par.inner_text =~ /:[\s]*([0-9]+)[\s]*$/
           #  pages = $1.to_i
           #end
 
-          #synopsis_div = doc%'div.sotto_schede' # exclude the first span though
+          #synopsis_div = doc % 'div.sotto_schede' # exclude the first span though
 
           
           #book = Book.new(title, isbns.first, authors)
