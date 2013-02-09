@@ -1,12 +1,12 @@
 source :rubygems
 
-gem 'gettext', '~> 2.1.0'
+gem 'gettext', '~> 2.1'
 gem 'hpricot', '~> 0.8.5'
-gem 'htmlentities', '~> 4.3.1'
+gem 'htmlentities', '~> 4.3'
 
 group :development, :test do
   gem 'minitest'
-  gem 'rake', '~> 0.9.2'
-  gem 'rspec', '~> 2.7.0'
+  gem 'rake', '~> 10.0'
+  gem 'rspec', '~> 2.7'
   gem 'rdoc', '~> 3.11'
 end
