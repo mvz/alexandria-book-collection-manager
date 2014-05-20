@@ -4,6 +4,7 @@ gem 'gettext', '~> 2.1'
 gem 'locale', '~> 2.0.5'
 gem 'hpricot', '~> 0.8.5'
 gem 'htmlentities', '~> 4.3'
+gem 'gtk2'
 
 group :development, :test do
   gem 'minitest'
