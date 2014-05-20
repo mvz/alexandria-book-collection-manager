@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 # Copyright (C) 2004-2006 Dafydd Harries
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
 #
@@ -23,7 +23,7 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
 require 'alexandria/import_library'
 
-class TestISBN < MiniTest::Unit::TestCase
+class TestISBN < MiniTest::Test
 
   def __test_fake_import_isbns
     libraries = Alexandria::Libraries.instance

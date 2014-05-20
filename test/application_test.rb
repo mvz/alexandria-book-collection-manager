@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2005-2006 Laurent Sansonetti
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
 #
@@ -24,7 +24,7 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
 and URI.parse(ENV['http_proxy']).userinfo.nil?
 
-class TestAlexandriaApplication < MiniTest::Unit::TestCase
+class TestAlexandriaApplication < MiniTest::Test
   def test_application_runs
     Alexandria::UI::Icons.init
     @main_app = Alexandria::UI::MainApp.instance
