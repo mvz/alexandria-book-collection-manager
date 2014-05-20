@@ -84,7 +84,7 @@ describe Alexandria::Library, " imported from 0.6.1 data files" do
     maloryBook = myLibrary.select {|b| b.isbn == '9780192812179'}[0]
     maloryBook.publisher.should == 'Oxford University Press'
     maloryBook.authors.include?('Vinaver').should be_true
-    maloryBook.version.should == Alexandria::VERSION
+    maloryBook.version.should == Alexandria::DATA_VERSION
 
     # Guide to LaTeX
     latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
@@ -116,7 +116,7 @@ describe Alexandria::Library, " with books without an ISBN" do
     latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
     latexBook.isbn.should == '9780201398250'
     latexBook.publisher.should == 'Addison Wesley' # note, no Ruby-Amazon cruft
-    latexBook.version.should == Alexandria::VERSION
+    latexBook.version.should == Alexandria::DATA_VERSION
 
     #Lex and Yacc
     lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
