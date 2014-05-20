@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Joseph Method
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -33,7 +34,10 @@ end
 
 describe Alexandria::UI::MainApp do
   before do
-    Alexandria::UI::UIManager.stub!(:new).and_return(mock(Alexandria::UI::UIManager, :actiongroup => mock(Object), :appbar => nil, :prefs => nil))
+    Alexandria::UI::UIManager.stub(:new).
+      and_return(double(Alexandria::UI::UIManager,
+                        actiongroup: double(Object), appbar: nil,
+                        prefs: nil))
   end
   it "should be a singleton" do
     proc do
