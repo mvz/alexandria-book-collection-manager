@@ -21,7 +21,7 @@
 # Boston, MA 02110-1301 USA.
 #++
 
-require 'goocanvas'
+# require 'goocanvas'
 
 module Alexandria
   module UI
