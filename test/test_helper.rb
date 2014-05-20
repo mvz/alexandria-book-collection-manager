@@ -35,10 +35,9 @@ def an_artist_of_the_floating_world
                        "Paperback")
 end
 
-# find a nicer way to do this... it generates a warning at the moment
 module Alexandria
   class Library
-    DIR = TESTDIR
+    DIR.replace TESTDIR
   end
 end
 

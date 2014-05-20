@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Joseph Method
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -40,10 +41,9 @@ end
 Thread.new { Alexandria::UI::start_gnome_program }
 Alexandria::UI::Icons.init
 
-# find a nicer way to do this... it generates a warning at the moment
 module Alexandria
   class Library
-    DIR = TESTDIR
+    DIR.replace TESTDIR
   end
 end
 
