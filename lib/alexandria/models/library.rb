@@ -73,7 +73,7 @@ module Alexandria
       test = [0,nil]
       ruined_books = []
       library = Library.new(name)
-      FileUtils.mkdir_p(library.path) unless File.exists?(library.path)
+      FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
         Dir["*" + EXT[:book]].each do |filename|
 
@@ -253,7 +253,7 @@ module Alexandria
       dest = dest_library.path
       books.each do |book|
         FileUtils.mv(source_library.yaml(book), dest)
-        if File.exists?(source_library.cover(book))
+        if File.exist?(source_library.cover(book))
           FileUtils.mv(source_library.cover(book), dest)
         end
 
@@ -415,7 +415,7 @@ module Alexandria
         #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
         FileUtils.rm(yaml(book.saved_ident))
       end
-      if File.exists?(cover(book.saved_ident))
+      if File.exist?(cover(book.saved_ident))
         begin
           FileUtils.mv(cover(book.saved_ident), cover(book.ident))
         rescue
@@ -438,7 +438,7 @@ module Alexandria
 
       if book.ident != book.saved_ident
         FileUtils.rm(yaml(book.saved_ident))
-        if File.exists?(cover(book.saved_ident))
+        if File.exist?(cover(book.saved_ident))
           FileUtils.mv(cover(book.saved_ident), cover(book.ident))
         end
 
@@ -447,7 +447,7 @@ module Alexandria
         notify_observers(self, BOOK_UPDATED, book) unless final
         book.saved_ident = book.ident
       end
-      ##was File.exists? but that returns true for empty files... CathalMagus
+      ##was File.exist? but that returns true for empty files... CathalMagus
       already_there = (File.size?(yaml(book)) and
                        !@deleted_books.include?(book))
       
@@ -621,10 +621,10 @@ module Alexandria
     end
 
     def copy_covers(somewhere)
-      FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
+      FileUtils.rm_rf(somewhere) if File.exist?(somewhere)
       FileUtils.mkdir(somewhere)
       each do |book|
-        next unless File.exists?(cover(book))
+        next unless File.exist?(cover(book))
         FileUtils.cp(cover(book),
                      File.join(somewhere, final_cover(book)))
       end

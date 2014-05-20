@@ -32,7 +32,7 @@ module Alexandria
     end
 
     def has_pixmaps?
-      File.exists?(@pixmaps_directory)
+      File.exist?(@pixmaps_directory)
     end
 
     #######
@@ -41,7 +41,7 @@ module Alexandria
 
     def self.load(themes_dir)
       themes = []
-      if File.exists?(themes_dir)
+      if File.exist?(themes_dir)
         Dir.entries(themes_dir).each do |file|
           # ignore hidden files
           next if file =~ /^\./
@@ -54,7 +54,7 @@ module Alexandria
           css_file = File.join(path, file + ".css")
           preview_file = File.join(path, "preview.jpg")
           [css_file, preview_file].each do |helper_file|
-            raise "#{helper_file} not found" unless File.exists?(helper_file)
+            raise "#{helper_file} not found" unless File.exist?(helper_file)
           end
           themes << WebTheme.new(css_file, preview_file,
                                  File.join(path, file, "pixmaps"))

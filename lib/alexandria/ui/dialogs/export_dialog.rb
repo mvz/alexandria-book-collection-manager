@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -143,14 +144,14 @@ module Alexandria
         filename = self.filename
         if format.ext
           filename += "." + format.ext if File.extname(filename).empty?
-          if File.exists?(filename)
+          if File.exist?(filename)
             dialog = ConfirmEraseDialog.new(@parent, filename)
             return unless dialog.erase?
             FileUtils.rm(filename)
           end
           args = []
         else
-          if File.exists?(filename)
+          if File.exist?(filename)
             unless File.directory?(filename)
               msg = _("The target, named '%s', is a regular " +
                       "file.  A directory is needed for this " +

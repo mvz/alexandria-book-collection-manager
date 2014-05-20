@@ -1,7 +1,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2009 Cathal Mc Ginley
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # This file is part of the Alexandria build system.
 #
@@ -232,7 +232,7 @@ file 'ChangeLog' do
   end
   sh "svn2cl -r HEAD:700 -o ChangeLog.tmp"
   # Revision r703 is on the date of the last ChangeLog.0 entry
-  if File.exists?('ChangeLog.tmp')
+  if File.exist?('ChangeLog.tmp')
     # fix up file (remove blank lines beginning with tabs)
     File.open('ChangeLog', 'wb') do |change_log|
       File.open('ChangeLog.tmp').each_line do |line|

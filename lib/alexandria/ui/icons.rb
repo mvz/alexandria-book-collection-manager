@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -74,7 +75,7 @@ module Alexandria
         begin
           return BOOK_ICON if library.nil?
           filename = library.cover(book)
-          if File.exists?(filename)
+          if File.exist?(filename)
             return Gdk::Pixbuf.new(filename)
           end
         rescue Exception => err

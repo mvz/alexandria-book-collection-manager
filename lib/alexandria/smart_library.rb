@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -212,11 +212,11 @@ module Alexandria
     end
 
     def copy_covers(somewhere)
-      FileUtils.rm_rf(somewhere) if File.exists?(somewhere)
+      FileUtils.rm_rf(somewhere) if File.exist?(somewhere)
       FileUtils.mkdir(somewhere)
       each do |book|
         library = @cache[book]
-        next unless File.exists?(library.cover(book))
+        next unless File.exist?(library.cover(book))
         FileUtils.cp(File.join(library.path,
                                book.ident + Library::EXT[:cover]),
                      File.join(somewhere,

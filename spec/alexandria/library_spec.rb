@@ -177,7 +177,7 @@ describe Alexandria::Library, " export sort order" do
   it "can sort by title" do
     sort_by_title = Alexandria::LibrarySortOrder.new(:title)
     @format.invoke(@myLibrary, sort_by_title, @outfile)
-    File.exists?(@outfile).should be_true
+    File.exist?(@outfile).should be_true
     rows = load_rows_from_csv
     rows.shift
     rows.size.should == @myLibrary.size
@@ -191,7 +191,7 @@ describe Alexandria::Library, " export sort order" do
   it "can sort in descending order" do
     sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
     @format.invoke(@myLibrary, sort_by_date_desc, @outfile)
-    File.exists?(@outfile).should be_true
+    File.exist?(@outfile).should be_true
     rows = load_rows_from_csv
     rows.shift
     rows.size.should == @myLibrary.size
@@ -204,7 +204,7 @@ describe Alexandria::Library, " export sort order" do
 
   after(:each) do
     FileUtils.rm_rf(TESTDIR)
-    if File.exists? @outfile
+    if File.exist? @outfile
       File.unlink @outfile
     end
   end

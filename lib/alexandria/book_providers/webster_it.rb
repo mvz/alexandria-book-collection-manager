@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Marco Costantini
+# Copyright (C) 2014 Matijs van Zuijlen
 # based on ibs_it.rb by Claudio Belotti
 #
 # Alexandria is free software; you can redistribute it and/or
@@ -30,7 +31,7 @@ module Alexandria
       LOCALE = "BIT" # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
       def initialize
         super("Webster_it", "Webster (Italy)")
-        FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)
+        FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
         # no preferences for the moment
         at_exit { clean_cache }
       end

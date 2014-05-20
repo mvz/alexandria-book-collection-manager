@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -133,7 +133,7 @@ module Alexandria
 
           @library << book
           @library.save(book)
-          if (File.exists?(TMP_COVER_FILE) and (not @delete_cover_file))
+          if (File.exist?(TMP_COVER_FILE) and (not @delete_cover_file))
             FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
           end
 

@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007 Cathal Mc Ginley
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -186,7 +187,7 @@ module Alexandria
     end
 
     def export_as_html(filename, theme)
-      FileUtils.mkdir(filename) unless File.exists?(filename)
+      FileUtils.mkdir(filename) unless File.exist?(filename)
       Dir.chdir(filename) do
         copy_covers("pixmaps")
         FileUtils.cp_r(theme.pixmaps_directory,
@@ -204,7 +205,7 @@ module Alexandria
       end
     end
     def export_as_ipod_notes(filename, theme)
-      FileUtils.mkdir(filename) unless File.exists?(filename)
+      FileUtils.mkdir(filename) unless File.exist?(filename)
       tempdir=Dir.getwd                
       Dir.chdir(filename)
       copy_covers("pixmaps")
@@ -219,7 +220,7 @@ module Alexandria
         File.open(book.ident, 'w') do |io|
           io.puts "<TITLE>#{book.title} </TITLE>"
           #put a link to the book's cover. only works on iPod 5G and above(?).
-          if File.exists?(cover(book))
+          if File.exist?(cover(book))
             io.puts '<A HREF="pixmaps/' + book.ident + '.jpg' + '">' + book.title + '</A>'
           else
             io.puts book.title
@@ -290,7 +291,7 @@ module Alexandria
           elem.add_element('TextFormat').text = '00'  # ASCII
           elem.add_element('Text').text = book.notes
         end
-        if File.exists?(cover(book))
+        if File.exist?(cover(book))
           elem = prod.add_element('MediaFile')
           # front cover image
           elem.add_element('MediaFileTypeCode').text = '04'
@@ -360,7 +361,7 @@ module Alexandria
         if book.notes and not book.notes.empty?
           entry.add_element('comments').text = book.notes
         end
-        if File.exists?(cover(book))
+        if File.exist?(cover(book))
           entry.add_element('cover').text = final_cover(book)
           image = images.add_element('image')
           image.add_attribute('id', final_cover(book))
@@ -416,7 +417,7 @@ EOS
   <p class="book_isbn">#{book.isbn}</p>
 EOS
 
-        if File.exists?(cover(book))
+        if File.exist?(cover(book))
           xhtml << <<EOS
   <img class="book_cover"
        src="#{File.join("pixmaps", final_cover(book))}"

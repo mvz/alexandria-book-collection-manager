@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2010 Cathal Mc Ginley
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -92,12 +93,12 @@ module Alexandria
       puts "Starting import_as_tellico_xml_archive... "
       return nil unless system("unzip -qqt \"#{filename}\"")
       tmpdir = File.join(Dir.tmpdir, "tellico_export")
-      FileUtils.rm_rf(tmpdir) if File.exists?(tmpdir)
+      FileUtils.rm_rf(tmpdir) if File.exist?(tmpdir)
       Dir.mkdir(tmpdir)
       Dir.chdir(tmpdir) do
         begin
           system("unzip -qq \"#{filename}\"")
-          file = File.exists?('bookcase.xml') \
+          file = File.exist?('bookcase.xml') \
           ? 'bookcase.xml' : 'tellico.xml'
           xml = REXML::Document.new(File.open(file))
           raise unless (xml.root.name == 'bookcase' or

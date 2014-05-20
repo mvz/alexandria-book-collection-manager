@@ -1,4 +1,5 @@
 # Copyright (C) 2005-2006 Claudio Belotti
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -28,7 +29,7 @@ module Alexandria
       REFERER = BASE_URI
       def initialize
         super("IBS_it", "Internet Bookshop (Italy)")
-        FileUtils.mkdir_p(CACHE_DIR) unless File.exists?(CACHE_DIR)
+        FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
         # no preferences for the moment
         at_exit { clean_cache }
       end
