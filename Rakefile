@@ -47,37 +47,10 @@ DATA_VERSION = '0.6.3'
 PROJECT_VERSION = '0.6.8'
 DISPLAY_VERSION = '0.6.8'
 
-
-# Write a .config file if the configuration data has changed
-# (e.g. new DESTDIR or PREFIX)
-# This is so new installations will regenerate files like config.rb
-config_data =<<EOS
-PREFIX=#{ENV['PREFIX']}
-SHARE=#{ENV['SHARE']}
-RUBYLIBDIR=#{ENV['RUBYLIBDIR']}
-EOS
-old_config_data = ""
-if File.exists?(".config") 
-  old_config_data = File.open(".config").read
-  if config_data != old_config_data
-    File.open(".config", 'wb') do |cfg|
-      cfg.write(config_data)
-    end
-  end
-else
-  # duplicated code...
-  File.open(".config", 'wb') do |cfg|
-    cfg.write(config_data)
-  end
-end
-
-
-
 gettext = GettextGenerateTask.new(PROJECT) do |g|
   g.generate_po_files('po', 'po/*.po', 'data/locale')
   g.generate_desktop('alexandria.desktop.in', 'alexandria.desktop')
 end
-
 
 omf = OmfGenerateTask.new(PROJECT) do |o|
   o.gnome_helpfiles_dir = "#{SHARE}/gnome/help"
@@ -144,22 +117,6 @@ def generate(filename)
     file.print autogen_comment
     file_contents = yield
     file.print file_contents.to_s
-  end
-end
-
-# generate lib/alexandria/config.rb
-file 'lib/alexandria/config.rb' => ['Rakefile', '.config'] do |f|
-  generate(f.name) do
-    <<EOS
-module Alexandria
-  module Config
-    SHARE_DIR = '#{SHARE}'
-    SOUNDS_DIR = "\#{SHARE_DIR}/sounds/#{PROJECT}"
-    DATA_DIR = "\#{SHARE_DIR}/#{PROJECT}"
-    MAIN_DATA_DIR = DATA_DIR
-  end
-end
-EOS
   end
 end
 

@@ -1,13 +1,10 @@
 InstalledFiles
 config.save
-.config
 alexandria.desktop
 alexandria.desktop.in.h
-ChangeLog
 .svn-authors
-lib/alexandria/config.rb
 lib/alexandria/default_preferences.rb
 lib/alexandria/version.rb
 Gemfile.lock
-data/locale/
-data/omf/alexandria/*.omf
+share/locale/
+share/omf/alexandria/*.omf
