@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2009 Cathal Mc Ginley
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
 
 require 'singleton'
 require 'observer'
-require 'alexandria/net'
 
 module Alexandria
   # FIXME: Use delegation instead of inheritance.
@@ -287,11 +286,6 @@ module Alexandria
       unabstract
     end
 
-    class WebsiteBasedProvider < GenericProvider
-      # further defined in alexandria/book_providers/web.rb
-      # its implementation requires Hpricot and HTMLEntities
-    end
-
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
     require 'alexandria/book_providers/douban' # only requires YAML
 
@@ -301,59 +295,21 @@ module Alexandria
     #require 'alexandria/book_providers/webster_it'
     log.info { "Not loading IBS, Renaud, BOL, Webster (providers not functional)" }
 
-
-
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
-    begin
-      begin
-        require 'hpricot'
-      rescue LoadError
-        require 'rubygems'
-        require 'hpricot'
-      end
-      require 'alexandria/book_providers/amazon_aws'
-    rescue LoadError => ex
-      log.error { ex }
-      log.error { ex.backtrace.join("\n> ") }
-      log.warn { "Can't load 'hpricot', hence Amazon book provider will not be available" }
-    end
-
+    require 'alexandria/book_providers/amazon_aws'
     
-    # AdLibris (needs htmlentities and hpricot)
-    begin
-      begin
-        require 'htmlentities'
-        require 'hpricot'
-      rescue LoadError
-        require 'rubygems'
-        require 'htmlentities'
-        require 'hpricot'
-      end
-      
-      require 'alexandria/book_providers/web'
-      require 'alexandria/book_providers/adlibris'
-      require 'alexandria/book_providers/barnes_and_noble'
-      require 'alexandria/book_providers/deastore'
-      require 'alexandria/book_providers/proxis'
-      require 'alexandria/book_providers/siciliano'
-      require 'alexandria/book_providers/thalia'
-      require 'alexandria/book_providers/worldcat'
-
-    rescue LoadError => ex
-      log.warn { "Can't load 'hpricot' and 'htmlentities', hence AdLibris, Barnes & Noble, DeaStore, Proxis, Siciliano, Thalia and Worldcat book providers will not be available" }
-    end
+    # Website based providers
+    require 'alexandria/book_providers/adlibris'
+    require 'alexandria/book_providers/barnes_and_noble'
+    require 'alexandria/book_providers/deastore'
+    require 'alexandria/book_providers/proxis'
+    require 'alexandria/book_providers/siciliano'
+    require 'alexandria/book_providers/thalia'
+    require 'alexandria/book_providers/worldcat'
 
 
     # Ruby/ZOOM is optional
     begin
-      begin
-        require 'zoom'
-        require 'marc'
-      rescue LoadError
-        require 'rubygems'
-        require 'zoom'
-        require 'marc'
-      end
       require 'alexandria/book_providers/z3950'
     rescue LoadError
       log.info { "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available" }

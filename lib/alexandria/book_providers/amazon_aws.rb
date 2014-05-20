@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Cathal Mc Ginley
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -18,6 +19,7 @@
 
 # http://en.wikipedia.org/wiki/Amazon
 
+require 'hpricot'
 require 'alexandria/book_providers/amazon_ecs_util'
 
 module Alexandria
