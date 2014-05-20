@@ -12,4 +12,5 @@ group :development, :test do
   gem 'rake', '~> 10.0'
   gem 'rspec', '~> 2.7'
   gem 'rdoc', '~> 3.11'
+  gem 'pry'
 end
