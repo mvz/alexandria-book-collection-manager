@@ -202,7 +202,6 @@ module Alexandria
             end
           end
 
-          image_url = nil
           product_image_div = doc % 'div#product-image'
           if product_image_div
             images = product_image_div / 'img'
