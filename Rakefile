@@ -48,13 +48,13 @@ PROJECT_VERSION = '0.6.8'
 DISPLAY_VERSION = '0.6.8'
 
 gettext = GettextGenerateTask.new(PROJECT) do |g|
-  g.generate_po_files('po', 'po/*.po', 'data/locale')
+  g.generate_po_files('po', 'po/*.po', 'share/locale')
   g.generate_desktop('alexandria.desktop.in', 'alexandria.desktop')
 end
 
 omf = OmfGenerateTask.new(PROJECT) do |o|
   o.gnome_helpfiles_dir = "#{SHARE}/gnome/help"
-  o.generate_omf('data/omf/alexandria', 'data/omf/alexandria/*.in') 
+  o.generate_omf('data/omf/alexandria', 'share/omf/alexandria/*.in')
 end
 
 def install_common(install_task)
