@@ -170,15 +170,7 @@ describe Alexandria::Library, " export sort order" do
 
 
   def load_rows_from_csv
-    csv_reader = CSV.open(@outfile, 'r', col_sep=';')
-    rows = []
-    while row = csv_reader.shift
-      if row.size == 0
-        break
-      end
-      rows << row
-    end
-    rows
+    CSV.read(@outfile, col_sep: ';')
   end
 
   it "can sort by title" do
