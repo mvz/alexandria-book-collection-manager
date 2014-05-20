@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 # Incorporates code Copyright (C) 2007 Joseph Method
 #
 # This file is part of Alexandria, a GNOME book collection manager.
@@ -19,7 +19,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'minitest/spec'
 require 'minitest/autorun'
 
 require 'gettext'
