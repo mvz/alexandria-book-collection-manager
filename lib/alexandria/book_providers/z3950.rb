@@ -178,7 +178,7 @@ module Alexandria
                when SEARCH_BY_KEYWORD  then [1016]
                end
         pqf = ""
-        attr.each { |attr| pqf += "@attr 1=#{attr} "}
+        attr.each { |att| pqf += "@attr 1=#{att} "}
         pqf += "\"" + criterion.upcase + "\""
         log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
 
