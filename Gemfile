@@ -1,4 +1,4 @@
-source :rubygems
+source "https://rubygems.org"
 
 gem 'gettext', '~> 2.1'
 gem 'hpricot', '~> 0.8.5'
