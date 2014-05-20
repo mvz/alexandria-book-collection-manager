@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -522,7 +523,6 @@ module Alexandria
         end
         @deleted_books << book
         i = self.index(book)
-        puts "i is #{i.inspect}"
         # We check object IDs there because the user could have added
         # a book with the same identifier as another book he/she
         # previously deleted and that he/she is trying to redo.
