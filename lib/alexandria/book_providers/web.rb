@@ -1,4 +1,22 @@
 # -*- ruby -*-
+#
+# Copyright (C) 2009 Cathal Mc Ginley
+# Copyright (C) 2014 Matijs van Zuijlen
+#
+# Alexandria is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# Alexandria is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public
+# License along with Alexandria; see the file COPYING.  If not,
+# write to the Free Software Foundation, Inc., 51 Franklin Street,
+# Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'hpricot'
 require 'htmlentities'
@@ -14,14 +32,8 @@ module Alexandria
       end
 
       def html_to_doc(html, source_data_charset="ISO-8859-1")
-        if html.respond_to? :encoding
-          html.force_encoding source_data_charset
-        end
-        if source_data_charset == "UTF-8"
-          utf8_html = html
-        else
-          utf8_html = Iconv.conv("UTF-8", source_data_charset, html)
-        end
+        html.force_encoding source_data_charset
+        utf8_html = html.encode('utf-8')
         normalized_html = @htmlentities.decode(utf8_html)
         Hpricot(normalized_html)
       end 
