@@ -178,6 +178,7 @@ describe Alexandria::Library, " export sort order" do
     @format.invoke(@myLibrary, sort_by_title, @outfile)
     File.exists?(@outfile).should be_true
     rows = load_rows_from_csv
+    rows.shift
     rows.size.should == @myLibrary.size
     TITLE = 0
     comparisons = rows.size - 1
@@ -191,6 +192,7 @@ describe Alexandria::Library, " export sort order" do
     @format.invoke(@myLibrary, sort_by_date_desc, @outfile)
     File.exists?(@outfile).should be_true
     rows = load_rows_from_csv
+    rows.shift
     rows.size.should == @myLibrary.size
     DATE = 5
     comparisons = rows.size - 1
