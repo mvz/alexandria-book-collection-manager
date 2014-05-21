@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2005-2006 Laurent Sansonetti
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 # Incorporates code Copyright (C) 2007 Joseph Method
 #
 # This file is part of Alexandria, a GNOME book collection manager.
@@ -182,11 +182,13 @@ describe Alexandria::BookProviders do
   end
 
   it "AdLibris should work" do
+    skip "Needs fixing: site has changed"
     assert_correct_search_result(Alexandria::BookProviders::AdLibrisProvider,
                                  '9789100109332')
   end
 
   it "Siciliano should work" do
+    skip "Needs fixing: no results found"
     assert_correct_search_result(Alexandria::BookProviders::SicilianoProvider,
                                  '9788599170380')
   end
