@@ -1,7 +1,6 @@
 source "https://rubygems.org"
 
-gem 'gettext', '~> 2.1'
-gem 'locale', '~> 2.0.5'
+gem 'gettext', '~> 3.1'
 gem 'hpricot', '~> 0.8.5'
 gem 'htmlentities', '~> 4.3'
 gem 'gtk2', '~> 2.2'
