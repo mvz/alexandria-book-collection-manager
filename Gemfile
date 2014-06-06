@@ -9,7 +9,7 @@ gem 'gstreamer', '~> 2.2'
 group :development, :test do
   gem 'minitest', '~> 5.0'
   gem 'rake', '~> 10.0'
-  gem 'rspec', '~> 2.99'
+  gem 'rspec', '~> 3.0'
   gem 'rdoc', '~> 4.0'
   gem 'pry'
 end
