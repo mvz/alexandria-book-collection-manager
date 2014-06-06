@@ -26,8 +26,8 @@ describe Alexandria::Library do
 
   it "has symbolic references to file extensions" do
     extensions = Alexandria::Library::EXT
-    extensions[:book].should_not be_nil
-    extensions[:cover].should_not be_nil
+    expect(extensions[:book]).not_to be_nil
+    expect(extensions[:cover]).not_to be_nil
   end
 
   it "disallows multiple deletion of the same copy of a book" do
@@ -35,7 +35,7 @@ describe Alexandria::Library do
     first_copy = an_artist_of_the_floating_world()
     myLibrary << first_copy
     myLibrary.delete(first_copy)
-    lambda { myLibrary.delete(first_copy) }.should raise_error
+    expect { myLibrary.delete(first_copy) }.to raise_error
   end
 
   it "allows multiple copies of a book to be added and deleted in turn" do
@@ -54,7 +54,7 @@ describe Alexandria::Library do
 
     #puts "second_copy #{second_copy.object_id}"
     #lambda {  myLibrary.delete(second_copy) }.should raise_error
-    lambda { myLibrary.delete(second_copy) }.should_not raise_error
+    expect { myLibrary.delete(second_copy) }.not_to raise_error
 
 
     #puts "BBB myLibrary.size #{myLibrary.size}"
@@ -78,19 +78,19 @@ describe Alexandria::Library, " imported from 0.6.1 data files" do
 
   it "imports cleanly from version 0.6.1 data format" do
     libs = Alexandria::Library.loadall
-    libs.size.should == 1
+    expect(libs.size).to eq(1)
     myLibrary = libs[0]
-    myLibrary.size.should == 3
+    expect(myLibrary.size).to eq(3)
     # Malory
     maloryBook = myLibrary.select {|b| b.isbn == '9780192812179'}[0]
-    maloryBook.publisher.should == 'Oxford University Press'
-    maloryBook.authors.include?('Vinaver').should be_truthy
-    maloryBook.version.should == Alexandria::DATA_VERSION
+    expect(maloryBook.publisher).to eq('Oxford University Press')
+    expect(maloryBook.authors.include?('Vinaver')).to be_truthy
+    expect(maloryBook.version).to eq(Alexandria::DATA_VERSION)
 
     # Guide to LaTeX
     latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
-    latexBook.isbn.should == '9780201398250'
-    latexBook.publisher.should == 'Addison Wesley' # note, no Ruby-Amazon cruft
+    expect(latexBook.isbn).to eq('9780201398250')
+    expect(latexBook.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
   end
 
   after(:each) do
@@ -109,19 +109,19 @@ describe Alexandria::Library, " with books without an ISBN" do
 
   it "allows books to have no ISBN" do
     libs = Alexandria::Library.loadall
-    libs.size.should == 1
+    expect(libs.size).to eq(1)
     myLibrary = libs[0]
-    myLibrary.size.should == 2
+    expect(myLibrary.size).to eq(2)
 
     # Guide to LaTeX
     latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
-    latexBook.isbn.should == '9780201398250'
-    latexBook.publisher.should == 'Addison Wesley' # note, no Ruby-Amazon cruft
-    latexBook.version.should == Alexandria::DATA_VERSION
+    expect(latexBook.isbn).to eq('9780201398250')
+    expect(latexBook.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
+    expect(latexBook.version).to eq(Alexandria::DATA_VERSION)
 
     #Lex and Yacc
     lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
-    lexAndYaccBook.publisher.should == "O'Reilley"
+    expect(lexAndYaccBook.publisher).to eq("O'Reilley")
 
     #puts "ident -> " + lexAndYaccBook.ident
 
@@ -134,16 +134,16 @@ describe Alexandria::Library, " with books without an ISBN" do
     librariesReloaded = Alexandria::Library.loadall
     myLibraryReloaded = librariesReloaded[0]
 
-    myLibraryReloaded.size.should == 2
+    expect(myLibraryReloaded.size).to eq(2)
 
     latexBook = myLibraryReloaded.select{|b| b.title.include? 'Latex'}[0]
-    latexBook.should_not be_nil
-    latexBook.publisher.should == 'Addison Wesley'
+    expect(latexBook).not_to be_nil
+    expect(latexBook.publisher).to eq('Addison Wesley')
     #puts latexBook.title
 
     lexAndYaccBook = myLibraryReloaded.select{|b| b.title.include? 'Lex'}[0]
-    lexAndYaccBook.should_not be_nil
-    lexAndYaccBook.publisher.should == "O'Reilley"
+    expect(lexAndYaccBook).not_to be_nil
+    expect(lexAndYaccBook.publisher).to eq("O'Reilley")
     #puts lexAndYaccBook.title
 
   end
@@ -177,28 +177,28 @@ describe Alexandria::Library, " export sort order" do
   it "can sort by title" do
     sort_by_title = Alexandria::LibrarySortOrder.new(:title)
     @format.invoke(@myLibrary, sort_by_title, @outfile)
-    File.exist?(@outfile).should be_truthy
+    expect(File.exist?(@outfile)).to be_truthy
     rows = load_rows_from_csv
     rows.shift
-    rows.size.should == @myLibrary.size
+    expect(rows.size).to eq(@myLibrary.size)
     TITLE = 0
     comparisons = rows.size - 1
     comparisons.times do |index|
-      rows[index][TITLE].should <= rows[index+1][TITLE]
+      expect(rows[index][TITLE]).to be <= rows[index+1][TITLE]
     end
   end
 
   it "can sort in descending order" do
     sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
     @format.invoke(@myLibrary, sort_by_date_desc, @outfile)
-    File.exist?(@outfile).should be_truthy
+    expect(File.exist?(@outfile)).to be_truthy
     rows = load_rows_from_csv
     rows.shift
-    rows.size.should == @myLibrary.size
+    expect(rows.size).to eq(@myLibrary.size)
     DATE = 5
     comparisons = rows.size - 1
     comparisons.times do |index|
-      rows[index][DATE].should >= rows[index+1][DATE]
+      expect(rows[index][DATE]).to be >= rows[index+1][DATE]
     end
   end
 

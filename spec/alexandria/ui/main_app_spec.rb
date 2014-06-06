@@ -34,15 +34,15 @@ end
 
 describe Alexandria::UI::MainApp do
   before do
-    Alexandria::UI::UIManager.stub(:new).
+    allow(Alexandria::UI::UIManager).to receive(:new).
       and_return(double(Alexandria::UI::UIManager,
                         actiongroup: double(Object), appbar: nil,
                         prefs: nil))
   end
   it "should be a singleton" do
-    proc do
+    expect do
       Alexandria::UI::MainApp.new
-    end.should raise_error
+    end.to raise_error
     #Alexandria::UI::MainApp.instance
   end
 end
