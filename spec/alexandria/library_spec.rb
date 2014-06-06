@@ -84,7 +84,7 @@ describe Alexandria::Library, " imported from 0.6.1 data files" do
     # Malory
     maloryBook = myLibrary.select {|b| b.isbn == '9780192812179'}[0]
     maloryBook.publisher.should == 'Oxford University Press'
-    maloryBook.authors.include?('Vinaver').should be_true
+    maloryBook.authors.include?('Vinaver').should be_truthy
     maloryBook.version.should == Alexandria::DATA_VERSION
 
     # Guide to LaTeX
@@ -177,7 +177,7 @@ describe Alexandria::Library, " export sort order" do
   it "can sort by title" do
     sort_by_title = Alexandria::LibrarySortOrder.new(:title)
     @format.invoke(@myLibrary, sort_by_title, @outfile)
-    File.exist?(@outfile).should be_true
+    File.exist?(@outfile).should be_truthy
     rows = load_rows_from_csv
     rows.shift
     rows.size.should == @myLibrary.size
@@ -191,7 +191,7 @@ describe Alexandria::Library, " export sort order" do
   it "can sort in descending order" do
     sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
     @format.invoke(@myLibrary, sort_by_date_desc, @outfile)
-    File.exist?(@outfile).should be_true
+    File.exist?(@outfile).should be_truthy
     rows = load_rows_from_csv
     rows.shift
     rows.size.should == @myLibrary.size

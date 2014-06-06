@@ -43,9 +43,9 @@ describe Alexandria::Scanners::CueCat do
   end
 
   it "should detect a complete scan only " do
-    @partials.each { |scan| @cuecat.match?(scan).should_not be_true }
-    @cuecat.match?(@scans[:isbn]).should be_true
-    @cuecat.match?(@scans[:ib5]).should be_true
+    @partials.each { |scan| @cuecat.match?(scan).should_not be_truthy }
+    @cuecat.match?(@scans[:isbn]).should be_truthy
+    @cuecat.match?(@scans[:ib5]).should be_truthy
   end
 
   it "should decode ISBN barcodes" do
@@ -58,11 +58,11 @@ describe Alexandria::Scanners::CueCat do
   end
 
   it "should decode ISSN barcodes" do
-    pending "Test scan ISSN"
+    skip "Test scan ISSN"
   end
 
   it "should decode UPC barcodes" do
-    pending "Test scan UPC"
+    skip "Test scan UPC"
   end
 
 end
