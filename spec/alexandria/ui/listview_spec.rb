@@ -21,12 +21,9 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Alexandria::UI::ListViewManager do
   it "should work" do
-    model = double(Object)
-    prefs = double(Object)
-    selection = double(Gtk::SelectionMode, :mode= => nil, :signal_connect => nil)
-    treeview = double(Gtk::TreeView, :model= => model, :append_column => nil, :selection => selection, :signal_connect => nil, :signal_connect_after => nil)
-    expect(treeview).to receive(:enable_model_drag_source)
-    listview, parent = treeview, double(Object, :prefs => double(Object))
+    listview = double(Gtk::TreeView).as_null_object
+    parent = double(Object, listview: listview).as_null_object
+    expect(listview).to receive(:enable_model_drag_source)
     Alexandria::UI::ListViewManager.new(listview, parent)
   end
 end
