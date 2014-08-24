@@ -32,4 +32,3 @@ describe Alexandria::Book do
     different_book.wont_equal book
   end
 end
-

@@ -58,4 +58,3 @@ end
 describe Gtk::TreeView do
   it "should extend Gtk::TreeView"
 end
-

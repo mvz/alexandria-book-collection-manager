@@ -46,6 +46,3 @@ describe Alexandria::UI::MainApp do
     #Alexandria::UI::MainApp.instance
   end
 end
-
-
-

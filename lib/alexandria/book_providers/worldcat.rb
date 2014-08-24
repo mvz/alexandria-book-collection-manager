@@ -262,4 +262,3 @@ module Alexandria
     end # class WorldCatProvider
   end # class BookProviders
 end # module Alexandria
-
