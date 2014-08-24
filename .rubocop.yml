@@ -1,8 +1,3 @@
-AllCops:
-  Exclude:
-    - 'test/**/*'
-    - 'spec/**/*'
-
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
