@@ -150,7 +150,7 @@ module Alexandria
     logger
   end
 
-  @@logger = self.create_logger
+  @@logger = create_logger
 
   public
 

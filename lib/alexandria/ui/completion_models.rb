@@ -41,7 +41,7 @@ class Gtk::Entry
     complete(Alexandria::UI::CompletionModels::TAG)
     #min = self.completion.minimum_key_length
     min = 2
-    self.completion.signal_connect('match-selected') do |c, model, iter|
+    completion.signal_connect('match-selected') do |c, model, iter|
       cur_text = c.entry.text
       new_tag = model.get_value(iter, 0)
       cur_text_split = cur_text.split(",")
@@ -50,7 +50,7 @@ class Gtk::Entry
       c.entry.text = cur_text_split.join(",")
       true
     end
-    self.completion.set_match_func do |comp, key, iter|
+    completion.set_match_func do |comp, key, iter|
       cur_tag = key.split(",").last.strip
       if cur_tag.size >= min
         begin

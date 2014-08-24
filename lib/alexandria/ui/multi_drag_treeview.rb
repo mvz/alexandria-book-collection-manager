@@ -18,9 +18,9 @@
 
 class Gdk::Event
   def ==(obj)
-    obj.is_a?(self.class) and self.time == obj.time \
-    and self.x == obj.x and self.y == obj.y \
-    and self.button == obj.button
+    obj.is_a?(self.class) and time == obj.time \
+    and x == obj.x and y == obj.y \
+    and button == obj.button
   end
 end
 
@@ -49,7 +49,7 @@ class Gtk::TreeView
     end
 
     def pending_event?
-      self.pending_event
+      pending_event
     end
   end
 
@@ -80,8 +80,8 @@ class Gtk::TreeView
     raise if @context.nil?
     @context.events.clear
     @context.pending_event = false
-    self.signal_handler_disconnect(@context.motion_notify_handler)
-    self.signal_handler_disconnect(@context.button_release_handler)
+    signal_handler_disconnect(@context.motion_notify_handler)
+    signal_handler_disconnect(@context.button_release_handler)
   end
 
   def button_release_event(event)
@@ -94,7 +94,7 @@ class Gtk::TreeView
     if Gtk::Drag.threshold?(self, @context.x, @context.y, event.x, event.y)
       stop_drag_check
       paths = []
-      self.selection.selected_each { |model, path, iter| paths << path }
+      selection.selected_each { |model, path, iter| paths << path }
       @context.drag_context = Gtk::Drag.begin(self,
                                               @context.source_targets,
                                               @context.source_actions,
@@ -106,7 +106,7 @@ class Gtk::TreeView
 
   def button_press_event(event)
     return false if event.button == 3
-    return false if event.window != self.bin_window
+    return false if event.window != bin_window
     return false if @context.events.include?(event)
 
     if @context.pending_event?
@@ -120,16 +120,16 @@ class Gtk::TreeView
     return false if path.nil?
 
     #call_parent = (event.state.control_mask? or event.state.shift_mask?) or !selected or event.button != 1
-    call_parent = !self.selection.path_is_selected?(path) or
+    call_parent = !selection.path_is_selected?(path) or
       event.button != 1
 
     if call_parent
-      self.signal_handler_block(@context.button_press_handler) do
-        self.signal_emit('button_press_event', event)
+      signal_handler_block(@context.button_press_handler) do
+        signal_emit('button_press_event', event)
       end
     end
 
-    if self.selection.path_is_selected?(path)
+    if selection.path_is_selected?(path)
       @context.pending_event = true
       @context.pressed_button = event.button
       @context.x = event.x

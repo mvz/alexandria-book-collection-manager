@@ -107,15 +107,15 @@ module Alexandria
 
     def self.all
       [
-        self.new(_("Archived ONIX XML"), "onix.tbz2",
+        new(_("Archived ONIX XML"), "onix.tbz2",
                  :export_as_onix_xml_archive),
-                 self.new(_("Archived Tellico XML"), "tc",
+                 new(_("Archived Tellico XML"), "tc",
                           :export_as_tellico_xml_archive),
-                          self.new(_("BibTeX"), "bib", :export_as_bibtex),
-                          self.new(_("CSV list"), "csv", :export_as_csv_list),
-                          self.new(_("ISBN List"), "txt", :export_as_isbn_list),
-                          self.new(_("iPod Notes"), nil, :export_as_ipod_notes),
-                          self.new(_("HTML Web Page"), nil, :export_as_html, true)
+                          new(_("BibTeX"), "bib", :export_as_bibtex),
+                          new(_("CSV list"), "csv", :export_as_csv_list),
+                          new(_("ISBN List"), "txt", :export_as_isbn_list),
+                          new(_("iPod Notes"), nil, :export_as_ipod_notes),
+                          new(_("HTML Web Page"), nil, :export_as_html, true)
       ]
     end
 
@@ -329,7 +329,7 @@ module Alexandria
       tellico.add_attribute('syntaxVersion', "7")
       tellico.add_namespace('http://periapsis.org/tellico/')
       collection = tellico.add_element('collection')
-      collection.add_attribute('title', self.name)
+      collection.add_attribute('title', name)
       collection.add_attribute('type', "2")
       fields = collection.add_element('fields')
       field1 = fields.add_element('field')

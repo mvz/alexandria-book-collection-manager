@@ -288,17 +288,17 @@ class FileInstallTask < Rake::TaskLib
     def install(base_dir)
       puts "Installing #{@description} to #{base_dir}#{@dest_dir}"
       files.each do |f|
-        dest = self.dest_dir(f, base_dir)
+        dest = dest_dir(f, base_dir)
         FileUtils.mkdir_p(dest) unless test(?d, dest)
         if test(?f, f)
-          FileUtils.install(f, dest, :mode => self.mode)
+          FileUtils.install(f, dest, :mode => mode)
         end
       end
     end
 
     def uninstall(base_dir)
       files.each do |f|
-        dest = self.dest_dir(f, base_dir)
+        dest = dest_dir(f, base_dir)
         filename = File.basename(f)
         file = File.join(dest, filename)
         if test(?f, file)
@@ -309,7 +309,7 @@ class FileInstallTask < Rake::TaskLib
 
     def get_installation_dirs(base_dir, all_dirs_set)
       files.each do |f|
-        dest = self.dest_dir(f, base_dir)
+        dest = dest_dir(f, base_dir)
         filename = File.basename(f)
         file = File.join(dest, filename)
         all_dirs_set << File.dirname(file)

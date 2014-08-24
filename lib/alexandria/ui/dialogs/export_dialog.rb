@@ -60,7 +60,7 @@ module Alexandria
 
         self.transient_for = parent
         self.current_name = library.name
-        self.signal_connect('destroy') { hide }
+        signal_connect('destroy') { hide }
 
         @parent, @library, @sort_order = parent, library, sort_order
 

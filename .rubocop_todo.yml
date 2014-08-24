@@ -364,11 +364,6 @@ Style/RedundantBegin:
 Style/RedundantReturn:
   Enabled: false
 
-# Offense count: 161
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Enabled: false
-
 # Offense count: 17
 Style/RegexpLiteral:
   MaxSlashes: 8

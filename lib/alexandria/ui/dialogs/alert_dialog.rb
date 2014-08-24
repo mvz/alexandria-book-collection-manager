@@ -25,11 +25,11 @@ module Alexandria
         self.border_width = 6
         self.resizable = false
         self.has_separator = false
-        self.vbox.spacing = 12
+        vbox.spacing = 12
 
         hbox = Gtk::HBox.new(false, 12)
         hbox.border_width = 6
-        self.vbox.pack_start(hbox)
+        vbox.pack_start(hbox)
 
         image = Gtk::Image.new(stock_icon,
                                Gtk::IconSize::DIALOG)

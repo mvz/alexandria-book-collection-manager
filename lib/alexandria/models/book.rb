@@ -66,7 +66,7 @@ module Alexandria
     end
 
     def ==(obj)
-      obj.is_a?(self.class) and self.ident == obj.ident
+      obj.is_a?(self.class) and ident == obj.ident
     end
   end
 end

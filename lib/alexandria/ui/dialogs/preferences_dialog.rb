@@ -34,7 +34,7 @@ module Alexandria
 
         self.has_separator = false
         self.resizable = false
-        self.vbox.border_width = 12
+        vbox.border_width = 12
 
         @controls = []
       end
@@ -113,13 +113,13 @@ module Alexandria
               [Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE])
         self.has_separator = false
         self.resizable = false
-        self.vbox.border_width = 12
+        vbox.border_width = 12
 
         table = Gtk::Table.new(0, 0)
         fill_table(table, provider)
-        self.vbox.pack_start(table)
+        vbox.pack_start(table)
 
-        self.signal_connect('destroy') { sync_variables }
+        signal_connect('destroy') { sync_variables }
 
         show_all
         run
@@ -143,7 +143,7 @@ module Alexandria
         @selected_instance = nil
 
         @table = Gtk::Table.new(2, 2)
-        self.vbox.pack_start(@table)
+        vbox.pack_start(@table)
 
         # Name.
 

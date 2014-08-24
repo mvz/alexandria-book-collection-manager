@@ -44,44 +44,44 @@ module Alexandria
       #puts "book_providers search #{self.instance.count_observers}"
 
       begin
-        factory = self.instance[factory_n]
+        factory = instance[factory_n]
         puts factory.fullname + " lookup" if $DEBUG
         if (not factory.enabled)
           puts factory.fullname + " disabled!, skipping..." if $DEBUG
           raise ProviderSkippedError
         end
-        self.instance.changed
-        self.instance.notify_observers(:searching, factory.fullname) # new
+        instance.changed
+        instance.notify_observers(:searching, factory.fullname) # new
         results = factory.search(criterion, type)
 
         # sanity check if at least one valid result is actually found
         results.delete_if { |book, cover| book.nil? }
 
         if results.length == 0
-          self.instance.changed
-          self.instance.notify_observers(:not_found, factory.fullname) # new
+          instance.changed
+          instance.notify_observers(:not_found, factory.fullname) # new
           raise NoResultsError
         else
           log.info { "found at " + factory.fullname }
-          self.instance.changed
-          self.instance.notify_observers(:found, factory.fullname) # new
+          instance.changed
+          instance.notify_observers(:found, factory.fullname) # new
           return results
         end
       rescue Exception => boom
         if boom.kind_of? NoResultsError
           unless boom.instance_of? ProviderSkippedError
-            self.instance.changed
-            self.instance.notify_observers(:not_found, factory.fullname) # new
+            instance.changed
+            instance.notify_observers(:not_found, factory.fullname) # new
             Thread.new { sleep(0.5) }.join
           end
         else
-          self.instance.changed
-          self.instance.notify_observers(:error, factory.fullname) # new
+          instance.changed
+          instance.notify_observers(:error, factory.fullname) # new
           Thread.new { sleep(0.5) }.join # hrmmmm, to make readable...
           trace = boom.backtrace.join("\n >")
           log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
         end
-        if self.last == factory
+        if last == factory
           log.warn { "Error while searching #{criterion}" }
           message = case boom
                 when Timeout::Error
@@ -121,7 +121,7 @@ module Alexandria
     end
 
     def self.isbn_search(criterion)
-      self.search(criterion, SEARCH_BY_ISBN)
+      search(criterion, SEARCH_BY_ISBN)
     end
 
     class Preferences < Array
@@ -180,11 +180,11 @@ module Alexandria
       end
 
       def variable_named(name)
-        self.find { |var| var.name == name }
+        find { |var| var.name == name }
       end
 
       def read
-        self.each do |var|
+        each do |var|
           message = @provider.variable_name(var)
           val = Alexandria::Preferences.instance.send(message)
           var.value = val unless (val.nil? or (val == "" and var.mandatory?))
@@ -266,11 +266,11 @@ module Alexandria
       end
 
       def self.abstract?
-        (not self.included_modules.include?(Singleton))
+        (not included_modules.include?(Singleton))
       end
 
       def <=>(provider)
-        self.fullname <=> provider.fullname
+        fullname <=> provider.fullname
       end
 
       def self.unabstract
@@ -362,7 +362,7 @@ module Alexandria
           providers[name] = instance
         end
       end
-      self.clear
+      clear
       rejig_providers_priority()
       priority = (@prefs.providers_priority or [])
       priority.map! { |x| x.strip }

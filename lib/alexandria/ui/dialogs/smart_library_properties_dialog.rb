@@ -39,9 +39,9 @@ module Alexandria
             Alexandria::UI::display_help(self, 'edit-smart-library')
           elsif response == Gtk::Dialog::RESPONSE_OK
             if user_confirms_possible_weirdnesses_before_saving?
-              smart_library.rules = self.smart_library_rules
+              smart_library.rules = smart_library_rules
               smart_library.predicate_operator_rule =
-                self.predicate_operator_rule
+                predicate_operator_rule
               smart_library.save
               block.call(smart_library)
               break

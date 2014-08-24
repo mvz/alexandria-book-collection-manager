@@ -26,20 +26,20 @@ class Gdk::Pixbuf
     new_pixbuf = Gdk::Pixbuf.new(Gdk::Pixbuf::COLORSPACE_RGB,
                                  true,
                                  8,
-                                 self.width + tweak_x,
-                                 self.height + tweak_y)
+                                 width + tweak_x,
+                                 height + tweak_y)
 
     # Fills with blank.
     new_pixbuf.fill!(0)
 
     # Copies the current pixbuf there (south-west).
-    self.copy_area(0, 0,
-                   self.width, self.height,
+    copy_area(0, 0,
+                   width, height,
                    new_pixbuf,
                    0, tweak_y)
 
     # Copies the tag pixbuf there (north-est).
-    tag_pixbuf_x = self.width - (tweak_x * 2)
+    tag_pixbuf_x = width - (tweak_x * 2)
     new_pixbuf.composite!(tag_pixbuf,
                           0, 0,
                           tag_pixbuf.width + tag_pixbuf_x,

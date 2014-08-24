@@ -28,7 +28,7 @@ module Alexandria
                     # User dir
                     File.join(ENV['HOME'], '.alexandria', '.web-themes')
                    ]
-      themes_dir.map { |x| self.load(x) }.flatten
+      themes_dir.map { |x| load(x) }.flatten
     end
 
     def has_pixmaps?

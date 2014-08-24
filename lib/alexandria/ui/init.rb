@@ -36,7 +36,7 @@ end
 
 class Gtk::IconView
   def freeze
-    @old_model = self.model
+    @old_model = model
     self.model = nil
   end
 
@@ -47,7 +47,7 @@ end
 
 class Gtk::TreeView
   def freeze
-    @old_model = self.model
+    @old_model = model
     self.model = nil
   end
 

@@ -33,13 +33,13 @@ module Alexandria
         self.has_separator = false
         self.resizable = true
         self.border_width = 4
-        self.vbox.border_width = 12
+        vbox.border_width = 12
 
         main_box = Gtk::VBox.new
         main_box.border_width = 4
         main_box.spacing = 8
 
-        self.vbox << main_box
+        vbox << main_box
 
         @smart_library_rules = []
 

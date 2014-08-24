@@ -60,7 +60,7 @@ module Alexandria
             text = IO.read(filename)
             hash = YAML.load(text)
             begin
-              smart_library = self.from_hash(hash)
+              smart_library = from_hash(hash)
               a << smart_library
             rescue => e
               puts "Cannot load serialized smart library: #{e}"
@@ -72,7 +72,7 @@ module Alexandria
       rescue Errno::ENOENT
         # First run and no smart libraries yet? Provide some default
         # ones.
-        self.sample_smart_libraries.each do |smart_library|
+        sample_smart_libraries.each do |smart_library|
           smart_library.save
           a << smart_library
         end
@@ -90,25 +90,25 @@ module Alexandria
       rule = Rule.new(operands.find { |x| x.book_selector == :rating },
                       Rule::Operators::IS,
                       UI::MainApp::MAX_RATING_STARS.to_s)
-      a << self.new(_("Favorite"), [rule], ALL_RULES)
+      a << new(_("Favorite"), [rule], ALL_RULES)
 
       # Loaned books.
       rule = Rule.new(operands.find { |x| x.book_selector == :loaned },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << self.new(_("Loaned"), [rule], ALL_RULES)
+      a << new(_("Loaned"), [rule], ALL_RULES)
 
       #Redd books.
       rule = Rule.new(operands.find { |x| x.book_selector == :redd },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << self.new(_("Read"), [rule], ALL_RULES)
+      a << new(_("Read"), [rule], ALL_RULES)
 
       #Own books.
       rule = Rule.new(operands.find { |x| x.book_selector == :own },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << self.new(_("Owned"), [rule], ALL_RULES)
+      a << new(_("Owned"), [rule], ALL_RULES)
 
       #Want books.
       rule = Rule.new(operands.find { |x| x.book_selector == :want },
@@ -117,7 +117,7 @@ module Alexandria
       rule2 = Rule.new(operands.find { |x| x.book_selector == :own },
                        Rule::Operators::IS_NOT_TRUE,
                        nil)
-      a << self.new(_("Wishlist"), [rule, rule2], ALL_RULES)
+      a << new(_("Wishlist"), [rule, rule2], ALL_RULES)
 
 
       return a
@@ -141,9 +141,9 @@ module Alexandria
 
     def name=(new_name)
       if @name != new_name
-        old_yaml = self.yaml
+        old_yaml = yaml
         @name = new_name
-        FileUtils.mv(old_yaml, self.yaml)
+        FileUtils.mv(old_yaml, yaml)
         save
       end
     end
@@ -169,7 +169,7 @@ module Alexandria
       filters = @rules.map { |x| x.filter_proc }
       selector = @predicate_operator_rule == ALL_RULES ? :all? : :any?
 
-      self.clear
+      clear
       @cache.clear
 
       @libraries.each do |library|
@@ -177,7 +177,7 @@ module Alexandria
           filters.send(selector) { |filter| filter.call(book) } #Problem here.
         end
         filtered_library.each { |x| @cache[x] = library }
-        self.concat(filtered_library)
+        concat(filtered_library)
       end
       @n_rated = select { |x| !x.rating.nil? and x.rating > 0 }.length
     end
@@ -199,7 +199,7 @@ module Alexandria
         @cache[book].save(book)
       else
         FileUtils.mkdir_p(DIR)
-        File.open(self.yaml, "w") { |io| io.puts self.to_hash.to_yaml }
+        File.open(yaml, "w") { |io| io.puts to_hash.to_yaml }
       end
     end
 
@@ -233,7 +233,7 @@ module Alexandria
     end
 
     def ==(object)
-      object.is_a?(self.class) && object.name == self.name
+      object.is_a?(self.class) && object.name == name
     end
 
     @@deleted_libraries = []
@@ -244,7 +244,7 @@ module Alexandria
 
     def self.really_delete_deleted_libraries
       @@deleted_libraries.each do |library|
-        puts "Deleting smart library file (#{self.yaml})" if $DEBUG
+        puts "Deleting smart library file (#{yaml})" if $DEBUG
         FileUtils.rm_rf(library.yaml)
       end
     end
@@ -253,7 +253,7 @@ module Alexandria
       if @@deleted_libraries.include?(self)
         puts "Already deleted a SmartLibrary with this name"
         puts "(this might mess up undeletes...)"
-        FileUtils.rm_rf(self.yaml)
+        FileUtils.rm_rf(yaml)
         # so we just delete the old smart library, and
         # 'pending' delete the new one of the same name...
         # urrr... yeah, that'll work!
@@ -319,7 +319,7 @@ module Alexandria
 
       class Operand < Struct.new(:name, :klass)
         def <=>(x)
-          self.name <=> x.name
+          name <=> x.name
         end
       end
 
@@ -334,7 +334,7 @@ module Alexandria
 
       class Operator < Struct.new(:sym, :name, :proc)
         def <=>(x)
-          self.name <=> x.name
+          name <=> x.name
         end
       end
 
@@ -465,8 +465,8 @@ module Alexandria
                                         #Time.now - x > 3600*24*y
                                       })
 
-        ALL = self.constants.map \
-        { |x| self.module_eval(x.to_s) }.select \
+        ALL = constants.map \
+        { |x| module_eval(x.to_s) }.select \
         { |x| x.is_a?(Operator) }
       end
 

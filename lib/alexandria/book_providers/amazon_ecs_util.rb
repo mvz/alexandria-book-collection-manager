@@ -96,7 +96,7 @@ module Amazon
         opts[:keywords] = terms
       end
 
-      self.send_request(opts)
+      send_request(opts)
     end
 
     # Search an item by ASIN no.
@@ -104,7 +104,7 @@ module Amazon
       opts[:operation] = 'ItemLookup'
       opts[:item_id] = item_id
 
-      self.send_request(opts)
+      send_request(opts)
     end
 
     # HACK : copied from book_providers.rb
@@ -116,11 +116,11 @@ module Amazon
 
     # Generic send request to ECS REST service. You have to specify the :operation parameter.
     def self.send_request(opts)
-      opts = self.options.merge(opts) if self.options
+      opts = options.merge(opts) if options
       request_url = prepare_url(opts)
       log.debug { "Request URL: #{request_url}" }
 
-      res = self.transport.get_response(URI::parse(request_url))
+      res = transport.get_response(URI::parse(request_url))
       unless res.kind_of? Net::HTTPSuccess
         raise Amazon::RequestError, "HTTP Response: #{res.code} #{res.message}"
       end

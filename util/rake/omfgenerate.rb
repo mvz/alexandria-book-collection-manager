@@ -58,7 +58,7 @@ class OmfGenerateTask < Rake::TaskLib
   end
 
   def omf_files
-    self.in_files.map { |f| f.sub(/.omf.in/, '.omf') }
+    in_files.map { |f| f.sub(/.omf.in/, '.omf') }
   end
 
 

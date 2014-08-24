@@ -28,12 +28,12 @@ module Alexandria
 
     def self.all
       [
-       self.new(_("Autodetect"), ['*'], :import_autodetect),
-       self.new(_("Archived Tellico XML (*.bc, *.tc)"),
+       new(_("Autodetect"), ['*'], :import_autodetect),
+       new(_("Archived Tellico XML (*.bc, *.tc)"),
                 ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
-       self.new(_("ISBN List (*.txt)"), ['*.txt'],
+       new(_("ISBN List (*.txt)"), ['*.txt'],
                 :import_as_isbn_list),
-       self.new(_("GoodReads CSV"), ['*.csv'],
+       new(_("GoodReads CSV"), ['*.csv'],
 		:import_as_csv_file)
       ]
     end
@@ -70,16 +70,16 @@ module Alexandria
       puts "Filename is #{filename} and ext is #{filename[-4..-1]}"
       puts "Beginning import: #{args[0]}, #{args[1]}"
       if filename[-4..-1] == ".txt"
-        self.import_as_isbn_list(*args)
+        import_as_isbn_list(*args)
       elsif [".tc", ".bc"].include? filename[-3..-1]
         begin
-          self.import_as_tellico_xml_archive(*args)
+          import_as_tellico_xml_archive(*args)
         rescue => e
           puts e.message
           puts e.backtrace.join("\n>> ")
         end
       elsif [".csv"].include? filename[-4..-1]
-	self.import_as_csv_file(*args)
+	import_as_csv_file(*args)
       else
         puts "Bailing on this import!"
         raise "Not supported type"
@@ -193,7 +193,7 @@ module Alexandria
       reader = CSV.open(filename, 'r')
       # Goodreads & LibraryThing now use csv header lines
       header = reader.shift
-      importer = self.identify_csv_type(header)
+      importer = identify_csv_type(header)
       failed_once = false
       begin
         reader.each do |row|
@@ -241,7 +241,7 @@ module Alexandria
 
           reader = CSV.open(csv_fixed.path, 'r')
           header = reader.shift
-          importer = self.identify_csv_type(header)
+          importer = identify_csv_type(header)
 
           retry
         end
