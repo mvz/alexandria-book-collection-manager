@@ -47,7 +47,7 @@ class Gtk::Entry
       cur_text_split = cur_text.split(",")
       cur_text_split.delete_at(-1)
       cur_text_split << new_tag
-      c.entry.text = cur_text_split.join(",")      
+      c.entry.text = cur_text_split.join(",")
       true
     end
     self.completion.set_match_func do |comp, key, iter|

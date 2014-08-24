@@ -74,7 +74,7 @@ module Alexandria
             self.instance.notify_observers(:not_found, factory.fullname) # new
             Thread.new {sleep(0.5)}.join
           end
-        else        
+        else
           self.instance.changed
           self.instance.notify_observers(:error, factory.fullname) # new
           Thread.new {sleep(0.5)}.join # hrmmmm, to make readable...
@@ -203,11 +203,11 @@ module Alexandria
         @prefs = Preferences.new(self)
         @prefs.add("enabled", _("Enabled"), true, [true,false])
       end
-      
+
       def enabled()
         @prefs['enabled']
       end
-      
+
       def toggle_enabled()
         old_value = enabled()
         @prefs.variable_named('enabled').new_value = (not old_value)
@@ -259,7 +259,7 @@ module Alexandria
       def transport
         config = Alexandria::Preferences.instance.http_proxy_config
         config ? Net::HTTP.Proxy(*config) : Net::HTTP
-      end    
+      end
 
       def abstract?
         self.class.abstract?
@@ -297,7 +297,7 @@ module Alexandria
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     require 'alexandria/book_providers/amazon_aws'
-    
+
     # Website based providers
     require 'alexandria/book_providers/adlibris'
     require 'alexandria/book_providers/barnes_and_noble'
@@ -388,7 +388,7 @@ module Alexandria
       unless priority.empty?
         changed = false
 
-        if ecs_index = priority.index("AmazonECS") 
+        if ecs_index = priority.index("AmazonECS")
           priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
           priority.uniq! # remove any other "Amazon" from the list
           changed = true

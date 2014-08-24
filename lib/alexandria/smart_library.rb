@@ -254,7 +254,7 @@ module Alexandria
         puts "Already deleted a SmartLibrary with this name"
         puts "(this might mess up undeletes...)"
         FileUtils.rm_rf(self.yaml)
-        # so we just delete the old smart library, and 
+        # so we just delete the old smart library, and
         # 'pending' delete the new one of the same name...
         # urrr... yeah, that'll work!
       end
@@ -417,7 +417,7 @@ module Alexandria
                                     proc { |x, y| x < y })
         IS_AFTER = Operator.new(
                                 :is_after,
-                                _("is after"),                              
+                                _("is after"),
 				proc { |x, y| x.to_i > y.to_i and x!=nil })
         IS_BEFORE = Operator.new(
                                  :is_before,
@@ -432,7 +432,7 @@ module Alexandria
                                         log.debug { "Given Date: #{x.inspect} #{x.class}" }
                                         given_date = Time.parse(x)
                                         days = y.to_i * (24*60*60)
-                                        
+
                                         Time.now - given_date <= days
                                       else
                                         false
@@ -446,13 +446,13 @@ module Alexandria
         IS_NOT_IN_LAST = Operator.new(
                                       :is_not_in_last_days,
                                       _("is not in last"),
-                                      proc { |x, y| 
+                                      proc { |x, y|
                                         begin
                                           unless x.nil? or x.empty?
                                             log.debug { "Given Date: #{x.inspect} #{x.class}" }
                                             given_date = Time.parse(x)
                                             days = y.to_i * (24*60*60)
-                                            
+
                                             Time.now - given_date > days
                                           else
                                             false
@@ -462,7 +462,7 @@ module Alexandria
                                           log.warn { "Date matching failed #{ex} #{trace}" }
                                           false
                                         end
-                                        #Time.now - x > 3600*24*y 
+                                        #Time.now - x > 3600*24*y
                                       })
 
         ALL = self.constants.map \

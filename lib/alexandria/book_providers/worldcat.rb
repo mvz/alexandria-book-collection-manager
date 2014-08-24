@@ -52,7 +52,7 @@ module Alexandria
         req = create_search_uri(type, criterion)
         puts req if $DEBUG
         html_data = transport.get_response(URI.parse(req))
-        # Note: I tried to use Alexandria::WWWAgent, 
+        # Note: I tried to use Alexandria::WWWAgent,
         #       but this caused failures here (empty pages...)
         #       find out how the requests differ
 
@@ -63,7 +63,7 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }          
+          results.map {|result| get_book_from_search_result(result) }
         end
 
       end
@@ -78,7 +78,7 @@ module Alexandria
       end
 
 
-      private 
+      private
 
       def create_search_uri(search_type, search_term)
         search_type_code = {SEARCH_BY_ISBN => 'isbn:',
@@ -131,14 +131,14 @@ module Alexandria
           log.warn {"Failed parsing search results for WorldCat " +
             "#{ex.message} #{trace}" }
         end
-        book_search_results  
+        book_search_results
       end
 
 
 
     def parse_result_data(html, search_isbn=nil, recursing=false)
       doc = html_to_doc(html, "UTF-8")
-      
+
       begin
         if doc % 'div#div-results-none'
           log.debug { "WorldCat reports no results" }
@@ -182,7 +182,7 @@ module Alexandria
               return [book, cover_url]
             end
           end
-          
+
           # gone through all and no ISBN match, so just return first result
           log.info {"no more results to check. Returning first result, just an approximation"}
           return first_result
@@ -236,7 +236,7 @@ module Alexandria
             isbns = (isbn_row/'td').last.inner_text.split
             isbn = Library.canonicalise_isbn(isbns.first)
           else
-            log.warn { "No ISBN found on page" }            
+            log.warn { "No ISBN found on page" }
           end
         end
 
@@ -247,7 +247,7 @@ module Alexandria
         image_url = nil # hm, it's on the website, but uses JavaScript...
 
         return [book, image_url]
-        
+
       rescue Exception => ex
         raise ex if ex.instance_of? NoResultsError
         trace = ex.backtrace.join("\n> ")
@@ -255,11 +255,11 @@ module Alexandria
           "#{ex.message} #{trace}" }
         raise NoResultsError
       end
-      
+
     end
 
 
     end # class WorldCatProvider
   end # class BookProviders
 end # module Alexandria
-  
+

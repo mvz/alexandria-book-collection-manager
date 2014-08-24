@@ -149,7 +149,7 @@ module Alexandria
       def parse_date(datestring)
         date_format = '%d/%m/%Y'
         begin
-          d = Date.strptime(datestring, date_format)          
+          d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
         rescue
           nil

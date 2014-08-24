@@ -18,7 +18,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-# AdLibris  Bokhandel AB http://www.adlibris.com/se/ 
+# AdLibris  Bokhandel AB http://www.adlibris.com/se/
 # Swedish online book store
 
 # New AdLibris provider, taken from the Palatina MetaDataSource and
@@ -34,10 +34,10 @@ module Alexandria
       include Alexandria::Logging
 
       SITE = "http://www.adlibris.com/se/"
-      
+
       BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" +
         "&fromproduct=False" # type/term
-      
+
       PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
 
       def initialize()
@@ -58,7 +58,7 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }          
+          results.map {|result| get_book_from_search_result(result) }
         end
 
       end
@@ -75,7 +75,7 @@ module Alexandria
         end
       end
 
-      private 
+      private
 
       def create_search_uri(search_type, search_term)
         if search_type == SEARCH_BY_ISBN
@@ -104,12 +104,12 @@ module Alexandria
         #doc = Hpricot(html)
         doc = html_to_doc(html)
         book_search_results = []
-	
+
         searchHit = doc.search("div'searchResult")[0]
         return [] unless searchHit
-	
+
         (searchHit/'ul.ulSearch table').each do |t|
-	  
+
           result = {}
           if title_data = (t % 'div.divTitle')
 	    result[:title] = (title_data % :a).inner_text
@@ -122,7 +122,7 @@ module Alexandria
 	end
         book_search_results
       end
-      
+
 
       #def binding_type(binding) # swedish string
       #  # hrm, this is a HACK and not currently working
@@ -131,7 +131,7 @@ module Alexandria
       #    "pocket" => :paperback,
       #    "storpocket" => :paperback,
       #    "kartonnage" => :hardback,
-      #    "kassettbok" => :audiobook}[binding.downcase] or :paperback      
+      #    "kassettbok" => :audiobook}[binding.downcase] or :paperback
       #  # H&#228;ftad == Paperback
       #end
 
@@ -146,10 +146,10 @@ module Alexandria
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
         #html = Iconv.conv("UTF-8", "ISO-8859-1", html)
         ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
-        #doc = Hpricot(html)     
+        #doc = Hpricot(html)
         doc = html_to_doc(html)
         begin
-          
+
           title = nil
           if h1 = doc.at('div.productTitleFormat h1')
             title = text_of(h1)
@@ -193,7 +193,7 @@ module Alexandria
 	    end
 	  end
 
-          
+
           isbns = []
           isbn_tds = doc.search("li[@id *= 'liISBN'] td[text()]")
 
@@ -213,7 +213,7 @@ module Alexandria
             isbn = Library.canonicalise_isbn(isbn)
           end
 
-          
+
 	  #cover
 	  image_url = nil
 	  if cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
@@ -227,7 +227,7 @@ module Alexandria
               # Alexandria has its own generic book icon...
               image_url = nil
             end
-	    
+
 	  end
 
           book = Book.new(title, authors, isbn, publisher, year, binding)

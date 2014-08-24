@@ -126,7 +126,7 @@ module Alexandria
           log.error { "problem with immediate export #{ex} try again" }
 
           ErrorDialog.new(@main_app, _("Export failed"),
-                              _("Try letting this library load " + 
+                              _("Try letting this library load " +
                                 "completely before exporting."))
         end
       end

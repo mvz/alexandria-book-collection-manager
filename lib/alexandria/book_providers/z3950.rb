@@ -100,12 +100,12 @@ module Alexandria
           msg += "\n edition: #{marc.edition}"
           msg
         }
-        
+
         return if marc.title.nil? # or marc.authors.empty?
-        
+
         isbn = isbn or marc.isbn
         isbn = Library.canonicalise_ean(isbn)
-        
+
         book = Book.new(marc.title, marc.authors,
                         isbn,
                         (marc.publisher or ""),
@@ -140,11 +140,11 @@ module Alexandria
               # failing that, try the genuine MARC parser
               book = marc_to_book(marc_txt)
             end
-          rescue Exception => ex 
+          rescue Exception => ex
             log.warn { ex }
             log.warn { ex.backtrace }
           end
-          
+
           results << [book] unless book.nil?
         end
         return results

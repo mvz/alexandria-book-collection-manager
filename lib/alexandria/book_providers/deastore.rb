@@ -33,18 +33,18 @@ module Alexandria
 
       SITE = "http://www.deastore.com"
       BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s" # type/term
-    
+
       def initialize()
         super("DeaStore", "DeaStore (Italy)")
         prefs.read
         @agent = nil
       end
 
-      def agent      
+      def agent
         unless @agent
           @agent = Alexandria::WWWAgent.new
           @agent.language = :it
-        end        
+        end
         @agent
       end
 
@@ -87,8 +87,8 @@ module Alexandria
 
       private
 
-      
-      def create_search_uri(search_type, search_term)        
+
+      def create_search_uri(search_type, search_term)
         # bah! very, very similar to the siciliano code! refactor out this duplication
         search_type_code = {SEARCH_BY_ISBN => 'isbn',
           SEARCH_BY_TITLE => 'title',
@@ -111,7 +111,7 @@ module Alexandria
       def parse_search_result_data(html)
         doc = html_to_doc(html)
         book_search_results = []
-        
+
         result_divs = doc.search('div.scheda_prodotto')
         result_divs.each do |div|
           begin
@@ -124,7 +124,7 @@ module Alexandria
             #  p.editore (publisher? editor?)
             #  p Data di pubblicazione: \n     2009
             #  p.prezzo (price)
-            
+
 #             cover_url = ''
 #             cover_images = div/'a/img'
 #             unless cover_images.empty?
@@ -140,24 +140,24 @@ module Alexandria
 #               log.debug { "Search Cover Image URL #{cover_url}" }
 
 #             end
-            
+
             content = div/'div.scheda_content'
             title_link = (content/:a).first
             title = normalize(title_link.inner_text)
             link_to_description = title_link['href']
             lookup_url =  "#{SITE}#{link_to_description}"
-            
+
             authors = []
             (content/'a.info').each do |link|
               authors << normalize(link.inner_text)
             end
-            
+
 
             result = {}
             result[:author] = authors.first # HACK, what about multiple authors
             result[:title] = title
             result[:url] = lookup_url
-            
+
             publishers = (content/'p.editore')
             unless publishers.empty?
               result[:publisher] = normalize(publishers.first.inner_text)
@@ -171,15 +171,15 @@ module Alexandria
         end
         book_search_results
       end
-        
-      
+
+
       def parse_result_data(html)
         begin
           doc = html_to_doc(html)
           data = doc % 'div#dati_scheda'
 
           # sotto_data_hdr = doc % 'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
-          
+
           # title
           title_span = data % 'h1.titolo_scheda'
           title = normalize(title_span.inner_text)
@@ -190,7 +190,7 @@ module Alexandria
           unless cover_img.empty?
             cover_link = cover_img.first['src']
           end
-          
+
           # author(s)
           authors = []
           author_span = data % 'span.int_scheda[text()*=Autore]'
@@ -219,7 +219,7 @@ module Alexandria
 
           # skip 'Collana', (ummm, possibly genre information, Babelfish
           # says "Necklace")
-          
+
           # format
           format_par = data % 'span.int_scheda[text()*=Formato]/..'
           format_par.inner_text =~ /:[\s]*(.+)[\s]*$/
@@ -241,7 +241,7 @@ module Alexandria
           end
 
           isbn = nil
-          unless isbns.empty?          
+          unless isbns.empty?
             isbn = Library.canonicalise_isbn(isbns.first)
           end
 
@@ -256,7 +256,7 @@ module Alexandria
 
           #synopsis_div = doc % 'div.sotto_schede' # exclude the first span though
 
-          
+
           #book = Book.new(title, isbns.first, authors)
           #if publisher
           #  book.publisher = Publisher.new(publisher)
@@ -264,7 +264,7 @@ module Alexandria
           #if format
           #  book.binding = CoverBinding.new(format, binding_type(format))
           #end
-          
+
 
           #cover
           image_url = nil
@@ -290,7 +290,7 @@ module Alexandria
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
           log.error { "Failed parsing DeaStore product page #{ex.message}\n#{trace}" }
-          return nil        
+          return nil
         end
       end
 
@@ -301,9 +301,9 @@ module Alexandria
         end
         str
       end
-      
-      
-      
+
+
+
     end
   end
 end

@@ -135,7 +135,7 @@ module Alexandria
             #isbn
             if book_elements[2].nil? or book_elements[2].strip.empty?
               book_elements[2] = nil
-            else              
+            else
               begin
                 book_elements[2] = book_elements[2].strip
                 book_elements[2] = Library.canonicalise_ean(book_elements[2])
@@ -209,7 +209,7 @@ module Alexandria
                 # available
                 book.authors = dl_book.authors
               end
-              unless book.edition 
+              unless book.edition
                 book.edition = dl_book.edition
               end
               cover = dl_cover
@@ -218,7 +218,7 @@ module Alexandria
               # note failure
             end
           end
-          
+
 
           books_and_covers << [book, cover]
           import_count += 1
@@ -248,7 +248,7 @@ module Alexandria
       end
 
       library = Library.load(name)
-      
+
       books_and_covers.each do |book, cover_uri|
         puts "Saving #{book.isbn} cover..." if $DEBUG
         library.save_cover(book, cover_uri) if cover_uri != nil

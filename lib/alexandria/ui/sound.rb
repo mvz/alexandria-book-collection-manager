@@ -69,7 +69,7 @@ module Alexandria
       def set_up_glib_loop
         unless @loop
           @loop = GLib::MainLoop.new(nil, false)
-          
+
           @bus = @ogg_vorbis_pipeline.bus
           @bus.add_watch do |bus, message|
             case message.type

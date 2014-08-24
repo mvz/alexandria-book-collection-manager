@@ -214,13 +214,13 @@ module Alexandria
                     when Columns::OWN then book.own = toggle_state
                     when Columns::WANT then book.want = toggle_state
                     end
-                    iter[iterid] = toggle_state    
+                    iter[iterid] = toggle_state
                     lib = @parent.selected_library
                     lib.save(book)
                   end
                 end
               end
-              
+
             end
           rescue ::Exception => e
             log.error { "toggle failed for path #{path} #{e}\n" + e.backtrace.join("\n") }

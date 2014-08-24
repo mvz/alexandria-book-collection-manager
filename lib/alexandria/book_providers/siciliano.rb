@@ -83,7 +83,7 @@ module Alexandria
           end
         end
 
-       
+
       end
 
       # the new Siciliano website no longer has direct links to books by their ISBN
@@ -109,7 +109,7 @@ module Alexandria
           else
             # search by ISBN-13 first
             search_term_encoded = Library.canonicalise_ean(search_term) # isbn-13
-          end          
+          end
         else
           search_term_encoded = CGI.escape(search_term)
         end
@@ -204,7 +204,7 @@ module Alexandria
           authors << translator
         end
 
-        
+
         binding = details["Acabamento"]
 
         publisher = search_result[:publisher]
@@ -222,7 +222,7 @@ module Alexandria
         #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
         image_urls = []
         (doc/"script").each do |script|
-          next if script.children.nil? 
+          next if script.children.nil?
           script.children.each do |ch|
             ch_text = ch.to_s
             if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
@@ -235,17 +235,17 @@ module Alexandria
             end
           end
         end
-      
+
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-        result =  [book, image_urls.first]        
+        result =  [book, image_urls.first]
         return result
       rescue Exception => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
-        return nil        
+        return nil
       end
     end
-    
+
     def first_non_empty_text_node(elem)
       text = ''
       elem.children.each do |node|

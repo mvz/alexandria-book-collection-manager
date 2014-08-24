@@ -16,11 +16,11 @@ options = OpenStruct.new
 OptionParser.new do |opts|
   opts.banner = "Usage: alexandria [options]"
   opts.on("-l", "--list", "List libraries in numbered format") { puts Alexandria.list_books_on_console; exit }
-  #opts.on("--output FORMAT", 
-  #        "Output library as FORMAT: csv|xml|yaml; use with --library or omit for ALL") do |val| 
+  #opts.on("--output FORMAT",
+  #        "Output library as FORMAT: csv|xml|yaml; use with --library or omit for ALL") do |val|
   #        options.format = val; exit
   #end
-  #opts.on("--library LIBRARY", 
+  #opts.on("--library LIBRARY",
   #        "Used with --output to pick a library to output") do |val|
   #        options.library = val; exit
   #end

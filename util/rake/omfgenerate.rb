@@ -52,11 +52,11 @@ class OmfGenerateTask < Rake::TaskLib
     omf_file =~ /.*-(.+)\.omf/
     $1
   end
-  
+
   def in_files
     FileList["#{@source_dir}/*.omf.in"]
   end
-  
+
   def omf_files
     self.in_files.map { |f| f.sub(/.omf.in/, '.omf')}
   end

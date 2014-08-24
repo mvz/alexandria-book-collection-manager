@@ -50,10 +50,10 @@ module Alexandria
         html_data = transport.get_response(URI.parse(req))
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)
-        else          
+        else
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
-          results.map {|result| get_book_from_search_result(result) }          
+          results.map {|result| get_book_from_search_result(result) }
         end
       end
 
@@ -90,7 +90,7 @@ module Alexandria
 
 
       def data_from_label(node, label_text)
-        label_node = node % "strong[text()*='#{label_text}']"      
+        label_node = node % "strong[text()*='#{label_text}']"
         if (item_node = label_node.parent)
           data = ""
           item_node.children.each do |n|
@@ -119,7 +119,7 @@ module Alexandria
             # already recursing, avoid doing so endlessly second time
             # around *should* lead to a book description, not a result
             # list
-            return 
+            return
           end
           # ISBN-lookup results in multiple results (trying to be
           # useful, such as for new editions e.g. 9780974514055
@@ -139,43 +139,43 @@ module Alexandria
           html_data = transport.get_response(URI.parse(chosen[:lookup_url]))
           return parse_result_data(html_data.body, isbn, true)
         end
-          
+
         begin
           if div = doc % 'div#contentFull'
             title_img = ((div % :h2) / :img).first
             title = title_img["alt"]
 
             # note, the following img also has alt="von Author, Author..."
-            
-            if author_h = doc % 'h3[text()*="Mehr von"]' # "More from..." links 
+
+            if author_h = doc % 'h3[text()*="Mehr von"]' # "More from..." links
               authors = []
               author_links = author_h.parent / :a
               author_links.each do |a|
                 if a['href'] =~ /BUCH\/sa/
                   # 'sa' means search author, there may also be 'ssw' (search keyword) links
-                  authors << a.inner_text[0..-2].strip 
+                  authors << a.inner_text[0..-2].strip
                   # NOTE stripping the little >> character here...
                 end
               end
             end
-            
+
             item_details = doc % 'ul.itemDataList'
             isbns = []
             isbns << data_from_label(item_details, 'EAN')
-            isbns << data_from_label(item_details, 'ISBN')           
-            
+            isbns << data_from_label(item_details, 'ISBN')
+
             year = nil
             date = data_from_label(item_details, 'Erschienen:')
             if (date =~ /([\d]{4})/)
               year = $1.to_i
             end
-            
+
             binding = data_from_label(item_details, 'Einband')
-              
+
             publisher = data_from_label(item_details, 'Erschienen bei:')
 
 
-            book = Book.new(title, authors, isbns.first, 
+            book = Book.new(title, authors, isbns.first,
                             publisher, year, binding)
 
             image_url = nil

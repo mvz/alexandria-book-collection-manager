@@ -33,7 +33,7 @@ module Alexandria
     # assists in turning on progress bar when searching
     # and turning it off when all search threads have completed...
     class SearchThreadCounter < Monitor
-      
+
       attr_reader :count
 
       def initialize
@@ -79,7 +79,7 @@ module Alexandria
         setup_scanner_area
         init_treeview
         @book_results = Hash.new
-        
+
         @search_thread_counter = SearchThreadCounter.new
         @search_threads_running = @search_thread_counter.new_cond
 
@@ -100,7 +100,7 @@ module Alexandria
             # puts "testing #{book.isbn}"
             (book.isbn == isbn10 || book.isbn == isbn13)
             #puts "book #{book.isbn}"
-            #book == new_book 
+            #book == new_book
           end
           # puts "book_in_library match #{match.inspect}"
           (not match.nil?)
@@ -193,7 +193,7 @@ module Alexandria
                 log.debug { "no book found for #{isbn}, not adding" }
                 adding_a_selection = true
               elsif book_in_library(isbn, library)
-                log.info { "#{isbn} is a duplicate" }                
+                log.info { "#{isbn} is a duplicate" }
                 isbn_duplicates << isbn
               elsif isbns.include? isbn
                 log.info { "detected duplicate in scanned list #{isbn}" }
@@ -230,9 +230,9 @@ module Alexandria
             # TODO (for 0.6.5) should offer to add this book manually
           else
 
-            book = result[0] 
+            book = result[0]
             cover_uri = result[1]
-            
+
             unless cover_uri.nil?
               library.save_cover(book, cover_uri)
             end
@@ -343,10 +343,10 @@ module Alexandria
 
       # end copy-n-paste
 
-      private 
-      
-      def start_search         
-        @search_thread_counter.synchronize do 
+      private
+
+      def start_search
+        @search_thread_counter.synchronize do
           if @search_thread_counter.count == 0
             @search_thread_counter.new_search
             @progress_bar_thread = Thread.new do
@@ -362,7 +362,7 @@ module Alexandria
             end
           else
             @search_thread_counter.new_search
-          end    
+          end
         end
       end
 
@@ -528,7 +528,7 @@ module Alexandria
             # then it's probably a human typing characters
 
             if @scanner.match? @scanner_buffer
-              
+
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
                 log.debug { "Waiting for more scanner input..." }
                 Gtk.idle_add do

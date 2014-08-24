@@ -27,9 +27,9 @@ module Alexandria
   module UI
 
     class BarcodeAnimation
-      
+
       attr_reader :canvas
-      
+
       def initialize
         @canvas = Goo::Canvas.new
         @canvas.set_size_request(300, 70)
@@ -37,7 +37,7 @@ module Alexandria
         @root = @canvas.root_item
 
         @barcode_bars = []
-        @barcode_data = [] 
+        @barcode_data = []
 
         @hpos = 0
 
@@ -57,7 +57,7 @@ module Alexandria
       end
 
       def start
-        @timeout = Gtk.timeout_add(20) do 
+        @timeout = Gtk.timeout_add(20) do
           scan_animation
           (@index >= 0)
         end
@@ -72,7 +72,7 @@ module Alexandria
         @canvas.set_property(:background_color, "white")
         @barcode_bars.each {|rect| rect.set_property(:fill_color, "white") }
       end
-      
+
       def set_passive
         if @canvas
           passive_bg = "#F4F4F4"
@@ -91,17 +91,17 @@ module Alexandria
         # TODO distinguish between scanner and manual input
         # @canvas.set_property(:background_color, "white")
       end
-      
+
       private
 
       def create_ean_barcode_data
         d = '211113123121112331122131113211111123122211132321112311231111'
-        #####911113... but that's too much padding on the left...      
+        #####911113... but that's too much padding on the left...
         while d.size > 0
           space_width = d[0].chr.to_i
           bar_width = d[1].chr.to_i
-          d = d[2..-1]          
-          @barcode_data << [space_width, bar_width]          
+          d = d[2..-1]
+          @barcode_data << [space_width, bar_width]
         end
       end
 
@@ -109,17 +109,17 @@ module Alexandria
       def draw_barcode_bars
         @barcode_data.each do |space_width, bar_width|
           @hpos += space_width
-          rect_item = Goo::CanvasRect.new(@root, 
-                                          @bar_left_edge + @scale*@hpos, @bar_top, 
+          rect_item = Goo::CanvasRect.new(@root,
+                                          @bar_left_edge + @scale*@hpos, @bar_top,
                                           @scale*bar_width, @bar_height,
                                           :line_width => 0,
                                           :fill_color => 'white')
           @hpos += bar_width
-          @barcode_bars << rect_item 
+          @barcode_bars << rect_item
         end
       end
 
-      def scan_animation  
+      def scan_animation
         if @index < @barcode_bars.size
           if @index < 0
             @index = 0

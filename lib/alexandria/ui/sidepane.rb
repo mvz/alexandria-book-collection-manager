@@ -41,7 +41,7 @@ module Alexandria
 
       def on_edited_library cell, path_string, new_text
         log.debug { "edited library name #{new_text}" }
-        ## new_text = new_text.reverse # for testing; 
+        ## new_text = new_text.reverse # for testing;
                                        # a great way to generate broken UTF-8
         if cell.text != new_text
           if match = contains_illegal_character(new_text)
@@ -52,7 +52,7 @@ module Alexandria
                                 "disallowed character <b>%s</b> ") % chars)
             else
               ErrorDialog.new(@main_app, _("Invalid library name"),
-                              _("The name provided contains " + 
+                              _("The name provided contains " +
                                 "invalid characters."))
             end
 

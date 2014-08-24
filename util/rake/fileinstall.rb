@@ -92,18 +92,18 @@ class FileInstallTask < Rake::TaskLib
     desc description
     task tasknames[:install] do
       @file_groups.each {|g| g.install(@stage_dir) }
-    end    
+    end
 
     # UNINSTALL TASKS
 
     task tasknames[:uninstall_files] do
       @file_groups.each {|g| g.uninstall(@stage_dir) }
-    end    
+    end
 
     task tasknames[:uninstall_dirs] => tasknames[:uninstall_files] do
       all_dirs = Set.new
       @file_groups.each {|g| g.get_installation_dirs(@stage_dir, all_dirs) }
-      
+
 
       to_delete = Set.new
       @dirs_to_remove_globs.each do |glob|
@@ -112,7 +112,7 @@ class FileInstallTask < Rake::TaskLib
           unless dir =~ /\/$/
             dir += '/'
           end
-          if regex =~ dir            
+          if regex =~ dir
             to_delete << $1
           end
         end
@@ -129,13 +129,13 @@ class FileInstallTask < Rake::TaskLib
     uninstall_description = "Uninstall package files"
     if @stage_dir
       uninstall_description += " from staging directory"
-    end   
+    end
     desc uninstall_description
-    task tasknames[:uninstall] => [tasknames[:uninstall_files], 
+    task tasknames[:uninstall] => [tasknames[:uninstall_files],
                                    tasknames[:uninstall_dirs]]
 
   end
-  
+
 
 
   public
@@ -195,11 +195,11 @@ class FileInstallTask < Rake::TaskLib
     end
     if ENV.has_key?('RUBYLIBDIR')
       ruby_libdir = ENV['RUBYLIBDIR']
-    end 
+    end
 
     @prefix = ENV['PREFIX'] || ruby_prefix
     if @prefix == ruby_prefix
-      @rubylib = ruby_libdir      
+      @rubylib = ruby_libdir
     elsif ruby_libdir.index(ruby_prefix) == 0
       libpart = ruby_libdir[ruby_prefix.size .. -1]
       @rubylib = File.join(@prefix, libpart)
@@ -233,7 +233,7 @@ class FileInstallTask < Rake::TaskLib
     end
   end
 
-  
+
   # Delete the directory at the given Pathname +p+ if all its children
   # can be similarly deleted, and if it is then empty.
   def delete_if_empty(p)
@@ -315,7 +315,7 @@ class FileInstallTask < Rake::TaskLib
         all_dirs_set << File.dirname(file)
       end
     end
-      
+
 
   end # class FileGroup
 

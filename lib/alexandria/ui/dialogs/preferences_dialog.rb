@@ -272,7 +272,7 @@ module Alexandria
           rndr.active = value
         end
 
-       
+
 
         @treeview_providers.append_column(column)
 
@@ -308,7 +308,7 @@ module Alexandria
           end
         end
 
-        
+
         setup_enable_disable_popup
         sensitize_providers
         setup_barcode_scanner_tab
@@ -336,7 +336,7 @@ module Alexandria
         renderer = Gtk::CellRendererText.new
         @scanner_device_type.pack_start(renderer, true)
         @scanner_device_type.add_attribute(renderer, 'text', 0)
-        
+
         Alexandria::Scanners::Registry.each do |scanner|
           iter = @scanner_device_model.append
           iter[0] = scanner.display_name
@@ -356,15 +356,15 @@ module Alexandria
         # New Enable/Disable pop-up menu...
         @enable_disable_providers_menu = Gtk::Menu.new
         @enable_item = Gtk::MenuItem.new(_("Disable Provider"))
-        @enable_item.signal_connect("activate") { 
+        @enable_item.signal_connect("activate") {
           prov = selected_provider
           prov.toggle_enabled()
           adjust_selected_provider(prov)
-          
+
         }
         @enable_disable_providers_menu.append(@enable_item)
         @enable_disable_providers_menu.show_all
-        
+
 
         @treeview_providers.signal_connect("button_press_event") do |widget, event|
           if event_is_right_click(event)
@@ -392,7 +392,7 @@ module Alexandria
         end
 
         # Popup the menu on Shift-F10
-        @treeview_providers.signal_connect("popup_menu") { 
+        @treeview_providers.signal_connect("popup_menu") {
           selected_prov = @treeview_providers.selection.selected
           puts selected_prov.inspect
           if selected_prov
@@ -401,7 +401,7 @@ module Alexandria
               message = already_enabled ? _("Disable Provider") : _("Enable Provider")
               @enable_item.label = message
 
-              @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME) 
+              @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME)
               false
             end
           else

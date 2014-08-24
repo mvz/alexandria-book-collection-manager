@@ -231,24 +231,24 @@ module Amazon
 
 
     def self.hmac_sha256(message, key)
-      block_size = 64 
+      block_size = 64
       ipad = "\x36" * block_size
       opad = "\x5c" * block_size
       if key.size > block_size
         d = Digest::SHA256.new
         key = d.digest(key)
       end
-      
+
       ipad_bytes = ipad.bytes.collect {|b| b }
       opad_bytes = opad.bytes.collect {|b| b }
       key_bytes = key.bytes.collect {|b| b}
       ipad_xor = ""
       opad_xor = ""
-      for i in 0 .. key.size - 1       
+      for i in 0 .. key.size - 1
         ipad_xor << (ipad_bytes[i] ^ key_bytes[i])
         opad_xor << (opad_bytes[i] ^ key_bytes[i])
       end
-      
+
       ipad = ipad_xor + ipad[key.size..-1]
       opad = opad_xor + opad[key.size..-1]
 
@@ -257,7 +257,7 @@ module Amazon
       d1.update(ipad)
       d1.update(message)
       msg_hash = d1.digest()
-      
+
       # outer hash
       d2 = Digest::SHA256.new
       d2.update(opad)
@@ -268,42 +268,42 @@ module Amazon
     def self.sign_request(request)
       raise AmazonNotConfiguredError unless @@secret_access_key
       # Step 0 : Split apart request string
-      url_pattern = /http:\/\/([^\/]+)(\/[^\?]+)\?(.*$)/ 
+      url_pattern = /http:\/\/([^\/]+)(\/[^\?]+)\?(.*$)/
       url_pattern =~ request
       host = $1
       path = $2
       param_string = $3
-      
+
       # Step 1: enter the timestamp
       t = Time.now.getutc # MUST be in UTC
       stamp = t.strftime('%Y-%m-%dT%H:%M:%SZ')
       param_string = param_string + "&Timestamp=#{stamp}"
-      
+
       # Step 2 : URL-encode
       param_string = param_string.gsub(',', '%2C').gsub(':', '%3A')
       #   NOTE : take care not to double-encode
-      
+
       # Step 3 : Split the parameter/value pairs
       params = param_string.split('&')
-      
+
       # Step 4 : Sort params
       params.sort!
-      
+
       # Step 5 : Rejoin the param string
       canonical_param_string = params.join('&')
-      
+
       # Steps 6 & 7: Prepend HTTP request info
       string_to_sign = "GET\n#{host}\n#{path}\n#{canonical_param_string}"
-      
+
       #puts string_to_sign
 
       # Step 8 : Calculate RFC 2104-compliant HMAC with SHA256 hash algorithm
-      sig = hmac_sha256(string_to_sign, @@secret_access_key)     
+      sig = hmac_sha256(string_to_sign, @@secret_access_key)
       base64_sig = [sig].pack('m').strip
-      
+
       # Step 9 : URL-encode + and = in sig
       base64_sig = CGI.escape(base64_sig)
-      
+
       # Step 10 : Add the URL encoded signature to your request
       "http://#{host}#{path}?#{param_string}&Signature=#{base64_sig}"
     end

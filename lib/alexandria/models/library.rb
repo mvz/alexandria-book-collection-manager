@@ -450,7 +450,7 @@ module Alexandria
       ##was File.exist? but that returns true for empty files... CathalMagus
       already_there = (File.size?(yaml(book)) and
                        !@deleted_books.include?(book))
-      
+
       temp_book=book.dup
       temp_book.library=nil
       File.open(yaml(temp_book), "w") { |io| io.puts temp_book.to_yaml }
@@ -659,7 +659,7 @@ module Alexandria
       @all_libraries.clear
       @all_libraries.concat(Library.loadall)
       @all_libraries.concat(SmartLibrary.loadall)
-      
+
       ruined = []
       deleted = []
       all_regular_libraries.each {|library|
@@ -678,7 +678,7 @@ module Alexandria
     def all_smart_libraries
       @all_libraries.select { |x| x.is_a?(SmartLibrary) }
     end
-    
+
     #def all_dynamic_libraries
     #      @all_libraries.select { |x| x.is_a?(SmartLibrary) }
     #end

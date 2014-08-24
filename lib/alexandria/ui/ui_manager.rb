@@ -51,7 +51,7 @@ module Alexandria
         setup_window_icons
         setup_callbacks
         create_uimanager
-        add_menus_and_popups_from_xml       
+        add_menus_and_popups_from_xml
         setup_menus
         setup_toolbar
         setup_move_actions
@@ -67,7 +67,7 @@ module Alexandria
         log.debug { "UI Manager initialized: #{@iconview.model.inspect}" }
         @clicking_on_sidepane = true
 
-        @library_listview.signal_connect('cursor-changed') do 
+        @library_listview.signal_connect('cursor-changed') do
           @clicking_on_sidepane = true
         end
       end
@@ -76,10 +76,10 @@ module Alexandria
         @main_app.show
       end
 
-      def widget_names 
+      def widget_names
         [:main_app, :paned, :vbox1, :library_listview,
          :notebook, :iconview, :listview, :status_label, :appbar,
-         :progressbar ] 
+         :progressbar ]
       end
 
       def create_uimanager
@@ -285,7 +285,7 @@ module Alexandria
           TrueClass,      #OWN
           TrueClass,      #WANT
           String,         # TAGS
-          String          # LOANED TO 
+          String          # LOANED TO
         ]
 
         @model = Gtk::ListStore.new(*list)
@@ -347,7 +347,7 @@ module Alexandria
               if widget.is_a?(Gtk::TreeView)
                 Gtk.idle_add do
                   #cur_path, focus_col = widget.cursor
-                  
+
                   widget.focus = true
 
 
@@ -376,7 +376,7 @@ module Alexandria
           #
           # Then we wait a while and only *then* pop up the menu.
 
-          
+
           if library_already_selected
             sensitize_library selected_library
 
@@ -393,7 +393,7 @@ module Alexandria
               false
             end
           end
-        
+
         else
           # not a right click
           if path = widget.get_path_at_pos(event.x, event.y)
@@ -404,8 +404,8 @@ module Alexandria
             sensitize_library selected_library
 
           end
-          
-  
+
+
         end
 
 
@@ -545,7 +545,7 @@ module Alexandria
             end
           end
         end
-        @clicking_on_sidepane = false        
+        @clicking_on_sidepane = false
       end
 
       def on_switch_page
@@ -936,8 +936,8 @@ module Alexandria
         set_status_label(_("Loading '%s'...") % library.name)
         total = library.length
         log.debug { "library #{library.name} length #{library.length}" }
-        n = 0       
-        
+        n = 0
+
         Gtk.idle_add do
 
           block_return = true
@@ -965,7 +965,7 @@ module Alexandria
               @filtered_model.refilter
               @listview.columns_autosize
               @progressbar.fraction = 1
-              # Hide the progress bar. 
+              # Hide the progress bar.
               @appbar.children.first.visible = false
               # Refresh the status bar.
               on_books_selection_changed
@@ -973,7 +973,7 @@ module Alexandria
               block_return = false
             end
           end
-          
+
           block_return
         end
       end

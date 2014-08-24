@@ -73,14 +73,14 @@ module Alexandria
                                    Gtk::Dialog::RESPONSE_ACCEPT)
         import_button.sensitive = false
 
-        self.signal_connect('destroy') { 
+        self.signal_connect('destroy') {
           if running
             @destroyed = true
-            
+
           else
             self.destroy
           end
-          #self.destroy unless running 
+          #self.destroy unless running
         }
 
         filters = {}
@@ -124,7 +124,7 @@ module Alexandria
 
         exec_queue = ExecutionQueue.new
 
-        while not @destroyed and 
+        while not @destroyed and
             (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 

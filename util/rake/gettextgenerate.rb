@@ -42,7 +42,7 @@ class GettextGenerateTask < Rake::TaskLib
   def make_task
     desc "Generate gettext localization files"
     task :gettext => @generated_files
-      
+
     if CLOBBER
       @generated_files.each {|gen| CLOBBER << gen }
     end
@@ -83,7 +83,7 @@ class GettextGenerateTask < Rake::TaskLib
   def locales
     po_files.map { |po| File.basename(po).split('.')[0] }
   end
-  
+
   def mo_files
     locales.map { |loc| mo_file_for(loc) }
   end

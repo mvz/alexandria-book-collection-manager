@@ -36,7 +36,7 @@ module Alexandria
         utf8_html = html.encode('utf-8')
         normalized_html = @htmlentities.decode(utf8_html)
         Hpricot(normalized_html)
-      end 
+      end
 
       ## from Palatina
       def text_of(node)

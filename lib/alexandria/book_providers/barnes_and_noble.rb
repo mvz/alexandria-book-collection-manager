@@ -51,16 +51,16 @@ module Alexandria
         prefs.read
       end
 
-      def agent      
+      def agent
         unless @agent
           @agent = Alexandria::WWWAgent.new
-        end        
+        end
         @agent
       end
 
 
       def fetch_redirectly(uri_str, limit = 5)
-        raise NoResultsError, 'HTTP redirect too deep' if limit == 0       
+        raise NoResultsError, 'HTTP redirect too deep' if limit == 0
         response = agent.get(uri_str)
         if limit < 10
           sleep 0.1
@@ -88,7 +88,7 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }          
+          results.map {|result| get_book_from_search_result(result) }
         end
 
       end
@@ -142,7 +142,7 @@ module Alexandria
           log.warn {"Failed parsing search results for Barnes & Noble " +
             "#{ex.message} #{trace}" }
         end
-        book_search_results  
+        book_search_results
       end
 
       def parse_result_data(html, search_isbn=nil, recursing=false)
@@ -197,7 +197,7 @@ module Alexandria
           book_data[:binding] = ""
           format_list_items = doc / '//div.col-one/ul/li'
           format_list_items.each do |li|
-            if li.inner_text =~ /Format:\s*(.*),/             
+            if li.inner_text =~ /Format:\s*(.*),/
               book_data[:binding] = $1
             end
           end
@@ -209,7 +209,7 @@ module Alexandria
               book_data[:image_url] = images.first['src']
             else
               if images.first['src'] =~ /see_inside.gif/
-                # the first image is the "See Inside!" label               
+                # the first image is the "See Inside!" label
                 book_data[:image_url] = images[1]['src']
               else
                 book_data[:image_url] = images.first['src']
@@ -217,7 +217,7 @@ module Alexandria
             end
           end
 
-          book = Book.new(book_data[:title], book_data[:authors], 
+          book = Book.new(book_data[:title], book_data[:authors],
                           book_data[:isbn], book_data[:publisher],
                           book_data[:publication_year],
                           book_data[:binding])

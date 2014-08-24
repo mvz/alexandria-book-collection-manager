@@ -42,7 +42,7 @@ module Alexandria
         prefs.add("associate_tag", _("Associate Tag"), '')
 
         prefs.read
-        token = prefs.variable_named("dev_token")        
+        token = prefs.variable_named("dev_token")
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
 
         if token
@@ -51,7 +51,7 @@ module Alexandria
           end
         end
         if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
-          token.new_value = ''           
+          token.new_value = ''
         end
 
         secret = prefs.variable_named("secret_key")
@@ -68,7 +68,7 @@ module Alexandria
           end
           if (associate.value != associate.value.strip)
             associate.new_value = associate.value.strip
-          end          
+          end
         end
 
 
@@ -80,7 +80,7 @@ module Alexandria
         if prefs["secret_key"].empty?
           raise Amazon::RequestError.new("Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account")
         end
-        
+
         if config = Alexandria::Preferences.instance.http_proxy_config
           host, port, user, pass = config
           url = "http://"
@@ -120,12 +120,12 @@ module Alexandria
             # multiple editions of a book with the same ISBN, and
             # Amazon was distinguishing between them.  So we'll log
             # this case, and arbitrarily return the FIRST item
-            
+
             # Actually, this may be due to Amazon recommending a
             # preferred later edition of a book, in spite of our
             # searching on a single ISBN it can return more than one
             # result with different ISBNs
-            
+
             if products.length > 1
               log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results; returning the first result only" }
             end
@@ -232,7 +232,7 @@ module Alexandria
 
       def url(book)
         begin
-          isbn = Library.canonicalise_isbn(book.isbn)          
+          isbn = Library.canonicalise_isbn(book.isbn)
           url = case prefs["locale"]
                 when "fr"
                   "http://www.amazon.fr/exec/obidos/ASIN/%s"

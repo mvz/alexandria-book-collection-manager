@@ -153,7 +153,7 @@ module Alexandria
         if is_isbn = item == @isbn_radiobutton
           Gtk.idle_add do
             @latest_size = @new_book_dialog.size
-            @new_book_dialog.resizable = false            
+            @new_book_dialog.resizable = false
             @entry_isbn.grab_focus
             false
           end
@@ -268,7 +268,7 @@ module Alexandria
                  BookProviders::SEARCH_BY_KEYWORD
                end
 
-        # @progressbar.show 
+        # @progressbar.show
         #progress_pulsing = Gtk.timeout_add(100) do
         #  unless @destroyed
         #    @progressbar.pulse
@@ -296,7 +296,7 @@ module Alexandria
             begin
               Alexandria::BookProviders.instance.add_observer(self)
               @results = Alexandria::BookProviders.search(criterion, mode)
-              
+
               log.info { "got #{@results.length} results" }
             rescue => e
               @find_error = e.message
@@ -311,7 +311,7 @@ module Alexandria
         Gtk.timeout_add(100) do
           # This block copies results into the tree view, or shows an
           # error if the search failed.
-          
+
           # Err... continue == false if @find_error
           continue = if @find_error
                        ErrorDialog.new(@parent,
@@ -368,7 +368,7 @@ module Alexandria
         end
       end
 
-      def decode_cuecat?(entry) # srsly? 
+      def decode_cuecat?(entry) # srsly?
         if entry.text=~/^\..*?\..*?\.(.*?)\.$/
           tmp = $1.tr('a-zA-Z0-9+-', ' -_')
           tmp = ((32 + tmp.length * 3/4).to_i.chr << tmp).unpack('u')[0]
@@ -398,8 +398,8 @@ module Alexandria
                          "provided.  Make sure it is written " +
                          "correctly, and try again.")
                end
-        assert_not_exist(library, @entry_isbn.text)        
-        @button_add.sensitive = false  
+        assert_not_exist(library, @entry_isbn.text)
+        @button_add.sensitive = false
         notify_start_add_by_isbn
         Gtk.idle_add do
 
@@ -420,7 +420,7 @@ module Alexandria
                 puts "adding book #{book} to library"
                 add_book_to_library(library, book, cover_url)
                 @entry_isbn.text = ''
-                
+
                 post_addition([book], library, is_new)
               else
                 post_addition([], library, is_new)
@@ -436,7 +436,7 @@ module Alexandria
             ensure
               Alexandria::BookProviders.instance.delete_observer(self)
               notify_end_add_by_isbn
-            end          
+            end
           end
 
           false
@@ -464,7 +464,7 @@ module Alexandria
             end
             books_to_add << [book, cover]
           end
-          
+
         end
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
@@ -481,10 +481,10 @@ module Alexandria
       end
 
       def post_addition(books, library, is_new_library)
-        puts "post_addition #{books.size}" 
+        puts "post_addition #{books.size}"
         return if books.empty?
 
-        # books, a 1d array of Alexandria::Book        
+        # books, a 1d array of Alexandria::Book
         @block.call(books, library, is_new_library)
 
         if @keep_open.active?
@@ -498,15 +498,15 @@ module Alexandria
             @entry_isbn.text = '' # blank ISBN field
             @entry_isbn.grab_focus
           end
-          
+
         else
           # Now we can destroy the dialog and go back to the main
           # application.
           @new_book_dialog.destroy
         end
-        
-        
-        
+
+
+
 
       end
 
@@ -532,7 +532,7 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
 
-          
+
         rescue => e
           ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
         end
@@ -591,7 +591,7 @@ module Alexandria
                 @entry_isbn.text = text
                 @entry_isbn.grab_focus
                 @entry_isbn.select_region(0, -1) # select all...
-                # @button_add.grab_focus 
+                # @button_add.grab_focus
                 false
               end
               log.debug { "Setting ISBN field to #{text}" }

@@ -206,7 +206,7 @@ module Alexandria
     end
     def export_as_ipod_notes(filename, theme)
       FileUtils.mkdir(filename) unless File.exist?(filename)
-      tempdir=Dir.getwd                
+      tempdir=Dir.getwd
       Dir.chdir(filename)
       copy_covers("pixmaps")
       File.open("index.linx", 'w') do |io|
@@ -228,12 +228,12 @@ module Alexandria
           io.puts book.authors.join(', ')
           io.puts book.edition
           io.puts((book.isbn or ""))
-          #we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria				
+          #we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
 
       end
-      #Again, allow the iPod to unmount		
+      #Again, allow the iPod to unmount
       Dir.chdir(tempdir)
     end
 

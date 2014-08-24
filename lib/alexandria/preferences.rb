@@ -109,7 +109,7 @@ module Alexandria
         generic_getter(method)
       end
     end
-    
+
     def remove_preference(variable_name)
       @alexandria_settings.delete(variable_name)
       @changed_settings << variable_name
@@ -129,7 +129,7 @@ module Alexandria
     def generic_getter(variable_name)
       value = @alexandria_settings[variable_name]
       if value.nil?
-        value = DEFAULT_VALUES[variable_name]          
+        value = DEFAULT_VALUES[variable_name]
         unless value.nil?
           @alexandria_settings[variable_name] = value
           @changed_settings << variable_name
@@ -137,7 +137,7 @@ module Alexandria
       end
       value
     end
-    
+
     def generic_setter(variable_name, new_value)
       if new_value.is_a?(Array)
         # when setting array, first remove nil elements (fixing #9007)
@@ -145,7 +145,7 @@ module Alexandria
       end
       old_value = @alexandria_settings[variable_name]
       @alexandria_settings[variable_name] = new_value
-      unless new_value == old_value 
+      unless new_value == old_value
         @changed_settings << variable_name
       end
     end
@@ -162,7 +162,7 @@ module Alexandria
             # set list value
             exec_gconf_set_list(var_path, new_value)
           end
-        else            
+        else
           # set non-list value
           if new_value.nil?
             exec_gconf_unset(variable_name)
@@ -185,7 +185,7 @@ module Alexandria
     ##
 
 
-    def get_gconf_type(value) 
+    def get_gconf_type(value)
       if value.is_a?(String)
         "string"
       elsif value.is_a?(Fixnum)
@@ -239,7 +239,7 @@ module Alexandria
       `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
-    
+
     def exec_gconf_unset(variable_name)
       `#{GCONFTOOL} --unset #{APP_DIR + "/" + variable_name}`
     end
@@ -255,7 +255,7 @@ module Alexandria
     # Since the ruby library 'gconf2' is deprecated, we call the
     # 'gconftool' executable.  Doing so one --get at a time is slow,
     # so we use --recursive-list to get everything at once.
-    def load_alexandria_settings 
+    def load_alexandria_settings
       all_vals = `#{GCONFTOOL} --recursive-list #{APP_DIR}`
       @alexandria_settings.merge!(gconftool_values_to_hash(all_vals))
     end
@@ -327,7 +327,7 @@ module Alexandria
     def discriminate(value)
       if value == "true"        # bool
         return true
-      elsif value == "false"    # bool 
+      elsif value == "false"    # bool
         return false
       elsif value =~ /^[0-9]+$/   # int
         return value.to_i

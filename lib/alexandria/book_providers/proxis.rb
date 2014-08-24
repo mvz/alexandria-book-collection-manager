@@ -61,15 +61,15 @@ module Alexandria
         raise NoResultsError if results.empty?
         if type == SEARCH_BY_ISBN
           get_book_from_search_result(results.first)
-        else          
-          results.map {|result| get_book_from_search_result(result) }          
+        else
+          results.map {|result| get_book_from_search_result(result) }
         end
 
       end
 
       def create_search_uri(search_type, search_term)
         if search_type == SEARCH_BY_ISBN
-          BASE_SEARCH_URL % Library.canonicalise_ean(search_term) 
+          BASE_SEARCH_URL % Library.canonicalise_ean(search_term)
         else
           BASE_SEARCH_URL % CGI.escape(search_term)
         end
@@ -108,7 +108,7 @@ module Alexandria
           #node.inner_html.strip
         end
       end
-      
+
       def parse_search_result_data(html)
         doc = html_to_doc(html)
         book_search_results = []
@@ -148,7 +148,7 @@ module Alexandria
         # TITLE
         title = nil
         if (title_header = doc.search('div.detailBlock h3'))
-          header_spans = title_header.first.search('span')        
+          header_spans = title_header.first.search('span')
           title = text_of(header_spans.first)
           if title =~ /(.+)-$/
             title = $1.strip
@@ -167,12 +167,12 @@ module Alexandria
           end
           book_data[:isbn] = Library.canonicalise_ean(isbns.first)
         end
-        
+
         #book = Book.new(title, ISBN.get(isbns.first))
 
         unless info_headers.empty?
           info_headers.each do |th|
-            header_text = th.inner_text 
+            header_text = th.inner_text
             if header_text =~ /Type/
               book_data[:binding] = data_for_header(th)
             elsif header_text =~ /Verschijningsdatum/
@@ -204,7 +204,7 @@ module Alexandria
                         book_data[:publish_year], book_data[:binding])
         return [book, image_url]
       end
-      
+
 
     end
   end

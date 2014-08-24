@@ -74,7 +74,7 @@ module Alexandria
 
         authors = []
         author_data = details[m[:authors][0]]
-        if author_data      
+        if author_data
           author_data.each do |ad|
             author = ad[m[:authors][1]]
             if author
@@ -102,7 +102,7 @@ module Alexandria
             binding = $1
           end
         end
-        
+
         publisher = nil
         publisher_data = details[m[:publisher][0]]
         if publisher_data
@@ -150,7 +150,7 @@ module Alexandria
           data = $2
 
           this_line_data = {}
-          
+
           #puts code
           #puts data
           d_idx = 0

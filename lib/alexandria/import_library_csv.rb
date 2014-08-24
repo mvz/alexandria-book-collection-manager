@@ -20,12 +20,12 @@
 
 require 'csv'
 require 'date'
-require 'htmlentities' 
+require 'htmlentities'
 require 'tempfile'
 
 module Alexandria
 
-  class CSVImport 
+  class CSVImport
     def initialize(header)
       @header = header
       @html = HTMLEntities.new
@@ -39,7 +39,7 @@ module Alexandria
       end
       return -1
     end
-    
+
     def normalize(string)
       @html.decode(string).strip
     end
@@ -47,13 +47,13 @@ module Alexandria
   end
 
   class GoodreadsCSVImport < CSVImport
-    
+
     def initialize(header)
       super(header)
       @title = index_of("Title")
       @author = index_of("Author")
       @additional_authors = index_of("Additional Authors")
-      @isbn = index_of("ISBN") 
+      @isbn = index_of("ISBN")
       @publisher = index_of("Publisher")
       @publishing_year = index_of("Year Published")
       @edition = index_of("Binding")
@@ -106,7 +106,7 @@ module Alexandria
           book.redd_when = date
           book.redd = true
         rescue
-          # 
+          #
         end
       end
       if row[@mainshelf]
@@ -176,7 +176,7 @@ module Alexandria
       if edition_info.size >= 3
         edition = publisher_info.split(',')[-2]
       end
-      
+
       year = row[@publishing_year].to_i
 
       book = Alexandria::Book.new(title,
@@ -270,7 +270,7 @@ end
 #         reader = CSV.open(csv_fixed.path, 'r')
 #         #puts csv_fixed.path
 #         header = reader.shift
-        
+
 #         retry
 #       end
 

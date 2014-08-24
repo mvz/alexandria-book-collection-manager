@@ -50,7 +50,7 @@ class Gtk::ComboBox
     self.pack_start(renderer, true)
     self.set_attributes(renderer, :text => 1)
     self.active = 0
-    # self.sensitive = libraries.length > 1 
+    # self.sensitive = libraries.length > 1
     # This prohibits us from adding a "New Library" from this combo
     # when we only have a single library
   end

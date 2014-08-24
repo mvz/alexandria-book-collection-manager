@@ -32,7 +32,7 @@ module Alexandria
   class BookProviders
     class DoubanProvider < GenericProvider
       include Alexandria::Logging
-	
+
       SITE = "http://www.douban.com"
       BASE_URL = "http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json"
 
@@ -45,30 +45,30 @@ module Alexandria
         nil
       end
 
-      
+
       def search(criterion, type)
         keyword = criterion
         request_url = BASE_URL % CGI.escape(keyword)
-        
+
         search_response = transport.get_response(URI.parse(request_url))
 
         results = parse_search_result(search_response.body)
         if results.length == 0
           raise NoResultsError
         end
-        
+
         if type == SEARCH_BY_ISBN
           return results.first
         else
           return results
         end
       end
-      
+
       private
 
       # The YAML parser in Ruby 1.8.6 chokes on the extremely
       # compressed inline-style of JSON returned by Douban. (Also, it
-      # doesn't un-escape forward slashes). 
+      # doesn't un-escape forward slashes).
       #
       # This is a quick-and-dirty method to pre-process the JSON into
       # YAML-parseable format, so that we don't have to drag in a new
@@ -78,18 +78,18 @@ module Alexandria
         # i.e. when followed by numeral, quote, { or [
         yaml = json.gsub(/(\:|\,)([0-9'"{\[])/) do |match|
           "#{$1} #{$2}"
-        end        
+        end
         yaml.gsub!(/\\\//, '/') # unescape forward slashes
         yaml
       end
 
-      public 
-      
+      public
+
 
       def parse_search_result(response)
         book_search_results = []
         begin
-          #dbresult = JSON.parse(response)          
+          #dbresult = JSON.parse(response)
           dbresult = YAML::load(json2yaml(response))
           #File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
           if(dbresult['opensearch:totalResults']['$t'].to_i > 0)

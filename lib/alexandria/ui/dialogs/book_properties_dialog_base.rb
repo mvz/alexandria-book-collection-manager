@@ -65,7 +65,7 @@ module Alexandria
         setup_calendar_widgets
         Gtk.timeout_add(150) do
           @setup_finished = true
-          
+
           false
         end
       end
@@ -78,7 +78,7 @@ module Alexandria
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
         @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
-        
+
         @calendar_popup.set_transient_for(@book_properties_dialog )
         @calendar_popup.set_type_hint( Gdk::Window::TYPE_HINT_DIALOG )
         @calendar_popup.name = 'calendar-popup'
@@ -105,7 +105,7 @@ module Alexandria
           end
 
         end
-        
+
         @calendar.signal_connect("day-selected-double-click") do
           date_arr = @calendar.date
           year = date_arr[0]
@@ -132,7 +132,7 @@ module Alexandria
           elsif primary.nick == 'secondary'
             clear_date_entry(entry)
             @label_loaning_duration.label = ""
-          end                                               
+          end
         end
 
       end
@@ -181,7 +181,7 @@ module Alexandria
           @book_properties_dialog.modal = false
           @calendar_popup.move(*get_entry_popup_coords(entry))
           @calendar_popup.show_all
-          @popup_displayed = true      
+          @popup_displayed = true
         end
       end
 
@@ -264,7 +264,7 @@ module Alexandria
         self.rating = 0
       end
 
-      
+
       def own_toggled
         if @checkbutton_own.active?
           @checkbutton_want.inconsistent = true
@@ -296,7 +296,7 @@ module Alexandria
             @delete_cover_file = false
             cover = Gdk::Pixbuf.new(dialog.filename)
             # At this stage the file format is recognized.
-            
+
             if File.exist?(@cover_file)
               unless @original_cover_file
                 # make a back up, but only of the original
@@ -311,7 +311,7 @@ module Alexandria
               cover = cover.scale(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT)
               cover.save(@cover_file, "jpeg")
             else
-              FileUtils.cp(dialog.filename, @cover_file)              
+              FileUtils.cp(dialog.filename, @cover_file)
             end
 
 
@@ -366,7 +366,7 @@ module Alexandria
                                         else
                                           ""
                                         end
-        
+
       end
       def redd_toggled
 	redd_yes=@checkbutton_redd.active?
@@ -425,7 +425,7 @@ module Alexandria
         date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
         ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
         begin
-          d = Date.strptime(datestring, date_format)          
+          d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
         rescue
           nil

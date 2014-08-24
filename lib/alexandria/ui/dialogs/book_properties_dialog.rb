@@ -88,7 +88,7 @@ module Alexandria
           self.loaned_since = book.loaned_since
           @date_loaned_since.sensitive = true
         else
-          @date_loaned_since.sensitive = false          
+          @date_loaned_since.sensitive = false
         end
 
         @checkbutton_own.active = book.own?
@@ -185,7 +185,7 @@ module Alexandria
 
         if @delete_cover_file
           FileUtils.rm_f(@cover_file)
-        end        
+        end
 
         if @original_cover_file
           FileUtils.rm_f(@original_cover_file)

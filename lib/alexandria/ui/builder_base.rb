@@ -24,7 +24,7 @@ module Alexandria
         builder = Gtk::Builder.new
         builder.add_from_file(file)
         builder.connect_signals do |handler|
-          begin  
+          begin
             method(handler)
           rescue Exception => ex
             puts "Error: #{ex}" if $DEBUG

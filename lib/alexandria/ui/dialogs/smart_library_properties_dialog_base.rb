@@ -146,7 +146,7 @@ module Alexandria
         operator_combo.model = operator_model
 
         value_entry = Gtk::Entry.new
-        
+
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
         date_entry.primary_icon_activatable = true
@@ -299,9 +299,9 @@ module Alexandria
               value = parse_date(date.text)
             rescue Exception => ex
               trace = ex.backtrace.join("\n > ")
-              log.warn { "Possibly invalid date entered #{ex.message}" } 
+              log.warn { "Possibly invalid date entered #{ex.message}" }
               log.warn { "Date widget returned #{date.text} / #{trace}" }
-              # user entered some non-date... 
+              # user entered some non-date...
               # default to current time, for the moment
               value = Time.now()
             end
@@ -321,7 +321,7 @@ module Alexandria
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
         @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
-        
+
         @calendar_popup.set_transient_for( self )
         @calendar_popup.set_type_hint( Gdk::Window::TYPE_HINT_DIALOG )
         @calendar_popup.name = 'calendar-popup'
@@ -348,7 +348,7 @@ module Alexandria
           end
 
         end
-        
+
         @calendar.signal_connect("day-selected-double-click") do
           date_arr = @calendar.date
           year = date_arr[0]
@@ -403,7 +403,7 @@ module Alexandria
           self.modal = false
           @calendar_popup.move(*get_entry_popup_coords(entry))
           @calendar_popup.show_all
-          @popup_displayed = true      
+          @popup_displayed = true
         end
       end
 
@@ -423,7 +423,7 @@ module Alexandria
         date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
         ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
         begin
-          d = Date.strptime(datestring, date_format)          
+          d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
         rescue
           nil
