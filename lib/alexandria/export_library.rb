@@ -527,7 +527,7 @@ EOS
           my_str.gsub!(/\}/,"\\}")
           my_str.gsub!(/_/,"\\_")
           my_str.gsub!(/\$/,"\\\$")
-          my_str.gsub!(/\"(.+)\"/, %q/``\1''/)
+          my_str.gsub!(/\"(.+)\"/, "``\1''")
           return my_str
     end
   end

@@ -482,11 +482,6 @@ Style/UnlessElse:
   Enabled: false
 
 # Offense count: 1
-# Cop supports --auto-correct.
-Style/UnneededPercentQ:
-  Enabled: false
-
-# Offense count: 1
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/VariableName:
   Enabled: false
