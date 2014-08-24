@@ -991,7 +991,7 @@ module Alexandria
         log.debug { "select library #{library}" }
         iter = @library_listview.model.iter_first
         ok = true
-        while ok do
+        while ok
           if iter[1] == library.name
             @library_listview.selection.select_iter(iter)
             break
@@ -1009,7 +1009,7 @@ module Alexandria
         log.debug { "#{ident}" }
         iter = @model.iter_first
         ok = true
-        while ok do
+        while ok
           if iter[Columns::IDENT] == ident
             return iter
           end

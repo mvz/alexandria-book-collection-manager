@@ -58,7 +58,7 @@ module Alexandria
       i = 1
       name = nil
       all_libraries = existing_libraries + @@deleted_libraries
-      while true do
+      while true
         name = i == 1 ? from_base : from_base + " #{i}"
         break unless all_libraries.find { |x| x.name == name }
         i += 1

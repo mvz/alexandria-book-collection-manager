@@ -491,11 +491,6 @@ Style/UnneededPercentQ:
 Style/VariableName:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/WhileUntilDo:
-  Enabled: false
-
 # Offense count: 17
 # Cop supports --auto-correct.
 Style/WordArray:
