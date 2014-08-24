@@ -41,19 +41,17 @@ module Alexandria
     end
 
     def sort(library)
-      begin
-        sorted = library.sort_by do |book|
-          book.send(@book_attribute)
-        end
-        if not @ascending
-          sorted.reverse!
-        end
-        sorted
-      rescue Exception => ex
-        trace = ex.backtrace.join("\n> ")
-        log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
-        library
+      sorted = library.sort_by do |book|
+        book.send(@book_attribute)
       end
+      if not @ascending
+        sorted.reverse!
+      end
+      sorted
+    rescue Exception => ex
+      trace = ex.backtrace.join("\n> ")
+      log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
+      library
     end
 
     def to_s

@@ -302,12 +302,10 @@ module Alexandria
     end
 
     def self.valid_isbn?(isbn)
-      begin
-        numbers = extract_numbers(isbn)
-        numbers.length == 10 and isbn_checksum(numbers) == 0
-      rescue InvalidISBNError
-        false
-      end
+      numbers = extract_numbers(isbn)
+      numbers.length == 10 and isbn_checksum(numbers) == 0
+    rescue InvalidISBNError
+      false
     end
 
     def self.ean_checksum(numbers)
@@ -316,15 +314,13 @@ module Alexandria
     end
 
     def self.valid_ean?(ean)
-      begin
-        numbers = extract_numbers(ean)
-        (numbers.length == 13 and
-         ean_checksum(numbers[0 .. 11]) == numbers[12]) or
-          (numbers.length == 18 and
-           ean_checksum(numbers[0 .. 11]) == numbers[12])
-      rescue InvalidISBNError
-        false
-      end
+      numbers = extract_numbers(ean)
+      (numbers.length == 13 and
+       ean_checksum(numbers[0 .. 11]) == numbers[12]) or
+        (numbers.length == 18 and
+         ean_checksum(numbers[0 .. 11]) == numbers[12])
+    rescue InvalidISBNError
+      false
     end
 
     def self.upc_checksum(numbers)
@@ -333,13 +329,11 @@ module Alexandria
     end
 
     def self.valid_upc?(upc)
-      begin
-        numbers = extract_numbers(upc)
-        (numbers.length == 17 and
-         upc_checksum(numbers[0 .. 10]) == numbers[11])
-      rescue InvalidISBNError
-        false
-      end
+      numbers = extract_numbers(upc)
+      (numbers.length == 17 and
+       upc_checksum(numbers[0 .. 10]) == numbers[11])
+    rescue InvalidISBNError
+      false
     end
 
     AMERICAN_UPC_LOOKUP = {

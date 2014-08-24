@@ -93,21 +93,19 @@ module Alexandria
       end
 
       def book_in_library(isbn10, library)
-        begin
-          isbn13 = Library.canonicalise_ean(isbn10)
-          # puts "new book #{isbn10} (or #{isbn13})"
-          match = library.find do |book|
-            # puts "testing #{book.isbn}"
-            (book.isbn == isbn10 || book.isbn == isbn13)
-            #puts "book #{book.isbn}"
-            #book == new_book
-          end
-          # puts "book_in_library match #{match.inspect}"
-          (not match.nil?)
-        rescue
-          log.warn { "Failed to check for book #{isbn10} in library #{library}" }
-          true
+        isbn13 = Library.canonicalise_ean(isbn10)
+        # puts "new book #{isbn10} (or #{isbn13})"
+        match = library.find do |book|
+          # puts "testing #{book.isbn}"
+          (book.isbn == isbn10 || book.isbn == isbn13)
+          #puts "book #{book.isbn}"
+          #book == new_book
         end
+        # puts "book_in_library match #{match.inspect}"
+        (not match.nil?)
+      rescue
+        log.warn { "Failed to check for book #{isbn10} in library #{library}" }
+        true
       end
 
       def on_add

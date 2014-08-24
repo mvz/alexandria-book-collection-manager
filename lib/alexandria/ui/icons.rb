@@ -88,14 +88,12 @@ module Alexandria
       end
 
       def self.blank?(filename)
-        begin
-          pixbuf = Gdk::Pixbuf.new(filename)
-          pixbuf.width == 1 and pixbuf.height == 1
-        rescue Exception => err
-          puts err.message
-          puts err.backtrace.join("\n> ")
-          true
-        end
+        pixbuf = Gdk::Pixbuf.new(filename)
+        pixbuf.width == 1 and pixbuf.height == 1
+      rescue Exception => err
+        puts err.message
+        puts err.backtrace.join("\n> ")
+        true
       end
     end
   end

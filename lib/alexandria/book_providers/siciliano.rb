@@ -173,77 +173,63 @@ module Alexandria
 
     def parse_result_data(html, search_result)
       # checked against Siciliano website 21 Feb 2009
-      begin
-        doc = html_to_doc(html)
-
-        # title
-        title_div = doc % 'div#conteudo//div.titulo'
-        raise NoResultsError unless title_div
-        title_h = title_div % 'h2'
-        title = title_h.inner_text if title_h
-        #title = first_non_empty_text_node(title_div)
-
-        #author_spans = doc/'span.rotulo'
-        author_hs = title_div / 'h3.autor'
-        authors = []
-        author_hs.each do |h|
-          authors << h.inner_text.strip
-        end
-
-        ## synopsis_div = doc % 'div#sinopse'
-
-        details_div = doc % 'div#tab-caracteristica'
-        details = string_array_to_map(lines_of_text_as_array(details_div))
-
-        # ISBN
-        isbn =  details["ISBN"]
-        ## ean = details["CdBarras"]
-
-        translator = details["Tradutor"]
-        if translator
-          authors << translator
-        end
-
-
-        binding = details["Acabamento"]
-
-        publisher = search_result[:publisher]
-
-        # publish year
-        publish_year = nil
-        edition = details["Edio"]
-        if edition
-          if edition =~ /([12][0-9]{3})/ # publication date
-            publish_year = $1.to_i
-          end
-        end
-
-        #cover
-        #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
-        image_urls = []
-        (doc / "script").each do |script|
-          next if script.children.nil?
-          script.children.each do |ch|
-            ch_text = ch.to_s
-            if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
-              slash = ''
-              img_link = $1
-              unless img_link =~ /^\//
-                slash = '/'
-              end
-              image_urls << img_link
-            end
-          end
-        end
-
-        book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-        result =  [book, image_urls.first]
-        return result
-      rescue Exception => ex
-        trace = ex.backtrace.join("\n> ")
-        log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
-        return nil
+      doc = html_to_doc(html)
+       # title
+      title_div = doc % 'div#conteudo//div.titulo'
+      raise NoResultsError unless title_div
+      title_h = title_div % 'h2'
+      title = title_h.inner_text if title_h
+      #title = first_non_empty_text_node(title_div)
+       #author_spans = doc/'span.rotulo'
+      author_hs = title_div / 'h3.autor'
+      authors = []
+      author_hs.each do |h|
+        authors << h.inner_text.strip
       end
+       ## synopsis_div = doc % 'div#sinopse'
+       details_div = doc % 'div#tab-caracteristica'
+      details = string_array_to_map(lines_of_text_as_array(details_div))
+       # ISBN
+      isbn =  details["ISBN"]
+      ## ean = details["CdBarras"]
+       translator = details["Tradutor"]
+      if translator
+        authors << translator
+      end
+      binding = details["Acabamento"]
+       publisher = search_result[:publisher]
+       # publish year
+      publish_year = nil
+      edition = details["Edio"]
+      if edition
+        if edition =~ /([12][0-9]{3})/ # publication date
+          publish_year = $1.to_i
+        end
+      end
+       #cover
+      #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
+      image_urls = []
+      (doc / "script").each do |script|
+        next if script.children.nil?
+        script.children.each do |ch|
+          ch_text = ch.to_s
+          if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
+            slash = ''
+            img_link = $1
+            unless img_link =~ /^\//
+              slash = '/'
+            end
+            image_urls << img_link
+          end
+        end
+      end
+       book = Book.new(title, authors, isbn, publisher, publish_year, binding)
+      result =  [book, image_urls.first]
+      return result
+    rescue Exception => ex
+      trace = ex.backtrace.join("\n> ")
+      log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
+      return nil
     end
 
     def first_non_empty_text_node(elem)

@@ -94,12 +94,10 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          create_search_uri(SEARCH_BY_ISBN, book.isbn)
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        create_search_uri(SEARCH_BY_ISBN, book.isbn)
+      rescue Exception => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       def create_search_uri(search_type, search_term)

@@ -353,11 +353,6 @@ Style/Proc:
 Style/RaiseArgs:
   Enabled: false
 
-# Offense count: 21
-# Cop supports --auto-correct.
-Style/RedundantBegin:
-  Enabled: false
-
 # Offense count: 17
 Style/RegexpLiteral:
   MaxSlashes: 8

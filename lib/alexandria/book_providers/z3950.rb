@@ -229,12 +229,10 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+" + Library.canonicalise_isbn(book.isbn)
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+" + Library.canonicalise_isbn(book.isbn)
+      rescue Exception => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
     end
 
@@ -276,12 +274,10 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
+      rescue Exception => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       #######
@@ -367,17 +363,15 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          "http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=%253CB%253E%253Cfont%2520color%253D%2523000064%253E" +
-            "Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E" +
-            canonicalise_isbn_with_dashes(book.isbn) +
-            "%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22" +
-            canonicalise_isbn_with_dashes(book.isbn) +
-            "%22%29&language=it&maxentries=10&target=0&position=1"
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        "http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=%253CB%253E%253Cfont%2520color%253D%2523000064%253E" +
+          "Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E" +
+          canonicalise_isbn_with_dashes(book.isbn) +
+          "%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22" +
+          canonicalise_isbn_with_dashes(book.isbn) +
+          "%22%29&language=it&maxentries=10&target=0&position=1"
+      rescue Exception => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       #######

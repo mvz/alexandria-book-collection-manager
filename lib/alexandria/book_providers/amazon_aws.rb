@@ -231,27 +231,25 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          isbn = Library.canonicalise_isbn(book.isbn)
-          url = case prefs["locale"]
-                when "fr"
-                  "http://www.amazon.fr/exec/obidos/ASIN/%s"
-                when "uk"
-                  "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
-                when "de"
-                  "http://www.amazon.de/exec/obidos/ASIN/%s"
-                when "ca"
-                  "http://www.amazon.ca/exec/obidos/ASIN/%s"
-                when "jp"
-                  "http://www.amazon.jp/exec/obidos/ASIN/%s"
-                when "us"
-                  "http://www.amazon.com/exec/obidos/ASIN/%s"
-                end
-          url % isbn
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        isbn = Library.canonicalise_isbn(book.isbn)
+        url = case prefs["locale"]
+              when "fr"
+                "http://www.amazon.fr/exec/obidos/ASIN/%s"
+              when "uk"
+                "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
+              when "de"
+                "http://www.amazon.de/exec/obidos/ASIN/%s"
+              when "ca"
+                "http://www.amazon.ca/exec/obidos/ASIN/%s"
+              when "jp"
+                "http://www.amazon.jp/exec/obidos/ASIN/%s"
+              when "us"
+                "http://www.amazon.com/exec/obidos/ASIN/%s"
+              end
+        url % isbn
+      rescue Exception => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       def normalize(str)

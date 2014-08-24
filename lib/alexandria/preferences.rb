@@ -151,31 +151,29 @@ module Alexandria
     end
 
     def generic_save_setting(variable_name, new_value)
-      begin
-        var_path = APP_DIR + "/" + variable_name
-        if new_value.is_a?(Array)
-          # when setting array, first remove nil elements (fixing #9007)
-          new_value.compact!
-          if new_value.empty?
-            exec_gconf_unset(variable_name)
-          else
-            # set list value
-            exec_gconf_set_list(var_path, new_value)
-          end
+      var_path = APP_DIR + "/" + variable_name
+      if new_value.is_a?(Array)
+        # when setting array, first remove nil elements (fixing #9007)
+        new_value.compact!
+        if new_value.empty?
+          exec_gconf_unset(variable_name)
         else
-          # set non-list value
-          if new_value.nil?
-            exec_gconf_unset(variable_name)
-          else
-            exec_gconf_set(var_path, new_value)
-          end
+          # set list value
+          exec_gconf_set_list(var_path, new_value)
         end
-      rescue Exception => ex
-        log.debug { new_value.inspect }
-        log.error { "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}" }
-        log << ex.message
-        log << ex
+      else
+        # set non-list value
+        if new_value.nil?
+          exec_gconf_unset(variable_name)
+        else
+          exec_gconf_set(var_path, new_value)
+        end
       end
+    rescue Exception => ex
+      log.debug { new_value.inspect }
+      log.error { "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}" }
+      log << ex.message
+      log << ex
     end
 
 
