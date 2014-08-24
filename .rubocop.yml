@@ -16,8 +16,10 @@ Style/DotPosition:
   EnforcedStyle: trailing
 
 # Require lines to fit in pull requests.
-Style/LineLength:
-  Max: 92
+# This config is commented out temporarily to allow .rubocop_todo.yml to
+# configure this cop.
+#Style/LineLength:
+  #Max: 92
 
 # Always use raise to raise exceptions
 Style/SignalException:
@@ -59,3 +61,5 @@ Style/AndOr:
 # RuboCop has no setting to accept how vim aligns parameters.
 Style/AlignParameters:
   Enabled: false
+
+inherit_from: .rubocop_todo.yml
