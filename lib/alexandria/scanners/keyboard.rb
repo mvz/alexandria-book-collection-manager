@@ -27,7 +27,7 @@ module Alexandria
     class KeyboardWedge
 
       def name()
-        return "KeyboardWedge"
+        "KeyboardWedge"
       end
 
       def display_name

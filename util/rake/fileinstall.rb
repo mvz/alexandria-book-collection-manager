@@ -219,7 +219,7 @@ class FileInstallTask < Rake::TaskLib
       part.gsub!("?", "[^\\/]")
     end
     pattern = real_parts.join("([^\/]+\/)*")
-    return /(#{pattern})/
+    /(#{pattern})/
   end
 
   # For each of the directories named in the list +dirs+, delete the
@@ -278,7 +278,7 @@ class FileInstallTask < Rake::TaskLib
         source_path = source_file.dirname.relative_path_from(source_basedir)
       end
       dest = source_path ? dest_basedir + source_path : dest_basedir
-      return dest.to_s
+      dest.to_s
     end
 
     def files

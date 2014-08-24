@@ -147,7 +147,7 @@ module Alexandria
 
           results << [book] unless book.nil?
         end
-        return results
+        results
       end
 
       def marc?
@@ -329,7 +329,7 @@ module Alexandria
           end
 
         end
-        return results
+        results
 
       end
     end

@@ -37,7 +37,7 @@ module Alexandria
           return i
         end
       end
-      return -1
+      -1
     end
 
     def normalize(string)

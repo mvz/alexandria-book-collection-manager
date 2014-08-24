@@ -135,7 +135,7 @@ module Alexandria
         }
         raise if books.empty?
 
-        return books
+        books
       end
 
     end

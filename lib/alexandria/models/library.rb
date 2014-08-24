@@ -63,7 +63,7 @@ module Alexandria
         break unless all_libraries.find { |x| x.name == name }
         i += 1
       end
-      return name
+      name
     end
 
     FIX_BIGNUM_REGEX =
@@ -246,7 +246,7 @@ module Alexandria
         a << load(_("My Library"))
       end
 
-      return a
+      a
     end
 
     def self.move(source_library, dest_library, *books)
@@ -560,7 +560,7 @@ module Alexandria
       each do |book|
         filtered_library << book if yield(book)
       end
-      return filtered_library
+      filtered_library
     end
 
     def old_cover(book)

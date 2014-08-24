@@ -26,11 +26,11 @@ module Alexandria
       include Alexandria::Logging
 
       def name()
-        return "CueCat"
+        "CueCat"
       end
 
       def display_name()
-        return "CueCat"
+        "CueCat"
       end
 
       # Checks if data looks like cuecat input
@@ -40,7 +40,7 @@ module Alexandria
         fields = data.split('.')
         return false if fields.size != 4
         return false if fields[2].size != 4
-        return true
+        true
       end
 
       # Decodes CueCat input into ISBN
@@ -84,7 +84,7 @@ module Alexandria
         padding = pad(values)
         result  = calc(values)
         result  = result[0, result.length - padding]
-        return result
+        result
       end
 
       def calc(values)
@@ -97,7 +97,7 @@ module Alexandria
 
           values = values[4, values.length]
         end
-        return result
+        result
       end
 
       def pad(array)
@@ -110,7 +110,7 @@ module Alexandria
           length.times { array.push(0) }
         end
 
-        return length
+        length
       end
     end
 

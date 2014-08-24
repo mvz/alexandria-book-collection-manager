@@ -880,7 +880,7 @@ module Alexandria
           library.undelete(book)
           UndoManager.instance.push { undoable_delete(library, [book]) }
         end
-        return iter
+        iter
       end
 
       def append_library(library, autoselect = false)
@@ -911,7 +911,7 @@ module Alexandria
                                        true)
           @actiongroup["Sidepane"].active = true
         end
-        return iter
+        iter
       end
 
       def append_library_separator
@@ -921,7 +921,7 @@ module Alexandria
         iter[1] = nil
         iter[2] = false     # editable?
         iter[3] = true      # separator?
-        return iter
+        iter
       end
 
       def refresh_books
@@ -1015,7 +1015,7 @@ module Alexandria
           end
           ok = iter.next!
         end
-        return nil
+        nil
       end
 
       def iter_from_book(book)

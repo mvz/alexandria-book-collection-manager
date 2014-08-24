@@ -316,7 +316,7 @@ module Alexandria
         elem.add_element('PublisherName').text = book.publisher
         prod.add_element('PublicationDate').text = book.publishing_year
       end
-      return doc
+      doc
     end
 
     def to_tellico_document
@@ -377,7 +377,7 @@ module Alexandria
           end
         end
       end
-      return doc
+      doc
     end
 
     def xhtml_escape(str)
@@ -513,7 +513,7 @@ EOS
         bibtex << "year = " + (book.publishing_year or "\"n/a\"").to_s + "\n"
         bibtex << "}\n\n"
       end
-      return bibtex
+      bibtex
     end
 
     def latex_escape(str)
@@ -528,7 +528,7 @@ EOS
           my_str.gsub!(/_/, "\\_")
           my_str.gsub!(/\$/, "\\\$")
           my_str.gsub!(/\"(.+)\"/, "``\1''")
-          return my_str
+          my_str
     end
   end
 

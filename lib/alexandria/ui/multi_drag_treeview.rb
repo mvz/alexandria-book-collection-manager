@@ -87,7 +87,7 @@ class Gtk::TreeView
   def button_release_event(event)
     @context.events.each { |evnt| Gtk.propagate_event(self, evnt) }
     stop_drag_check
-    return false
+    false
   end
 
   def motion_notify_event(event)
@@ -101,7 +101,7 @@ class Gtk::TreeView
                                               @context.pressed_button,
                                               event)
     end
-    return true
+    true
   end
 
   def button_press_event(event)
@@ -147,6 +147,6 @@ class Gtk::TreeView
       @context.events << event unless call_parent
     end
 
-    return true
+    true
   end
 end

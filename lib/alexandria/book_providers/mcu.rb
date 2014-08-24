@@ -172,7 +172,7 @@ module Alexandria
           log.warn { "No title was returned for #{book.isbn}" }
           book.title = ''
         end
-        return [book]
+        [book]
       end
 
     end

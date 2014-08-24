@@ -202,7 +202,7 @@ module Alexandria
         book = Book.new(book_data[:title], book_data[:authors],
                         book_data[:isbn], book_data[:publisher],
                         book_data[:publish_year], book_data[:binding])
-        return [book, image_url]
+        [book, image_url]
       end
 
 

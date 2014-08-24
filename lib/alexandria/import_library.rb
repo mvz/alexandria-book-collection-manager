@@ -256,7 +256,7 @@ module Alexandria
         library << book
         library.save(book)
       end
-      return [library, []]
+      [library, []]
 
     end
 
@@ -312,7 +312,7 @@ module Alexandria
         on_iterate_cb.call(current_iteration += 1,
                            max_iterations) if on_iterate_cb
       end
-      return [library, bad_isbns, failed_lookup_isbns]
+      [library, bad_isbns, failed_lookup_isbns]
     end
 
     private

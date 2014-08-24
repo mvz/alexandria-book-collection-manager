@@ -166,7 +166,7 @@ module Alexandria
           args = [theme]
         end
         format.invoke(@library, @sort_order, filename, *args)
-        return true
+        true
       end
     end
   end

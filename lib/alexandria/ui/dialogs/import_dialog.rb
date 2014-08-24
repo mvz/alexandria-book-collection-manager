@@ -23,7 +23,7 @@ class Alexandria::ImportFilter
     filefilter = Gtk::FileFilter.new
     filefilter.name = name
     patterns.each { |x| filefilter.add_pattern(x) }
-    return filefilter
+    filefilter
   end
 end
 

@@ -78,7 +78,7 @@ module Alexandria
         end
       end
       a.each { |x| x.refilter }
-      return a
+      a
     end
 
     def self.sample_smart_libraries
@@ -120,7 +120,7 @@ module Alexandria
       a << new(_("Wishlist"), [rule, rule2], ALL_RULES)
 
 
-      return a
+      a
     end
 
     def self.from_hash(hash)

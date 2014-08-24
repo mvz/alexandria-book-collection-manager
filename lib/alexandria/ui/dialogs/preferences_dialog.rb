@@ -87,7 +87,7 @@ module Alexandria
           table.attach_defaults(entry, 1, 2, i, i + 1)
           i += 1
         end
-        return table
+        table
       end
 
       def sync_variables

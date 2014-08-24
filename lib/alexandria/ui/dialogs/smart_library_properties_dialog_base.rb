@@ -67,7 +67,7 @@ module Alexandria
 
       def smart_library_rules
         fill_smart_library_rules_values
-        return @smart_library_rules
+        @smart_library_rules
       end
 
       def has_weirdnesses?
@@ -75,7 +75,7 @@ module Alexandria
         smart_library_rules.each do |rule|
           return true if rule.value == ""
         end
-        return false
+        false
       end
 
       def user_confirms_possible_weirdnesses_before_saving?
@@ -94,7 +94,7 @@ module Alexandria
         dialog.show_all
         confirmed = dialog.run == Gtk::Dialog::RESPONSE_YES
         dialog.destroy
-        return confirmed
+        confirmed
       end
 
       def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)

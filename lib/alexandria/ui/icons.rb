@@ -47,7 +47,7 @@ class Gdk::Pixbuf
                           tag_pixbuf_x, 0,
                           1, 1,
                           Gdk::Pixbuf::INTERP_HYPER, 255)
-    return new_pixbuf
+    new_pixbuf
   end
 end
 

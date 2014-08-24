@@ -70,6 +70,6 @@ class Gtk::ComboBox
       end
     end
     raise unless library
-    return [library, is_new]
+    [library, is_new]
   end
 end

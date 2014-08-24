@@ -126,7 +126,7 @@ module Alexandria
         end
         puts medium_cover + " has 0 size, removing ..." if $DEBUG
         File.delete(medium_cover)
-        return [Book.new(title, authors, isbn, publisher, publish_year, edition)]
+        [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)

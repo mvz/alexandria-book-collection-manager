@@ -62,7 +62,7 @@ module Alexandria
       else
         FileUtils.mkdir_p(themes_dir)
       end
-      return themes
+      themes
     end
 
     def initialize(css_file, preview_file, pixmaps_directory)

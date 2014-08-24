@@ -36,7 +36,7 @@ module Alexandria
         return super(severity, progname, category)
       end
       category = "#{category} #{progname}" if progname
-      return super(severity, message, category, &block)
+      super(severity, message, category, &block)
     end
 
     def debug(source = nil, progname = nil, &block)
