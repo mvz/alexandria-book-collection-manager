@@ -44,7 +44,7 @@ class OmfGenerateTask < Rake::TaskLib
     task :omf => @generated_files
 
     if CLOBBER
-      @generated_files.each {|gen| CLOBBER << gen }
+      @generated_files.each { |gen| CLOBBER << gen }
     end
   end
 
@@ -58,7 +58,7 @@ class OmfGenerateTask < Rake::TaskLib
   end
 
   def omf_files
-    self.in_files.map { |f| f.sub(/.omf.in/, '.omf')}
+    self.in_files.map { |f| f.sub(/.omf.in/, '.omf') }
   end
 
 
@@ -78,7 +78,7 @@ class OmfGenerateTask < Rake::TaskLib
       puts "Generating #{t.name}..."
       File.open(t.name, 'w') { |io| io.puts data }
     end
-    omf_files.each {|o| @generated_files << o }
+    omf_files.each { |o| @generated_files << o }
   end
 
 end

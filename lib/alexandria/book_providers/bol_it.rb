@@ -99,7 +99,7 @@ module Alexandria
 
         raise "No ISBN" unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
         isbn = md[1].strip
-        isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
+        isbn += String(Library.ean_checksum(Library.extract_numbers(isbn)))
 
         #raise unless
         md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
@@ -128,22 +128,22 @@ module Alexandria
         cover_filename = isbn + ".tmp"
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, "w") do |file|
-            file.write open(cover_url, "Referer" => REFERER ).read
+            file.write open(cover_url, "Referer" => REFERER).read
           end
         end
 
         medium_cover = CACHE_DIR + "/" + cover_filename
         if File.size(medium_cover) > 43 and File.size(medium_cover) != 2382 # 2382 is the size of the fake image "copertina non disponibile"
           puts medium_cover + " has non-0 size" if $DEBUG
-          return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+          return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
         puts medium_cover + " has 0 size, removing ..." if $DEBUG
         File.delete(medium_cover)
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+        return [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)
-        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/) { |a| yield a}.empty?
+        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/) { |a| yield a }.empty?
       end
 
       def clean_cache

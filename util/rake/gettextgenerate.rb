@@ -44,7 +44,7 @@ class GettextGenerateTask < Rake::TaskLib
     task :gettext => @generated_files
 
     if CLOBBER
-      @generated_files.each {|gen| CLOBBER << gen }
+      @generated_files.each { |gen| CLOBBER << gen }
     end
   end
 
@@ -55,14 +55,14 @@ class GettextGenerateTask < Rake::TaskLib
     @mo_files_regex = /.*\/(.+)\/LC_MESSAGES\/.+\.mo/
 
     # create MO files
-    rule( /\.mo$/ => [ lambda { |dest| source_file(dest) }]) do |t|
+    rule(/\.mo$/ => [lambda { |dest| source_file(dest) }]) do |t|
       dest_dir = File.dirname(t.name)
       FileUtils.makedirs(dest_dir) unless FileTest.exists?(dest_dir)
       puts "Generating #{t.name}"
       system("msgfmt #{t.source} -o #{t.name}")
       raise "msgfmt failed for #{t.source}" if $? != 0
     end
-    mo_files.each {|mo| @generated_files << mo }
+    mo_files.each { |mo| @generated_files << mo }
   end
 
   def po_files

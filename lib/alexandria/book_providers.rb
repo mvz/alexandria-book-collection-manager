@@ -72,12 +72,12 @@ module Alexandria
           unless boom.instance_of? ProviderSkippedError
             self.instance.changed
             self.instance.notify_observers(:not_found, factory.fullname) # new
-            Thread.new {sleep(0.5)}.join
+            Thread.new { sleep(0.5) }.join
           end
         else
           self.instance.changed
           self.instance.notify_observers(:error, factory.fullname) # new
-          Thread.new {sleep(0.5)}.join # hrmmmm, to make readable...
+          Thread.new { sleep(0.5) }.join # hrmmmm, to make readable...
           trace = boom.backtrace.join("\n >")
           log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
         end
@@ -135,7 +135,7 @@ module Alexandria
         attr_accessor :value
 
         def initialize(provider, name, description, default_value,
-                       possible_values=nil, mandatory=true)
+                       possible_values = nil, mandatory = true)
 
           @provider = provider
           @name = name
@@ -197,11 +197,11 @@ module Alexandria
       attr_reader :prefs
       attr_accessor :name, :fullname
 
-      def initialize(name, fullname=nil)
+      def initialize(name, fullname = nil)
         @name = name
         @fullname = (fullname or name)
         @prefs = Preferences.new(self)
-        @prefs.add("enabled", _("Enabled"), true, [true,false])
+        @prefs.add("enabled", _("Enabled"), true, [true, false])
       end
 
       def enabled()

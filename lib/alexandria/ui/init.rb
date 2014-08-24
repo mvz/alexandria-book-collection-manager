@@ -25,7 +25,7 @@ class CellRendererToggle < Gtk::CellRendererToggle
         "text",
         "Some damn value",
         "",
-        GLib::Param::READABLE|GLib::Param::WRITABLE))
+        GLib::Param::READABLE | GLib::Param::WRITABLE))
 end
 
 class Gtk::ActionGroup
@@ -76,7 +76,7 @@ end
 
 module Alexandria
   module UI
-    def self.display_help(parent=nil, section=nil)
+    def self.display_help(parent = nil, section = nil)
       begin
         # TODO this should call Gtk.show_uri, but it's not included
         # in ruby-gnome2 yet

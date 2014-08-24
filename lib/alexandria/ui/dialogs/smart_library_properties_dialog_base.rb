@@ -97,8 +97,7 @@ module Alexandria
         return confirmed
       end
 
-      def update_rules_header_box(predicate_operator_rule=
-                                  SmartLibrary::ALL_RULES)
+      def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)
 
         @rules_header_box.children.each { |x| @rules_header_box.remove(x) }
 
@@ -134,7 +133,7 @@ module Alexandria
         @rules_header_box.show_all
       end
 
-      def insert_new_rule(rule=nil)
+      def insert_new_rule(rule = nil)
         rule_box = Gtk::HBox.new
         rule_box.spacing = 8
 
@@ -315,15 +314,15 @@ module Alexandria
 
       def setup_calendar_widgets
         @popup_displayed = false
-        @calendar_popup = Gtk::Window.new()# Gtk::Window::POPUP)
+        @calendar_popup = Gtk::Window.new() # Gtk::Window::POPUP)
         # @calendar_popup.modal = true
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
         @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
 
-        @calendar_popup.set_transient_for( self )
-        @calendar_popup.set_type_hint( Gdk::Window::TYPE_HINT_DIALOG )
+        @calendar_popup.set_transient_for(self)
+        @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4
@@ -340,7 +339,7 @@ module Alexandria
         @calendar.signal_connect("day-selected") do
           date_arr = @calendar.date
           year = date_arr[0]
-          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
@@ -352,7 +351,7 @@ module Alexandria
         @calendar.signal_connect("day-selected-double-click") do
           date_arr = @calendar.date
           year = date_arr[0]
-          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
@@ -409,7 +408,7 @@ module Alexandria
 
       def get_entry_popup_coords(entry)
         gdk_win = entry.parent_window
-        x,y = gdk_win.origin
+        x, y = gdk_win.origin
         alloc = entry.allocation
         x += alloc.x
         y += alloc.y
@@ -432,7 +431,7 @@ module Alexandria
 
       def format_date(datetime)
          date_format = '%d/%m/%Y'
-        datetime.strftime( date_format = '%d/%m/%Y')
+        datetime.strftime(date_format = '%d/%m/%Y')
       end
 
     end

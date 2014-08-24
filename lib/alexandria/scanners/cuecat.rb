@@ -51,7 +51,7 @@ module Alexandria
         fields = data.split('.')
         fields.shift # First part is gibberish
         fields.shift # Second part is cuecat serial number
-        type, code = fields.map {|field| decode_field(field) }
+        type, code = fields.map { |field| decode_field(field) }
 
         if type == 'IB5'
           type = 'IBN'
@@ -75,11 +75,11 @@ module Alexandria
 
       private
 
-      def decode_field (encoded)
+      def decode_field(encoded)
         seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-';
 
         chars   = encoded.split(//)
-        values  = chars.map {|c| seq.index(c) }
+        values  = chars.map { |c| seq.index(c) }
 
         padding = pad(values)
         result  = calc(values)
@@ -87,7 +87,7 @@ module Alexandria
         return result
       end
 
-      def calc (values)
+      def calc(values)
         result = ''
         while values.length > 0
           num = ((values[0] << 6 | values[1]) << 6 | values[2]) << 6 | values[3]
@@ -100,7 +100,7 @@ module Alexandria
         return result
       end
 
-      def pad (array)
+      def pad(array)
         length = array.length % 4
 
         if length != 0

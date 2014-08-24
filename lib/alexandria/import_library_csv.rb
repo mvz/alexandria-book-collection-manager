@@ -32,7 +32,7 @@ module Alexandria
     end
 
     def index_of(header_name)
-      @header.each_with_index do |h,i|
+      @header.each_with_index do |h, i|
         if h == header_name
           return i
         end

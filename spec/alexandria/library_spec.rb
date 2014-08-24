@@ -82,13 +82,13 @@ describe Alexandria::Library, " imported from 0.6.1 data files" do
     myLibrary = libs[0]
     expect(myLibrary.size).to eq(3)
     # Malory
-    maloryBook = myLibrary.select {|b| b.isbn == '9780192812179'}[0]
+    maloryBook = myLibrary.select { |b| b.isbn == '9780192812179' }[0]
     expect(maloryBook.publisher).to eq('Oxford University Press')
     expect(maloryBook.authors.include?('Vinaver')).to be_truthy
     expect(maloryBook.version).to eq(Alexandria::DATA_VERSION)
 
     # Guide to LaTeX
-    latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
+    latexBook = myLibrary.select { |b| b.title.include? 'Latex' }[0]
     expect(latexBook.isbn).to eq('9780201398250')
     expect(latexBook.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
   end
@@ -114,13 +114,13 @@ describe Alexandria::Library, " with books without an ISBN" do
     expect(myLibrary.size).to eq(2)
 
     # Guide to LaTeX
-    latexBook = myLibrary.select{|b| b.title.include? 'Latex'}[0]
+    latexBook = myLibrary.select { |b| b.title.include? 'Latex' }[0]
     expect(latexBook.isbn).to eq('9780201398250')
     expect(latexBook.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
     expect(latexBook.version).to eq(Alexandria::DATA_VERSION)
 
     #Lex and Yacc
-    lexAndYaccBook = myLibrary.select{|b| b.title.include? 'Lex'}[0]
+    lexAndYaccBook = myLibrary.select { |b| b.title.include? 'Lex' }[0]
     expect(lexAndYaccBook.publisher).to eq("O'Reilley")
 
     #puts "ident -> " + lexAndYaccBook.ident
@@ -136,12 +136,12 @@ describe Alexandria::Library, " with books without an ISBN" do
 
     expect(myLibraryReloaded.size).to eq(2)
 
-    latexBook = myLibraryReloaded.select{|b| b.title.include? 'Latex'}[0]
+    latexBook = myLibraryReloaded.select { |b| b.title.include? 'Latex' }[0]
     expect(latexBook).not_to be_nil
     expect(latexBook.publisher).to eq('Addison Wesley')
     #puts latexBook.title
 
-    lexAndYaccBook = myLibraryReloaded.select{|b| b.title.include? 'Lex'}[0]
+    lexAndYaccBook = myLibraryReloaded.select { |b| b.title.include? 'Lex' }[0]
     expect(lexAndYaccBook).not_to be_nil
     expect(lexAndYaccBook.publisher).to eq("O'Reilley")
     #puts lexAndYaccBook.title
@@ -184,7 +184,7 @@ describe Alexandria::Library, " export sort order" do
     TITLE = 0
     comparisons = rows.size - 1
     comparisons.times do |index|
-      expect(rows[index][TITLE]).to be <= rows[index+1][TITLE]
+      expect(rows[index][TITLE]).to be <= rows[index + 1][TITLE]
     end
   end
 
@@ -198,7 +198,7 @@ describe Alexandria::Library, " export sort order" do
     DATE = 5
     comparisons = rows.size - 1
     comparisons.times do |index|
-      expect(rows[index][DATE]).to be >= rows[index+1][DATE]
+      expect(rows[index][DATE]).to be >= rows[index + 1][DATE]
     end
   end
 

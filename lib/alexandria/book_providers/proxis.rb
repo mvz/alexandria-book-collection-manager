@@ -62,7 +62,7 @@ module Alexandria
         if type == SEARCH_BY_ISBN
           get_book_from_search_result(results.first)
         else
-          results.map {|result| get_book_from_search_result(result) }
+          results.map { |result| get_book_from_search_result(result) }
         end
 
       end
@@ -101,7 +101,7 @@ module Alexandria
             if node.children.nil?
               return nil
             else
-              node_text = node.children.map {|n| text_of(n) }.join
+              node_text = node.children.map { |n| text_of(n) }.join
               node_text.strip.squeeze(' ')
             end
           end

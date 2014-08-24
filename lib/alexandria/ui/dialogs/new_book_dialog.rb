@@ -54,7 +54,7 @@ module Alexandria
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-      def initialize(parent, selected_library=nil, &block)
+      def initialize(parent, selected_library = nil, &block)
         super('new_book_dialog__builder.glade', widget_names)
         log.info { "New Book Dialog" }
         @new_book_dialog.transient_for = @parent = parent
@@ -321,8 +321,8 @@ module Alexandria
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
                        @results.each do |book, cover|
-                         s = _("%s, by %s") % [ book.title,
-                           book.authors.join(', ') ]
+                         s = _("%s, by %s") % [book.title,
+                           book.authors.join(', ')]
                          if @results.find { |book2, cover2|
                            book.title == book2.title and
                            book.authors == book2.authors
@@ -369,11 +369,11 @@ module Alexandria
       end
 
       def decode_cuecat?(entry) # srsly?
-        if entry.text=~/^\..*?\..*?\.(.*?)\.$/
+        if entry.text =~ /^\..*?\..*?\.(.*?)\.$/
           tmp = $1.tr('a-zA-Z0-9+-', ' -_')
-          tmp = ((32 + tmp.length * 3/4).to_i.chr << tmp).unpack('u')[0]
+          tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack('u')[0]
           tmp.chomp!("\000")
-          entry.text = tmp.gsub!(/./) {|c| (c[0] ^ 67).chr }
+          entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
           if entry.text.count('^ -~') > 0
             entry.text = 'Bad scan result'
           end
@@ -469,7 +469,7 @@ module Alexandria
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
         end
-        return books_to_add.map {|x| x.first } # array of Books only
+        return books_to_add.map { |x| x.first } # array of Books only
       end
 
       def add_book_to_library(library, book, cover_uri)
@@ -642,7 +642,7 @@ module Alexandria
         puts isbn13
         if book = library.find { |bk| bk.isbn == isbn13 }
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
-            [ isbn, library.name, book.title.sub("&", "&amp;") ]
+            [isbn, library.name, book.title.sub("&", "&amp;")]
         end
         true
       end

@@ -35,7 +35,7 @@ module Alexandria
   class LibrarySortOrder
     include Logging
 
-    def initialize(book_attribute, ascending=true)
+    def initialize(book_attribute, ascending = true)
       @book_attribute = book_attribute
       @ascending = ascending
     end
@@ -137,7 +137,7 @@ module Alexandria
     private
     #######
 
-    def initialize(name, ext, message, needs_preview=false)
+    def initialize(name, ext, message, needs_preview = false)
       @name = name
       @ext = ext
       @message = message
@@ -206,7 +206,7 @@ module Alexandria
     end
     def export_as_ipod_notes(filename, theme)
       FileUtils.mkdir(filename) unless File.exist?(filename)
-      tempdir=Dir.getwd
+      tempdir = Dir.getwd
       Dir.chdir(filename)
       copy_covers("pixmaps")
       File.open("index.linx", 'w') do |io|
@@ -296,7 +296,7 @@ module Alexandria
           # front cover image
           elem.add_element('MediaFileTypeCode').text = '04'
           elem.add_element('MediaFileFormatCode').text =
-          (Library.jpeg?(cover(book)) ? '03' : '02' )
+          (Library.jpeg?(cover(book)) ? '03' : '02')
           # filename
           elem.add_element('MediaFileLinkTypeCode').text = '06'
           elem.add_element('MediaFileLink').text =
@@ -339,7 +339,7 @@ module Alexandria
       images = collection.add_element('images')
       each_with_index do |book, idx|
         entry = collection.add_element('entry')
-        new_index = (idx+1).to_s
+        new_index = (idx + 1).to_s
         entry.add_attribute('id', new_index)
         # translate the binding
         entry.add_element('title').text = book.title
@@ -519,14 +519,14 @@ EOS
     def latex_escape(str)
       return "" if str == nil
       my_str = str.dup
-      my_str.gsub!(/%/,"\\%")
-      my_str.gsub!(/~/,"\\textasciitilde")
-      my_str.gsub!(/\&/,"\\\\&")
-      my_str.gsub!(/\#/,"\\\\#")
-        my_str.gsub!(/\{/,"\\{")
-          my_str.gsub!(/\}/,"\\}")
-          my_str.gsub!(/_/,"\\_")
-          my_str.gsub!(/\$/,"\\\$")
+      my_str.gsub!(/%/, "\\%")
+      my_str.gsub!(/~/, "\\textasciitilde")
+      my_str.gsub!(/\&/, "\\\\&")
+      my_str.gsub!(/\#/, "\\\\#")
+        my_str.gsub!(/\{/, "\\{")
+          my_str.gsub!(/\}/, "\\}")
+          my_str.gsub!(/_/, "\\_")
+          my_str.gsub!(/\$/, "\\\$")
           my_str.gsub!(/\"(.+)\"/, "``\1''")
           return my_str
     end

@@ -110,7 +110,7 @@ module Alexandria
         super(_("Preferences for %s") % provider.fullname,
               parent,
               Gtk::Dialog::MODAL,
-              [ Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE ])
+              [Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE])
         self.has_separator = false
         self.resizable = false
         self.vbox.border_width = 12
@@ -135,7 +135,7 @@ module Alexandria
         super(_("New Provider"),
               parent,
               Gtk::Dialog::MODAL,
-              [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL ])
+              [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
         @add_button = add_button(Gtk::Stock::ADD,
                                  Gtk::Dialog::RESPONSE_ACCEPT)
 
@@ -252,7 +252,7 @@ module Alexandria
         reload_providers
         model.signal_connect_after('row-changed') { update_priority }
 
-        renderer= Gtk::CellRendererToggle.new
+        renderer = Gtk::CellRendererToggle.new
         renderer.activatable = true
         renderer.signal_connect('toggled') do |rndrr, path|
           tree_path = Gtk::TreePath.new(path)

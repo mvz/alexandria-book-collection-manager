@@ -97,13 +97,13 @@ module Alexandria
         if md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data)
           this = CGI.unescape(md[0].strip)
           authors = this.scan(/<a href="[^>]+">([^<]+)<\/a>,?/)
-          authors = authors.collect {|author| author[0]}
+          authors = authors.collect { |author| author[0] }
           #puts this
           #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
         raise unless md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
-        isbn = Library.canonicalise_ean( md[1].strip )
+        isbn = Library.canonicalise_ean(md[1].strip)
 
         #raise unless
         md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
@@ -131,23 +131,23 @@ module Alexandria
           cover_filename = isbn + ".tmp"
           Dir.chdir(CACHE_DIR) do
             File.open(cover_filename, "w") do |file|
-              file.write open(cover_url, "Referer" => REFERER ).read rescue nil
+              file.write open(cover_url, "Referer" => REFERER).read rescue nil
             end
           end
 
           medium_cover = CACHE_DIR + "/" + cover_filename
           if File.size(medium_cover) > 0
             puts medium_cover + " has non-0 size" if $DEBUG
-            return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+            return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
           end
           puts medium_cover + " has 0 size, removing ..." if $DEBUG
           File.delete(medium_cover)
         end
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+        return [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)
-        raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/) { |a| yield a}.empty?
+        raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/) { |a| yield a }.empty?
       end
 
       def clean_cache

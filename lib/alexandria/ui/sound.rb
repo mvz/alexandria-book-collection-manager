@@ -37,7 +37,7 @@ module Alexandria
       end
 
       def play(effect)
-        file = File.join(@sounds_dir,"#{effect}.ogg")
+        file = File.join(@sounds_dir, "#{effect}.ogg")
         unless @playing
           @filesrc.location = file
           start_playback

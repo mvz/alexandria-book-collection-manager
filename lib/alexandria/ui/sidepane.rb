@@ -188,7 +188,7 @@ module Alexandria
             begin
               Gtk::Drag.finish(drag_context, success, false, 0) #,time)
             rescue Exception => ex
-              log.error { "Gtk::Drag.finish failed: #{ex}"}
+              log.error { "Gtk::Drag.finish failed: #{ex}" }
             end
           end
       end

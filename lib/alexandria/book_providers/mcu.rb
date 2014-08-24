@@ -73,7 +73,7 @@ module Alexandria
         transport.get(URI.parse(req)).each do |line|
           #line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
-          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1,$2)) then
+          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1, $2)) then
             products[$1] = book
             puts $1 if $DEBUG # for DEBUGing
           end
@@ -97,8 +97,8 @@ module Alexandria
       private
       #######
 
-      def parseBook(docn,ndoc)
-        detailspage='http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
+      def parseBook(docn, ndoc)
+        detailspage = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
         print "Looking at detailspage: #{detailspage}\n" if $DEBUG # for DEBUGing
         product = {}
         product['authors'] = []
@@ -118,7 +118,7 @@ module Alexandria
           if line =~ /^<\/td>$/ or line =~ /^<\/tr>$/
             robotstate = 0
           elsif robotstate == 1 and line =~ /^([^<]+)</
-            author = $1.gsub('&nbsp;',' ').sub(/ +$/,'')
+            author = $1.gsub('&nbsp;', ' ').sub(/ +$/, '')
             if author.length > 3 then
               # Only add authors of appropiate length
               product['authors'] << author
@@ -169,10 +169,10 @@ module Alexandria
                         nil, # TODO: furnish publish year
                         product['media'])
         if book.title.nil?
-          log.warn { "No title was returned for #{book.isbn}"}
+          log.warn { "No title was returned for #{book.isbn}" }
           book.title = ''
         end
-        return [ book ]
+        return [book]
       end
 
     end

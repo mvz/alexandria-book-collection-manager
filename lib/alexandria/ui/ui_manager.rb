@@ -79,7 +79,7 @@ module Alexandria
       def widget_names
         [:main_app, :paned, :vbox1, :library_listview,
          :notebook, :iconview, :listview, :status_label, :appbar,
-         :progressbar ]
+         :progressbar]
       end
 
       def create_uimanager
@@ -123,7 +123,7 @@ module Alexandria
         @toolbar.show_all
         @actiongroup["Undo"].sensitive = @actiongroup["Redo"].sensitive = false
         UndoManager.instance.add_observer(self)
-        @vbox1.add(@toolbar, {:position => 1, :expand => false, :fill => false})
+        @vbox1.add(@toolbar, { :position => 1, :expand => false, :fill => false })
       end
 
       def add_main_toolbar_items
@@ -160,7 +160,7 @@ module Alexandria
           #log.debug { "row_separator" }
           iter[0] == '-'
         end
-        [ _("Match everything"),
+        [_("Match everything"),
               '-',
               _("Title contains"),
               _("Authors contain"),
@@ -210,9 +210,9 @@ module Alexandria
         BookProviders.each do |provider|
 
           name = provider.action_name
-          [ "ui/MainMenubar/ViewMenu/OnlineInformation/",
+          ["ui/MainMenubar/ViewMenu/OnlineInformation/",
                 "ui/BookPopup/OnlineInformation/",
-                "ui/NoBookPopup/OnlineInformation/" ].each do |path|
+                "ui/NoBookPopup/OnlineInformation/"].each do |path|
             log.debug { "Adding #{name} to #{path}" }
             @uimanager.add_ui(mid, path, name, name,
                               Gtk::UIManager::MENUITEM, false)
@@ -222,7 +222,7 @@ module Alexandria
 
       def add_menus_and_popups_from_xml
         log.debug { "add_menus_and_popups_from_xml" }
-        [ "menus.xml", "popups.xml" ].each do |ui_file|
+        ["menus.xml", "popups.xml"].each do |ui_file|
           @uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR,
                                           "ui", ui_file))
         end
@@ -235,7 +235,7 @@ module Alexandria
 
       def setup_menus
         @menubar = @uimanager.get_widget("/MainMenubar")
-        @vbox1.add(@menubar, {:position => 0, :expand => false, :fill => false})
+        @vbox1.add(@menubar, { :position => 0, :expand => false, :fill => false })
       end
 
       def setup_dialog_hooks
@@ -455,21 +455,21 @@ module Alexandria
           if n_unrated == library.length
             n_("Library '%s' selected, %d unrated book",
                                   "Library '%s' selected, %d unrated books",
-                                  library.length) % [ library.name,
-                                    library.length ]
+                                  library.length) % [library.name,
+                                    library.length]
           elsif n_unrated == 0
             n_("Library '%s' selected, %d book",
                                   "Library '%s' selected, %d books",
-                                  library.length) % [ library.name,
-                                    library.length ]
+                                  library.length) % [library.name,
+                                    library.length]
           else
             n_("Library '%s' selected, %d book, " +
                                   "%d unrated",
                                   "Library '%s' selected, %d books, " +
                                   "%d unrated",
-                                  library.length) % [ library.name,
+                                  library.length) % [library.name,
                                     library.length,
-                                    n_unrated ]
+                                    n_unrated]
           end
         end
       end
@@ -503,7 +503,7 @@ module Alexandria
 
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
-          log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}"}
+          log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
           log.debug { "@library_listview: #{@library_listview.has_focus?} or @library_popup:#{@library_popup.has_focus?}" } #or selection: #{selection}"}
           log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
@@ -738,7 +738,7 @@ module Alexandria
         recovery_dialog = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL,
                                                  Gtk::MessageDialog::WARNING,
                                                  Gtk::MessageDialog::BUTTONS_OK_CANCEL,
-                                                 new_message ).show
+                                                 new_message).show
         recovery_dialog.signal_connect('response') do |dialog, response_type|
           recovery_dialog.destroy
           if response_type == Gtk::Dialog::RESPONSE_OK
@@ -774,7 +774,7 @@ module Alexandria
                   end
 
 
-                  log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'"}
+                  log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'" }
                   unless cover_uri.nil?
                     library.save_cover(book, cover_uri)
                   end
@@ -859,10 +859,10 @@ module Alexandria
           icon = icon.tag(Icons::FAVORITE_TAG)
         end
         iter[Columns::COVER_ICON] = icon
-        log.debug { "Full iter: " + (0..15).collect {|num| iter[num].inspect }.join(", ") }
+        log.debug { "Full iter: " + (0..15).collect { |num| iter[num].inspect }.join(", ") }
       end
 
-      def append_book(book, tail=nil)
+      def append_book(book, tail = nil)
         log.debug { @model.inspect }
         iter = @model.append
         log.debug { "iter == #{iter}" }
@@ -883,7 +883,7 @@ module Alexandria
         return iter
       end
 
-      def append_library(library, autoselect=false)
+      def append_library(library, autoselect = false)
         log.debug { "append_library #{library.name}" }
         model = @library_listview.model
         is_smart = library.is_a?(SmartLibrary)
@@ -956,7 +956,7 @@ module Alexandria
               fraction = percent / 100
               log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
               @progressbar.fraction = fraction
-              n+= 1
+              n += 1
             end
           else
             Gtk.queue do
@@ -1192,8 +1192,8 @@ module Alexandria
         @move_mid = @uimanager.new_merge_id
         @libraries.all_regular_libraries.each do |library|
           name = library.action_name
-          [ "ui/MainMenubar/EditMenu/Move/",
-              "ui/BookPopup/Move/" ].each do |path|
+          ["ui/MainMenubar/EditMenu/Move/",
+              "ui/BookPopup/Move/"].each do |path|
             @uimanager.add_ui(@move_mid, path, name, name,
                               Gtk::UIManager::MENUITEM, false)
               end
@@ -1222,11 +1222,11 @@ module Alexandria
             5 => :isbn,
             6 => :publisher,
             7 => :publishing_year,
-            8 =>:edition, #binding
+            8 => :edition, #binding
             12 => :redd,
             13 => :own,
             14 => :want,
-            9 => :rating}
+            9 => :rating }
 
           sort_attribute = column_ids_to_attributes[sort_column]
           ascending = (sort_order == Gtk::SORT_ASCENDING)
@@ -1256,7 +1256,7 @@ module Alexandria
         # @library_listview.selection.select_iter(next_iter)
       end
 
-      def undoable_delete(library, books=nil)
+      def undoable_delete(library, books = nil)
         # Deleting a library.
         if books.nil?
           library.delete_observer(self) if library.is_a?(Library)
@@ -1282,7 +1282,7 @@ module Alexandria
         end
       end
 
-      def undoable_undelete(library, books=nil)
+      def undoable_undelete(library, books = nil)
         # Undeleting a library.
         if books.nil?
           library.undelete

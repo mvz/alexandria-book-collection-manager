@@ -169,7 +169,7 @@ module Alexandria
                                                   self.filename)
             rescue => ex
               trace = ex.backtrace.join("\n> ")
-              log.error { "Import failed: #{ex.message} #{trace}"}
+              log.error { "Import failed: #{ex.message} #{trace}" }
             end
           end
 

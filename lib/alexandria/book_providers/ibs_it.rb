@@ -115,22 +115,22 @@ module Alexandria
         cover_filename = isbn + ".tmp"
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, "w") do |file|
-            file.write open(cover_url, "Referer" => REFERER ).read
+            file.write open(cover_url, "Referer" => REFERER).read
           end
         end
 
         medium_cover = CACHE_DIR + "/" + cover_filename
         if File.size(medium_cover) > 0 and File.size(medium_cover) != 1822 # 1822 is the size of the fake image "copertina non disponibile"
           puts medium_cover + " has non-0 size" if $DEBUG
-          return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+          return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
         puts medium_cover + " has 0 size, removing ..." if $DEBUG
         File.delete(medium_cover)
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+        return [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)
-        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
+        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/) { |a| yield a }.empty?
       end
 
       def clean_cache

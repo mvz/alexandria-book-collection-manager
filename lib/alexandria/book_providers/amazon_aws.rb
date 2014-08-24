@@ -31,7 +31,7 @@ module Alexandria
 
       #CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 
-      LOCALES = ['ca','de','fr','jp','uk','us']
+      LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us']
 
       def initialize
         super("Amazon", "Amazon")
@@ -91,8 +91,8 @@ module Alexandria
 
         access_key_id = prefs["dev_token"]
 
-        Amazon::Ecs.options = {:aWS_access_key_id => access_key_id,
-                               :associateTag => prefs["associate_tag"]}
+        Amazon::Ecs.options = { :aWS_access_key_id => access_key_id,
+                               :associateTag => prefs["associate_tag"] }
         Amazon::Ecs.secret_access_key = prefs["secret_key"]
         ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
@@ -107,7 +107,7 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res = Amazon::Ecs.item_search(criterion, { :response_group => 'ItemAttributes,Images', :country => request_locale })
             res.items.each do |item|
               products << item
             end
@@ -131,7 +131,7 @@ module Alexandria
             end
 
           when SEARCH_BY_TITLE
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res = Amazon::Ecs.item_search(criterion, { :response_group => 'ItemAttributes,Images', :country => request_locale })
 
             res.items.each do |item|
               if /#{criterion}/i.match(item.get('itemattributes/title'))
@@ -142,14 +142,14 @@ module Alexandria
 
           when SEARCH_BY_AUTHORS
             criterion = "author:#{criterion}"
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale, :type => 'Power'})
+            res = Amazon::Ecs.item_search(criterion, { :response_group => 'ItemAttributes,Images', :country => request_locale, :type => 'Power' })
             res.items.each do |item|
               products << item
             end
             ##req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res = Amazon::Ecs.item_search(criterion, { :response_group => 'ItemAttributes,Images', :country => request_locale })
 
             res.items.each do |item|
               products << item
@@ -163,7 +163,7 @@ module Alexandria
           end
           # raise NoResultsError if products.empty?
         rescue Amazon::RequestError => re
-          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}"}
+          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}" }
           retry unless locales.empty?
           raise NoResultsError
         end
@@ -204,8 +204,8 @@ module Alexandria
                           media)
 
           image_url = item.get('mediumimage/url')
-          log.info { "Found at Amazon[#{request_locale}]: #{book.title}"}
-          results << [ book, image_url ]
+          log.info { "Found at Amazon[#{request_locale}]: #{book.title}" }
+          results << [book, image_url]
         end
         if type == SEARCH_BY_ISBN
           if results.size == 1
@@ -219,10 +219,10 @@ module Alexandria
               if query_isbn_canon == book_isbn_canon
                 return rslt
               end
-              log.debug {"rejected possible result #{book}"}
+              log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result
-            log.info {"no more results to check. Returning first result, just an approximation"}
+            log.info { "no more results to check. Returning first result, just an approximation" }
             return results.first
           end
         else

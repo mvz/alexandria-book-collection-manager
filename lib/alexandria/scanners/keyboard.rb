@@ -46,7 +46,7 @@ module Alexandria
         if data.length == 10
           return data
         elsif data.length >= 13
-          return data[0,13]
+          return data[0, 13]
         else
           raise "Unknown scan data #{data}"
         end

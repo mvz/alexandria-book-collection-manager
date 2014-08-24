@@ -62,7 +62,7 @@ module Alexandria
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-      def initialize(parent, selected_library=nil, &block)
+      def initialize(parent, selected_library = nil, &block)
         super('acquire_dialog__builder.glade', widget_names)
         @acquire_dialog.transient_for = @parent = parent
         @block = block
@@ -336,7 +336,7 @@ module Alexandria
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
           # @parent.appbar.status = message
-          MainApp.instance.ui_manager.set_status_label( message )
+          MainApp.instance.ui_manager.set_status_label(message)
           false
         end
       end
@@ -396,7 +396,7 @@ module Alexandria
 
             @add_button.sensitive = true
           rescue StandardError => err
-            log.error { "Book Search failed: #{err.message}"}
+            log.error { "Book Search failed: #{err.message}" }
             log << err if log.error?
           ensure
             stop_search
@@ -445,7 +445,7 @@ module Alexandria
       end
 
       def on_destroy
-        MainApp.instance.ui_manager.set_status_label( "" )
+        MainApp.instance.ui_manager.set_status_label("")
         notify_end_add_by_isbn
         # TODO possibly make sure all threads have stopped running
         @animation.destroy
@@ -463,7 +463,7 @@ module Alexandria
 
         log.debug { "Using #{@scanner.name} scanner" }
         message = _("Ready to use %s barcode scanner") % @scanner.name
-        MainApp.instance.ui_manager.set_status_label( message )
+        MainApp.instance.ui_manager.set_status_label(message)
 
         @prev_time = 0
         @interval = 0
@@ -535,7 +535,7 @@ module Alexandria
                   @animation.manual_input
                   false
                 end
-                time_to_wait = [3, interval*4].min
+                time_to_wait = [3, interval * 4].min
                 sleep(time_to_wait)
                 if buffer == @scanner_buffer
                   log.debug { "Buffer unchanged; scanning complete" }

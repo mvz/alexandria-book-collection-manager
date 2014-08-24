@@ -68,7 +68,7 @@ module Alexandria
             bad_isbn_warn.signal_connect('response') { log.debug { "bad_isbn" }; bad_isbn_warn.destroy }
           end
           unless failed_isbns.nil? || failed_isbns.empty?
-            message= _("Books could not be found for the following ISBNs:")
+            message = _("Books could not be found for the following ISBNs:")
             failed_lookup = BadIsbnsDialog.new(@main_app, message, failed_isbns)
             failed_lookup.signal_connect('response') { log.debug { "failed lookup of #{failed_isbns.size} ISBNs" }; failed_lookup.destroy }
           end
@@ -271,7 +271,7 @@ module Alexandria
 
       def on_about widget, event
         ad = AboutDialog.new(@main_app)
-        ad.signal_connect('response'){ log.debug { "destroy about" }; ad.destroy }
+        ad.signal_connect('response') { log.debug { "destroy about" }; ad.destroy }
         ad.show
       end
 
@@ -294,11 +294,11 @@ module Alexandria
           ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", _("Deselect everything"), method(:on_deselect_all)],
           ["SetRating", nil, _("My _Rating")],
           ["SetRating0", nil, _("None"), nil, nil, proc { on_set_rating[0].call }],
-          ["SetRating1", nil, _("One Star"), nil, nil, proc { on_set_rating[1].call } ],
+          ["SetRating1", nil, _("One Star"), nil, nil, proc { on_set_rating[1].call }],
           ["SetRating2", nil, _("Two Stars"), nil, nil, proc { on_set_rating[2].call }],
           ["SetRating3", nil, _("Three Stars"), nil, nil, proc { on_set_rating[3].call }],
           ["SetRating4", nil, _("Four Stars"), nil, nil, proc { on_set_rating[4].call }],
-          ["SetRating5", nil, _("Five Stars"), nil, nil, proc { on_set_rating[5].call } ],
+          ["SetRating5", nil, _("Five Stars"), nil, nil, proc { on_set_rating[5].call }],
           ["Move", nil, _("_Move")],
           ["Rename", nil, _("_Rename"), nil, nil, method(:on_rename)],
           ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", _("Delete the selected books or library"), method(:on_delete)],

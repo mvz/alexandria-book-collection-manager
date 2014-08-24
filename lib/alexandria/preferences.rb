@@ -84,7 +84,7 @@ module Alexandria
     def save!
       log.debug { "preferences save!" }
       @changed_settings.each do |variable_name|
-        log.debug {"saving preference #{variable_name} / #{@alexandria_settings[variable_name].class}" }
+        log.debug { "saving preference #{variable_name} / #{@alexandria_settings[variable_name].class}" }
         generic_save_setting(variable_name, @alexandria_settings[variable_name])
       end
       @changed_settings.clear
@@ -215,7 +215,7 @@ module Alexandria
 
     def make_list_string(list)
       if get_gconf_type(list.first) == "string"
-        list.map! {|x| x.gsub(/\"/, "\\\"") }
+        list.map! { |x| x.gsub(/\"/, "\\\"") }
       end
       contents = list.join(",")
       "[" + contents + "]"
@@ -338,7 +338,7 @@ module Alexandria
           pair = $1.split(",")
           return [discriminate(pair.first), discriminate(pair.last)]
         rescue
-          return [0,0]
+          return [0, 0]
         end
       else
         return value           # string

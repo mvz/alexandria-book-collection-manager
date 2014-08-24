@@ -59,7 +59,7 @@ class FileInstallTask < Rake::TaskLib
   # Debian, set +dirname+ to 'debian/packagename' and
   # +install_to_rubylibdir+ to true so that files are stage-installed
   # to 'debian/packagename/usr/lib/ruby/1.8'
-  def initialize(taskname, dirname=nil, install_to_rubylibdir=false)
+  def initialize(taskname, dirname = nil, install_to_rubylibdir = false)
     @taskname = taskname
     @install_to_rubylibdir = install_to_rubylibdir
     calculate_ruby_dir
@@ -91,18 +91,18 @@ class FileInstallTask < Rake::TaskLib
     end
     desc description
     task tasknames[:install] do
-      @file_groups.each {|g| g.install(@stage_dir) }
+      @file_groups.each { |g| g.install(@stage_dir) }
     end
 
     # UNINSTALL TASKS
 
     task tasknames[:uninstall_files] do
-      @file_groups.each {|g| g.uninstall(@stage_dir) }
+      @file_groups.each { |g| g.uninstall(@stage_dir) }
     end
 
     task tasknames[:uninstall_dirs] => tasknames[:uninstall_files] do
       all_dirs = Set.new
-      @file_groups.each {|g| g.get_installation_dirs(@stage_dir, all_dirs) }
+      @file_groups.each { |g| g.get_installation_dirs(@stage_dir, all_dirs) }
 
 
       to_delete = Set.new
@@ -161,7 +161,7 @@ class FileInstallTask < Rake::TaskLib
 
   # Install icon files. This method splits up the source file name and
   # determines where they should be put in the destination hierarchy.
-  def install_icons(file_globs, dest_dir, theme='hicolor', icon_type='apps')
+  def install_icons(file_globs, dest_dir, theme = 'hicolor', icon_type = 'apps')
     file_globs.each do |fg|
       files = FileList.new(fg)
       files.each do |f|
@@ -254,7 +254,7 @@ class FileInstallTask < Rake::TaskLib
   class FileGroup
     attr_reader :mode
     attr_accessor :description
-    def initialize(src_dir, file_glob, dest_dir, mode=0644)
+    def initialize(src_dir, file_glob, dest_dir, mode = 0644)
       @src_dir = src_dir
       @file_glob = file_glob
       @dest_dir = dest_dir
@@ -264,7 +264,7 @@ class FileInstallTask < Rake::TaskLib
     def to_s
       "FileGroup[#{@src_dir}] => #{@dest_dir}"
     end
-    def dest_dir(file, staging_dir=nil)
+    def dest_dir(file, staging_dir = nil)
       source_basedir = Pathname.new(@src_dir)
       source_file = Pathname.new(file)
 

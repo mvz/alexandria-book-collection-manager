@@ -62,7 +62,7 @@ module Alexandria
         trying_again = false
         begin
           req = create_search_uri(type, criterion, trying_again)
-          log.debug {"#{name} #{trying_again ? 'retrying ':''}request = #{req}"}
+          log.debug { "#{name} #{trying_again ? 'retrying ' :  ''}request = #{req}" }
           data = transport.get(URI.parse(req))
           results = parse_search_result_data(data)
           raise NoResultsError if results.empty?
@@ -71,7 +71,7 @@ module Alexandria
           if type == SEARCH_BY_ISBN
             get_book_from_search_result(results.first)
           else
-            results.map {|result| get_book_from_search_result(result) }
+            results.map { |result| get_book_from_search_result(result) }
           end
 
         rescue NoResultsError => err
@@ -95,8 +95,8 @@ module Alexandria
 
       private
 
-      def create_search_uri(search_type, search_term, trying_again=false)
-        search_type_code = {SEARCH_BY_ISBN => 'G',
+      def create_search_uri(search_type, search_term, trying_again = false)
+        search_type_code = { SEARCH_BY_ISBN => 'G',
           SEARCH_BY_TITLE => 'A',
           SEARCH_BY_AUTHORS => 'B',
           SEARCH_BY_KEYWORD => 'X'
@@ -184,7 +184,7 @@ module Alexandria
         #title = first_non_empty_text_node(title_div)
 
         #author_spans = doc/'span.rotulo'
-        author_hs = title_div/'h3.autor'
+        author_hs = title_div / 'h3.autor'
         authors = []
         author_hs.each do |h|
           authors << h.inner_text.strip
@@ -221,7 +221,7 @@ module Alexandria
         #cover
         #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
         image_urls = []
-        (doc/"script").each do |script|
+        (doc / "script").each do |script|
           next if script.children.nil?
           script.children.each do |ch|
             ch_text = ch.to_s

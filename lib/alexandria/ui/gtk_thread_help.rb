@@ -66,7 +66,7 @@ module Gtk
 
 
 
-  def Gtk.main_with_queue(timeout=100) # millis
+  def Gtk.main_with_queue(timeout = 100) # millis
     Gtk.timeout_add(timeout) do
       GTK_PENDING_BLOCKS_LOCK.synchronize do
         for block in GTK_PENDING_BLOCKS

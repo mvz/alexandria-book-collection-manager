@@ -70,14 +70,14 @@ module Alexandria
 
       def set_active
         @canvas.set_property(:background_color, "white")
-        @barcode_bars.each {|rect| rect.set_property(:fill_color, "white") }
+        @barcode_bars.each { |rect| rect.set_property(:fill_color, "white") }
       end
 
       def set_passive
         if @canvas
           passive_bg = "#F4F4F4"
           @canvas.set_property(:background_color, passive_bg)
-          @barcode_bars.each {|rect| rect.set_property(:fill_color, passive_bg) }
+          @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
         end
       end
 
@@ -110,8 +110,8 @@ module Alexandria
         @barcode_data.each do |space_width, bar_width|
           @hpos += space_width
           rect_item = Goo::CanvasRect.new(@root,
-                                          @bar_left_edge + @scale*@hpos, @bar_top,
-                                          @scale*bar_width, @bar_height,
+                                          @bar_left_edge + @scale * @hpos, @bar_top,
+                                          @scale * bar_width, @bar_height,
                                           :line_width => 0,
                                           :fill_color => 'white')
           @hpos += bar_width
@@ -124,7 +124,7 @@ module Alexandria
           if @index < 0
             @index = 0
           end
-          alpha = 7 * (@index+1)
+          alpha = 7 * (@index + 1)
           @barcode_bars.each_with_index do |rect, i|
             rect.set_property(:fill_color_rgba, 0xFF000000 + alpha)
             if i >= @index
@@ -135,7 +135,7 @@ module Alexandria
         else
           @index = -1
           Gtk.timeout_add(5) do
-            @barcode_bars.each {|rect| rect.set_property(:fill_color_rgba, 0x000000C0) }
+            @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, 0x000000C0) }
             Gtk.timeout_add(15) do
               fade_animation
               (@fade_opacity != -1)
@@ -152,7 +152,7 @@ module Alexandria
         end
         if @fade_opacity >= 0
           grey = 0x00000000 + @fade_opacity
-          @barcode_bars.each {|rect| rect.set_property(:fill_color_rgba, grey) }
+          @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, grey) }
           @fade_opacity -= 5
         else
           @fade_opacity = -1

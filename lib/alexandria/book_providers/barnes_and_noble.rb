@@ -88,7 +88,7 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }
+          results.map { |result| get_book_from_search_result(result) }
         end
 
       end
@@ -145,7 +145,7 @@ module Alexandria
         book_search_results
       end
 
-      def parse_result_data(html, search_isbn=nil, recursing=false)
+      def parse_result_data(html, search_isbn = nil, recursing = false)
         doc = html_to_doc(html)
         begin
           book_data = {}
@@ -170,7 +170,7 @@ module Alexandria
           end
 
           isbn_links = doc / '//a.isbn-a'
-          isbns = isbn_links.map{|a| a.inner_text}
+          isbns = isbn_links.map { |a| a.inner_text }
           book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
 
 

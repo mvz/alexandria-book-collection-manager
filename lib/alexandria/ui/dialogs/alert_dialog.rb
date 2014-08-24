@@ -19,7 +19,7 @@
 module Alexandria
   module UI
     class AlertDialog < Gtk::Dialog
-      def initialize(parent, title, stock_icon, buttons, message=nil)
+      def initialize(parent, title, stock_icon, buttons, message = nil)
         super("", parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
 
         self.border_width = 6
@@ -56,7 +56,7 @@ module Alexandria
     end
 
     class ErrorDialog < AlertDialog
-      def initialize(parent, title, message=nil)
+      def initialize(parent, title, message = nil)
         super(parent, title, Gtk::Stock::DIALOG_ERROR,
               [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
         self.default_response = Gtk::Dialog::RESPONSE_OK

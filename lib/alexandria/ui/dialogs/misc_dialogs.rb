@@ -24,7 +24,7 @@ module Alexandria
       def initialize(parent, library, book)
         super(parent,
               _("The book '%s' already exists in '%s'. Would you like " +
-                "to replace it?") % [ book.title, library.name ],
+                "to replace it?") % [book.title, library.name],
               Gtk::Stock::DIALOG_QUESTION,
               [[_("_Skip"), Gtk::Dialog::RESPONSE_CANCEL],
                [_("_Replace"), Gtk::Dialog::RESPONSE_OK]],
@@ -44,7 +44,7 @@ module Alexandria
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-      def initialize(parent, library, books=nil)
+      def initialize(parent, library, books = nil)
         # Deleting a library.
         if books.nil?
           message = _("Are you sure you want to delete '%s'?") \
@@ -61,7 +61,7 @@ module Alexandria
         else
           message = if books.length == 1
                       _("Are you sure you want to delete '%s' " +
-                        "from '%s'?") % [ books.first.title, library.name ]
+                        "from '%s'?") % [books.first.title, library.name]
                     else
                       _("Are you sure you want to delete the " +
                         "selected books from '%s'?") % library.name

@@ -71,7 +71,7 @@ module Alexandria
       puts "Beginning import: #{args[0]}, #{args[1]}"
       if filename[-4..-1] == ".txt"
         self.import_as_isbn_list(*args)
-      elsif [".tc",".bc"].include? filename[-3..-1]
+      elsif [".tc", ".bc"].include? filename[-3..-1]
         begin
           self.import_as_tellico_xml_archive(*args)
         rescue => e
@@ -146,7 +146,7 @@ module Alexandria
                 raise ex
               end
             end
-            book_elements[4] = book_elements[4].to_i unless book_elements[4]== nil # publishing_year
+            book_elements[4] = book_elements[4].to_i unless book_elements[4] == nil # publishing_year
             puts book_elements.inspect
             if elements['cover']
               cover = neaten(elements['cover'].text)
@@ -159,8 +159,8 @@ module Alexandria
               book.rating = elements['rating'].text.to_i
             end
             book.notes = neaten(elements['comments'].text) if elements['comments']
-            content << [ book, cover]
-            on_iterate_cb.call(n+1, total) if on_iterate_cb
+            content << [book, cover]
+            on_iterate_cb.call(n + 1, total) if on_iterate_cb
           end
 
           library = Library.load(name)
@@ -185,7 +185,7 @@ module Alexandria
                                  on_error_cb)
       require 'alexandria/import_library_csv'
       books_and_covers = []
-      line_count = IO.readlines(filename).inject(0) {|count,line| count+1 }
+      line_count = IO.readlines(filename).inject(0) { |count, line| count + 1 }
 
       import_count = 0
       max_import = line_count - 1

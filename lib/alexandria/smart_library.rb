@@ -44,7 +44,7 @@ module Alexandria
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
       #carry deleted books over from libraries that are part of the smart library
-      self.deleted_books=libraries.deleted_books
+      self.deleted_books = libraries.deleted_books
       @cache = {}
     end
 
@@ -186,7 +186,7 @@ module Alexandria
       @cache[book].cover(book)
     end
 
-    def yaml(book=nil)
+    def yaml(book = nil)
       if book
         @cache[book].yaml(book)
       else
@@ -194,7 +194,7 @@ module Alexandria
       end
     end
 
-    def save(book=nil)
+    def save(book = nil)
       if book
         @cache[book].save(book)
       else
@@ -418,11 +418,11 @@ module Alexandria
         IS_AFTER = Operator.new(
                                 :is_after,
                                 _("is after"),
-				proc { |x, y| x.to_i > y.to_i and x!=nil })
+				proc { |x, y| x.to_i > y.to_i and x != nil })
         IS_BEFORE = Operator.new(
                                  :is_before,
                                  _("is before"),
-                                 proc { |x, y| x.to_i < y.to_i and x!=nil})
+                                 proc { |x, y| x.to_i < y.to_i and x != nil })
         IS_IN_LAST = Operator.new(
                                   :is_in_last_days,
                                   _("is in last"),
@@ -431,7 +431,7 @@ module Alexandria
                                       unless x.nil? or x.empty?
                                         log.debug { "Given Date: #{x.inspect} #{x.class}" }
                                         given_date = Time.parse(x)
-                                        days = y.to_i * (24*60*60)
+                                        days = y.to_i * (24 * 60 * 60)
 
                                         Time.now - given_date <= days
                                       else
@@ -451,7 +451,7 @@ module Alexandria
                                           unless x.nil? or x.empty?
                                             log.debug { "Given Date: #{x.inspect} #{x.class}" }
                                             given_date = Time.parse(x)
-                                            days = y.to_i * (24*60*60)
+                                            days = y.to_i * (24 * 60 * 60)
 
                                             Time.now - given_date > days
                                           else

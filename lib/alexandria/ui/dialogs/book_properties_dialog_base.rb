@@ -72,15 +72,15 @@ module Alexandria
 
       def setup_calendar_widgets
         @popup_displayed = false
-        @calendar_popup = Gtk::Window.new()# Gtk::Window::POPUP)
+        @calendar_popup = Gtk::Window.new() # Gtk::Window::POPUP)
         # @calendar_popup.modal = true
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
         @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
 
-        @calendar_popup.set_transient_for(@book_properties_dialog )
-        @calendar_popup.set_type_hint( Gdk::Window::TYPE_HINT_DIALOG )
+        @calendar_popup.set_transient_for(@book_properties_dialog)
+        @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4
@@ -97,7 +97,7 @@ module Alexandria
         @calendar.signal_connect("day-selected") do
           date_arr = @calendar.date
           year = date_arr[0]
-          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
@@ -109,7 +109,7 @@ module Alexandria
         @calendar.signal_connect("day-selected-double-click") do
           date_arr = @calendar.date
           year = date_arr[0]
-          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
@@ -187,7 +187,7 @@ module Alexandria
 
       def get_entry_popup_coords(entry)
         gdk_win = entry.parent_window
-        x,y = gdk_win.origin
+        x, y = gdk_win.origin
         alloc = entry.allocation
         x += alloc.x
         y += alloc.y
@@ -356,7 +356,7 @@ module Alexandria
           return
         end
         loaned_time = Time.at(t)
-        n_days = ((Time.now - loaned_time) / (3600*24)).to_i
+        n_days = ((Time.now - loaned_time) / (3600 * 24)).to_i
         if n_days > 365250 # 1,000 years
           @label_loaning_duration.label = ""
           return
@@ -369,8 +369,8 @@ module Alexandria
 
       end
       def redd_toggled
-	redd_yes=@checkbutton_redd.active?
-	@redd_date.sensitive=redd_yes
+	redd_yes = @checkbutton_redd.active?
+	@redd_date.sensitive = redd_yes
         if @setup_finished
           # don't do this when popping up the dialog for the first time
           if redd_yes && @redd_date.text.strip.empty?
@@ -392,7 +392,7 @@ module Alexandria
                   @image_rating5
                  ]
         raise "out of range" if rating < 0 or rating > images.length
-        images[0..rating-1].each { |x| x.pixbuf = Icons::STAR_SET }
+        images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
         images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }
         @current_rating = rating
       end
@@ -434,7 +434,7 @@ module Alexandria
 
       def format_date(datetime)
          date_format = '%d/%m/%Y'
-        datetime.strftime( date_format = '%d/%m/%Y')
+        datetime.strftime(date_format = '%d/%m/%Y')
       end
 
     end

@@ -63,7 +63,7 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }
+          results.map { |result| get_book_from_search_result(result) }
         end
 
       end
@@ -81,7 +81,7 @@ module Alexandria
       private
 
       def create_search_uri(search_type, search_term)
-        search_type_code = {SEARCH_BY_ISBN => 'isbn:',
+        search_type_code = { SEARCH_BY_ISBN => 'isbn:',
           SEARCH_BY_AUTHORS => 'au:',
           SEARCH_BY_TITLE => 'ti:',
           SEARCH_BY_KEYWORD => ''
@@ -108,7 +108,7 @@ module Alexandria
         doc = html_to_doc(html, "UTF-8")
         book_search_results = []
         begin
-          result_cells = doc/'td.result/div.name/..'
+          result_cells = doc / 'td.result/div.name/..'
           #puts result_cells.length
           result_cells.each do |td|
             type_icon = (td % 'div.type/img.icn')
@@ -136,7 +136,7 @@ module Alexandria
 
 
 
-    def parse_result_data(html, search_isbn=nil, recursing=false)
+    def parse_result_data(html, search_isbn = nil, recursing = false)
       doc = html_to_doc(html, "UTF-8")
 
       begin
@@ -162,7 +162,7 @@ module Alexandria
             rslt2 = transport.get_response(URI.parse(rslt[:url]))
             html2 = rslt2.body
 
-            book,cover_url = parse_result_data(html2, search_isbn, true)
+            book, cover_url = parse_result_data(html2, search_isbn, true)
             if first_result.nil?
               first_result = [book, cover_url]
             end
@@ -173,10 +173,10 @@ module Alexandria
               search_isbn_canon = Library.canonicalise_ean(search_isbn)
               rslt_isbn_canon = Library.canonicalise_ean(book.isbn)
               if search_isbn_canon == rslt_isbn_canon
-                log.info { "book #{book} is a match"}
+                log.info { "book #{book} is a match" }
                 return [book, cover_url]
               end
-              log.debug {"not a match, checking next"}
+              log.debug { "not a match, checking next" }
             else
               # no constraint to match isbn, just return first result
               return [book, cover_url]
@@ -184,7 +184,7 @@ module Alexandria
           end
 
           # gone through all and no ISBN match, so just return first result
-          log.info {"no more results to check. Returning first result, just an approximation"}
+          log.info { "no more results to check. Returning first result, just an approximation" }
           return first_result
 
         end
@@ -200,7 +200,7 @@ module Alexandria
         authors = []
         authors_tr = doc % 'tr#details-allauthors'
         if authors_tr
-          (authors_tr/:a).each do |a|
+          (authors_tr / :a).each do |a|
             authors << a.inner_text
           end
         end
@@ -211,7 +211,7 @@ module Alexandria
         publisher_row = bibdata_table % 'th[text()*=Publisher]/..'
 
         if publisher_row
-          publication_info = (publisher_row/'td').last.inner_text
+          publication_info = (publisher_row / 'td').last.inner_text
 
           if publication_info.index(';')
             publication_info =~ /;[\s]*([^\d]+)[\s]*[\d]*/
@@ -233,7 +233,7 @@ module Alexandria
         unless isbn
           isbn_row = doc % 'tr#details-standardno' ##bibdata_table % 'th[text()*=ISBN]/..'
           if isbn_row
-            isbns = (isbn_row/'td').last.inner_text.split
+            isbns = (isbn_row / 'td').last.inner_text.split
             isbn = Library.canonicalise_isbn(isbns.first)
           else
             log.warn { "No ISBN found on page" }

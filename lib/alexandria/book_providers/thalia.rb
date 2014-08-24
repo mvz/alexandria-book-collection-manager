@@ -53,12 +53,12 @@ module Alexandria
         else
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
-          results.map {|result| get_book_from_search_result(result) }
+          results.map { |result| get_book_from_search_result(result) }
         end
       end
 
       def create_search_uri(search_type, search_term)
-        search_type_code = {SEARCH_BY_ISBN => 'sq',
+        search_type_code = { SEARCH_BY_ISBN => 'sq',
           SEARCH_BY_AUTHORS => 'sa', #Autor
           SEARCH_BY_TITLE => 'st', # Titel
           SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
@@ -110,7 +110,7 @@ module Alexandria
         parse_result_data(html_data.body, "noisbn", true)
       end
 
-      def parse_result_data(html, isbn, recursing=false)
+      def parse_result_data(html, isbn, recursing = false)
         doc = html_to_doc(html)
 
         results_divs = doc / 'div.articlePresentationSearchCH'
@@ -130,7 +130,7 @@ module Alexandria
           chosen = results.first # fallback!
           results.each do |rslt|
             if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
-              if $1.gsub('-','') == isbn10
+              if $1.gsub('-', '') == isbn10
                 chosen = rslt
                 break
               end

@@ -58,7 +58,7 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }
+          results.map { |result| get_book_from_search_result(result) }
         end
 
       end
@@ -81,7 +81,7 @@ module Alexandria
         if search_type == SEARCH_BY_ISBN
           PRODUCT_URL % Library.canonicalise_isbn(search_term)
         else
-          search_type_code = {SEARCH_BY_AUTHORS => 'author',
+          search_type_code = { SEARCH_BY_AUTHORS => 'author',
             SEARCH_BY_TITLE => 'title',
             SEARCH_BY_KEYWORD => 'keyword'
           }[search_type] or 'keyword'
@@ -108,7 +108,7 @@ module Alexandria
         searchHit = doc.search("div'searchResult")[0]
         return [] unless searchHit
 
-        (searchHit/'ul.ulSearch table').each do |t|
+        (searchHit / 'ul.ulSearch table').each do |t|
 
           result = {}
           if title_data = (t % 'div.divTitle')

@@ -92,7 +92,7 @@ module Alexandria
           #dbresult = JSON.parse(response)
           dbresult = YAML::load(json2yaml(response))
           #File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
-          if(dbresult['opensearch:totalResults']['$t'].to_i > 0)
+          if (dbresult['opensearch:totalResults']['$t'].to_i > 0)
             for item in dbresult['entry']
               name = item['title']['$t']
               isbn = nil
@@ -114,7 +114,7 @@ module Alexandria
                 end
               end
               if item['author']
-                authors = item['author'].map{ |a| a['name']['$t'] }
+                authors = item['author'].map { |a| a['name']['$t'] }
               else
                 authors = []
               end
@@ -125,7 +125,7 @@ module Alexandria
                 end
               end
               book = Book.new(name, authors, isbn, publisher, pubdate, binding)
-              book_search_results << [ book, image_url ]
+              book_search_results << [book, image_url]
             end
           end
         rescue Exception => ex

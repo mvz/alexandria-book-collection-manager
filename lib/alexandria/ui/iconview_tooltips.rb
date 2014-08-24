@@ -73,7 +73,7 @@ class IconViewTooltips
                                 nil,
                                 @tooltip_window,
                                 'tooltip',
-                                0,0,size[0],size[1])
+                                0, 0, size[0], size[1])
     # must return nil so the label contents get drawn correctly
     nil
   end

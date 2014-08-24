@@ -75,7 +75,7 @@ module Alexandria
         if type == SEARCH_BY_ISBN
           get_book_from_search_result(results.first)
         else
-          results.map {|result| get_book_from_search_result(result) }
+          results.map { |result| get_book_from_search_result(result) }
         end
 
       end
@@ -90,7 +90,7 @@ module Alexandria
 
       def create_search_uri(search_type, search_term)
         # bah! very, very similar to the siciliano code! refactor out this duplication
-        search_type_code = {SEARCH_BY_ISBN => 'isbn',
+        search_type_code = { SEARCH_BY_ISBN => 'isbn',
           SEARCH_BY_TITLE => 'title',
           SEARCH_BY_AUTHORS => 'author',
           SEARCH_BY_KEYWORD => 'keywords'
@@ -141,14 +141,14 @@ module Alexandria
 
 #             end
 
-            content = div/'div.scheda_content'
-            title_link = (content/:a).first
+            content = div / 'div.scheda_content'
+            title_link = (content / :a).first
             title = normalize(title_link.inner_text)
             link_to_description = title_link['href']
             lookup_url =  "#{SITE}#{link_to_description}"
 
             authors = []
-            (content/'a.info').each do |link|
+            (content / 'a.info').each do |link|
               authors << normalize(link.inner_text)
             end
 
@@ -158,7 +158,7 @@ module Alexandria
             result[:title] = title
             result[:url] = lookup_url
 
-            publishers = (content/'p.editore')
+            publishers = (content / 'p.editore')
             unless publishers.empty?
               result[:publisher] = normalize(publishers.first.inner_text)
             end
@@ -186,7 +186,7 @@ module Alexandria
 
           # cover
           cover_link = nil
-          cover_img = data/'a/img'
+          cover_img = data / 'a/img'
           unless cover_img.empty?
             cover_link = cover_img.first['src']
           end
@@ -198,7 +198,7 @@ module Alexandria
             author_span = data % 'span.int_scheda[text()*=cura]' # editor
           end
           if author_span
-            author_links = author_span/'a.info'
+            author_links = author_span / 'a.info'
             authors = []
             author_links.each do |link|
               authors << normalize(link.inner_html)
@@ -233,7 +233,7 @@ module Alexandria
             publish_year = $1.to_i
           end
 
-          isbn_spans = data/'div.sotto/span.isbn'
+          isbn_spans = data / 'div.sotto/span.isbn'
           isbns = []
           isbn_spans.each do |span|
             span.inner_text =~ /:[\s]*(.+)[\s]*$/

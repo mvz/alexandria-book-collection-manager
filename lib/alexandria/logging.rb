@@ -27,7 +27,7 @@ module Alexandria
   # or Object. A LoggerWrapper can be used to simplify this procedure.
   class Logger < ::Logger
 
-    def add(severity, message = nil, source=nil, progname = nil, &block)
+    def add(severity, message = nil, source = nil, progname = nil, &block)
       if source.nil?
         return super(severity, message, progname, &block)
       end
@@ -39,23 +39,23 @@ module Alexandria
       return super(severity, message, category, &block)
     end
 
-    def debug(source=nil, progname = nil, &block)
+    def debug(source = nil, progname = nil, &block)
       add(DEBUG, nil, source, progname, &block)
     end
 
-    def info(source=nil, progname = nil, &block)
+    def info(source = nil, progname = nil, &block)
       add(INFO, nil, source, progname, &block)
     end
 
-    def warn(source=nil, progname = nil, &block)
+    def warn(source = nil, progname = nil, &block)
       add(WARN, nil, source, progname, &block)
     end
 
-    def error(source=nil, progname = nil, &block)
+    def error(source = nil, progname = nil, &block)
       add(ERROR, nil, source, progname, &block)
     end
 
-    def fatal(source=nil, progname = nil, &block)
+    def fatal(source = nil, progname = nil, &block)
       add(FATAL, nil, source, progname, &block)
     end
 

@@ -103,17 +103,17 @@ module Alexandria
       end
 
       TEXT_COLUMNS = [
-        [ _("Authors"), Columns::AUTHORS ],
-        [ _("ISBN"), Columns::ISBN ],
-        [ _("Publisher"), Columns::PUBLISHER ],
-        [ _("Publish Year"), Columns::PUBLISH_DATE ],
-        [ _("Binding"), Columns::EDITION ],
-        [ _("Loaned To"), Columns::LOANED_TO ]
+        [_("Authors"), Columns::AUTHORS],
+        [_("ISBN"), Columns::ISBN],
+        [_("Publisher"), Columns::PUBLISHER],
+        [_("Publish Year"), Columns::PUBLISH_DATE],
+        [_("Binding"), Columns::EDITION],
+        [_("Loaned To"), Columns::LOANED_TO]
       ]
       CHECK_COLUMNS = [
-        [ _("Read"), Columns::REDD],
-        [ _("Own"), Columns::OWN],
-        [ _("Want"), Columns::WANT]
+        [_("Read"), Columns::REDD],
+        [_("Own"), Columns::OWN],
+        [_("Want"), Columns::WANT]
       ]
 
       def setup_books_listview
@@ -188,7 +188,7 @@ module Alexandria
       end
 
       def setup_check_column title, iterid
-        renderer= CellRendererToggle.new
+        renderer = CellRendererToggle.new
         renderer.activatable = true
         renderer.signal_connect('toggled') do |rndrr, path|
           begin
@@ -207,7 +207,7 @@ module Alexandria
                                  when Columns::WANT then book.want
                                  end
                   # invert toggle_state
-                  unless (iterid==Columns::WANT && book.own)
+                  unless (iterid == Columns::WANT && book.own)
                     toggle_state = !toggle_state
                     case iterid
                     when Columns::REDD then book.redd = toggle_state
@@ -289,7 +289,7 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end
-        log.debug { "Columns visibility: " + cols.collect {|col| "#{col.title} #{col.visible?.to_s}"}.join(", ") }
+        log.debug { "Columns visibility: " + cols.collect { |col| "#{col.title} #{col.visible?.to_s}" }.join(", ") }
       end
 
       # Sets the width of each column based on any respective
@@ -307,7 +307,7 @@ module Alexandria
             end
           end
         end
-        log.debug { "Columns width: " + @listview.columns.collect {|col| "#{col.title} #{col.width.to_s}"}.join(", ") }
+        log.debug { "Columns width: " + @listview.columns.collect { |col| "#{col.title} #{col.width.to_s}" }.join(", ") }
       end
     end
   end

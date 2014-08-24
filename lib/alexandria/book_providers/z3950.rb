@@ -30,7 +30,7 @@ module Alexandria
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-      def initialize(name="Z3950", fullname="Z39.50")
+      def initialize(name = "Z3950", fullname = "Z39.50")
         super
         prefs.add("hostname", _("Hostname"), "")
         prefs.add("port", _("Port"), 7090)
@@ -41,7 +41,7 @@ module Alexandria
         prefs.add("charset", _("Charset encoding"), "ISO-8859-1")
 
         # HACK : piggybacking support
-        prefs.add("piggyback", "Piggyback", true, [true,false])
+        prefs.add("piggyback", "Piggyback", true, [true, false])
         prefs.read
       end
 
@@ -178,7 +178,7 @@ module Alexandria
                when SEARCH_BY_KEYWORD  then [1016]
                end
         pqf = ""
-        attr.each { |att| pqf += "@attr 1=#{att} "}
+        attr.each { |att| pqf += "@attr 1=#{att} " }
         pqf += "\"" + criterion.upcase + "\""
         log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
 
@@ -194,7 +194,7 @@ module Alexandria
           if /1005/ =~ ex.message
             if prefs.variable_named("piggyback") and prefs['piggyback']
               log.error { "Z39.50 search failed:: #{ex.message}" }
-              log.info { "Turning off piggybacking for this provider"}
+              log.info { "Turning off piggybacking for this provider" }
               prefs.variable_named('piggyback').new_value = false
               conn = nil
               search_records(criterion, type, conn_count)
@@ -307,7 +307,7 @@ module Alexandria
             elsif md = /^ME-Personal Name:\s+(.*),[^,]+$/.match(line)
               authors << md[1]
             elsif md = /^ISBN:\s+([\dXx]+)/.match(line)
-              isbn = Library.canonicalise_ean( md[1] )
+              isbn = Library.canonicalise_ean(md[1])
             elsif md = /^Imprint:.+\:\s*(.+)\,/.match(line)
               publisher = md[1]
             end
@@ -392,7 +392,7 @@ module Alexandria
 
         if isbn[0..1] == "88"
           # Italian speaking area
-          if isbn > "8895000" and isbn <="8899999996"
+          if isbn > "8895000" and isbn <= "8899999996"
             return isbn[0..1] + "-" + isbn[2..6] + "-" + isbn[7..8] + "-" + isbn[9..9]
           elsif isbn > "88900000"
             return isbn[0..1] + "-" + isbn[2..7] + "-" + isbn[8..8] + "-" + isbn[9..9]
