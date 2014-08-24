@@ -62,7 +62,7 @@ def install_common(install_task)
   install_task.install('lib', 'lib/**/*.rb', install_task.rubylib)
 
   share_files = ['data/alexandria/**/*', 'data/gnome/**/*.*',
-                 'data/locale/**/*.mo', 'data/omf/**/*.omf', 
+                 'data/locale/**/*.mo', 'data/omf/**/*.omf',
                  'data/sounds/**/*.ogg'] #, 'data/menu/*']
   install_task.install('data', share_files, SHARE)
 
@@ -87,9 +87,9 @@ packageinstall = FileInstallTask.new(:package) do |j|
   install_common(j)
 
   docs = ['README', 'NEWS', 'INSTALL', 'COPYING', 'TODO']
-  devel_docs = ['doc/AUTHORS', 'doc/BUGS', 'doc/FAQ', 
+  devel_docs = ['doc/AUTHORS', 'doc/BUGS', 'doc/FAQ',
                 'doc/cuecat_support.rdoc']
-  j.install('', docs, "#{SHARE}/doc/#{PROJECT}") 
+  j.install('', docs, "#{SHARE}/doc/#{PROJECT}")
   j.install('doc', devel_docs, "#{SHARE}/doc/#{PROJECT}")
 
   j.uninstall_empty_dirs(["#{SHARE}/**/#{PROJECT}/",
@@ -148,8 +148,8 @@ def convert_with_type(value, type)
 end
 
 SCHEMA_PATH = 'schemas/alexandria.schemas'
-  
-# This generates default_preferences.rb by copying over values from 
+
+# This generates default_preferences.rb by copying over values from
 # providers_priority key in alexandria.schemas (necessary?)
 
 file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
@@ -263,7 +263,7 @@ Rake::PackageTask.new(PROJECT, DISPLAY_VERSION) do |p|
                           "schemas/**/*", "spec/**/*", "tests/**/*")
 end
 
-task :tgz => [:build] do 
+task :tgz => [:build] do
   `rake package`
 end
 
