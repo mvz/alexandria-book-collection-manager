@@ -18,7 +18,7 @@
 
 $:.unshift(File.join(File.dirname(__FILE__), '/../lib'))
 
-require  'alexandria'
+require 'alexandria'
 
 LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '/data/libraries'))
 TESTDIR = File.join(LIBDIR, 'test')

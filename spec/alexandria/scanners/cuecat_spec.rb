@@ -19,7 +19,7 @@
 
 $:.unshift(File.join(File.dirname(__FILE__), '../../../lib'))
 
-require  'alexandria/scanners/cuecat'
+require 'alexandria/scanners/cuecat'
 
 describe Alexandria::Scanners::CueCat do
 
