@@ -413,7 +413,7 @@ module Alexandria
 
       def determine_library_popup widget, event
         # widget.grab_focus
-        widget.get_path_at_pos(event.x, event.y) == nil \
+        widget.get_path_at_pos(event.x, event.y).nil? \
           ? @nolibrary_popup \
           : selected_library.is_a?(SmartLibrary) \
           ? @smart_library_popup : @library_popup

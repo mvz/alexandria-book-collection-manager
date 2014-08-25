@@ -96,13 +96,13 @@ module Alexandria
           old_pub_year = book.publishing_year
           begin
             begin
-              book.isbn = canonicalise_ean(book.isbn).to_s unless book.isbn == nil
+              book.isbn = canonicalise_ean(book.isbn).to_s unless book.isbn.nil?
               raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
             rescue InvalidISBNError => e
               book.isbn = old_isbn
             end
 
-            book.publishing_year = book.publishing_year.to_i unless book.publishing_year == nil
+            book.publishing_year = book.publishing_year.to_i unless book.publishing_year.nil?
 
             # Or if isbn has changed
             raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
@@ -118,7 +118,7 @@ module Alexandria
 
             ## TODO copy cover image file, if necessary
             # due to #26909 cover files for books without ISBN are re-saved as "g#{ident}.cover"
-            if book.isbn == nil || book.isbn.empty?
+            if book.isbn.nil? || book.isbn.empty?
               if File.exist? library.old_cover(book)
                 log.debug { "#{library.name}; book #{book.title} has no ISBN, fixing cover image" }
                 FileUtils::Verbose.mv(library.old_cover(book), library.cover(book))
@@ -285,7 +285,7 @@ module Alexandria
     end
 
     def self.extract_numbers(isbn)
-      raise NoISBNError.new("Nil ISBN") if isbn == nil || isbn.empty?
+      raise NoISBNError.new("Nil ISBN") if isbn.nil? || isbn.empty?
 
       isbn.delete('- ').upcase.split('').map do |x|
         raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/

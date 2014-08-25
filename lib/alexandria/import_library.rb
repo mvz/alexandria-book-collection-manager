@@ -146,7 +146,7 @@ module Alexandria
                 raise ex
               end
             end
-            book_elements[4] = book_elements[4].to_i unless book_elements[4] == nil # publishing_year
+            book_elements[4] = book_elements[4].to_i unless book_elements[4].nil? # publishing_year
             puts book_elements.inspect
             if elements['cover']
               cover = neaten(elements['cover'].text)

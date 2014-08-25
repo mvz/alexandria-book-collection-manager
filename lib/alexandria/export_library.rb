@@ -436,7 +436,7 @@ EOS
 EOS
         end
 
-        unless book.title == nil
+        unless book.title.nil?
           xhtml << <<EOS
 <p class="book_title">#{xhtml_escape(book.title)}</p>
 EOS
@@ -452,13 +452,13 @@ EOS
           xhtml << "</ul>"
         end
 
-        unless book.edition == nil
+        unless book.edition.nil?
           xhtml << <<EOS
 <p class="book_binding">#{xhtml_escape(book.edition)}</p>
 EOS
         end
 
-        unless book.publisher == nil
+        unless book.publisher.nil?
           xhtml << <<EOS
 <p class="book_publisher">#{xhtml_escape(book.publisher)}</p>
 EOS
@@ -515,7 +515,7 @@ EOS
     end
 
     def latex_escape(str)
-      return "" if str == nil
+      return "" if str.nil?
       my_str = str.dup
       my_str.gsub!(/%/, "\\%")
       my_str.gsub!(/~/, "\\textasciitilde")

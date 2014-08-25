@@ -115,7 +115,7 @@ class IconViewTooltips
     # hmmm, actually seems to work. Report a bug if you can spot a failure
     if tree_path
       iter = view.model.get_iter(tree_path)
-      if @latest_iter == nil
+      if @latest_iter.nil?
         @latest_iter = iter
 
         @tooltip_timeout_id = Gtk.timeout_add(250) do
