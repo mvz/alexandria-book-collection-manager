@@ -110,7 +110,7 @@ module Alexandria
           #puts result_cells.length
           result_cells.each do |td|
             type_icon = (td % 'div.type/img.icn')
-            next unless (type_icon and type_icon['src'] =~ /icon-bks/)
+            next unless type_icon and type_icon['src'] =~ /icon-bks/
             name_div = td % 'div.name'
             title = name_div.inner_text
             anchor = name_div % :a

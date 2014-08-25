@@ -74,7 +74,7 @@ module Alexandria
       unless @http_proxy_loaded
         load_http_proxy_settings
       end
-      if (@use_http_proxy && @proxy_host && @proxy_port)
+      if @use_http_proxy && @proxy_host && @proxy_port
         [@proxy_host, @proxy_port, @proxy_user, @proxy_password]
       end
     end

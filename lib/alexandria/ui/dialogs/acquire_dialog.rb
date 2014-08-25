@@ -166,7 +166,7 @@ module Alexandria
                 ## TODO add another column in the iter, like "isbn/01"
                 # that would allow this kind of behaviour...
 
-              elsif (not @book_results.has_key?(isbn)) #HAX
+              elsif not @book_results.has_key?(isbn) #HAX
                 log.debug { "no book found for #{isbn}, not adding" }
 
                 # good enough for now
@@ -187,7 +187,7 @@ module Alexandria
             row_iters = []
             model.each do |mod, path, iter|
               isbn = iter[0]
-              if (not @book_results.has_key?(isbn))
+              if not @book_results.has_key?(isbn)
                 log.debug { "no book found for #{isbn}, not adding" }
                 adding_a_selection = true
               elsif book_in_library(isbn, library)
@@ -203,7 +203,7 @@ module Alexandria
               end
             end
             # remove list items
-            if (isbn_duplicates.empty? and (not adding_a_selection))
+            if isbn_duplicates.empty? and (not adding_a_selection)
               model.clear # TODO unless!!!
               row_iters.clear
             else
@@ -623,7 +623,7 @@ module Alexandria
 
         col.set_cell_data_func(pixbuf_renderer) do |column, cell, model, iter|
           pixbuf = iter[1]
-          if (pixbuf)
+          if pixbuf
             max_height = 25
 
             if pixbuf.height > max_height

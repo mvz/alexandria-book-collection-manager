@@ -158,7 +158,7 @@ module Alexandria
       authors << normalize(row[@author])
       isbn = row[@isbn]
       if isbn
-        if (isbn =~ /\[([^\]]+)\]/)
+        if isbn =~ /\[([^\]]+)\]/
           isbn = Regexp.last_match[1]
         end
         isbn = Library.canonicalise_ean(isbn)
@@ -168,7 +168,7 @@ module Alexandria
       # sometimes "Publisher (YEAR), Edition: NUM, Binding, NUM pages"
       publisher_info = normalize(row[@publisher_info])
       publisher = publisher_info
-      if (publisher_info =~ /([^\(]+)\(/)
+      if publisher_info =~ /([^\(]+)\(/
         publisher = Regexp.last_match[1]
       end
       edition = publisher_info # binding
@@ -229,7 +229,7 @@ module Alexandria
     elsif is_goodreads
       return GoodreadsCSVImport.new(header)
     end
-    raise "Not Recognized" unless (is_librarything || is_goodreads)
+    raise "Not Recognized" unless is_librarything || is_goodreads
   end
 
 

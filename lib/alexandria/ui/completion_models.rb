@@ -54,7 +54,7 @@ class Gtk::Entry
       cur_tag = key.split(",").last.strip
       if cur_tag.size >= min
         begin
-          if (iter[0] =~ /^#{cur_tag}/)
+          if iter[0] =~ /^#{cur_tag}/
             true
           else
             false

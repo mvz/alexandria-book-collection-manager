@@ -207,7 +207,7 @@ module Alexandria
                                  when Columns::WANT then book.want
                                  end
                   # invert toggle_state
-                  unless (iterid == Columns::WANT && book.own)
+                  unless iterid == Columns::WANT && book.own
                     toggle_state = !toggle_state
                     case iterid
                     when Columns::REDD then book.redd = toggle_state

@@ -498,7 +498,7 @@ module Alexandria
 
 
         # Focus is the wrong idiom here.
-        unless (@clicking_on_sidepane or (@main_app.focus == @library_listview))
+        unless @clicking_on_sidepane or (@main_app.focus == @library_listview)
           # unless @main_app.focus == @library_listview
 
 

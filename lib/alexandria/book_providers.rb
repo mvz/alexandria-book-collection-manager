@@ -46,7 +46,7 @@ module Alexandria
       begin
         factory = instance[factory_n]
         puts factory.fullname + " lookup" if $DEBUG
-        if (not factory.enabled)
+        if not factory.enabled
           puts factory.fullname + " disabled!, skipping..." if $DEBUG
           raise ProviderSkippedError
         end
@@ -187,7 +187,7 @@ module Alexandria
         each do |var|
           message = @provider.variable_name(var)
           val = Alexandria::Preferences.instance.send(message)
-          var.value = val unless (val.nil? or (val == "" and var.mandatory?))
+          var.value = val unless val.nil? or (val == "" and var.mandatory?)
         end
       end
     end

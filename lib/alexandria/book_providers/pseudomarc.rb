@@ -91,14 +91,14 @@ module Alexandria
         binding = nil
         isbn_data = details[m[:isbn][0]]
         if isbn_data
-          if (isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/)
+          if isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/
             isbn = Regexp.last_match[1]
           end
         end
 
         binding_data = details[m[:binding][0]]
         if binding_data
-          if (binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/)
+          if binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
             binding = Regexp.last_match[1]
           end
         end
@@ -145,7 +145,7 @@ module Alexandria
     def self.marc_text_to_details(marc)
       details = {}
       marc.each_line do |line|
-        if (line =~ /(\d+)\s*(.+)/)
+        if line =~ /(\d+)\s*(.+)/
           code = Regexp.last_match[1]
           data = Regexp.last_match[2]
 

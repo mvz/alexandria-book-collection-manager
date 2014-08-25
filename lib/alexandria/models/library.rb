@@ -564,7 +564,7 @@ module Alexandria
     def cover(something)
       ident = case something
               when Book
-                if (something.isbn && (not something.isbn.empty?))
+                if something.isbn && (not something.isbn.empty?)
                   something.ident
                 else
                   "g#{something.ident}" # g is for generated id...

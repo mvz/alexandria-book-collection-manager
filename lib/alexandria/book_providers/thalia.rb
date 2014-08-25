@@ -114,7 +114,7 @@ module Alexandria
         doc = html_to_doc(html)
 
         results_divs = doc / 'div.articlePresentationSearchCH'
-        unless (results_divs.empty?)
+        unless results_divs.empty?
           if recursing
             # already recursing, avoid doing so endlessly second time
             # around *should* lead to a book description, not a result
@@ -166,7 +166,7 @@ module Alexandria
 
             year = nil
             date = data_from_label(item_details, 'Erschienen:')
-            if (date =~ /([\d]{4})/)
+            if date =~ /([\d]{4})/
               year = Regexp.last_match[1].to_i
             end
 

@@ -101,14 +101,14 @@ module Alexandria
           file = File.exist?('bookcase.xml') \
           ? 'bookcase.xml' : 'tellico.xml'
           xml = REXML::Document.new(File.open(file))
-          raise unless (xml.root.name == 'bookcase' or
-                        xml.root.name == 'tellico')
+          raise unless xml.root.name == 'bookcase' or
+                        xml.root.name == 'tellico'
           # FIXME: handle multiple collections
           raise unless xml.root.elements.size == 1
           collection = xml.root.elements[1]
           raise unless collection.name == 'collection'
           type = collection.attribute('type').value.to_i
-          raise unless (type == 2 or type == 5)
+          raise unless type == 2 or type == 5
 
           content = []
           entries = collection.elements.to_a('entry')
