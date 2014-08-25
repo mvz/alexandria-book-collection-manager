@@ -113,7 +113,7 @@ class FileInstallTask < Rake::TaskLib
             dir += '/'
           end
           if regex =~ dir
-            to_delete << $1
+            to_delete << Regexp.last_match[1]
           end
         end
       end

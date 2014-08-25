@@ -219,9 +219,9 @@ module Alexandria
             publication_info =~ /([^;,]+)/
           end
 
-          publisher = $1
+          publisher = Regexp.last_match[1]
           publication_info =~ /([12][0-9]{3})/
-          year = $1.to_i if $1
+          year = Regexp.last_match[1].to_i if Regexp.last_match[1]
         else
           publisher = nil
           year = nil

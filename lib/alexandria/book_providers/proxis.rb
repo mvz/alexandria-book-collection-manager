@@ -151,7 +151,7 @@ module Alexandria
           header_spans = title_header.first.search('span')
           title = text_of(header_spans.first)
           if title =~ /(.+)-$/
-            title = $1.strip
+            title = Regexp.last_match[1].strip
           end
           book_data[:title] = title
         end
@@ -178,7 +178,7 @@ module Alexandria
             elsif header_text =~ /Verschijningsdatum/
               date = data_for_header(th)
               date =~ /\/([\d]{4})/
-              book_data[:publish_year] = $1.to_i
+              book_data[:publish_year] = Regexp.last_match[1].to_i
             elsif header_text =~ /Auteur/
               book_data[:authors] << data_for_header(th)
             elsif header_text =~ /Uitgever/

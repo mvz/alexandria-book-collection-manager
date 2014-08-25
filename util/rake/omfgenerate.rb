@@ -50,7 +50,7 @@ class OmfGenerateTask < Rake::TaskLib
 
   def locale_for(omf_file)
     omf_file =~ /.*-(.+)\.omf/
-    $1
+    Regexp.last_match[1]
   end
 
   def in_files

@@ -313,7 +313,7 @@ module Alexandria
       vals = all_vals.split(/$/)
       vals.each do |val|
         if /([a-z_]+) = (.*)/ =~ val
-          hash[$1] = discriminate($2)
+          hash[Regexp.last_match[1]] = discriminate(Regexp.last_match[2])
         end
       end
       hash
@@ -330,10 +330,10 @@ module Alexandria
       elsif value =~ /^[0-9]+$/   # int
         return value.to_i
       elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
-        return $1.split(",")
+        return Regexp.last_match[1].split(",")
       elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
         begin
-          pair = $1.split(",")
+          pair = Regexp.last_match[1].split(",")
           return [discriminate(pair.first), discriminate(pair.last)]
         rescue
           return [0, 0]

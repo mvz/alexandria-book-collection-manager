@@ -163,7 +163,7 @@ module Alexandria
           author_cells.each do |li|
             author_role = (li % :strong).inner_text # first strong contains author_role
 	    if author_role =~ /([^:]+):/
-	      author_role = $1
+	      author_role = Regexp.last_match[1]
 	    end
 	    author_name = text_of(li.search('h2 > a')[0])
 
@@ -179,7 +179,7 @@ module Alexandria
 	  if format = doc.search('div.productTitleFormat span').first
 	    binding = text_of(format)
 	    if binding =~ /\(([^\)]+)\)/
-	      binding = $1
+	      binding = Regexp.last_match[1]
 	    end
 	  end
 
@@ -187,7 +187,7 @@ module Alexandria
 	  if published = product.search('span[@id$="Published"]').first
 	    publication = published.inner_text
 	    if publication =~ /([12][0-9]{3})/
-	      year = $1.to_i
+	      year = Regexp.last_match[1].to_i
 	    end
 	  end
 
@@ -202,7 +202,7 @@ module Alexandria
 	    end
 	    isbn.gsub(/(\n|\r)/, " ")
             if isbn =~ /:[\s]*([0-9x]+)/i
-              isbn = $1
+              isbn = Regexp.last_match[1]
             end
             isbns << isbn
           end

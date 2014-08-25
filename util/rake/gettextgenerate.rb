@@ -100,7 +100,7 @@ class GettextGenerateTask < Rake::TaskLib
 
   def source_file(dest_file)
     dest_file =~ @mo_files_regex
-    po_file_for($1)
+    po_file_for(Regexp.last_match[1])
   end
 end
 

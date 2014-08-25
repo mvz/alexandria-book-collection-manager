@@ -130,7 +130,7 @@ module Alexandria
           chosen = results.first # fallback!
           results.each do |rslt|
             if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
-              if $1.gsub('-', '') == isbn10
+              if Regexp.last_match[1].gsub('-', '') == isbn10
                 chosen = rslt
                 break
               end
@@ -167,7 +167,7 @@ module Alexandria
             year = nil
             date = data_from_label(item_details, 'Erschienen:')
             if (date =~ /([\d]{4})/)
-              year = $1.to_i
+              year = Regexp.last_match[1].to_i
             end
 
             binding = data_from_label(item_details, 'Einband')

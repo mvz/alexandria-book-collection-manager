@@ -223,7 +223,7 @@ module Amazon
       end
 
       def self.camelize(s)
-        s.to_s.gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
+        s.to_s.gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
       end
 
 
@@ -268,9 +268,9 @@ module Amazon
       # Step 0 : Split apart request string
       url_pattern = /http:\/\/([^\/]+)(\/[^\?]+)\?(.*$)/
       url_pattern =~ request
-      host = $1
-      path = $2
-      param_string = $3
+      host = Regexp.last_match[1]
+      path = Regexp.last_match[2]
+      param_string = Regexp.last_match[3]
 
       # Step 1: enter the timestamp
       t = Time.now.getutc # MUST be in UTC

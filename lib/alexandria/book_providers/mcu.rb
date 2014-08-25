@@ -73,9 +73,9 @@ module Alexandria
         transport.get(URI.parse(req)).each do |line|
           #line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
-          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1, $2)) then
-            products[$1] = book
-            puts $1 if $DEBUG # for DEBUGing
+          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[Regexp.last_match[1]]) and (book = parseBook(Regexp.last_match[1], Regexp.last_match[2])) then
+            products[Regexp.last_match[1]] = book
+            puts Regexp.last_match[1] if $DEBUG # for DEBUGing
           end
         end
 
@@ -116,7 +116,7 @@ module Alexandria
           if line =~ /^<\/td>$/ or line =~ /^<\/tr>$/
             robotstate = 0
           elsif robotstate == 1 and line =~ /^([^<]+)</
-            author = $1.gsub('&nbsp;', ' ').sub(/ +$/, '')
+            author = Regexp.last_match[1].gsub('&nbsp;', ' ').sub(/ +$/, '')
             if author.length > 3 then
               # Only add authors of appropiate length
               product['authors'] << author
@@ -124,20 +124,20 @@ module Alexandria
               robotstate = 0
             end
           elsif robotstate == 2 and line =~ /^(.*)$/ # The title es the next line to title declaration and has not tags on web src code
-            product['name'] = $1.strip
+            product['name'] = Regexp.last_match[1].strip
             print "Name is #{product['name']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
           elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]).*/
-            product['isbn'] = $1
+            product['isbn'] = Regexp.last_match[1]
             print "ISBN is #{product['isbn']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
           elsif robotstate == 4 and line =~ /^([^<]+)</
-            product['manufacturer'] = $1.strip
+            product['manufacturer'] = Regexp.last_match[1].strip
             print "Manufacturer is #{product['manufacturer']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
             #                elsif robotstate == 5 and line =~ /^([^<]+)</
           elsif robotstate == 5 and line =~ /<span>([^<]+)</
-            product['media'] = $1.strip
+            product['media'] = Regexp.last_match[1].strip
             print "Media is #{product['media']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
           elsif line =~ /^.*>Autor:\s*</

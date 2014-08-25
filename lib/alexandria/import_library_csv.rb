@@ -159,7 +159,7 @@ module Alexandria
       isbn = row[@isbn]
       if isbn
         if (isbn =~ /\[([^\]]+)\]/)
-          isbn = $1
+          isbn = Regexp.last_match[1]
         end
         isbn = Library.canonicalise_ean(isbn)
       end
@@ -169,7 +169,7 @@ module Alexandria
       publisher_info = normalize(row[@publisher_info])
       publisher = publisher_info
       if (publisher_info =~ /([^\(]+)\(/)
-        publisher = $1
+        publisher = Regexp.last_match[1]
       end
       edition = publisher_info # binding
       edition_info = publisher_info.split(',')

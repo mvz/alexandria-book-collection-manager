@@ -45,7 +45,7 @@ module Alexandria
         if data.first[part]
           part_data = data.first[part].strip
           if part_data =~ stripping
-            part_data = $1
+            part_data = Regexp.last_match[1]
             part_data = part_data.strip
           end
           if field != ''
@@ -80,7 +80,7 @@ module Alexandria
             if author
               author = author.strip
               if author =~ /(.*),$/
-                author = $1
+                author = Regexp.last_match[1]
               end
               authors << author
             end
@@ -92,14 +92,14 @@ module Alexandria
         isbn_data = details[m[:isbn][0]]
         if isbn_data
           if (isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/)
-            isbn = $1
+            isbn = Regexp.last_match[1]
           end
         end
 
         binding_data = details[m[:binding][0]]
         if binding_data
           if (binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/)
-            binding = $1
+            binding = Regexp.last_match[1]
           end
         end
 
@@ -114,7 +114,7 @@ module Alexandria
         if publication_data
           year = publication_data.first[m[:year][1]]
           if year =~ /(\d+)/
-            year = $1.to_i
+            year = Regexp.last_match[1].to_i
           end
         end
 
@@ -146,8 +146,8 @@ module Alexandria
       details = {}
       marc.each_line do |line|
         if (line =~ /(\d+)\s*(.+)/)
-          code = $1
-          data = $2
+          code = Regexp.last_match[1]
+          data = Regexp.last_match[2]
 
           this_line_data = {}
 
@@ -159,8 +159,8 @@ module Alexandria
             #puts d_str
             if (idx = d_str =~ /\$([a-z]) ([^\$]+)/)
               #puts idx
-              sub_code = $1
-              sub_data = $2
+              sub_code = Regexp.last_match[1]
+              sub_data = Regexp.last_match[2]
               this_line_data[sub_code] = sub_data
               #puts "  " + $1
               #puts "    " + $2

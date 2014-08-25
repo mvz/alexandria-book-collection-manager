@@ -195,7 +195,7 @@ module Alexandria
           end
           # hack, extract year by regexp (not Y10K compatible :-)
           /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
-          publishing_year = $1 ? $1.to_i : nil
+          publishing_year = Regexp.last_match[1] ? Regexp.last_match[1].to_i : nil
           book = Book.new(title,
                           atts.get_array('author').map { |x| normalize(x) },
                           isbn,

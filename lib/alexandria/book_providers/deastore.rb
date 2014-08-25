@@ -214,19 +214,19 @@ module Alexandria
          # format
         format_par = data % 'span.int_scheda[text()*=Formato]/..'
         format_par.inner_text =~ /:[\s]*(.+)[\s]*$/
-        binding = normalize($1)
+        binding = normalize(Regexp.last_match[1])
          # year
         date_par = data % 'span.int_scheda[text()*=Data di pubblicazione]/..'
         date_par.inner_text =~ /:[\s]*([12][0-9]{3})[\s]*$/
         publish_year = nil
-        if $1
-          publish_year = $1.to_i
+        if Regexp.last_match[1]
+          publish_year = Regexp.last_match[1].to_i
         end
          isbn_spans = data / 'div.sotto/span.isbn'
         isbns = []
         isbn_spans.each do |span|
           span.inner_text =~ /:[\s]*(.+)[\s]*$/
-          isbns << $1
+          isbns << Regexp.last_match[1]
         end
          isbn = nil
         unless isbns.empty?

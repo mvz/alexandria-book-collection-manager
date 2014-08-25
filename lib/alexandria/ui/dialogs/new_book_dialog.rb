@@ -370,7 +370,7 @@ module Alexandria
 
       def decode_cuecat?(entry) # srsly?
         if entry.text =~ /^\..*?\..*?\.(.*?)\.$/
-          tmp = $1.tr('a-zA-Z0-9+-', ' -_')
+          tmp = Regexp.last_match[1].tr('a-zA-Z0-9+-', ' -_')
           tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack('u')[0]
           tmp.chomp!("\000")
           entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }

@@ -203,7 +203,7 @@ module Alexandria
       edition = details["Edio"]
       if edition
         if edition =~ /([12][0-9]{3})/ # publication date
-          publish_year = $1.to_i
+          publish_year = Regexp.last_match[1].to_i
         end
       end
        #cover
@@ -215,7 +215,7 @@ module Alexandria
           ch_text = ch.to_s
           if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
             slash = ''
-            img_link = $1
+            img_link = Regexp.last_match[1]
             unless img_link =~ /^\//
               slash = '/'
             end

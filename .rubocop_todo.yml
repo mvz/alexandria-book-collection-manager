@@ -333,11 +333,6 @@ Style/ParenthesesAroundCondition:
 Style/PercentLiteralDelimiters:
   Enabled: false
 
-# Offense count: 59
-# Cop supports --auto-correct.
-Style/PerlBackrefs:
-  Enabled: false
-
 # Offense count: 4
 # Configuration parameters: NamePrefixBlacklist.
 Style/PredicateName:
