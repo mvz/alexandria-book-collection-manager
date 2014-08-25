@@ -371,11 +371,6 @@ Style/SelfAssignment:
 Style/Semicolon:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/SpecialGlobalVars:
-  Enabled: false
-
 # Offense count: 60
 Style/Tab:
   Enabled: false

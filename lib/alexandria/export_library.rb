@@ -151,7 +151,7 @@ module Alexandria
       copy_covers(File.join(Dir.tmpdir, "images"))
       Dir.chdir(Dir.tmpdir) do
         output = `tar -cjf \"#{filename}\" onix.xml images 2>&1`
-        raise output unless $?.success?
+        raise output unless $CHILD_STATUS.success?
       end
       FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
       FileUtils.rm(File.join(Dir.tmpdir, "onix.xml"))
@@ -170,7 +170,7 @@ module Alexandria
       copy_covers(File.join(Dir.tmpdir, "images"))
       Dir.chdir(Dir.tmpdir) do
         output = `zip -q -r \"#{filename}\" tellico.xml images 2>&1`
-        raise output unless $?.success?
+        raise output unless $CHILD_STATUS.success?
       end
       FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
       FileUtils.rm(File.join(Dir.tmpdir, "tellico.xml"))
