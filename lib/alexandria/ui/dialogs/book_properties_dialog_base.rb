@@ -357,7 +357,7 @@ module Alexandria
         end
         loaned_time = Time.at(t)
         n_days = ((Time.now - loaned_time) / (3600 * 24)).to_i
-        if n_days > 365250 # 1,000 years
+        if n_days > 365_250 # 1,000 years
           @label_loaning_duration.label = ""
           return
         end
