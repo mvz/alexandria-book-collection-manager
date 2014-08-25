@@ -558,7 +558,7 @@ module Alexandria
         if @clicking_on_sidepane or widget == @library_listview
           log.debug { "on_focus: @library_listview" }
           Gtk.idle_add do
-            %w{OnlineInformation SelectAll DeselectAll}.each do |action|
+            %w(OnlineInformation SelectAll DeselectAll).each do |action|
               @actiongroup[action].sensitive = false
             end
             @actiongroup["Properties"].sensitive = selected_library.is_a?(SmartLibrary)

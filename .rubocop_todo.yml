@@ -327,12 +327,6 @@ Style/ParameterLists:
 Style/ParenthesesAroundCondition:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Enabled: false
-
 # Offense count: 4
 # Configuration parameters: NamePrefixBlacklist.
 Style/PredicateName:
