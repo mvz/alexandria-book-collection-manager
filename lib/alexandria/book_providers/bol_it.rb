@@ -114,7 +114,7 @@ module Alexandria
         elsif md = / (\d+) pagine \| /.match(data)
           nr_pages = CGI.unescape(md[1].strip)
         end
-        if nr_pages != "0" and  nr_pages != nil
+        if nr_pages != "0" and  !nr_pages.nil?
           edition = nr_pages + " p., " + edition
         end
 

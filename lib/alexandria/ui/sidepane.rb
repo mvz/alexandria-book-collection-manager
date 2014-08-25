@@ -150,7 +150,7 @@ module Alexandria
               Gtk::TreeView::DROP_INTO_OR_AFTER)
 
               drag_context.drag_status(
-                path != nil ? drag_context.suggested_action : 0,
+                !path.nil? ? drag_context.suggested_action : 0,
                 time)
           end
 

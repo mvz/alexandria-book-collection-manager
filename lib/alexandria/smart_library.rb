@@ -416,11 +416,11 @@ module Alexandria
         IS_AFTER = Operator.new(
                                 :is_after,
                                 _("is after"),
-				proc { |x, y| x.to_i > y.to_i and x != nil })
+				proc { |x, y| x.to_i > y.to_i and !x.nil? })
         IS_BEFORE = Operator.new(
                                  :is_before,
                                  _("is before"),
-                                 proc { |x, y| x.to_i < y.to_i and x != nil })
+                                 proc { |x, y| x.to_i < y.to_i and !x.nil? })
         IS_IN_LAST = Operator.new(
                                   :is_in_last_days,
                                   _("is in last"),

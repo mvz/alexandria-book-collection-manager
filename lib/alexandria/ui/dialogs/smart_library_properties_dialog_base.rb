@@ -255,10 +255,10 @@ module Alexandria
           operation_idx = operations.map \
           { |x| x.first }.index(rule.operation)
 
-          if operand_idx != nil and operation_idx != nil
+          if !operand_idx.nil? and !operation_idx.nil?
             left_operand_combo.active = operand_idx
             operator_combo.active = operation_idx
-            if rule.value != nil
+            if !rule.value.nil?
               case rule.value
               when String
                 value_entry.text = rule.value

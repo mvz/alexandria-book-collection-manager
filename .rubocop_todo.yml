@@ -296,12 +296,6 @@ Style/NestedTernaryOperator:
 Style/NilComparison:
   Enabled: false
 
-# Offense count: 17
-# Cop supports --auto-correct.
-# Configuration parameters: IncludeSemanticChanges.
-Style/NonNilCheck:
-  Enabled: false
-
 # Offense count: 26
 # Cop supports --auto-correct.
 Style/Not:

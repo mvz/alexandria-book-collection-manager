@@ -314,7 +314,7 @@ module Alexandria
                    when 6 then iter[Columns::NOTES]
                    when 7 then iter[Columns::TAGS]
                    end
-            data != nil and data.downcase.include?(filter.downcase)
+            !data.nil? and data.downcase.include?(filter.downcase)
           end
         end
 
@@ -1056,7 +1056,7 @@ module Alexandria
 
       def selected_books
         a = collate_selected_books(@notebook.page)
-        selected = a.select { |x| x != nil }
+        selected = a.select { |x| !x.nil? }
         log.debug { "Selected books = #{selected.inspect}" }
         selected
       end
@@ -1276,7 +1276,7 @@ module Alexandria
       end
 
       def remove_library_separator
-        if @library_separator_iter != nil and @libraries.all_smart_libraries.empty?
+        if !@library_separator_iter.nil? and @libraries.all_smart_libraries.empty?
           @library_listview.model.remove(@library_separator_iter)
           @library_separator_iter = nil
         end
