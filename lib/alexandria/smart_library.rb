@@ -224,9 +224,7 @@ module Alexandria
       end
     end
 
-    def n_rated
-      @n_rated
-    end
+    attr_reader :n_rated
 
     def n_unrated
       length - n_rated

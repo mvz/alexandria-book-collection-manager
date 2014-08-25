@@ -135,9 +135,7 @@ module Amazon
       end
 
       # Return Hpricot object.
-      def doc
-        @doc
-      end
+      attr_reader :doc
 
       # Return true if request is valid.
       def is_valid_request?

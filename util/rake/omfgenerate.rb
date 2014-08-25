@@ -61,10 +61,7 @@ class OmfGenerateTask < Rake::TaskLib
     in_files.map { |f| f.sub(/.omf.in/, '.omf') }
   end
 
-
-  def gnome_helpfiles_dir=(dir)
-    @gnome_helpfiles_dir = dir
-  end
+  attr_writer :gnome_helpfiles_dir
 
   def generate_omf(src_dir, file_glob)
     @source_dir = src_dir

@@ -385,12 +385,6 @@ Style/Tab:
 Style/TrailingComma:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: ExactNameMatch, AllowPredicates, AllowDSLWriters, Whitelist.
-Style/TrivialAccessors:
-  Enabled: false
-
 # Offense count: 13
 Style/UnlessElse:
   Enabled: false
