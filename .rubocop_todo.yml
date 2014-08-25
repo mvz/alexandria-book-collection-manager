@@ -399,8 +399,3 @@ Style/UnlessElse:
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/VariableName:
   Enabled: false
-
-# Offense count: 17
-# Cop supports --auto-correct.
-Style/WordArray:
-  MinSize: 6
