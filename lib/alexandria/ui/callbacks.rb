@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -63,14 +63,16 @@ module Alexandria
       def on_import widget, event
         ImportDialog.new(@main_app) do |library, bad_isbns, failed_isbns|
           unless bad_isbns.empty?
+            log.debug { "bad_isbn" }
             message = _("The following lines are not valid ISBNs and were not imported:")
             bad_isbn_warn = BadIsbnsDialog.new(@main_app, message, bad_isbns)
-            bad_isbn_warn.signal_connect('response') { log.debug { "bad_isbn" }; bad_isbn_warn.destroy }
+            bad_isbn_warn.signal_connect('response') { bad_isbn_warn.destroy }
           end
           unless failed_isbns.nil? || failed_isbns.empty?
+            log.debug { "failed lookup of #{failed_isbns.size} ISBNs" }
             message = _("Books could not be found for the following ISBNs:")
             failed_lookup = BadIsbnsDialog.new(@main_app, message, failed_isbns)
-            failed_lookup.signal_connect('response') { log.debug { "failed lookup of #{failed_isbns.size} ISBNs" }; failed_lookup.destroy }
+            failed_lookup.signal_connect('response') { failed_lookup.destroy }
           end
           @libraries.add_library(library)
           append_library(library, true)
@@ -268,7 +270,10 @@ module Alexandria
 
       def on_about widget, event
         ad = AboutDialog.new(@main_app)
-        ad.signal_connect('response') { log.debug { "destroy about" }; ad.destroy }
+        ad.signal_connect('response') do
+          log.debug { "destroy about" }
+          ad.destroy
+        end
         ad.show
       end
 

@@ -35,18 +35,31 @@ require 'ostruct'
 options = OpenStruct.new
 OptionParser.new do |opts|
   opts.banner = "Usage: alexandria [options]"
-  opts.on("-l", "--list", "List libraries in numbered format") { puts Alexandria.list_books_on_console; exit }
+  opts.on("-l", "--list", "List libraries in numbered format") do
+    puts Alexandria.list_books_on_console
+    exit
+  end
   #opts.on("--output FORMAT",
   #        "Output library as FORMAT: csv|xml|yaml; use with --library or omit for ALL") do |val|
-  #        options.format = val; exit
+  #        options.format = val
+  #        exit
   #end
   #opts.on("--library LIBRARY",
   #        "Used with --output to pick a library to output") do |val|
-  #        options.library = val; exit
+  #        options.library = val
+  #        exit
   #end
-  opts.on("-d", "--debug", "Run in debug mode") { $DEBUG = true }
-  opts.on("-h", "--help", "Show help options") { puts opts; exit }
-  opts.on("-v", "--version", "Get version number") { puts Alexandria::VERSION; exit }
+  opts.on("-d", "--debug", "Run in debug mode") do
+    $DEBUG = true
+  end
+  opts.on("-h", "--help", "Show help options") do
+    puts opts
+    exit
+  end
+  opts.on("-v", "--version", "Get version number") do
+    puts Alexandria::VERSION
+    exit
+  end
 end.parse!
 
 

@@ -76,7 +76,7 @@ module Alexandria
       private
 
       def decode_field(encoded)
-        seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-';
+        seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-'
 
         chars   = encoded.split(//)
         values  = chars.map { |c| seq.index(c) }

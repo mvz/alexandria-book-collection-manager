@@ -365,12 +365,6 @@ Style/RescueModifier:
 Style/SelfAssignment:
   Enabled: false
 
-# Offense count: 7
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAsExpressionSeparator.
-Style/Semicolon:
-  Enabled: false
-
 # Offense count: 60
 Style/Tab:
   Enabled: false
