@@ -521,6 +521,7 @@ module Alexandria
           # Sensitize providers URL
           if books.length == 1
             b = books.first
+            # FIXME: Clean up endless negation in this logic
             no_urls = true
             BookProviders.each do |provider|
               has_no_url = true
