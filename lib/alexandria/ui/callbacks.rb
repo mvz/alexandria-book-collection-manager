@@ -304,16 +304,16 @@ module Alexandria
           ["Rename", nil, _("_Rename"), nil, nil, method(:on_rename)],
           ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", _("Delete the selected books or library"), method(:on_delete)],
           ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", _("Filter books"), method(:on_search)],
-            ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", _("Clear the search results"), method(:on_clear_search_results)],
-            ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), "<control>O", _("Change Alexandria's settings"), method(:on_preferences)],
+          ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", _("Clear the search results"), method(:on_clear_search_results)],
+          ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), "<control>O", _("Change Alexandria's settings"), method(:on_preferences)],
           ["ViewMenu", nil, _("_View")],
-            ["ArrangeIcons", nil, _("Arran_ge Icons")],
-            ["OnlineInformation", nil, _("Display Online _Information")],
+          ["ArrangeIcons", nil, _("Arran_ge Icons")],
+          ["OnlineInformation", nil, _("Display Online _Information")],
 
           ["HelpMenu", nil, _("_Help")],
-            ["SubmitBugReport", Gtk::Stock::EDIT, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
-            ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
-            ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)],
+          ["SubmitBugReport", Gtk::Stock::EDIT, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
+          ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
+          ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)],
         ]
 
         on_view_sidepane = proc do |_actiongroup, action|
@@ -340,13 +340,13 @@ module Alexandria
 
         toggle_actions = [
           ["Sidepane", nil, _("Side _Pane"), "F9", nil,
-            on_view_sidepane, true],
+           on_view_sidepane, true],
           ["Toolbar", nil, _("_Toolbar"), nil, nil,
-            on_view_toolbar, true],
+           on_view_toolbar, true],
           ["Statusbar", nil, _("_Statusbar"), nil, nil,
-            on_view_statusbar, true],
+           on_view_statusbar, true],
           ["ReversedOrder", nil, _("Re_versed Order"), nil, nil,
-            on_reverse_order],
+           on_reverse_order],
         ]
 
         view_as_actions = [
@@ -364,8 +364,8 @@ module Alexandria
         ]
         providers_actions = BookProviders.map do |provider|
           [provider.action_name, Gtk::Stock::JUMP_TO,
-            _("At _%s") % provider.fullname, nil, nil,
-            proc { open_web_browser(provider.url(selected_books.first)) }]
+           _("At _%s") % provider.fullname, nil, nil,
+           proc { open_web_browser(provider.url(selected_books.first)) }]
         end
 
         log.debug { "Adding actions to @actiongroup" }

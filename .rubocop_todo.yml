@@ -45,17 +45,6 @@ Lint/UselessAccessModifier:
 Lint/UselessAssignment:
   Enabled: false
 
-# Offense count: 24
-# Cop supports --auto-correct.
-Style/AlignArray:
-  Enabled: false
-
-# Offense count: 20
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle, SupportedLastArgumentHashStyles.
-Style/AlignHash:
-  Enabled: false
-
 # Offense count: 1
 # Cop supports --auto-correct.
 Style/BlockComments:

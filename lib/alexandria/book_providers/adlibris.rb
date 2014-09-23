@@ -76,7 +76,8 @@ module Alexandria
         if search_type == SEARCH_BY_ISBN
           PRODUCT_URL % Library.canonicalise_isbn(search_term)
         else
-          search_type_code = { SEARCH_BY_AUTHORS => 'author',
+          search_type_code = {
+            SEARCH_BY_AUTHORS => 'author',
             SEARCH_BY_TITLE => 'title',
             SEARCH_BY_KEYWORD => 'keyword'
           }[search_type] or 'keyword'

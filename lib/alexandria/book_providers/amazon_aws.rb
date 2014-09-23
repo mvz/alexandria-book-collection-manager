@@ -90,7 +90,7 @@ module Alexandria
         access_key_id = prefs["dev_token"]
 
         Amazon::Ecs.options = { :aWS_access_key_id => access_key_id,
-                               :associateTag => prefs["associate_tag"] }
+                                :associateTag => prefs["associate_tag"] }
         Amazon::Ecs.secret_access_key = prefs["secret_key"]
         # #req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup

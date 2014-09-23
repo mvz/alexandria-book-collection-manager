@@ -27,9 +27,7 @@ module Alexandria
       include Logging
       include GetText
       include DragAndDropable
-      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS",
-        Gtk::Drag::TARGET_SAME_APP,
-        0]]
+      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", Gtk::Drag::TARGET_SAME_APP, 0]]
 
       MAX_RATING_STARS = 5
       module Columns
