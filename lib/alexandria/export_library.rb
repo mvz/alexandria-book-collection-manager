@@ -281,7 +281,7 @@ module Alexandria
             elem.add_element('PersonName').text = author
           end
         end
-        if book.notes and not book.notes.empty?
+        if book.notes and !book.notes.empty?
           elem = prod.add_element('OtherText')
           # reader description
           elem.add_element('TextTypeCode').text = '12'
@@ -355,7 +355,7 @@ module Alexandria
         unless book.rating == Book::DEFAULT_RATING
           entry.add_element('rating').text = book.rating
         end
-        if book.notes and not book.notes.empty?
+        if book.notes and !book.notes.empty?
           entry.add_element('comments').text = book.notes
         end
         if File.exist?(cover(book))
@@ -503,7 +503,7 @@ EOS
         bibtex << "\",\n"
         bibtex << "title = \"#{latex_escape(book.title)}\",\n"
         bibtex << "publisher = \"#{latex_escape(book.publisher)}\",\n"
-        if book.notes and not book.notes.empty?
+        if book.notes and !book.notes.empty?
           bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
         end
         #year is a required field in bibtex @BOOK

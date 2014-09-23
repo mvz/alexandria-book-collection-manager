@@ -529,7 +529,7 @@ module Alexandria
               rescue Exception => ex
                 log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
               end
-              @actiongroup[provider.action_name].sensitive = (not has_no_url)
+              @actiongroup[provider.action_name].sensitive = !has_no_url
               no_urls = false unless has_no_url
             end
             if no_urls

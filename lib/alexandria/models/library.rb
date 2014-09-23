@@ -509,7 +509,7 @@ module Alexandria
         @@deleted_libraries << self
       else
         if @deleted_books.include?(book)
-          doubles = @deleted_books.reject { |b| not b.equal? book }
+          doubles = @deleted_books.reject { |b| !b.equal?(book) }
           raise "Book #{book.isbn} was already deleted" unless doubles.empty?
         end
         @deleted_books << book
@@ -561,7 +561,7 @@ module Alexandria
     def cover(something)
       ident = case something
               when Book
-                if something.isbn && (not something.isbn.empty?)
+                if something.isbn && !something.isbn.empty?
                   something.ident
                 else
                   "g#{something.ident}" # g is for generated id...

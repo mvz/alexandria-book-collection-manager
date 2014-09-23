@@ -43,7 +43,7 @@ module Alexandria
               rules = smart_library_rules
               basename = if rules.length == 1 and
                              rules.first.value.is_a?(String) and
-                             not rules.first.value.strip.empty?
+                             !rules.first.value.strip.empty?
                            rules.first.value
                          else
                            _('Smart Library')

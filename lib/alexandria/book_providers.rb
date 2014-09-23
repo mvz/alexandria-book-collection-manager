@@ -210,7 +210,7 @@ module Alexandria
 
       def toggle_enabled()
         old_value = enabled()
-        @prefs.variable_named('enabled').new_value = (not old_value)
+        @prefs.variable_named('enabled').new_value = !old_value
       end
 
       def reinitialize(fullname)

@@ -569,7 +569,7 @@ module Alexandria
           @button_prov_up.sensitive = sel_iter != model.iter_first
           @button_prov_down.sensitive = sel_iter != last_iter
           provider = BookProviders.find { |x| x.name == sel_iter[1] }
-          @button_prov_setup.sensitive = (not prefs_empty(provider.prefs))
+          @button_prov_setup.sensitive = !prefs_empty(provider.prefs)
           @button_prov_remove.sensitive = provider.abstract?
         end
       end
