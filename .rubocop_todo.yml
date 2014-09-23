@@ -250,11 +250,6 @@ Style/MultilineTernaryOperator:
 Style/NestedTernaryOperator:
   Enabled: false
 
-# Offense count: 26
-# Cop supports --auto-correct.
-Style/Not:
-  Enabled: false
-
 # Offense count: 8
 Style/OpMethod:
   Enabled: false

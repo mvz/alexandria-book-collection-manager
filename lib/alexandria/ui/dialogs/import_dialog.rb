@@ -124,7 +124,7 @@ module Alexandria
 
         exec_queue = ExecutionQueue.new
 
-        while not @destroyed and
+        while !@destroyed and
             (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 
@@ -173,7 +173,7 @@ module Alexandria
             end
           end
 
-          while thread.alive? and not @destroyed
+          while thread.alive? and !@destroyed
             #puts "Thread #{thread} still alive."
             running = true
             exec_queue.iterate

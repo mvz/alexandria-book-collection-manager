@@ -266,7 +266,7 @@ module Alexandria
       end
 
       def self.abstract?
-        (not included_modules.include?(Singleton))
+        (!included_modules.include?(Singleton))
       end
 
       def <=>(provider)

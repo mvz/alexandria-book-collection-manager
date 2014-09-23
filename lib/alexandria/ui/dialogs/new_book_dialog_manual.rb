@@ -124,7 +124,7 @@ module Alexandria
         book.tags = @entry_tags.text.split
         @library << book
         @library.save(book)
-        if File.exist?(TMP_COVER_FILE) and (not @delete_cover_file)
+        if File.exist?(TMP_COVER_FILE) and (!@delete_cover_file)
           FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
         end
         @on_add_cb.call(book)
