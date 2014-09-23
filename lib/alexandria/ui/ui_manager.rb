@@ -926,7 +926,7 @@ module Alexandria
 
       def refresh_books
         log.debug { "refresh_books" }
-		@library_listview.set_sensitive(false)
+                @library_listview.set_sensitive(false)
         library = selected_library
         @model.clear
         @iconview.freeze

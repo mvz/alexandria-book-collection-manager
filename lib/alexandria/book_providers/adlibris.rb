@@ -110,14 +110,14 @@ module Alexandria
 
           result = {}
           if title_data = (t % 'div.divTitle')
-	    result[:title] = (title_data % :a).inner_text
-	    lookup_url = (title_data % :a)['href']
-	  end
-	  result[:lookup_url] = "#{SITE}#{lookup_url}"
+            result[:title] = (title_data % :a).inner_text
+            lookup_url = (title_data % :a)['href']
+          end
+          result[:lookup_url] = "#{SITE}#{lookup_url}"
 
-	  book_search_results << result
+          book_search_results << result
 
-	end
+        end
         book_search_results
       end
 
@@ -151,21 +151,21 @@ module Alexandria
           title = nil
           if h1 = doc.at('div.productTitleFormat h1')
             title = text_of(h1)
-	  else
-	    raise NoResultsError, "title not found on page"
+          else
+            raise NoResultsError, "title not found on page"
           end
 
-	  product = doc.at('div.product')
-	  ul_info = doc.at('ul.info') # NOTE, two of these
+          product = doc.at('div.product')
+          ul_info = doc.at('ul.info') # NOTE, two of these
 
           author_cells = ul_info.search('li.liAuthor') #css-like search
           authors = []
           author_cells.each do |li|
             author_role = (li % :strong).inner_text # first strong contains author_role
-	    if author_role =~ /([^:]+):/
-	      author_role = Regexp.last_match[1]
-	    end
-	    author_name = text_of(li.search('h2 > a')[0])
+            if author_role =~ /([^:]+):/
+              author_role = Regexp.last_match[1]
+            end
+            author_name = text_of(li.search('h2 > a')[0])
 
             authors << author_name
           end
@@ -176,20 +176,20 @@ module Alexandria
           end
 
           binding = nil
-	  if format = doc.search('div.productTitleFormat span').first
-	    binding = text_of(format)
-	    if binding =~ /\(([^\)]+)\)/
-	      binding = Regexp.last_match[1]
-	    end
-	  end
+          if format = doc.search('div.productTitleFormat span').first
+            binding = text_of(format)
+            if binding =~ /\(([^\)]+)\)/
+              binding = Regexp.last_match[1]
+            end
+          end
 
-	  year = nil
-	  if published = product.search('span[@id$="Published"]').first
-	    publication = published.inner_text
-	    if publication =~ /([12][0-9]{3})/
-	      year = Regexp.last_match[1].to_i
-	    end
-	  end
+          year = nil
+          if published = product.search('span[@id$="Published"]').first
+            publication = published.inner_text
+            if publication =~ /([12][0-9]{3})/
+              year = Regexp.last_match[1].to_i
+            end
+          end
 
 
           isbns = []
@@ -197,10 +197,10 @@ module Alexandria
 
           isbn_tds.each do |isbn_td|
             isbn = isbn_td.inner_text
-	    unless isbn =~ /[0-9x]{10,13}/i
-	      next
-	    end
-	    isbn.gsub(/(\n|\r)/, " ")
+            unless isbn =~ /[0-9x]{10,13}/i
+              next
+            end
+            isbn.gsub(/(\n|\r)/, " ")
             if isbn =~ /:[\s]*([0-9x]+)/i
               isbn = Regexp.last_match[1]
             end
@@ -212,21 +212,21 @@ module Alexandria
           end
 
 
-	  #cover
-	  image_url = nil
-	  if cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
-	    if cover_img['src'] =~ /^http\:\/\//
-	      image_url = cover_img['src']
-	    else
-	      image_url = "#{SITE}/#{cover_img['src']}" # HACK use html base
-	    end
-	    if image_url =~ /noimage.gif$/
+          #cover
+          image_url = nil
+          if cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
+            if cover_img['src'] =~ /^http\:\/\//
+              image_url = cover_img['src']
+            else
+              image_url = "#{SITE}/#{cover_img['src']}" # HACK use html base
+            end
+            if image_url =~ /noimage.gif$/
               # no point downloading a "no image" graphic
               # Alexandria has its own generic book icon...
               image_url = nil
             end
 
-	  end
+          end
 
           book = Book.new(title, authors, isbn, publisher, year, binding)
 

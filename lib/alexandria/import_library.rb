@@ -34,7 +34,7 @@ module Alexandria
        new(_("ISBN List (*.txt)"), ['*.txt'],
                 :import_as_isbn_list),
        new(_("GoodReads CSV"), ['*.csv'],
-		:import_as_csv_file)
+                :import_as_csv_file)
       ]
     end
 
@@ -79,7 +79,7 @@ module Alexandria
           puts e.backtrace.join("\n>> ")
         end
       elsif [".csv"].include? filename[-4..-1]
-	import_as_csv_file(*args)
+        import_as_csv_file(*args)
       else
         puts "Bailing on this import!"
         raise "Not supported type"

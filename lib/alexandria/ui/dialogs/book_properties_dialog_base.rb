@@ -369,8 +369,8 @@ module Alexandria
 
       end
       def redd_toggled
-	redd_yes = @checkbutton_redd.active?
-	@redd_date.sensitive = redd_yes
+        redd_yes = @checkbutton_redd.active?
+        @redd_date.sensitive = redd_yes
         if @setup_finished
           # don't do this when popping up the dialog for the first time
           if redd_yes && @redd_date.text.strip.empty?
@@ -418,7 +418,7 @@ module Alexandria
         # XXX 'date_changed' signal not automatically called after #time=.
       end
       def redd_when=(time)
-	@redd_date.text = format_date(time)
+        @redd_date.text = format_date(time)
       end
 
       def parse_date(datestring)

@@ -326,7 +326,3 @@ Style/RescueModifier:
 # Offense count: 2
 Style/SelfAssignment:
   Enabled: false
-
-# Offense count: 60
-Style/Tab:
-  Enabled: false

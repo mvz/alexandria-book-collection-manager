@@ -99,10 +99,10 @@ module Alexandria
           else
             @redd_date.text = format_date(book.redd_when)
           end
-	  #self.redd_when = (book.redd_when or Time.now)
+          #self.redd_when = (book.redd_when or Time.now)
         else
           @redd_date.sensitive = false
-	end
+        end
         @checkbutton_want.active = book.want?
 
         if @checkbutton_own.active = book.own?
@@ -116,7 +116,7 @@ module Alexandria
 
       def on_close
         if @entry_isbn.text == ""
- 		  # If set to nil .to_yaml in library.save causes crash
+                  # If set to nil .to_yaml in library.save causes crash
           @book.isbn = ""
         else
           ary = @library.select { |book| book.ident == @entry_isbn.text }
@@ -162,7 +162,7 @@ module Alexandria
         end
 
         @book.redd = @checkbutton_redd.active?
-	if @book.redd
+        if @book.redd
           redd_date = @redd_date.text
           if redd_date.strip.empty?
             @book.redd_when = nil
@@ -175,9 +175,9 @@ module Alexandria
               puts err.backtrace
             end
           end
-	else
+        else
           @book.redd_when = nil
-	end
+        end
         @book.own = @checkbutton_own.active?
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split(',') # tags are comma separated

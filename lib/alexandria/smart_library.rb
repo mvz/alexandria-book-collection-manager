@@ -355,7 +355,7 @@ module Alexandria
                 LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
                 LeftOperand.new(:loaned_to, _("Loaning Person"), String),
                 LeftOperand.new(:redd, _("Read"), TrueClass),
-		LeftOperand.new(:redd_when, _("Date Read"), Time),
+                LeftOperand.new(:redd_when, _("Date Read"), Time),
                 LeftOperand.new(:own, _("Own"), TrueClass),
                 LeftOperand.new(:want, _("Want"), TrueClass),
                ].sort
@@ -416,7 +416,7 @@ module Alexandria
         IS_AFTER = Operator.new(
                                 :is_after,
                                 _("is after"),
-				proc { |x, y| x.to_i > y.to_i and !x.nil? })
+                                proc { |x, y| x.to_i > y.to_i and !x.nil? })
         IS_BEFORE = Operator.new(
                                  :is_before,
                                  _("is before"),
