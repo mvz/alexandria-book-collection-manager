@@ -53,8 +53,7 @@ module Alexandria
           iter = @treeview_authors.model.get_iter(path)
           iter[0] = new_text
         end
-        renderer.signal_connect('editing_started') do |_cell, entry,
-          _path_string|
+        renderer.signal_connect('editing_started') do |_cell, entry, _path_string|
           entry.complete_authors
         end
         col = Gtk::TreeViewColumn.new("", renderer,

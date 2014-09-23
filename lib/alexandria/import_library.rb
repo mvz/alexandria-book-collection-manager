@@ -94,11 +94,9 @@ module Alexandria
       Dir.chdir(tmpdir) do
         begin
           system("unzip -qq \"#{filename}\"")
-          file = File.exist?('bookcase.xml') \
-          ? 'bookcase.xml' : 'tellico.xml'
+          file = File.exist?('bookcase.xml') ? 'bookcase.xml' : 'tellico.xml'
           xml = REXML::Document.new(File.open(file))
-          raise unless xml.root.name == 'bookcase' or
-                        xml.root.name == 'tellico'
+          raise unless ['bookcase', 'tellico'].include? xml.root.name
           # FIXME: handle multiple collections
           raise unless xml.root.elements.size == 1
           collection = xml.root.elements[1]
@@ -177,8 +175,7 @@ module Alexandria
       end
     end
 
-    def self.import_as_csv_file(name, filename, on_iterate_cb,
-                                 _on_error_cb)
+    def self.import_as_csv_file(name, filename, on_iterate_cb, _on_error_cb)
       require 'alexandria/import_library_csv'
       books_and_covers = []
       line_count = IO.readlines(filename).inject(0) { |count, _line| count + 1 }

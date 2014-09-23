@@ -132,8 +132,7 @@ module Alexandria
     def to_hash
       {
         :name => @name,
-        :predicate_operator_rule =>
-        @predicate_operator_rule == ALL_RULES ? :all : :any,
+        :predicate_operator_rule => @predicate_operator_rule == ALL_RULES ? :all : :any,
         :rules => @rules.map { |x| x.to_hash }
       }
     end
@@ -216,10 +215,8 @@ module Alexandria
       each do |book|
         library = @cache[book]
         next unless File.exist?(library.cover(book))
-        FileUtils.cp(File.join(library.path,
-                               book.ident + Library::EXT[:cover]),
-                     File.join(somewhere,
-                               library.final_cover(book)))
+        FileUtils.cp(File.join(library.path, book.ident + Library::EXT[:cover]),
+                     File.join(somewhere, library.final_cover(book)))
       end
     end
 
@@ -372,56 +369,43 @@ module Alexandria
         extend GetText
         bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-        IS_TRUE = Operator.new(
-                               :is_true,
+        IS_TRUE = Operator.new(:is_true,
                                _("is set"),
                                proc { |x| x })
-        IS_NOT_TRUE = Operator.new(
-                                   :is_not_true,
+        IS_NOT_TRUE = Operator.new(:is_not_true,
                                    _("is not set"),
                                    proc { |x| !x })
-        IS = Operator.new(
-                          :is,
+        IS = Operator.new(:is,
                           _("is"),
                           proc { |x, y| x == y })
-        IS_NOT = Operator.new(
-                              :is_not,
+        IS_NOT = Operator.new(:is_not,
                               _("is not"),
                               proc { |x, y| x != y })
-        CONTAINS = Operator.new(
-                                :contains,
+        CONTAINS = Operator.new(:contains,
                                 _("contains"),
                                 proc { |x, y| x.include?(y) })
-        DOES_NOT_CONTAIN = Operator.new(
-                                        :does_not_contain,
+        DOES_NOT_CONTAIN = Operator.new(:does_not_contain,
                                         _("does not contain"),
                                         proc { |x, y| !x.include?(y) })
-        STARTS_WITH = Operator.new(
-                                   :starts_with,
+        STARTS_WITH = Operator.new(:starts_with,
                                    _("starts with"),
                                    proc { |x, y| /^#{y}/.match(x) })
-        ENDS_WITH = Operator.new(
-                                 :ends_with,
+        ENDS_WITH = Operator.new(:ends_with,
                                  _("ends with"),
                                  proc { |x, y| /#{y}$/.match(x) })
-        IS_GREATER_THAN = Operator.new(
-                                       :is_greater_than,
+        IS_GREATER_THAN = Operator.new(:is_greater_than,
                                        _("is greater than"),
                                        proc { |x, y| x > y })
-        IS_LESS_THAN = Operator.new(
-                                    :is_less_than,
+        IS_LESS_THAN = Operator.new(:is_less_than,
                                     _("is less than"),
                                     proc { |x, y| x < y })
-        IS_AFTER = Operator.new(
-                                :is_after,
+        IS_AFTER = Operator.new(:is_after,
                                 _("is after"),
                                 proc { |x, y| x.to_i > y.to_i and !x.nil? })
-        IS_BEFORE = Operator.new(
-                                 :is_before,
+        IS_BEFORE = Operator.new(:is_before,
                                  _("is before"),
                                  proc { |x, y| x.to_i < y.to_i and !x.nil? })
-        IS_IN_LAST = Operator.new(
-                                  :is_in_last_days,
+        IS_IN_LAST = Operator.new(:is_in_last_days,
                                   _("is in last"),
                                   proc { |x, y|
                                     begin
@@ -440,8 +424,7 @@ module Alexandria
                                       false
                                     end
                                   })
-        IS_NOT_IN_LAST = Operator.new(
-                                      :is_not_in_last_days,
+        IS_NOT_IN_LAST = Operator.new(:is_not_in_last_days,
                                       _("is not in last"),
                                       proc { |x, y|
                                         begin
@@ -463,8 +446,8 @@ module Alexandria
                                       })
 
         ALL = constants.map \
-        { |x| module_eval(x.to_s) }.select \
-        { |x| x.is_a?(Operator) }
+          { |x| module_eval(x.to_s) }.select \
+          { |x| x.is_a?(Operator) }
       end
 
       BOOLEAN_OPERATORS = [
@@ -515,7 +498,7 @@ module Alexandria
         when 'Time'
           TIME_OPERATORS.map do |x|
             if x == Operators::IS_IN_LAST or
-                x == Operators::IS_NOT_IN_LAST
+              x == Operators::IS_NOT_IN_LAST
 
               [x, Operands::DAYS]
             else
