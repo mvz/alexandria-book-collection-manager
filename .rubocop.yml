@@ -57,6 +57,10 @@ Style/AndOr:
 Style/AlignParameters:
   Enabled: false
 
+# Allow semantic choice of trailing comma
+Style/TrailingComma:
+  Enabled: false
+
 # Alexandria uses regular arrays
 Style/WordArray:
   Enabled: false

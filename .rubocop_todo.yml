@@ -330,8 +330,3 @@ Style/SelfAssignment:
 # Offense count: 60
 Style/Tab:
   Enabled: false
-
-# Offense count: 3
-# Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
-Style/TrailingComma:
-  Enabled: false
