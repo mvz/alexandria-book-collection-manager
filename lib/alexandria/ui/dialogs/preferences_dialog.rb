@@ -387,20 +387,20 @@ module Alexandria
 
         # Popup the menu on Shift-F10
         @treeview_providers.signal_connect("popup_menu") {
-          selected_prov = @treeview_providers.selection.selected
-          puts selected_prov.inspect
-          if selected_prov
-            Gtk.idle_add do
-              already_enabled = selected_prov[2]
-              message = already_enabled ? _("Disable Provider") : _("Enable Provider")
-              @enable_item.label = message
+            selected_prov = @treeview_providers.selection.selected
+            puts selected_prov.inspect
+            if selected_prov
+              Gtk.idle_add do
+                already_enabled = selected_prov[2]
+                message = already_enabled ? _("Disable Provider") : _("Enable Provider")
+                @enable_item.label = message
 
-              @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME)
-              false
+                @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME)
+                false
+              end
+            else
+              puts "no action"
             end
-          else
-            puts "no action"
-          end
           }
       end
 

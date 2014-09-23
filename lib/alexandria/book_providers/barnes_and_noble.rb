@@ -177,13 +177,13 @@ module Alexandria
           publisher_item = doc % 'li.publisher'
           if publisher_item
             publisher_item.inner_text =~ /Publisher:\s*(.+)/
-              book_data[:publisher] = Regexp.last_match[1]
+            book_data[:publisher] = Regexp.last_match[1]
           end
 
           date_item = doc % 'li.pubDate'
           if date_item
             date_item.inner_text =~ /Date: ([^\s]*)\s*([\d]{4})/
-              year = Regexp.last_match[2].to_i if Regexp.last_match[2]
+            year = Regexp.last_match[2].to_i if Regexp.last_match[2]
             book_data[:publication_year] = year
           end
 

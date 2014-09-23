@@ -41,11 +41,11 @@ module Amazon
     include Alexandria::Logging
 
     SERVICE_URLS = { :us => 'http://webservices.amazon.com/onca/xml?Service=AWSECommerceService',
-        :uk => 'http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService',
-        :ca => 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
-        :de => 'http://webservices.amazon.de/onca/xml?Service=AWSECommerceService',
-        :jp => 'http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService',
-        :fr => 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService'
+                     :uk => 'http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService',
+                     :ca => 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
+                     :de => 'http://webservices.amazon.de/onca/xml?Service=AWSECommerceService',
+                     :jp => 'http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService',
+                     :fr => 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService'
     }
 
     @@options = {}
@@ -201,28 +201,28 @@ module Amazon
     #  end
 
     private
-      def self.prepare_url(opts)
-        country = opts.delete(:country)
-        country = (country.nil?) ? 'us' : country
-        request_url = SERVICE_URLS[country.to_sym]
-        raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
+    def self.prepare_url(opts)
+      country = opts.delete(:country)
+      country = (country.nil?) ? 'us' : country
+      request_url = SERVICE_URLS[country.to_sym]
+      raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
 
-        qs = ''
-        opts.each {|k, v|
-          next unless v
-          v = v.join(',') if v.is_a? Array
-          qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
-        }
-        url = "#{request_url}#{qs}"
-        #puts ">>> base url >> #{url}"
-        signed_url = sign_request(url)
-        #puts ">>> SIGNED >> #{signed_url}"
-        signed_url
-      end
+      qs = ''
+      opts.each {|k, v|
+        next unless v
+        v = v.join(',') if v.is_a? Array
+        qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
+      }
+      url = "#{request_url}#{qs}"
+      #puts ">>> base url >> #{url}"
+      signed_url = sign_request(url)
+      #puts ">>> SIGNED >> #{signed_url}"
+      signed_url
+    end
 
-      def self.camelize(s)
-        s.to_s.gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
-      end
+    def self.camelize(s)
+      s.to_s.gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
+    end
 
     def self.hmac_sha256(message, key)
       block_size = 64

@@ -25,28 +25,28 @@ module Alexandria
   DESCRIPTION = _('A program to help you manage your book collection.')
   COPYRIGHT = "Copyright (C) 2004,2005,2006 Laurent Sansonetti\n" +
     "Copyright (C) 2007,2008,2009,2010 Alexandria Contributors"
-    AUTHORS = [
-             'Alexander McCormmach <alexander@tunicate.org>',
-             'Aymeric Nys <aymeric@nnx.com>',
-             'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
-             'Claudio Belotti <bel8@lilik.it>',
-             'Constantine Evans <cevans@costinet.org>',
-             'Dafydd Harries <daf@muse.19inch.net>',
-             'Javier Fernandez-Sanguino Pena <jfs@debian.org>',
-             'Joseph Method <tristil@gmail.com>',
-             'Kevin Schultz <schultkl@ieee.org>',
-             'Laurent Sansonetti <lrz@gnome.org>',
-             'Marco Costantini <costanti@science.unitn.it>',
-             'Mathieu Leduc-Hamel <arrak@arrak.org>',
-             'Owain Evans <o.evans@gmail.com>',
-             'Pascal Terjan <pterjan@linuxfr.org>',
-             'Rene Samselnig <sandman@sdm-net.org>',
-             'Robby Stephenson <robby@periapsis.org>',
-             'Sun Ning <classicning@gmail.com>',
-             'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
-             'Timothy Malone <timothy.malone@gmail.com>',
-             'Zachary P. Landau <kapheine@hypa.net>'
-  ]
+  AUTHORS = [
+           'Alexander McCormmach <alexander@tunicate.org>',
+           'Aymeric Nys <aymeric@nnx.com>',
+           'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
+           'Claudio Belotti <bel8@lilik.it>',
+           'Constantine Evans <cevans@costinet.org>',
+           'Dafydd Harries <daf@muse.19inch.net>',
+           'Javier Fernandez-Sanguino Pena <jfs@debian.org>',
+           'Joseph Method <tristil@gmail.com>',
+           'Kevin Schultz <schultkl@ieee.org>',
+           'Laurent Sansonetti <lrz@gnome.org>',
+           'Marco Costantini <costanti@science.unitn.it>',
+           'Mathieu Leduc-Hamel <arrak@arrak.org>',
+           'Owain Evans <o.evans@gmail.com>',
+           'Pascal Terjan <pterjan@linuxfr.org>',
+           'Rene Samselnig <sandman@sdm-net.org>',
+           'Robby Stephenson <robby@periapsis.org>',
+           'Sun Ning <classicning@gmail.com>',
+           'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
+           'Timothy Malone <timothy.malone@gmail.com>',
+           'Zachary P. Landau <kapheine@hypa.net>'
+]
   DOCUMENTERS = [
                  'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
                  'Liam Davison <registrations@liamjdavison.info>'

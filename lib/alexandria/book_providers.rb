@@ -277,8 +277,8 @@ module Alexandria
         include Singleton
         undef_method :reinitialize
         undef_method :name=
-          undef_method :fullname=
-          undef_method :remove
+        undef_method :fullname=
+        undef_method :remove
       end
     end
 

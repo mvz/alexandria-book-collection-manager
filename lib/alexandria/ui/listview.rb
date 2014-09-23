@@ -82,8 +82,8 @@ module Alexandria
       def make_renderer_editable renderer
         renderer.signal_connect('editing_started') do |_cell, entry,
           _path_string|
-        log.debug { "editing_started" }
-        entry.complete_titles
+          log.debug { "editing_started" }
+          entry.complete_titles
         end
 
         renderer.signal_connect('edited') do |_cell, path_string, new_string|

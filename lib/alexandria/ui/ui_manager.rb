@@ -161,13 +161,13 @@ module Alexandria
           iter[0] == '-'
         end
         [_("Match everything"),
-              '-',
-              _("Title contains"),
-              _("Authors contain"),
-              _("ISBN contains"),
-              _("Publisher contains"),
-              _("Notes contain"),
-              _("Tags contain")
+         '-',
+         _("Title contains"),
+         _("Authors contain"),
+         _("ISBN contains"),
+         _("Publisher contains"),
+         _("Notes contain"),
+         _("Tags contain")
         ].each do |item|
           cb.append_text(item)
         end
@@ -211,12 +211,12 @@ module Alexandria
 
           name = provider.action_name
           ["ui/MainMenubar/ViewMenu/OnlineInformation/",
-                "ui/BookPopup/OnlineInformation/",
-                "ui/NoBookPopup/OnlineInformation/"].each do |path|
-            log.debug { "Adding #{name} to #{path}" }
-            @uimanager.add_ui(mid, path, name, name,
-                              Gtk::UIManager::MENUITEM, false)
-                end
+           "ui/BookPopup/OnlineInformation/",
+           "ui/NoBookPopup/OnlineInformation/"].each do |path|
+             log.debug { "Adding #{name} to #{path}" }
+             @uimanager.add_ui(mid, path, name, name,
+                               Gtk::UIManager::MENUITEM, false)
+           end
         end
       end
 
@@ -224,7 +224,7 @@ module Alexandria
         log.debug { "add_menus_and_popups_from_xml" }
         ["menus.xml", "popups.xml"].each do |ui_file|
           @uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR,
-                                          "ui", ui_file))
+                                      "ui", ui_file))
         end
       end
 
@@ -270,22 +270,22 @@ module Alexandria
         # The active model.
 
         list = [Gdk::Pixbuf,    # COVER_LIST
-          Gdk::Pixbuf,    # COVER_ICON
-          String,         # TITLE
-          String,         # TITLE_REDUCED
-          String,         # AUTHORS
-          String,         # ISBN
-          String,         # PUBLISHER
-          String,         # PUBLISH_DATE
-          String,         # EDITION
-          Integer,        # RATING
-          String,         # IDENT
-          String,         # NOTES
-          TrueClass,      #REDD
-          TrueClass,      #OWN
-          TrueClass,      #WANT
-          String,         # TAGS
-          String          # LOANED TO
+                Gdk::Pixbuf,    # COVER_ICON
+                String,         # TITLE
+                String,         # TITLE_REDUCED
+                String,         # AUTHORS
+                String,         # ISBN
+                String,         # PUBLISHER
+                String,         # PUBLISH_DATE
+                String,         # EDITION
+                Integer,        # RATING
+                String,         # IDENT
+                String,         # NOTES
+                TrueClass,      #REDD
+                TrueClass,      #OWN
+                TrueClass,      #WANT
+                String,         # TAGS
+                String          # LOANED TO
         ]
 
         @model = Gtk::ListStore.new(*list)
@@ -449,22 +449,22 @@ module Alexandria
           n_unrated = library.n_unrated
           if n_unrated == library.length
             n_("Library '%s' selected, %d unrated book",
-                                  "Library '%s' selected, %d unrated books",
-                                  library.length) % [library.name,
-                                    library.length]
+               "Library '%s' selected, %d unrated books",
+               library.length) % [library.name,
+                                  library.length]
           elsif n_unrated == 0
             n_("Library '%s' selected, %d book",
-                                  "Library '%s' selected, %d books",
-                                  library.length) % [library.name,
-                                    library.length]
+               "Library '%s' selected, %d books",
+               library.length) % [library.name,
+                                  library.length]
           else
             n_("Library '%s' selected, %d book, " +
-                                  "%d unrated",
-                                  "Library '%s' selected, %d books, " +
-                                  "%d unrated",
-                                  library.length) % [library.name,
-                                    library.length,
-                                    n_unrated]
+               "%d unrated",
+               "Library '%s' selected, %d books, " +
+               "%d unrated",
+               library.length) % [library.name,
+                                  library.length,
+                                  n_unrated]
           end
         end
       end
@@ -917,7 +917,7 @@ module Alexandria
 
       def refresh_books
         log.debug { "refresh_books" }
-                @library_listview.set_sensitive(false)
+        @library_listview.set_sensitive(false)
         library = selected_library
         @model.clear
         @iconview.freeze
@@ -1143,7 +1143,7 @@ module Alexandria
           cols_width[c.title] = [c.widget.size_request.first, c.width].max
         end
         @prefs.cols_width = '{' + cols_width.to_a.collect do |t, v|
-            '"' + t + '": ' + v.to_s
+          '"' + t + '": ' + v.to_s
         end.join(', ') + '}'
         log.debug { "cols_width: #{@prefs.cols_width} " }
         @prefs.save!
@@ -1158,9 +1158,9 @@ module Alexandria
       def move_selected_books_to_library(library)
         books = selected_books.select do |book|
           !library.include?(book) or
-          ConflictWhileCopyingDialog.new(@main_app,
-                                         library,
-                                         book).replace?
+            ConflictWhileCopyingDialog.new(@main_app,
+                                           library,
+                                           book).replace?
         end
         undoable_move(selected_library, library, books)
       end
@@ -1184,10 +1184,10 @@ module Alexandria
         @libraries.all_regular_libraries.each do |library|
           name = library.action_name
           ["ui/MainMenubar/EditMenu/Move/",
-              "ui/BookPopup/Move/"].each do |path|
+           "ui/BookPopup/Move/"].each do |path|
             @uimanager.add_ui(@move_mid, path, name, name,
                               Gtk::UIManager::MENUITEM, false)
-              end
+          end
         end
       end
 
@@ -1210,15 +1210,15 @@ module Alexandria
           sort_order = sorted_on[1]
 
           column_ids_to_attributes = { 2 => :title,
-            4 => :authors,
-            5 => :isbn,
-            6 => :publisher,
-            7 => :publishing_year,
-            8 => :edition, #binding
-            12 => :redd,
-            13 => :own,
-            14 => :want,
-            9 => :rating }
+                                       4 => :authors,
+                                       5 => :isbn,
+                                       6 => :publisher,
+                                       7 => :publishing_year,
+                                       8 => :edition, #binding
+                                       12 => :redd,
+                                       13 => :own,
+                                       14 => :want,
+                                       9 => :rating }
 
           sort_attribute = column_ids_to_attributes[sort_column]
           ascending = (sort_order == Gtk::SORT_ASCENDING)

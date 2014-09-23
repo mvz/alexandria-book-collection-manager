@@ -205,25 +205,25 @@ module Alexandria
   # we shall guess that "PUBLICATION INFO" implies LibraryThing
   # and "Year Published" implies Goodreads
 
-  def self.identify_csv_type(header)
-    is_librarything = false
-    is_goodreads = false
-    header.each do |head|
-      if head == "'PUBLICATION INFO'"
-        is_librarything = true
-        break
-      elsif head == "Year Published"
-        is_goodreads = true
-        break
+    def self.identify_csv_type(header)
+      is_librarything = false
+      is_goodreads = false
+      header.each do |head|
+        if head == "'PUBLICATION INFO'"
+          is_librarything = true
+          break
+        elsif head == "Year Published"
+          is_goodreads = true
+          break
+        end
       end
+      if is_librarything
+        return LibraryThingCSVImport.new(header)
+      elsif is_goodreads
+        return GoodreadsCSVImport.new(header)
+      end
+      raise "Not Recognized" unless is_librarything || is_goodreads
     end
-    if is_librarything
-      return LibraryThingCSVImport.new(header)
-    elsif is_goodreads
-      return GoodreadsCSVImport.new(header)
-    end
-    raise "Not Recognized" unless is_librarything || is_goodreads
-  end
 end
 
 #   def read_csv_file(csv_file)

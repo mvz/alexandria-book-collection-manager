@@ -34,10 +34,10 @@ module Alexandria
 
       SITE = "http://www.siciliano.com.br"
       BASE_SEARCH_URL = "#{SITE}/pesquisaweb/pesquisaweb.dll/pesquisa?" +
-      "&FIL_ID=102" +
-      "&PALAVRASN1=%s" + # search term
-      "&FILTRON1=%s" + # search type
-      "&ESTRUTN1=0301&ORDEMN2=E"
+        "&FIL_ID=102" +
+        "&PALAVRASN1=%s" + # search term
+        "&FILTRON1=%s" + # search type
+        "&ESTRUTN1=0301&ORDEMN2=E"
 
       def initialize
         super("Siciliano", "Livraria Siciliano (Brasil)")
@@ -92,9 +92,9 @@ module Alexandria
 
       def create_search_uri(search_type, search_term, trying_again = false)
         search_type_code = { SEARCH_BY_ISBN => 'G',
-          SEARCH_BY_TITLE => 'A',
-          SEARCH_BY_AUTHORS => 'B',
-          SEARCH_BY_KEYWORD => 'X'
+                             SEARCH_BY_TITLE => 'A',
+                             SEARCH_BY_AUTHORS => 'B',
+                             SEARCH_BY_KEYWORD => 'X'
         }[search_type] or 'X'
         search_term_encoded = search_term
         if search_type == SEARCH_BY_ISBN
@@ -112,161 +112,161 @@ module Alexandria
         BASE_SEARCH_URL % [search_term_encoded, search_type_code]
       end
 
-    def parse_search_result_data(html)
-      # The layout...
-      # td[@class="normal"]
-      #   span[@class="vitrine_nome_produto"]
-      #      a (title and link to 'product page')
-      #   br
-      #   TEXT --> author / publisher
-      #   br
-      #   div[@class="vitrine_preco_por"] (price info)
+      def parse_search_result_data(html)
+        # The layout...
+        # td[@class="normal"]
+        #   span[@class="vitrine_nome_produto"]
+        #      a (title and link to 'product page')
+        #   br
+        #   TEXT --> author / publisher
+        #   br
+        #   div[@class="vitrine_preco_por"] (price info)
 
-      doc = html_to_doc(html)
-      book_search_results = []
-      # each result will be a dict with keys :title, :author, :publisher, :url
+        doc = html_to_doc(html)
+        book_search_results = []
+        # each result will be a dict with keys :title, :author, :publisher, :url
 
-      list_items = doc.search('div.pesquisa-item-lista-conteudo')
-      list_items.each do |item|
-        begin
-          result = {}
+        list_items = doc.search('div.pesquisa-item-lista-conteudo')
+        list_items.each do |item|
+          begin
+            result = {}
 
-          # author & publisher
-          author_publisher = ''
-          item.children.each do |node|
-            author_publisher += node.to_s if node.text?
-            author_publisher.strip!
-            break unless author_publisher.empty?
-          end
-          author, publisher = author_publisher.split('/')
-          result[:author] = author.strip if author
-          result[:publisher] = publisher.strip if publisher
+            # author & publisher
+            author_publisher = ''
+            item.children.each do |node|
+              author_publisher += node.to_s if node.text?
+              author_publisher.strip!
+              break unless author_publisher.empty?
+            end
+            author, publisher = author_publisher.split('/')
+            result[:author] = author.strip if author
+            result[:publisher] = publisher.strip if publisher
 
-          # title & url
-          link = item % 'a'
-          result[:title] = link.inner_text.strip
-          link_to_description = link['href']
-          slash = ''
-          unless link_to_description =~ /^\//
-            slash = '/'
-          end
-          result[:url] =  "#{SITE}#{slash}#{link_to_description}"
-
-          book_search_results << result
-        rescue Exception => ex
-          trace = ex.backtrace.join("\n> ")
-          log.error { "Failed parsing Siciliano search page #{ex.message}\n#{trace}" }
-        end
-      end
-
-      book_search_results
-    end
-
-    def parse_result_data(html, search_result)
-      # checked against Siciliano website 21 Feb 2009
-      doc = html_to_doc(html)
-       # title
-      title_div = doc % 'div#conteudo//div.titulo'
-      raise NoResultsError unless title_div
-      title_h = title_div % 'h2'
-      title = title_h.inner_text if title_h
-      #title = first_non_empty_text_node(title_div)
-       #author_spans = doc/'span.rotulo'
-      author_hs = title_div / 'h3.autor'
-      authors = []
-      author_hs.each do |h|
-        authors << h.inner_text.strip
-      end
-       ## synopsis_div = doc % 'div#sinopse'
-       details_div = doc % 'div#tab-caracteristica'
-      details = string_array_to_map(lines_of_text_as_array(details_div))
-       # ISBN
-      isbn =  details["ISBN"]
-      ## ean = details["CdBarras"]
-       translator = details["Tradutor"]
-      if translator
-        authors << translator
-      end
-      binding = details["Acabamento"]
-       publisher = search_result[:publisher]
-       # publish year
-      publish_year = nil
-      edition = details["Edio"]
-      if edition
-        if edition =~ /([12][0-9]{3})/ # publication date
-          publish_year = Regexp.last_match[1].to_i
-        end
-      end
-       #cover
-      #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
-      image_urls = []
-      (doc / "script").each do |script|
-        next if script.children.nil?
-        script.children.each do |ch|
-          ch_text = ch.to_s
-          if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
+            # title & url
+            link = item % 'a'
+            result[:title] = link.inner_text.strip
+            link_to_description = link['href']
             slash = ''
-            img_link = Regexp.last_match[1]
-            unless img_link =~ /^\//
+            unless link_to_description =~ /^\//
               slash = '/'
             end
-            image_urls << img_link
+            result[:url] =  "#{SITE}#{slash}#{link_to_description}"
+
+            book_search_results << result
+          rescue Exception => ex
+            trace = ex.backtrace.join("\n> ")
+            log.error { "Failed parsing Siciliano search page #{ex.message}\n#{trace}" }
           end
         end
-      end
-       book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-      result =  [book, image_urls.first]
-      return result
-    rescue Exception => ex
-      trace = ex.backtrace.join("\n> ")
-      log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
-      return nil
-    end
 
-    def first_non_empty_text_node(elem)
-      text = ''
-      elem.children.each do |node|
-        next unless node.text?
-        text = node.to_s.strip
-        break unless text.empty?
+        book_search_results
       end
-      text
-    end
 
-    def lines_of_text_as_array(elem)
-      lines = []
-      current_text = ''
-      elem.children.each do |e|
-        if e.text?
-          current_text += e.to_s
-        elsif e.name == 'br'
-          lines << current_text.strip
-          current_text = ''
-        else
-          current_text += e.inner_text
+      def parse_result_data(html, search_result)
+        # checked against Siciliano website 21 Feb 2009
+        doc = html_to_doc(html)
+        # title
+        title_div = doc % 'div#conteudo//div.titulo'
+        raise NoResultsError unless title_div
+        title_h = title_div % 'h2'
+        title = title_h.inner_text if title_h
+        #title = first_non_empty_text_node(title_div)
+        #author_spans = doc/'span.rotulo'
+        author_hs = title_div / 'h3.autor'
+        authors = []
+        author_hs.each do |h|
+          authors << h.inner_text.strip
         end
-      end
-      lines << current_text.strip
-      lines.delete('')
-      lines
-    end
-
-    def string_array_to_map(arr)
-      map = {}
-      arr.each do |str|
-        key, val = str.split(':')
-        # a real hack for not handling encoding properly :^)
-        if val
-          map[key.gsub(/[^a-zA-Z]/, '')] = val.strip()
+        ## synopsis_div = doc % 'div#sinopse'
+        details_div = doc % 'div#tab-caracteristica'
+        details = string_array_to_map(lines_of_text_as_array(details_div))
+        # ISBN
+        isbn =  details["ISBN"]
+        ## ean = details["CdBarras"]
+        translator = details["Tradutor"]
+        if translator
+          authors << translator
         end
+        binding = details["Acabamento"]
+        publisher = search_result[:publisher]
+        # publish year
+        publish_year = nil
+        edition = details["Edio"]
+        if edition
+          if edition =~ /([12][0-9]{3})/ # publication date
+            publish_year = Regexp.last_match[1].to_i
+          end
+        end
+        #cover
+        #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
+        image_urls = []
+        (doc / "script").each do |script|
+          next if script.children.nil?
+          script.children.each do |ch|
+            ch_text = ch.to_s
+            if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
+              slash = ''
+              img_link = Regexp.last_match[1]
+              unless img_link =~ /^\//
+                slash = '/'
+              end
+              image_urls << img_link
+            end
+          end
+        end
+        book = Book.new(title, authors, isbn, publisher, publish_year, binding)
+        result =  [book, image_urls.first]
+        return result
+      rescue Exception => ex
+        trace = ex.backtrace.join("\n> ")
+        log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
+        return nil
       end
-      map
-    end
 
-    #def binding_type(binding) # portuguese string
-    #  {"brochura" => :paperback,
-    #    "encadernado" => :hardback}[binding.downcase] or :unknown
-    #end
+      def first_non_empty_text_node(elem)
+        text = ''
+        elem.children.each do |node|
+          next unless node.text?
+          text = node.to_s.strip
+          break unless text.empty?
+        end
+        text
+      end
+
+      def lines_of_text_as_array(elem)
+        lines = []
+        current_text = ''
+        elem.children.each do |e|
+          if e.text?
+            current_text += e.to_s
+          elsif e.name == 'br'
+            lines << current_text.strip
+            current_text = ''
+          else
+            current_text += e.inner_text
+          end
+        end
+        lines << current_text.strip
+        lines.delete('')
+        lines
+      end
+
+      def string_array_to_map(arr)
+        map = {}
+        arr.each do |str|
+          key, val = str.split(':')
+          # a real hack for not handling encoding properly :^)
+          if val
+            map[key.gsub(/[^a-zA-Z]/, '')] = val.strip()
+          end
+        end
+        map
+      end
+
+      #def binding_type(binding) # portuguese string
+      #  {"brochura" => :paperback,
+      #    "encadernado" => :hardback}[binding.downcase] or :unknown
+      #end
     end
   end
 end

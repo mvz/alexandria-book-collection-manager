@@ -31,8 +31,8 @@ module Alexandria
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
-                _("The book titled '%s' has an invalid ISBN, but still " +
+               [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
+              _("The book titled '%s' has an invalid ISBN, but still " +
                 "exists in the providers libraries.  Do you want to " +
                 "keep the book but change the ISBN or cancel the add?") \
                 % book.title)
@@ -274,7 +274,7 @@ module Alexandria
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
         log.info { "TreeStore Model: %s columns; ref_counts: %s" %
-        [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
+                   [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
 
         @find_error = nil
         @results = nil
@@ -315,12 +315,13 @@ module Alexandria
                        log.info { "Got results: #{@results[0]}..." }
                        @results.each do |book, _cover|
                          s = _("%s, by %s") % [book.title,
-                           book.authors.join(', ')]
-                         if @results.find { |book2, _cover2|
+                                               book.authors.join(', ')]
+                         similar_books = @results.find { |book2, _cover2|
                            book.title == book2.title and
-                           book.authors == book2.authors
-                         }.length > 1
-                         s += " (#{book.edition}, #{book.publisher})"
+                             book.authors == book2.authors
+                         }
+                         if similar_books.length > 1
+                           s += " (#{book.edition}, #{book.publisher})"
                          end
                          log.info { "Copying %s into tree view." % book.title }
                          iter = @treeview_results.model.append
@@ -451,7 +452,7 @@ module Alexandria
             rescue Alexandria::Library::InvalidISBNError
               puts "invalidisbn #{book.isbn}"
               next unless
-                KeepBadISBNDialog.new(@parent, book).keep?
+              KeepBadISBNDialog.new(@parent, book).keep?
               book.isbn = book.saved_ident = nil
             end
             books_to_add << [book, cover]
@@ -572,7 +573,7 @@ module Alexandria
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
           if text = clipboard.wait_for_text
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
-                Library.valid_upc?(text)
+              Library.valid_upc?(text)
               Gtk.idle_add do
 
                 @entry_isbn.text = text
@@ -598,15 +599,15 @@ module Alexandria
           radio, target_widget, box2, box3 = case widget
                                              when @eventbox_entry_search
                                                [@title_radiobutton, @entry_search,
-                                                 @eventbox_combo_search, @eventbox_entry_isbn]
+                                                @eventbox_combo_search, @eventbox_entry_isbn]
 
                                              when @eventbox_combo_search
                                                [@title_radiobutton, @combo_search,
-                                                 @eventbox_entry_search, @eventbox_entry_isbn]
+                                                @eventbox_entry_search, @eventbox_entry_isbn]
 
                                              when @eventbox_entry_isbn
                                                [@isbn_radiobutton, @entry_isbn,
-                                                 @eventbox_entry_search, @eventbox_combo_search]
+                                                @eventbox_entry_search, @eventbox_combo_search]
                                              end
           radio.active = true
           target_widget.grab_focus

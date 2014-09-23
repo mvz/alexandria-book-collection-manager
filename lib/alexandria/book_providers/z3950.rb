@@ -83,9 +83,9 @@ module Alexandria
           begin
             marc = MARC::Record.new(marc_txt)
             rescue Exception => ex2
-            log.error { ex2.message }
-            log.error { ex2.backtrace.join("> \n") }
-            raise ex2
+              log.error { ex2.message }
+              log.error { ex2.backtrace.join("> \n") }
+              raise ex2
           end
         end
 

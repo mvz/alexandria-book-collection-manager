@@ -69,11 +69,11 @@ module Alexandria
           selection_data, _info,
           _time|
 
-        idents = @parent.selected_books.map { |book| book.ident }
-        unless idents.empty?
-          selection_data.set(Gdk::Selection::TYPE_STRING,
-                             idents.join(','))
-        end
+          idents = @parent.selected_books.map { |book| book.ident }
+          unless idents.empty?
+            selection_data.set(Gdk::Selection::TYPE_STRING,
+                               idents.join(','))
+          end
         end
 
         view.enable_model_drag_source(Gdk::Window::BUTTON1_MASK,

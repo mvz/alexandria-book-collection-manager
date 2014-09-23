@@ -97,17 +97,17 @@ module Alexandria
               pubdate = nil
               binding = nil
               for av in item['db:attribute']
-                  if av['@name'] == 'isbn13'
-                      isbn = av['$t']
-                  end
+                if av['@name'] == 'isbn13'
+                  isbn = av['$t']
+                end
                 if av['@name'] == 'publisher'
-                    publisher = av['$t']
+                  publisher = av['$t']
                 end
                 if av['@name'] == 'pubdate'
-                    pubdate = av['$t']
+                  pubdate = av['$t']
                 end
                 if av['@name'] == 'binding'
-                    binding = av['$t']
+                  binding = av['$t']
                 end
               end
               if item['author']

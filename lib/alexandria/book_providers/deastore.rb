@@ -88,9 +88,9 @@ module Alexandria
       def create_search_uri(search_type, search_term)
         # bah! very, very similar to the siciliano code! refactor out this duplication
         search_type_code = { SEARCH_BY_ISBN => 'isbn',
-          SEARCH_BY_TITLE => 'title',
-          SEARCH_BY_AUTHORS => 'author',
-          SEARCH_BY_KEYWORD => 'keywords'
+                             SEARCH_BY_TITLE => 'title',
+                             SEARCH_BY_AUTHORS => 'author',
+                             SEARCH_BY_KEYWORD => 'keywords'
         }[search_type] or 'keywords'
 
         search_term_encoded = search_term
@@ -122,21 +122,21 @@ module Alexandria
             #  p Data di pubblicazione: \n     2009
             #  p.prezzo (price)
 
-#             cover_url = ''
-#             cover_images = div/'a/img'
-#             unless cover_images.empty?
-#               img = cover_images.first
-#               image_url = img['src']
-#               if image_url =~ /^http/
-#                 cover_url = '' # image_url
-#               elsif image_url[0..0] != '/'
-#                 cover_url = "#{SITE}/#{image_url}"
-#               else
-#                 cover_url = "#{SITE}#{image_url}"
-#               end
-#               log.debug { "Search Cover Image URL #{cover_url}" }
+            #             cover_url = ''
+            #             cover_images = div/'a/img'
+            #             unless cover_images.empty?
+            #               img = cover_images.first
+            #               image_url = img['src']
+            #               if image_url =~ /^http/
+            #                 cover_url = '' # image_url
+            #               elsif image_url[0..0] != '/'
+            #                 cover_url = "#{SITE}/#{image_url}"
+            #               else
+            #                 cover_url = "#{SITE}#{image_url}"
+            #               end
+            #               log.debug { "Search Cover Image URL #{cover_url}" }
 
-#             end
+            #             end
 
             content = div / 'div.scheda_content'
             title_link = (content / :a).first
@@ -171,17 +171,17 @@ module Alexandria
       def parse_result_data(html)
         doc = html_to_doc(html)
         data = doc % 'div#dati_scheda'
-         # sotto_data_hdr = doc % 'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
-         # title
+        # sotto_data_hdr = doc % 'div.sotto_schede/h1.titolo_sotto[text()*="Informazioni generali"]/..'
+        # title
         title_span = data % 'h1.titolo_scheda'
         title = normalize(title_span.inner_text)
-         # cover
+        # cover
         cover_link = nil
         cover_img = data / 'a/img'
         unless cover_img.empty?
           cover_link = cover_img.first['src']
         end
-         # author(s)
+        # author(s)
         authors = []
         author_span = data % 'span.int_scheda[text()*=Autore]'
         unless author_span
@@ -194,47 +194,47 @@ module Alexandria
             authors << normalize(link.inner_html)
           end
         end
-         #if author_span
+        #if author_span
         #  author_links = author_span/'a.info'
         #  author_links.each do |link|
         #    authors << normalize(link.inner_text)
         #  end
         #end
-         # publisher
+        # publisher
         publisher_par = data % 'span.int_scheda[text()*=Editore]/..'
         publisher_link = publisher_par % 'a.info'
         publisher = normalize(publisher_link.inner_text)
-         # skip 'Collana', (ummm, possibly genre information, Babelfish
+        # skip 'Collana', (ummm, possibly genre information, Babelfish
         # says "Necklace")
-         # format
+        # format
         format_par = data % 'span.int_scheda[text()*=Formato]/..'
         format_par.inner_text =~ /:[\s]*(.+)[\s]*$/
         binding = normalize(Regexp.last_match[1])
-         # year
+        # year
         date_par = data % 'span.int_scheda[text()*=Data di pubblicazione]/..'
         date_par.inner_text =~ /:[\s]*([12][0-9]{3})[\s]*$/
         publish_year = nil
         if Regexp.last_match[1]
           publish_year = Regexp.last_match[1].to_i
         end
-         isbn_spans = data / 'div.sotto/span.isbn'
+        isbn_spans = data / 'div.sotto/span.isbn'
         isbns = []
         isbn_spans.each do |span|
           span.inner_text =~ /:[\s]*(.+)[\s]*$/
           isbns << Regexp.last_match[1]
         end
-         isbn = nil
+        isbn = nil
         unless isbns.empty?
           isbn = Library.canonicalise_isbn(isbns.first)
         end
-         # Editore & Imprint : as publisher info above...
-         # pages
+        # Editore & Imprint : as publisher info above...
+        # pages
         #page_par = data % 'span.int_scheda[text()*=Pagine]/..'
         #if page_par
         #  page_par.inner_text =~ /:[\s]*([0-9]+)[\s]*$/
         #  pages = $1.to_i
         #end
-         #synopsis_div = doc % 'div.sotto_schede' # exclude the first span though
+        #synopsis_div = doc % 'div.sotto_schede' # exclude the first span though
         #book = Book.new(title, isbns.first, authors)
         #if publisher
         #  book.publisher = Publisher.new(publisher)
@@ -256,10 +256,10 @@ module Alexandria
           else
             image_url = "#{SITE}#{cover_link}"
           end
-           log.debug { "Cover Image URL:: #{image_url}" }
+          log.debug { "Cover Image URL:: #{image_url}" }
         end
-         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-         return [book, image_url]
+        book = Book.new(title, authors, isbn, publisher, publish_year, binding)
+        return [book, image_url]
       rescue Exception => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing DeaStore product page #{ex.message}\n#{trace}" }

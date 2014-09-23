@@ -80,7 +80,7 @@ module Alexandria
         if (title = @entry_title.text.strip).empty?
           raise AddError.new(_("A title must be provided."))
         end
-         isbn = nil
+        isbn = nil
         if @entry_isbn.text != ""
           ary = @library.select { |book|
             book.ident == @entry_isbn.text }
@@ -95,39 +95,39 @@ module Alexandria
                                         "and try again."))
                  end
         end
-         if (publisher = @entry_publisher.text.strip).empty?
+        if (publisher = @entry_publisher.text.strip).empty?
           raise AddError.new(_("A publisher must be provided."))
-        end
-         publishing_year = @entry_publish_date.text.to_i
+       end
+        publishing_year = @entry_publish_date.text.to_i
          # TODO Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?
           raise AddError.new(_("A binding must be provided."))
         end
-         authors = []
+        authors = []
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
           raise AddError.new(_("At least one author must be " +
                                "provided."))
         end
-         book = Book.new(title, authors, isbn, publisher,
-                        publishing_year == 0 ? nil : publishing_year,
-                        edition)
+        book = Book.new(title, authors, isbn, publisher,
+                       publishing_year == 0 ? nil : publishing_year,
+                       edition)
         book.rating = @current_rating
         book.notes = @textview_notes.buffer.text
         book.loaned = @checkbutton_loaned.active?
         book.loaned_to = @entry_loaned_to.text
         # book.loaned_since = Time.at(@date_loaned_since.time)
         book.loaned_since = parse_date(@date_loaned_since.text)
-         book.redd = @checkbutton_redd.active?
+        book.redd = @checkbutton_redd.active?
         book.own = @checkbutton_own.active?
         book.want = @checkbutton_want.active?
         book.tags = @entry_tags.text.split
-         @library << book
+        @library << book
         @library.save(book)
         if File.exist?(TMP_COVER_FILE) and (not @delete_cover_file)
           FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
         end
-         @on_add_cb.call(book)
+        @on_add_cb.call(book)
         @book_properties_dialog.destroy
       rescue AddError => e
         ErrorDialog.new(@parent, _("Couldn't add the book"),

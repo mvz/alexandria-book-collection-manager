@@ -19,14 +19,14 @@
 module Alexandria
   # A really simple regex-based parser to grab data out of marc text records.
   class PseudoMarcParser
-     BNF_FR_MAPPINGS = { :title => ["200", 'a'],
-      :authors => ["700", 'a'],
-      :isbn => ["010", 'a'],
-      :publisher => ["210", 'g'],
-      :year => ["210", 'd'],
-      :binding => ["225", 'a'],
-      :notes => ["520", 'a']
-    }
+    BNF_FR_MAPPINGS = { :title => ["200", 'a'],
+     :authors => ["700", 'a'],
+     :isbn => ["010", 'a'],
+     :publisher => ["210", 'g'],
+     :year => ["210", 'd'],
+     :binding => ["225", 'a'],
+     :notes => ["520", 'a']
+   }
 
     USMARC_MAPPINGS = { :title => ["245", 'a', 'b'],
       :authors => ["100", 'a'],
@@ -66,7 +66,7 @@ module Alexandria
         if title_data
           title_data_all = get_fields(title_data, :title, /(.*)[\/:]$/, m)
           if title_data_all
-              title = title_data_all
+            title = title_data_all
           end
         end
 

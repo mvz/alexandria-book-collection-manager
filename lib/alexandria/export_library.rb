@@ -520,12 +520,12 @@ EOS
       my_str.gsub!(/~/, "\\textasciitilde")
       my_str.gsub!(/\&/, "\\\\&")
       my_str.gsub!(/\#/, "\\\\#")
-        my_str.gsub!(/\{/, "\\{")
-          my_str.gsub!(/\}/, "\\}")
-          my_str.gsub!(/_/, "\\_")
-          my_str.gsub!(/\$/, "\\\$")
-          my_str.gsub!(/\"(.+)\"/, "``\1''")
-          my_str
+      my_str.gsub!(/\{/, "\\{")
+      my_str.gsub!(/\}/, "\\}")
+      my_str.gsub!(/_/, "\\_")
+      my_str.gsub!(/\$/, "\\\$")
+      my_str.gsub!(/\"(.+)\"/, "``\1''")
+      my_str
     end
   end
 

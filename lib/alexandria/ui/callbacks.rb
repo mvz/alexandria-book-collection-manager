@@ -124,20 +124,20 @@ module Alexandria
         ExportDialog.new(@main_app, selected_library, library_sort_order)
       rescue Exception => ex
         log.error { "problem with immediate export #{ex} try again" }
-         ErrorDialog.new(@main_app, _("Export failed"),
-                            _("Try letting this library load " +
-                              "completely before exporting."))
+        ErrorDialog.new(@main_app, _("Export failed"),
+                           _("Try letting this library load " +
+                             "completely before exporting."))
       end
 
       def on_acquire _widget, _event
         AcquireDialog.new(@main_app,
                           selected_library) do |_books, library, is_new|
-          if is_new
-            append_library(library, true)
-            setup_move_actions
-          elsif selected_library != library
-            select_library(library)
-          end
+                            if is_new
+                              append_library(library, true)
+                              setup_move_actions
+                            elsif selected_library != library
+                              select_library(library)
+                            end
                           end
       end
 

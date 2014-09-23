@@ -40,7 +40,7 @@ module Alexandria
       def on_edited_library cell, path_string, new_text
         log.debug { "edited library name #{new_text}" }
         ## new_text = new_text.reverse # for testing;
-                                       # a great way to generate broken UTF-8
+        # a great way to generate broken UTF-8
         if cell.text != new_text
           if match = contains_illegal_character(new_text)
             if match.instance_of? MatchData
@@ -57,14 +57,14 @@ module Alexandria
           elsif new_text.strip.empty?
             log.debug { "Empty text" }
             ErrorDialog.new(@main_app, _("The library name " +
-                                           "can not be empty"))
+                                         "can not be empty"))
           elsif library_already_exists new_text
             log.debug { "Already exists" }
             ErrorDialog.new(@main_app,
                             _("The library can not be renamed"),
                             _("There is already a library named " +
-                                "'%s'.  Please choose a different " +
-                                "name.") % new_text.strip)
+                              "'%s'.  Please choose a different " +
+                              "name.") % new_text.strip)
           else
             log.debug { "Attempting to apply #{path_string}, #{new_text}" }
             path = Gtk::TreePath.new(path_string)
@@ -120,74 +120,74 @@ module Alexandria
           BOOKS_TARGET_TABLE,
           Gdk::DragContext::ACTION_MOVE)
 
-          @library_listview.signal_connect('drag-motion') do
-            |_widget, drag_context, x, y, time, _data|
-            log.debug { "drag-motion" }
+        @library_listview.signal_connect('drag-motion') do
+          |_widget, drag_context, x, y, time, _data|
+          log.debug { "drag-motion" }
 
-            path, column, _, _ =
-              @library_listview.get_path_at_pos(x, y)
+          path, column, _, _ =
+            @library_listview.get_path_at_pos(x, y)
 
-            if path
-              # Refuse drags from/to smart libraries.
-              if @parent.selected_library.is_a?(SmartLibrary)
+          if path
+            # Refuse drags from/to smart libraries.
+            if @parent.selected_library.is_a?(SmartLibrary)
+              path = nil
+            else
+              iter = @library_listview.model.get_iter(path)
+              if iter[3]  # separator?
                 path = nil
               else
-                iter = @library_listview.model.get_iter(path)
-                if iter[3]  # separator?
-                  path = nil
-                else
-                  library = @libraries.all_libraries.find do |lib|
-                    lib.name == iter[1]
-                  end
-                  path = nil if library.is_a?(SmartLibrary)
-                end
-              end
-            end
-
-            @library_listview.set_drag_dest_row(
-              path,
-              Gtk::TreeView::DROP_INTO_OR_AFTER)
-
-              drag_context.drag_status(
-                !path.nil? ? drag_context.suggested_action : 0,
-                time)
-          end
-
-          @library_listview.signal_connect('drag-drop') do
-            |widget, drag_context, _x, _y, time, _data|
-            log.debug { "drag-drop" }
-
-            Gtk::Drag.get_data(widget,
-                               drag_context,
-                               drag_context.targets.first,
-                               time)
-            true
-          end
-
-          @library_listview.signal_connect('drag-data-received') do
-            |_widget, drag_context, x, y, selection_data, _info, _time|
-            log.debug { "drag-data-received" }
-
-            success = false
-            if selection_data.type == Gdk::Selection::TYPE_STRING
-              path, _ =
-                @library_listview.get_dest_row_at_pos(x, y)
-
-              if path
-                iter = @library_listview.model.get_iter(path)
                 library = @libraries.all_libraries.find do |lib|
                   lib.name == iter[1]
                 end
-                @parent.move_selected_books_to_library(library)
-                success = true
+                path = nil if library.is_a?(SmartLibrary)
               end
             end
-            begin
-              Gtk::Drag.finish(drag_context, success, false, 0) #,time)
-            rescue Exception => ex
-              log.error { "Gtk::Drag.finish failed: #{ex}" }
+          end
+
+          @library_listview.set_drag_dest_row(
+            path,
+            Gtk::TreeView::DROP_INTO_OR_AFTER)
+
+          drag_context.drag_status(
+            !path.nil? ? drag_context.suggested_action : 0,
+            time)
+        end
+
+        @library_listview.signal_connect('drag-drop') do
+          |widget, drag_context, _x, _y, time, _data|
+          log.debug { "drag-drop" }
+
+          Gtk::Drag.get_data(widget,
+                             drag_context,
+                             drag_context.targets.first,
+                             time)
+          true
+        end
+
+        @library_listview.signal_connect('drag-data-received') do
+          |_widget, drag_context, x, y, selection_data, _info, _time|
+          log.debug { "drag-data-received" }
+
+          success = false
+          if selection_data.type == Gdk::Selection::TYPE_STRING
+            path, _ =
+              @library_listview.get_dest_row_at_pos(x, y)
+
+            if path
+              iter = @library_listview.model.get_iter(path)
+              library = @libraries.all_libraries.find do |lib|
+                lib.name == iter[1]
+              end
+              @parent.move_selected_books_to_library(library)
+              success = true
             end
           end
+          begin
+            Gtk::Drag.finish(drag_context, success, false, 0) #,time)
+          rescue Exception => ex
+            log.error { "Gtk::Drag.finish failed: #{ex}" }
+          end
+        end
       end
     end
   end
