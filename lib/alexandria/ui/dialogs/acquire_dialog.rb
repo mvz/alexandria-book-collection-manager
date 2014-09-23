@@ -304,11 +304,11 @@ module Alexandria
           main_progress_bar = MainApp.instance.appbar.children.first
           main_progress_bar.visible = true
           @progress_pulsing = Gtk.timeout_add(100) do
-            unless @destroyed
+            if @destroyed
+              false
+            else
               main_progress_bar.pulse
               true
-            else
-              false
             end
           end
           false

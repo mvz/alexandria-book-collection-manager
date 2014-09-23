@@ -50,7 +50,9 @@ module Alexandria
                                   rescue "")
         @entry_publish_date.signal_connect('focus-out-event') do
           text = @entry_publish_date.text
-          unless text.empty?
+          if text.empty?
+            false
+          else
             year = text.to_i
             if year == 0 or year > (Time.now.year + 10) or year < 10
               @entry_publish_date.text = ""
@@ -60,8 +62,6 @@ module Alexandria
               @entry_publish_date.text = "19" + year.to_s
               false
             end
-          else
-            false
           end
         end
         @entry_edition.text = book.edition

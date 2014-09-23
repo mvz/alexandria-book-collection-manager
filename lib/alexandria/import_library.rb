@@ -126,10 +126,10 @@ module Alexandria
               book_elements += [[]]
             end
             book_elements += keys.map {|key|
-              unless elements[key]
-                nil
-              else
+              if elements[key]
                 neaten(elements[key].text)
+              else
+                nil
               end
             }
             #isbn
@@ -284,10 +284,10 @@ module Alexandria
       failed_lookup_isbns = []
       isbn_list.each do |isbn|
         begin
-          unless isbn[1]
-            bad_isbns << isbn[0]
-          else
+          if isbn[1]
             books << Alexandria::BookProviders.isbn_search(isbn[1])
+          else
+            bad_isbns << isbn[0]
           end
         rescue Exception => e
           puts e.message

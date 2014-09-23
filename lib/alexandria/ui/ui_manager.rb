@@ -660,7 +660,7 @@ module Alexandria
           log.warn("Attempt to open browser with nil url")
           return
         end
-        unless (cmd = Preferences.instance.www_browser).nil?
+        if (cmd = Preferences.instance.www_browser)
           launch_command = cmd
           if cmd.downcase.index("%u")
             launch_command = cmd.gsub(/%U/i, "\"" + url + "\"")
@@ -679,7 +679,7 @@ module Alexandria
       end
 
       def open_email_client(url)
-        unless (cmd = Preferences.instance.email_client).nil?
+        if (cmd = Preferences.instance.email_client)
           launch_command = cmd
           if cmd.downcase.index("%u")
             launch_command = cmd.gsub(/%u/i, "\"" + url + "\"")

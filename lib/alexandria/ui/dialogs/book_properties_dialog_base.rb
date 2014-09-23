@@ -218,10 +218,10 @@ module Alexandria
 
       def on_title_changed
         title = @entry_title.text.strip
-        @book_properties_dialog.title = unless title.empty?
-                                          _("Properties for '%s'") % title
-                                        else
+        @book_properties_dialog.title = if title.empty?
                                           _("Properties")
+                                        else
+                                          _("Properties for '%s'") % title
                                         end
       end
 

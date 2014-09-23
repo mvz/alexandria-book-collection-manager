@@ -82,7 +82,7 @@ module Alexandria
       end
 
       def url(book)
-        unless book.isbn.nil? or book.isbn.empty?
+        if book.isbn.nil? or book.isbn.empty?
           ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn)
         else
           nil

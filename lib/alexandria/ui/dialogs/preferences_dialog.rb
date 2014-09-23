@@ -68,17 +68,17 @@ module Alexandria
           label.xalign = 0
           table.attach_defaults(label, 0, 1, i, i + 1)
 
-          unless variable.possible_values.nil?
+          if variable.possible_values.nil?
+            entry = Gtk::Entry.new
+            entry.text = variable.value.to_s
+            entry.mandatory = variable.mandatory?
+          else
             entry = Gtk::ComboBox.new
             variable.possible_values.each do |value|
               entry.append_text(value.to_s)
             end
             index = variable.possible_values.index(variable.value)
             entry.active = index
-          else
-            entry = Gtk::Entry.new
-            entry.text = variable.value.to_s
-            entry.mandatory = variable.mandatory?
           end
           label.mnemonic_widget = entry
 

@@ -426,14 +426,14 @@ module Alexandria
                                   _("is in last"),
                                   proc { |x, y|
                                     begin
-                                      unless x.nil? or x.empty?
+                                      if x.nil? or x.empty?
+                                        false
+                                      else
                                         log.debug { "Given Date: #{x.inspect} #{x.class}" }
                                         given_date = Time.parse(x)
                                         days = y.to_i * (24 * 60 * 60)
 
                                         Time.now - given_date <= days
-                                      else
-                                        false
                                       end
                                     rescue Exception => ex
                                       trace = ex.backtrace.join("\n >")
@@ -446,14 +446,14 @@ module Alexandria
                                       _("is not in last"),
                                       proc { |x, y|
                                         begin
-                                          unless x.nil? or x.empty?
+                                          if x.nil? or x.empty?
+                                            false
+                                          else
                                             log.debug { "Given Date: #{x.inspect} #{x.class}" }
                                             given_date = Time.parse(x)
                                             days = y.to_i * (24 * 60 * 60)
 
                                             Time.now - given_date > days
-                                          else
-                                            false
                                           end
                                         rescue Exception => ex
                                           trace = ex.backtrace.join("\n >")
