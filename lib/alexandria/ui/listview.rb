@@ -38,7 +38,7 @@ module Alexandria
           NOTES, REDD, OWN, WANT, TAGS, LOANED_TO = (0..17).to_a
       end
 
-      def initialize _listview, parent
+      def initialize(_listview, parent)
         @parent = parent
         @prefs = @parent.prefs
         @listview = @parent.listview
@@ -79,7 +79,7 @@ module Alexandria
         @listview.append_column(column)
       end
 
-      def make_renderer_editable renderer
+      def make_renderer_editable(renderer)
         renderer.signal_connect('editing_started') do |_cell, entry,
           _path_string|
           log.debug { "editing_started" }
@@ -187,7 +187,7 @@ module Alexandria
         @listview.append_column(column)
       end
 
-      def setup_check_column title, iterid
+      def setup_check_column(title, iterid)
         renderer = CellRendererToggle.new
         renderer.activatable = true
         renderer.signal_connect('toggled') do |_rndrr, path|
@@ -256,7 +256,7 @@ module Alexandria
         @listview.append_column(column)
       end
 
-      def setup_text_column title, iterid
+      def setup_text_column(title, iterid)
         log.debug { "Create listview column for %s..." % title }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?

@@ -40,7 +40,7 @@ module Gtk
   GTK_PENDING_BLOCKS = []
   GTK_PENDING_BLOCKS_LOCK = Monitor.new
 
-  def Gtk.queue &block
+  def Gtk.queue(&block)
     if Thread.current == Thread.main
       block.call
     else

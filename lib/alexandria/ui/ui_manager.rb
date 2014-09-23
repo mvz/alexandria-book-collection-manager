@@ -37,7 +37,7 @@ module Alexandria
       # The maximum number of rating stars displayed.
       MAX_RATING_STARS = 5
 
-      def initialize parent
+      def initialize(parent)
         super("main_app__builder.glade",  widget_names)
         @parent = parent
 
@@ -406,7 +406,7 @@ module Alexandria
         end
       end
 
-      def determine_library_popup widget, event
+      def determine_library_popup(widget, event)
         # widget.grab_focus
         widget.get_path_at_pos(event.x, event.y).nil? \
           ? @nolibrary_popup \
@@ -414,7 +414,7 @@ module Alexandria
           ? @smart_library_popup : @library_popup
       end
 
-      def event_is_right_click event
+      def event_is_right_click(event)
         event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
       end
 
@@ -440,7 +440,7 @@ module Alexandria
         end
       end
 
-      def get_library_selection_text library
+      def get_library_selection_text(library)
         case library.length
         when 0
           _("Library '%s' selected") % library.name
@@ -469,7 +469,7 @@ module Alexandria
         end
       end
 
-      def get_appbar_status library, books
+      def get_appbar_status(library, books)
         case books.length
         when 0
           get_library_selection_text library
@@ -573,7 +573,7 @@ module Alexandria
         @actiongroup["Sidepane"].active = false
       end
 
-      def select_a_book book
+      def select_a_book(book)
         select_this_book = proc do |bk, view|
           @filtered_model.refilter
           iter = iter_from_book bk
@@ -620,7 +620,7 @@ module Alexandria
         end
       end
 
-      def handle_update_caller_library ary
+      def handle_update_caller_library(ary)
         library, kind, book = ary
         if library == selected_library
           @iconview.freeze # This makes @iconview.model == nil
@@ -1015,7 +1015,7 @@ module Alexandria
         iter_from_ident(book.ident)
       end
 
-      def collate_selected_books page
+      def collate_selected_books(page)
         a = []
         library = selected_library
         view = page == 0 ? @iconview : @listview
@@ -1070,7 +1070,7 @@ module Alexandria
         sensitize_library library
       end
 
-      def sensitize_library library
+      def sensitize_library(library)
         smart = library.is_a?(SmartLibrary)
         log.debug { "sensitize_library: smartlibrary = #{smart}" }
         Gtk.idle_add do
@@ -1118,7 +1118,7 @@ module Alexandria
         select_a_library library
       end
 
-      def select_a_library library
+      def select_a_library(library)
         if library
           select_library(library)
         else
@@ -1229,7 +1229,7 @@ module Alexandria
         end
       end
 
-      def get_previous_selected_library library
+      def get_previous_selected_library(library)
         log.debug { "get_previous_selected_library: #{library}" }
         previous_selected_library = selected_library
         if previous_selected_library != library

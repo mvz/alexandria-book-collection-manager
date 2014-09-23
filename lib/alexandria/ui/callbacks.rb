@@ -22,7 +22,7 @@ module Alexandria
     module Callbacks
       include Logging
 
-      def on_new _widget, _event
+      def on_new(_widget, _event)
         name = Library.generate_new_name(@libraries.all_libraries)
         library = Library.load(name)
         @libraries.add_library(library)
@@ -31,7 +31,7 @@ module Alexandria
         library.add_observer(self)
       end
 
-      def on_new_smart _widget, _event
+      def on_new_smart(_widget, _event)
         NewSmartLibraryDialog.new(@main_app) do |smart_library|
           smart_library.refilter
           @libraries.add_library(smart_library)
@@ -40,7 +40,7 @@ module Alexandria
         end
       end
 
-      def on_add_book _widget, _event
+      def on_add_book(_widget, _event)
         log.info { "on_add_book" }
         NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
           if is_new
@@ -52,14 +52,14 @@ module Alexandria
         end
       end
 
-      def on_add_book_manual _widget, _event
+      def on_add_book_manual(_widget, _event)
         library = selected_library
         NewBookDialogManual.new(@main_app, library) { |_book|
           refresh_books
         }
       end
 
-      def on_import _widget, _event
+      def on_import(_widget, _event)
         ImportDialog.new(@main_app) do |library, bad_isbns, failed_isbns|
           unless bad_isbns.empty?
             log.debug { "bad_isbn" }
@@ -79,7 +79,7 @@ module Alexandria
         end
       end
 
-      def on_window_state_event _window, event
+      def on_window_state_event(_window, event)
         log.debug { "window-state-event" }
         if event.is_a?(Gdk::EventWindowState)
           @maximized = event.new_window_state == Gdk::EventWindowState::MAXIMIZED
@@ -87,7 +87,7 @@ module Alexandria
         log.debug { "end window-state-event" }
       end
 
-      def on_toolbar_view_as_changed cb
+      def on_toolbar_view_as_changed(cb)
         log.debug { "changed" }
         action = case cb.active
                  when 0
@@ -98,7 +98,7 @@ module Alexandria
         action.active = true
       end
 
-      def on_window_destroy _window
+      def on_window_destroy(_window)
         log.debug { "destroy" }
         @actiongroup["Quit"].activate
       end
@@ -120,7 +120,7 @@ module Alexandria
         @iconview.unfreeze
       end
 
-      def on_export _widget, _event
+      def on_export(_widget, _event)
         ExportDialog.new(@main_app, selected_library, library_sort_order)
       rescue Exception => ex
         log.error { "problem with immediate export #{ex} try again" }
@@ -129,7 +129,7 @@ module Alexandria
                              "completely before exporting."))
       end
 
-      def on_acquire _widget, _event
+      def on_acquire(_widget, _event)
         AcquireDialog.new(@main_app,
                           selected_library) do |_books, library, is_new|
                             if is_new
@@ -141,7 +141,7 @@ module Alexandria
                           end
       end
 
-      def on_properties _widget, _event
+      def on_properties(_widget, _event)
         if @library_listview.focus? or selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
@@ -161,7 +161,7 @@ module Alexandria
         end
       end
 
-      def on_quit _widget, _event
+      def on_quit(_widget, _event)
         save_preferences
         Gtk.main_quit
         #@libraries.really_save_all_books
@@ -171,15 +171,15 @@ module Alexandria
         end
       end
 
-      def on_undo _widget, _event
+      def on_undo(_widget, _event)
         UndoManager.instance.undo!
       end
 
-      def on_redo _widget, _event
+      def on_redo(_widget, _event)
         UndoManager.instance.redo!
       end
 
-      def on_select_all _widget, _event
+      def on_select_all(_widget, _event)
         log.debug { "on_select_all" }
         case @notebook.page
         when 0
@@ -189,7 +189,7 @@ module Alexandria
         end
       end
 
-      def on_deselect_all _widget, _event
+      def on_deselect_all(_widget, _event)
         log.debug { "on_deselect_all" }
         case @notebook.page
         when 0
@@ -213,14 +213,14 @@ module Alexandria
         end
       end
 
-      def on_rename _widget, _event
+      def on_rename(_widget, _event)
         iter = @library_listview.selection.selected
         @library_listview.set_cursor(iter.path,
                                      @library_listview.get_column(0),
                                      true)
       end
 
-      def on_delete _widget, _event
+      def on_delete(_widget, _event)
         library = selected_library
 
         if selected_books.empty?
@@ -242,32 +242,32 @@ module Alexandria
         end
       end
 
-      def on_clear_search_results _widget, _event
+      def on_clear_search_results(_widget, _event)
         @filter_entry.text = ""
         @iconview.freeze
         @filtered_model.refilter
         @iconview.unfreeze
       end
 
-      def on_search _widget, _event
+      def on_search(_widget, _event)
         @filter_entry.grab_focus
       end
 
-      def on_preferences _widget, _event
+      def on_preferences(_widget, _event)
         PreferencesDialog.new(@main_app) do
           @listview_manager.setup_listview_columns_visibility
         end
       end
 
-      def on_submit_bug_report _widget, _event
+      def on_submit_bug_report(_widget, _event)
         open_web_browser(BUGREPORT_URL)
       end
 
-      def on_help _widget, _event
+      def on_help(_widget, _event)
         Alexandria::UI::display_help(@main_app)
       end
 
-      def on_about _widget, _event
+      def on_about(_widget, _event)
         ad = AboutDialog.new(@main_app)
         ad.signal_connect('response') do
           log.debug { "destroy about" }

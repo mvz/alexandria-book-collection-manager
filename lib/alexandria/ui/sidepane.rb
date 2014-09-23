@@ -5,7 +5,7 @@ module Alexandria
       include Logging
       include GetText
       attr_accessor :library_listview
-      def initialize library_listview, parent
+      def initialize(library_listview, parent)
         @library_listview = library_listview
         @parent = parent
         @libraries = Libraries.instance
@@ -13,7 +13,7 @@ module Alexandria
         setup_sidepane
       end
 
-      def library_already_exists new_text
+      def library_already_exists(new_text)
         x = (@libraries.all_libraries + Library.deleted_libraries).find do |library|
           library.name == new_text.strip
         end
@@ -37,7 +37,7 @@ module Alexandria
         # /([^\w\s'"()&?!:;.\-])/.match(new_text) # anglocentric!
       end
 
-      def on_edited_library cell, path_string, new_text
+      def on_edited_library(cell, path_string, new_text)
         log.debug { "edited library name #{new_text}" }
         ## new_text = new_text.reverse # for testing;
         # a great way to generate broken UTF-8
