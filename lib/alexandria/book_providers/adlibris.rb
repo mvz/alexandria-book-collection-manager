@@ -103,10 +103,10 @@ module Alexandria
         doc = html_to_doc(html)
         book_search_results = []
 
-        searchHit = doc.search("div'searchResult")[0]
-        return [] unless searchHit
+        search_hit = doc.search("div'searchResult")[0]
+        return [] unless search_hit
 
-        (searchHit / 'ul.ulSearch table').each do |t|
+        (search_hit / 'ul.ulSearch table').each do |t|
 
           result = {}
           if title_data = (t % 'div.divTitle')

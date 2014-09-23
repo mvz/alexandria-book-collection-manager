@@ -339,8 +339,3 @@ Style/TrailingComma:
 # Offense count: 13
 Style/UnlessElse:
   Enabled: false
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/VariableName:
-  Enabled: false
