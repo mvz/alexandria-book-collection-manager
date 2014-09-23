@@ -23,8 +23,6 @@ require 'alexandria'
 LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '/data/libraries'))
 TESTDIR = File.join(LIBDIR, 'test')
 
-
-
 #def useTestLibrary(version)
 #  libVersion = File.join(LIBDIR, version)
 #  FileUtils.cp_r(libVersion, TESTDIR)

@@ -40,7 +40,6 @@ module Alexandria
       ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" +
         "&shop=100001NL&SelRubricLevel1Id=100001NL"
 
-
       def initialize
         super("Proxis", "Proxis (Belgium)")
         #prefs.add("lang", _("Language"), "fr",
@@ -87,7 +86,6 @@ module Alexandria
           nil
         end
       end
-
 
       ## from Palatina
       def text_of(node)

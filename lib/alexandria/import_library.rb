@@ -86,8 +86,6 @@ module Alexandria
       end
     end
 
-
-
     def self.import_as_tellico_xml_archive(name, filename,
                                            on_iterate_cb, _on_error_cb)
       puts "Starting import_as_tellico_xml_archive... "
@@ -219,7 +217,6 @@ module Alexandria
             end
           end
 
-
           books_and_covers << [book, cover]
           import_count += 1
           if on_iterate_cb
@@ -258,7 +255,6 @@ module Alexandria
       end
       [library, []]
     end
-
 
     def self.import_as_isbn_list(name, filename, on_iterate_cb,
                                  on_error_cb)

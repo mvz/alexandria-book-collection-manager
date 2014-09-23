@@ -52,7 +52,6 @@ module Alexandria
   end
 end
 
-
 # lrz says 'macui' is obsolete (may be supported again some day)
 #unless $MACOSX
 require 'alexandria/config'

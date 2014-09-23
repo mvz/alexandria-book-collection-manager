@@ -28,7 +28,6 @@
 # Updated from Palatina, to reflect changes in the worldcat website.
 # (1 Sep 2009)
 
-
 require 'cgi'
 require 'alexandria/net'
 require 'alexandria/book_providers/web'
@@ -74,7 +73,6 @@ module Alexandria
         nil
       end
 
-
       private
 
       def create_search_uri(search_type, search_term)
@@ -98,8 +96,6 @@ module Alexandria
         html_data =  transport.get_response(URI.parse(result[:url]))
         parse_result_data(html_data.body)
       end
-
-
 
       def parse_search_result_data(html)
         doc = html_to_doc(html, "UTF-8")
@@ -131,8 +127,6 @@ module Alexandria
         book_search_results
       end
 
-
-
     def parse_result_data(html, search_isbn = nil, recursing = false)
       doc = html_to_doc(html, "UTF-8")
 
@@ -141,7 +135,6 @@ module Alexandria
           log.debug { "WorldCat reports no results" }
           raise NoResultsError
         end
-
 
         if doc % 'table.table-results'
           if recursing

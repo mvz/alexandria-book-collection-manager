@@ -38,7 +38,6 @@ describe Alexandria::Scanners::CueCat do
     }
   end
 
-
   it "is called CueCat" do
     expect(@cuecat.name).to match(/CueCat/i)
   end

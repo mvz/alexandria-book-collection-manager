@@ -19,7 +19,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 # Please retain the following note:
 #
 # Based upon Recipe 168 - "How to display tooltips in GtkTreeView - Part 3"
@@ -140,7 +139,6 @@ class IconViewTooltips
       elsif @latest_iter != iter
         hide_tooltip()
       end
-
 
     else
       hide_tooltip()

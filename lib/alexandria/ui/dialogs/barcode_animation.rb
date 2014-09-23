@@ -79,7 +79,6 @@ module Alexandria
         end
       end
 
-
       def manual_input
         # TODO distinguish between scanner and manual input
         # @canvas.set_property(:background_color, "#FFF8C0")
@@ -102,7 +101,6 @@ module Alexandria
           @barcode_data << [space_width, bar_width]
         end
       end
-
 
       def draw_barcode_bars
         @barcode_data.each do |space_width, bar_width|

@@ -110,7 +110,6 @@ module Alexandria
           iter[3]
         end
 
-
         @library_listview.selection.signal_connect('changed') do
           log.debug { "changed" }
           @parent.refresh_libraries

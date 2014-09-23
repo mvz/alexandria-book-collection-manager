@@ -23,7 +23,6 @@
 
 # Author: Sun Ning <classicning@gmail.com>, http://sunng.info/
 
-
 require 'cgi'
 require 'alexandria/net'
 require 'yaml'
@@ -44,7 +43,6 @@ module Alexandria
       def url(_book)
         nil
       end
-
 
       def search(criterion, type)
         keyword = criterion
@@ -84,7 +82,6 @@ module Alexandria
       end
 
       public
-
 
       def parse_search_result(response)
         book_search_results = []

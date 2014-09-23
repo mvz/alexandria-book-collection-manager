@@ -51,7 +51,6 @@ module Alexandria
         parse_result_data(html_data, result)
       end
 
-
       def search(criterion, type)
         begin
           criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
@@ -66,7 +65,6 @@ module Alexandria
           data = transport.get(URI.parse(req))
           results = parse_search_result_data(data)
           raise NoResultsError if results.empty?
-
 
           if type == SEARCH_BY_ISBN
             get_book_from_search_result(results.first)
@@ -89,7 +87,6 @@ module Alexandria
       def url(_book)
         nil
       end
-
 
       private
 
@@ -114,7 +111,6 @@ module Alexandria
 
         BASE_SEARCH_URL % [search_term_encoded, search_type_code]
       end
-
 
     def parse_search_result_data(html)
       # The layout...
@@ -165,8 +161,6 @@ module Alexandria
 
       book_search_results
     end
-
-
 
     def parse_result_data(html, search_result)
       # checked against Siciliano website 21 Feb 2009

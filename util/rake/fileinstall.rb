@@ -103,7 +103,6 @@ class FileInstallTask < Rake::TaskLib
       all_dirs = Set.new
       @file_groups.each { |g| g.get_installation_dirs(@stage_dir, all_dirs) }
 
-
       to_delete = Set.new
       @dirs_to_remove_globs.each do |glob|
         regex = glob2regex(glob)
@@ -134,8 +133,6 @@ class FileInstallTask < Rake::TaskLib
                                    tasknames[:uninstall_dirs]]
   end
 
-
-
   public
 
   # Include the files specified in the +file_glob+ to be installed in
@@ -155,7 +152,6 @@ class FileInstallTask < Rake::TaskLib
   def install_exe(src_dir, file_glob, dest_dir)
     @file_groups << FileGroup.new(src_dir, file_glob, dest_dir, 0755)
   end
-
 
   # Install icon files. This method splits up the source file name and
   # determines where they should be put in the destination hierarchy.
@@ -230,7 +226,6 @@ class FileInstallTask < Rake::TaskLib
       end
     end
   end
-
 
   # Delete the directory at the given Pathname +p+ if all its children
   # can be similarly deleted, and if it is then empty.

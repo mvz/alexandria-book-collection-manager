@@ -62,8 +62,6 @@ module Alexandria
         end
       end
 
-
-
       ## url
       def url(book)
         create_search_uri(SEARCH_BY_ISBN, book.isbn)
@@ -119,7 +117,6 @@ module Alexandria
         end
         book_search_results
       end
-
 
       #def binding_type(binding) # swedish string
       #  # hrm, this is a HACK and not currently working
@@ -190,7 +187,6 @@ module Alexandria
             end
           end
 
-
           isbns = []
           isbn_tds = doc.search("li[@id *= 'liISBN'] td[text()]")
 
@@ -209,7 +205,6 @@ module Alexandria
           if isbn
             isbn = Library.canonicalise_isbn(isbn)
           end
-
 
           #cover
           image_url = nil

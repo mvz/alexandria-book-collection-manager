@@ -235,7 +235,6 @@ module Alexandria
       Dir.chdir(tempdir)
     end
 
-
     def export_as_csv_list(filename)
       File.open(filename, 'w') do |io|
         io.puts "Title" + ';' + "Authors" + ';' + "Publisher" + ';' + "Edition" + ';' + "ISBN" + ';' + "Year Published" + ';' + "Rating" + "(0 to #{UI::MainApp::MAX_RATING_STARS.to_s})" + ';' + "Notes" + ';' + "Want?" + ';' + "Read?" + ';' + "Own?" + ';' + "Tags"

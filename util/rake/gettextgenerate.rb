@@ -78,7 +78,6 @@ class GettextGenerateTask < Rake::TaskLib
     end
   end
 
-
   def locales
     po_files.map { |po| File.basename(po).split('.')[0] }
   end
@@ -94,8 +93,6 @@ class GettextGenerateTask < Rake::TaskLib
   def mo_file_for(locale)
     "#{@mo_dir}/#{locale}/LC_MESSAGES/#{@projectname}.mo"
   end
-
-
 
   def source_file(dest_file)
     dest_file =~ @mo_files_regex

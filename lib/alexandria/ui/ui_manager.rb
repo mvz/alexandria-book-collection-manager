@@ -350,7 +350,6 @@ module Alexandria
 
                   widget.focus = true
 
-
                   widget.set_cursor(path, nil, false)
                   widget.grab_focus
                   widget.has_focus = true
@@ -375,7 +374,6 @@ module Alexandria
           # seem to suffice).
           #
           # Then we wait a while and only *then* pop up the menu.
-
 
           if library_already_selected
             sensitize_library selected_library
@@ -404,7 +402,6 @@ module Alexandria
             sensitize_library selected_library
 
           end
-
 
         end
       end
@@ -494,11 +491,9 @@ module Alexandria
         set_status_label(get_appbar_status(library, books))
         #selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
-
         # Focus is the wrong idiom here.
         unless @clicking_on_sidepane or (@main_app.focus == @library_listview)
           # unless @main_app.focus == @library_listview
-
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
@@ -515,7 +510,6 @@ module Alexandria
             @actiongroup["DeselectAll"].sensitive = \
             @actiongroup["Move"].sensitive =
             @actiongroup["SetRating"].sensitive = !books.empty?
-
 
           log.debug { "on_books_selection_changed Delete: #{@actiongroup["Delete"].sensitive?}" }
 
@@ -770,7 +764,6 @@ module Alexandria
                       log.error { "Could not delete empty file #{filename}" }
                     end
                   end
-
 
                   log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'" }
                   unless cover_uri.nil?

@@ -88,7 +88,6 @@ module Alexandria
        book_search_results
       end
 
-
       def data_from_label(node, label_text)
         label_node = node % "strong[text()*='#{label_text}']"
         if (item_node = label_node.parent)
@@ -173,7 +172,6 @@ module Alexandria
             binding = data_from_label(item_details, 'Einband')
 
             publisher = data_from_label(item_details, 'Erschienen bei:')
-
 
             book = Book.new(title, authors, isbns.first,
                             publisher, year, binding)

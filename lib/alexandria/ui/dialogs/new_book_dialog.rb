@@ -520,7 +520,6 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
 
-
         rescue => e
           ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
         end

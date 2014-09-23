@@ -52,7 +52,6 @@ module Alexandria
       end
     end
 
-
     class AcquireDialog < BuilderBase
       include GetText
       include Logging
@@ -292,7 +291,6 @@ module Alexandria
         end
       end
 
-
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
@@ -360,14 +358,12 @@ module Alexandria
         end
       end
 
-
       def stop_search
         @search_thread_counter.synchronize do
           @search_thread_counter.end_search
           @search_threads_running.signal
         end
       end
-
 
       def lookup_book(isbn)
         Thread.new do
@@ -427,7 +423,6 @@ module Alexandria
               end
             end
 
-
           rescue StandardError => err
             log.error {
               "Failed to load cover image icon: #{err.message}"
@@ -461,7 +456,6 @@ module Alexandria
 
         @prev_time = 0
         @interval = 0
-
 
         @animation = BarcodeAnimation.new()
         @scan_frame.add(@animation.canvas)
@@ -632,13 +626,11 @@ module Alexandria
 
         end
 
-
         @barcodes_treeview.append_column(col)
 
         # Add column using the second renderer
         col = Gtk::TreeViewColumn.new("Title", text_renderer, :text => 2)
         @barcodes_treeview.append_column(col)
-
 
         @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|
           if not model.iter_first

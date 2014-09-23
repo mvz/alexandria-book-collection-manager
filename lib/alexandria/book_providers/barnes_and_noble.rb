@@ -26,7 +26,6 @@
 
 # NOTE: this modified version is based on the Alexandria WorldCat provider.
 
-
 require 'cgi'
 require 'alexandria/net'
 require 'alexandria/book_providers/web'
@@ -56,7 +55,6 @@ module Alexandria
         end
         @agent
       end
-
 
       def fetch_redirectly(uri_str, limit = 5)
         raise NoResultsError, 'HTTP redirect too deep' if limit == 0
@@ -168,7 +166,6 @@ module Alexandria
           isbn_links = doc / '//a.isbn-a'
           isbns = isbn_links.map { |a| a.inner_text }
           book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
-
 
           authors = []
           author_links = title_header / 'a[@href*="ATH"]'

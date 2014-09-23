@@ -74,7 +74,6 @@ module Alexandria
       private
       #######
 
-
       def marc_to_book(marc_txt)
         begin
           marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
@@ -208,7 +207,6 @@ module Alexandria
       end
     end
 
-
     class LOCProvider < Z3950Provider
       # http://en.wikipedia.org/wiki/Library_of_Congress
       unabstract
@@ -233,7 +231,6 @@ module Alexandria
         nil
       end
     end
-
 
     class BLProvider < Z3950Provider
       # http://en.wikipedia.org/wiki/Copac
@@ -326,7 +323,6 @@ module Alexandria
         results
       end
     end
-
 
     class SBNProvider < Z3950Provider
       # http://sbnonline.sbn.it/

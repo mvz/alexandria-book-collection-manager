@@ -116,7 +116,6 @@ module Alexandria
           end
         end
 
-
         notes = ""
         notes_data = details[m[:notes][0]]
         if notes_data

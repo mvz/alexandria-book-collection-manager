@@ -62,7 +62,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-
 begin
   Alexandria.main
 rescue => e

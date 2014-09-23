@@ -119,7 +119,6 @@ module Alexandria
                        nil)
       a << new(_("Wishlist"), [rule, rule2], ALL_RULES)
 
-
       a
     end
 
@@ -486,7 +485,6 @@ module Alexandria
                                 Operators::CONTAINS,
                                 Operators::DOES_NOT_CONTAIN
                                ].sort
-
 
       INTEGER_OPERATORS = [
                            Operators::IS,

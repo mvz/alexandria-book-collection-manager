@@ -263,7 +263,6 @@ module Alexandria
         self.rating = 0
       end
 
-
       def own_toggled
         if @checkbutton_own.active?
           @checkbutton_want.inconsistent = true
@@ -312,7 +311,6 @@ module Alexandria
             else
               FileUtils.cp(dialog.filename, @cover_file)
             end
-
 
             self.cover = cover
             @@latest_filechooser_directory = dialog.current_folder

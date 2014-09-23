@@ -56,7 +56,6 @@ describe Alexandria::Library do
     #lambda {  my_library.delete(second_copy) }.should raise_error
     expect { my_library.delete(second_copy) }.not_to raise_error
 
-
     #puts "BBB my_library.size #{my_library.size}"
     # my_library.size.should == 1 # not yet an established feature...
   end
@@ -67,14 +66,12 @@ describe Alexandria::Library do
 
 end
 
-
 describe Alexandria::Library, " imported from 0.6.1 data files" do
 
   before(:each) do
     lib_version = File.join(LIBDIR, '0.6.1')
     FileUtils.cp_r(lib_version, TESTDIR)
   end
-
 
   it "imports cleanly from version 0.6.1 data format" do
     libs = Alexandria::Library.loadall
@@ -105,7 +102,6 @@ describe Alexandria::Library, " with books without an ISBN" do
     lib_version = File.join(LIBDIR, '0.6.1-noisbn')
     FileUtils.cp_r(lib_version, TESTDIR)
   end
-
 
   it "allows books to have no ISBN" do
     libs = Alexandria::Library.loadall
@@ -168,7 +164,6 @@ describe Alexandria::Library, " export sort order" do
     @outfile = File.join(Dir.tmpdir, "my_library-0.6.2.csv")
     @my_library = Alexandria::Library.loadall[0]
   end
-
 
   def load_rows_from_csv
     CSV.read(@outfile, col_sep: ';')

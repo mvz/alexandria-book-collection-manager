@@ -52,7 +52,6 @@ module Alexandria
       # load_system_settings
     end
 
-
     def www_browser
       unless @url_handlers_loaded
         load_url_handler_settings
@@ -60,7 +59,6 @@ module Alexandria
       puts @http_command
       @http_command
     end
-
 
     def email_client
       unless @url_handlers_loaded
@@ -79,8 +77,6 @@ module Alexandria
       end
     end
 
-
-
     def save!
       log.debug { "preferences save!" }
       @changed_settings.each do |variable_name|
@@ -89,7 +85,6 @@ module Alexandria
       end
       @changed_settings.clear
     end
-
 
     def method_missing(id, *args)
       method = id.id2name
@@ -115,16 +110,11 @@ module Alexandria
       @changed_settings << variable_name
     end
 
-
-
     private
-
-
 
     ##
     ## GENERIC GETTER and SETTER CODE
     ##
-
 
     def generic_getter(variable_name)
       value = @alexandria_settings[variable_name]
@@ -176,12 +166,9 @@ module Alexandria
       log << ex
     end
 
-
-
     ##
     ## GCONFTOOL SET and SET LIST and SET PAIR and UNSET
     ##
-
 
     def get_gconf_type(value)
       if value.is_a?(String)
@@ -237,14 +224,9 @@ module Alexandria
       `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
-
     def exec_gconf_unset(variable_name)
       `#{GCONFTOOL} --unset #{APP_DIR + "/" + variable_name}`
     end
-
-
-
-
 
     ##
     ## GCONFTOOL LOAD RECURSIVE...
@@ -258,13 +240,11 @@ module Alexandria
       @alexandria_settings.merge!(gconftool_values_to_hash(all_vals))
     end
 
-
     # May be useful to pre-load these settings
     def load_system_settings
       load_url_handler_settingss
       load_http_proxy_settings
     end
-
 
     # Called at most once, by #web_browser or #email_client
     # TODO: Enforce this.
@@ -301,8 +281,6 @@ module Alexandria
       end
       @http_proxy_loaded = true
     end
-
-
 
     # 'gconftool -R' returns keys and values, one per line, with one
     # leading space, separated with " = " This method parses the keys

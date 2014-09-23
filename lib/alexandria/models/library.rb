@@ -126,7 +126,6 @@ module Alexandria
               end
             end
 
-
             library << book
           rescue => e
             book.version = Alexandria::DATA_VERSION
@@ -155,8 +154,6 @@ module Alexandria
           rescue
           end
         end
-
-
 
         Dir["*" + EXT[:cover]].each do |cover|
           next if cover[0] == 'g'
@@ -429,7 +426,6 @@ module Alexandria
       # Let's initialize the saved identifier if not already
       # (backward compatibility from 0.4.0).
       book.saved_ident ||= book.ident
-
 
       if book.ident != book.saved_ident
         FileUtils.rm(yaml(book.saved_ident))

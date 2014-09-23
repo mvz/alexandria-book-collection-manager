@@ -310,7 +310,6 @@ module Alexandria
 
       # COPIED and PASTED from book_properties_dialog_base
 
-
       def setup_calendar_widgets
         @popup_displayed = false
         @calendar_popup = Gtk::Window.new() # Gtk::Window::POPUP)

@@ -34,7 +34,6 @@ require 'cgi'
 
 require 'digest/sha2'
 
-
 module Amazon
   class RequestError < StandardError; end
 
@@ -112,7 +111,6 @@ module Amazon
       config = Alexandria::Preferences.instance.http_proxy_config
       config ? Net::HTTP.Proxy(*config) : Net::HTTP
     end
-
 
     # Generic send request to ECS REST service. You have to specify the :operation parameter.
     def self.send_request(opts)
@@ -225,8 +223,6 @@ module Amazon
       def self.camelize(s)
         s.to_s.gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
       end
-
-
 
     def self.hmac_sha256(message, key)
       block_size = 64

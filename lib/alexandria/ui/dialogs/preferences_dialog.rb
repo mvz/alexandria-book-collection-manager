@@ -272,8 +272,6 @@ module Alexandria
           rndr.active = value
         end
 
-
-
         @treeview_providers.append_column(column)
 
         renderer = Gtk::CellRendererText.new
@@ -308,12 +306,10 @@ module Alexandria
           end
         end
 
-
         setup_enable_disable_popup
         sensitize_providers
         setup_barcode_scanner_tab
       end
-
 
       def widget_names
         [:button_prov_add, :button_prov_down, :button_prov_remove,
@@ -347,7 +343,6 @@ module Alexandria
           index += 1
         end
 
-
         @use_scanning_sound.active = Preferences.instance.play_scanning_sound
         @use_scan_sound.active = Preferences.instance.play_scan_sound
       end
@@ -364,7 +359,6 @@ module Alexandria
         }
         @enable_disable_providers_menu.append(@enable_item)
         @enable_disable_providers_menu.show_all
-
 
         @treeview_providers.signal_connect("button_press_event") do |widget, event|
           if event_is_right_click(event)
@@ -414,7 +408,6 @@ module Alexandria
         event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
       end
 
-
       def prefs_empty(prefs)
         prefs.empty? or (prefs.size == 1 and prefs.first.name == "enabled")
       end
@@ -459,8 +452,6 @@ module Alexandria
         end
       end
 
-
-
       def on_scanner_device_type(_combo)
         iter = @scanner_device_type.active_iter
         if iter && iter[1]
@@ -475,7 +466,6 @@ module Alexandria
       def on_use_scan_sound(checkbox)
         Preferences.instance.play_scan_sound = checkbox.active?
       end
-
 
       def on_provider_remove
         provider = selected_provider

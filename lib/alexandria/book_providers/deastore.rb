@@ -48,7 +48,6 @@ module Alexandria
         @agent
       end
 
-
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
         html_data = agent.get(result[:url])
@@ -85,7 +84,6 @@ module Alexandria
       end
 
       private
-
 
       def create_search_uri(search_type, search_term)
         # bah! very, very similar to the siciliano code! refactor out this duplication
@@ -151,7 +149,6 @@ module Alexandria
               authors << normalize(link.inner_text)
             end
 
-
             result = {}
             result[:author] = authors.first # HACK, what about multiple authors
             result[:title] = title
@@ -170,7 +167,6 @@ module Alexandria
         end
         book_search_results
       end
-
 
       def parse_result_data(html)
         doc = html_to_doc(html)
@@ -269,7 +265,6 @@ module Alexandria
         log.error { "Failed parsing DeaStore product page #{ex.message}\n#{trace}" }
         return nil
       end
-
 
       def normalize(str)
         unless str.nil?
