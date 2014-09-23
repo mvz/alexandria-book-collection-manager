@@ -18,7 +18,7 @@
 
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-#break this up!
+# break this up!
 
 describe CellRendererToggle do
   it "should work"
@@ -43,6 +43,6 @@ describe Alexandria::UI::MainApp do
     expect do
       Alexandria::UI::MainApp.new
     end.to raise_error
-    #Alexandria::UI::MainApp.instance
+    # Alexandria::UI::MainApp.instance
   end
 end

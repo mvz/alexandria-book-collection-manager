@@ -41,7 +41,7 @@ describe Alexandria::Library do
   it "allows multiple copies of a book to be added and deleted in turn" do
     my_library = Alexandria::Library.loadall[0]
     first_copy = an_artist_of_the_floating_world
-    #puts "first_copy #{first_copy.object_id}"
+    # puts "first_copy #{first_copy.object_id}"
     my_library << first_copy
     my_library.delete(first_copy)
 
@@ -50,13 +50,13 @@ describe Alexandria::Library do
     third_copy = an_artist_of_the_floating_world
     my_library << third_copy
 
-    #puts "AAA my_library.size #{my_library.size}"
+    # puts "AAA my_library.size #{my_library.size}"
 
-    #puts "second_copy #{second_copy.object_id}"
-    #lambda {  my_library.delete(second_copy) }.should raise_error
+    # puts "second_copy #{second_copy.object_id}"
+    # lambda {  my_library.delete(second_copy) }.should raise_error
     expect { my_library.delete(second_copy) }.not_to raise_error
 
-    #puts "BBB my_library.size #{my_library.size}"
+    # puts "BBB my_library.size #{my_library.size}"
     # my_library.size.should == 1 # not yet an established feature...
   end
 
@@ -115,11 +115,11 @@ describe Alexandria::Library, " with books without an ISBN" do
     expect(latex_book.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
     expect(latex_book.version).to eq(Alexandria::DATA_VERSION)
 
-    #Lex and Yacc
+    # Lex and Yacc
     lex_and_yacc_book = my_library.select { |b| b.title.include? 'Lex' }[0]
     expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
 
-    #puts "ident -> " + lex_and_yacc_book.ident
+    # puts "ident -> " + lex_and_yacc_book.ident
 
     my_library.each do |book|
       my_library.save(book, true)
@@ -135,12 +135,12 @@ describe Alexandria::Library, " with books without an ISBN" do
     latex_book = my_library_reloaded.select { |b| b.title.include? 'Latex' }[0]
     expect(latex_book).not_to be_nil
     expect(latex_book.publisher).to eq('Addison Wesley')
-    #puts latex_book.title
+    # puts latex_book.title
 
     lex_and_yacc_book = my_library_reloaded.select { |b| b.title.include? 'Lex' }[0]
     expect(lex_and_yacc_book).not_to be_nil
     expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
-    #puts lex_and_yacc_book.title
+    # puts lex_and_yacc_book.title
 
   end
 

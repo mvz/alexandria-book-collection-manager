@@ -173,8 +173,8 @@ module Alexandria
         raise NoResultsError unless title_div
         title_h = title_div % 'h2'
         title = title_h.inner_text if title_h
-        #title = first_non_empty_text_node(title_div)
-        #author_spans = doc/'span.rotulo'
+        # title = first_non_empty_text_node(title_div)
+        # author_spans = doc/'span.rotulo'
         author_hs = title_div / 'h3.autor'
         authors = []
         author_hs.each do |h|
@@ -200,8 +200,8 @@ module Alexandria
             publish_year = Regexp.last_match[1].to_i
           end
         end
-        #cover
-        #ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
+        # cover
+        # ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
         image_urls = []
         (doc / "script").each do |script|
           next if script.children.nil?
@@ -266,10 +266,10 @@ module Alexandria
         map
       end
 
-      #def binding_type(binding) # portuguese string
+      # def binding_type(binding) # portuguese string
       #  {"brochura" => :paperback,
       #    "encadernado" => :hardback}[binding.downcase] or :unknown
-      #end
+      # end
     end
   end
 end

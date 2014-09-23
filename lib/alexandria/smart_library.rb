@@ -43,7 +43,7 @@ module Alexandria
       libraries = Libraries.instance
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
-      #carry deleted books over from libraries that are part of the smart library
+      # carry deleted books over from libraries that are part of the smart library
       self.deleted_books = libraries.deleted_books
       @cache = {}
     end
@@ -98,19 +98,19 @@ module Alexandria
                       nil)
       a << new(_("Loaned"), [rule], ALL_RULES)
 
-      #Redd books.
+      # Redd books.
       rule = Rule.new(operands.find { |x| x.book_selector == :redd },
                       Rule::Operators::IS_TRUE,
                       nil)
       a << new(_("Read"), [rule], ALL_RULES)
 
-      #Own books.
+      # Own books.
       rule = Rule.new(operands.find { |x| x.book_selector == :own },
                       Rule::Operators::IS_TRUE,
                       nil)
       a << new(_("Owned"), [rule], ALL_RULES)
 
-      #Want books.
+      # Want books.
       rule = Rule.new(operands.find { |x| x.book_selector == :want },
                       Rule::Operators::IS_TRUE,
                       nil)
@@ -173,7 +173,7 @@ module Alexandria
 
       @libraries.each do |library|
         filtered_library = library.select do |book|
-          filters.send(selector) { |filter| filter.call(book) } #Problem here.
+          filters.send(selector) { |filter| filter.call(book) } # Problem here.
         end
         filtered_library.each { |x| @cache[x] = library }
         concat(filtered_library)
@@ -459,7 +459,7 @@ module Alexandria
                                           log.warn { "Date matching failed #{ex} #{trace}" }
                                           false
                                         end
-                                        #Time.now - x > 3600*24*y
+                                        # Time.now - x > 3600*24*y
                                       })
 
         ALL = constants.map \

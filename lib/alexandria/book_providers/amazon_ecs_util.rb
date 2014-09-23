@@ -188,7 +188,7 @@ module Amazon
       end
     end
 
-    #protected
+    # protected
     #  def self.log(s)
     #    return unless self.debug
     #    if defined? RAILS_DEFAULT_LOGGER
@@ -214,9 +214,9 @@ module Amazon
         qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
       }
       url = "#{request_url}#{qs}"
-      #puts ">>> base url >> #{url}"
+      # puts ">>> base url >> #{url}"
       signed_url = sign_request(url)
-      #puts ">>> SIGNED >> #{signed_url}"
+      # puts ">>> SIGNED >> #{signed_url}"
       signed_url
     end
 
@@ -289,7 +289,7 @@ module Amazon
       # Steps 6 & 7: Prepend HTTP request info
       string_to_sign = "GET\n#{host}\n#{path}\n#{canonical_param_string}"
 
-      #puts string_to_sign
+      # puts string_to_sign
 
       # Step 8 : Calculate RFC 2104-compliant HMAC with SHA256 hash algorithm
       sig = hmac_sha256(string_to_sign, @@secret_access_key)

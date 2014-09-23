@@ -23,10 +23,10 @@ require 'alexandria'
 LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '/data/libraries'))
 TESTDIR = File.join(LIBDIR, 'test')
 
-#def useTestLibrary(version)
+# def useTestLibrary(version)
 #  libVersion = File.join(LIBDIR, version)
 #  FileUtils.cp_r(libVersion, TESTDIR)
-#end
+# end
 
 def an_artist_of_the_floating_world
   Alexandria::Book.new("An Artist of the Floating World",

@@ -119,9 +119,9 @@ module Alexandria
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs['charset'], "UTF-8") # (prefs['record_syntax'], 'USMARC')
           log.debug { marc_txt }
-          #marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
+          # marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
           if $DEBUG
-            File.open(',marc.txt', 'wb') do |f| #DEBUG
+            File.open(',marc.txt', 'wb') do |f| # DEBUG
               f.write(marc_txt)
             end
           end
@@ -164,7 +164,7 @@ module Alexandria
         conn.database_name = prefs['database']
 
         # HACK turn off piggybacking, just to see CMcG
-        ##conn.piggyback = false
+        # #conn.piggyback = false
 
         conn.preferred_record_syntax = prefs['record_syntax']
         conn.element_set_name = 'F'
@@ -283,7 +283,7 @@ module Alexandria
         results = []
         resultset[0..9].each do |record|
           text = record.render(prefs['charset'], "UTF-8")
-          #File.open(',bl.marc', 'wb') {|f| f.write(text) }
+          # File.open(',bl.marc', 'wb') {|f| f.write(text) }
           log.debug { text }
           # text = text.convert("UTF-8", prefs['charset'])
 

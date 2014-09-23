@@ -229,7 +229,7 @@ module Alexandria
                   unless @treeview_results.model.iter_is_valid?(iter)
                     raise "Iter is invalid! %s" % iter
                   end
-                  iter[2] = pixbuf #I bet you this is it!
+                  iter[2] = pixbuf # I bet you this is it!
                 end
 
                 @images.delete(key)
@@ -262,14 +262,14 @@ module Alexandria
                end
 
         # @progressbar.show
-        #progress_pulsing = Gtk.timeout_add(100) do
+        # progress_pulsing = Gtk.timeout_add(100) do
         #  if @destroyed
         #    false
         #  else
         #    @progressbar.pulse
         #    true
         #  end
-        #end
+        # end
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
@@ -295,7 +295,7 @@ module Alexandria
               @find_error = e.message
             ensure
               Alexandria::BookProviders.instance.delete_observer(self)
-              #notify_end_add_by_isbn
+              # notify_end_add_by_isbn
             end
           end
           false
@@ -336,9 +336,9 @@ module Alexandria
                          true
                        else
                          log.info { "@find_thread (#{@find_thread}) asleep now." }
-                         #Not really async now.
+                         # Not really async now.
                          get_images_async
-                         false #continue == false if you get to here. Stop timeout_add.
+                         false # continue == false if you get to here. Stop timeout_add.
                        end
                      else
                        # Stop if the book find thread has stopped.
@@ -348,7 +348,7 @@ module Alexandria
           # timeout_add ends if continue is false!
 
           unless continue
-            unless @find_thread.alive? #This happens after find_thread is done
+            unless @find_thread.alive? # This happens after find_thread is done
               unless @destroyed
                 # Gtk.timeout_remove(progress_pulsing)
                 # @progressbar.hide
@@ -358,7 +358,7 @@ module Alexandria
             end
           end
 
-          continue #timeout_add loop condition
+          continue # timeout_add loop condition
         end
       end
 
@@ -524,7 +524,7 @@ module Alexandria
         rescue => e
           ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
         end
-        #books_to_add
+        # books_to_add
       end
 
       def on_cancel
@@ -564,7 +564,7 @@ module Alexandria
 
           # @parent.appbar.status = message
           MainApp.instance.appbar.status = message # HACKish
-          #false
+          # false
         end
       end
 

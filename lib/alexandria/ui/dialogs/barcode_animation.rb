@@ -93,7 +93,7 @@ module Alexandria
 
       def create_ean_barcode_data
         d = '211113123121112331122131113211111123122211132321112311231111'
-        #####911113... but that's too much padding on the left...
+        # ####911113... but that's too much padding on the left...
         while d.size > 0
           space_width = d[0].chr.to_i
           bar_width = d[1].chr.to_i

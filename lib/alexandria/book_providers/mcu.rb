@@ -71,7 +71,7 @@ module Alexandria
         products = {}
         print "Request page is #{req}\n" if $DEBUG # for DEBUGing
         transport.get(URI.parse(req)).each do |line|
-          #line = line.convert("ISO-8859-1", "UTF-8")
+          # line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
           if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[Regexp.last_match[1]]) and (book = parseBook(Regexp.last_match[1], Regexp.last_match[2])) then
             products[Regexp.last_match[1]] = book

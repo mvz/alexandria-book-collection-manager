@@ -42,12 +42,12 @@ module Alexandria
 
       def initialize()
         super("WorldCat", "WorldCat")
-        #prefs.add("enabled", _("Enabled"), true, [true,false])
+        # prefs.add("enabled", _("Enabled"), true, [true,false])
         prefs.read
       end
 
       def search(criterion, type)
-        #puts create_search_uri(type, criterion)
+        # puts create_search_uri(type, criterion)
         req = create_search_uri(type, criterion)
         puts req if $DEBUG
         html_data = transport.get_response(URI.parse(req))
@@ -55,7 +55,7 @@ module Alexandria
         #       but this caused failures here (empty pages...)
         #       find out how the requests differ
 
-        #puts html_data.class
+        # puts html_data.class
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)
         else
@@ -102,7 +102,7 @@ module Alexandria
         book_search_results = []
         begin
           result_cells = doc / 'td.result/div.name/..'
-          #puts result_cells.length
+          # puts result_cells.length
           result_cells.each do |td|
             type_icon = (td % 'div.type/img.icn')
             next unless type_icon and type_icon['src'] =~ /icon-bks/
@@ -147,7 +147,7 @@ module Alexandria
             cover_url = nil
             first_result = nil
             search_results.each do |rslt|
-              #rslt = search_results.rslt
+              # rslt = search_results.rslt
               log.debug { "checking #{rslt[:url]}" }
               rslt2 = transport.get_response(URI.parse(rslt[:url]))
               html2 = rslt2.body
@@ -221,7 +221,7 @@ module Alexandria
 
           isbn = search_isbn
           unless isbn
-            isbn_row = doc % 'tr#details-standardno' ##bibdata_table % 'th[text()*=ISBN]/..'
+            isbn_row = doc % 'tr#details-standardno' # #bibdata_table % 'th[text()*=ISBN]/..'
             if isbn_row
               isbns = (isbn_row / 'td').last.inner_text.split
               isbn = Library.canonicalise_isbn(isbns.first)

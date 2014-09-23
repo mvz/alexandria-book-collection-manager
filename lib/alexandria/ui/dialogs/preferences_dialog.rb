@@ -265,7 +265,7 @@ module Alexandria
           end
         end
 
-        #renderer.active = true
+        # renderer.active = true
         column = Gtk::TreeViewColumn.new("Enabled", renderer)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           value = iter[2]
@@ -280,11 +280,11 @@ module Alexandria
                                          # :text => 0)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           rndr.markup = iter[0]
-          #enabled = iter[2]
-          #unless enabled
+          # enabled = iter[2]
+          # unless enabled
           #  rndr.foreground = "gray"
-          #end
-          #rndr.active = value
+          # end
+          # rndr.active = value
         end
         @treeview_providers.append_column(column)
         @treeview_providers.selection.signal_connect('changed') \

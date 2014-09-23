@@ -156,7 +156,7 @@ module Alexandria
             book = books.first
             BookPropertiesDialog.new(@main_app,
                                      selected_library,
-                                     book) #{ |modified_book| }
+                                     book) # { |modified_book| }
           end
         end
       end
@@ -164,7 +164,7 @@ module Alexandria
       def on_quit(_widget, _event)
         save_preferences
         Gtk.main_quit
-        #@libraries.really_save_all_books
+        # @libraries.really_save_all_books
         @libraries.really_delete_deleted_libraries
         @libraries.all_regular_libraries.each do |library|
           library.really_delete_deleted_books
@@ -228,7 +228,7 @@ module Alexandria
         else
           books = selected_books
         end
-        #books = @library_listview.focus? ? nil : selected_books
+        # books = @library_listview.focus? ? nil : selected_books
         is_smart = library.is_a?(SmartLibrary)
         last_library = (@libraries.all_regular_libraries.length == 1)
         if books.nil? && !is_smart && last_library

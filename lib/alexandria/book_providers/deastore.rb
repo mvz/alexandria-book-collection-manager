@@ -51,9 +51,9 @@ module Alexandria
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
         html_data = agent.get(result[:url])
-        #File.open("rsltflarn#{Time.now().usec()}.html", 'wb') do |f|
+        # File.open("rsltflarn#{Time.now().usec()}.html", 'wb') do |f|
         #  f.write(html_data.body)
-        #end
+        # end
         parse_result_data(html_data.body)
       end
 
@@ -65,9 +65,9 @@ module Alexandria
           raise NoResultsError
         end
         html_data = agent.get(create_search_uri(type, criterion))
-        #File.open("flarn#{Time.now().usec()}.html", 'wb') do |f|
+        # File.open("flarn#{Time.now().usec()}.html", 'wb') do |f|
         #  f.write(html_data.body)
-        #end
+        # end
         results = parse_search_result_data(html_data.body)
         raise NoResultsError if results.empty?
 
@@ -194,12 +194,12 @@ module Alexandria
             authors << normalize(link.inner_html)
           end
         end
-        #if author_span
+        # if author_span
         #  author_links = author_span/'a.info'
         #  author_links.each do |link|
         #    authors << normalize(link.inner_text)
         #  end
-        #end
+        # end
         # publisher
         publisher_par = data % 'span.int_scheda[text()*=Editore]/..'
         publisher_link = publisher_par % 'a.info'
@@ -229,20 +229,20 @@ module Alexandria
         end
         # Editore & Imprint : as publisher info above...
         # pages
-        #page_par = data % 'span.int_scheda[text()*=Pagine]/..'
-        #if page_par
+        # page_par = data % 'span.int_scheda[text()*=Pagine]/..'
+        # if page_par
         #  page_par.inner_text =~ /:[\s]*([0-9]+)[\s]*$/
         #  pages = $1.to_i
-        #end
-        #synopsis_div = doc % 'div.sotto_schede' # exclude the first span though
-        #book = Book.new(title, isbns.first, authors)
-        #if publisher
+        # end
+        # synopsis_div = doc % 'div.sotto_schede' # exclude the first span though
+        # book = Book.new(title, isbns.first, authors)
+        # if publisher
         #  book.publisher = Publisher.new(publisher)
-        #end
-        #if format
+        # end
+        # if format
         #  book.binding = CoverBinding.new(format, binding_type(format))
-        #end
-        #cover
+        # end
+        # cover
         image_url = nil
         if cover_link
           if cover_link =~ /^http/

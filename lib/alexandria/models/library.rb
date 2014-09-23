@@ -88,7 +88,7 @@ module Alexandria
               ruined_books << [nil, file_isbn, library]
             else
               log.warn { "Filename #{filename} does not contain an ISBN" }
-              #TODO delete this file...
+              # TODO delete this file...
             end
             next
           end
@@ -179,7 +179,7 @@ module Alexandria
     def self.regularize_book_from_yaml(name)
       text = IO.read(name)
 
-      #Code to remove the mystery string in books imported from Amazon
+      # Code to remove the mystery string in books imported from Amazon
       # (In the past, still?) To allow ruby-amazon to be removed.
 
       # The string is removed on load, but can't make it stick, maybe has to do with cache
@@ -404,7 +404,7 @@ module Alexandria
         book.saved_ident = book.ident
       end
       if book.ident != book.saved_ident
-        #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
+        # log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
         FileUtils.rm(yaml(book.saved_ident))
       end
       if File.exist?(cover(book.saved_ident))
@@ -438,7 +438,7 @@ module Alexandria
         notify_observers(self, BOOK_UPDATED, book) unless final
         book.saved_ident = book.ident
       end
-      ##was File.exist? but that returns true for empty files... CathalMagus
+      # #was File.exist? but that returns true for empty files... CathalMagus
       already_there = (File.size?(yaml(book)) and
                        !@deleted_books.include?(book))
 
@@ -655,7 +655,7 @@ module Alexandria
       deleted = []
       all_regular_libraries.each {|library|
         ruined += library.ruined_books
-        #make deleted books from each library accessible so we don't crash on smart libraries
+        # make deleted books from each library accessible so we don't crash on smart libraries
         deleted += library.deleted_books
       }
       @ruined_books = ruined
@@ -670,9 +670,9 @@ module Alexandria
       @all_libraries.select { |x| x.is_a?(SmartLibrary) }
     end
 
-    #def all_dynamic_libraries
+    # def all_dynamic_libraries
     #      @all_libraries.select { |x| x.is_a?(SmartLibrary) }
-    #end
+    # end
 
     LIBRARY_ADDED, LIBRARY_REMOVED = 1, 2
 

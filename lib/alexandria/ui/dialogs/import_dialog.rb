@@ -80,7 +80,7 @@ module Alexandria
           else
             destroy
           end
-          #self.destroy unless running
+          # self.destroy unless running
         }
 
         filters = {}
@@ -174,7 +174,7 @@ module Alexandria
           end
 
           while thread.alive? and !@destroyed
-            #puts "Thread #{thread} still alive."
+            # puts "Thread #{thread} still alive."
             running = true
             exec_queue.iterate
             Gtk.main_iteration_do(false)

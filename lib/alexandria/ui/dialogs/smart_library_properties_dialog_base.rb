@@ -156,8 +156,8 @@ module Alexandria
 
         # Really hide the time part of the date entry, as the constructor
         # does not seem to do it...
-        ###date_entry.children[2..3].each { |x| date_entry.remove(x) }
-        ###date_entry.spacing = 8
+        # ##date_entry.children[2..3].each { |x| date_entry.remove(x) }
+        # ##date_entry.spacing = 8
         entry_label = Gtk::Label.new("")
 
         add_button = Gtk::Button.new("")
@@ -410,8 +410,8 @@ module Alexandria
         x += alloc.x
         y += alloc.y
         y += alloc.height
-        #x = [0, x].max
-        #y = [0, y].max
+        # x = [0, x].max
+        # y = [0, y].max
         [x, y]
       end
 

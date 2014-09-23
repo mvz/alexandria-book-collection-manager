@@ -19,7 +19,7 @@
 require 'fileutils'
 require 'net/http'
 require 'open-uri'
-#require 'cgi'
+# require 'cgi'
 
 module Alexandria
   class BookProviders
@@ -59,7 +59,7 @@ module Alexandria
         p req if $DEBUG
         data = transport.get(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          to_book(data) #rescue raise NoResultsError
+          to_book(data) # rescue raise NoResultsError
         else
           begin
             results = []
@@ -96,11 +96,11 @@ module Alexandria
         raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
         isbn = md[1].strip
 
-        #raise "No publisher" unless
+        # raise "No publisher" unless
         md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
         publisher = CGI.unescape(md[1].strip) or md
 
-        #raise "No edition" unless
+        # raise "No edition" unless
         md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
         edition = CGI.unescape(md[1].strip) or md
 
@@ -134,7 +134,7 @@ module Alexandria
       end
 
       def clean_cache
-        #FIXME begin ... rescue ... end?
+        # FIXME begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob("*.tmp") do |file|
             puts "removing " + file if $DEBUG

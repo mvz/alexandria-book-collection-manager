@@ -25,9 +25,9 @@ require 'alexandria/book_providers/web'
 module Alexandria
   class BookProviders
     class ProxisProvider < WebsiteBasedProvider
-      #include GetText
+      # include GetText
       include Alexandria::Logging
-      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      # GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       # Proxis essentially has three book databases, NL, FR and EN.
       # Currently, this provider only searches the NL database, since
@@ -42,7 +42,7 @@ module Alexandria
 
       def initialize
         super("Proxis", "Proxis (Belgium)")
-        #prefs.add("lang", _("Language"), "fr",
+        # prefs.add("lang", _("Language"), "fr",
         #          LANGUAGES.keys)
         prefs.read
       end
@@ -102,7 +102,7 @@ module Alexandria
               node_text.strip.squeeze(' ')
             end
           end
-          #node.inner_html.strip
+          # node.inner_html.strip
         end
       end
 
@@ -122,9 +122,9 @@ module Alexandria
           end
           book_search_results << result
         end
-        #require 'pp'
-        #pp book_search_results
-        #raise :Ruckus
+        # require 'pp'
+        # pp book_search_results
+        # raise :Ruckus
         book_search_results
       end
 
@@ -165,7 +165,7 @@ module Alexandria
           book_data[:isbn] = Library.canonicalise_ean(isbns.first)
         end
 
-        #book = Book.new(title, ISBN.get(isbns.first))
+        # book = Book.new(title, ISBN.get(isbns.first))
 
         unless info_headers.empty?
           info_headers.each do |th|

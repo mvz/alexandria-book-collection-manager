@@ -122,8 +122,8 @@ module Alexandria
           result_divs = doc / 'div[@class*="book-container"]'
           result_divs.each do |div|
             result = {}
-            #img = div % 'div.book-image/a/img'
-            #result[:image_url] = img['src'] if img
+            # img = div % 'div.book-image/a/img'
+            # result[:image_url] = img['src'] if img
             title_header = div % 'h2'
             title_links = title_header / 'a'
             result[:title] = title_links.first.inner_text

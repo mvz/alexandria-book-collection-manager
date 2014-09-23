@@ -99,7 +99,7 @@ module Alexandria
           else
             @redd_date.text = format_date(book.redd_when)
           end
-          #self.redd_when = (book.redd_when or Time.now)
+          # self.redd_when = (book.redd_when or Time.now)
         else
           @redd_date.sensitive = false
         end

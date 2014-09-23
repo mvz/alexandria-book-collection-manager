@@ -134,9 +134,9 @@ module Alexandria
                           Gtk::UIManager::TOOLITEM, false)
         @uimanager.add_ui(mid, "ui/MainToolbar/", "AddBook", "AddBook",
                           Gtk::UIManager::TOOLITEM, false)
-        #@uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
+        # @uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
         #                  Gtk::UIManager::SEPARATOR, false)
-        #@uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
+        # @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
         #                  Gtk::UIManager::TOOLITEM, false)
       end
 
@@ -157,7 +157,7 @@ module Alexandria
 
         cb = Gtk::ComboBox.new
         cb.set_row_separator_func do |_model, iter|
-          #log.debug { "row_separator" }
+          # log.debug { "row_separator" }
           iter[0] == '-'
         end
         [_("Match everything"),
@@ -281,9 +281,9 @@ module Alexandria
                 Integer,        # RATING
                 String,         # IDENT
                 String,         # NOTES
-                TrueClass,      #REDD
-                TrueClass,      #OWN
-                TrueClass,      #WANT
+                TrueClass,      # REDD
+                TrueClass,      # OWN
+                TrueClass,      # WANT
                 String,         # TAGS
                 String          # LOANED TO
         ]
@@ -293,7 +293,7 @@ module Alexandria
         # Filter books according to the search toolbar widgets.
         @filtered_model = Gtk::TreeModelFilter.new(@model)
         @filtered_model.set_visible_func do |_model, iter|
-          #log.debug { "visible_func" }
+          # log.debug { "visible_func" }
           @filter_books_mode ||= 0
           filter = @filter_entry.text
           if filter.empty?
@@ -346,7 +346,7 @@ module Alexandria
 
               if widget.is_a?(Gtk::TreeView)
                 Gtk.idle_add do
-                  #cur_path, focus_col = widget.cursor
+                  # cur_path, focus_col = widget.cursor
 
                   widget.focus = true
 
@@ -355,10 +355,10 @@ module Alexandria
                   widget.has_focus = true
                   false
                 end
-                #widget.has_focus = true
+                # widget.has_focus = true
               end
 
-              #library_already_selected = true
+              # library_already_selected = true
             end
           else
             widget.unselect_all
@@ -489,7 +489,7 @@ module Alexandria
         library = selected_library
         books = selected_books
         set_status_label(get_appbar_status(library, books))
-        #selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
+        # selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
         # Focus is the wrong idiom here.
         unless @clicking_on_sidepane or (@main_app.focus == @library_listview)
@@ -497,7 +497,7 @@ module Alexandria
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
-          log.debug { "@library_listview: #{@library_listview.has_focus?} or @library_popup:#{@library_popup.has_focus?}" } #or selection: #{selection}"}
+          log.debug { "@library_listview: #{@library_listview.has_focus?} or @library_popup:#{@library_popup.has_focus?}" } # or selection: #{selection}"}
           log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup["Properties"].sensitive = \
@@ -645,7 +645,7 @@ module Alexandria
       end
 
       #######
-      #private
+      # private
       #######
 
       def open_web_browser(url)
@@ -720,10 +720,10 @@ module Alexandria
       def handle_ruined_books
         new_message = _("The data files for the following books are malformed or empty. Do you wish to attempt to download new information for them from the online book providers?\n")
 
-        #message = _("These books do not conform to the ISBN-13
-        #standard. We will attempt to replace them from the book
-        #providers. Otherwise, we will turn them into manual
-        #entries.\n" )
+        # message = _("These books do not conform to the ISBN-13
+        # standard. We will attempt to replace them from the book
+        # providers. Otherwise, we will turn them into manual
+        # entries.\n" )
 
         @libraries.ruined_books.each { |bi|
           new_message += "\n#{bi[1] or bi[1].inspect}"
@@ -1215,7 +1215,7 @@ module Alexandria
                                        5 => :isbn,
                                        6 => :publisher,
                                        7 => :publishing_year,
-                                       8 => :edition, #binding
+                                       8 => :edition, # binding
                                        12 => :redd,
                                        13 => :own,
                                        14 => :want,
@@ -1243,8 +1243,8 @@ module Alexandria
         old_iter = @library_listview.selection.selected
         # commenting out this code seems to fix #20681
         # "crashes when switching to smart library mid-load"
-        #next_iter = @library_listview.selection.selected
-        #next_iter.next!
+        # next_iter = @library_listview.selection.selected
+        # next_iter.next!
         @library_listview.model.remove(old_iter)
         # @library_listview.selection.select_iter(next_iter)
       end

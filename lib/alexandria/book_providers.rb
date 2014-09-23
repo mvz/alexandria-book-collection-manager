@@ -41,7 +41,7 @@ module Alexandria
 
     def self.search(criterion, type)
       factory_n = 0
-      #puts "book_providers search #{self.instance.count_observers}"
+      # puts "book_providers search #{self.instance.count_observers}"
 
       begin
         factory = instance[factory_n]
@@ -289,10 +289,10 @@ module Alexandria
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
     require 'alexandria/book_providers/douban' # only requires YAML
 
-    #require 'alexandria/book_providers/ibs_it'
-    #require 'alexandria/book_providers/renaud'
-    #require 'alexandria/book_providers/bol_it'
-    #require 'alexandria/book_providers/webster_it'
+    # require 'alexandria/book_providers/ibs_it'
+    # require 'alexandria/book_providers/renaud'
+    # require 'alexandria/book_providers/bol_it'
+    # require 'alexandria/book_providers/webster_it'
     log.info { "Not loading IBS, Renaud, BOL, Webster (providers not functional)" }
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot

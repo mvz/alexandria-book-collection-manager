@@ -95,8 +95,8 @@ module Alexandria
 
       def parse_search_result_data(html)
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
-        #html = Iconv.conv("UTF-8", "ISO-8859-1", html)
-        #doc = Hpricot(html)
+        # html = Iconv.conv("UTF-8", "ISO-8859-1", html)
+        # doc = Hpricot(html)
         doc = html_to_doc(html)
         book_search_results = []
 
@@ -118,7 +118,7 @@ module Alexandria
         book_search_results
       end
 
-      #def binding_type(binding) # swedish string
+      # def binding_type(binding) # swedish string
       #  # hrm, this is a HACK and not currently working
       #  # perhaps use regexes instead...
       #  {"inbunden" => :hardback,
@@ -127,20 +127,20 @@ module Alexandria
       #    "kartonnage" => :hardback,
       #    "kassettbok" => :audiobook}[binding.downcase] or :paperback
       #  # H&#228;ftad == Paperback
-      #end
+      # end
 
       def normalize(text)
-        #unless text.nil?
+        # unless text.nil?
         #  text = @ent.decode(text).strip
-        #end
+        # end
         text
       end
 
       def parse_result_data(html)
         # adlibris site presents data in ISO-8859-1, so change it to UTF-8
-        #html = Iconv.conv("UTF-8", "ISO-8859-1", html)
+        # html = Iconv.conv("UTF-8", "ISO-8859-1", html)
         ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
-        #doc = Hpricot(html)
+        # doc = Hpricot(html)
         doc = html_to_doc(html)
         begin
 
@@ -154,7 +154,7 @@ module Alexandria
           product = doc.at('div.product')
           ul_info = doc.at('ul.info') # NOTE, two of these
 
-          author_cells = ul_info.search('li.liAuthor') #css-like search
+          author_cells = ul_info.search('li.liAuthor') # css-like search
           authors = []
           author_cells.each do |li|
             author_role = (li % :strong).inner_text # first strong contains author_role
@@ -206,7 +206,7 @@ module Alexandria
             isbn = Library.canonicalise_isbn(isbn)
           end
 
-          #cover
+          # cover
           image_url = nil
           if cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
             if cover_img['src'] =~ /^http\:\/\//

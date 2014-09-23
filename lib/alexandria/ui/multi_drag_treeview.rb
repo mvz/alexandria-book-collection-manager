@@ -25,7 +25,7 @@ class Gdk::Event
 end
 
 class Gtk::TreeView
-  #include Alexandria::Logging
+  # include Alexandria::Logging
 
   class Context < Struct.new(:pressed_button,
                              :x,
@@ -119,7 +119,7 @@ class Gtk::TreeView
     path, _, cell_x, cell_y = get_path_at_pos(event.x, event.y)
     return false if path.nil?
 
-    #call_parent = (event.state.control_mask? or event.state.shift_mask?) or !selected or event.button != 1
+    # call_parent = (event.state.control_mask? or event.state.shift_mask?) or !selected or event.button != 1
     call_parent = !selection.path_is_selected?(path) or
       event.button != 1
 

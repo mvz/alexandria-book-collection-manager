@@ -71,7 +71,7 @@ module Alexandria
         column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.text, cell.editable = iter[Columns::TITLE], false #true
+          cell.text, cell.editable = iter[Columns::TITLE], false # true
         end
 
         column.sort_column_id = Columns::TITLE

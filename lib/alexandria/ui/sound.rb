@@ -46,7 +46,7 @@ module Alexandria
         @filesrc = Gst::ElementFactory.make("filesrc")
         demuxer = Gst::ElementFactory.make("oggdemux")
         decoder = Gst::ElementFactory.make("vorbisdec")
-        converter = Gst::ElementFactory.make("audioconvert") ##??
+        converter = Gst::ElementFactory.make("audioconvert") # #??
         audiosink = Gst::ElementFactory.make("autoaudiosink")
 
         @ogg_vorbis_pipeline.add(@filesrc, demuxer, decoder,

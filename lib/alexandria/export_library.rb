@@ -20,7 +20,7 @@
 # Export sorting added 23 Oct 2007 by Cathal Mc Ginley
 # Classes LibrarySortOrder and SortedLibrary, and changed ExportFormat#invoke
 # iPod Notes support added 20 January 2008 by Tim Malone
-#require 'cgi'
+# require 'cgi'
 
 begin        # image_size is optional
   $IMAGE_SIZE_LOADED = true
@@ -217,7 +217,7 @@ module Alexandria
       each do |book|
         File.open(book.ident, 'w') do |io|
           io.puts "<TITLE>#{book.title} </TITLE>"
-          #put a link to the book's cover. only works on iPod 5G and above(?).
+          # put a link to the book's cover. only works on iPod 5G and above(?).
           if File.exist?(cover(book))
             io.puts '<A HREF="pixmaps/' + book.ident + '.jpg' + '">' + book.title + '</A>'
           else
@@ -226,12 +226,12 @@ module Alexandria
           io.puts book.authors.join(', ')
           io.puts book.edition
           io.puts((book.isbn or ""))
-          #we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
+          # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
 
       end
-      #Again, allow the iPod to unmount
+      # Again, allow the iPod to unmount
       Dir.chdir(tempdir)
     end
 
@@ -506,7 +506,7 @@ EOS
         if book.notes and !book.notes.empty?
           bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
         end
-        #year is a required field in bibtex @BOOK
+        # year is a required field in bibtex @BOOK
         bibtex << "year = " + (book.publishing_year or "\"n/a\"").to_s + "\n"
         bibtex << "}\n\n"
       end

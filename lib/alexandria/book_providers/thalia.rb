@@ -32,7 +32,7 @@ module Alexandria
       include Alexandria::Logging
 
       SITE = "http://www.thalia.de"
-      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" #type,term
+      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
 
       def initialize
         super("Thalia", "Thalia (Germany)")
@@ -59,14 +59,14 @@ module Alexandria
 
       def create_search_uri(search_type, search_term)
         search_type_code = { SEARCH_BY_ISBN => 'sq',
-          SEARCH_BY_AUTHORS => 'sa', #Autor
+          SEARCH_BY_AUTHORS => 'sa', # Autor
           SEARCH_BY_TITLE => 'st', # Titel
           SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
         }[search_type] or ''
         search_type_code = CGI.escape(search_type_code)
         search_term_encoded = search_term
         if search_type == SEARCH_BY_ISBN
-          #search_term_encoded = search_term.as_isbn_13
+          # search_term_encoded = search_term.as_isbn_13
           search_term_encoded = Library.canonicalise_isbn(search_term) # check this!
         else
           search_term_encoded = CGI.escape(search_term)

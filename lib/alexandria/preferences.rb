@@ -210,7 +210,7 @@ module Alexandria
       if /cols_width/ =~ var_path
         puts new_value
 
-        #new_value = {}
+        # new_value = {}
       end
       type = get_gconf_type(new_value)
       value_str = new_value

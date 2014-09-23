@@ -29,7 +29,7 @@ module Alexandria
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
-      #CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
+      # CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 
       LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us']
 
@@ -92,7 +92,7 @@ module Alexandria
         Amazon::Ecs.options = { :aWS_access_key_id => access_key_id,
                                :associateTag => prefs["associate_tag"] }
         Amazon::Ecs.secret_access_key = prefs["secret_key"]
-        ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
+        # #req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
         locales.delete prefs["locale"]
         locales.unshift prefs["locale"]
@@ -109,7 +109,7 @@ module Alexandria
             res.items.each do |item|
               products << item
             end
-            ##req.asin_search(criterion) do |product|
+            # #req.asin_search(criterion) do |product|
 
             # Shouldn't happen.
             # raise TooManyResultsError if products.length > 1
@@ -136,7 +136,7 @@ module Alexandria
                 products << item
               end
             end
-            ##req.keyword_search(criterion) do |product|
+            # #req.keyword_search(criterion) do |product|
 
           when SEARCH_BY_AUTHORS
             criterion = "author:#{criterion}"
@@ -144,7 +144,7 @@ module Alexandria
             res.items.each do |item|
               products << item
             end
-            ##req.author_search(criterion) do |product|
+            # #req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
             res = Amazon::Ecs.item_search(criterion, { :response_group => 'ItemAttributes,Images', :country => request_locale })
@@ -177,9 +177,9 @@ module Alexandria
           # the garbled titles to UTF-8. This tries to convert back into
           # valid UTF-8. It does not always work - see isbn 2259196098
           # (from the mailing list) for an example.
-          #if req.locale == 'us'
+          # if req.locale == 'us'
           #    title = title.convert('ISO-8859-1','UTF-8')
-          #end
+          # end
           # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!! Yep 2009-12-09!
 
           media = normalize(atts.get('binding'))

@@ -51,7 +51,7 @@ module Alexandria
               node_text.strip.squeeze(' ')
             end
           end
-          #node.inner_html.strip
+          # node.inner_html.strip
         end
       end
     end

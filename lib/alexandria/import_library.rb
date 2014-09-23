@@ -113,7 +113,7 @@ module Alexandria
           (total = entries.size).times do |n|
             entry = entries[n]
             elements = entry.elements
-            #Feed an array in here, tomorrow.
+            # Feed an array in here, tomorrow.
             keys = ['isbn', 'publisher', 'pub_year', 'binding']
 
             book_elements = [neaten(elements['title'].text)]
@@ -130,7 +130,7 @@ module Alexandria
                 nil
               end
             }
-            #isbn
+            # isbn
             if book_elements[2].nil? or book_elements[2].strip.empty?
               book_elements[2] = nil
             else
@@ -288,7 +288,7 @@ module Alexandria
           puts e.message
           failed_lookup_isbns << isbn[1]
           puts "NOTE : ignoring on_error_cb #{on_error_cb}"
-          #return nil unless
+          # return nil unless
           #  (on_error_cb and on_error_cb.call(e.message))
         end
 

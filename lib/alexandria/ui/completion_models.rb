@@ -39,7 +39,7 @@ class Gtk::Entry
 
   def complete_tags
     complete(Alexandria::UI::CompletionModels::TAG)
-    #min = self.completion.minimum_key_length
+    # min = self.completion.minimum_key_length
     min = 2
     completion.signal_connect('match-selected') do |c, model, iter|
       cur_text = c.entry.text

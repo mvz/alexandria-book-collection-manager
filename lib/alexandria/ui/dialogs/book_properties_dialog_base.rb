@@ -16,7 +16,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-#require 'alexandria/ui/glade_base'
+# require 'alexandria/ui/glade_base'
 
 module Alexandria
   module UI
@@ -191,8 +191,8 @@ module Alexandria
         x += alloc.x
         y += alloc.y
         y += alloc.height
-        #x = [0, x].max
-        #y = [0, y].max
+        # x = [0, x].max
+        # y = [0, y].max
         [x, y]
       end
 

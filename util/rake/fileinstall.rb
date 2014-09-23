@@ -297,7 +297,7 @@ class FileInstallTask < Rake::TaskLib
         filename = File.basename(f)
         file = File.join(dest, filename)
         if test(?f, file)
-          FileUtils::Verbose.rm_f(file) #, :noop => true)
+          FileUtils::Verbose.rm_f(file) # , :noop => true)
         end
       end
     end

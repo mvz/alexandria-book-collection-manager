@@ -202,11 +202,6 @@ Style/IndentArray:
 Style/Lambda:
   Enabled: false
 
-# Offense count: 220
-# Cop supports --auto-correct.
-Style/LeadingCommentSpace:
-  Enabled: false
-
 # Offense count: 312
 # Configuration parameters: AllowURI.
 Style/LineLength:

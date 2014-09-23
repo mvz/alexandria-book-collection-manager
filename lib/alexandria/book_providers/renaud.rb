@@ -24,7 +24,7 @@ module Alexandria
   class BookProviders
     class RENAUDProvider < GenericProvider
       include GetText
-      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      # GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
       BASE_URI = "http://www.renaud-bray.com/"
       ACCENTUATED_CHARS = "áàâäçéèêëíìîïóòôöúùûü"
 
@@ -131,7 +131,7 @@ module Alexandria
         titles.each_with_index {|title, i|
           books << [Book.new(title, authors[i], isbns[i], publishers[i], publish_years[i], editions[i]),
                     book_covers[i]]
-          #print books
+          # print books
         }
         raise if books.empty?
 
