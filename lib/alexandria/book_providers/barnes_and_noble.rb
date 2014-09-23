@@ -37,10 +37,10 @@ module Alexandria
 
       SITE = "http://www.barnesandnoble.com"
 
-      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/books" +
+      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/books" \
         "/product.aspx?ISBSRC=Y&ISBN=%s"
 
-      BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" +
+      BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" \
         "/results.asp?%s=%s" # type, term
 
       def initialize()
@@ -133,7 +133,7 @@ module Alexandria
           end
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for Barnes & Noble " +
+          log.warn {"Failed parsing search results for Barnes & Noble " \
             "#{ex.message} #{trace}" }
         end
         book_search_results
@@ -218,7 +218,7 @@ module Alexandria
         rescue Exception => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for BarnesAndNoble " +
+          log.warn {"Failed parsing search results for BarnesAndNoble " \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end

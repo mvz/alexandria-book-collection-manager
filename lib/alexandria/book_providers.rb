@@ -85,21 +85,21 @@ module Alexandria
           log.warn { "Error while searching #{criterion}" }
           message = case boom
                 when Timeout::Error
-                  _("Couldn't reach the provider '%s': timeout " +
+                  _("Couldn't reach the provider '%s': timeout " \
                     "expired.") % factory.name
 
                 when SocketError
-                  _("Couldn't reach the provider '%s': socket " +
+                  _("Couldn't reach the provider '%s': socket " \
                     "error (%s).") % [factory.name, boom.message]
 
                 when NoResultsError
-                  _("No results were found.  Make sure your " +
-                    "search criterion is spelled correctly, and " +
+                  _("No results were found.  Make sure your " \
+                    "search criterion is spelled correctly, and " \
                     "try again.")
 
                 when ProviderSkippedError
-                  _("No results were found.  Make sure your " +
-                    "search criterion is spelled correctly, and " +
+                  _("No results were found.  Make sure your " \
+                    "search criterion is spelled correctly, and " \
                     "try again.")
 
                 when TooManyResultsError

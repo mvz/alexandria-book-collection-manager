@@ -35,7 +35,7 @@ module Alexandria
 
       SITE = "http://www.adlibris.com/se/"
 
-      BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" +
+      BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" \
         "&fromproduct=False" # type/term
 
       PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
@@ -228,7 +228,7 @@ module Alexandria
         rescue Exception => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for AdLibris " +
+          log.warn {"Failed parsing search results for AdLibris " \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end

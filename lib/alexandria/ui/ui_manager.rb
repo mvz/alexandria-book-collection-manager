@@ -458,9 +458,9 @@ module Alexandria
                library.length) % [library.name,
                                   library.length]
           else
-            n_("Library '%s' selected, %d book, " +
+            n_("Library '%s' selected, %d book, " \
                "%d unrated",
-               "Library '%s' selected, %d books, " +
+               "Library '%s' selected, %d books, " \
                "%d unrated",
                library.length) % [library.name,
                                   library.length,
@@ -664,9 +664,9 @@ module Alexandria
         else
           ErrorDialog.new(@main_app,
                           _("Unable to launch the web browser"),
-                          _("Check out that a web browser is " +
-                            "configured as default (Desktop " +
-                            "Preferences -> Advanced -> Preferred " +
+                          _("Check out that a web browser is " \
+                            "configured as default (Desktop " \
+                            "Preferences -> Advanced -> Preferred " \
                             "Applications) and try again."))
         end
       end
@@ -683,9 +683,9 @@ module Alexandria
         else
           ErrorDialog.new(@main_app,
                           _("Unable to launch the mail reader"),
-                          _("Check out that a mail reader is " +
-                            "configured as default (Desktop " +
-                            "Preferences -> Advanced -> Preferred " +
+                          _("Check out that a mail reader is " \
+                            "configured as default (Desktop " \
+                            "Preferences -> Advanced -> Preferred " \
                             "Applications) and try again."))
         end
       end

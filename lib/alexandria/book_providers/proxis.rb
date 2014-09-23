@@ -35,9 +35,9 @@ module Alexandria
       # English titles).
 
       SITE = "http://www.proxis.nl"
-      BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" +
+      BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" \
         "&shop=100001NL&SelRubricLevel1Id=100001NL"
-      ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" +
+      ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" \
         "&shop=100001NL&SelRubricLevel1Id=100001NL"
 
       def initialize

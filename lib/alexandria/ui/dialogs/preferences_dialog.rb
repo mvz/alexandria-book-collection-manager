@@ -242,7 +242,7 @@ module Alexandria
           if checkbutton
             checkbutton.active = Preferences.instance.send(pref_name)
           else
-            log.warn { "no CheckButton for property #{pref_name} " +
+            log.warn { "no CheckButton for property #{pref_name} " \
               "(probably conflicting versions of GUI and lib code)" }
           end
         end
@@ -470,16 +470,16 @@ module Alexandria
       def on_provider_remove
         provider = selected_provider
         dialog = AlertDialog.new(@main_app,
-                                 _("Are you sure you want to " +
-                                   "permanently delete the provider " +
+                                 _("Are you sure you want to " \
+                                   "permanently delete the provider " \
                                    "'%s'?") % provider.fullname,
                                  Gtk::Stock::DIALOG_QUESTION,
                                  [[Gtk::Stock::CANCEL,
                                    Gtk::Dialog::RESPONSE_CANCEL],
                                   [Gtk::Stock::DELETE,
                                    Gtk::Dialog::RESPONSE_OK]],
-                                 _("If you continue, the provider and " +
-                                   "all of its preferences will be " +
+                                 _("If you continue, the provider and " \
+                                   "all of its preferences will be " \
                                    "permanently deleted."))
         dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
         dialog.show_all

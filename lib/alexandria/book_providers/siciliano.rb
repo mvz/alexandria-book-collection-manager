@@ -33,10 +33,10 @@ module Alexandria
       include Logging
 
       SITE = "http://www.siciliano.com.br"
-      BASE_SEARCH_URL = "#{SITE}/pesquisaweb/pesquisaweb.dll/pesquisa?" +
-        "&FIL_ID=102" +
-        "&PALAVRASN1=%s" + # search term
-        "&FILTRON1=%s" + # search type
+      BASE_SEARCH_URL = "#{SITE}/pesquisaweb/pesquisaweb.dll/pesquisa?" \
+        "&FIL_ID=102" \
+        "&PALAVRASN1=%s" \ # search term
+        "&FILTRON1=%s" \ # search type
         "&ESTRUTN1=0301&ORDEMN2=E"
 
       def initialize

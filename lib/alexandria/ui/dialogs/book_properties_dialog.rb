@@ -123,7 +123,7 @@ module Alexandria
           unless ary.empty? or (ary.length == 1 and ary.first == @book)
             ErrorDialog.new(@parent,
                             _("Couldn't modify the book"),
-                            _("The EAN/ISBN you provided is already " +
+                            _("The EAN/ISBN you provided is already " \
                               "used in this library."))
             return
           end
@@ -132,8 +132,8 @@ module Alexandria
                        rescue Alexandria::Library::InvalidISBNError
                          ErrorDialog.new(@parent,
                                          _("Couldn't modify the book"),
-                                         _("Couldn't validate the EAN/ISBN you " +
-                                           "provided.  Make sure it is written " +
+                                         _("Couldn't validate the EAN/ISBN you " \
+                                           "provided.  Make sure it is written " \
                                            "correcty, and try again."))
                          return
                        end

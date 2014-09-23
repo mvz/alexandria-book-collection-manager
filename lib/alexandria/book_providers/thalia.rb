@@ -186,7 +186,7 @@ module Alexandria
           end
         rescue Exception => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for Thalia " +
+          log.warn {"Failed parsing search results for Thalia " \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end

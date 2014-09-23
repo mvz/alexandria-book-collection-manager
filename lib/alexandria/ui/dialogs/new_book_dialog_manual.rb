@@ -84,14 +84,14 @@ module Alexandria
         if @entry_isbn.text != ""
           ary = @library.select { |book|
             book.ident == @entry_isbn.text }
-          raise AddError.new(_("The EAN/ISBN you provided is " +
+          raise AddError.new(_("The EAN/ISBN you provided is " \
                                "already used in this library.")) unless ary.empty?
           isbn = begin
                    Library.canonicalise_isbn(@entry_isbn.text)
                  rescue Alexandria::Library::InvalidISBNError
-                   raise AddError.new(_("Couldn't validate the " +
-                                        "EAN/ISBN you provided.  Make " +
-                                        "sure it is written correcty, " +
+                   raise AddError.new(_("Couldn't validate the " \
+                                        "EAN/ISBN you provided.  Make " \
+                                        "sure it is written correcty, " \
                                         "and try again."))
                  end
         end
@@ -106,7 +106,7 @@ module Alexandria
         authors = []
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
-          raise AddError.new(_("At least one author must be " +
+          raise AddError.new(_("At least one author must be " \
                                "provided."))
         end
         book = Book.new(title, authors, isbn, publisher,

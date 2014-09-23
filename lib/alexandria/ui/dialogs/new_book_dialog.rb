@@ -32,8 +32,8 @@ module Alexandria
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
-              _("The book titled '%s' has an invalid ISBN, but still " +
-                "exists in the providers libraries.  Do you want to " +
+              _("The book titled '%s' has an invalid ISBN, but still " \
+                "exists in the providers libraries.  Do you want to " \
                 "keep the book but change the ISBN or cancel the add?") \
                 % book.title)
         self.default_response = Gtk::Dialog::RESPONSE_OK
@@ -388,8 +388,8 @@ module Alexandria
         isbn = begin
                  Library.canonicalise_isbn(@entry_isbn.text)
                rescue
-                 raise _("Couldn't validate the EAN/ISBN you " +
-                         "provided.  Make sure it is written " +
+                 raise _("Couldn't validate the EAN/ISBN you " \
+                         "provided.  Make sure it is written " \
                          "correctly, and try again.")
                end
         assert_not_exist(library, @entry_isbn.text)

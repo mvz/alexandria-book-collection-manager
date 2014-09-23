@@ -188,8 +188,8 @@ module Alexandria
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
               ErrorDialog.new(parent,
                               _("Couldn't import the library"),
-                              _("The format of the file you " +
-                                "provided is unknown.  Please " +
+                              _("The format of the file you " \
+                                "provided is unknown.  Please " \
                                 "retry with another file."))
             end
             pbar.hide

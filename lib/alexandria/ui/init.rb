@@ -85,8 +85,8 @@ module Alexandria
     rescue
       log.error(self) { "Unable to load help browser" }
       ErrorDialog.new(parent, _("Unable to launch the help browser"),
-                      _("Could not display help for Alexandria. " +
-                        "There was an error launching the system " +
+                      _("Could not display help for Alexandria. " \
+                        "There was an error launching the system " \
                         "help browser."))
     end
   end

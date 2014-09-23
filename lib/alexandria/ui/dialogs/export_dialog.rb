@@ -27,7 +27,7 @@ module Alexandria
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                [_("_Replace"), Gtk::Dialog::RESPONSE_OK]],
-              _("A file named '%s' already exists.  Do you want " +
+              _("A file named '%s' already exists.  Do you want " \
                 "to replace it with the one you are generating?") \
               % filename)
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
@@ -153,9 +153,9 @@ module Alexandria
         else
           if File.exist?(filename)
             unless File.directory?(filename)
-              msg = _("The target, named '%s', is a regular " +
-                      "file.  A directory is needed for this " +
-                      "operation.  Please select a directory and " +
+              msg = _("The target, named '%s', is a regular " \
+                      "file.  A directory is needed for this " \
+                      "operation.  Please select a directory and " \
                       "try again.") % filename
               ErrorDialog.new(@parent, _("Not a directory"), msg)
               return
