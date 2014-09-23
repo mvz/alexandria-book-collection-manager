@@ -64,7 +64,7 @@ class IconViewTooltips
         on_leave(vw, event) }
   end
 
-  def on_expose(window, event)
+  def on_expose(window, _event)
     # this paints a nice outline around the label
     size = window.size_request
     window.style.paint_flat_box(window.window,
@@ -159,7 +159,7 @@ class IconViewTooltips
     end
   end
 
-  def on_leave(view, event)
+  def on_leave(_view, _event)
     @tooltip_window.hide()
   end
 end

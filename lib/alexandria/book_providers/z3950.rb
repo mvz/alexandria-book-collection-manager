@@ -66,7 +66,7 @@ module Alexandria
         type == SEARCH_BY_ISBN ? results.first : results
       end
 
-      def url(book)
+      def url(_book)
         nil
       end
 
@@ -115,7 +115,7 @@ module Alexandria
         book
       end
 
-      def books_from_marc(resultset, isbn)
+      def books_from_marc(resultset, _isbn)
 
         results = []
         resultset[0..9].each do |record|

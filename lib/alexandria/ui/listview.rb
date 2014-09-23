@@ -38,7 +38,7 @@ module Alexandria
           NOTES, REDD, OWN, WANT, TAGS, LOANED_TO = (0..17).to_a
       end
 
-      def initialize listview, parent
+      def initialize _listview, parent
         @parent = parent
         @prefs = @parent.prefs
         @listview = @parent.listview

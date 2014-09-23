@@ -202,7 +202,7 @@ module Alexandria
         io << to_bibtex
       end
     end
-    def export_as_ipod_notes(filename, theme)
+    def export_as_ipod_notes(filename, _theme)
       FileUtils.mkdir(filename) unless File.exist?(filename)
       tempdir = Dir.getwd
       Dir.chdir(filename)

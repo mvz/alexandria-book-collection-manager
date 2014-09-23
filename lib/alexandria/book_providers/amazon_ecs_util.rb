@@ -78,7 +78,7 @@ module Amazon
       @@debug = dbg
     end
 
-    def self.configure(&proc)
+    def self.configure(&_proc)
       raise ArgumentError, "Block is required." unless block_given?
       yield @@options
     end

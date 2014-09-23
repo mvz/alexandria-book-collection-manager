@@ -203,7 +203,7 @@ module Alexandria
       end
     end
 
-    def save_cover(book, cover_uri)
+    def save_cover(book, _cover_uri)
       @cache[book].save_cover(book)
     end
 

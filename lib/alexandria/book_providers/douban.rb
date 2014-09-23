@@ -41,7 +41,7 @@ module Alexandria
         prefs.read
       end
 
-      def url(book)
+      def url(_book)
         nil
       end
 

@@ -134,7 +134,7 @@ module Alexandria
         touch
       end
 
-      def update(library, kind, book)
+      def update(_library, _kind, _book)
         # FIXME: Do not rebuild all the models there.
         touch
       end

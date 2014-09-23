@@ -89,7 +89,7 @@ module Alexandria
 
 
     def self.import_as_tellico_xml_archive(name, filename,
-                                           on_iterate_cb, on_error_cb)
+                                           on_iterate_cb, _on_error_cb)
       puts "Starting import_as_tellico_xml_archive... "
       return nil unless system("unzip -qqt \"#{filename}\"")
       tmpdir = File.join(Dir.tmpdir, "tellico_export")
@@ -182,7 +182,7 @@ module Alexandria
     end
 
     def self.import_as_csv_file(name, filename, on_iterate_cb,
-                                 on_error_cb)
+                                 _on_error_cb)
       require 'alexandria/import_library_csv'
       books_and_covers = []
       line_count = IO.readlines(filename).inject(0) { |count, _line| count + 1 }

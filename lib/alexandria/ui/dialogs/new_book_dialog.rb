@@ -380,7 +380,7 @@ module Alexandria
         end
       end
 
-      def on_results_button_press_event(widget, event)
+      def on_results_button_press_event(_widget, event)
         # double left click
         if event.event_type == Gdk::Event::BUTTON2_PRESS and
           event.button == 1
@@ -444,7 +444,7 @@ module Alexandria
 
       end
 
-      def add_selected_books(library, is_new)
+      def add_selected_books(library, _is_new)
         books_to_add = []
         @treeview_results.selection.selected_each do |_model, _path, iter|
           @results.each do |book, cover|

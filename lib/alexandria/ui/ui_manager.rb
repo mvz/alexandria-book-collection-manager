@@ -554,7 +554,7 @@ module Alexandria
         on_books_selection_changed
       end
 
-      def on_focus(widget, event_focus)
+      def on_focus(widget, _event_focus)
         if @clicking_on_sidepane or widget == @library_listview
           log.debug { "on_focus: @library_listview" }
           Gtk.idle_add do
@@ -862,7 +862,7 @@ module Alexandria
         log.debug { "Full iter: " + (0..15).collect { |num| iter[num].inspect }.join(", ") }
       end
 
-      def append_book(book, tail = nil)
+      def append_book(book, _tail = nil)
         log.debug { @model.inspect }
         iter = @model.append
         log.debug { "iter == #{iter}" }

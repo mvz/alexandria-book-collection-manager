@@ -461,7 +461,7 @@ module Alexandria
 
 
 
-      def on_scanner_device_type(combo)
+      def on_scanner_device_type(_combo)
         iter = @scanner_device_type.active_iter
         if iter && iter[1]
           Preferences.instance.barcode_scanner = iter[1]
@@ -509,7 +509,7 @@ module Alexandria
         @changed_block.call
       end
 
-      def on_providers_button_press_event(widget, event)
+      def on_providers_button_press_event(_widget, event)
         # double left click
         if event.event_type == Gdk::Event::BUTTON2_PRESS and
             event.button == 1

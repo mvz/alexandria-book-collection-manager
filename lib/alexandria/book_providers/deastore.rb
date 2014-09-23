@@ -81,7 +81,7 @@ module Alexandria
       end
 
       # it isn't possible to create a URL for a book given only the ISBN...
-      def url(book)
+      def url(_book)
         nil
       end
 

@@ -88,7 +88,7 @@ module Alexandria
 
       # the new Siciliano website no longer has direct links to books by their ISBN
       # (the permalink now seems to be based on the product id)
-      def url(book)
+      def url(_book)
         nil
       end
 

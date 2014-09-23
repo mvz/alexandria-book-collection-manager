@@ -84,7 +84,7 @@ class Gtk::TreeView
     signal_handler_disconnect(@context.button_release_handler)
   end
 
-  def button_release_event(event)
+  def button_release_event(_event)
     @context.events.each { |evnt| Gtk.propagate_event(self, evnt) }
     stop_drag_check
     false

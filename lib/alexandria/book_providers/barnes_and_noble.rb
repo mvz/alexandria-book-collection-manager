@@ -143,7 +143,7 @@ module Alexandria
         book_search_results
       end
 
-      def parse_result_data(html, search_isbn = nil, recursing = false)
+      def parse_result_data(html, _search_isbn = nil, _recursing = false)
         doc = html_to_doc(html)
         begin
           book_data = {}

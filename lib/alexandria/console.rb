@@ -16,7 +16,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  def self.list_books_on_console(title = true, authors = true)
+  def self.list_books_on_console(_title = true, authors = true)
     libraries_simpleton = Alexandria::Libraries.instance
     libraries_simpleton.reload
     libraries = Alexandria::Library.loadall
