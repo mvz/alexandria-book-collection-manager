@@ -1140,7 +1140,7 @@ module Alexandria
         @prefs.statusbar_visible = @actiongroup["Statusbar"].active?
         @prefs.view_as = @notebook.page
         @prefs.selected_library = selected_library.name
-        cols_width = Hash.new
+        cols_width = {}
         @listview.columns.each do |c|
           cols_width[c.title] = [c.widget.size_request.first, c.width].max
         end

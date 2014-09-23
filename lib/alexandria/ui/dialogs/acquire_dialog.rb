@@ -74,7 +74,7 @@ module Alexandria
         @prefs = Alexandria::Preferences.instance
         setup_scanner_area
         init_treeview
-        @book_results = Hash.new
+        @book_results = {}
 
         @search_thread_counter = SearchThreadCounter.new
         @search_threads_running = @search_thread_counter.new_cond
