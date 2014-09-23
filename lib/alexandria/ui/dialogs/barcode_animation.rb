@@ -108,8 +108,8 @@ module Alexandria
           rect_item = Goo::CanvasRect.new(@root,
                                           @bar_left_edge + @scale * @hpos, @bar_top,
                                           @scale * bar_width, @bar_height,
-                                          :line_width => 0,
-                                          :fill_color => 'white')
+                                          line_width: 0,
+                                          fill_color: 'white')
           @hpos += bar_width
           @barcode_bars << rect_item
         end

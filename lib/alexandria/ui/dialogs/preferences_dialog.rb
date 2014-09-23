@@ -104,7 +104,7 @@ module Alexandria
 
     class ProviderPreferencesDialog < ProviderPreferencesBaseDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, provider)
         super(_("Preferences for %s") % provider.fullname,
@@ -129,7 +129,7 @@ module Alexandria
 
     class NewProviderDialog <  ProviderPreferencesBaseDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent)
         super(_("New Provider"),
@@ -218,7 +218,7 @@ module Alexandria
     class PreferencesDialog < BuilderBase
       include Alexandria::Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, &changed_block)
         super('preferences_dialog__builder.glade', widget_names)

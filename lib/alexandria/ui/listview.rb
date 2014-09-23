@@ -22,7 +22,7 @@ module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
     class ListViewManager
       include Logging
       include GetText
@@ -142,7 +142,7 @@ module Alexandria
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
-                                         :text => Columns::TAGS)
+                                         text: Columns::TAGS)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = Columns::TAGS
         column.resizable = true
@@ -225,7 +225,7 @@ module Alexandria
           end
 
         end
-        column = Gtk::TreeViewColumn.new(title, renderer, :text => iterid)
+        column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
@@ -259,7 +259,7 @@ module Alexandria
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
-                                         :text => iterid)
+                                         text: iterid)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true

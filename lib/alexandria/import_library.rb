@@ -24,7 +24,7 @@ module Alexandria
 
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def self.all
       [

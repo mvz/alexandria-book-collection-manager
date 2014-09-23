@@ -28,7 +28,7 @@ module Alexandria
     class Z3950Provider < AbstractProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(name = "Z3950", fullname = "Z39.50")
         super
@@ -76,7 +76,7 @@ module Alexandria
 
       def marc_to_book(marc_txt)
         begin
-          marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
+          marc = MARC::Record.new_from_marc(marc_txt, forgiving: true)
         rescue Exception => ex
           log.error { ex.message }
           log.error { ex.backtrace.join("> \n") }
@@ -212,7 +212,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize
         super("LOC", _("Library of Congress (Usa)"))
@@ -243,7 +243,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize
         super("BL", _("British Library"))
@@ -330,7 +330,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize
         super("SBN", "Servizio Bibliotecario Nazionale (Italy)")

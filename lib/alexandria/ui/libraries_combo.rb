@@ -19,7 +19,7 @@
 class Gtk::ComboBox
   include GetText
   extend GetText
-  GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+  GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
   def populate_with_libraries(libraries, selected_library)
     libraries_names = libraries.map { |x| x.name }
@@ -45,10 +45,10 @@ class Gtk::ComboBox
     iter[2] = true
     renderer = Gtk::CellRendererPixbuf.new
     pack_start(renderer, false)
-    set_attributes(renderer, :pixbuf => 0)
+    set_attributes(renderer, pixbuf: 0)
     renderer = Gtk::CellRendererText.new
     pack_start(renderer, true)
-    set_attributes(renderer, :text => 1)
+    set_attributes(renderer, text: 1)
     self.active = 0
     # self.sensitive = libraries.length > 1
     # This prohibits us from adding a "New Library" from this combo

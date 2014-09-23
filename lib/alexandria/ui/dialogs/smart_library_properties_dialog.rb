@@ -19,7 +19,7 @@ module Alexandria
   module UI
     class SmartLibraryPropertiesDialog < SmartLibraryPropertiesDialogBase
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, smart_library, &block)
         super(parent)

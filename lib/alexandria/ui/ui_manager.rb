@@ -26,7 +26,7 @@ module Alexandria
       attr_reader :model
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       module Columns
         COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
@@ -123,7 +123,7 @@ module Alexandria
         @toolbar.show_all
         @actiongroup["Undo"].sensitive = @actiongroup["Redo"].sensitive = false
         UndoManager.instance.add_observer(self)
-        @vbox1.add(@toolbar, { :position => 1, :expand => false, :fill => false })
+        @vbox1.add(@toolbar, { position: 1, expand: false, fill: false })
       end
 
       def add_main_toolbar_items
@@ -235,7 +235,7 @@ module Alexandria
 
       def setup_menus
         @menubar = @uimanager.get_widget("/MainMenubar")
-        @vbox1.add(@menubar, { :position => 0, :expand => false, :fill => false })
+        @vbox1.add(@menubar, { position: 0, expand: false, fill: false })
       end
 
       def setup_dialog_hooks

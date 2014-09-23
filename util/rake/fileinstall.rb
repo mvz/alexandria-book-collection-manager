@@ -286,7 +286,7 @@ class FileInstallTask < Rake::TaskLib
         dest = dest_dir(f, base_dir)
         FileUtils.mkdir_p(dest) unless test(?d, dest)
         if test(?f, f)
-          FileUtils.install(f, dest, :mode => mode)
+          FileUtils.install(f, dest, mode: mode)
         end
       end
     end

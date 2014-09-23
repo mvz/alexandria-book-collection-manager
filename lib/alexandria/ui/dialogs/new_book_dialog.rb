@@ -25,7 +25,7 @@ module Alexandria
   module UI
     class KeepBadISBNDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, book)
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
@@ -50,7 +50,7 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, selected_library = nil, &block)
         super('new_book_dialog__builder.glade', widget_names)
@@ -105,7 +105,7 @@ module Alexandria
         @treeview_results.append_column(col)
 
         col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new,
-                                      :text => 0)
+                                      text: 0)
         @treeview_results.append_column(col)
 
         @combo_search.active = 0
@@ -554,10 +554,10 @@ module Alexandria
       def update(status, provider)
         Gtk.queue do
           messages = {
-            :searching => _("Searching Provider '%s'..."),
-            :error => _("Error while Searching Provider '%s'"),
-            :not_found => _("Not Found at Provider '%s'"),
-            :found => _("Found at Provider '%s'")
+            searching: _("Searching Provider '%s'..."),
+            error: _("Error while Searching Provider '%s'"),
+            not_found: _("Not Found at Provider '%s'"),
+            found: _("Found at Provider '%s'")
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }

@@ -23,7 +23,7 @@ module Alexandria
     class BookPropertiesDialogBase < BuilderBase
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       COVER_MAXWIDTH = 140    # pixels
 
@@ -57,8 +57,8 @@ module Alexandria
           entry.complete_authors
         end
         col = Gtk::TreeViewColumn.new("", renderer,
-                                      :text => 0,
-                                      :editable => 1)
+                                      text: 0,
+                                      editable: 1)
         @treeview_authors.append_column(col)
 
         setup_calendar_widgets

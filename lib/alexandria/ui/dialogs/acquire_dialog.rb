@@ -56,7 +56,7 @@ module Alexandria
       include GetText
       include Logging
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, selected_library = nil, &block)
         super('acquire_dialog__builder.glade', widget_names)
@@ -320,10 +320,10 @@ module Alexandria
       def update(status, provider)
         Gtk.idle_add do
           messages = {
-            :searching => _("Searching Provider '%s'..."),
-            :error => _("Error while Searching Provider '%s'"),
-            :not_found => _("Not Found at Provider '%s'"),
-            :found => _("Found at Provider '%s'")
+            searching: _("Searching Provider '%s'..."),
+            error: _("Error while Searching Provider '%s'"),
+            not_found: _("Not Found at Provider '%s'"),
+            found: _("Found at Provider '%s'")
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
@@ -604,7 +604,7 @@ module Alexandria
         text_renderer.editable = false
 
         # Add column using our renderer
-        col = Gtk::TreeViewColumn.new("ISBN", text_renderer, :text => 0)
+        col = Gtk::TreeViewColumn.new("ISBN", text_renderer, text: 0)
         @barcodes_treeview.append_column(col)
 
         # Middle colulmn is cover-image renderer
@@ -629,7 +629,7 @@ module Alexandria
         @barcodes_treeview.append_column(col)
 
         # Add column using the second renderer
-        col = Gtk::TreeViewColumn.new("Title", text_renderer, :text => 2)
+        col = Gtk::TreeViewColumn.new("Title", text_renderer, text: 2)
         @barcodes_treeview.append_column(col)
 
         @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|

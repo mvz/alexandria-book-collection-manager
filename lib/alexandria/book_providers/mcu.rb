@@ -28,7 +28,7 @@ module Alexandria
     class MCUProvider < GenericProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       LANGUAGES = {
         'es' => '1'
