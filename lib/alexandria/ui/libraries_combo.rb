@@ -28,18 +28,18 @@ class Gtk::ComboBox
       libraries_names.unshift selected_library.name
     end
     clear
-    set_row_separator_func do |model, iter|
+    set_row_separator_func do |_model, iter|
       iter[1] == '-'
     end
     self.model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
     libraries_names.each do |library_name|
-      iter = self.model.append
+      iter = model.append
       iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
       iter[1] = library_name
       iter[2] = false
     end
-    self.model.append[1] = '-'
-    iter = self.model.append
+    model.append[1] = '-'
+    iter = model.append
     iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
     iter[1] = _('New Library')
     iter[2] = true

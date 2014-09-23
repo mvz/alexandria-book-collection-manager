@@ -185,7 +185,7 @@ module Alexandria
                                  on_error_cb)
       require 'alexandria/import_library_csv'
       books_and_covers = []
-      line_count = IO.readlines(filename).inject(0) { |count, line| count + 1 }
+      line_count = IO.readlines(filename).inject(0) { |count, _line| count + 1 }
 
       import_count = 0
       max_import = line_count - 1

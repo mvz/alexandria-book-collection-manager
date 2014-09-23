@@ -144,7 +144,7 @@ module Alexandria
         @book.publishing_year = year == 0 ? nil : year
         @book.edition = @entry_edition.text
         @book.authors = []
-        @treeview_authors.model.each { |m, p, i| @book.authors << i[0] }
+        @treeview_authors.model.each { |_m, _p, i| @book.authors << i[0] }
         @book.notes = @textview_notes.buffer.text
         @book.rating = @current_rating
 

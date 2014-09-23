@@ -63,7 +63,7 @@ module Alexandria
         else
           begin
             results = []
-            each_book_page(data) do |code, title|
+            each_book_page(data) do |code, _title|
               results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?cc=" + code)))
             end
             return results

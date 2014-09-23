@@ -71,7 +71,7 @@ class GettextGenerateTask < Rake::TaskLib
 
   def generate_desktop(infile, outfile)
     @generated_files << outfile
-    file outfile => [infile, *po_files] do |f|
+    file outfile => [infile, *po_files] do |_f|
       unless `intltool-merge --version`
         raise Exception, "Need to install intltool"
       end

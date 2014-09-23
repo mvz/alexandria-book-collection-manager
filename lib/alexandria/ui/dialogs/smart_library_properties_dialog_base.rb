@@ -149,7 +149,7 @@ module Alexandria
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
         date_entry.primary_icon_activatable = true
-        date_entry.signal_connect('icon-press') do |entry, primary, icon|
+        date_entry.signal_connect('icon-press') do |entry, primary, _icon|
           if primary.nick == 'primary'
             display_calendar_popup(entry)
           end
@@ -173,7 +173,7 @@ module Alexandria
         remove_button << Gtk::Image.new(Gtk::Stock::REMOVE,
                                         Gtk::IconSize::BUTTON)
 
-        remove_button.signal_connect('clicked') do |button|
+        remove_button.signal_connect('clicked') do |_button|
           idx = @rules_box.children.index(rule_box)
           raise if idx.nil?
           @smart_library_rules.delete_at(idx)
@@ -328,7 +328,7 @@ module Alexandria
         # @calendar_popup.border_width = 4
         # @calendar_popup.app_paintable = true
 
-        @calendar_popup.signal_connect("focus-out-event") do |popup, event|
+        @calendar_popup.signal_connect("focus-out-event") do |_popup, _event|
           hide_calendar_popup
           false
         end

@@ -254,7 +254,7 @@ module Alexandria
 
         renderer = Gtk::CellRendererToggle.new
         renderer.activatable = true
-        renderer.signal_connect('toggled') do |rndrr, path|
+        renderer.signal_connect('toggled') do |_rndrr, path|
           tree_path = Gtk::TreePath.new(path)
           @treeview_providers.selection.select_path(tree_path)
           prov = selected_provider
@@ -267,7 +267,7 @@ module Alexandria
 
         #renderer.active = true
         column = Gtk::TreeViewColumn.new("Enabled", renderer)
-        column.set_cell_data_func(renderer) do |col, rndr, mod, iter|
+        column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           value = iter[2]
           rndr.active = value
         end
@@ -280,7 +280,7 @@ module Alexandria
         column = Gtk::TreeViewColumn.new("Providers",
                                          renderer)
                                          # :text => 0)
-        column.set_cell_data_func(renderer) do |col, rndr, mod, iter|
+        column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           rndr.markup = iter[0]
           #enabled = iter[2]
           #unless enabled
@@ -586,7 +586,7 @@ module Alexandria
 
       def update_priority
         priority = []
-        @treeview_providers.model.each do |model, path, iter|
+        @treeview_providers.model.each do |_model, _path, iter|
           priority << iter[1]
         end
         Preferences.instance.providers_priority = priority

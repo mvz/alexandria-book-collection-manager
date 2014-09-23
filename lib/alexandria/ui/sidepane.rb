@@ -90,14 +90,14 @@ module Alexandria
         renderer = Gtk::CellRendererPixbuf.new
         column = Gtk::TreeViewColumn.new(_("Library"))
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           #log.debug { "sidepane: cell_data_func #{col}, #{cell}, #{iter}" }
           cell.pixbuf = iter[0]
         end
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column.pack_start(renderer, true)
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           #log.debug { "sidepane: editable #{cell}, #{iter} #{iter[1]}: #{iter[2]}" }
           cell.text, cell.editable = iter[1], iter[2]
           #log.debug { "exit sidepane: editable #{cell}, #{iter}" }
@@ -105,7 +105,7 @@ module Alexandria
         renderer.signal_connect('edited', &method(:on_edited_library))
         @library_listview.append_column(column)
 
-        @library_listview.set_row_separator_func do |model, iter|
+        @library_listview.set_row_separator_func do |_model, iter|
           #log.debug { "library_listview row_separator #{iter}" }
           iter[3]
         end
@@ -122,7 +122,7 @@ module Alexandria
           Gdk::DragContext::ACTION_MOVE)
 
           @library_listview.signal_connect('drag-motion') do
-            |widget, drag_context, x, y, time, data|
+            |_widget, drag_context, x, y, time, _data|
             log.debug { "drag-motion" }
 
             path, column, _, _ =
@@ -155,7 +155,7 @@ module Alexandria
           end
 
           @library_listview.signal_connect('drag-drop') do
-            |widget, drag_context, x, y, time, data|
+            |widget, drag_context, _x, _y, time, _data|
             log.debug { "drag-drop" }
 
             Gtk::Drag.get_data(widget,
@@ -166,7 +166,7 @@ module Alexandria
           end
 
           @library_listview.signal_connect('drag-data-received') do
-            |widget, drag_context, x, y, selection_data, info, time|
+            |_widget, drag_context, x, y, selection_data, _info, _time|
             log.debug { "drag-data-received" }
 
             success = false

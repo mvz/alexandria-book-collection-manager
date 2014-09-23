@@ -104,7 +104,7 @@ module Alexandria
           raise AddError.new(_("A binding must be provided."))
         end
          authors = []
-        @treeview_authors.model.each { |m, p, i| authors << i[0] }
+        @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
           raise AddError.new(_("At least one author must be " +
                                "provided."))

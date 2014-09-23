@@ -37,11 +37,6 @@ Lint/RescueException:
 Lint/StringConversionInInterpolation:
   Enabled: false
 
-# Offense count: 107
-# Cop supports --auto-correct.
-Lint/UnusedBlockArgument:
-  Enabled: false
-
 # Offense count: 73
 # Cop supports --auto-correct.
 Lint/UnusedMethodArgument:

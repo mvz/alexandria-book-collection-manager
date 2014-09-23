@@ -83,7 +83,7 @@ module Alexandria
       if need_retval
         while true
           @protect_pending_retvals.synchronize do
-            ary = @pending_retvals.find { |id, retval| id == @id }
+            ary = @pending_retvals.find { |id, _retval| id == @id }
             if ary
               @pending_retvals.delete(ary)
               return ary[1]

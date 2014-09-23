@@ -63,7 +63,7 @@ class Gtk::TreeView
     @context.source_actions = actions
 
     @context.button_press_handler =
-      signal_connect('button_press_event') do |widget, event, data|
+      signal_connect('button_press_event') do |_widget, event, _data|
       button_press_event(event)
     end
   end
@@ -94,7 +94,7 @@ class Gtk::TreeView
     if Gtk::Drag.threshold?(self, @context.x, @context.y, event.x, event.y)
       stop_drag_check
       paths = []
-      selection.selected_each { |model, path, iter| paths << path }
+      selection.selected_each { |_model, path, _iter| paths << path }
       @context.drag_context = Gtk::Drag.begin(self,
                                               @context.source_targets,
                                               @context.source_actions,
@@ -137,11 +137,11 @@ class Gtk::TreeView
       @context.cell_x = cell_x
       @context.cell_y = cell_y
       @context.motion_notify_handler =
-        signal_connect('motion_notify_event') do |widget, evnt, data|
+        signal_connect('motion_notify_event') do |_widget, evnt, _data|
           motion_notify_event(evnt)
         end
       @context.button_release_handler =
-        signal_connect('button_release_event') do |widget, evnt, data|
+        signal_connect('button_release_event') do |_widget, evnt, _data|
           button_release_event(evnt)
         end
       @context.events << event unless call_parent

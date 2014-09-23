@@ -43,7 +43,7 @@ module Alexandria
 
       def on_add_book widget, event
         log.info { "on_add_book" }
-        NewBookDialog.new(@main_app, selected_library) do |books, library, is_new|
+        NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
           if is_new
             append_library(library, true)
             setup_move_actions
@@ -55,7 +55,7 @@ module Alexandria
 
       def on_add_book_manual widget, event
         library = selected_library
-        NewBookDialogManual.new(@main_app, library) { |book|
+        NewBookDialogManual.new(@main_app, library) { |_book|
           refresh_books
         }
       end
@@ -132,7 +132,7 @@ module Alexandria
 
       def on_acquire widget, event
         AcquireDialog.new(@main_app,
-                          selected_library) do |books, library, is_new|
+                          selected_library) do |_books, library, is_new|
           if is_new
             append_library(library, true)
             setup_move_actions
@@ -317,22 +317,22 @@ module Alexandria
             ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)],
         ]
 
-        on_view_sidepane = proc do |actiongroup, action|
+        on_view_sidepane = proc do |_actiongroup, action|
           log.debug { "on_view_sidepane" }
           @paned.child1.visible = action.active?
         end
 
-        on_view_toolbar = proc do |actiongroup, action|
+        on_view_toolbar = proc do |_actiongroup, action|
           log.debug { "on_view_toolbar" }
           @toolbar.parent.visible = action.active?
         end
 
-        on_view_statusbar = proc do |actiongroup, action|
+        on_view_statusbar = proc do |_actiongroup, action|
           log.debug { "on_view_statusbar" }
           @appbar.visible = action.active?
         end
 
-        on_reverse_order = proc do |actiongroup, action|
+        on_reverse_order = proc do |_actiongroup, action|
           log.debug { "on_reverse_order" }
           Preferences.instance.reverse_icons = action.active?
           Preferences.instance.save!
@@ -375,14 +375,14 @@ module Alexandria
         @actiongroup.add_actions(standard_actions)
         @actiongroup.add_actions(providers_actions)
         @actiongroup.add_toggle_actions(toggle_actions)
-        @actiongroup.add_radio_actions(view_as_actions) do |action, current|
+        @actiongroup.add_radio_actions(view_as_actions) do |_action, current|
           @notebook.page = current.current_value
           hid = @toolbar_view_as_signal_hid
           @toolbar_view_as.signal_handler_block(hid) do
             @toolbar_view_as.active = current.current_value
           end
         end
-        @actiongroup.add_radio_actions(arrange_icons_actions) do |action, current|
+        @actiongroup.add_radio_actions(arrange_icons_actions) do |_action, current|
           @prefs.arrange_icons_mode = current.current_value
           setup_books_iconview_sorting
         end

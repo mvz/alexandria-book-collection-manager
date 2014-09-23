@@ -48,13 +48,13 @@ module Alexandria
         @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
         @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
         renderer = Gtk::CellRendererText.new
-        renderer.signal_connect('edited') do |cell, path_string, new_text|
+        renderer.signal_connect('edited') do |_cell, path_string, new_text|
           path = Gtk::TreePath.new(path_string)
           iter = @treeview_authors.model.get_iter(path)
           iter[0] = new_text
         end
-        renderer.signal_connect('editing_started') do |cell, entry,
-          path_string|
+        renderer.signal_connect('editing_started') do |_cell, entry,
+          _path_string|
           entry.complete_authors
         end
         col = Gtk::TreeViewColumn.new("", renderer,
@@ -86,7 +86,7 @@ module Alexandria
         # @calendar_popup.border_width = 4
         # @calendar_popup.app_paintable = true
 
-        @calendar_popup.signal_connect("focus-out-event") do |popup, event|
+        @calendar_popup.signal_connect("focus-out-event") do |_popup, _event|
           hide_calendar_popup
           false
         end
@@ -118,7 +118,7 @@ module Alexandria
           hide_calendar_popup
         end
 
-        @redd_date.signal_connect('icon-press') do |entry, primary, icon|
+        @redd_date.signal_connect('icon-press') do |entry, primary, _icon|
           if primary.nick == 'primary'
             display_calendar_popup(entry)
           elsif primary.nick == 'secondary'
@@ -126,7 +126,7 @@ module Alexandria
           end
         end
 
-        @date_loaned_since.signal_connect('icon-press') do |entry, primary, icon|
+        @date_loaned_since.signal_connect('icon-press') do |entry, primary, _icon|
           if primary.nick == 'primary'
             display_calendar_popup(entry)
           elsif primary.nick == 'secondary'

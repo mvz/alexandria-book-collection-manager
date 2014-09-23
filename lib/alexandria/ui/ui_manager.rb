@@ -156,7 +156,7 @@ module Alexandria
         @tooltips = Gtk::Tooltips.new
 
         cb = Gtk::ComboBox.new
-        cb.set_row_separator_func do |model, iter|
+        cb.set_row_separator_func do |_model, iter|
           #log.debug { "row_separator" }
           iter[0] == '-'
         end
@@ -240,11 +240,11 @@ module Alexandria
 
       def setup_dialog_hooks
         log.debug { "setup_dialog_hooks" }
-        Gtk::AboutDialog.set_url_hook do |about, link|
+        Gtk::AboutDialog.set_url_hook do |_about, link|
           log.debug { "set_url_hook" }
           open_web_browser(link)
         end
-        Gtk::AboutDialog.set_email_hook do |about, link|
+        Gtk::AboutDialog.set_email_hook do |_about, link|
           log.debug { "set_email_hook" }
           open_email_client("mailto:" + link)
         end
@@ -292,7 +292,7 @@ module Alexandria
 
         # Filter books according to the search toolbar widgets.
         @filtered_model = Gtk::TreeModelFilter.new(@model)
-        @filtered_model.set_visible_func do |model, iter|
+        @filtered_model.set_visible_func do |_model, iter|
           #log.debug { "visible_func" }
           @filter_books_mode ||= 0
           filter = @filter_entry.text
@@ -739,7 +739,7 @@ module Alexandria
                                                  Gtk::MessageDialog::WARNING,
                                                  Gtk::MessageDialog::BUTTONS_OK_CANCEL,
                                                  new_message).show
-        recovery_dialog.signal_connect('response') do |dialog, response_type|
+        recovery_dialog.signal_connect('response') do |_dialog, response_type|
           recovery_dialog.destroy
           if response_type == Gtk::Dialog::RESPONSE_OK
             # progress indicator...
@@ -1029,7 +1029,7 @@ module Alexandria
         view = page == 0 ? @iconview : @listview
         selection = page == 0 ? @iconview : @listview.selection
 
-        selection.selected_each do |the_view, path|
+        selection.selected_each do |_the_view, path|
           # don't use the_view which is passed in by this block
           # as it doesn't consider the filtering for some reason
           # see bug #24568

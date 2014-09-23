@@ -58,7 +58,7 @@ module Alexandria
         # this next must be a dynamic link, as demuxers potentially
         # have multiple src pads (for audio/video muxed streams)
 
-        demuxer.signal_connect("pad-added") do |parser, ogg_src_pad|
+        demuxer.signal_connect("pad-added") do |_parser, ogg_src_pad|
           vorbis_sink_pad = decoder.get_pad("sink")
           ogg_src_pad.link(vorbis_sink_pad)
         end
@@ -71,7 +71,7 @@ module Alexandria
           @loop = GLib::MainLoop.new(nil, false)
 
           @bus = @ogg_vorbis_pipeline.bus
-          @bus.add_watch do |bus, message|
+          @bus.add_watch do |_bus, message|
             case message.type
             when Gst::Message::EOS
               @playing = false

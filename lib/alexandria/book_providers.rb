@@ -55,7 +55,7 @@ module Alexandria
         results = factory.search(criterion, type)
 
         # sanity check if at least one valid result is actually found
-        results.delete_if { |book, cover| book.nil? }
+        results.delete_if { |book, _cover| book.nil? }
 
         if results.length == 0
           instance.changed

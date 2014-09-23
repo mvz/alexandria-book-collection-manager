@@ -130,7 +130,7 @@ module Alexandria
 
           model.freeze_notify do
             # capture isbns
-            selection.selected_each do |mod, path, iter|
+            selection.selected_each do |_mod, _path, iter|
               isbn = iter[0]
               if book_in_library(isbn, library)
                 isbn_duplicates << isbn
@@ -185,7 +185,7 @@ module Alexandria
           model.freeze_notify do
             # capture isbns
             row_iters = []
-            model.each do |mod, path, iter|
+            model.each do |_mod, _path, iter|
               isbn = iter[0]
               if not @book_results.has_key?(isbn)
                 log.debug { "no book found for #{isbn}, not adding" }
@@ -471,10 +471,10 @@ module Alexandria
         @scan_frame.add(@animation.canvas)
 
         # attach signals
-        @scan_area.signal_connect("button-press-event") do |widget, event|
+        @scan_area.signal_connect("button-press-event") do |_widget, _event|
           @scan_area.grab_focus
         end
-        @scan_area.signal_connect("focus-in-event") do |widget, event|
+        @scan_area.signal_connect("focus-in-event") do |_widget, _event|
           @barcode_label.label = _("%s _Barcode Scanner Ready" % _(@scanner.display_name))
           @scanner_buffer = ""
           begin
@@ -483,7 +483,7 @@ module Alexandria
             log << err if log.error?
           end
         end
-        @scan_area.signal_connect("focus-out-event") do |widget, event|
+        @scan_area.signal_connect("focus-out-event") do |_widget, _event|
           @barcode_label.label = _("Click below to scan _barcodes")
           @scanner_buffer = ""
           @animation.set_passive
@@ -491,7 +491,7 @@ module Alexandria
         end
 
         @@debug_index = 0
-        @scan_area.signal_connect("key-press-event") do |button, event|
+        @scan_area.signal_connect("key-press-event") do |_button, event|
           #log.debug { event.keyval }
             # event.keyval == 65293 means Enter key
           # HACK, this disallows numeric keypad entry of data...
@@ -621,7 +621,7 @@ module Alexandria
         pixbuf_renderer = Gtk::CellRendererPixbuf.new
         col = Gtk::TreeViewColumn.new("Cover", pixbuf_renderer)
 
-        col.set_cell_data_func(pixbuf_renderer) do |column, cell, model, iter|
+        col.set_cell_data_func(pixbuf_renderer) do |_column, cell, _model, iter|
           pixbuf = iter[1]
           if pixbuf
             max_height = 25
@@ -644,7 +644,7 @@ module Alexandria
         @barcodes_treeview.append_column(col)
 
 
-        @barcodes_treeview.model.signal_connect("row-deleted") do |model, path|
+        @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|
           if not model.iter_first
             @add_button.sensitive = false
           end

@@ -67,7 +67,7 @@ module Alexandria
         else
           begin
             results = []
-            each_book_page(data) do |code, title|
+            each_book_page(data) do |code, _title|
               results << to_book(transport.get(URI.parse(BASE_URI + "/#{LOCALE}/scheda/ea" + code)))
             end
             return results

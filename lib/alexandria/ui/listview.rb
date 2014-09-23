@@ -56,7 +56,7 @@ module Alexandria
         column.widget = Gtk::Label.new(title).show
         renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           cell.pixbuf = iter[Columns::COVER_LIST]
@@ -68,7 +68,7 @@ module Alexandria
 
         column.pack_start(renderer, true)
 
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           cell.text, cell.editable = iter[Columns::TITLE], false #true
@@ -80,13 +80,13 @@ module Alexandria
       end
 
       def make_renderer_editable renderer
-        renderer.signal_connect('editing_started') do |cell, entry,
-          path_string|
+        renderer.signal_connect('editing_started') do |_cell, entry,
+          _path_string|
         log.debug { "editing_started" }
         entry.complete_titles
         end
 
-        renderer.signal_connect('edited') do |cell, path_string, new_string|
+        renderer.signal_connect('edited') do |_cell, path_string, new_string|
           log.debug { "edited" }
           path = Gtk::TreePath.new(path_string)
           path = @listview_model.convert_path_to_child_path(path)
@@ -174,7 +174,7 @@ module Alexandria
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
           column.pack_start(renderer, false)
-          column.set_cell_data_func(renderer) do |col, cell, model, iter|
+          column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
             iter = @listview_model.convert_iter_to_child_iter(iter)
             iter = @filtered_model.convert_iter_to_child_iter(iter)
             rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
@@ -190,7 +190,7 @@ module Alexandria
       def setup_check_column title, iterid
         renderer = CellRendererToggle.new
         renderer.activatable = true
-        renderer.signal_connect('toggled') do |rndrr, path|
+        renderer.signal_connect('toggled') do |_rndrr, path|
           begin
             tree_path = Gtk::TreePath.new(path)
             child_path = @listview_model.convert_path_to_child_path(tree_path)
@@ -238,7 +238,7 @@ module Alexandria
           cell.activatable = true
         end
         log.debug { "Setting cell_data_func for #{renderer}" }
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           case iterid

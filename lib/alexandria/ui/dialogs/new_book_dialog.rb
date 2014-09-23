@@ -95,7 +95,7 @@ module Alexandria
 
         renderer = Gtk::CellRendererPixbuf.new
         col = Gtk::TreeViewColumn.new("", renderer)
-        col.set_cell_data_func(renderer) do |column, cell, model, iter|
+        col.set_cell_data_func(renderer) do |_column, cell, _model, iter|
           pixbuf = iter[2]
           max_height = 25
 
@@ -320,10 +320,10 @@ module Alexandria
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
-                       @results.each do |book, cover|
+                       @results.each do |book, _cover|
                          s = _("%s, by %s") % [book.title,
                            book.authors.join(', ')]
-                         if @results.find { |book2, cover2|
+                         if @results.find { |book2, _cover2|
                            book.title == book2.title and
                            book.authors == book2.authors
                          }.length > 1
@@ -446,7 +446,7 @@ module Alexandria
 
       def add_selected_books(library, is_new)
         books_to_add = []
-        @treeview_results.selection.selected_each do |model, path, iter|
+        @treeview_results.selection.selected_each do |_model, _path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
             begin

@@ -50,7 +50,7 @@ class Gtk::Entry
       c.entry.text = cur_text_split.join(",")
       true
     end
-    completion.set_match_func do |comp, key, iter|
+    completion.set_match_func do |_comp, key, iter|
       cur_tag = key.split(",").last.strip
       if cur_tag.size >= min
         begin
