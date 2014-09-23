@@ -86,7 +86,7 @@ task debian_install: :install_package_staging
 FileInstallTask.new(:package) do |j|
   install_common(j)
 
-  docs = %w(README NEWS INSTALL COPYING TODO)
+  docs = %w(README.rdoc NEWS INSTALL.rdoc COPYING TODO)
   devel_docs = ['doc/AUTHORS', 'doc/BUGS', 'doc/FAQ',
                 'doc/cuecat_support.rdoc']
   j.install('', docs, "#{SHARE}/doc/#{PROJECT}")
@@ -211,33 +211,11 @@ task ultra_clobber: :clobber do
   end
 end
 
-file 'ChangeLog' do
-  unless `svn2cl --version`
-    raise Exception, "Unable to generate ChangeLog; install svn2cl"
-  end
-  sh "svn2cl -r HEAD:700 -o ChangeLog.tmp"
-  # Revision r703 is on the date of the last ChangeLog.0 entry
-  if File.exist?('ChangeLog.tmp')
-    # fix up file (remove blank lines beginning with tabs)
-    File.open('ChangeLog', 'wb') do |change_log|
-      File.open('ChangeLog.tmp').each_line do |line|
-        if line.chomp =~ /(^[\t][\s]+$)/
-          change_log.write("\n")
-        else
-          change_log.write(line)
-        end
-      end
-    end
-    File.delete('ChangeLog.tmp')
-  end
-end
-ULTRA_CLOBBER << "ChangeLog"
-
 ## # # # package task # # # ##
 
 Rake::PackageTask.new(PROJECT, DISPLAY_VERSION) do |p|
   p.need_tar_gz = true
-  p.package_files.include("README*", "COPYING", "ChangeLog", "INSTALL",
+  p.package_files.include("README*", "COPYING", "CHANGELOG.md", "INSTALL.rdoc",
                           "NEWS", "Rakefile", "util/**/*",
                           "TODO", "alexandria.desktop",
                           "alexandria.desktop.in",

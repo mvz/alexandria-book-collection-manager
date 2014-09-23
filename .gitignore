@@ -7,3 +7,4 @@ lib/alexandria/default_preferences.rb
 Gemfile.lock
 share/locale/
 share/omf/alexandria/*.omf
+pkg/
