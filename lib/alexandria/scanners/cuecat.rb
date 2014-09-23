@@ -23,11 +23,11 @@ module Alexandria
     class CueCat
       include Alexandria::Logging
 
-      def name()
+      def name
         "CueCat"
       end
 
-      def display_name()
+      def display_name
         "CueCat"
       end
 

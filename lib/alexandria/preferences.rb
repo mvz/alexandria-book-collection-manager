@@ -33,7 +33,7 @@ module Alexandria
 
     GCONFTOOL = "gconftool-2"
 
-    def initialize()
+    def initialize
       @alexandria_settings = {}
       @changed_settings = Set.new
 

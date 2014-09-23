@@ -145,7 +145,7 @@ class IconViewTooltips
     end
   end
 
-  def hide_tooltip()
+  def hide_tooltip
     unless @tooltip_window.nil?
       @tooltip_window.hide
       if @tooltip_timeout_id

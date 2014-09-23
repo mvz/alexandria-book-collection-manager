@@ -24,7 +24,7 @@ module Alexandria
     # scan data as if typed from a keyboard. (Modified CueCats act
     # like this.)
     class KeyboardWedge
-      def name()
+      def name
         "KeyboardWedge"
       end
 

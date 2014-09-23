@@ -40,7 +40,7 @@ module Alexandria
 
       PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
 
-      def initialize()
+      def initialize
         super("AdLibris", "AdLibris (Sweden)")
         prefs.read
         # @ent = HTMLEntities.new

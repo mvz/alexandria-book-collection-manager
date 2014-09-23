@@ -34,7 +34,7 @@ module Alexandria
       SITE = "http://www.deastore.com"
       BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s" # type/term
 
-      def initialize()
+      def initialize
         super("DeaStore", "DeaStore (Italy)")
         prefs.read
         @agent = nil

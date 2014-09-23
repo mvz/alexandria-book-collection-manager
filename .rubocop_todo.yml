@@ -128,11 +128,6 @@ Style/ConstantName:
 Style/CyclomaticComplexity:
   Max: 28
 
-# Offense count: 13
-# Cop supports --auto-correct.
-Style/DefWithParentheses:
-  Enabled: false
-
 # Offense count: 134
 Style/Documentation:
   Enabled: false

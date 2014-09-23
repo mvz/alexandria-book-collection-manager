@@ -204,11 +204,11 @@ module Alexandria
         @prefs.add("enabled", _("Enabled"), true, [true, false])
       end
 
-      def enabled()
+      def enabled
         @prefs['enabled']
       end
 
-      def toggle_enabled()
+      def toggle_enabled
         old_value = enabled
         @prefs.variable_named('enabled').new_value = !old_value
       end

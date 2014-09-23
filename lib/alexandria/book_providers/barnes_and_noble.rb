@@ -43,7 +43,7 @@ module Alexandria
       BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" \
         "/results.asp?%s=%s" # type, term
 
-      def initialize()
+      def initialize
         super("BarnesAndNoble", "BarnesAndNoble")
         @agent = nil
         prefs.read

@@ -2,7 +2,7 @@
 
 module Alexandria
   class WWWAgent
-    def initialize()
+    def initialize
       user_agent = "Ruby #{RUBY_VERSION} #{Alexandria::TITLE}/#{Alexandria::VERSION}"
       @extra_request_headers = { "User-Agent" => user_agent }
     end

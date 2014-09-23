@@ -40,7 +40,7 @@ module Alexandria
       SITE = "http://www.worldcat.org"
       BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
 
-      def initialize()
+      def initialize
         super("WorldCat", "WorldCat")
         # prefs.add("enabled", _("Enabled"), true, [true,false])
         prefs.read

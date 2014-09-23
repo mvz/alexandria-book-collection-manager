@@ -35,7 +35,7 @@ module Alexandria
       SITE = "http://www.douban.com"
       BASE_URL = "http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json"
 
-      def initialize()
+      def initialize
         super("Douban", "Douban (China)")
         prefs.read
       end
