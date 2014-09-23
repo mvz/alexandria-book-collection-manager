@@ -187,7 +187,7 @@ class FileInstallTask < Rake::TaskLib
     else
       ruby_libdir = RbConfig::CONFIG['sitelibdir']
     end
-    if ENV.has_key?('RUBYLIBDIR')
+    if ENV.key?('RUBYLIBDIR')
       ruby_libdir = ENV['RUBYLIBDIR']
     end
 

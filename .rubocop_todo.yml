@@ -133,11 +133,6 @@ Style/CyclomaticComplexity:
 Style/DefWithParentheses:
   Enabled: false
 
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/DeprecatedHashMethods:
-  Enabled: false
-
 # Offense count: 134
 Style/Documentation:
   Enabled: false

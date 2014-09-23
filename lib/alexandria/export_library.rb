@@ -484,7 +484,7 @@ EOS
       auths = Hash.new(0)
       each do |book|
         k = (book.authors[0] or "Anonymous").split[0]
-        if auths.has_key?(k)
+        if auths.key?(k)
           auths[k] += 1
         else
           auths[k] = 1

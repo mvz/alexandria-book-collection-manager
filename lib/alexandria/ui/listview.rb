@@ -297,7 +297,7 @@ module Alexandria
           cols_width = YAML.load(@prefs.cols_width)
           log.debug { "cols_width: #{cols_width.inspect }" }
           @listview.columns.each do |c|
-            if cols_width.has_key?(c.title)
+            if cols_width.key?(c.title)
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
               c.sizing = Gtk::TreeViewColumn::FIXED
               c.fixed_width = cols_width[c.title]

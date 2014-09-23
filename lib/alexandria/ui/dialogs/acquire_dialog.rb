@@ -161,7 +161,7 @@ module Alexandria
                 ## TODO add another column in the iter, like "isbn/01"
                 # that would allow this kind of behaviour...
 
-              elsif !@book_results.has_key?(isbn) # HAX
+              elsif !@book_results.key?(isbn) # HAX
                 log.debug { "no book found for #{isbn}, not adding" }
 
                 # good enough for now
@@ -182,7 +182,7 @@ module Alexandria
             row_iters = []
             model.each do |_mod, _path, iter|
               isbn = iter[0]
-              if !@book_results.has_key?(isbn)
+              if !@book_results.key?(isbn)
                 log.debug { "no book found for #{isbn}, not adding" }
                 adding_a_selection = true
               elsif book_in_library(isbn, library)

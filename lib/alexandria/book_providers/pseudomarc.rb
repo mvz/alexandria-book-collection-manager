@@ -171,7 +171,7 @@ module Alexandria
           end
 
           unless this_line_data.empty?
-            unless details.has_key?(code)
+            unless details.key?(code)
               details[code] = []
             end
             details[code] << this_line_data
