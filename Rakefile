@@ -42,7 +42,6 @@ PREFIX = prefix_dir
 share_dir = ENV['SHARE'] || "#{PREFIX}/share"
 SHARE = share_dir
 
-PROJECT_VERSION = '0.6.8'
 DISPLAY_VERSION = '0.6.8'
 
 GettextGenerateTask.new(PROJECT) do |g|
