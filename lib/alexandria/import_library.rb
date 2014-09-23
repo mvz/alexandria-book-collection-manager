@@ -248,7 +248,7 @@ module Alexandria
 
       books_and_covers.each do |book, cover_uri|
         puts "Saving #{book.isbn} cover..." if $DEBUG
-        library.save_cover(book, cover_uri) if !cover_uri.nil?
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)
@@ -300,7 +300,7 @@ module Alexandria
       puts "Going with these #{books.length} books: #{books.inspect}" if $DEBUG
       books.each do |book, cover_uri|
         puts "Saving #{book.isbn} cover..." if $DEBUG
-        library.save_cover(book, cover_uri) if !cover_uri.nil?
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)

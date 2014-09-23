@@ -30,7 +30,7 @@ module Alexandria
         return super(severity, message, progname, &block)
       end
       category = self.class.category(source)
-      if not block_given?
+      unless block_given?
         return super(severity, progname, category)
       end
       category = "#{category} #{progname}" if progname

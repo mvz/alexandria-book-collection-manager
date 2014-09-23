@@ -633,7 +633,7 @@ module Alexandria
         @barcodes_treeview.append_column(col)
 
         @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|
-          if not model.iter_first
+          unless model.iter_first
             @add_button.sensitive = false
           end
         end

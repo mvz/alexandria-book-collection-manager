@@ -46,7 +46,7 @@ module Alexandria
       begin
         factory = instance[factory_n]
         puts factory.fullname + " lookup" if $DEBUG
-        if not factory.enabled
+        unless factory.enabled
           puts factory.fullname + " disabled!, skipping..." if $DEBUG
           raise ProviderSkippedError
         end

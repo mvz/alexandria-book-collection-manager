@@ -80,7 +80,7 @@ module Alexandria
 
           test[1] = filename if test[0] == 0
 
-          if not File.size? test[1]
+          unless File.size? test[1]
             log.warn { "Book file #{test[1]} was empty" }
             md = /([\dxX]{10,13})#{EXT[:book]}/.match(filename)
             if md

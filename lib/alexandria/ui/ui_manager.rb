@@ -576,7 +576,7 @@ module Alexandria
         select_this_book = proc do |bk, view|
           @filtered_model.refilter
           iter = iter_from_book bk
-          if not iter
+          unless iter
             next
           end
           path = iter.path

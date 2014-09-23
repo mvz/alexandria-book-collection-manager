@@ -257,7 +257,7 @@ module Alexandria
           if !operand_idx.nil? and !operation_idx.nil?
             left_operand_combo.active = operand_idx
             operator_combo.active = operation_idx
-            if !rule.value.nil?
+            unless rule.value.nil?
               case rule.value
               when String
                 value_entry.text = rule.value

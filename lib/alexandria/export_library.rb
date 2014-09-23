@@ -43,7 +43,7 @@ module Alexandria
       sorted = library.sort_by do |book|
         book.send(@book_attribute)
       end
-      if not @ascending
+      unless @ascending
         sorted.reverse!
       end
       sorted
@@ -352,7 +352,7 @@ module Alexandria
         end
         entry.add_element('read').text = book.redd.to_s if book.redd
         entry.add_element('loaned').text = book.loaned.to_s if book.loaned
-        if not book.rating == Book::DEFAULT_RATING
+        unless book.rating == Book::DEFAULT_RATING
           entry.add_element('rating').text = book.rating
         end
         if book.notes and not book.notes.empty?

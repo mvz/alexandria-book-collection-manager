@@ -246,11 +246,6 @@ Style/MultilineIfThen:
 Style/MultilineTernaryOperator:
   Enabled: false
 
-# Offense count: 11
-# Cop supports --auto-correct.
-Style/NegatedIf:
-  Enabled: false
-
 # Offense count: 2
 Style/NestedTernaryOperator:
   Enabled: false

@@ -182,7 +182,7 @@ module Alexandria
 
         begin
           if prefs.variable_named("piggyback")
-            if not prefs['piggyback']
+            unless prefs['piggyback']
               log.debug { "setting conn.piggyback to false" }
               conn.piggyback = false
             end
