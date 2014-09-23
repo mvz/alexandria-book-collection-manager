@@ -28,13 +28,11 @@ module Alexandria
 
     def self.all
       [
-       new(_("Autodetect"), ['*'], :import_autodetect),
-       new(_("Archived Tellico XML (*.bc, *.tc)"),
-                ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
-       new(_("ISBN List (*.txt)"), ['*.txt'],
-                :import_as_isbn_list),
-       new(_("GoodReads CSV"), ['*.csv'],
-                :import_as_csv_file)
+        new(_("Autodetect"), ['*'], :import_autodetect),
+        new(_("Archived Tellico XML (*.bc, *.tc)"),
+            ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
+        new(_("ISBN List (*.txt)"), ['*.txt'], :import_as_isbn_list),
+        new(_("GoodReads CSV"), ['*.csv'], :import_as_csv_file)
       ]
     end
 

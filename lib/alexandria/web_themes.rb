@@ -22,12 +22,12 @@ module Alexandria
 
     def self.all
       themes_dir = [
-                    # System dir
-                    File.join(Alexandria::Config::DATA_DIR, "web-themes"),
+        # System dir
+        File.join(Alexandria::Config::DATA_DIR, "web-themes"),
 
-                    # User dir
-                    File.join(ENV['HOME'], '.alexandria', '.web-themes')
-                   ]
+        # User dir
+        File.join(ENV['HOME'], '.alexandria', '.web-themes')
+      ]
       themes_dir.map { |x| load(x) }.flatten
     end
 

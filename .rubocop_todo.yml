@@ -99,7 +99,7 @@ Style/ClassCheck:
 # Offense count: 35
 # Configuration parameters: CountComments.
 Style/ClassLength:
-  Max: 1070
+  Max: 1071
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -191,11 +191,6 @@ Style/HashSyntax:
 # Offense count: 67
 # Configuration parameters: MaxLineLength.
 Style/IfUnlessModifier:
-  Enabled: false
-
-# Offense count: 23
-# Cop supports --auto-correct.
-Style/IndentArray:
   Enabled: false
 
 # Offense count: 1

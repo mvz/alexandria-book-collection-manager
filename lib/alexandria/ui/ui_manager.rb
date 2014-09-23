@@ -269,23 +269,24 @@ module Alexandria
         log.debug { "setting up active model" }
         # The active model.
 
-        list = [Gdk::Pixbuf,    # COVER_LIST
-                Gdk::Pixbuf,    # COVER_ICON
-                String,         # TITLE
-                String,         # TITLE_REDUCED
-                String,         # AUTHORS
-                String,         # ISBN
-                String,         # PUBLISHER
-                String,         # PUBLISH_DATE
-                String,         # EDITION
-                Integer,        # RATING
-                String,         # IDENT
-                String,         # NOTES
-                TrueClass,      # REDD
-                TrueClass,      # OWN
-                TrueClass,      # WANT
-                String,         # TAGS
-                String          # LOANED TO
+        list = [
+          Gdk::Pixbuf,    # COVER_LIST
+          Gdk::Pixbuf,    # COVER_ICON
+          String,         # TITLE
+          String,         # TITLE_REDUCED
+          String,         # AUTHORS
+          String,         # ISBN
+          String,         # PUBLISHER
+          String,         # PUBLISH_DATE
+          String,         # EDITION
+          Integer,        # RATING
+          String,         # IDENT
+          String,         # NOTES
+          TrueClass,      # REDD
+          TrueClass,      # OWN
+          TrueClass,      # WANT
+          String,         # TAGS
+          String          # LOANED TO
         ]
 
         @model = Gtk::ListStore.new(*list)

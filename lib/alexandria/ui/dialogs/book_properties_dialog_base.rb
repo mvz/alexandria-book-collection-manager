@@ -281,12 +281,9 @@ module Alexandria
                                             @book_properties_dialog,
                                             Gtk::FileChooser::ACTION_OPEN,
                                             backend,
-                                            [_("No Cover"),
-                                             Gtk::Dialog::RESPONSE_REJECT],
-                                            [Gtk::Stock::CANCEL,
-                                             Gtk::Dialog::RESPONSE_CANCEL],
-                                            [Gtk::Stock::OPEN,
-                                             Gtk::Dialog::RESPONSE_ACCEPT])
+                                            [_("No Cover"), Gtk::Dialog::RESPONSE_REJECT],
+                                            [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+                                            [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT])
         dialog.current_folder = @@latest_filechooser_directory
         response = dialog.run
         if response == Gtk::Dialog::RESPONSE_ACCEPT
@@ -337,7 +334,7 @@ module Alexandria
 
       def on_loaned_date_changed
         date_regexes =  [/[0123]?[0-9]\/[0123]?[0-9]\/[0-9]{4}/,
-                        /[0-9]{4}-[0123]?[0-9]-[0123]?[0-9]/]
+                         /[0-9]{4}-[0123]?[0-9]-[0123]?[0-9]/]
         matches_regex = false
         date_regexes.each do |regex|
           if matches_regex = regex.match(@date_loaned_since.text)
@@ -382,12 +379,12 @@ module Alexandria
 
       def rating=(rating)
         images = [
-                  @image_rating1,
-                  @image_rating2,
-                  @image_rating3,
-                  @image_rating4,
-                  @image_rating5
-                 ]
+          @image_rating1,
+          @image_rating2,
+          @image_rating3,
+          @image_rating4,
+          @image_rating5
+        ]
         raise "out of range" if rating < 0 or rating > images.length
         images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
         images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }

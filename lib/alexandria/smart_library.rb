@@ -341,23 +341,23 @@ module Alexandria
         bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
         LEFT = [
-                LeftOperand.new(:title, _("Title"), String),
-                LeftOperand.new(:isbn, _("ISBN"), String),
-                LeftOperand.new(:authors, _("Authors"), String),
-                LeftOperand.new(:publisher, _("Publisher"), String),
-                LeftOperand.new(:publishing_year, _("Publish Year"), Integer),
-                LeftOperand.new(:edition, _("Binding"), String),
-                LeftOperand.new(:rating, _("Rating"), Integer),
-                LeftOperand.new(:notes, _("Notes"), String),
-                LeftOperand.new(:tags, _("Tags"), Array),
-                LeftOperand.new(:loaned, _("Loaning State"), TrueClass),
-                LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
-                LeftOperand.new(:loaned_to, _("Loaning Person"), String),
-                LeftOperand.new(:redd, _("Read"), TrueClass),
-                LeftOperand.new(:redd_when, _("Date Read"), Time),
-                LeftOperand.new(:own, _("Own"), TrueClass),
-                LeftOperand.new(:want, _("Want"), TrueClass),
-               ].sort
+          LeftOperand.new(:title, _("Title"), String),
+          LeftOperand.new(:isbn, _("ISBN"), String),
+          LeftOperand.new(:authors, _("Authors"), String),
+          LeftOperand.new(:publisher, _("Publisher"), String),
+          LeftOperand.new(:publishing_year, _("Publish Year"), Integer),
+          LeftOperand.new(:edition, _("Binding"), String),
+          LeftOperand.new(:rating, _("Rating"), Integer),
+          LeftOperand.new(:notes, _("Notes"), String),
+          LeftOperand.new(:tags, _("Tags"), Array),
+          LeftOperand.new(:loaned, _("Loaning State"), TrueClass),
+          LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
+          LeftOperand.new(:loaned_to, _("Loaning Person"), String),
+          LeftOperand.new(:redd, _("Read"), TrueClass),
+          LeftOperand.new(:redd_when, _("Date Read"), Time),
+          LeftOperand.new(:own, _("Own"), TrueClass),
+          LeftOperand.new(:want, _("Want"), TrueClass),
+        ].sort
 
         STRING = Operand.new(nil, String)
         STRING_ARRAY = Operand.new(nil, String)
@@ -468,39 +468,39 @@ module Alexandria
       end
 
       BOOLEAN_OPERATORS = [
-                           Operators::IS_TRUE,
-                           Operators::IS_NOT_TRUE
-                          ].sort
+        Operators::IS_TRUE,
+        Operators::IS_NOT_TRUE
+      ].sort
 
       STRING_OPERATORS = [
-                          Operators::IS,
-                          Operators::IS_NOT,
-                          Operators::CONTAINS,
-                          Operators::DOES_NOT_CONTAIN,
-                          Operators::STARTS_WITH,
-                          Operators::ENDS_WITH
-                         ].sort
+        Operators::IS,
+        Operators::IS_NOT,
+        Operators::CONTAINS,
+        Operators::DOES_NOT_CONTAIN,
+        Operators::STARTS_WITH,
+        Operators::ENDS_WITH
+      ].sort
 
       STRING_ARRAY_OPERATORS = [
-                                Operators::CONTAINS,
-                                Operators::DOES_NOT_CONTAIN
-                               ].sort
+        Operators::CONTAINS,
+        Operators::DOES_NOT_CONTAIN
+      ].sort
 
       INTEGER_OPERATORS = [
-                           Operators::IS,
-                           Operators::IS_NOT,
-                           Operators::IS_GREATER_THAN,
-                           Operators::IS_LESS_THAN
-                          ].sort
+        Operators::IS,
+        Operators::IS_NOT,
+        Operators::IS_GREATER_THAN,
+        Operators::IS_LESS_THAN
+      ].sort
 
       TIME_OPERATORS = [
-                        Operators::IS,
-                        Operators::IS_NOT,
-                        Operators::IS_AFTER,
-                        Operators::IS_BEFORE,
-                        Operators::IS_IN_LAST,
-                        Operators::IS_NOT_IN_LAST
-                       ].sort
+        Operators::IS,
+        Operators::IS_NOT,
+        Operators::IS_AFTER,
+        Operators::IS_BEFORE,
+        Operators::IS_IN_LAST,
+        Operators::IS_NOT_IN_LAST
+      ].sort
 
       def self.operations_for_operand(operand)
         case operand.klass.name
