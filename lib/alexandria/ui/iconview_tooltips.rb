@@ -49,7 +49,7 @@ class IconViewTooltips
     @label.wrap = true
     @label.set_alignment(0.5, 0.5)
     @label.use_markup = true
-    @label.show()
+    @label.show
 
     @tooltip_window.add(@label)
     set_view(view)
@@ -128,7 +128,7 @@ class IconViewTooltips
             size = @tooltip_window.size_request
             @tooltip_window.move(event.x_root - size[0],
                                  event.y_root + 12)
-            @tooltip_window.show()
+            @tooltip_window.show
             # don't run again
             false
           else
@@ -137,17 +137,17 @@ class IconViewTooltips
         end
 
       elsif @latest_iter != iter
-        hide_tooltip()
+        hide_tooltip
       end
 
     else
-      hide_tooltip()
+      hide_tooltip
     end
   end
 
   def hide_tooltip()
     unless @tooltip_window.nil?
-      @tooltip_window.hide()
+      @tooltip_window.hide
       if @tooltip_timeout_id
         Gtk.timeout_remove(@tooltip_timeout_id)
         @tooltip_timeout_id = nil
@@ -157,6 +157,6 @@ class IconViewTooltips
   end
 
   def on_leave(_view, _event)
-    @tooltip_window.hide()
+    @tooltip_window.hide
   end
 end

@@ -217,11 +217,6 @@ Style/LineEndConcatenation:
 Style/LineLength:
   Max: 395
 
-# Offense count: 32
-# Cop supports --auto-correct.
-Style/MethodCallParentheses:
-  Enabled: false
-
 # Offense count: 240
 # Configuration parameters: CountComments.
 Style/MethodLength:

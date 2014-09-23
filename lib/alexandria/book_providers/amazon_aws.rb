@@ -252,7 +252,7 @@ module Alexandria
 
       def normalize(str)
         unless str.nil?
-          str = str.squeeze(' ').strip()
+          str = str.squeeze(' ').strip
         end
         str
       end

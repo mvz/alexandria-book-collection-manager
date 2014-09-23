@@ -469,7 +469,7 @@ EOS
       end
       xhtml << <<EOS
 <p class="copyright">
-  Generated on #{xhtml_escape(Date.today().to_s)} by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
+  Generated on #{xhtml_escape(Date.today.to_s)} by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
 </p>
 </body>
 </html>
@@ -479,7 +479,7 @@ EOS
     def to_bibtex
       generator = "Alexandria " + Alexandria::DISPLAY_VERSION
       bibtex = ""
-      bibtex << "\%Generated on #{Date.today()} by: #{generator}\n"
+      bibtex << "\%Generated on #{Date.today} by: #{generator}\n"
       bibtex << "\%\n"
       bibtex << "\n"
 

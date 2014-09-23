@@ -457,7 +457,7 @@ module Alexandria
         @prev_time = 0
         @interval = 0
 
-        @animation = BarcodeAnimation.new()
+        @animation = BarcodeAnimation.new
         @scan_frame.add(@animation.canvas)
 
         # attach signals

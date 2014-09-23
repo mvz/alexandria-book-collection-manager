@@ -55,7 +55,7 @@ module Alexandria
         data = transport.get(URI.parse(req))
         begin
           if type == SEARCH_BY_ISBN
-            return to_books(data).pop()
+            return to_books(data).pop
           else
             results = []
             to_books(data).each {|book|

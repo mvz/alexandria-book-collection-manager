@@ -72,7 +72,7 @@ module Alexandria
 
       def setup_calendar_widgets
         @popup_displayed = false
-        @calendar_popup = Gtk::Window.new() # Gtk::Window::POPUP)
+        @calendar_popup = Gtk::Window.new # Gtk::Window::POPUP)
         # @calendar_popup.modal = true
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true

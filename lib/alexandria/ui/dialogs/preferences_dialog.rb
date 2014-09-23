@@ -259,7 +259,7 @@ module Alexandria
           @treeview_providers.selection.select_path(tree_path)
           prov = selected_provider
           if prov
-            prov.toggle_enabled()
+            prov.toggle_enabled
             adjust_selected_provider(prov)
             # reload_providers
           end
@@ -353,7 +353,7 @@ module Alexandria
         @enable_item = Gtk::MenuItem.new(_("Disable Provider"))
         @enable_item.signal_connect("activate") {
           prov = selected_provider
-          prov.toggle_enabled()
+          prov.toggle_enabled
           adjust_selected_provider(prov)
 
         }

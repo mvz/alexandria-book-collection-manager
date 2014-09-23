@@ -113,6 +113,6 @@ module Alexandria
     end
 
     # Register a cuecat scanner with the Scanner Registry
-    Registry.push(CueCat.new())
+    Registry.push(CueCat.new)
   end
 end

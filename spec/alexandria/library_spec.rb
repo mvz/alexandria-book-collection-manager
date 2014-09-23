@@ -31,23 +31,23 @@ describe Alexandria::Library do
   end
 
   it "disallows multiple deletion of the same copy of a book" do
-    my_library = Alexandria::Library.loadall()[0]
-    first_copy = an_artist_of_the_floating_world()
+    my_library = Alexandria::Library.loadall[0]
+    first_copy = an_artist_of_the_floating_world
     my_library << first_copy
     my_library.delete(first_copy)
     expect { my_library.delete(first_copy) }.to raise_error
   end
 
   it "allows multiple copies of a book to be added and deleted in turn" do
-    my_library = Alexandria::Library.loadall()[0]
-    first_copy = an_artist_of_the_floating_world()
+    my_library = Alexandria::Library.loadall[0]
+    first_copy = an_artist_of_the_floating_world
     #puts "first_copy #{first_copy.object_id}"
     my_library << first_copy
     my_library.delete(first_copy)
 
-    second_copy = an_artist_of_the_floating_world()
+    second_copy = an_artist_of_the_floating_world
     my_library << second_copy
-    third_copy = an_artist_of_the_floating_world()
+    third_copy = an_artist_of_the_floating_world
     my_library << third_copy
 
     #puts "AAA my_library.size #{my_library.size}"

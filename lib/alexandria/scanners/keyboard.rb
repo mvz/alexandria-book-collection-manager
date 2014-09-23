@@ -54,6 +54,6 @@ module Alexandria
     end
 
     # Register the wedge scanner with the Scanner Registry
-    Registry.push(KeyboardWedge.new())
+    Registry.push(KeyboardWedge.new)
   end
 end

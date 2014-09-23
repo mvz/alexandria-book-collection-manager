@@ -350,7 +350,7 @@ module Alexandria
     }
 
     def self.upc_convert(upc)
-      test_upc = upc.map { |x| x.to_s }.join()
+      test_upc = upc.map { |x| x.to_s }.join
       extract_numbers(AMERICAN_UPC_LOOKUP[test_upc])
     end
 
@@ -393,7 +393,7 @@ module Alexandria
                     raise InvalidISBNError.new(isbn)
                   end
 
-      canonical.map { |x| x.to_s }.join()
+      canonical.map { |x| x.to_s }.join
     end
 
     def simple_save(book)
@@ -401,7 +401,7 @@ module Alexandria
       # (backward compatibility from 0.4.0)
       # book.saved_ident ||= book.ident
       if book.saved_ident.nil? or book.saved_ident.empty?
-        book.saved_ident = book.ident()
+        book.saved_ident = book.ident
       end
       if book.ident != book.saved_ident
         #log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }

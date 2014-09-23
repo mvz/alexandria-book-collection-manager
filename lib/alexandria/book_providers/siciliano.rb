@@ -257,7 +257,7 @@ module Alexandria
           key, val = str.split(':')
           # a real hack for not handling encoding properly :^)
           if val
-            map[key.gsub(/[^a-zA-Z]/, '')] = val.strip()
+            map[key.gsub(/[^a-zA-Z]/, '')] = val.strip
           end
         end
         map

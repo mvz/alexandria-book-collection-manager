@@ -250,7 +250,7 @@ module Amazon
       d1 = Digest::SHA256.new
       d1.update(ipad)
       d1.update(message)
-      msg_hash = d1.digest()
+      msg_hash = d1.digest
 
       # outer hash
       d2 = Digest::SHA256.new

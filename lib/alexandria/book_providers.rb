@@ -209,7 +209,7 @@ module Alexandria
       end
 
       def toggle_enabled()
-        old_value = enabled()
+        old_value = enabled
         @prefs.variable_named('enabled').new_value = !old_value
       end
 
@@ -361,7 +361,7 @@ module Alexandria
         end
       end
       clear
-      rejig_providers_priority()
+      rejig_providers_priority
       priority = (@prefs.providers_priority or [])
       priority.map! { |x| x.strip }
       rest = providers.keys - priority
