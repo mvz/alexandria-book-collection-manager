@@ -50,6 +50,7 @@ module Alexandria
     def path
       File.join(DIR, @name)
     end
+
     def updating?
       @updating
     end

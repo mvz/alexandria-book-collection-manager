@@ -94,18 +94,23 @@ module Alexandria
         @logger << msg + "\n"
       end
     end
+
     def debug(progname = nil, &block)
       @logger.debug(@source, progname, &block)
     end
+
     def info(progname = nil, &block)
       @logger.info(@source, progname, &block)
     end
+
     def warn(progname = nil, &block)
       @logger.warn(@source, progname, &block)
     end
+
     def error(progname = nil, &block)
       @logger.error(@source, progname, &block)
     end
+
     def fatal(progname = nil, &block)
       @logger.fatal(@source, progname, &block)
     end

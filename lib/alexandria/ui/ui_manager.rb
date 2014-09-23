@@ -1199,6 +1199,7 @@ module Alexandria
               end
         end
       end
+
       def current_view
         case @notebook.page
         when 0

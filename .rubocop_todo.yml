@@ -153,12 +153,6 @@ Style/DeprecatedHashMethods:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: AllowAdjacentOneLineDefs.
-Style/EmptyLineBetweenDefs:
-  Enabled: false
-
 # Offense count: 119
 # Cop supports --auto-correct.
 Style/EmptyLines:

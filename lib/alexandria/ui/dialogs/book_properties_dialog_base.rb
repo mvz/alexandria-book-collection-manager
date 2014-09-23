@@ -368,6 +368,7 @@ module Alexandria
                                         end
 
       end
+
       def redd_toggled
         redd_yes = @checkbutton_redd.active?
         @redd_date.sensitive = redd_yes
@@ -417,6 +418,7 @@ module Alexandria
         end
         # XXX 'date_changed' signal not automatically called after #time=.
       end
+
       def redd_when=(time)
         @redd_date.text = format_date(time)
       end

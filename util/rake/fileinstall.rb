@@ -261,9 +261,11 @@ class FileInstallTask < Rake::TaskLib
       @mode = mode
       @description = "files"
     end
+
     def to_s
       "FileGroup[#{@src_dir}] => #{@dest_dir}"
     end
+
     def dest_dir(file, staging_dir = nil)
       source_basedir = Pathname.new(@src_dir)
       source_file = Pathname.new(file)
