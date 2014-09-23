@@ -33,10 +33,13 @@ module Alexandria
       include Logging
 
       SITE = "http://www.siciliano.com.br"
+
+      # The string interpolations in this URL are the search term and search
+      # type, respectively.
       BASE_SEARCH_URL = "#{SITE}/pesquisaweb/pesquisaweb.dll/pesquisa?" \
         "&FIL_ID=102" \
-        "&PALAVRASN1=%s" \ # search term
-        "&FILTRON1=%s" \ # search type
+        "&PALAVRASN1=%s" \
+        "&FILTRON1=%s" \
         "&ESTRUTN1=0301&ORDEMN2=E"
 
       def initialize
