@@ -82,7 +82,7 @@ module Alexandria
       #######
 
       def to_book(data)
-        raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data) != nil
+        raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data)
         data = data.convert("UTF-8", "ISO-8859-1")
 
         raise "No title" unless md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)

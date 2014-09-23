@@ -84,7 +84,7 @@ module Alexandria
       #######
 
       def to_book(data)
-        raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data) != nil
+        raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data)
         data = data.convert("UTF-8", "ISO-8859-15")
 
         raise unless md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
