@@ -82,8 +82,6 @@ module Alexandria
             raise err
           end
         end
-
-
       end
 
       # the new Siciliano website no longer has direct links to books by their ISBN
@@ -119,7 +117,6 @@ module Alexandria
 
 
     def parse_search_result_data(html)
-
       # The layout...
       # td[@class="normal"]
       #   span[@class="vitrine_nome_produto"]
@@ -276,8 +273,6 @@ module Alexandria
     #  {"brochura" => :paperback,
     #    "encadernado" => :hardback}[binding.downcase] or :unknown
     #end
-
-
     end
   end
 end

@@ -70,8 +70,6 @@ module Alexandria
             associate.new_value = associate.value.strip
           end
         end
-
-
       end
 
       def search(criterion, type)
@@ -258,7 +256,6 @@ module Alexandria
         end
         str
       end
-
     end
   end
 end

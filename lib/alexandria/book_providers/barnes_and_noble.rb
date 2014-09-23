@@ -33,7 +33,6 @@ require 'alexandria/book_providers/web'
 
 module Alexandria
   class BookProviders
-
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
@@ -90,7 +89,6 @@ module Alexandria
 
           results.map { |result| get_book_from_search_result(result) }
         end
-
       end
 
       def url(book)
@@ -227,9 +225,7 @@ module Alexandria
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end
-
       end
-
     end # class BarnesAndNobleProvider
   end # class BookProviders
 end # module Alexandria

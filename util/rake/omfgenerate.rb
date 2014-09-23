@@ -29,7 +29,6 @@ require 'pathname'
 require 'rake/tasklib'
 
 class OmfGenerateTask < Rake::TaskLib
-
   def initialize(projectname)
     @projectname = projectname
     @generated_files = []
@@ -77,5 +76,4 @@ class OmfGenerateTask < Rake::TaskLib
     end
     omf_files.each { |o| @generated_files << o }
   end
-
 end

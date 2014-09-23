@@ -408,6 +408,5 @@ module Alexandria
         @prefs.providers_priority = priority if changed
       end
     end
-
   end
 end

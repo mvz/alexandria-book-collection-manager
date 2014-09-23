@@ -192,12 +192,7 @@ module Alexandria
             "#{ex.message} #{trace}" }
            raise NoResultsError
         end
-
       end
-
-
-
-
     end
   end
 end

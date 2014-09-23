@@ -20,7 +20,6 @@
 module Alexandria
   module UI
     module Callbacks
-
       include Logging
 
       def on_new _widget, _event

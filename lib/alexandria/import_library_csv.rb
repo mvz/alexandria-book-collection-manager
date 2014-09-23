@@ -24,7 +24,6 @@ require 'htmlentities'
 require 'tempfile'
 
 module Alexandria
-
   class CSVImport
     def initialize(header)
       @header = header
@@ -43,11 +42,9 @@ module Alexandria
     def normalize(string)
       @html.decode(string).strip
     end
-
   end
 
   class GoodreadsCSVImport < CSVImport
-
     def initialize(header)
       super(header)
       @title = index_of("Title")
@@ -132,11 +129,9 @@ module Alexandria
       puts "Goodreads loading #{book.title}" if $DEBUG
       book
     end
-
   end
 
   class LibraryThingCSVImport < CSVImport
-
     def initialize(header)
       super(header)
       @title = index_of("'TITLE'")
@@ -149,7 +144,6 @@ module Alexandria
       @notes = index_of("'COMMENTS'")
       @rating = index_of("'RATING'")
       @tags = index_of("'TAGS'")
-
     end
 
     def row_to_book(row)
@@ -204,7 +198,6 @@ module Alexandria
       puts "LibraryThing loading #{book.title}" if $DEBUG
       book
     end
-
   end
 
   class Library
@@ -231,9 +224,6 @@ module Alexandria
     end
     raise "Not Recognized" unless is_librarything || is_goodreads
   end
-
-
-
 end
 
 #   def read_csv_file(csv_file)
@@ -277,5 +267,4 @@ end
 #     end
 
 #   end
-
 end

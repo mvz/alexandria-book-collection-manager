@@ -29,7 +29,6 @@ require 'pathname'
 require 'rake/tasklib'
 
 class GettextGenerateTask < Rake::TaskLib
-
   def initialize(projectname)
     @projectname = projectname
     @generated_files = []

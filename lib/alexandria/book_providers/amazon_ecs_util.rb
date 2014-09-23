@@ -305,9 +305,6 @@ module Amazon
       # Step 10 : Add the URL encoded signature to your request
       "http://#{host}#{path}?#{param_string}&Signature=#{base64_sig}"
     end
-
-
-
   end
 
   # Internal wrapper class to provide convenient method to access Hpricot element value.

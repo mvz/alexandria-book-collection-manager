@@ -60,7 +60,6 @@ module Alexandria
 
           results.map { |result| get_book_from_search_result(result) }
         end
-
       end
 
 
@@ -239,7 +238,6 @@ module Alexandria
           raise NoResultsError
         end
       end
-
     end
   end
 end

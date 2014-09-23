@@ -64,7 +64,6 @@ module Alexandria
         else
           results.map { |result| get_book_from_search_result(result) }
         end
-
       end
 
       def create_search_uri(search_type, search_term)
@@ -204,8 +203,6 @@ module Alexandria
                         book_data[:publish_year], book_data[:binding])
         [book, image_url]
       end
-
-
     end
   end
 end

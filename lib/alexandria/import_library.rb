@@ -257,7 +257,6 @@ module Alexandria
         library.save(book)
       end
       [library, []]
-
     end
 
 
@@ -324,6 +323,5 @@ module Alexandria
         str
       end
     end
-
   end
 end

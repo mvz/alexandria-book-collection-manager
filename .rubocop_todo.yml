@@ -162,11 +162,6 @@ Style/EmptyLines:
 Style/EmptyLinesAroundAccessModifier:
   Enabled: false
 
-# Offense count: 98
-# Cop supports --auto-correct.
-Style/EmptyLinesAroundBody:
-  Enabled: false
-
 # Offense count: 2
 # Cop supports --auto-correct.
 Style/EmptyLiteral:

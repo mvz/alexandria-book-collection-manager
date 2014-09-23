@@ -24,10 +24,8 @@ require 'gst'
 
 module Alexandria
   module UI
-
     ## Uses Ruby/GStreamer to play Ogg/Vorbis sound effects
     class SoundEffectsPlayer
-
       def initialize
         @sounds_dir = Alexandria::Config::SOUNDS_DIR
         @ogg_vorbis_pipeline = Gst::Pipeline.new
@@ -104,7 +102,6 @@ module Alexandria
       def stop_playback
         @ogg_vorbis_pipeline.stop
       end
-
     end
   end
 end

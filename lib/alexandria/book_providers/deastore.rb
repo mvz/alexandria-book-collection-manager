@@ -77,7 +77,6 @@ module Alexandria
         else
           results.map { |result| get_book_from_search_result(result) }
         end
-
       end
 
       # it isn't possible to create a URL for a book given only the ISBN...
@@ -278,9 +277,6 @@ module Alexandria
         end
         str
       end
-
-
-
     end
   end
 end

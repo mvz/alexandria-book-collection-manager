@@ -25,9 +25,7 @@
 
 module Alexandria
   module UI
-
     class BarcodeAnimation
-
       attr_reader :canvas
 
       def initialize
@@ -158,8 +156,6 @@ module Alexandria
           @fade_opacity = -1
         end
       end
-
     end
-
   end
 end

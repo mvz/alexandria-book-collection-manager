@@ -116,7 +116,6 @@ module Alexandria
       end
 
       def books_from_marc(resultset, _isbn)
-
         results = []
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs['charset'], "UTF-8") # (prefs['record_syntax'], 'USMARC')
@@ -207,7 +206,6 @@ module Alexandria
           end
         end
       end
-
     end
 
 
@@ -326,7 +324,6 @@ module Alexandria
 
         end
         results
-
       end
     end
 
@@ -429,6 +426,5 @@ http://gwz.cilea.it/cgi-bin/reportOpac.cgi
 
 =end
     end
-
   end
 end

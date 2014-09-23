@@ -78,7 +78,6 @@ module Gtk
     end
     Gtk.main
   end
-
 end
 
 # Usage is very simple:

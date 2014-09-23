@@ -134,7 +134,6 @@ module Alexandria
             @label_loaning_duration.label = ""
           end
         end
-
       end
 
       def clear_date_entry(entry)
@@ -366,7 +365,6 @@ module Alexandria
                                         else
                                           ""
                                         end
-
       end
 
       def redd_toggled
@@ -438,7 +436,6 @@ module Alexandria
          date_format = '%d/%m/%Y'
         datetime.strftime(date_format = '%d/%m/%Y')
       end
-
     end
   end
 end

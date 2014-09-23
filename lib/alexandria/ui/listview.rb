@@ -254,7 +254,6 @@ module Alexandria
         end
         log.debug { "append_column #{column}" }
         @listview.append_column(column)
-
       end
 
       def setup_text_column title, iterid

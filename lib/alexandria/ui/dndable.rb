@@ -23,7 +23,6 @@ module Alexandria
       0]]
 
     module DragAndDropable
-
       BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
 
       def setup_view_source_dnd(view)

@@ -31,7 +31,6 @@
 require 'cgi'
 
 class IconViewTooltips
-
   include Alexandria::Logging
 
   def initialize(view)

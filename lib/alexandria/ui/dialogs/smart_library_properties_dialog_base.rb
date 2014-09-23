@@ -98,7 +98,6 @@ module Alexandria
       end
 
       def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)
-
         @rules_header_box.children.each { |x| @rules_header_box.remove(x) }
 
         if @rules_box.children.length > 1
@@ -359,7 +358,6 @@ module Alexandria
           end
           hide_calendar_popup
         end
-
       end
 
       def hide_calendar_popup
@@ -433,7 +431,6 @@ module Alexandria
          date_format = '%d/%m/%Y'
         datetime.strftime(date_format = '%d/%m/%Y')
       end
-
     end
   end
 end

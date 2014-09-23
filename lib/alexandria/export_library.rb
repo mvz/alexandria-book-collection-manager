@@ -31,7 +31,6 @@ rescue LoadError
 end
 
 module Alexandria
-
   class LibrarySortOrder
     include Logging
 

@@ -407,8 +407,6 @@ module Alexandria
 
 
         end
-
-
       end
 
       def determine_library_popup widget, event

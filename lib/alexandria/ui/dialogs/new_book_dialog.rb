@@ -19,9 +19,7 @@
 require 'gdk_pixbuf2'
 
 module Alexandria
-
   class DuplicateBookException < NameError
-
   end
 
   module UI
@@ -66,7 +64,6 @@ module Alexandria
       end
 
       def widget_names
-
         [:liststore1, :liststore2, :new_book_dialog, :dialog_vbox1,
          :dialog_action_area1, :button_help, :button_cancel,
          :button_add, :table1, :keep_open, :combo_libraries,
@@ -75,7 +72,6 @@ module Alexandria
          :cellrenderertext2, :eventbox_entry_search, :entry_search,
          :button_find, :scrolledwindow, :treeview_results,
          :title_radiobutton, :isbn_radiobutton, :progressbar]
-
       end
 
       def setup_dialog_gui
@@ -139,8 +135,6 @@ module Alexandria
       end
 
       def on_criterion_toggled(item)
-
-
         log.debug { "on_criterion_toggled" }
         return unless item.active?
 
@@ -181,7 +175,6 @@ module Alexandria
         @@last_criterion_was_not_isbn = !is_isbn
 
         # @new_book_dialog.present # attempted fix, bring dialog to foreground
-
       end
 
       def on_changed(entry)
@@ -441,7 +434,6 @@ module Alexandria
 
           false
         end
-
       end
 
       def add_selected_books(library, _is_new)
@@ -504,10 +496,6 @@ module Alexandria
           # application.
           @new_book_dialog.destroy
         end
-
-
-
-
       end
 
       def on_add

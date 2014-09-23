@@ -137,7 +137,6 @@ module Alexandria
 
         books
       end
-
     end
   end
 end

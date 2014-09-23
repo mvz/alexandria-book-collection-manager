@@ -17,10 +17,8 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-
   # A really simple regex-based parser to grab data out of marc text records.
   class PseudoMarcParser
-
      BNF_FR_MAPPINGS = { :title => ["200", 'a'],
       :authors => ["700", 'a'],
       :isbn => ["010", 'a'],
@@ -182,6 +180,5 @@ module Alexandria
       end
       details
     end
-
   end
 end

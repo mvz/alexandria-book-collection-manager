@@ -342,6 +342,5 @@ module Alexandria
         return value           # string
       end
     end
-
   end
 end

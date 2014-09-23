@@ -35,7 +35,6 @@ require 'rake/tasklib'
 # (preparatory to bundling the installed files in a binary package
 # such as deb or rpm).
 class FileInstallTask < Rake::TaskLib
-
   # The calculated location of the preferred ruby lib installation dir.
   attr_reader :rubylib
 
@@ -133,7 +132,6 @@ class FileInstallTask < Rake::TaskLib
     desc uninstall_description
     task tasknames[:uninstall] => [tasknames[:uninstall_files],
                                    tasknames[:uninstall_dirs]]
-
   end
 
 
@@ -317,8 +315,5 @@ class FileInstallTask < Rake::TaskLib
         all_dirs_set << File.dirname(file)
       end
     end
-
-
   end # class FileGroup
-
 end # class FileInstallTask

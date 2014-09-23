@@ -23,9 +23,7 @@ require 'htmlentities'
 
 module Alexandria
   class BookProviders
-
     class WebsiteBasedProvider < GenericProvider
-
       def initialize(name, fullname = nil)
         super(name, fullname)
         @htmlentities = HTMLEntities.new
@@ -56,8 +54,6 @@ module Alexandria
           #node.inner_html.strip
         end
       end
-
-
     end
   end
 end

@@ -18,7 +18,6 @@
 require 'glib2'
 
 class String
-
   # Converts this string into the desired charset.
   #
   # Note that this may raise a GLib::ConvertError if the

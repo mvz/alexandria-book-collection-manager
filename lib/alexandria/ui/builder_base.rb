@@ -17,7 +17,6 @@
 
 module Alexandria
   module UI
-
     class BuilderBase
       def initialize(filename, widget_names)
         file = File.join(Alexandria::Config::DATA_DIR, 'glade', filename)
@@ -40,6 +39,5 @@ module Alexandria
         end
       end
     end
-
   end
 end

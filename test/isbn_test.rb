@@ -24,7 +24,6 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 require 'alexandria/import_library'
 
 class TestISBN < MiniTest::Test
-
   def __test_fake_import_isbns
     libraries = Alexandria::Libraries.instance
     library = Alexandria::Library.new("Test Library")

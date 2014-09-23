@@ -20,13 +20,11 @@ require 'logger'
 require 'forwardable'
 
 module Alexandria
-
   # A Logger subclass which accepts a source for log messages
   # in order to improve legibility of the logs.
   # The source should usually be +self+, whether that be a Class, Module
   # or Object. A LoggerWrapper can be used to simplify this procedure.
   class Logger < ::Logger
-
     def add(severity, message = nil, source = nil, progname = nil, &block)
       if source.nil?
         return super(severity, message, progname, &block)
@@ -70,7 +68,6 @@ module Alexandria
         "<Obj #{source.class.name}>"
       end
     end
-
   end
 
   # A wrapper around a Logger, which allows code to define the source
@@ -114,7 +111,6 @@ module Alexandria
     def fatal(progname = nil, &block)
       @logger.fatal(@source, progname, &block)
     end
-
   end
 
   # A mixin to include a +log+ instance method for objects or a
@@ -122,7 +118,6 @@ module Alexandria
   # +LogWrapper+ is returned which wraps the Alexandria log and
   # specifies the appropriate source object, class or module.
   module Logging
-
     module ClassMethods
       def log
         @log_wrapper ||= LogWrapper.new(Alexandria.log, self)
@@ -163,5 +158,4 @@ module Alexandria
   def self.log
     @@logger
   end
-
 end

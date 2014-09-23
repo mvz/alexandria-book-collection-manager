@@ -26,14 +26,12 @@ require 'alexandria/ui/dialogs/barcode_animation'
 
 module Alexandria
   module UI
-
     require 'thread'
     require 'monitor'
 
     # assists in turning on progress bar when searching
     # and turning it off when all search threads have completed...
     class SearchThreadCounter < Monitor
-
       attr_reader :count
 
       def initialize
@@ -52,7 +50,6 @@ module Alexandria
           @count -= 1 unless (@count == 0)
         end
       end
-
     end
 
 
@@ -82,7 +79,6 @@ module Alexandria
 
         @search_thread_counter = SearchThreadCounter.new
         @search_threads_running = @search_thread_counter.new_cond
-
       end
 
       def widget_names
@@ -649,9 +645,7 @@ module Alexandria
             @add_button.sensitive = false
           end
         end
-
       end
-
     end
   end
 end

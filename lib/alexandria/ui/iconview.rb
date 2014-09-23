@@ -88,7 +88,6 @@ module Alexandria
                                            : Gtk::SORT_ASCENDING)
         @filtered_model.refilter    # force redraw
       end
-
     end
   end
 end
