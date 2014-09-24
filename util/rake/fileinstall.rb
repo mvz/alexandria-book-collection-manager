@@ -284,8 +284,8 @@ class FileInstallTask < Rake::TaskLib
       puts "Installing #{@description} to #{base_dir}#{@dest_dir}"
       files.each do |f|
         dest = dest_dir(f, base_dir)
-        FileUtils.mkdir_p(dest) unless test(?d, dest)
-        if test(?f, f)
+        FileUtils.mkdir_p(dest) unless test('d', dest)
+        if test('f', f)
           FileUtils.install(f, dest, mode: mode)
         end
       end
@@ -296,7 +296,7 @@ class FileInstallTask < Rake::TaskLib
         dest = dest_dir(f, base_dir)
         filename = File.basename(f)
         file = File.join(dest, filename)
-        if test(?f, file)
+        if test('f', file)
           FileUtils::Verbose.rm_f(file) # , :noop => true)
         end
       end

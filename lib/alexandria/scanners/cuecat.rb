@@ -34,7 +34,7 @@ module Alexandria
       # Checks if data looks like cuecat input
       def match?(data)
         data.chomp!
-        return false if data[-1] != ?.
+        return false if data[-1] != '.'
         fields = data.split('.')
         return false if fields.size != 4
         return false if fields[2].size != 4
