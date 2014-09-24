@@ -45,11 +45,6 @@ Lint/UselessAccessModifier:
 Lint/UselessAssignment:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/BlockComments:
-  Enabled: false
-
 # Offense count: 15
 Style/BlockNesting:
   Max: 5

@@ -399,28 +399,26 @@ module Alexandria
           return isbn
         end
       end
-=begin
-
-Remarks about SBN
-
-This provider requires that value of conn.count is 0. It's a Yaz option "Number of records to be retrieved".
-This provider requires to specify the value of conn.element_set_name = 'F'. It's a Yaz option "Element-Set name of records".
-See http://www.indexdata.dk/yaz/doc/zoom.resultsets.tkl
-
-Dashes:
-this database requires that Italian books are searched with dashes :(
-However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
-
-References:
-http://opac.internetculturale.it/cgi-bin/main.cgi?type=field
-http://www.internetculturale.it/
-http://sbnonline.sbn.it/zgw/homeit.html
-http://www.iccu.sbn.it/genera.jsp?id=124
-with link at http://www.iccu.sbn.it/upload/documenti/cartecsbn.pdf
-http://www.loc.gov/cgi-bin/zgstart?ACTION=INIT&FORM_HOST_PORT=/prod/www/data/z3950/iccu.html,opac.sbn.it,2100
-http://gwz.cilea.it/cgi-bin/reportOpac.cgi
-
-=end
+      #
+      # Remarks about SBN
+      #
+      # This provider requires that value of conn.count is 0. It's a Yaz option "Number of records to be retrieved".
+      # This provider requires to specify the value of conn.element_set_name = 'F'. It's a Yaz option "Element-Set name of records".
+      # See http://www.indexdata.dk/yaz/doc/zoom.resultsets.tkl
+      #
+      # Dashes:
+      # this database requires that Italian books are searched with dashes :(
+      # However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
+      #
+      # References:
+      # http://opac.internetculturale.it/cgi-bin/main.cgi?type=field
+      # http://www.internetculturale.it/
+      # http://sbnonline.sbn.it/zgw/homeit.html
+      # http://www.iccu.sbn.it/genera.jsp?id=124
+      # with link at http://www.iccu.sbn.it/upload/documenti/cartecsbn.pdf
+      # http://www.loc.gov/cgi-bin/zgstart?ACTION=INIT&FORM_HOST_PORT=/prod/www/data/z3950/iccu.html,opac.sbn.it,2100
+      # http://gwz.cilea.it/cgi-bin/reportOpac.cgi
+      #
     end
   end
 end
