@@ -84,33 +84,33 @@ module Alexandria
         if last == factory
           log.warn { "Error while searching #{criterion}" }
           message = case boom
-                when Timeout::Error
-                  _("Couldn't reach the provider '%s': timeout " \
-                    "expired.") % factory.name
+                    when Timeout::Error
+                      _("Couldn't reach the provider '%s': timeout " \
+                        "expired.") % factory.name
 
-                when SocketError
-                  _("Couldn't reach the provider '%s': socket " \
-                    "error (%s).") % [factory.name, boom.message]
+                    when SocketError
+                      _("Couldn't reach the provider '%s': socket " \
+                        "error (%s).") % [factory.name, boom.message]
 
-                when NoResultsError
-                  _("No results were found.  Make sure your " \
-                    "search criterion is spelled correctly, and " \
-                    "try again.")
+                    when NoResultsError
+                      _("No results were found.  Make sure your " \
+                        "search criterion is spelled correctly, and " \
+                        "try again.")
 
-                when ProviderSkippedError
-                  _("No results were found.  Make sure your " \
-                    "search criterion is spelled correctly, and " \
-                    "try again.")
+                    when ProviderSkippedError
+                      _("No results were found.  Make sure your " \
+                        "search criterion is spelled correctly, and " \
+                        "try again.")
 
-                when TooManyResultsError
-                  _("Too many results for that search.")
+                    when TooManyResultsError
+                      _("Too many results for that search.")
 
-                when InvalidSearchTypeError
-                  _("Invalid search type.")
+                    when InvalidSearchTypeError
+                      _("Invalid search type.")
 
-                else
-                  boom.message
-                end
+                    else
+                      boom.message
+                    end
           puts "raising empty error #{message}"
           raise SearchEmptyError, message
         else

@@ -34,11 +34,6 @@ Lint/UselessAssignment:
 Style/BlockNesting:
   Max: 5
 
-# Offense count: 6
-# Configuration parameters: IndentWhenRelativeTo, SupportedStyles, IndentOneStep.
-Style/CaseIndentation:
-  Enabled: false
-
 # Offense count: 3
 Style/ClassAndModuleCamelCase:
   Enabled: false
