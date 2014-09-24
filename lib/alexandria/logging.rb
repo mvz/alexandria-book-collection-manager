@@ -57,8 +57,6 @@ module Alexandria
       add(FATAL, nil, source, progname, &block)
     end
 
-    private
-
     def self.category(source)
       if source.instance_of? Class
         "[Cls  #{source.name}]"

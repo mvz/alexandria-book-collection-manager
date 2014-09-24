@@ -264,9 +264,7 @@ module Alexandria
       @@deleted_libraries.delete(self)
     end
 
-    #######
     private
-    #######
 
     def libraries=(ary)
       @libraries ||= []
@@ -274,10 +272,6 @@ module Alexandria
       @libraries = ary.select { |x| x.is_a?(Library) }
       @libraries.each { |x| x.add_observer(self) }
     end
-
-    ######
-    public
-    ######
 
     class Rule
       include GetText

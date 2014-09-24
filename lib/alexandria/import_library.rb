@@ -305,8 +305,6 @@ module Alexandria
       [library, bad_isbns, failed_lookup_isbns]
     end
 
-    private
-
     def self.neaten(str)
       if str
         str.strip

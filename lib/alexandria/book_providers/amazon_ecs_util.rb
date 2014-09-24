@@ -200,7 +200,6 @@ module Amazon
     #    end
     #  end
 
-    private
     def self.prepare_url(opts)
       country = opts.delete(:country)
       country = (country.nil?) ? 'us' : country

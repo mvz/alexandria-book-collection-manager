@@ -49,8 +49,6 @@ module Alexandria
           raise "Unknown scan data #{data}"
         end
       end
-
-      private
     end
 
     # Register the wedge scanner with the Scanner Registry
