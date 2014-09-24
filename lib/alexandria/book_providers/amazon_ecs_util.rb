@@ -119,7 +119,7 @@ module Amazon
       log.debug { "Request URL: #{request_url}" }
 
       res = transport.get_response(URI.parse(request_url))
-      unless res.kind_of? Net::HTTPSuccess
+      unless res.is_a? Net::HTTPSuccess
         raise Amazon::RequestError, "HTTP Response: #{res.code} #{res.message}"
       end
       Response.new(res.body)

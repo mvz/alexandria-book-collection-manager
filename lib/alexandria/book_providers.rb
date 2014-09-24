@@ -68,7 +68,7 @@ module Alexandria
           return results
         end
       rescue Exception => boom
-        if boom.kind_of? NoResultsError
+        if boom.is_a? NoResultsError
           unless boom.instance_of? ProviderSkippedError
             instance.changed
             instance.notify_observers(:not_found, factory.fullname) # new
