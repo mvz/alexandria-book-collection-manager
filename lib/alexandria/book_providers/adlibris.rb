@@ -158,10 +158,6 @@ module Alexandria
           author_cells = ul_info.search('li.liAuthor') # css-like search
           authors = []
           author_cells.each do |li|
-            author_role = (li % :strong).inner_text # first strong contains author_role
-            if author_role =~ /([^:]+):/
-              author_role = Regexp.last_match[1]
-            end
             author_name = text_of(li.search('h2 > a')[0])
 
             authors << author_name

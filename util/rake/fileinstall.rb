@@ -160,7 +160,6 @@ class FileInstallTask < Rake::TaskLib
       files = FileList.new(fg)
       files.each do |f|
         icon_file = Pathname.new(f)
-        icon_filename = icon_file.basename
         icon_dir = icon_file.dirname
         icon_size = Pathname.new(icon_dir).basename
         icon_dest_dir = "#{dest_dir}/#{theme}/#{icon_size}/#{icon_type}"

@@ -26,10 +26,6 @@ Lint/LiteralInCondition:
 Lint/UselessAccessModifier:
   Enabled: false
 
-# Offense count: 17
-Lint/UselessAssignment:
-  Enabled: false
-
 # Offense count: 15
 Style/BlockNesting:
   Max: 5

@@ -1232,11 +1232,11 @@ module Alexandria
 
       def get_previous_selected_library(library)
         log.debug { "get_previous_selected_library: #{library}" }
-        previous_selected_library = selected_library
-        if previous_selected_library != library
+        @previous_selected_library = selected_library
+        if @previous_selected_library != library
           select_library(library)
         else
-          previous_selected_library = nil
+          @previous_selected_library = nil
         end
       end
 

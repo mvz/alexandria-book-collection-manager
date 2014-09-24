@@ -104,7 +104,7 @@ class IconViewTooltips
       html += "(#{year})"
     end
 
-    html += "</small>"
+    html + "</small>"
   end
 
   def on_motion(view, event)

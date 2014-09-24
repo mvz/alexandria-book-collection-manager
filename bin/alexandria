@@ -32,7 +32,7 @@ require 'alexandria'
 require 'optparse'
 require 'ostruct'
 
-options = OpenStruct.new
+# options = OpenStruct.new
 OptionParser.new do |opts|
   opts.banner = "Usage: alexandria [options]"
   opts.on("-l", "--list", "List libraries in numbered format") do

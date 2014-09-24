@@ -143,7 +143,6 @@ module Alexandria
         book_data = {}
         book_data[:authors] = []
         # TITLE
-        title = nil
         if (title_header = doc.search('div.detailBlock h3'))
           header_spans = title_header.first.search('span')
           title = text_of(header_spans.first)

@@ -99,7 +99,7 @@ module Alexandria
             begin
               book.isbn = canonicalise_ean(book.isbn).to_s unless book.isbn.nil?
               raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
-            rescue InvalidISBNError => e
+            rescue InvalidISBNError
               book.isbn = old_isbn
             end
 
@@ -127,7 +127,7 @@ module Alexandria
             end
 
             library << book
-          rescue => e
+          rescue
             book.version = Alexandria::DATA_VERSION
             savedfilename = library.simple_save(book)
             test[0] = test[0] + 1

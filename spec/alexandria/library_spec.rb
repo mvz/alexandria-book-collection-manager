@@ -124,8 +124,6 @@ describe Alexandria::Library, " with books without an ISBN" do
     my_library.each do |book|
       my_library.save(book, true)
     end
-    libs = nil
-    my_library = nil
 
     libraries_reloaded = Alexandria::Library.loadall
     my_library_reloaded = libraries_reloaded[0]

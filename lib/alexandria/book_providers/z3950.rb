@@ -194,7 +194,6 @@ module Alexandria
               log.error { "Z39.50 search failed:: #{ex.message}" }
               log.info { "Turning off piggybacking for this provider" }
               prefs.variable_named('piggyback').new_value = false
-              conn = nil
               search_records(criterion, type, conn_count)
               # hopefully these precautions will prevent infinite loops here
             else

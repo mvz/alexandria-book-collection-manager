@@ -425,8 +425,7 @@ module Alexandria
       end
 
       def format_date(datetime)
-        date_format = '%d/%m/%Y'
-        datetime.strftime(date_format = '%d/%m/%Y')
+        datetime.strftime('%d/%m/%Y')
       end
     end
   end
