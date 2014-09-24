@@ -24,10 +24,8 @@ require 'gst'
 
 module Alexandria
   module UI
-
     ## Uses Ruby/GStreamer to play Ogg/Vorbis sound effects
     class SoundEffectsPlayer
-
       def initialize
         @sounds_dir = Alexandria::Config::SOUNDS_DIR
         @ogg_vorbis_pipeline = Gst::Pipeline.new
@@ -37,7 +35,7 @@ module Alexandria
       end
 
       def play(effect)
-        file = File.join(@sounds_dir,"#{effect}.ogg")
+        file = File.join(@sounds_dir, "#{effect}.ogg")
         unless @playing
           @filesrc.location = file
           start_playback
@@ -48,7 +46,7 @@ module Alexandria
         @filesrc = Gst::ElementFactory.make("filesrc")
         demuxer = Gst::ElementFactory.make("oggdemux")
         decoder = Gst::ElementFactory.make("vorbisdec")
-        converter = Gst::ElementFactory.make("audioconvert") ##??
+        converter = Gst::ElementFactory.make("audioconvert") # #??
         audiosink = Gst::ElementFactory.make("autoaudiosink")
 
         @ogg_vorbis_pipeline.add(@filesrc, demuxer, decoder,
@@ -58,7 +56,7 @@ module Alexandria
         # this next must be a dynamic link, as demuxers potentially
         # have multiple src pads (for audio/video muxed streams)
 
-        demuxer.signal_connect("pad-added") do |parser, ogg_src_pad|
+        demuxer.signal_connect("pad-added") do |_parser, ogg_src_pad|
           vorbis_sink_pad = decoder.get_pad("sink")
           ogg_src_pad.link(vorbis_sink_pad)
         end
@@ -69,9 +67,9 @@ module Alexandria
       def set_up_glib_loop
         unless @loop
           @loop = GLib::MainLoop.new(nil, false)
-          
+
           @bus = @ogg_vorbis_pipeline.bus
-          @bus.add_watch do |bus, message|
+          @bus.add_watch do |_bus, message|
             case message.type
             when Gst::Message::EOS
               @playing = false
@@ -104,7 +102,6 @@ module Alexandria
       def stop_playback
         @ogg_vorbis_pipeline.stop
       end
-
     end
   end
 end

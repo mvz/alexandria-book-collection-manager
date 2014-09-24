@@ -20,7 +20,7 @@
 require 'fileutils'
 require 'net/http'
 require 'open-uri'
-#require 'cgi'
+# require 'cgi'
 
 module Alexandria
   class BookProviders
@@ -61,11 +61,11 @@ module Alexandria
         p req if $DEBUG
         data = transport.get(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          to_book(data) #rescue raise NoResultsError
+          to_book(data) # rescue raise NoResultsError
         else
           begin
             results = []
-            each_book_page(data) do |code, title|
+            each_book_page(data) do |code, _title|
               results << to_book(transport.get(URI.parse(BASE_URI + "/#{LOCALE}/" + code)))
             end
             return results
@@ -84,44 +84,46 @@ module Alexandria
       #######
 
       def to_book(data)
-        raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data) != nil
+        raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data)
         data = data.convert("UTF-8", "ISO-8859-15")
 
-        raise unless md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
+        md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
+        raise unless md
         title = CGI.unescape(md[1].strip)
-        if md = /<span class="product_heading_volume">([^<]+)/.match(data)
+        if (md = /<span class="product_heading_volume">([^<]+)/.match(data))
           title += " " + CGI.unescape(md[1].strip)
         end
 
         authors = []
-        if md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data)
+        if (md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data))
           this = CGI.unescape(md[0].strip)
           authors = this.scan(/<a href="[^>]+">([^<]+)<\/a>,?/)
-          authors = authors.collect {|author| author[0]}
-          #puts this
+          authors = authors.map { |author| author[0] }
+          # puts this
           #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
-        raise unless md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
-        isbn = Library.canonicalise_ean( md[1].strip )
+        md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
+        raise unless md
+        isbn = Library.canonicalise_ean(md[1].strip)
 
-        #raise unless
+        # raise unless
         md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
         publisher = CGI.unescape(md[1].strip) or md
 
-        if md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
+        if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
           edition = CGI.unescape(md[1].strip) + " p."
         else
           edition = nil
         end
 
         publish_year = nil
-        if md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data)
+        if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip)[-4 .. -1].to_i
           publish_year = nil if publish_year == 0
         end
 
-        if data =~ /javascript:popImage/ and  md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data)
+        if data =~ /javascript:popImage/ and (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
           cover_url = BASE_URI + md[1].strip
           # use "p" instead of "g" for smaller image
           if cover_url[-5] == 103
@@ -130,28 +132,35 @@ module Alexandria
 
           cover_filename = isbn + ".tmp"
           Dir.chdir(CACHE_DIR) do
-            File.open(cover_filename, "w") do |file|
-              file.write open(cover_url, "Referer" => REFERER ).read rescue nil
+            begin
+              cover_data = open(cover_url, "Referer" => REFERER).read
+            rescue OpenURI::HTTPError
+              cover_data = nil
+            end
+            if cover_data
+              File.open(cover_filename, "w") do |file|
+                file.write cover_data
+              end
             end
           end
 
           medium_cover = CACHE_DIR + "/" + cover_filename
           if File.size(medium_cover) > 0
             puts medium_cover + " has non-0 size" if $DEBUG
-            return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+            return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
           end
           puts medium_cover + " has 0 size, removing ..." if $DEBUG
           File.delete(medium_cover)
         end
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+        [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)
-        raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/) { |a| yield a}.empty?
+        raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/) { |a| yield a }.empty?
       end
 
       def clean_cache
-        #FIXME begin ... rescue ... end?
+        # FIXME begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob("*.tmp") do |file|
             puts "removing " + file if $DEBUG

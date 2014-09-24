@@ -20,40 +20,37 @@
 
 require 'csv'
 require 'date'
-require 'htmlentities' 
+require 'htmlentities'
 require 'tempfile'
 
 module Alexandria
-
-  class CSVImport 
+  class CSVImport
     def initialize(header)
       @header = header
       @html = HTMLEntities.new
     end
 
     def index_of(header_name)
-      @header.each_with_index do |h,i|
+      @header.each_with_index do |h, i|
         if h == header_name
           return i
         end
       end
-      return -1
+      -1
     end
-    
+
     def normalize(string)
       @html.decode(string).strip
     end
-
   end
 
   class GoodreadsCSVImport < CSVImport
-    
     def initialize(header)
       super(header)
       @title = index_of("Title")
       @author = index_of("Author")
       @additional_authors = index_of("Additional Authors")
-      @isbn = index_of("ISBN") 
+      @isbn = index_of("ISBN")
       @publisher = index_of("Publisher")
       @publishing_year = index_of("Year Published")
       @edition = index_of("Binding")
@@ -106,7 +103,7 @@ module Alexandria
           book.redd_when = date
           book.redd = true
         rescue
-          # 
+          #
         end
       end
       if row[@mainshelf]
@@ -132,11 +129,9 @@ module Alexandria
       puts "Goodreads loading #{book.title}" if $DEBUG
       book
     end
-
   end
 
   class LibraryThingCSVImport < CSVImport
-
     def initialize(header)
       super(header)
       @title = index_of("'TITLE'")
@@ -149,7 +144,6 @@ module Alexandria
       @notes = index_of("'COMMENTS'")
       @rating = index_of("'RATING'")
       @tags = index_of("'TAGS'")
-
     end
 
     def row_to_book(row)
@@ -158,8 +152,8 @@ module Alexandria
       authors << normalize(row[@author])
       isbn = row[@isbn]
       if isbn
-        if (isbn =~ /\[([^\]]+)\]/)
-          isbn = $1
+        if isbn =~ /\[([^\]]+)\]/
+          isbn = Regexp.last_match[1]
         end
         isbn = Library.canonicalise_ean(isbn)
       end
@@ -168,15 +162,15 @@ module Alexandria
       # sometimes "Publisher (YEAR), Edition: NUM, Binding, NUM pages"
       publisher_info = normalize(row[@publisher_info])
       publisher = publisher_info
-      if (publisher_info =~ /([^\(]+)\(/)
-        publisher = $1
+      if publisher_info =~ /([^\(]+)\(/
+        publisher = Regexp.last_match[1]
       end
       edition = publisher_info # binding
       edition_info = publisher_info.split(',')
       if edition_info.size >= 3
         edition = publisher_info.split(',')[-2]
       end
-      
+
       year = row[@publishing_year].to_i
 
       book = Alexandria::Book.new(title,
@@ -204,78 +198,73 @@ module Alexandria
       puts "LibraryThing loading #{book.title}" if $DEBUG
       book
     end
-
   end
 
   class Library
-  # LibraryThing has 15 fields (Apr 2010), Goodreads has 29
-  # we shall guess that "PUBLICATION INFO" implies LibraryThing
-  # and "Year Published" implies Goodreads
+    # LibraryThing has 15 fields (Apr 2010), Goodreads has 29
+    # we shall guess that "PUBLICATION INFO" implies LibraryThing
+    # and "Year Published" implies Goodreads
 
-  def self.identify_csv_type(header)
-    is_librarything = false
-    is_goodreads = false
-    header.each do |head|
-      if head == "'PUBLICATION INFO'"
-        is_librarything = true
-        break
-      elsif head == "Year Published"
-        is_goodreads = true
-        break
+    def self.identify_csv_type(header)
+      is_librarything = false
+      is_goodreads = false
+      header.each do |head|
+        if head == "'PUBLICATION INFO'"
+          is_librarything = true
+          break
+        elsif head == "Year Published"
+          is_goodreads = true
+          break
+        end
       end
+      if is_librarything
+        return LibraryThingCSVImport.new(header)
+      elsif is_goodreads
+        return GoodreadsCSVImport.new(header)
+      end
+      raise "Not Recognized" unless is_librarything || is_goodreads
     end
-    if is_librarything
-      return LibraryThingCSVImport.new(header)
-    elsif is_goodreads
-      return GoodreadsCSVImport.new(header)
-    end
-    raise "Not Recognized" unless (is_librarything || is_goodreads)
   end
 
+  #   def read_csv_file(csv_file)
 
+  #     reader = CSV.open(csv_file, 'r')
+  #     # goodreads & librarything now use csv header lines
+  #     header = reader.shift
 
-end
+  #     #header.each {|h| puts h }
+  #     importer = identify_csv_type(header)
 
-#   def read_csv_file(csv_file)
+  #     retries = 0
+  #     begin
+  #       reader.each do |row|
+  #         #puts row
+  #         bk = importer.row_to_book(row)
+  #         puts "\"#{bk.title}\"     by     #{bk.authors.join(', ')};     isbn : #{bk.isbn}      #{bk.publisher} | #{bk.publishing_year.inspect}   binding:#{bk.edition}"
+  #         if bk.notes.size > 0
+  #           puts "   >>> #{bk.notes}"
+  #         end
+  #       end
+  #     rescue
+  #       if retries < 1
+  #         retries += 1
+  #         puts "Retrying..."
 
-#     reader = CSV.open(csv_file, 'r')
-#     # goodreads & librarything now use csv header lines
-#     header = reader.shift
+  #         # probably Goodreads' wonky ISBN fields ,,="043432432X", and such
+  #         # hack to fix up these files
+  #         data = File.read(csv_file)
+  #         data.gsub!(/\,\=\"/, ',"')
+  #         csv_fixed = Tempfile.new("#{csv_file}_fixed")
+  #         csv_fixed.write(data)
+  #         csv_fixed.close
+  #         reader = CSV.open(csv_fixed.path, 'r')
+  #         #puts csv_fixed.path
+  #         header = reader.shift
 
-#     #header.each {|h| puts h }
-#     importer = identify_csv_type(header)
+  #         retry
+  #       end
 
-#     retries = 0
-#     begin
-#       reader.each do |row|
-#         #puts row
-#         bk = importer.row_to_book(row)
-#         puts "\"#{bk.title}\"     by     #{bk.authors.join(', ')};     isbn : #{bk.isbn}      #{bk.publisher} | #{bk.publishing_year.inspect}   binding:#{bk.edition}"
-#         if bk.notes.size > 0
-#           puts "   >>> #{bk.notes}"
-#         end
-#       end
-#     rescue
-#       if retries < 1
-#         retries += 1
-#         puts "Retrying..."
+  #     end
 
-#         # probably Goodreads' wonky ISBN fields ,,="043432432X", and such
-#         # hack to fix up these files
-#         data = File.read(csv_file)
-#         data.gsub!(/\,\=\"/, ',"')
-#         csv_fixed = Tempfile.new("#{csv_file}_fixed")
-#         csv_fixed.write(data)
-#         csv_fixed.close
-#         reader = CSV.open(csv_fixed.path, 'r')
-#         #puts csv_fixed.path
-#         header = reader.shift
-        
-#         retry
-#       end
-
-#     end
-
-#   end
-
+  #   end
 end

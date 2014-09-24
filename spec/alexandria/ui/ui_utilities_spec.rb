@@ -27,7 +27,7 @@ describe Alexandria::UI::CompletionModels do
   it "should work"
 end
 
-#from glade_base
+# from glade_base
 
 describe Alexandria::UI::BuilderBase do
   it "should be revisited"
@@ -43,13 +43,13 @@ describe Alexandria::UI::Icons do
   it "should aid identification"
 end
 
-#from libraries_combo
+# from libraries_combo
 
 describe Gtk::ComboBox do
   it "should extend Gtk::ComboBox"
 end
 
-#from multi_drag_treeview
+# from multi_drag_treeview
 
 describe Gdk::Event do
   it "should extend Gdk::Event"
@@ -58,4 +58,3 @@ end
 describe Gtk::TreeView do
   it "should extend Gtk::TreeView"
 end
-

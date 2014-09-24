@@ -16,19 +16,17 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-$:.unshift(File.join(File.dirname(__FILE__), '/../lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '/../lib'))
 
-require  'alexandria'
+require 'alexandria'
 
 LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '/data/libraries'))
 TESTDIR = File.join(LIBDIR, 'test')
 
-
-
-#def useTestLibrary(version)
+# def useTestLibrary(version)
 #  libVersion = File.join(LIBDIR, version)
 #  FileUtils.cp_r(libVersion, TESTDIR)
-#end
+# end
 
 def an_artist_of_the_floating_world
   Alexandria::Book.new("An Artist of the Floating World",
@@ -38,7 +36,7 @@ def an_artist_of_the_floating_world
                        "Paperback")
 end
 
-Thread.new { Alexandria::UI::start_gnome_program }
+Thread.new { Alexandria::UI.start_gnome_program }
 Alexandria::UI::Icons.init
 
 module Alexandria
@@ -46,4 +44,3 @@ module Alexandria
     DIR.replace TESTDIR
   end
 end
-

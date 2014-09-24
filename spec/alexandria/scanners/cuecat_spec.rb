@@ -17,9 +17,9 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-$:.unshift(File.join(File.dirname(__FILE__), '../../../lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../../../lib'))
 
-require  'alexandria/scanners/cuecat'
+require 'alexandria/scanners/cuecat'
 
 describe Alexandria::Scanners::CueCat do
 
@@ -33,11 +33,10 @@ describe Alexandria::Scanners::CueCat do
                  '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW'
                 ]
     @scans = {
-      :isbn => '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.',
-      :ib5 => '.C3nZC3nZC3n2ChnWENz7DxnY.cGf2.ENr7C3z0DNn0ENnWE3nZDhP6.'
+      isbn: '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.',
+      ib5: '.C3nZC3nZC3n2ChnWENz7DxnY.cGf2.ENr7C3z0DNn0ENnWE3nZDhP6.'
     }
   end
-
 
   it "is called CueCat" do
     expect(@cuecat.name).to match(/CueCat/i)

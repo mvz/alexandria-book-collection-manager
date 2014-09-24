@@ -23,7 +23,7 @@ class Alexandria::ImportFilter
     filefilter = Gtk::FileFilter.new
     filefilter.name = name
     patterns.each { |x| filefilter.add_pattern(x) }
-    return filefilter
+    filefilter
   end
 end
 
@@ -31,7 +31,7 @@ module Alexandria
   module UI
     class SkipEntryDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, message)
         super(parent, _("Error while importing"),
@@ -39,7 +39,7 @@ module Alexandria
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                [_("_Continue"), Gtk::Dialog::RESPONSE_OK]],
               message)
-        puts "Opened SkipEntryDialog #{self.inspect}" if $DEBUG
+        puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
         show_all and @response = run
         destroy
@@ -54,7 +54,7 @@ module Alexandria
       include GetText
       include Logging
 
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       FILTERS = Alexandria::ImportFilter.all
 
@@ -73,41 +73,41 @@ module Alexandria
                                    Gtk::Dialog::RESPONSE_ACCEPT)
         import_button.sensitive = false
 
-        self.signal_connect('destroy') { 
+        signal_connect('destroy') {
           if running
             @destroyed = true
-            
+
           else
-            self.destroy
+            destroy
           end
-          #self.destroy unless running 
+          # self.destroy unless running
         }
 
         filters = {}
         FILTERS.each do |filter|
           filefilter = filter.to_filefilter
-          self.add_filter(filefilter)
+          add_filter(filefilter)
           puts "Added ImportFilter #{filefilter} -- #{filefilter.name}" if $DEBUG
           filters[filefilter] = filter
         end
 
-        self.signal_connect('selection_changed') do
+        signal_connect('selection_changed') do
           import_button.sensitive =
-            self.filename and File.file?(self.filename)
+            filename and File.file?(filename)
         end
 
         # before adding the (hidden) progress bar, we must re-set the
         # packing of the button box (currently packed at the end),
         # because the progressbar will be *after* the button box.
-        buttonbox = self.vbox.children.last
-        options = self.vbox.query_child_packing(buttonbox)
+        buttonbox = vbox.children.last
+        options = vbox.query_child_packing(buttonbox)
         options[-1] = Gtk::PACK_START
-        self.vbox.set_child_packing(buttonbox, *options)
-        self.vbox.reorder_child(buttonbox, 1)
+        vbox.set_child_packing(buttonbox, *options)
+        vbox.reorder_child(buttonbox, 1)
 
         pbar = Gtk::ProgressBar.new
         pbar.show_text = true
-        self.vbox.pack_start(pbar, false)
+        vbox.pack_start(pbar, false)
 
         on_progress = proc do |fraction|
           begin
@@ -124,15 +124,15 @@ module Alexandria
 
         exec_queue = ExecutionQueue.new
 
-        while not @destroyed and 
+        while !@destroyed and
             (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 
           if response == Gtk::Dialog::RESPONSE_HELP
-            Alexandria::UI::display_help(self, 'import-library')
+            Alexandria::UI.display_help(self, 'import-library')
             next
           end
-          file = File.basename(self.filename, '.*')
+          file = File.basename(filename, '.*')
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
                                                        Libraries.instance.all_libraries,
@@ -149,7 +149,7 @@ module Alexandria
               percent = n / coeff
               # fraction between 0 and 1
               fraction = percent / 100
-              puts "#{self.inspect} Percentage: #{fraction}" if $DEBUG
+              puts "#{inspect} Percentage: #{fraction}" if $DEBUG
               exec_queue.call(on_progress, fraction)
             end
           end
@@ -157,7 +157,7 @@ module Alexandria
           not_cancelled = true
           filter.on_error do |message|
             not_cancelled = exec_queue.sync_call(on_error, message)
-            puts "#{self.inspect} cancel state: #{not_cancelled}" if $DEBUG
+            puts "#{inspect} cancel state: #{not_cancelled}" if $DEBUG
           end
 
           library = nil
@@ -166,15 +166,15 @@ module Alexandria
           thread = Thread.start do
             begin
               library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
-                                                  self.filename)
+                                                  filename)
             rescue => ex
               trace = ex.backtrace.join("\n> ")
-              log.error { "Import failed: #{ex.message} #{trace}"}
+              log.error { "Import failed: #{ex.message} #{trace}" }
             end
           end
 
-          while thread.alive? and not @destroyed
-            #puts "Thread #{thread} still alive."
+          while thread.alive? and !@destroyed
+            # puts "Thread #{thread} still alive."
             running = true
             exec_queue.iterate
             Gtk.main_iteration_do(false)
@@ -188,8 +188,8 @@ module Alexandria
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
               ErrorDialog.new(parent,
                               _("Couldn't import the library"),
-                              _("The format of the file you " +
-                                "provided is unknown.  Please " +
+                              _("The format of the file you " \
+                                "provided is unknown.  Please " \
                                 "retry with another file."))
             end
             pbar.hide

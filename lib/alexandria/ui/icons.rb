@@ -26,20 +26,20 @@ class Gdk::Pixbuf
     new_pixbuf = Gdk::Pixbuf.new(Gdk::Pixbuf::COLORSPACE_RGB,
                                  true,
                                  8,
-                                 self.width + tweak_x,
-                                 self.height + tweak_y)
+                                 width + tweak_x,
+                                 height + tweak_y)
 
     # Fills with blank.
     new_pixbuf.fill!(0)
 
     # Copies the current pixbuf there (south-west).
-    self.copy_area(0, 0,
-                   self.width, self.height,
+    copy_area(0, 0,
+                   width, height,
                    new_pixbuf,
                    0, tweak_y)
 
     # Copies the tag pixbuf there (north-est).
-    tag_pixbuf_x = self.width - (tweak_x * 2)
+    tag_pixbuf_x = width - (tweak_x * 2)
     new_pixbuf.composite!(tag_pixbuf,
                           0, 0,
                           tag_pixbuf.width + tag_pixbuf_x,
@@ -47,7 +47,7 @@ class Gdk::Pixbuf
                           tag_pixbuf_x, 0,
                           1, 1,
                           Gdk::Pixbuf::INTERP_HYPER, 255)
-    return new_pixbuf
+    new_pixbuf
   end
 end
 
@@ -64,9 +64,9 @@ module Alexandria
       def self.load_icon_images
         Dir.entries(ICONS_DIR).each do |file|
           next unless file =~ /\.png$/    # skip non '.png' files
-            # Don't use upcase and use tr instead
-            # For example in Turkish the upper case of 'i' is still 'i'.
-            name = File.basename(file, ".png").tr('a-z', 'A-Z')
+          # Don't use upcase and use tr instead
+          # For example in Turkish the upper case of 'i' is still 'i'.
+          name = File.basename(file, ".png").tr('a-z', 'A-Z')
           const_set(name, Gdk::Pixbuf.new(File.join(ICONS_DIR, file)))
         end
       end
@@ -78,8 +78,8 @@ module Alexandria
           if File.exist?(filename)
             return Gdk::Pixbuf.new(filename)
           end
-        rescue Exception => err
-            # report load error; FIX should go to a Logger...
+        rescue => err
+          # report load error; FIX should go to a Logger...
           puts err.message
           puts err.backtrace.join("\n> ")
           puts "Failed to load Gdk::Pixbuf, please ensure that from #{filename} is a valid image file"
@@ -88,14 +88,12 @@ module Alexandria
       end
 
       def self.blank?(filename)
-        begin
-          pixbuf = Gdk::Pixbuf.new(filename)
-          pixbuf.width == 1 and pixbuf.height == 1
-        rescue Exception => err
-          puts err.message
-          puts err.backtrace.join("\n> ")
-          true
-        end
+        pixbuf = Gdk::Pixbuf.new(filename)
+        pixbuf.width == 1 and pixbuf.height == 1
+      rescue => err
+        puts err.message
+        puts err.backtrace.join("\n> ")
+        true
       end
     end
   end

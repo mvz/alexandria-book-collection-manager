@@ -27,11 +27,11 @@ module Alexandria
     class AmazonProvider < GenericProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      #CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
+      # CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 
-      LOCALES = ['ca','de','fr','jp','uk','us']
+      LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us']
 
       def initialize
         super("Amazon", "Amazon")
@@ -42,7 +42,7 @@ module Alexandria
         prefs.add("associate_tag", _("Associate Tag"), '')
 
         prefs.read
-        token = prefs.variable_named("dev_token")        
+        token = prefs.variable_named("dev_token")
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
 
         if token
@@ -51,7 +51,7 @@ module Alexandria
           end
         end
         if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
-          token.new_value = ''           
+          token.new_value = ''
         end
 
         secret = prefs.variable_named("secret_key")
@@ -68,10 +68,8 @@ module Alexandria
           end
           if (associate.value != associate.value.strip)
             associate.new_value = associate.value.strip
-          end          
+          end
         end
-
-
       end
 
       def search(criterion, type)
@@ -80,8 +78,8 @@ module Alexandria
         if prefs["secret_key"].empty?
           raise Amazon::RequestError.new("Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account")
         end
-        
-        if config = Alexandria::Preferences.instance.http_proxy_config
+
+        if (config = Alexandria::Preferences.instance.http_proxy_config)
           host, port, user, pass = config
           url = "http://"
           url += user + ":" + pass + "@" if user and pass
@@ -91,10 +89,10 @@ module Alexandria
 
         access_key_id = prefs["dev_token"]
 
-        Amazon::Ecs.options = {:aWS_access_key_id => access_key_id,
-                               :associateTag => prefs["associate_tag"]}
+        Amazon::Ecs.options = { aWS_access_key_id: access_key_id,
+                                associateTag: prefs["associate_tag"] }
         Amazon::Ecs.secret_access_key = prefs["secret_key"]
-        ##req.cache = Amazon::Search::Cache.new(CACHE_DIR)
+        # #req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
         locales.delete prefs["locale"]
         locales.unshift prefs["locale"]
@@ -107,11 +105,11 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
             res.items.each do |item|
               products << item
             end
-            ##req.asin_search(criterion) do |product|
+            # #req.asin_search(criterion) do |product|
 
             # Shouldn't happen.
             # raise TooManyResultsError if products.length > 1
@@ -120,36 +118,36 @@ module Alexandria
             # multiple editions of a book with the same ISBN, and
             # Amazon was distinguishing between them.  So we'll log
             # this case, and arbitrarily return the FIRST item
-            
+
             # Actually, this may be due to Amazon recommending a
             # preferred later edition of a book, in spite of our
             # searching on a single ISBN it can return more than one
             # result with different ISBNs
-            
+
             if products.length > 1
               log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results; returning the first result only" }
             end
 
           when SEARCH_BY_TITLE
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
               if /#{criterion}/i.match(item.get('itemattributes/title'))
                 products << item
               end
             end
-            ##req.keyword_search(criterion) do |product|
+            # #req.keyword_search(criterion) do |product|
 
           when SEARCH_BY_AUTHORS
             criterion = "author:#{criterion}"
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale, :type => 'Power'})
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale, type: 'Power')
             res.items.each do |item|
               products << item
             end
-            ##req.author_search(criterion) do |product|
+            # #req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            res = Amazon::Ecs.item_search(criterion, {:response_group =>'ItemAttributes,Images', :country => request_locale})
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
               products << item
@@ -163,7 +161,7 @@ module Alexandria
           end
           # raise NoResultsError if products.empty?
         rescue Amazon::RequestError => re
-          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}"}
+          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}" }
           retry unless locales.empty?
           raise NoResultsError
         end
@@ -179,9 +177,9 @@ module Alexandria
           # the garbled titles to UTF-8. This tries to convert back into
           # valid UTF-8. It does not always work - see isbn 2259196098
           # (from the mailing list) for an example.
-          #if req.locale == 'us'
+          # if req.locale == 'us'
           #    title = title.convert('ISO-8859-1','UTF-8')
-          #end
+          # end
           # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!! Yep 2009-12-09!
 
           media = normalize(atts.get('binding'))
@@ -195,7 +193,7 @@ module Alexandria
           end
           # hack, extract year by regexp (not Y10K compatible :-)
           /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
-          publishing_year = $1 ? $1.to_i : nil
+          publishing_year = Regexp.last_match[1] ? Regexp.last_match[1].to_i : nil
           book = Book.new(title,
                           atts.get_array('author').map { |x| normalize(x) },
                           isbn,
@@ -204,8 +202,8 @@ module Alexandria
                           media)
 
           image_url = item.get('mediumimage/url')
-          log.info { "Found at Amazon[#{request_locale}]: #{book.title}"}
-          results << [ book, image_url ]
+          log.info { "Found at Amazon[#{request_locale}]: #{book.title}" }
+          results << [book, image_url]
         end
         if type == SEARCH_BY_ISBN
           if results.size == 1
@@ -219,10 +217,10 @@ module Alexandria
               if query_isbn_canon == book_isbn_canon
                 return rslt
               end
-              log.debug {"rejected possible result #{book}"}
+              log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result
-            log.info {"no more results to check. Returning first result, just an approximation"}
+            log.info { "no more results to check. Returning first result, just an approximation" }
             return results.first
           end
         else
@@ -231,36 +229,33 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          isbn = Library.canonicalise_isbn(book.isbn)          
-          url = case prefs["locale"]
-                when "fr"
-                  "http://www.amazon.fr/exec/obidos/ASIN/%s"
-                when "uk"
-                  "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
-                when "de"
-                  "http://www.amazon.de/exec/obidos/ASIN/%s"
-                when "ca"
-                  "http://www.amazon.ca/exec/obidos/ASIN/%s"
-                when "jp"
-                  "http://www.amazon.jp/exec/obidos/ASIN/%s"
-                when "us"
-                  "http://www.amazon.com/exec/obidos/ASIN/%s"
-                end
-          url % isbn
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        isbn = Library.canonicalise_isbn(book.isbn)
+        url = case prefs["locale"]
+              when "fr"
+                "http://www.amazon.fr/exec/obidos/ASIN/%s"
+              when "uk"
+                "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
+              when "de"
+                "http://www.amazon.de/exec/obidos/ASIN/%s"
+              when "ca"
+                "http://www.amazon.ca/exec/obidos/ASIN/%s"
+              when "jp"
+                "http://www.amazon.jp/exec/obidos/ASIN/%s"
+              when "us"
+                "http://www.amazon.com/exec/obidos/ASIN/%s"
+              end
+        url % isbn
+      rescue => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       def normalize(str)
         unless str.nil?
-          str = str.squeeze(' ').strip()
+          str = str.squeeze(' ').strip
         end
         str
       end
-
     end
   end
 end

@@ -22,13 +22,13 @@ module Alexandria
 
     def self.all
       themes_dir = [
-                    # System dir
-                    File.join(Alexandria::Config::DATA_DIR, "web-themes"),
+        # System dir
+        File.join(Alexandria::Config::DATA_DIR, "web-themes"),
 
-                    # User dir
-                    File.join(ENV['HOME'], '.alexandria', '.web-themes')
-                   ]
-      themes_dir.map { |x| self.load(x) }.flatten
+        # User dir
+        File.join(ENV['HOME'], '.alexandria', '.web-themes')
+      ]
+      themes_dir.map { |x| load(x) }.flatten
     end
 
     def has_pixmaps?
@@ -62,7 +62,7 @@ module Alexandria
       else
         FileUtils.mkdir_p(themes_dir)
       end
-      return themes
+      themes
     end
 
     def initialize(css_file, preview_file, pixmaps_directory)

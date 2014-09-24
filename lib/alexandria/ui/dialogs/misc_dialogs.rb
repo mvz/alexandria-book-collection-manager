@@ -19,16 +19,16 @@ module Alexandria
   module UI
     class ConflictWhileCopyingDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, library, book)
         super(parent,
-              _("The book '%s' already exists in '%s'. Would you like " +
-                "to replace it?") % [ book.title, library.name ],
+              _("The book '%s' already exists in '%s'. Would you like " \
+                "to replace it?") % [book.title, library.name],
               Gtk::Stock::DIALOG_QUESTION,
               [[_("_Skip"), Gtk::Dialog::RESPONSE_CANCEL],
                [_("_Replace"), Gtk::Dialog::RESPONSE_OK]],
-              _("If you replace the existing book, its contents will " +
+              _("If you replace the existing book, its contents will " \
                 "be overwritten."))
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
         show_all and @response = run
@@ -42,9 +42,9 @@ module Alexandria
 
     class ReallyDeleteDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      def initialize(parent, library, books=nil)
+      def initialize(parent, library, books = nil)
         # Deleting a library.
         if books.nil?
           message = _("Are you sure you want to delete '%s'?") \
@@ -60,10 +60,10 @@ module Alexandria
           # Deleting books.
         else
           message = if books.length == 1
-                      _("Are you sure you want to delete '%s' " +
-                        "from '%s'?") % [ books.first.title, library.name ]
+                      _("Are you sure you want to delete '%s' " \
+                        "from '%s'?") % [books.first.title, library.name]
                     else
-                      _("Are you sure you want to delete the " +
+                      _("Are you sure you want to delete the " \
                         "selected books from '%s'?") % library.name
                     end
           description = nil
@@ -85,5 +85,3 @@ module Alexandria
     end
   end
 end
-
-

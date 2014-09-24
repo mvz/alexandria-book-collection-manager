@@ -33,7 +33,6 @@ require 'alexandria/logging'
 require 'alexandria/about'
 
 module Alexandria
-
   def self.set_proxy
     ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
       and URI.parse(ENV['http_proxy']).userinfo.nil?
@@ -53,20 +52,19 @@ module Alexandria
   end
 end
 
-
 # lrz says 'macui' is obsolete (may be supported again some day)
-#unless $MACOSX
+# unless $MACOSX
 require 'alexandria/config'
 require 'alexandria/version'
 
-#else
+# else
 #  module Alexandria
 #    module Config
 #      DATA_DIR = OSX::NSBundle.mainBundle.resourcePath.fileSystemRepresentation
 #    end
 #    VERSION = OSX::NSBundle.mainBundle.infoDictionary.objectForKey('CFBundleVersion').to_s
 #  end
-#end
+# end
 require 'alexandria/utils'
 
 require 'alexandria/models/book'

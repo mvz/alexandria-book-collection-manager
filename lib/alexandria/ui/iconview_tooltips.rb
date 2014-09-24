@@ -19,7 +19,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-
 # Please retain the following note:
 #
 # Based upon Recipe 168 - "How to display tooltips in GtkTreeView - Part 3"
@@ -31,7 +30,6 @@
 require 'cgi'
 
 class IconViewTooltips
-
   include Alexandria::Logging
 
   def initialize(view)
@@ -47,24 +45,24 @@ class IconViewTooltips
     @tooltip_window.signal_connect('leave_notify_event') { |vw, event|
       on_leave(vw, event) }
 
-      @label = Gtk::Label.new('')
-      @label.wrap = true
-      @label.set_alignment(0.5, 0.5)
-      @label.use_markup = true
-      @label.show()
+    @label = Gtk::Label.new('')
+    @label.wrap = true
+    @label.set_alignment(0.5, 0.5)
+    @label.use_markup = true
+    @label.show
 
-      @tooltip_window.add(@label)
-      set_view(view)
+    @tooltip_window.add(@label)
+    set_view(view)
   end
 
   def set_view(view)
     view.signal_connect('motion_notify_event') { |vw, event|
       on_motion(vw, event) }
-      view.signal_connect('leave_notify_event') { |vw, event|
-        on_leave(vw, event) }
+    view.signal_connect('leave_notify_event') { |vw, event|
+      on_leave(vw, event) }
   end
 
-  def on_expose(window, event)
+  def on_expose(window, _event)
     # this paints a nice outline around the label
     size = window.size_request
     window.style.paint_flat_box(window.window,
@@ -73,7 +71,7 @@ class IconViewTooltips
                                 nil,
                                 @tooltip_window,
                                 'tooltip',
-                                0,0,size[0],size[1])
+                                0, 0, size[0], size[1])
     # must return nil so the label contents get drawn correctly
     nil
   end
@@ -106,7 +104,7 @@ class IconViewTooltips
       html += "(#{year})"
     end
 
-    html += "</small>"
+    html + "</small>"
   end
 
   def on_motion(view, event)
@@ -115,7 +113,7 @@ class IconViewTooltips
     # hmmm, actually seems to work. Report a bug if you can spot a failure
     if tree_path
       iter = view.model.get_iter(tree_path)
-      if @latest_iter == nil
+      if @latest_iter.nil?
         @latest_iter = iter
 
         @tooltip_timeout_id = Gtk.timeout_add(250) do
@@ -130,7 +128,7 @@ class IconViewTooltips
             size = @tooltip_window.size_request
             @tooltip_window.move(event.x_root - size[0],
                                  event.y_root + 12)
-            @tooltip_window.show()
+            @tooltip_window.show
             # don't run again
             false
           else
@@ -139,18 +137,17 @@ class IconViewTooltips
         end
 
       elsif @latest_iter != iter
-        hide_tooltip()
+        hide_tooltip
       end
 
-
     else
-      hide_tooltip()
+      hide_tooltip
     end
   end
 
-  def hide_tooltip()
+  def hide_tooltip
     unless @tooltip_window.nil?
-      @tooltip_window.hide()
+      @tooltip_window.hide
       if @tooltip_timeout_id
         Gtk.timeout_remove(@tooltip_timeout_id)
         @tooltip_timeout_id = nil
@@ -159,7 +156,7 @@ class IconViewTooltips
     end
   end
 
-  def on_leave(view, event)
-    @tooltip_window.hide()
+  def on_leave(_view, _event)
+    @tooltip_window.hide
   end
 end

@@ -21,7 +21,7 @@ module Alexandria
     class SmartLibraryPropertiesDialogBase < Gtk::Dialog
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_reader :predicate_operator_rule
 
@@ -33,13 +33,13 @@ module Alexandria
         self.has_separator = false
         self.resizable = true
         self.border_width = 4
-        self.vbox.border_width = 12
+        vbox.border_width = 12
 
         main_box = Gtk::VBox.new
         main_box.border_width = 4
         main_box.spacing = 8
 
-        self.vbox << main_box
+        vbox << main_box
 
         @smart_library_rules = []
 
@@ -67,7 +67,7 @@ module Alexandria
 
       def smart_library_rules
         fill_smart_library_rules_values
-        return @smart_library_rules
+        @smart_library_rules
       end
 
       def has_weirdnesses?
@@ -75,7 +75,7 @@ module Alexandria
         smart_library_rules.each do |rule|
           return true if rule.value == ""
         end
-        return false
+        false
       end
 
       def user_confirms_possible_weirdnesses_before_saving?
@@ -86,20 +86,18 @@ module Alexandria
                                  Gtk::Stock::DIALOG_QUESTION,
                                  [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                                   [_("_Save However"), Gtk::Dialog::RESPONSE_YES]],
-                                 _("This smart library contains one or more conditions " +
-                                   "which are empty or conflict with each other. This is " +
-                                   "likely to result in never matching a book. Are you " +
+                                 _("This smart library contains one or more conditions " \
+                                   "which are empty or conflict with each other. This is " \
+                                   "likely to result in never matching a book. Are you " \
                                    "sure you want to save this library?"))
         dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
         dialog.show_all
         confirmed = dialog.run == Gtk::Dialog::RESPONSE_YES
         dialog.destroy
-        return confirmed
+        confirmed
       end
 
-      def update_rules_header_box(predicate_operator_rule=
-                                  SmartLibrary::ALL_RULES)
-
+      def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)
         @rules_header_box.children.each { |x| @rules_header_box.remove(x) }
 
         if @rules_box.children.length > 1
@@ -134,7 +132,7 @@ module Alexandria
         @rules_header_box.show_all
       end
 
-      def insert_new_rule(rule=nil)
+      def insert_new_rule(rule = nil)
         rule_box = Gtk::HBox.new
         rule_box.spacing = 8
 
@@ -146,11 +144,11 @@ module Alexandria
         operator_combo.model = operator_model
 
         value_entry = Gtk::Entry.new
-        
+
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
         date_entry.primary_icon_activatable = true
-        date_entry.signal_connect('icon-press') do |entry, primary, icon|
+        date_entry.signal_connect('icon-press') do |entry, primary, _icon|
           if primary.nick == 'primary'
             display_calendar_popup(entry)
           end
@@ -158,8 +156,8 @@ module Alexandria
 
         # Really hide the time part of the date entry, as the constructor
         # does not seem to do it...
-        ###date_entry.children[2..3].each { |x| date_entry.remove(x) }
-        ###date_entry.spacing = 8
+        # ##date_entry.children[2..3].each { |x| date_entry.remove(x) }
+        # ##date_entry.spacing = 8
         entry_label = Gtk::Label.new("")
 
         add_button = Gtk::Button.new("")
@@ -174,7 +172,7 @@ module Alexandria
         remove_button << Gtk::Image.new(Gtk::Stock::REMOVE,
                                         Gtk::IconSize::BUTTON)
 
-        remove_button.signal_connect('clicked') do |button|
+        remove_button.signal_connect('clicked') do |_button|
           idx = @rules_box.children.index(rule_box)
           raise if idx.nil?
           @smart_library_rules.delete_at(idx)
@@ -256,10 +254,10 @@ module Alexandria
           operation_idx = operations.map \
           { |x| x.first }.index(rule.operation)
 
-          if operand_idx != nil and operation_idx != nil
+          if !operand_idx.nil? and !operation_idx.nil?
             left_operand_combo.active = operand_idx
             operator_combo.active = operation_idx
-            if rule.value != nil
+            unless rule.value.nil?
               case rule.value
               when String
                 value_entry.text = rule.value
@@ -297,13 +295,13 @@ module Alexandria
           elsif date.visible?
             begin
               value = parse_date(date.text)
-            rescue Exception => ex
+            rescue => ex
               trace = ex.backtrace.join("\n > ")
-              log.warn { "Possibly invalid date entered #{ex.message}" } 
+              log.warn { "Possibly invalid date entered #{ex.message}" }
               log.warn { "Date widget returned #{date.text} / #{trace}" }
-              # user entered some non-date... 
+              # user entered some non-date...
               # default to current time, for the moment
-              value = Time.now()
+              value = Time.now
             end
           end
           @smart_library_rules[i].value = value
@@ -312,24 +310,23 @@ module Alexandria
 
       # COPIED and PASTED from book_properties_dialog_base
 
-
       def setup_calendar_widgets
         @popup_displayed = false
-        @calendar_popup = Gtk::Window.new()# Gtk::Window::POPUP)
+        @calendar_popup = Gtk::Window.new # Gtk::Window::POPUP)
         # @calendar_popup.modal = true
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
         @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
-        
-        @calendar_popup.set_transient_for( self )
-        @calendar_popup.set_type_hint( Gdk::Window::TYPE_HINT_DIALOG )
+
+        @calendar_popup.set_transient_for(self)
+        @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4
         # @calendar_popup.app_paintable = true
 
-        @calendar_popup.signal_connect("focus-out-event") do |popup, event|
+        @calendar_popup.signal_connect("focus-out-event") do |_popup, _event|
           hide_calendar_popup
           false
         end
@@ -340,7 +337,7 @@ module Alexandria
         @calendar.signal_connect("day-selected") do
           date_arr = @calendar.date
           year = date_arr[0]
-          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
@@ -348,11 +345,11 @@ module Alexandria
           end
 
         end
-        
+
         @calendar.signal_connect("day-selected-double-click") do
           date_arr = @calendar.date
           year = date_arr[0]
-          month = date_arr[1]# + 1 # gtk : months 0-indexed, Time.gm : 1-index
+          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
           day = date_arr[2]
           if @calendar_popup_for_entry
             time = Time.gm(year, month, day)
@@ -360,7 +357,6 @@ module Alexandria
           end
           hide_calendar_popup
         end
-
       end
 
       def hide_calendar_popup
@@ -403,19 +399,19 @@ module Alexandria
           self.modal = false
           @calendar_popup.move(*get_entry_popup_coords(entry))
           @calendar_popup.show_all
-          @popup_displayed = true      
+          @popup_displayed = true
         end
       end
 
       def get_entry_popup_coords(entry)
         gdk_win = entry.parent_window
-        x,y = gdk_win.origin
+        x, y = gdk_win.origin
         alloc = entry.allocation
         x += alloc.x
         y += alloc.y
         y += alloc.height
-        #x = [0, x].max
-        #y = [0, y].max
+        # x = [0, x].max
+        # y = [0, y].max
         [x, y]
       end
 
@@ -423,7 +419,7 @@ module Alexandria
         date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
         ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
         begin
-          d = Date.strptime(datestring, date_format)          
+          d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
         rescue
           nil
@@ -431,10 +427,8 @@ module Alexandria
       end
 
       def format_date(datetime)
-         date_format = '%d/%m/%Y'
-        datetime.strftime( date_format = '%d/%m/%Y')
+        datetime.strftime('%d/%m/%Y')
       end
-
     end
   end
 end

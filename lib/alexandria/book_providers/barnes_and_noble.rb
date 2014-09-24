@@ -26,41 +26,38 @@
 
 # NOTE: this modified version is based on the Alexandria WorldCat provider.
 
-
 require 'cgi'
 require 'alexandria/net'
 require 'alexandria/book_providers/web'
 
 module Alexandria
   class BookProviders
-
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
       SITE = "http://www.barnesandnoble.com"
 
-      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/books" +
+      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/books" \
         "/product.aspx?ISBSRC=Y&ISBN=%s"
 
-      BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" +
+      BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" \
         "/results.asp?%s=%s" # type, term
 
-      def initialize()
+      def initialize
         super("BarnesAndNoble", "BarnesAndNoble")
         @agent = nil
         prefs.read
       end
 
-      def agent      
+      def agent
         unless @agent
           @agent = Alexandria::WWWAgent.new
-        end        
+        end
         @agent
       end
 
-
       def fetch_redirectly(uri_str, limit = 5)
-        raise NoResultsError, 'HTTP redirect too deep' if limit == 0       
+        raise NoResultsError, 'HTTP redirect too deep' if limit == 0
         response = agent.get(uri_str)
         if limit < 10
           sleep 0.1
@@ -88,23 +85,21 @@ module Alexandria
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
 
-          results.map {|result| get_book_from_search_result(result) }          
+          results.map { |result| get_book_from_search_result(result) }
         end
-
       end
 
       def url(book)
-        begin
-          create_search_uri(SEARCH_BY_ISBN, book.isbn)
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        create_search_uri(SEARCH_BY_ISBN, book.isbn)
+      rescue => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       def create_search_uri(search_type, search_term)
-        search_type_code = { SEARCH_BY_AUTHORS => 'ATH',
-           SEARCH_BY_TITLE => 'TTL',
+        search_type_code = {
+          SEARCH_BY_AUTHORS => 'ATH',
+          SEARCH_BY_TITLE => 'TTL',
           SEARCH_BY_KEYWORD => 'WRD'    # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
         }[search_type] or ''
         if search_type == SEARCH_BY_ISBN
@@ -128,8 +123,8 @@ module Alexandria
           result_divs = doc / 'div[@class*="book-container"]'
           result_divs.each do |div|
             result = {}
-            #img = div % 'div.book-image/a/img'
-            #result[:image_url] = img['src'] if img
+            # img = div % 'div.book-image/a/img'
+            # result[:image_url] = img['src'] if img
             title_header = div % 'h2'
             title_links = title_header / 'a'
             result[:title] = title_links.first.inner_text
@@ -137,15 +132,15 @@ module Alexandria
 
             book_search_results << result
           end
-        rescue Exception => ex
+        rescue => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for Barnes & Noble " +
+          log.warn {"Failed parsing search results for Barnes & Noble " \
             "#{ex.message} #{trace}" }
         end
-        book_search_results  
+        book_search_results
       end
 
-      def parse_result_data(html, search_isbn=nil, recursing=false)
+      def parse_result_data(html, _search_isbn = nil, _recursing = false)
         doc = html_to_doc(html)
         begin
           book_data = {}
@@ -170,9 +165,8 @@ module Alexandria
           end
 
           isbn_links = doc / '//a.isbn-a'
-          isbns = isbn_links.map{|a| a.inner_text}
+          isbns = isbn_links.map { |a| a.inner_text }
           book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
-
 
           authors = []
           author_links = title_header / 'a[@href*="ATH"]'
@@ -184,21 +178,21 @@ module Alexandria
           publisher_item = doc % 'li.publisher'
           if publisher_item
             publisher_item.inner_text =~ /Publisher:\s*(.+)/
-              book_data[:publisher] = $1
+            book_data[:publisher] = Regexp.last_match[1]
           end
 
           date_item = doc % 'li.pubDate'
           if date_item
             date_item.inner_text =~ /Date: ([^\s]*)\s*([\d]{4})/
-              year = $2.to_i if $2
+            year = Regexp.last_match[2].to_i if Regexp.last_match[2]
             book_data[:publication_year] = year
           end
 
           book_data[:binding] = ""
           format_list_items = doc / '//div.col-one/ul/li'
           format_list_items.each do |li|
-            if li.inner_text =~ /Format:\s*(.*),/             
-              book_data[:binding] = $1
+            if li.inner_text =~ /Format:\s*(.*),/
+              book_data[:binding] = Regexp.last_match[1]
             end
           end
 
@@ -209,7 +203,7 @@ module Alexandria
               book_data[:image_url] = images.first['src']
             else
               if images.first['src'] =~ /see_inside.gif/
-                # the first image is the "See Inside!" label               
+                # the first image is the "See Inside!" label
                 book_data[:image_url] = images[1]['src']
               else
                 book_data[:image_url] = images.first['src']
@@ -217,21 +211,19 @@ module Alexandria
             end
           end
 
-          book = Book.new(book_data[:title], book_data[:authors], 
+          book = Book.new(book_data[:title], book_data[:authors],
                           book_data[:isbn], book_data[:publisher],
                           book_data[:publication_year],
                           book_data[:binding])
           return [book, book_data[:image_url]]
-        rescue Exception => ex
+        rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for BarnesAndNoble " +
+          log.warn {"Failed parsing search results for BarnesAndNoble " \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end
-
       end
-
     end # class BarnesAndNobleProvider
   end # class BookProviders
 end # module Alexandria

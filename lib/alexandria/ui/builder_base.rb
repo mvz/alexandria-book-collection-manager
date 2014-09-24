@@ -17,16 +17,15 @@
 
 module Alexandria
   module UI
-
     class BuilderBase
       def initialize(filename, widget_names)
         file = File.join(Alexandria::Config::DATA_DIR, 'glade', filename)
         builder = Gtk::Builder.new
         builder.add_from_file(file)
         builder.connect_signals do |handler|
-          begin  
+          begin
             method(handler)
-          rescue Exception => ex
+          rescue => ex
             puts "Error: #{ex}" if $DEBUG
             nil
           end
@@ -40,6 +39,5 @@ module Alexandria
         end
       end
     end
-
   end
 end

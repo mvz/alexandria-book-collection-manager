@@ -20,46 +20,42 @@ require 'logger'
 require 'forwardable'
 
 module Alexandria
-
   # A Logger subclass which accepts a source for log messages
   # in order to improve legibility of the logs.
   # The source should usually be +self+, whether that be a Class, Module
   # or Object. A LoggerWrapper can be used to simplify this procedure.
   class Logger < ::Logger
-
-    def add(severity, message = nil, source=nil, progname = nil, &block)
+    def add(severity, message = nil, source = nil, progname = nil, &block)
       if source.nil?
         return super(severity, message, progname, &block)
       end
       category = self.class.category(source)
-      if not block_given?
+      unless block_given?
         return super(severity, progname, category)
       end
       category = "#{category} #{progname}" if progname
-      return super(severity, message, category, &block)
+      super(severity, message, category, &block)
     end
 
-    def debug(source=nil, progname = nil, &block)
+    def debug(source = nil, progname = nil, &block)
       add(DEBUG, nil, source, progname, &block)
     end
 
-    def info(source=nil, progname = nil, &block)
+    def info(source = nil, progname = nil, &block)
       add(INFO, nil, source, progname, &block)
     end
 
-    def warn(source=nil, progname = nil, &block)
+    def warn(source = nil, progname = nil, &block)
       add(WARN, nil, source, progname, &block)
     end
 
-    def error(source=nil, progname = nil, &block)
+    def error(source = nil, progname = nil, &block)
       add(ERROR, nil, source, progname, &block)
     end
 
-    def fatal(source=nil, progname = nil, &block)
+    def fatal(source = nil, progname = nil, &block)
       add(FATAL, nil, source, progname, &block)
     end
-
-    private
 
     def self.category(source)
       if source.instance_of? Class
@@ -70,7 +66,6 @@ module Alexandria
         "<Obj #{source.class.name}>"
       end
     end
-
   end
 
   # A wrapper around a Logger, which allows code to define the source
@@ -94,22 +89,26 @@ module Alexandria
         @logger << msg + "\n"
       end
     end
+
     def debug(progname = nil, &block)
       @logger.debug(@source, progname, &block)
     end
+
     def info(progname = nil, &block)
       @logger.info(@source, progname, &block)
     end
+
     def warn(progname = nil, &block)
       @logger.warn(@source, progname, &block)
     end
+
     def error(progname = nil, &block)
       @logger.error(@source, progname, &block)
     end
+
     def fatal(progname = nil, &block)
       @logger.fatal(@source, progname, &block)
     end
-
   end
 
   # A mixin to include a +log+ instance method for objects or a
@@ -117,7 +116,6 @@ module Alexandria
   # +LogWrapper+ is returned which wraps the Alexandria log and
   # specifies the appropriate source object, class or module.
   module Logging
-
     module ClassMethods
       def log
         @log_wrapper ||= LogWrapper.new(Alexandria.log, self)
@@ -150,7 +148,7 @@ module Alexandria
     logger
   end
 
-  @@logger = self.create_logger
+  @@logger = create_logger
 
   public
 
@@ -158,5 +156,4 @@ module Alexandria
   def self.log
     @@logger
   end
-
 end

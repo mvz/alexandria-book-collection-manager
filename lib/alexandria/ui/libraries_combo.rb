@@ -19,7 +19,7 @@
 class Gtk::ComboBox
   include GetText
   extend GetText
-  GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+  GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
   def populate_with_libraries(libraries, selected_library)
     libraries_names = libraries.map { |x| x.name }
@@ -27,36 +27,36 @@ class Gtk::ComboBox
       libraries_names.delete selected_library.name
       libraries_names.unshift selected_library.name
     end
-    self.clear
-    self.set_row_separator_func do |model, iter|
+    clear
+    set_row_separator_func do |_model, iter|
       iter[1] == '-'
     end
     self.model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
     libraries_names.each do |library_name|
-      iter = self.model.append
+      iter = model.append
       iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
       iter[1] = library_name
       iter[2] = false
     end
-    self.model.append[1] = '-'
-    iter = self.model.append
+    model.append[1] = '-'
+    iter = model.append
     iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
     iter[1] = _('New Library')
     iter[2] = true
     renderer = Gtk::CellRendererPixbuf.new
-    self.pack_start(renderer, false)
-    self.set_attributes(renderer, :pixbuf => 0)
+    pack_start(renderer, false)
+    set_attributes(renderer, pixbuf: 0)
     renderer = Gtk::CellRendererText.new
-    self.pack_start(renderer, true)
-    self.set_attributes(renderer, :text => 1)
+    pack_start(renderer, true)
+    set_attributes(renderer, text: 1)
     self.active = 0
-    # self.sensitive = libraries.length > 1 
+    # self.sensitive = libraries.length > 1
     # This prohibits us from adding a "New Library" from this combo
     # when we only have a single library
   end
 
   def selection_from_libraries(libraries)
-    iter = self.active_iter
+    iter = active_iter
     is_new = false
     library = nil
     if iter[2]
@@ -66,10 +66,10 @@ class Gtk::ComboBox
       is_new = true
     else
       library = libraries.find do |x|
-        x.name == self.active_iter[1]
+        x.name == active_iter[1]
       end
     end
     raise unless library
-    return [library, is_new]
+    [library, is_new]
   end
 end

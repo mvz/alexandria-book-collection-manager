@@ -29,7 +29,6 @@ require 'pathname'
 require 'rake/tasklib'
 
 class GettextGenerateTask < Rake::TaskLib
-
   def initialize(projectname)
     @projectname = projectname
     @generated_files = []
@@ -41,10 +40,10 @@ class GettextGenerateTask < Rake::TaskLib
 
   def make_task
     desc "Generate gettext localization files"
-    task :gettext => @generated_files
-      
+    task gettext: @generated_files
+
     if CLOBBER
-      @generated_files.each {|gen| CLOBBER << gen }
+      @generated_files.each { |gen| CLOBBER << gen }
     end
   end
 
@@ -55,14 +54,14 @@ class GettextGenerateTask < Rake::TaskLib
     @mo_files_regex = /.*\/(.+)\/LC_MESSAGES\/.+\.mo/
 
     # create MO files
-    rule( /\.mo$/ => [ lambda { |dest| source_file(dest) }]) do |t|
+    rule(/\.mo$/ => [->(dest) { source_file(dest) }]) do |t|
       dest_dir = File.dirname(t.name)
       FileUtils.makedirs(dest_dir) unless FileTest.exists?(dest_dir)
       puts "Generating #{t.name}"
       system("msgfmt #{t.source} -o #{t.name}")
-      raise "msgfmt failed for #{t.source}" if $? != 0
+      raise "msgfmt failed for #{t.source}" if $CHILD_STATUS != 0
     end
-    mo_files.each {|mo| @generated_files << mo }
+    mo_files.each { |mo| @generated_files << mo }
   end
 
   def po_files
@@ -71,7 +70,7 @@ class GettextGenerateTask < Rake::TaskLib
 
   def generate_desktop(infile, outfile)
     @generated_files << outfile
-    file outfile => [infile, *po_files] do |f|
+    file outfile => [infile, *po_files] do |_f|
       unless `intltool-merge --version`
         raise Exception, "Need to install intltool"
       end
@@ -79,11 +78,10 @@ class GettextGenerateTask < Rake::TaskLib
     end
   end
 
-
   def locales
     po_files.map { |po| File.basename(po).split('.')[0] }
   end
-  
+
   def mo_files
     locales.map { |loc| mo_file_for(loc) }
   end
@@ -96,11 +94,9 @@ class GettextGenerateTask < Rake::TaskLib
     "#{@mo_dir}/#{locale}/LC_MESSAGES/#{@projectname}.mo"
   end
 
-
-
   def source_file(dest_file)
     dest_file =~ @mo_files_regex
-    po_file_for($1)
+    po_file_for(Regexp.last_match[1])
   end
 end
 

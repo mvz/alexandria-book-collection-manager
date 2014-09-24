@@ -24,7 +24,7 @@ module Alexandria
   class BookProviders
     class RENAUDProvider < GenericProvider
       include GetText
-      #GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      # GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
       BASE_URI = "http://www.renaud-bray.com/"
       ACCENTUATED_CHARS = "áàâäçéèêëíìîïóòôöúùûü"
 
@@ -55,17 +55,17 @@ module Alexandria
         data = transport.get(URI.parse(req))
         begin
           if type == SEARCH_BY_ISBN
-            return to_books(data).pop()
+            return to_books(data).pop
           else
             results = []
-            to_books(data).each{|book|
+            to_books(data).each {|book|
               results << book
             }
             while /Suivant/.match(data)
               md = /Enteterouge\">([\d]*)<\/b>/.match(data)
-              num = md[1].to_i+1
-              data = transport.get(URI.parse(req+"&PageActuelle="+num.to_s))
-              to_books(data).each{|book|
+              num = md[1].to_i + 1
+              data = transport.get(URI.parse(req + "&PageActuelle=" + num.to_s))
+              to_books(data).each {|book|
                 results << book
               }
             end
@@ -86,17 +86,17 @@ module Alexandria
       #######
 
       def to_books(data)
-        data = CGI::unescapeHTML(data)
+        data = CGI.unescapeHTML(data)
         data = data.convert("UTF-8", "ISO-8859-1")
-        raise NoResultsError if /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.match(data) != nil
+        raise NoResultsError if /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.match(data)
 
         titles = []
-        data.scan(/"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each{|md|
+        data.scan(/"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each {|md|
           titles << md[1].strip
         }
         raise if titles.empty?
         authors = []
-        data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each{|md|
+        data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each {|md|
           authors2 = []
           for author in md[0].split('  ')
             authors2 << author.strip
@@ -105,39 +105,38 @@ module Alexandria
         }
         raise if authors.empty?
         isbns = []
-        data.scan(/ISBN : ?<\/td><td>(\d+)/).each{|md|
+        data.scan(/ISBN : ?<\/td><td>(\d+)/).each {|md|
           isbns << md[0].strip
         }
         raise if isbns.empty?
         editions = []
         publish_years = []
-        data.scan(/Parution : <br>(\d{4,}-\d{2,}-\d{2,})/).each{|md|
+        data.scan(/Parution : <br>(\d{4,}-\d{2,}-\d{2,})/).each {|md|
           editions << md[0].strip
           publish_years << md[0].strip.split(/-/)[0].to_i
         }
         raise if editions.empty? or publish_years.empty?
         publishers = []
-        data.scan(/diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each{|md|
+        data.scan(/diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each {|md|
           publishers << md[0].strip
         }
         raise if publishers.empty?
         book_covers = []
-        data.scan(/(\/ImagesEditeurs\/[\d]*\/([\dX]*-f.(jpg|gif))|\/francais\/suggestion\/images\/livre\/livre.gif)/).each{|md|
+        data.scan(/(\/ImagesEditeurs\/[\d]*\/([\dX]*-f.(jpg|gif))|\/francais\/suggestion\/images\/livre\/livre.gif)/).each {|md|
           book_covers << BASE_URI + md[0].strip
         }
         raise if book_covers.empty?
 
         books = []
-        titles.each_with_index{|title, i|
+        titles.each_with_index {|title, i|
           books << [Book.new(title, authors[i], isbns[i], publishers[i], publish_years[i], editions[i]),
                     book_covers[i]]
-          #print books
+          # print books
         }
         raise if books.empty?
 
-        return books
+        books
       end
-
     end
   end
 end

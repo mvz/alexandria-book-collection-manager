@@ -29,7 +29,6 @@ require 'pathname'
 require 'rake/tasklib'
 
 class OmfGenerateTask < Rake::TaskLib
-
   def initialize(projectname)
     @projectname = projectname
     @generated_files = []
@@ -41,30 +40,27 @@ class OmfGenerateTask < Rake::TaskLib
 
   def make_task
     desc "Generate Open Metadata Framework files"
-    task :omf => @generated_files
+    task omf: @generated_files
 
     if CLOBBER
-      @generated_files.each {|gen| CLOBBER << gen }
+      @generated_files.each { |gen| CLOBBER << gen }
     end
   end
 
   def locale_for(omf_file)
     omf_file =~ /.*-(.+)\.omf/
-    $1
+    Regexp.last_match[1]
   end
-  
+
   def in_files
     FileList["#{@source_dir}/*.omf.in"]
   end
-  
+
   def omf_files
-    self.in_files.map { |f| f.sub(/.omf.in/, '.omf')}
+    in_files.map { |f| f.sub(/.omf.in/, '.omf') }
   end
 
-
-  def gnome_helpfiles_dir=(dir)
-    @gnome_helpfiles_dir = dir
-  end
+  attr_writer :gnome_helpfiles_dir
 
   def generate_omf(src_dir, file_glob)
     @source_dir = src_dir
@@ -78,7 +74,6 @@ class OmfGenerateTask < Rake::TaskLib
       puts "Generating #{t.name}..."
       File.open(t.name, 'w') { |io| io.puts data }
     end
-    omf_files.each {|o| @generated_files << o }
+    omf_files.each { |o| @generated_files << o }
   end
-
 end

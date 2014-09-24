@@ -28,9 +28,9 @@ module Alexandria
     class Z3950Provider < AbstractProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      def initialize(name="Z3950", fullname="Z39.50")
+      def initialize(name = "Z3950", fullname = "Z39.50")
         super
         prefs.add("hostname", _("Hostname"), "")
         prefs.add("port", _("Port"), 7090)
@@ -41,7 +41,7 @@ module Alexandria
         prefs.add("charset", _("Charset encoding"), "ISO-8859-1")
 
         # HACK : piggybacking support
-        prefs.add("piggyback", "Piggyback", true, [true,false])
+        prefs.add("piggyback", "Piggyback", true, [true, false])
         prefs.read
       end
 
@@ -66,7 +66,7 @@ module Alexandria
         type == SEARCH_BY_ISBN ? results.first : results
       end
 
-      def url(book)
+      def url(_book)
         nil
       end
 
@@ -74,19 +74,18 @@ module Alexandria
       private
       #######
 
-
       def marc_to_book(marc_txt)
         begin
-          marc = MARC::Record.new_from_marc(marc_txt, :forgiving => true)
-        rescue Exception => ex
+          marc = MARC::Record.new_from_marc(marc_txt, forgiving: true)
+        rescue => ex
           log.error { ex.message }
           log.error { ex.backtrace.join("> \n") }
           begin
             marc = MARC::Record.new(marc_txt)
-            rescue Exception => ex2
-            log.error { ex2.message }
-            log.error { ex2.backtrace.join("> \n") }
-            raise ex2
+            rescue => ex2
+              log.error { ex2.message }
+              log.error { ex2.backtrace.join("> \n") }
+              raise ex2
           end
         end
 
@@ -100,12 +99,12 @@ module Alexandria
           msg += "\n edition: #{marc.edition}"
           msg
         }
-        
+
         return if marc.title.nil? # or marc.authors.empty?
-        
+
         isbn = isbn or marc.isbn
         isbn = Library.canonicalise_ean(isbn)
-        
+
         book = Book.new(marc.title, marc.authors,
                         isbn,
                         (marc.publisher or ""),
@@ -115,15 +114,14 @@ module Alexandria
         book
       end
 
-      def books_from_marc(resultset, isbn)
-
+      def books_from_marc(resultset, _isbn)
         results = []
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs['charset'], "UTF-8") # (prefs['record_syntax'], 'USMARC')
           log.debug { marc_txt }
-          #marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
+          # marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
           if $DEBUG
-            File.open(',marc.txt', 'wb') do |f| #DEBUG
+            File.open(',marc.txt', 'wb') do |f| # DEBUG
               f.write(marc_txt)
             end
           end
@@ -140,14 +138,14 @@ module Alexandria
               # failing that, try the genuine MARC parser
               book = marc_to_book(marc_txt)
             end
-          rescue Exception => ex 
+          rescue => ex
             log.warn { ex }
             log.warn { ex.backtrace }
           end
-          
+
           results << [book] unless book.nil?
         end
-        return results
+        results
       end
 
       def marc?
@@ -166,7 +164,7 @@ module Alexandria
         conn.database_name = prefs['database']
 
         # HACK turn off piggybacking, just to see CMcG
-        ##conn.piggyback = false
+        # #conn.piggyback = false
 
         conn.preferred_record_syntax = prefs['record_syntax']
         conn.element_set_name = 'F'
@@ -178,25 +176,24 @@ module Alexandria
                when SEARCH_BY_KEYWORD  then [1016]
                end
         pqf = ""
-        attr.each { |att| pqf += "@attr 1=#{att} "}
+        attr.each { |att| pqf += "@attr 1=#{att} " }
         pqf += "\"" + criterion.upcase + "\""
         log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
 
         begin
           if prefs.variable_named("piggyback")
-            if not prefs['piggyback']
+            unless prefs['piggyback']
               log.debug { "setting conn.piggyback to false" }
               conn.piggyback = false
             end
           end
           conn.search(pqf)
-        rescue Exception => ex
+        rescue => ex
           if /1005/ =~ ex.message
             if prefs.variable_named("piggyback") and prefs['piggyback']
               log.error { "Z39.50 search failed:: #{ex.message}" }
-              log.info { "Turning off piggybacking for this provider"}
+              log.info { "Turning off piggybacking for this provider" }
               prefs.variable_named('piggyback').new_value = false
-              conn = nil
               search_records(criterion, type, conn_count)
               # hopefully these precautions will prevent infinite loops here
             else
@@ -207,16 +204,14 @@ module Alexandria
           end
         end
       end
-
     end
-
 
     class LOCProvider < Z3950Provider
       # http://en.wikipedia.org/wiki/Library_of_Congress
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize
         super("LOC", _("Library of Congress (Usa)"))
@@ -229,15 +224,12 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+" + Library.canonicalise_isbn(book.isbn)
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+" + Library.canonicalise_isbn(book.isbn)
+      rescue => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
     end
-
 
     class BLProvider < Z3950Provider
       # http://en.wikipedia.org/wiki/Copac
@@ -250,7 +242,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize
         super("BL", _("British Library"))
@@ -276,12 +268,10 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
+      rescue => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       #######
@@ -292,7 +282,7 @@ module Alexandria
         results = []
         resultset[0..9].each do |record|
           text = record.render(prefs['charset'], "UTF-8")
-          #File.open(',bl.marc', 'wb') {|f| f.write(text) }
+          # File.open(',bl.marc', 'wb') {|f| f.write(text) }
           log.debug { text }
           # text = text.convert("UTF-8", prefs['charset'])
 
@@ -300,15 +290,15 @@ module Alexandria
           authors = []
 
           text.split(/\n/).each do |line|
-            if md = /^Title:\s+(.*)$/.match(line)
+            if (md = /^Title:\s+(.*)$/.match(line))
               title = md[1].sub(/\.$/, '').squeeze(' ')
-            elsif md = /^Added Person Name:\s+(.*),[^,]+$/.match(line)
+            elsif (md = /^Added Person Name:\s+(.*),[^,]+$/.match(line))
               authors << md[1]
-            elsif md = /^ME-Personal Name:\s+(.*),[^,]+$/.match(line)
+            elsif (md = /^ME-Personal Name:\s+(.*),[^,]+$/.match(line))
               authors << md[1]
-            elsif md = /^ISBN:\s+([\dXx]+)/.match(line)
-              isbn = Library.canonicalise_ean( md[1] )
-            elsif md = /^Imprint:.+\:\s*(.+)\,/.match(line)
+            elsif (md = /^ISBN:\s+([\dXx]+)/.match(line))
+              isbn = Library.canonicalise_ean(md[1])
+            elsif (md = /^Imprint:.+\:\s*(.+)\,/.match(line))
               publisher = md[1]
             end
           end
@@ -329,11 +319,9 @@ module Alexandria
           end
 
         end
-        return results
-
+        results
       end
     end
-
 
     class SBNProvider < Z3950Provider
       # http://sbnonline.sbn.it/
@@ -341,7 +329,7 @@ module Alexandria
       unabstract
 
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize
         super("SBN", "Servizio Bibliotecario Nazionale (Italy)")
@@ -367,17 +355,15 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          "http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=%253CB%253E%253Cfont%2520color%253D%2523000064%253E" +
-            "Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E" +
-            canonicalise_isbn_with_dashes(book.isbn) +
-            "%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22" +
-            canonicalise_isbn_with_dashes(book.isbn) +
-            "%22%29&language=it&maxentries=10&target=0&position=1"
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        "http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=%253CB%253E%253Cfont%2520color%253D%2523000064%253E" \
+          "Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E" +
+          canonicalise_isbn_with_dashes(book.isbn) +
+          "%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22" +
+          canonicalise_isbn_with_dashes(book.isbn) +
+          "%22%29&language=it&maxentries=10&target=0&position=1"
+      rescue => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       #######
@@ -392,7 +378,7 @@ module Alexandria
 
         if isbn[0..1] == "88"
           # Italian speaking area
-          if isbn > "8895000" and isbn <="8899999996"
+          if isbn > "8895000" and isbn <= "8899999996"
             return isbn[0..1] + "-" + isbn[2..6] + "-" + isbn[7..8] + "-" + isbn[9..9]
           elsif isbn > "88900000"
             return isbn[0..1] + "-" + isbn[2..7] + "-" + isbn[8..8] + "-" + isbn[9..9]
@@ -412,29 +398,26 @@ module Alexandria
           return isbn
         end
       end
-=begin
-
-Remarks about SBN
-
-This provider requires that value of conn.count is 0. It's a Yaz option "Number of records to be retrieved".
-This provider requires to specify the value of conn.element_set_name = 'F'. It's a Yaz option "Element-Set name of records".
-See http://www.indexdata.dk/yaz/doc/zoom.resultsets.tkl
-
-Dashes:
-this database requires that Italian books are searched with dashes :(
-However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
-
-References:
-http://opac.internetculturale.it/cgi-bin/main.cgi?type=field
-http://www.internetculturale.it/
-http://sbnonline.sbn.it/zgw/homeit.html
-http://www.iccu.sbn.it/genera.jsp?id=124
-with link at http://www.iccu.sbn.it/upload/documenti/cartecsbn.pdf
-http://www.loc.gov/cgi-bin/zgstart?ACTION=INIT&FORM_HOST_PORT=/prod/www/data/z3950/iccu.html,opac.sbn.it,2100
-http://gwz.cilea.it/cgi-bin/reportOpac.cgi
-
-=end
+      #
+      # Remarks about SBN
+      #
+      # This provider requires that value of conn.count is 0. It's a Yaz option "Number of records to be retrieved".
+      # This provider requires to specify the value of conn.element_set_name = 'F'. It's a Yaz option "Element-Set name of records".
+      # See http://www.indexdata.dk/yaz/doc/zoom.resultsets.tkl
+      #
+      # Dashes:
+      # this database requires that Italian books are searched with dashes :(
+      # However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
+      #
+      # References:
+      # http://opac.internetculturale.it/cgi-bin/main.cgi?type=field
+      # http://www.internetculturale.it/
+      # http://sbnonline.sbn.it/zgw/homeit.html
+      # http://www.iccu.sbn.it/genera.jsp?id=124
+      # with link at http://www.iccu.sbn.it/upload/documenti/cartecsbn.pdf
+      # http://www.loc.gov/cgi-bin/zgstart?ACTION=INIT&FORM_HOST_PORT=/prod/www/data/z3950/iccu.html,opac.sbn.it,2100
+      # http://gwz.cilea.it/cgi-bin/reportOpac.cgi
+      #
     end
-
   end
 end

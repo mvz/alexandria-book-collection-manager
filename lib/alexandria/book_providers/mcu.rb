@@ -28,7 +28,7 @@ module Alexandria
     class MCUProvider < GenericProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       LANGUAGES = {
         'es' => '1'
@@ -54,16 +54,16 @@ module Alexandria
         req = BASE_URI + "CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
         req += case type
                when SEARCH_BY_ISBN
-                 "WGEN-C=&WISB-C=#{CGI::escape(criterion)}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+                 "WGEN-C=&WISB-C=#{CGI.escape(criterion)}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                when SEARCH_BY_TITLE
-                 "WGEN-C=&WISB-C=&WAUT-C=&WTIT-C=#{CGI::escape(criterion)}&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+                 "WGEN-C=&WISB-C=&WAUT-C=&WTIT-C=#{CGI.escape(criterion)}&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                when SEARCH_BY_AUTHORS
-                 "WGEN-C=&WISB-C=&WAUT-C=#{CGI::escape(criterion)}&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+                 "WGEN-C=&WISB-C=&WAUT-C=#{CGI.escape(criterion)}&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                when SEARCH_BY_KEYWORD
-                 "WGEN-C=#{CGI::escape(criterion)}&WISB-C=&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+                 "WGEN-C=#{CGI.escape(criterion)}&WISB-C=&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
 
                else
                  raise InvalidSearchTypeError
@@ -71,11 +71,11 @@ module Alexandria
         products = {}
         print "Request page is #{req}\n" if $DEBUG # for DEBUGing
         transport.get(URI.parse(req)).each do |line|
-          #line = line.convert("ISO-8859-1", "UTF-8")
+          # line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
-          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[$1]) and (book = parseBook($1,$2)) then
-            products[$1] = book
-            puts $1 if $DEBUG # for DEBUGing
+          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[Regexp.last_match[1]]) and (book = parseBook(Regexp.last_match[1], Regexp.last_match[2])) then
+            products[Regexp.last_match[1]] = book
+            puts Regexp.last_match[1] if $DEBUG # for DEBUGing
           end
         end
 
@@ -84,21 +84,19 @@ module Alexandria
       end
 
       def url(book)
-        begin
-          isbn = Library.canonicalise_isbn(book.isbn)
-          "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=#{isbn}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
-        rescue Exception => ex
-          log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-          nil
-        end
+        isbn = Library.canonicalise_isbn(book.isbn)
+        "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=#{isbn}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+      rescue => ex
+        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+        nil
       end
 
       #######
       private
       #######
 
-      def parseBook(docn,ndoc)
-        detailspage='http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
+      def parseBook(docn, ndoc)
+        detailspage = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc
         print "Looking at detailspage: #{detailspage}\n" if $DEBUG # for DEBUGing
         product = {}
         product['authors'] = []
@@ -118,7 +116,7 @@ module Alexandria
           if line =~ /^<\/td>$/ or line =~ /^<\/tr>$/
             robotstate = 0
           elsif robotstate == 1 and line =~ /^([^<]+)</
-            author = $1.gsub('&nbsp;',' ').sub(/ +$/,'')
+            author = Regexp.last_match[1].gsub('&nbsp;', ' ').sub(/ +$/, '')
             if author.length > 3 then
               # Only add authors of appropiate length
               product['authors'] << author
@@ -126,20 +124,20 @@ module Alexandria
               robotstate = 0
             end
           elsif robotstate == 2 and line =~ /^(.*)$/ # The title es the next line to title declaration and has not tags on web src code
-            product['name'] = $1.strip
+            product['name'] = Regexp.last_match[1].strip
             print "Name is #{product['name']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
           elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]).*/
-            product['isbn'] = $1
+            product['isbn'] = Regexp.last_match[1]
             print "ISBN is #{product['isbn']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
           elsif robotstate == 4 and line =~ /^([^<]+)</
-            product['manufacturer'] = $1.strip
+            product['manufacturer'] = Regexp.last_match[1].strip
             print "Manufacturer is #{product['manufacturer']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
             #                elsif robotstate == 5 and line =~ /^([^<]+)</
           elsif robotstate == 5 and line =~ /<span>([^<]+)</
-            product['media'] = $1.strip
+            product['media'] = Regexp.last_match[1].strip
             print "Media is #{product['media']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
           elsif line =~ /^.*>Autor:\s*</
@@ -169,12 +167,11 @@ module Alexandria
                         nil, # TODO: furnish publish year
                         product['media'])
         if book.title.nil?
-          log.warn { "No title was returned for #{book.isbn}"}
+          log.warn { "No title was returned for #{book.isbn}" }
           book.title = ''
         end
-        return [ book ]
+        [book]
       end
-
     end
   end
 end

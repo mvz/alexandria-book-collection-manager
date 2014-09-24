@@ -20,27 +20,25 @@ require 'alexandria/scanners'
 
 module Alexandria
   module Scanners
-
     class CueCat
-
       include Alexandria::Logging
 
-      def name()
-        return "CueCat"
+      def name
+        "CueCat"
       end
 
-      def display_name()
-        return "CueCat"
+      def display_name
+        "CueCat"
       end
 
       # Checks if data looks like cuecat input
       def match?(data)
         data.chomp!
-        return false if data[-1] != ?.
+        return false if data[-1] != '.'
         fields = data.split('.')
         return false if fields.size != 4
         return false if fields[2].size != 4
-        return true
+        true
       end
 
       # Decodes CueCat input into ISBN
@@ -51,7 +49,7 @@ module Alexandria
         fields = data.split('.')
         fields.shift # First part is gibberish
         fields.shift # Second part is cuecat serial number
-        type, code = fields.map {|field| decode_field(field) }
+        type, code = fields.map { |field| decode_field(field) }
 
         if type == 'IB5'
           type = 'IBN'
@@ -75,19 +73,19 @@ module Alexandria
 
       private
 
-      def decode_field (encoded)
-        seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-';
+      def decode_field(encoded)
+        seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-'
 
         chars   = encoded.split(//)
-        values  = chars.map {|c| seq.index(c) }
+        values  = chars.map { |c| seq.index(c) }
 
         padding = pad(values)
         result  = calc(values)
         result  = result[0, result.length - padding]
-        return result
+        result
       end
 
-      def calc (values)
+      def calc(values)
         result = ''
         while values.length > 0
           num = ((values[0] << 6 | values[1]) << 6 | values[2]) << 6 | values[3]
@@ -97,10 +95,10 @@ module Alexandria
 
           values = values[4, values.length]
         end
-        return result
+        result
       end
 
-      def pad (array)
+      def pad(array)
         length = array.length % 4
 
         if length != 0
@@ -110,12 +108,11 @@ module Alexandria
           length.times { array.push(0) }
         end
 
-        return length
+        length
       end
     end
 
     # Register a cuecat scanner with the Scanner Registry
-    Registry.push(CueCat.new())
-
+    register CueCat.new
   end
 end

@@ -20,14 +20,12 @@ require 'alexandria/scanners'
 
 module Alexandria
   module Scanners
-
     # A simple keyboard-wedge style barcode scanner which presents
     # scan data as if typed from a keyboard. (Modified CueCats act
     # like this.)
     class KeyboardWedge
-
-      def name()
-        return "KeyboardWedge"
+      def name
+        "KeyboardWedge"
       end
 
       def display_name
@@ -46,19 +44,14 @@ module Alexandria
         if data.length == 10
           return data
         elsif data.length >= 13
-          return data[0,13]
+          return data[0, 13]
         else
           raise "Unknown scan data #{data}"
         end
       end
-
-      private
-
-
     end
 
     # Register the wedge scanner with the Scanner Registry
-    Registry.push(KeyboardWedge.new())
-
+    register KeyboardWedge.new
   end
 end

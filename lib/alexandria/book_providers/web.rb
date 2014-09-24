@@ -23,20 +23,18 @@ require 'htmlentities'
 
 module Alexandria
   class BookProviders
-
     class WebsiteBasedProvider < GenericProvider
-
-      def initialize(name, fullname=nil)
+      def initialize(name, fullname = nil)
         super(name, fullname)
         @htmlentities = HTMLEntities.new
       end
 
-      def html_to_doc(html, source_data_charset="ISO-8859-1")
+      def html_to_doc(html, source_data_charset = "ISO-8859-1")
         html.force_encoding source_data_charset
         utf8_html = html.encode('utf-8')
         normalized_html = @htmlentities.decode(utf8_html)
         Hpricot(normalized_html)
-      end 
+      end
 
       ## from Palatina
       def text_of(node)
@@ -49,15 +47,13 @@ module Alexandria
             if node.children.nil?
               return nil
             else
-              node_text = node.children.map {|n| text_of(n) }.join
+              node_text = node.children.map { |n| text_of(n) }.join
               node_text.strip.squeeze(' ')
             end
           end
-          #node.inner_html.strip
+          # node.inner_html.strip
         end
       end
-
-
     end
   end
 end

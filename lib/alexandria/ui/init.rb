@@ -25,7 +25,7 @@ class CellRendererToggle < Gtk::CellRendererToggle
         "text",
         "Some damn value",
         "",
-        GLib::Param::READABLE|GLib::Param::WRITABLE))
+        GLib::Param::READABLE | GLib::Param::WRITABLE))
 end
 
 class Gtk::ActionGroup
@@ -36,7 +36,7 @@ end
 
 class Gtk::IconView
   def freeze
-    @old_model = self.model
+    @old_model = model
     self.model = nil
   end
 
@@ -47,7 +47,7 @@ end
 
 class Gtk::TreeView
   def freeze
-    @old_model = self.model
+    @old_model = model
     self.model = nil
   end
 
@@ -76,22 +76,18 @@ end
 
 module Alexandria
   module UI
-    def self.display_help(parent=nil, section=nil)
-      begin
-        # TODO this should call Gtk.show_uri, but it's not included
-        # in ruby-gnome2 yet
-        section_index = ''
-        if section
-          section_index = "##{section}"
-        end
-        exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
-      rescue
-        log.error(self) { "Unable to load help browser" }
-        ErrorDialog.new(parent, _("Unable to launch the help browser"),
-                        _("Could not display help for Alexandria. " +
-                          "There was an error launching the system " +
-                          "help browser."))
+    def self.display_help(parent = nil, section = nil)
+      section_index = ''
+      if section
+        section_index = "##{section}"
       end
+      exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
+    rescue
+      log.error(self) { "Unable to load help browser" }
+      ErrorDialog.new(parent, _("Unable to launch the help browser"),
+                      _("Could not display help for Alexandria. " \
+                        "There was an error launching the system " \
+                        "help browser."))
     end
   end
 end

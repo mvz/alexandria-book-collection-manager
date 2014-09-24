@@ -22,14 +22,12 @@ module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
     class ListViewManager
       include Logging
       include GetText
       include DragAndDropable
-      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS",
-        Gtk::Drag::TARGET_SAME_APP,
-        0]]
+      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", Gtk::Drag::TARGET_SAME_APP, 0]]
 
       MAX_RATING_STARS = 5
       module Columns
@@ -38,7 +36,7 @@ module Alexandria
           NOTES, REDD, OWN, WANT, TAGS, LOANED_TO = (0..17).to_a
       end
 
-      def initialize listview, parent
+      def initialize(_listview, parent)
         @parent = parent
         @prefs = @parent.prefs
         @listview = @parent.listview
@@ -56,7 +54,7 @@ module Alexandria
         column.widget = Gtk::Label.new(title).show
         renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           cell.pixbuf = iter[Columns::COVER_LIST]
@@ -68,10 +66,10 @@ module Alexandria
 
         column.pack_start(renderer, true)
 
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.text, cell.editable = iter[Columns::TITLE], false #true
+          cell.text, cell.editable = iter[Columns::TITLE], false # true
         end
 
         column.sort_column_id = Columns::TITLE
@@ -79,14 +77,14 @@ module Alexandria
         @listview.append_column(column)
       end
 
-      def make_renderer_editable renderer
-        renderer.signal_connect('editing_started') do |cell, entry,
-          path_string|
-        log.debug { "editing_started" }
-        entry.complete_titles
+      def make_renderer_editable(renderer)
+        renderer.signal_connect('editing_started') do |_cell, entry,
+          _path_string|
+          log.debug { "editing_started" }
+          entry.complete_titles
         end
 
-        renderer.signal_connect('edited') do |cell, path_string, new_string|
+        renderer.signal_connect('edited') do |_cell, path_string, new_string|
           log.debug { "edited" }
           path = Gtk::TreePath.new(path_string)
           path = @listview_model.convert_path_to_child_path(path)
@@ -103,17 +101,17 @@ module Alexandria
       end
 
       TEXT_COLUMNS = [
-        [ _("Authors"), Columns::AUTHORS ],
-        [ _("ISBN"), Columns::ISBN ],
-        [ _("Publisher"), Columns::PUBLISHER ],
-        [ _("Publish Year"), Columns::PUBLISH_DATE ],
-        [ _("Binding"), Columns::EDITION ],
-        [ _("Loaned To"), Columns::LOANED_TO ]
+        [_("Authors"), Columns::AUTHORS],
+        [_("ISBN"), Columns::ISBN],
+        [_("Publisher"), Columns::PUBLISHER],
+        [_("Publish Year"), Columns::PUBLISH_DATE],
+        [_("Binding"), Columns::EDITION],
+        [_("Loaned To"), Columns::LOANED_TO]
       ]
       CHECK_COLUMNS = [
-        [ _("Read"), Columns::REDD],
-        [ _("Own"), Columns::OWN],
-        [ _("Want"), Columns::WANT]
+        [_("Read"), Columns::REDD],
+        [_("Own"), Columns::OWN],
+        [_("Want"), Columns::WANT]
       ]
 
       def setup_books_listview
@@ -144,7 +142,7 @@ module Alexandria
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
-                                         :text => Columns::TAGS)
+                                         text: Columns::TAGS)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = Columns::TAGS
         column.resizable = true
@@ -174,7 +172,7 @@ module Alexandria
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
           column.pack_start(renderer, false)
-          column.set_cell_data_func(renderer) do |col, cell, model, iter|
+          column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
             iter = @listview_model.convert_iter_to_child_iter(iter)
             iter = @filtered_model.convert_iter_to_child_iter(iter)
             rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
@@ -187,10 +185,10 @@ module Alexandria
         @listview.append_column(column)
       end
 
-      def setup_check_column title, iterid
-        renderer= CellRendererToggle.new
+      def setup_check_column(title, iterid)
+        renderer = CellRendererToggle.new
         renderer.activatable = true
-        renderer.signal_connect('toggled') do |rndrr, path|
+        renderer.signal_connect('toggled') do |_rndrr, path|
           begin
             tree_path = Gtk::TreePath.new(path)
             child_path = @listview_model.convert_path_to_child_path(tree_path)
@@ -207,38 +205,38 @@ module Alexandria
                                  when Columns::WANT then book.want
                                  end
                   # invert toggle_state
-                  unless (iterid==Columns::WANT && book.own)
+                  unless iterid == Columns::WANT && book.own
                     toggle_state = !toggle_state
                     case iterid
                     when Columns::REDD then book.redd = toggle_state
                     when Columns::OWN then book.own = toggle_state
                     when Columns::WANT then book.want = toggle_state
                     end
-                    iter[iterid] = toggle_state    
+                    iter[iterid] = toggle_state
                     lib = @parent.selected_library
                     lib.save(book)
                   end
                 end
               end
-              
+
             end
-          rescue ::Exception => e
+          rescue => e
             log.error { "toggle failed for path #{path} #{e}\n" + e.backtrace.join("\n") }
           end
 
         end
-        column = Gtk::TreeViewColumn.new(title, renderer, :text => iterid)
+        column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { "Create listview column for %s..." % title }
-        setup_column = Proc.new do |iter, cell, col|
+        setup_column = proc do |iter, cell, col|
           state = iter[col]
           cell.set_active(state)
           cell.activatable = true
         end
         log.debug { "Setting cell_data_func for #{renderer}" }
-        column.set_cell_data_func(renderer) do |col, cell, model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
           case iterid
@@ -254,15 +252,14 @@ module Alexandria
         end
         log.debug { "append_column #{column}" }
         @listview.append_column(column)
-
       end
 
-      def setup_text_column title, iterid
+      def setup_text_column(title, iterid)
         log.debug { "Create listview column for %s..." % title }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
-                                         :text => iterid)
+                                         text: iterid)
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
@@ -289,7 +286,7 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end
-        log.debug { "Columns visibility: " + cols.collect {|col| "#{col.title} #{col.visible?.to_s}"}.join(", ") }
+        log.debug { "Columns visibility: " + cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ") }
       end
 
       # Sets the width of each column based on any respective
@@ -300,14 +297,14 @@ module Alexandria
           cols_width = YAML.load(@prefs.cols_width)
           log.debug { "cols_width: #{cols_width.inspect }" }
           @listview.columns.each do |c|
-            if cols_width.has_key?(c.title)
+            if cols_width.key?(c.title)
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
               c.sizing = Gtk::TreeViewColumn::FIXED
               c.fixed_width = cols_width[c.title]
             end
           end
         end
-        log.debug { "Columns width: " + @listview.columns.collect {|col| "#{col.title} #{col.width.to_s}"}.join(", ") }
+        log.debug { "Columns width: " + @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(", ") }
       end
     end
   end

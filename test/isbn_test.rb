@@ -24,7 +24,6 @@ require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 require 'alexandria/import_library'
 
 class TestISBN < MiniTest::Test
-
   def __test_fake_import_isbns
     libraries = Alexandria::Libraries.instance
     library = Alexandria::Library.new("Test Library")
@@ -58,7 +57,7 @@ class TestISBN < MiniTest::Test
     Alexandria::Library.canonicalise_isbn("9780345431929")
   end
 
-  #Doesn't work quite yet.
+  # Doesn't work quite yet.
   #     def test_ISBN_import_bad_number
   #             on_iterate_cb = proc { }
   #             on_error_cb = proc { }

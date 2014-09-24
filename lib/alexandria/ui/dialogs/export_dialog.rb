@@ -20,14 +20,14 @@ module Alexandria
   module UI
     class ConfirmEraseDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, filename)
         super(parent, _("File already exists"),
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                [_("_Replace"), Gtk::Dialog::RESPONSE_OK]],
-              _("A file named '%s' already exists.  Do you want " +
+              _("A file named '%s' already exists.  Do you want " \
                 "to replace it with the one you are generating?") \
               % filename)
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
@@ -43,7 +43,7 @@ module Alexandria
     class ExportDialog < Gtk::FileChooserDialog
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       FORMATS = Alexandria::ExportFormat.all
       THEMES = Alexandria::WebTheme.all
@@ -60,7 +60,7 @@ module Alexandria
 
         self.transient_for = parent
         self.current_name = library.name
-        self.signal_connect('destroy') { hide }
+        signal_connect('destroy') { hide }
 
         @parent, @library, @sort_order = parent, library, sort_order
 
@@ -120,7 +120,7 @@ module Alexandria
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 
           if response == Gtk::Dialog::RESPONSE_HELP
-            Alexandria::UI::display_help(self, 'exporting')
+            Alexandria::UI.display_help(self, 'exporting')
           else
             begin
               break if on_export(FORMATS[types_combo.active],
@@ -153,9 +153,9 @@ module Alexandria
         else
           if File.exist?(filename)
             unless File.directory?(filename)
-              msg = _("The target, named '%s', is a regular " +
-                      "file.  A directory is needed for this " +
-                      "operation.  Please select a directory and " +
+              msg = _("The target, named '%s', is a regular " \
+                      "file.  A directory is needed for this " \
+                      "operation.  Please select a directory and " \
                       "try again.") % filename
               ErrorDialog.new(@parent, _("Not a directory"), msg)
               return
@@ -166,7 +166,7 @@ module Alexandria
           args = [theme]
         end
         format.invoke(@library, @sort_order, filename, *args)
-        return true
+        true
       end
     end
   end

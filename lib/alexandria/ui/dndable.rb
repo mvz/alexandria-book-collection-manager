@@ -18,18 +18,15 @@
 
 module Alexandria
   module UI
-    BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS",
-      Gtk::Drag::TARGET_SAME_APP,
-      0]]
+    BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", Gtk::Drag::TARGET_SAME_APP, 0]]
 
     module DragAndDropable
-
       BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
 
       def setup_view_source_dnd(view)
         # better be Loggable!
         log.info { "setup_view_source_dnd for %s" % view }
-        view.signal_connect_after('drag-begin') do |widget, drag_context|
+        view.signal_connect_after('drag-begin') do |_widget, drag_context|
           n_books = @parent.selected_books.length
           if n_books > 1
             # Render generic book icon.
@@ -66,15 +63,15 @@ module Alexandria
           end
         end
 
-        view.signal_connect('drag-data-get') do |widget, drag_context,
-          selection_data, info,
-          time|
+        view.signal_connect('drag-data-get') do |_widget, _drag_context,
+          selection_data, _info,
+          _time|
 
-        idents = @parent.selected_books.map { |book| book.ident }
-        unless idents.empty?
-          selection_data.set(Gdk::Selection::TYPE_STRING,
-                             idents.join(','))
-        end
+          idents = @parent.selected_books.map { |book| book.ident }
+          unless idents.empty?
+            selection_data.set(Gdk::Selection::TYPE_STRING,
+                               idents.join(','))
+          end
         end
 
         view.enable_model_drag_source(Gdk::Window::BUTTON1_MASK,

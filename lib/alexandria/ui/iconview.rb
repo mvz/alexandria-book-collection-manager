@@ -31,7 +31,7 @@ module Alexandria
       include Logging
       include GetText
       include DragAndDropable
-      def initialize iconview, parent
+      def initialize(_iconview, parent)
         @parent = parent
         @iconview = @parent.iconview
         @tooltips = IconViewTooltips.new(@iconview)
@@ -88,7 +88,6 @@ module Alexandria
                                            : Gtk::SORT_ASCENDING)
         @filtered_model.refilter    # force redraw
       end
-
     end
   end
 end

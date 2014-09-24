@@ -19,7 +19,7 @@
 require 'fileutils'
 require 'net/http'
 require 'open-uri'
-#require 'cgi'
+# require 'cgi'
 
 module Alexandria
   class BookProviders
@@ -59,11 +59,11 @@ module Alexandria
         p req if $DEBUG
         data = transport.get(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          to_book(data) #rescue raise NoResultsError
+          to_book(data) # rescue raise NoResultsError
         else
           begin
             results = []
-            each_book_page(data) do |code, title|
+            each_book_page(data) do |code, _title|
               results << to_book(transport.get(URI.parse("http://www.internetbookshop.it/ser/serdsp.asp?cc=" + code)))
             end
             return results
@@ -82,30 +82,32 @@ module Alexandria
       #######
 
       def to_book(data)
-        raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data) != nil
+        raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data)
         data = data.convert("UTF-8", "ISO-8859-1")
 
-        raise "No title" unless md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
+        md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
+        raise "No title" unless md
         title = CGI.unescape(md[1].strip)
 
         authors = []
-        if md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
+        if (md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data))
           md[0].strip.gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
-        raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
+        md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
+        raise "No ISBN" unless md
         isbn = md[1].strip
 
-        #raise "No publisher" unless
+        # raise "No publisher" unless
         md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
         publisher = CGI.unescape(md[1].strip) or md
 
-        #raise "No edition" unless
+        # raise "No edition" unless
         md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
         edition = CGI.unescape(md[1].strip) or md
 
         publish_year = nil
-        if md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data)
+        if (md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
           publish_year = nil if publish_year == 0
         end
@@ -115,26 +117,26 @@ module Alexandria
         cover_filename = isbn + ".tmp"
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, "w") do |file|
-            file.write open(cover_url, "Referer" => REFERER ).read
+            file.write open(cover_url, "Referer" => REFERER).read
           end
         end
 
         medium_cover = CACHE_DIR + "/" + cover_filename
         if File.size(medium_cover) > 0 and File.size(medium_cover) != 1822 # 1822 is the size of the fake image "copertina non disponibile"
           puts medium_cover + " has non-0 size" if $DEBUG
-          return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+          return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
         puts medium_cover + " has 0 size, removing ..." if $DEBUG
         File.delete(medium_cover)
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+        [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)
-        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/) { |a| yield a}.empty?
+        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/) { |a| yield a }.empty?
       end
 
       def clean_cache
-        #FIXME begin ... rescue ... end?
+        # FIXME begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob("*.tmp") do |file|
             puts "removing " + file if $DEBUG

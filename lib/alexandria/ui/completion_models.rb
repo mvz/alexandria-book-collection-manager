@@ -39,22 +39,22 @@ class Gtk::Entry
 
   def complete_tags
     complete(Alexandria::UI::CompletionModels::TAG)
-    #min = self.completion.minimum_key_length
+    # min = self.completion.minimum_key_length
     min = 2
-    self.completion.signal_connect('match-selected') do |c, model, iter|
+    completion.signal_connect('match-selected') do |c, model, iter|
       cur_text = c.entry.text
       new_tag = model.get_value(iter, 0)
       cur_text_split = cur_text.split(",")
       cur_text_split.delete_at(-1)
       cur_text_split << new_tag
-      c.entry.text = cur_text_split.join(",")      
+      c.entry.text = cur_text_split.join(",")
       true
     end
-    self.completion.set_match_func do |comp, key, iter|
+    completion.set_match_func do |_comp, key, iter|
       cur_tag = key.split(",").last.strip
       if cur_tag.size >= min
         begin
-          if (iter[0] =~ /^#{cur_tag}/)
+          if iter[0] =~ /^#{cur_tag}/
             true
           else
             false
@@ -101,10 +101,10 @@ begin
     first and last ? first + ' ' + last : first ? first : last
   end
 rescue LoadError => e
-  Alexandria::log.debug { "Could not find optional ruby-revolution; Evolution contacts will not be loaded"}
+  Alexandria.log.debug { "Could not find optional ruby-revolution; Evolution contacts will not be loaded" }
   EVOLUTION_CONTACTS = []
-rescue Exception => e
-  Alexandria::log.warn { e.message }
+rescue => e
+  Alexandria.log.warn { e.message }
   EVOLUTION_CONTACTS = []
 end
 
@@ -129,12 +129,12 @@ module Alexandria
       end
 
       def remove_source(library)
-        @libraries.delete_if { |x| x.name == library.name}
+        @libraries.delete_if { |x| x.name == library.name }
         library.delete_observer(self)
         touch
       end
 
-      def update(library, kind, book)
+      def update(_library, _kind, _book)
         # FIXME: Do not rebuild all the models there.
         touch
       end
@@ -187,7 +187,7 @@ module Alexandria
       end
 
       def rebuild_models
-        titles, authors, publishers, editions, borrowers = [],[],[],[],[]
+        titles, authors, publishers, editions, borrowers = [], [], [], [], []
         tags = []
         @libraries.each do |library|
           library.each do |book|
@@ -196,7 +196,7 @@ module Alexandria
             publishers << book.publisher
             editions << book.edition
             borrowers << book.loaned_to
-            book.tags.each {|tag| tags << tag }
+            book.tags.each { |tag| tags << tag }
           end
         end
 

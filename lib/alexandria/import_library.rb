@@ -24,17 +24,15 @@ module Alexandria
 
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def self.all
       [
-       self.new(_("Autodetect"), ['*'], :import_autodetect),
-       self.new(_("Archived Tellico XML (*.bc, *.tc)"),
-                ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
-       self.new(_("ISBN List (*.txt)"), ['*.txt'],
-                :import_as_isbn_list),
-       self.new(_("GoodReads CSV"), ['*.csv'],
-		:import_as_csv_file)
+        new(_("Autodetect"), ['*'], :import_autodetect),
+        new(_("Archived Tellico XML (*.bc, *.tc)"),
+            ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
+        new(_("ISBN List (*.txt)"), ['*.txt'], :import_as_isbn_list),
+        new(_("GoodReads CSV"), ['*.csv'], :import_as_csv_file)
       ]
     end
 
@@ -70,26 +68,24 @@ module Alexandria
       puts "Filename is #{filename} and ext is #{filename[-4..-1]}"
       puts "Beginning import: #{args[0]}, #{args[1]}"
       if filename[-4..-1] == ".txt"
-        self.import_as_isbn_list(*args)
-      elsif [".tc",".bc"].include? filename[-3..-1]
+        import_as_isbn_list(*args)
+      elsif [".tc", ".bc"].include? filename[-3..-1]
         begin
-          self.import_as_tellico_xml_archive(*args)
+          import_as_tellico_xml_archive(*args)
         rescue => e
           puts e.message
           puts e.backtrace.join("\n>> ")
         end
       elsif [".csv"].include? filename[-4..-1]
-	self.import_as_csv_file(*args)
+        import_as_csv_file(*args)
       else
         puts "Bailing on this import!"
         raise "Not supported type"
       end
     end
 
-
-
     def self.import_as_tellico_xml_archive(name, filename,
-                                           on_iterate_cb, on_error_cb)
+                                           on_iterate_cb, _on_error_cb)
       puts "Starting import_as_tellico_xml_archive... "
       return nil unless system("unzip -qqt \"#{filename}\"")
       tmpdir = File.join(Dir.tmpdir, "tellico_export")
@@ -98,55 +94,53 @@ module Alexandria
       Dir.chdir(tmpdir) do
         begin
           system("unzip -qq \"#{filename}\"")
-          file = File.exist?('bookcase.xml') \
-          ? 'bookcase.xml' : 'tellico.xml'
+          file = File.exist?('bookcase.xml') ? 'bookcase.xml' : 'tellico.xml'
           xml = REXML::Document.new(File.open(file))
-          raise unless (xml.root.name == 'bookcase' or
-                        xml.root.name == 'tellico')
+          raise unless ['bookcase', 'tellico'].include? xml.root.name
           # FIXME: handle multiple collections
           raise unless xml.root.elements.size == 1
           collection = xml.root.elements[1]
           raise unless collection.name == 'collection'
           type = collection.attribute('type').value.to_i
-          raise unless (type == 2 or type == 5)
+          raise unless type == 2 or type == 5
 
           content = []
           entries = collection.elements.to_a('entry')
           (total = entries.size).times do |n|
             entry = entries[n]
             elements = entry.elements
-            #Feed an array in here, tomorrow.
+            # Feed an array in here, tomorrow.
             keys = ['isbn', 'publisher', 'pub_year', 'binding']
 
             book_elements = [neaten(elements['title'].text)]
-            if elements['authors'] != nil
+            if !elements['authors'].nil?
               book_elements += [elements['authors'].elements.to_a.map \
                                 { |x| neaten(x.text) }]
             else
               book_elements += [[]]
             end
             book_elements += keys.map {|key|
-              unless elements[key]
-                nil
-              else
+              if elements[key]
                 neaten(elements[key].text)
+              else
+                nil
               end
             }
-            #isbn
+            # isbn
             if book_elements[2].nil? or book_elements[2].strip.empty?
               book_elements[2] = nil
-            else              
+            else
               begin
                 book_elements[2] = book_elements[2].strip
                 book_elements[2] = Library.canonicalise_ean(book_elements[2])
-              rescue Exception => ex
+              rescue => ex
                 puts book_elements[2]
                 puts ex.message
                 puts ex.backtrace.join("\n> ")
                 raise ex
               end
             end
-            book_elements[4] = book_elements[4].to_i unless book_elements[4]== nil # publishing_year
+            book_elements[4] = book_elements[4].to_i unless book_elements[4].nil? # publishing_year
             puts book_elements.inspect
             if elements['cover']
               cover = neaten(elements['cover'].text)
@@ -159,8 +153,8 @@ module Alexandria
               book.rating = elements['rating'].text.to_i
             end
             book.notes = neaten(elements['comments'].text) if elements['comments']
-            content << [ book, cover]
-            on_iterate_cb.call(n+1, total) if on_iterate_cb
+            content << [book, cover]
+            on_iterate_cb.call(n + 1, total) if on_iterate_cb
           end
 
           library = Library.load(name)
@@ -181,11 +175,10 @@ module Alexandria
       end
     end
 
-    def self.import_as_csv_file(name, filename, on_iterate_cb,
-                                 on_error_cb)
+    def self.import_as_csv_file(name, filename, on_iterate_cb, _on_error_cb)
       require 'alexandria/import_library_csv'
       books_and_covers = []
-      line_count = IO.readlines(filename).inject(0) {|count,line| count+1 }
+      line_count = IO.readlines(filename).reduce(0) { |count, _line| count + 1 }
 
       import_count = 0
       max_import = line_count - 1
@@ -193,7 +186,7 @@ module Alexandria
       reader = CSV.open(filename, 'r')
       # Goodreads & LibraryThing now use csv header lines
       header = reader.shift
-      importer = self.identify_csv_type(header)
+      importer = identify_csv_type(header)
       failed_once = false
       begin
         reader.each do |row|
@@ -209,7 +202,7 @@ module Alexandria
                 # available
                 book.authors = dl_book.authors
               end
-              unless book.edition 
+              unless book.edition
                 book.edition = dl_book.edition
               end
               cover = dl_cover
@@ -218,7 +211,6 @@ module Alexandria
               # note failure
             end
           end
-          
 
           books_and_covers << [book, cover]
           import_count += 1
@@ -241,25 +233,23 @@ module Alexandria
 
           reader = CSV.open(csv_fixed.path, 'r')
           header = reader.shift
-          importer = self.identify_csv_type(header)
+          importer = identify_csv_type(header)
 
           retry
         end
       end
 
       library = Library.load(name)
-      
+
       books_and_covers.each do |book, cover_uri|
         puts "Saving #{book.isbn} cover..." if $DEBUG
-        library.save_cover(book, cover_uri) if cover_uri != nil
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)
       end
-      return [library, []]
-
+      [library, []]
     end
-
 
     def self.import_as_isbn_list(name, filename, on_iterate_cb,
                                  on_error_cb)
@@ -269,7 +259,7 @@ module Alexandria
         # Let's preserve the failing isbns so we can report them later.
         begin
           [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
-        rescue Exception => e
+        rescue => e
           puts e.message
           [line.chomp, nil]
         end
@@ -284,16 +274,16 @@ module Alexandria
       failed_lookup_isbns = []
       isbn_list.each do |isbn|
         begin
-          unless isbn[1]
-            bad_isbns << isbn[0]
-          else
+          if isbn[1]
             books << Alexandria::BookProviders.isbn_search(isbn[1])
+          else
+            bad_isbns << isbn[0]
           end
-        rescue Exception => e
+        rescue => e
           puts e.message
           failed_lookup_isbns << isbn[1]
           puts "NOTE : ignoring on_error_cb #{on_error_cb}"
-          #return nil unless
+          # return nil unless
           #  (on_error_cb and on_error_cb.call(e.message))
         end
 
@@ -305,17 +295,15 @@ module Alexandria
       puts "Going with these #{books.length} books: #{books.inspect}" if $DEBUG
       books.each do |book, cover_uri|
         puts "Saving #{book.isbn} cover..." if $DEBUG
-        library.save_cover(book, cover_uri) if cover_uri != nil
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)
         on_iterate_cb.call(current_iteration += 1,
                            max_iterations) if on_iterate_cb
       end
-      return [library, bad_isbns, failed_lookup_isbns]
+      [library, bad_isbns, failed_lookup_isbns]
     end
-
-    private
 
     def self.neaten(str)
       if str
@@ -324,6 +312,5 @@ module Alexandria
         str
       end
     end
-
   end
 end

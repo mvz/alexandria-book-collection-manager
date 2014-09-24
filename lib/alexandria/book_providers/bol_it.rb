@@ -20,7 +20,7 @@
 require 'fileutils'
 require 'net/http'
 require 'open-uri'
-#require 'cgi'
+# require 'cgi'
 
 module Alexandria
   class BookProviders
@@ -63,11 +63,11 @@ module Alexandria
         p req if $DEBUG
         data = transport.get(URI.parse(req))
         if type == SEARCH_BY_ISBN
-          to_book(data) #rescue raise NoResultsError
+          to_book(data) # rescue raise NoResultsError
         else
           begin
             results = []
-            each_book_page(data) do |code, title|
+            each_book_page(data) do |code, _title|
               results << to_book(transport.get(URI.parse(BASE_URI + "/#{LOCALE}/scheda/ea" + code)))
             end
             return results
@@ -86,40 +86,42 @@ module Alexandria
       #######
 
       def to_book(data)
-        raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data) != nil
+        raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data)
         data = data.convert("UTF-8", "ISO-8859-1")
 
-        raise "No title" unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
+        md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
+        raise "No title" unless md
         title = CGI.unescape(md[1].strip)
 
         authors = []
-        if md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data)
+        if (md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data))
           md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
-        raise "No ISBN" unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
+        md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
+        raise "No ISBN" unless md
         isbn = md[1].strip
-        isbn += String( Library.ean_checksum( Library.extract_numbers( isbn ) ) )
+        isbn += String(Library.ean_checksum(Library.extract_numbers(isbn)))
 
-        #raise unless
+        # raise unless
         md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
         publisher = CGI.unescape(md[1].strip) or md
 
-        #raise unless
+        # raise unless
         md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
         edition = CGI.unescape(md[1].strip) or md
 
-        if md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data)
+        if (md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data))
           nr_pages = CGI.unescape(md[1].strip)
-        elsif md = / (\d+) pagine \| /.match(data)
+        elsif (md = / (\d+) pagine \| /.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         end
-        if nr_pages != "0" and  nr_pages != nil
+        if nr_pages != "0" and  !nr_pages.nil?
           edition = nr_pages + " p., " + edition
         end
 
         publish_year = nil
-        if md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data)
+        if (md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
           publish_year = nil if publish_year == 0
         end
@@ -128,26 +130,26 @@ module Alexandria
         cover_filename = isbn + ".tmp"
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, "w") do |file|
-            file.write open(cover_url, "Referer" => REFERER ).read
+            file.write open(cover_url, "Referer" => REFERER).read
           end
         end
 
         medium_cover = CACHE_DIR + "/" + cover_filename
         if File.size(medium_cover) > 43 and File.size(medium_cover) != 2382 # 2382 is the size of the fake image "copertina non disponibile"
           puts medium_cover + " has non-0 size" if $DEBUG
-          return [ Book.new(title, authors, isbn, publisher, publish_year, edition),medium_cover ]
+          return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
         puts medium_cover + " has 0 size, removing ..." if $DEBUG
         File.delete(medium_cover)
-        return [ Book.new(title, authors, isbn, publisher, publish_year, edition) ]
+        [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
       def each_book_page(data)
-        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/) { |a| yield a}.empty?
+        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/) { |a| yield a }.empty?
       end
 
       def clean_cache
-        #FIXME begin ... rescue ... end?
+        # FIXME begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob("*.tmp") do |file|
             puts "removing " + file if $DEBUG

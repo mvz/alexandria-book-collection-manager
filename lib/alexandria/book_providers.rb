@@ -27,7 +27,7 @@ module Alexandria
     include Singleton
     include Observable
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS,
     SEARCH_BY_KEYWORD = (0..3).to_a
@@ -41,76 +41,76 @@ module Alexandria
 
     def self.search(criterion, type)
       factory_n = 0
-      #puts "book_providers search #{self.instance.count_observers}"
+      # puts "book_providers search #{self.instance.count_observers}"
 
       begin
-        factory = self.instance[factory_n]
+        factory = instance[factory_n]
         puts factory.fullname + " lookup" if $DEBUG
-        if (not factory.enabled)
+        unless factory.enabled
           puts factory.fullname + " disabled!, skipping..." if $DEBUG
           raise ProviderSkippedError
         end
-        self.instance.changed
-        self.instance.notify_observers(:searching, factory.fullname) # new
+        instance.changed
+        instance.notify_observers(:searching, factory.fullname) # new
         results = factory.search(criterion, type)
 
         # sanity check if at least one valid result is actually found
-        results.delete_if { |book, cover| book.nil? }
+        results.delete_if { |book, _cover| book.nil? }
 
         if results.length == 0
-          self.instance.changed
-          self.instance.notify_observers(:not_found, factory.fullname) # new
+          instance.changed
+          instance.notify_observers(:not_found, factory.fullname) # new
           raise NoResultsError
         else
           log.info { "found at " + factory.fullname }
-          self.instance.changed
-          self.instance.notify_observers(:found, factory.fullname) # new
+          instance.changed
+          instance.notify_observers(:found, factory.fullname) # new
           return results
         end
-      rescue Exception => boom
-        if boom.kind_of? NoResultsError
+      rescue => boom
+        if boom.is_a? NoResultsError
           unless boom.instance_of? ProviderSkippedError
-            self.instance.changed
-            self.instance.notify_observers(:not_found, factory.fullname) # new
-            Thread.new {sleep(0.5)}.join
+            instance.changed
+            instance.notify_observers(:not_found, factory.fullname) # new
+            Thread.new { sleep(0.5) }.join
           end
-        else        
-          self.instance.changed
-          self.instance.notify_observers(:error, factory.fullname) # new
-          Thread.new {sleep(0.5)}.join # hrmmmm, to make readable...
+        else
+          instance.changed
+          instance.notify_observers(:error, factory.fullname) # new
+          Thread.new { sleep(0.5) }.join # hrmmmm, to make readable...
           trace = boom.backtrace.join("\n >")
           log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
         end
-        if self.last == factory
+        if last == factory
           log.warn { "Error while searching #{criterion}" }
           message = case boom
-                when Timeout::Error
-                  _("Couldn't reach the provider '%s': timeout " +
-                    "expired.") % factory.name
+                    when Timeout::Error
+                      _("Couldn't reach the provider '%s': timeout " \
+                        "expired.") % factory.name
 
-                when SocketError
-                  _("Couldn't reach the provider '%s': socket " +
-                    "error (%s).") % [factory.name, boom.message]
+                    when SocketError
+                      _("Couldn't reach the provider '%s': socket " \
+                        "error (%s).") % [factory.name, boom.message]
 
-                when NoResultsError
-                  _("No results were found.  Make sure your " +
-                    "search criterion is spelled correctly, and " +
-                    "try again.")
+                    when NoResultsError
+                      _("No results were found.  Make sure your " \
+                        "search criterion is spelled correctly, and " \
+                        "try again.")
 
-                when ProviderSkippedError
-                  _("No results were found.  Make sure your " +
-                    "search criterion is spelled correctly, and " +
-                    "try again.")
+                    when ProviderSkippedError
+                      _("No results were found.  Make sure your " \
+                        "search criterion is spelled correctly, and " \
+                        "try again.")
 
-                when TooManyResultsError
-                  _("Too many results for that search.")
+                    when TooManyResultsError
+                      _("Too many results for that search.")
 
-                when InvalidSearchTypeError
-                  _("Invalid search type.")
+                    when InvalidSearchTypeError
+                      _("Invalid search type.")
 
-                else
-                  boom.message
-                end
+                    else
+                      boom.message
+                    end
           puts "raising empty error #{message}"
           raise SearchEmptyError, message
         else
@@ -121,7 +121,7 @@ module Alexandria
     end
 
     def self.isbn_search(criterion)
-      self.search(criterion, SEARCH_BY_ISBN)
+      search(criterion, SEARCH_BY_ISBN)
     end
 
     class Preferences < Array
@@ -135,7 +135,7 @@ module Alexandria
         attr_accessor :value
 
         def initialize(provider, name, description, default_value,
-                       possible_values=nil, mandatory=true)
+                       possible_values = nil, mandatory = true)
 
           @provider = provider
           @name = name
@@ -180,14 +180,14 @@ module Alexandria
       end
 
       def variable_named(name)
-        self.find { |var| var.name == name }
+        find { |var| var.name == name }
       end
 
       def read
-        self.each do |var|
+        each do |var|
           message = @provider.variable_name(var)
           val = Alexandria::Preferences.instance.send(message)
-          var.value = val unless (val.nil? or (val == "" and var.mandatory?))
+          var.value = val unless val.nil? or (val == "" and var.mandatory?)
         end
       end
     end
@@ -197,20 +197,20 @@ module Alexandria
       attr_reader :prefs
       attr_accessor :name, :fullname
 
-      def initialize(name, fullname=nil)
+      def initialize(name, fullname = nil)
         @name = name
         @fullname = (fullname or name)
         @prefs = Preferences.new(self)
-        @prefs.add("enabled", _("Enabled"), true, [true,false])
+        @prefs.add("enabled", _("Enabled"), true, [true, false])
       end
-      
-      def enabled()
+
+      def enabled
         @prefs['enabled']
       end
-      
-      def toggle_enabled()
-        old_value = enabled()
-        @prefs.variable_named('enabled').new_value = (not old_value)
+
+      def toggle_enabled
+        old_value = enabled
+        @prefs.variable_named('enabled').new_value = !old_value
       end
 
       def reinitialize(fullname)
@@ -227,11 +227,11 @@ module Alexandria
 
       def remove
         prefs = Alexandria::Preferences.instance
-        if ary = prefs.abstract_providers
+        if (ary = prefs.abstract_providers)
           ary.delete(@name)
           prefs.abstract_providers = ary
         end
-        if ary = prefs.providers_priority and ary.include?(@name)
+        if (ary = prefs.providers_priority) and ary.include?(@name)
           ary.delete(@name)
           prefs.providers_priority = ary
         end
@@ -259,26 +259,26 @@ module Alexandria
       def transport
         config = Alexandria::Preferences.instance.http_proxy_config
         config ? Net::HTTP.Proxy(*config) : Net::HTTP
-      end    
+      end
 
       def abstract?
         self.class.abstract?
       end
 
       def self.abstract?
-        (not self.included_modules.include?(Singleton))
+        (!included_modules.include?(Singleton))
       end
 
       def <=>(provider)
-        self.fullname <=> provider.fullname
+        fullname <=> provider.fullname
       end
 
       def self.unabstract
         include Singleton
         undef_method :reinitialize
         undef_method :name=
-          undef_method :fullname=
-          undef_method :remove
+        undef_method :fullname=
+        undef_method :remove
       end
     end
 
@@ -289,15 +289,15 @@ module Alexandria
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
     require 'alexandria/book_providers/douban' # only requires YAML
 
-    #require 'alexandria/book_providers/ibs_it'
-    #require 'alexandria/book_providers/renaud'
-    #require 'alexandria/book_providers/bol_it'
-    #require 'alexandria/book_providers/webster_it'
+    # require 'alexandria/book_providers/ibs_it'
+    # require 'alexandria/book_providers/renaud'
+    # require 'alexandria/book_providers/bol_it'
+    # require 'alexandria/book_providers/webster_it'
     log.info { "Not loading IBS, Renaud, BOL, Webster (providers not functional)" }
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     require 'alexandria/book_providers/amazon_aws'
-    
+
     # Website based providers
     require 'alexandria/book_providers/adlibris'
     require 'alexandria/book_providers/barnes_and_noble'
@@ -307,14 +307,12 @@ module Alexandria
     require 'alexandria/book_providers/thalia'
     require 'alexandria/book_providers/worldcat'
 
-
     # Ruby/ZOOM is optional
     begin
       require 'alexandria/book_providers/z3950'
     rescue LoadError
       log.info { "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available" }
     end
-
 
     attr_reader :abstract_classes
 
@@ -332,7 +330,8 @@ module Alexandria
       @abstract_classes.clear
       providers = {}
       self.class.constants.each do |constant|
-        next unless md = /(.+)Provider$/.match(constant)
+        md = /(.+)Provider$/.match(constant)
+        next unless md
         klass = self.class.module_eval(constant.to_s)
         if klass.ancestors.include?(AbstractProvider) and
             klass != GenericProvider and
@@ -346,7 +345,7 @@ module Alexandria
           end
         end
       end
-      if ary = @prefs.abstract_providers
+      if (ary = @prefs.abstract_providers)
         ary.each do |name|
           md = /^(.+)_/.match(name)
           next unless md
@@ -362,8 +361,8 @@ module Alexandria
           providers[name] = instance
         end
       end
-      self.clear
-      rejig_providers_priority()
+      clear
+      rejig_providers_priority
       priority = (@prefs.providers_priority or [])
       priority.map! { |x| x.strip }
       rest = providers.keys - priority
@@ -388,26 +387,25 @@ module Alexandria
       unless priority.empty?
         changed = false
 
-        if ecs_index = priority.index("AmazonECS") 
+        if (ecs_index = priority.index("AmazonECS"))
           priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
           priority.uniq! # remove any other "Amazon" from the list
           changed = true
         end
-        if deastore_index = priority.index("DeaStore_it")
+        if (deastore_index = priority.index("DeaStore_it"))
           priority[deastore_index] = "DeaStore"
           changed = true
         end
-        if worldcat_index = priority.index("Worldcat")
+        if (worldcat_index = priority.index("Worldcat"))
           priority[worldcat_index] = "WorldCat"
           changed = true
         end
-        if adlibris_index = priority.index("Adlibris")
+        if (adlibris_index = priority.index("Adlibris"))
           priority[adlibris_index] = "AdLibris"
           changed = true
         end
         @prefs.providers_priority = priority if changed
       end
     end
-
   end
 end

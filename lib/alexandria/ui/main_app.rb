@@ -44,7 +44,7 @@ module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     class MainApp
       include Logging

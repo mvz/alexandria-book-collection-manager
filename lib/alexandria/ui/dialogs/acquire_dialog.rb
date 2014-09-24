@@ -17,7 +17,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-#require 'monitor'
+# require 'monitor'
 require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
 
@@ -26,14 +26,12 @@ require 'alexandria/ui/dialogs/barcode_animation'
 
 module Alexandria
   module UI
-
     require 'thread'
     require 'monitor'
 
     # assists in turning on progress bar when searching
     # and turning it off when all search threads have completed...
     class SearchThreadCounter < Monitor
-      
       attr_reader :count
 
       def initialize
@@ -52,17 +50,15 @@ module Alexandria
           @count -= 1 unless (@count == 0)
         end
       end
-
     end
-
 
     class AcquireDialog < BuilderBase
       include GetText
       include Logging
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      def initialize(parent, selected_library=nil, &block)
+      def initialize(parent, selected_library = nil, &block)
         super('acquire_dialog__builder.glade', widget_names)
         @acquire_dialog.transient_for = @parent = parent
         @block = block
@@ -78,11 +74,10 @@ module Alexandria
         @prefs = Alexandria::Preferences.instance
         setup_scanner_area
         init_treeview
-        @book_results = Hash.new
-        
+        @book_results = {}
+
         @search_thread_counter = SearchThreadCounter.new
         @search_threads_running = @search_thread_counter.new_cond
-
       end
 
       def widget_names
@@ -93,21 +88,19 @@ module Alexandria
       end
 
       def book_in_library(isbn10, library)
-        begin
-          isbn13 = Library.canonicalise_ean(isbn10)
-          # puts "new book #{isbn10} (or #{isbn13})"
-          match = library.find do |book|
-            # puts "testing #{book.isbn}"
-            (book.isbn == isbn10 || book.isbn == isbn13)
-            #puts "book #{book.isbn}"
-            #book == new_book 
-          end
-          # puts "book_in_library match #{match.inspect}"
-          (not match.nil?)
-        rescue
-          log.warn { "Failed to check for book #{isbn10} in library #{library}" }
-          true
+        isbn13 = Library.canonicalise_ean(isbn10)
+        # puts "new book #{isbn10} (or #{isbn13})"
+        match = library.find do |book|
+          # puts "testing #{book.isbn}"
+          (book.isbn == isbn10 || book.isbn == isbn13)
+          # puts "book #{book.isbn}"
+          # book == new_book
         end
+        # puts "book_in_library match #{match.inspect}"
+        !match.nil?
+      rescue
+        log.warn { "Failed to check for book #{isbn10} in library #{library}" }
+        true
       end
 
       def on_add
@@ -132,7 +125,7 @@ module Alexandria
 
           model.freeze_notify do
             # capture isbns
-            selection.selected_each do |mod, path, iter|
+            selection.selected_each do |_mod, _path, iter|
               isbn = iter[0]
               if book_in_library(isbn, library)
                 isbn_duplicates << isbn
@@ -145,14 +138,14 @@ module Alexandria
             end
             # remove list items (complex, cf. tutorial...)
             # http://ruby-gnome2.sourceforge.jp/hiki.cgi?tut-treeview-model-remove
-            #row_refs = []
-            #paths = selection.selected_rows
-            #paths.each do |path|
+            # row_refs = []
+            # paths = selection.selected_rows
+            # paths.each do |path|
             #    row_refs << Gtk::TreeRowReference.new(model, path)
-            #end
-            #row_refs.each do |ref|
+            # end
+            # row_refs.each do |ref|
             #    model.remove(model.get_iter(ref.path))
-            #end
+            # end
 
             # try it this way... works because of persistent iters
             row_iters = []
@@ -161,14 +154,14 @@ module Alexandria
               isbn = iter[0]
               if book_in_library(isbn, library)
                 log.debug { "#{isbn} is a duplicate" }
-              ##elsif isbns.include? isbn
+                # #elsif isbns.include? isbn
                 # this won't work since multiple scans of the same
                 # book have the same isbn (so we can't refrain from removing
                 # one, we'd end up not removing any)
                 ## TODO add another column in the iter, like "isbn/01"
                 # that would allow this kind of behaviour...
 
-              elsif (not @book_results.has_key?(isbn)) #HAX
+              elsif !@book_results.key?(isbn) # HAX
                 log.debug { "no book found for #{isbn}, not adding" }
 
                 # good enough for now
@@ -187,13 +180,13 @@ module Alexandria
           model.freeze_notify do
             # capture isbns
             row_iters = []
-            model.each do |mod, path, iter|
+            model.each do |_mod, _path, iter|
               isbn = iter[0]
-              if (not @book_results.has_key?(isbn))
+              if !@book_results.key?(isbn)
                 log.debug { "no book found for #{isbn}, not adding" }
                 adding_a_selection = true
               elsif book_in_library(isbn, library)
-                log.info { "#{isbn} is a duplicate" }                
+                log.info { "#{isbn} is a duplicate" }
                 isbn_duplicates << isbn
               elsif isbns.include? isbn
                 log.info { "detected duplicate in scanned list #{isbn}" }
@@ -205,7 +198,7 @@ module Alexandria
               end
             end
             # remove list items
-            if (isbn_duplicates.empty? and (not adding_a_selection))
+            if isbn_duplicates.empty? and !adding_a_selection
               model.clear # TODO unless!!!
               row_iters.clear
             else
@@ -230,9 +223,9 @@ module Alexandria
             # TODO (for 0.6.5) should offer to add this book manually
           else
 
-            book = result[0] 
+            book = result[0]
             cover_uri = result[1]
-            
+
             unless cover_uri.nil?
               library.save_cover(book, cover_uri)
             end
@@ -298,7 +291,6 @@ module Alexandria
         end
       end
 
-
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
@@ -306,11 +298,11 @@ module Alexandria
           main_progress_bar = MainApp.instance.appbar.children.first
           main_progress_bar.visible = true
           @progress_pulsing = Gtk.timeout_add(100) do
-            unless @destroyed
+            if @destroyed
+              false
+            else
               main_progress_bar.pulse
               true
-            else
-              false
             end
           end
           false
@@ -320,7 +312,7 @@ module Alexandria
       def notify_end_add_by_isbn
         Gtk.idle_add do
           MainApp.instance.appbar.children.first.visible = false
-          Gtk::timeout_remove(@progress_pulsing) if @progress_pulsing
+          Gtk.timeout_remove(@progress_pulsing) if @progress_pulsing
           false
         end
       end
@@ -328,25 +320,25 @@ module Alexandria
       def update(status, provider)
         Gtk.idle_add do
           messages = {
-            :searching => _("Searching Provider '%s'..."),
-            :error => _("Error while Searching Provider '%s'"),
-            :not_found => _("Not Found at Provider '%s'"),
-            :found => _("Found at Provider '%s'")
+            searching: _("Searching Provider '%s'..."),
+            error: _("Error while Searching Provider '%s'"),
+            not_found: _("Not Found at Provider '%s'"),
+            found: _("Found at Provider '%s'")
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
           # @parent.appbar.status = message
-          MainApp.instance.ui_manager.set_status_label( message )
+          MainApp.instance.ui_manager.set_status_label(message)
           false
         end
       end
 
       # end copy-n-paste
 
-      private 
-      
-      def start_search         
-        @search_thread_counter.synchronize do 
+      private
+
+      def start_search
+        @search_thread_counter.synchronize do
           if @search_thread_counter.count == 0
             @search_thread_counter.new_search
             @progress_bar_thread = Thread.new do
@@ -362,10 +354,9 @@ module Alexandria
             end
           else
             @search_thread_counter.new_search
-          end    
+          end
         end
       end
-
 
       def stop_search
         @search_thread_counter.synchronize do
@@ -373,7 +364,6 @@ module Alexandria
           @search_threads_running.signal
         end
       end
-
 
       def lookup_book(isbn)
         Thread.new do
@@ -396,7 +386,7 @@ module Alexandria
 
             @add_button.sensitive = true
           rescue StandardError => err
-            log.error { "Book Search failed: #{err.message}"}
+            log.error { "Book Search failed: #{err.message}" }
             log << err if log.error?
           ensure
             stop_search
@@ -433,7 +423,6 @@ module Alexandria
               end
             end
 
-
           rescue StandardError => err
             log.error {
               "Failed to load cover image icon: #{err.message}"
@@ -445,7 +434,7 @@ module Alexandria
       end
 
       def on_destroy
-        MainApp.instance.ui_manager.set_status_label( "" )
+        MainApp.instance.ui_manager.set_status_label("")
         notify_end_add_by_isbn
         # TODO possibly make sure all threads have stopped running
         @animation.destroy
@@ -454,29 +443,25 @@ module Alexandria
       def setup_scanner_area
         @scanner_buffer = ""
         scanner_name = @prefs.barcode_scanner
-        @scanner = Alexandria::Scanners::Registry.first # CueCat is default
-        Alexandria::Scanners::Registry.each do |scanner|
-          if scanner.name == scanner_name
-            @scanner = scanner
-          end
-        end
+
+        @acanner = Alexandria::Scanners.find_scanner scanner_name ||
+          Alexandria::Scanners.default_scanner # CueCat is default
 
         log.debug { "Using #{@scanner.name} scanner" }
         message = _("Ready to use %s barcode scanner") % @scanner.name
-        MainApp.instance.ui_manager.set_status_label( message )
+        MainApp.instance.ui_manager.set_status_label(message)
 
         @prev_time = 0
         @interval = 0
 
-
-        @animation = BarcodeAnimation.new()
+        @animation = BarcodeAnimation.new
         @scan_frame.add(@animation.canvas)
 
         # attach signals
-        @scan_area.signal_connect("button-press-event") do |widget, event|
+        @scan_area.signal_connect("button-press-event") do |_widget, _event|
           @scan_area.grab_focus
         end
-        @scan_area.signal_connect("focus-in-event") do |widget, event|
+        @scan_area.signal_connect("focus-in-event") do |_widget, _event|
           @barcode_label.label = _("%s _Barcode Scanner Ready" % _(@scanner.display_name))
           @scanner_buffer = ""
           begin
@@ -485,7 +470,7 @@ module Alexandria
             log << err if log.error?
           end
         end
-        @scan_area.signal_connect("focus-out-event") do |widget, event|
+        @scan_area.signal_connect("focus-out-event") do |_widget, _event|
           @barcode_label.label = _("Click below to scan _barcodes")
           @scanner_buffer = ""
           @animation.set_passive
@@ -493,9 +478,9 @@ module Alexandria
         end
 
         @@debug_index = 0
-        @scan_area.signal_connect("key-press-event") do |button, event|
-          #log.debug { event.keyval }
-            # event.keyval == 65293 means Enter key
+        @scan_area.signal_connect("key-press-event") do |_button, event|
+          # log.debug { event.keyval }
+          # event.keyval == 65293 means Enter key
           # HACK, this disallows numeric keypad entry of data...
           if event.keyval < 255
             if @scanner_buffer.empty?
@@ -528,14 +513,14 @@ module Alexandria
             # then it's probably a human typing characters
 
             if @scanner.match? @scanner_buffer
-              
+
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
                 log.debug { "Waiting for more scanner input..." }
                 Gtk.idle_add do
                   @animation.manual_input
                   false
                 end
-                time_to_wait = [3, interval*4].min
+                time_to_wait = [3, interval * 4].min
                 sleep(time_to_wait)
                 if buffer == @scanner_buffer
                   log.debug { "Buffer unchanged; scanning complete" }
@@ -580,7 +565,7 @@ module Alexandria
           puts effect
           return unless @prefs.play_scan_sound
           Gtk.idle_add do
-            #sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
+            # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
             @sound_players[effect].play(effect)
             false
           end
@@ -616,16 +601,16 @@ module Alexandria
         text_renderer.editable = false
 
         # Add column using our renderer
-        col = Gtk::TreeViewColumn.new("ISBN", text_renderer, :text => 0)
+        col = Gtk::TreeViewColumn.new("ISBN", text_renderer, text: 0)
         @barcodes_treeview.append_column(col)
 
         # Middle colulmn is cover-image renderer
         pixbuf_renderer = Gtk::CellRendererPixbuf.new
         col = Gtk::TreeViewColumn.new("Cover", pixbuf_renderer)
 
-        col.set_cell_data_func(pixbuf_renderer) do |column, cell, model, iter|
+        col.set_cell_data_func(pixbuf_renderer) do |_column, cell, _model, iter|
           pixbuf = iter[1]
-          if (pixbuf)
+          if pixbuf
             max_height = 25
 
             if pixbuf.height > max_height
@@ -638,22 +623,18 @@ module Alexandria
 
         end
 
-
         @barcodes_treeview.append_column(col)
 
         # Add column using the second renderer
-        col = Gtk::TreeViewColumn.new("Title", text_renderer, :text => 2)
+        col = Gtk::TreeViewColumn.new("Title", text_renderer, text: 2)
         @barcodes_treeview.append_column(col)
 
-
-        @barcodes_treeview.model.signal_connect("row-deleted") do |model, path|
-          if not model.iter_first
+        @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|
+          unless model.iter_first
             @add_button.sensitive = false
           end
         end
-
       end
-
     end
   end
 end

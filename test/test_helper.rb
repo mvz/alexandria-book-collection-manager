@@ -40,4 +40,3 @@ module Alexandria
     DIR.replace TESTDIR
   end
 end
-

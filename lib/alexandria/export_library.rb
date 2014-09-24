@@ -20,7 +20,7 @@
 # Export sorting added 23 Oct 2007 by Cathal Mc Ginley
 # Classes LibrarySortOrder and SortedLibrary, and changed ExportFormat#invoke
 # iPod Notes support added 20 January 2008 by Tim Malone
-#require 'cgi'
+# require 'cgi'
 
 begin        # image_size is optional
   $IMAGE_SIZE_LOADED = true
@@ -31,29 +31,26 @@ rescue LoadError
 end
 
 module Alexandria
-
   class LibrarySortOrder
     include Logging
 
-    def initialize(book_attribute, ascending=true)
+    def initialize(book_attribute, ascending = true)
       @book_attribute = book_attribute
       @ascending = ascending
     end
 
     def sort(library)
-      begin
-        sorted = library.sort_by do |book|
-          book.send(@book_attribute)
-        end
-        if not @ascending
-          sorted.reverse!
-        end
-        sorted
-      rescue Exception => ex
-        trace = ex.backtrace.join("\n> ")
-        log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
-        library
+      sorted = library.sort_by do |book|
+        book.send(@book_attribute)
       end
+      unless @ascending
+        sorted.reverse!
+      end
+      sorted
+    rescue => ex
+      trace = ex.backtrace.join("\n> ")
+      log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
+      library
     end
 
     def to_s
@@ -103,19 +100,17 @@ module Alexandria
     include GetText
     include Logging
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def self.all
       [
-        self.new(_("Archived ONIX XML"), "onix.tbz2",
-                 :export_as_onix_xml_archive),
-                 self.new(_("Archived Tellico XML"), "tc",
-                          :export_as_tellico_xml_archive),
-                          self.new(_("BibTeX"), "bib", :export_as_bibtex),
-                          self.new(_("CSV list"), "csv", :export_as_csv_list),
-                          self.new(_("ISBN List"), "txt", :export_as_isbn_list),
-                          self.new(_("iPod Notes"), nil, :export_as_ipod_notes),
-                          self.new(_("HTML Web Page"), nil, :export_as_html, true)
+        new(_("Archived ONIX XML"), "onix.tbz2", :export_as_onix_xml_archive),
+        new(_("Archived Tellico XML"), "tc", :export_as_tellico_xml_archive),
+        new(_("BibTeX"), "bib", :export_as_bibtex),
+        new(_("CSV list"), "csv", :export_as_csv_list),
+        new(_("ISBN List"), "txt", :export_as_isbn_list),
+        new(_("iPod Notes"), nil, :export_as_ipod_notes),
+        new(_("HTML Web Page"), nil, :export_as_html, true)
       ]
     end
 
@@ -137,7 +132,7 @@ module Alexandria
     private
     #######
 
-    def initialize(name, ext, message, needs_preview=false)
+    def initialize(name, ext, message, needs_preview = false)
       @name = name
       @ext = ext
       @message = message
@@ -153,7 +148,7 @@ module Alexandria
       copy_covers(File.join(Dir.tmpdir, "images"))
       Dir.chdir(Dir.tmpdir) do
         output = `tar -cjf \"#{filename}\" onix.xml images 2>&1`
-        raise output unless $?.success?
+        raise output unless $CHILD_STATUS.success?
       end
       FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
       FileUtils.rm(File.join(Dir.tmpdir, "onix.xml"))
@@ -163,7 +158,7 @@ module Alexandria
       File.open(File.join(Dir.tmpdir, "tellico.xml"), "w") do |io|
         begin
           to_tellico_document.write(io, 0)
-        rescue Exception => ex
+        rescue => ex
           puts ex.message
           puts ex.backtrace
           raise ex
@@ -172,7 +167,7 @@ module Alexandria
       copy_covers(File.join(Dir.tmpdir, "images"))
       Dir.chdir(Dir.tmpdir) do
         output = `zip -q -r \"#{filename}\" tellico.xml images 2>&1`
-        raise output unless $?.success?
+        raise output unless $CHILD_STATUS.success?
       end
       FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
       FileUtils.rm(File.join(Dir.tmpdir, "tellico.xml"))
@@ -204,9 +199,10 @@ module Alexandria
         io << to_bibtex
       end
     end
-    def export_as_ipod_notes(filename, theme)
+
+    def export_as_ipod_notes(filename, _theme)
       FileUtils.mkdir(filename) unless File.exist?(filename)
-      tempdir=Dir.getwd                
+      tempdir = Dir.getwd
       Dir.chdir(filename)
       copy_covers("pixmaps")
       File.open("index.linx", 'w') do |io|
@@ -219,7 +215,7 @@ module Alexandria
       each do |book|
         File.open(book.ident, 'w') do |io|
           io.puts "<TITLE>#{book.title} </TITLE>"
-          #put a link to the book's cover. only works on iPod 5G and above(?).
+          # put a link to the book's cover. only works on iPod 5G and above(?).
           if File.exist?(cover(book))
             io.puts '<A HREF="pixmaps/' + book.ident + '.jpg' + '">' + book.title + '</A>'
           else
@@ -228,19 +224,18 @@ module Alexandria
           io.puts book.authors.join(', ')
           io.puts book.edition
           io.puts((book.isbn or ""))
-          #we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria				
+          # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
 
       end
-      #Again, allow the iPod to unmount		
+      # Again, allow the iPod to unmount
       Dir.chdir(tempdir)
     end
 
-
     def export_as_csv_list(filename)
       File.open(filename, 'w') do |io|
-        io.puts "Title" + ';' + "Authors" + ';' + "Publisher" + ';' + "Edition" + ';' + "ISBN" + ';' + "Year Published" + ';' + "Rating" + "(0 to #{UI::MainApp::MAX_RATING_STARS.to_s})" + ';' + "Notes" + ';' + "Want?" + ';' + "Read?" + ';' + "Own?" + ';' + "Tags"
+        io.puts "Title" + ';' + "Authors" + ';' + "Publisher" + ';' + "Edition" + ';' + "ISBN" + ';' + "Year Published" + ';' + "Rating" + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + "Notes" + ';' + "Want?" + ';' + "Read?" + ';' + "Own?" + ';' + "Tags"
         each do |book|
           io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or "") + ';' + (book.edition or "") + ';' + (book.isbn or "") + ';' + (book.publishing_year.to_s or "") + ';' + (book.rating.to_s or "0") + ';' + (book.notes or "") + ';' + ( book.want ? "1" : "0") + ';' + ( book.redd ? "1" : "0") + ';' + ( book.own ? "1" : "0") + ';' + (book.tags ? book.tags.join(', ') : "")
         end
@@ -284,7 +279,7 @@ module Alexandria
             elem.add_element('PersonName').text = author
           end
         end
-        if book.notes and not book.notes.empty?
+        if book.notes and !book.notes.empty?
           elem = prod.add_element('OtherText')
           # reader description
           elem.add_element('TextTypeCode').text = '12'
@@ -296,7 +291,7 @@ module Alexandria
           # front cover image
           elem.add_element('MediaFileTypeCode').text = '04'
           elem.add_element('MediaFileFormatCode').text =
-          (Library.jpeg?(cover(book)) ? '03' : '02' )
+          (Library.jpeg?(cover(book)) ? '03' : '02')
           # filename
           elem.add_element('MediaFileLinkTypeCode').text = '06'
           elem.add_element('MediaFileLink').text =
@@ -316,7 +311,7 @@ module Alexandria
         elem.add_element('PublisherName').text = book.publisher
         prod.add_element('PublicationDate').text = book.publishing_year
       end
-      return doc
+      doc
     end
 
     def to_tellico_document
@@ -329,7 +324,7 @@ module Alexandria
       tellico.add_attribute('syntaxVersion', "7")
       tellico.add_namespace('http://periapsis.org/tellico/')
       collection = tellico.add_element('collection')
-      collection.add_attribute('title', self.name)
+      collection.add_attribute('title', name)
       collection.add_attribute('type', "2")
       fields = collection.add_element('fields')
       field1 = fields.add_element('field')
@@ -339,7 +334,7 @@ module Alexandria
       images = collection.add_element('images')
       each_with_index do |book, idx|
         entry = collection.add_element('entry')
-        new_index = (idx+1).to_s
+        new_index = (idx + 1).to_s
         entry.add_attribute('id', new_index)
         # translate the binding
         entry.add_element('title').text = book.title
@@ -355,10 +350,10 @@ module Alexandria
         end
         entry.add_element('read').text = book.redd.to_s if book.redd
         entry.add_element('loaned').text = book.loaned.to_s if book.loaned
-        if not book.rating == Book::DEFAULT_RATING
+        unless book.rating == Book::DEFAULT_RATING
           entry.add_element('rating').text = book.rating
         end
-        if book.notes and not book.notes.empty?
+        if book.notes and !book.notes.empty?
           entry.add_element('comments').text = book.notes
         end
         if File.exist?(cover(book))
@@ -377,7 +372,7 @@ module Alexandria
           end
         end
       end
-      return doc
+      doc
     end
 
     def xhtml_escape(str)
@@ -438,7 +433,7 @@ EOS
 EOS
         end
 
-        unless book.title == nil
+        unless book.title.nil?
           xhtml << <<EOS
 <p class="book_title">#{xhtml_escape(book.title)}</p>
 EOS
@@ -454,13 +449,13 @@ EOS
           xhtml << "</ul>"
         end
 
-        unless book.edition == nil
+        unless book.edition.nil?
           xhtml << <<EOS
 <p class="book_binding">#{xhtml_escape(book.edition)}</p>
 EOS
         end
 
-        unless book.publisher == nil
+        unless book.publisher.nil?
           xhtml << <<EOS
 <p class="book_publisher">#{xhtml_escape(book.publisher)}</p>
 EOS
@@ -472,7 +467,7 @@ EOS
       end
       xhtml << <<EOS
 <p class="copyright">
-  Generated on #{xhtml_escape(Date.today().to_s)} by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
+  Generated on #{xhtml_escape(Date.today.to_s)} by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
 </p>
 </body>
 </html>
@@ -482,14 +477,14 @@ EOS
     def to_bibtex
       generator = "Alexandria " + Alexandria::DISPLAY_VERSION
       bibtex = ""
-      bibtex << "\%Generated on #{Date.today()} by: #{generator}\n"
+      bibtex << "\%Generated on #{Date.today} by: #{generator}\n"
       bibtex << "\%\n"
       bibtex << "\n"
 
       auths = Hash.new(0)
       each do |book|
         k = (book.authors[0] or "Anonymous").split[0]
-        if auths.has_key?(k)
+        if auths.key?(k)
           auths[k] += 1
         else
           auths[k] = 1
@@ -506,29 +501,29 @@ EOS
         bibtex << "\",\n"
         bibtex << "title = \"#{latex_escape(book.title)}\",\n"
         bibtex << "publisher = \"#{latex_escape(book.publisher)}\",\n"
-        if book.notes and not book.notes.empty?
+        if book.notes and !book.notes.empty?
           bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
         end
-        #year is a required field in bibtex @BOOK
+        # year is a required field in bibtex @BOOK
         bibtex << "year = " + (book.publishing_year or "\"n/a\"").to_s + "\n"
         bibtex << "}\n\n"
       end
-      return bibtex
+      bibtex
     end
 
     def latex_escape(str)
-      return "" if str == nil
+      return "" if str.nil?
       my_str = str.dup
-      my_str.gsub!(/%/,"\\%")
-      my_str.gsub!(/~/,"\\textasciitilde")
-      my_str.gsub!(/\&/,"\\\\&")
-      my_str.gsub!(/\#/,"\\\\#")
-        my_str.gsub!(/\{/,"\\{")
-          my_str.gsub!(/\}/,"\\}")
-          my_str.gsub!(/_/,"\\_")
-          my_str.gsub!(/\$/,"\\\$")
-          my_str.gsub!(/\"(.+)\"/, %q/``\1''/)
-          return my_str
+      my_str.gsub!(/%/, "\\%")
+      my_str.gsub!(/~/, "\\textasciitilde")
+      my_str.gsub!(/\&/, "\\\\&")
+      my_str.gsub!(/\#/, "\\\\#")
+      my_str.gsub!(/\{/, "\\{")
+      my_str.gsub!(/\}/, "\\}")
+      my_str.gsub!(/_/, "\\_")
+      my_str.gsub!(/\$/, "\\\$")
+      my_str.gsub!(/\"(.+)\"/, "``\1''")
+      my_str
     end
   end
 

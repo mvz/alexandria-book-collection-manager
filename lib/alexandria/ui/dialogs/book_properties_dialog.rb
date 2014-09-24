@@ -21,7 +21,7 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, library, book)
         super(parent, library.cover(book))
@@ -46,11 +46,12 @@ module Alexandria
         @entry_title.text = @book_properties_dialog.title = book.title
         @entry_isbn.text = (book.isbn or "")
         @entry_publisher.text = book.publisher
-        @entry_publish_date.text = (book.publishing_year.to_s \
-                                  rescue "")
+        @entry_publish_date.text = book.publishing_year.to_s
         @entry_publish_date.signal_connect('focus-out-event') do
           text = @entry_publish_date.text
-          unless text.empty?
+          if text.empty?
+            false
+          else
             year = text.to_i
             if year == 0 or year > (Time.now.year + 10) or year < 10
               @entry_publish_date.text = ""
@@ -60,8 +61,6 @@ module Alexandria
               @entry_publish_date.text = "19" + year.to_s
               false
             end
-          else
-            false
           end
         end
         @entry_edition.text = book.edition
@@ -83,29 +82,29 @@ module Alexandria
         self.cover = Icons.cover(library, book)
         self.rating = (book.rating or Book::DEFAULT_RATING)
 
-        if @checkbutton_loaned.active = book.loaned?
+        if (@checkbutton_loaned.active = book.loaned?)
           @entry_loaned_to.text = (book.loaned_to or "")
           self.loaned_since = book.loaned_since
           @date_loaned_since.sensitive = true
         else
-          @date_loaned_since.sensitive = false          
+          @date_loaned_since.sensitive = false
         end
 
         @checkbutton_own.active = book.own?
-        if @checkbutton_redd.active = book.redd?
+        if (@checkbutton_redd.active = book.redd?)
           @redd_date.sensitive = true
           if book.redd_when.nil?
             puts "no redd_when"
           else
             @redd_date.text = format_date(book.redd_when)
           end
-	  #self.redd_when = (book.redd_when or Time.now)
+          # self.redd_when = (book.redd_when or Time.now)
         else
           @redd_date.sensitive = false
-	end
+        end
         @checkbutton_want.active = book.want?
 
-        if @checkbutton_own.active = book.own?
+        if (@checkbutton_own.active = book.own?)
           @checkbutton_want.inconsistent = true
         end
       end
@@ -116,14 +115,14 @@ module Alexandria
 
       def on_close
         if @entry_isbn.text == ""
- 		  # If set to nil .to_yaml in library.save causes crash
+          # If set to nil .to_yaml in library.save causes crash
           @book.isbn = ""
         else
           ary = @library.select { |book| book.ident == @entry_isbn.text }
           unless ary.empty? or (ary.length == 1 and ary.first == @book)
             ErrorDialog.new(@parent,
                             _("Couldn't modify the book"),
-                            _("The EAN/ISBN you provided is already " +
+                            _("The EAN/ISBN you provided is already " \
                               "used in this library."))
             return
           end
@@ -132,8 +131,8 @@ module Alexandria
                        rescue Alexandria::Library::InvalidISBNError
                          ErrorDialog.new(@parent,
                                          _("Couldn't modify the book"),
-                                         _("Couldn't validate the EAN/ISBN you " +
-                                           "provided.  Make sure it is written " +
+                                         _("Couldn't validate the EAN/ISBN you " \
+                                           "provided.  Make sure it is written " \
                                            "correcty, and try again."))
                          return
                        end
@@ -144,7 +143,7 @@ module Alexandria
         @book.publishing_year = year == 0 ? nil : year
         @book.edition = @entry_edition.text
         @book.authors = []
-        @treeview_authors.model.each { |m, p, i| @book.authors << i[0] }
+        @treeview_authors.model.each { |_m, _p, i| @book.authors << i[0] }
         @book.notes = @textview_notes.buffer.text
         @book.rating = @current_rating
 
@@ -162,7 +161,7 @@ module Alexandria
         end
 
         @book.redd = @checkbutton_redd.active?
-	if @book.redd
+        if @book.redd
           redd_date = @redd_date.text
           if redd_date.strip.empty?
             @book.redd_when = nil
@@ -175,17 +174,16 @@ module Alexandria
               puts err.backtrace
             end
           end
-	else
+        else
           @book.redd_when = nil
-	end
+        end
         @book.own = @checkbutton_own.active?
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split(',') # tags are comma separated
 
-
         if @delete_cover_file
           FileUtils.rm_f(@cover_file)
-        end        
+        end
 
         if @original_cover_file
           FileUtils.rm_f(@original_cover_file)
@@ -204,7 +202,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI::display_help(@preferences_dialog,
+        Alexandria::UI.display_help(@preferences_dialog,
                                      'editing-book-properties')
       end
     end

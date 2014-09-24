@@ -19,23 +19,21 @@
 require 'gdk_pixbuf2'
 
 module Alexandria
-
   class DuplicateBookException < NameError
-
   end
 
   module UI
     class KeepBadISBNDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, book)
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
-                _("The book titled '%s' has an invalid ISBN, but still " +
-                "exists in the providers libraries.  Do you want to " +
+               [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
+              _("The book titled '%s' has an invalid ISBN, but still " \
+                "exists in the providers libraries.  Do you want to " \
                 "keep the book but change the ISBN or cancel the add?") \
                 % book.title)
         self.default_response = Gtk::Dialog::RESPONSE_OK
@@ -52,9 +50,9 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      def initialize(parent, selected_library=nil, &block)
+      def initialize(parent, selected_library = nil, &block)
         super('new_book_dialog__builder.glade', widget_names)
         log.info { "New Book Dialog" }
         @new_book_dialog.transient_for = @parent = parent
@@ -66,7 +64,6 @@ module Alexandria
       end
 
       def widget_names
-
         [:liststore1, :liststore2, :new_book_dialog, :dialog_vbox1,
          :dialog_action_area1, :button_help, :button_cancel,
          :button_add, :table1, :keep_open, :combo_libraries,
@@ -75,7 +72,6 @@ module Alexandria
          :cellrenderertext2, :eventbox_entry_search, :entry_search,
          :button_find, :scrolledwindow, :treeview_results,
          :title_radiobutton, :isbn_radiobutton, :progressbar]
-
       end
 
       def setup_dialog_gui
@@ -95,7 +91,7 @@ module Alexandria
 
         renderer = Gtk::CellRendererPixbuf.new
         col = Gtk::TreeViewColumn.new("", renderer)
-        col.set_cell_data_func(renderer) do |column, cell, model, iter|
+        col.set_cell_data_func(renderer) do |_column, cell, _model, iter|
           pixbuf = iter[2]
           max_height = 25
 
@@ -109,7 +105,7 @@ module Alexandria
         @treeview_results.append_column(col)
 
         col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new,
-                                      :text => 0)
+                                      text: 0)
         @treeview_results.append_column(col)
 
         @combo_search.active = 0
@@ -139,8 +135,6 @@ module Alexandria
       end
 
       def on_criterion_toggled(item)
-
-
         log.debug { "on_criterion_toggled" }
         return unless item.active?
 
@@ -150,10 +144,11 @@ module Alexandria
         # title bar to be able to focus it again. Putting the GUI
         # modifications in an Gtk.idle_add block fixed the problem.
 
-        if is_isbn = item == @isbn_radiobutton
+        is_isbn = item == @isbn_radiobutton
+        if is_isbn
           Gtk.idle_add do
             @latest_size = @new_book_dialog.size
-            @new_book_dialog.resizable = false            
+            @new_book_dialog.resizable = false
             @entry_isbn.grab_focus
             false
           end
@@ -181,7 +176,6 @@ module Alexandria
         @@last_criterion_was_not_isbn = !is_isbn
 
         # @new_book_dialog.present # attempted fix, bring dialog to foreground
-
       end
 
       def on_changed(entry)
@@ -236,7 +230,7 @@ module Alexandria
                   unless @treeview_results.model.iter_is_valid?(iter)
                     raise "Iter is invalid! %s" % iter
                   end
-                  iter[2] = pixbuf #I bet you this is it!
+                  iter[2] = pixbuf # I bet you this is it!
                 end
 
                 @images.delete(key)
@@ -268,20 +262,20 @@ module Alexandria
                  BookProviders::SEARCH_BY_KEYWORD
                end
 
-        # @progressbar.show 
-        #progress_pulsing = Gtk.timeout_add(100) do
-        #  unless @destroyed
+        # @progressbar.show
+        # progress_pulsing = Gtk.timeout_add(100) do
+        #  if @destroyed
+        #    false
+        #  else
         #    @progressbar.pulse
         #    true
-        #  else
-        #    false
         #  end
-        #end
+        # end
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
         log.info { "TreeStore Model: %s columns; ref_counts: %s" %
-        [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
+                   [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
 
         @find_error = nil
         @results = nil
@@ -296,13 +290,13 @@ module Alexandria
             begin
               Alexandria::BookProviders.instance.add_observer(self)
               @results = Alexandria::BookProviders.search(criterion, mode)
-              
+
               log.info { "got #{@results.length} results" }
             rescue => e
               @find_error = e.message
             ensure
               Alexandria::BookProviders.instance.delete_observer(self)
-              #notify_end_add_by_isbn
+              # notify_end_add_by_isbn
             end
           end
           false
@@ -311,7 +305,7 @@ module Alexandria
         Gtk.timeout_add(100) do
           # This block copies results into the tree view, or shows an
           # error if the search failed.
-          
+
           # Err... continue == false if @find_error
           continue = if @find_error
                        ErrorDialog.new(@parent,
@@ -320,14 +314,15 @@ module Alexandria
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
-                       @results.each do |book, cover|
-                         s = _("%s, by %s") % [ book.title,
-                           book.authors.join(', ') ]
-                         if @results.find { |book2, cover2|
+                       @results.each do |book, _cover|
+                         s = _("%s, by %s") % [book.title,
+                                               book.authors.join(', ')]
+                         similar_books = @results.find { |book2, _cover2|
                            book.title == book2.title and
-                           book.authors == book2.authors
-                         }.length > 1
-                         s += " (#{book.edition}, #{book.publisher})"
+                             book.authors == book2.authors
+                         }
+                         if similar_books.length > 1
+                           s += " (#{book.edition}, #{book.publisher})"
                          end
                          log.info { "Copying %s into tree view." % book.title }
                          iter = @treeview_results.model.append
@@ -342,9 +337,9 @@ module Alexandria
                          true
                        else
                          log.info { "@find_thread (#{@find_thread}) asleep now." }
-                         #Not really async now.
+                         # Not really async now.
                          get_images_async
-                         false #continue == false if you get to here. Stop timeout_add.
+                         false # continue == false if you get to here. Stop timeout_add.
                        end
                      else
                        # Stop if the book find thread has stopped.
@@ -354,7 +349,7 @@ module Alexandria
           # timeout_add ends if continue is false!
 
           unless continue
-            unless @find_thread.alive? #This happens after find_thread is done
+            unless @find_thread.alive? # This happens after find_thread is done
               unless @destroyed
                 # Gtk.timeout_remove(progress_pulsing)
                 # @progressbar.hide
@@ -364,23 +359,23 @@ module Alexandria
             end
           end
 
-          continue #timeout_add loop condition
+          continue # timeout_add loop condition
         end
       end
 
-      def decode_cuecat?(entry) # srsly? 
-        if entry.text=~/^\..*?\..*?\.(.*?)\.$/
-          tmp = $1.tr('a-zA-Z0-9+-', ' -_')
-          tmp = ((32 + tmp.length * 3/4).to_i.chr << tmp).unpack('u')[0]
+      def decode_cuecat?(entry) # srsly?
+        if entry.text =~ /^\..*?\..*?\.(.*?)\.$/
+          tmp = Regexp.last_match[1].tr('a-zA-Z0-9+-', ' -_')
+          tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack('u')[0]
           tmp.chomp!("\000")
-          entry.text = tmp.gsub!(/./) {|c| (c[0] ^ 67).chr }
+          entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
           if entry.text.count('^ -~') > 0
             entry.text = 'Bad scan result'
           end
         end
       end
 
-      def on_results_button_press_event(widget, event)
+      def on_results_button_press_event(_widget, event)
         # double left click
         if event.event_type == Gdk::Event::BUTTON2_PRESS and
           event.button == 1
@@ -394,12 +389,12 @@ module Alexandria
         isbn = begin
                  Library.canonicalise_isbn(@entry_isbn.text)
                rescue
-                 raise _("Couldn't validate the EAN/ISBN you " +
-                         "provided.  Make sure it is written " +
+                 raise _("Couldn't validate the EAN/ISBN you " \
+                         "provided.  Make sure it is written " \
                          "correctly, and try again.")
                end
-        assert_not_exist(library, @entry_isbn.text)        
-        @button_add.sensitive = false  
+        assert_not_exist(library, @entry_isbn.text)
+        @button_add.sensitive = false
         notify_start_add_by_isbn
         Gtk.idle_add do
 
@@ -420,13 +415,13 @@ module Alexandria
                 puts "adding book #{book} to library"
                 add_book_to_library(library, book, cover_url)
                 @entry_isbn.text = ''
-                
+
                 post_addition([book], library, is_new)
               else
                 post_addition([], library, is_new)
               end
             rescue => e
-              unless e.kind_of? Alexandria::BookProviders::NoResultsError
+              unless e.is_a? Alexandria::BookProviders::NoResultsError
                 puts e.message
                 puts e.backtrace.join("\n> ")
               end
@@ -436,17 +431,16 @@ module Alexandria
             ensure
               Alexandria::BookProviders.instance.delete_observer(self)
               notify_end_add_by_isbn
-            end          
+            end
           end
 
           false
         end
-
       end
 
-      def add_selected_books(library, is_new)
+      def add_selected_books(library, _is_new)
         books_to_add = []
-        @treeview_results.selection.selected_each do |model, path, iter|
+        @treeview_results.selection.selected_each do |_model, _path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
             begin
@@ -459,17 +453,17 @@ module Alexandria
             rescue Alexandria::Library::InvalidISBNError
               puts "invalidisbn #{book.isbn}"
               next unless
-                KeepBadISBNDialog.new(@parent, book).keep?
+              KeepBadISBNDialog.new(@parent, book).keep?
               book.isbn = book.saved_ident = nil
             end
             books_to_add << [book, cover]
           end
-          
+
         end
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
         end
-        return books_to_add.map {|x| x.first } # array of Books only
+        books_to_add.map { |x| x.first } # array of Books only
       end
 
       def add_book_to_library(library, book, cover_uri)
@@ -481,10 +475,10 @@ module Alexandria
       end
 
       def post_addition(books, library, is_new_library)
-        puts "post_addition #{books.size}" 
+        puts "post_addition #{books.size}"
         return if books.empty?
 
-        # books, a 1d array of Alexandria::Book        
+        # books, a 1d array of Alexandria::Book
         @block.call(books, library, is_new_library)
 
         if @keep_open.active?
@@ -498,16 +492,12 @@ module Alexandria
             @entry_isbn.text = '' # blank ISBN field
             @entry_isbn.grab_focus
           end
-          
+
         else
           # Now we can destroy the dialog and go back to the main
           # application.
           @new_book_dialog.destroy
         end
-        
-        
-        
-
       end
 
       def on_add
@@ -532,11 +522,10 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
 
-          
         rescue => e
           ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
         end
-        #books_to_add
+        # books_to_add
       end
 
       def on_cancel
@@ -549,49 +538,49 @@ module Alexandria
         main_progress_bar = MainApp.instance.appbar.children.first
         main_progress_bar.visible = true
         @progress_pulsing = Gtk.timeout_add(100) do
-          unless @destroyed
+          if @destroyed
+            false
+          else
             main_progress_bar.pulse
             true
-          else
-            false
           end
         end
       end
 
       def notify_end_add_by_isbn
         MainApp.instance.appbar.children.first.visible = false
-        Gtk::timeout_remove(@progress_pulsing)
+        Gtk.timeout_remove(@progress_pulsing)
       end
 
       def update(status, provider)
         Gtk.queue do
           messages = {
-            :searching => _("Searching Provider '%s'..."),
-            :error => _("Error while Searching Provider '%s'"),
-            :not_found => _("Not Found at Provider '%s'"),
-            :found => _("Found at Provider '%s'")
+            searching: _("Searching Provider '%s'..."),
+            error: _("Error while Searching Provider '%s'"),
+            not_found: _("Not Found at Provider '%s'"),
+            found: _("Found at Provider '%s'")
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
 
           # @parent.appbar.status = message
           MainApp.instance.appbar.status = message # HACKish
-          #false
+          # false
         end
       end
 
       def on_focus
         if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
-          if text = clipboard.wait_for_text
+          if (text = clipboard.wait_for_text)
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
-                Library.valid_upc?(text)
+              Library.valid_upc?(text)
               Gtk.idle_add do
 
                 @entry_isbn.text = text
                 @entry_isbn.grab_focus
                 @entry_isbn.select_region(0, -1) # select all...
-                # @button_add.grab_focus 
+                # @button_add.grab_focus
                 false
               end
               log.debug { "Setting ISBN field to #{text}" }
@@ -611,15 +600,15 @@ module Alexandria
           radio, target_widget, box2, box3 = case widget
                                              when @eventbox_entry_search
                                                [@title_radiobutton, @entry_search,
-                                                 @eventbox_combo_search, @eventbox_entry_isbn]
+                                                @eventbox_combo_search, @eventbox_entry_isbn]
 
                                              when @eventbox_combo_search
                                                [@title_radiobutton, @combo_search,
-                                                 @eventbox_entry_search, @eventbox_entry_isbn]
+                                                @eventbox_entry_search, @eventbox_entry_isbn]
 
                                              when @eventbox_entry_isbn
                                                [@isbn_radiobutton, @entry_isbn,
-                                                 @eventbox_entry_search, @eventbox_combo_search]
+                                                @eventbox_entry_search, @eventbox_combo_search]
                                              end
           radio.active = true
           target_widget.grab_focus
@@ -629,7 +618,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI::display_help(@preferences_dialog, 'add-book-by-isbn')
+        Alexandria::UI.display_help(@preferences_dialog, 'add-book-by-isbn')
       end
 
       #######
@@ -640,13 +629,12 @@ module Alexandria
         # Check that the book doesn't already exist in the library.
         isbn13 = Library.canonicalise_ean(isbn)
         puts isbn13
-        if book = library.find { |bk| bk.isbn == isbn13 }
+        if (book = library.find { |bk| bk.isbn == isbn13 })
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
-            [ isbn, library.name, book.title.sub("&", "&amp;") ]
+            [isbn, library.name, book.title.sub("&", "&amp;")]
         end
         true
       end
     end
   end
 end
-

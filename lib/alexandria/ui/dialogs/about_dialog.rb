@@ -19,7 +19,7 @@ module Alexandria
   module UI
     class AboutDialog < Gtk::AboutDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       GPL = <<EOL
 Alexandria is free software; you can redistribute it and/or
@@ -52,7 +52,7 @@ EOL
         self.website = Alexandria::WEBSITE_URL
         self.license = GPL
         self.transient_for = parent
-        self.signal_connect('response') { self.destroy }
+        signal_connect('response') { destroy }
       end
     end
   end
