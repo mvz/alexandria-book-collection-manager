@@ -443,12 +443,9 @@ module Alexandria
       def setup_scanner_area
         @scanner_buffer = ""
         scanner_name = @prefs.barcode_scanner
-        @scanner = Alexandria::Scanners::Registry.first # CueCat is default
-        Alexandria::Scanners::Registry.each do |scanner|
-          if scanner.name == scanner_name
-            @scanner = scanner
-          end
-        end
+
+        @acanner = Alexandria::Scanners.find_scanner scanner_name ||
+          Alexandria::Scanners.default_scanner # CueCat is default
 
         log.debug { "Using #{@scanner.name} scanner" }
         message = _("Ready to use %s barcode scanner") % @scanner.name

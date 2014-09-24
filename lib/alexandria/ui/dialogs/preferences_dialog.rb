@@ -333,7 +333,7 @@ module Alexandria
         @scanner_device_type.pack_start(renderer, true)
         @scanner_device_type.add_attribute(renderer, 'text', 0)
 
-        Alexandria::Scanners::Registry.each do |scanner|
+        Alexandria::Scanners.each_scanner do |scanner|
           iter = @scanner_device_model.append
           iter[0] = scanner.display_name
           iter[1] = scanner.name

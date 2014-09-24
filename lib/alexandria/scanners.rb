@@ -21,6 +21,22 @@
 
 module Alexandria
   module Scanners
-    Registry = []
+    REGISTRY = []
+
+    def self.register scanner
+      REGISTRY.push(scanner)
+    end
+
+    def self.default_scanner
+      REGISTRY.first
+    end
+
+    def self.find_scanner name
+      REGISTRY.find { |scanner| scanner.name == name }
+    end
+
+    def each_scanner
+      REGISTRY.each { |scanner| yield scanner }
+    end
   end
 end

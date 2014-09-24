@@ -44,10 +44,6 @@ Style/ClassVars:
 Style/CommentAnnotation:
   Enabled: false
 
-# Offense count: 1
-Style/ConstantName:
-  Enabled: false
-
 # Offense count: 79
 Style/CyclomaticComplexity:
   Max: 28
