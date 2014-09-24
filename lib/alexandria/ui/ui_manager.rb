@@ -331,7 +331,7 @@ module Alexandria
         if event_is_right_click event
           log.debug { "library right click!" }
           library_already_selected = true
-          if path = widget.get_path_at_pos(event.x, event.y)
+          if (path = widget.get_path_at_pos(event.x, event.y))
             @clicking_on_sidepane = true
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
@@ -395,7 +395,7 @@ module Alexandria
 
         else
           # not a right click
-          if path = widget.get_path_at_pos(event.x, event.y)
+          if (path = widget.get_path_at_pos(event.x, event.y))
             @clicking_on_sidepane = true
             obj, path = widget.is_a?(Gtk::TreeView) \
               ? [widget.selection, path.first] : [widget, path]
@@ -424,7 +424,7 @@ module Alexandria
         if event_is_right_click event
           widget.grab_focus
 
-          if path = widget.get_path_at_pos(event.x.to_i, event.y.to_i)
+          if (path = widget.get_path_at_pos(event.x.to_i, event.y.to_i))
             obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
 
             unless obj.path_is_selected?(path)
@@ -973,7 +973,7 @@ module Alexandria
 
       def selected_library
         log.debug { "selected_library" }
-        if iter = @library_listview.selection.selected
+        if (iter = @library_listview.selection.selected)
           @libraries.all_libraries.find { |x| x.name == iter[1] }
         else
           @libraries.all_libraries.first

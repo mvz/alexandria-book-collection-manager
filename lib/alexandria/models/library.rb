@@ -191,7 +191,7 @@ module Alexandria
 
       # Backward compatibility with versions <= 0.6.0, where the
       # loaned_since field was a numeric.
-      if md = FIX_BIGNUM_REGEX.match(text)
+      if (md = FIX_BIGNUM_REGEX.match(text))
         new_yaml = Time.at(md[2].to_i).to_yaml
         # Remove the "---" prefix.
         new_yaml.sub!(/^\s*\-+\s*/, '')

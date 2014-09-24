@@ -42,7 +42,7 @@ module Alexandria
         ## new_text = new_text.reverse # for testing;
         # a great way to generate broken UTF-8
         if cell.text != new_text
-          if match = contains_illegal_character(new_text)
+          if (match = contains_illegal_character(new_text))
             if match.instance_of? MatchData
               chars = match[1].gsub(/&/, "&amp;")
               ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,

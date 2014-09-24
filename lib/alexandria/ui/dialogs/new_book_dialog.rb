@@ -144,7 +144,8 @@ module Alexandria
         # title bar to be able to focus it again. Putting the GUI
         # modifications in an Gtk.idle_add block fixed the problem.
 
-        if is_isbn = item == @isbn_radiobutton
+        is_isbn = item == @isbn_radiobutton
+        if is_isbn
           Gtk.idle_add do
             @latest_size = @new_book_dialog.size
             @new_book_dialog.resizable = false
@@ -571,7 +572,7 @@ module Alexandria
       def on_focus
         if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
-          if text = clipboard.wait_for_text
+          if (text = clipboard.wait_for_text)
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
               Library.valid_upc?(text)
               Gtk.idle_add do
@@ -628,7 +629,7 @@ module Alexandria
         # Check that the book doesn't already exist in the library.
         isbn13 = Library.canonicalise_ean(isbn)
         puts isbn13
-        if book = library.find { |bk| bk.isbn == isbn13 }
+        if (book = library.find { |bk| bk.isbn == isbn13 })
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
             [isbn, library.name, book.title.sub("&", "&amp;")]
         end

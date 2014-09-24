@@ -233,9 +233,8 @@ module Alexandria
       end
 
       def on_remove_author
-        if iter = @treeview_authors.selection.selected
-          @treeview_authors.model.remove(iter)
-        end
+        iter = @treeview_authors.selection.selected
+        @treeview_authors.model.remove(iter) if iter
       end
 
       def on_image_rating1_press
@@ -336,9 +335,8 @@ module Alexandria
                          /[0-9]{4}-[0123]?[0-9]-[0123]?[0-9]/]
         matches_regex = false
         date_regexes.each do |regex|
-          if matches_regex = regex.match(@date_loaned_since.text)
-            break
-          end
+          matches_regex = regex.match(@date_loaned_since.text)
+          break if matches_regex
         end
         unless matches_regex
           return

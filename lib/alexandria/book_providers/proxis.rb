@@ -185,7 +185,7 @@ module Alexandria
         end
 
         image_url = nil
-        if cover_img = doc.at("img[@id$='imgProduct']")
+        if (cover_img = doc.at("img[@id$='imgProduct']"))
           if cover_img['src'] =~ /^http/
             image_url = cover_img['src']
           else

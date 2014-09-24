@@ -362,7 +362,7 @@ module Alexandria
 
         @treeview_providers.signal_connect("button_press_event") do |widget, event|
           if event_is_right_click(event)
-            if path = widget.get_path_at_pos(event.x, event.y)
+            if (path = widget.get_path_at_pos(event.x, event.y))
               widget.grab_focus
               obj, path = widget.selection, path.first
               unless obj.path_is_selected?(path)

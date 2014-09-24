@@ -83,7 +83,7 @@ module Alexandria
         self.cover = Icons.cover(library, book)
         self.rating = (book.rating or Book::DEFAULT_RATING)
 
-        if @checkbutton_loaned.active = book.loaned?
+        if (@checkbutton_loaned.active = book.loaned?)
           @entry_loaned_to.text = (book.loaned_to or "")
           self.loaned_since = book.loaned_since
           @date_loaned_since.sensitive = true
@@ -92,7 +92,7 @@ module Alexandria
         end
 
         @checkbutton_own.active = book.own?
-        if @checkbutton_redd.active = book.redd?
+        if (@checkbutton_redd.active = book.redd?)
           @redd_date.sensitive = true
           if book.redd_when.nil?
             puts "no redd_when"
@@ -105,7 +105,7 @@ module Alexandria
         end
         @checkbutton_want.active = book.want?
 
-        if @checkbutton_own.active = book.own?
+        if (@checkbutton_own.active = book.own?)
           @checkbutton_want.inconsistent = true
         end
       end

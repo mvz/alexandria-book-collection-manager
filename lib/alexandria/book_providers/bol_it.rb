@@ -89,15 +89,17 @@ module Alexandria
         raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data)
         data = data.convert("UTF-8", "ISO-8859-1")
 
-        raise "No title" unless md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
+        md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
+        raise "No title" unless md
         title = CGI.unescape(md[1].strip)
 
         authors = []
-        if md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data)
+        if (md = /<INPUT type =HIDDEN name ="mailAutore" value="([^"]+)/.match(data))
           md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
-        raise "No ISBN" unless md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
+        md = /<INPUT type =HIDDEN name ="mailEAN" value="([^"]+)/.match(data)
+        raise "No ISBN" unless md
         isbn = md[1].strip
         isbn += String(Library.ean_checksum(Library.extract_numbers(isbn)))
 
@@ -109,9 +111,9 @@ module Alexandria
         md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
         edition = CGI.unescape(md[1].strip) or md
 
-        if md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data)
+        if (md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data))
           nr_pages = CGI.unescape(md[1].strip)
-        elsif md = / (\d+) pagine \| /.match(data)
+        elsif (md = / (\d+) pagine \| /.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         end
         if nr_pages != "0" and  !nr_pages.nil?
@@ -119,7 +121,7 @@ module Alexandria
         end
 
         publish_year = nil
-        if md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data)
+        if (md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
           publish_year = nil if publish_year == 0
         end

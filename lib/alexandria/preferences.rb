@@ -88,7 +88,7 @@ module Alexandria
 
     def method_missing(id, *args)
       method = id.id2name
-      if match = /(.*)=$/.match(method)
+      if (match = /(.*)=$/.match(method))
         if args.length != 1
           raise "Set method #{method} should be called with " \
             "only one argument (was called with #{args.length})"

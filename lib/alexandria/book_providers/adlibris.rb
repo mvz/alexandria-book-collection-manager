@@ -107,7 +107,7 @@ module Alexandria
         (search_hit / 'ul.ulSearch table').each do |t|
 
           result = {}
-          if title_data = (t % 'div.divTitle')
+          if (title_data = (t % 'div.divTitle'))
             result[:title] = (title_data % :a).inner_text
             lookup_url = (title_data % :a)['href']
           end
@@ -146,7 +146,7 @@ module Alexandria
         begin
 
           title = nil
-          if h1 = doc.at('div.productTitleFormat h1')
+          if (h1 = doc.at('div.productTitleFormat h1'))
             title = text_of(h1)
           else
             raise NoResultsError, "title not found on page"
@@ -168,12 +168,12 @@ module Alexandria
           end
 
           publisher = nil
-          if publisher_elem = product.search('li[@id$="liPublisher"] a').first
+          if (publisher_elem = product.search('li[@id$="liPublisher"] a').first)
             publisher = text_of(publisher_elem)
           end
 
           binding = nil
-          if format = doc.search('div.productTitleFormat span').first
+          if (format = doc.search('div.productTitleFormat span').first)
             binding = text_of(format)
             if binding =~ /\(([^\)]+)\)/
               binding = Regexp.last_match[1]
@@ -181,7 +181,7 @@ module Alexandria
           end
 
           year = nil
-          if published = product.search('span[@id$="Published"]').first
+          if (published = product.search('span[@id$="Published"]').first)
             publication = published.inner_text
             if publication =~ /([12][0-9]{3})/
               year = Regexp.last_match[1].to_i
@@ -209,7 +209,7 @@ module Alexandria
 
           # cover
           image_url = nil
-          if cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
+          if (cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first)
             if cover_img['src'] =~ /^http\:\/\//
               image_url = cover_img['src']
             else

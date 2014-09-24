@@ -141,13 +141,13 @@ module Alexandria
         end
 
         begin
-          if div = doc % 'div#contentFull'
+          if (div = doc % 'div#contentFull')
             title_img = ((div % :h2) / :img).first
             title = title_img["alt"]
 
             # note, the following img also has alt="von Author, Author..."
 
-            if author_h = doc % 'h3[text()*="Mehr von"]' # "More from..." links
+            if (author_h = doc % 'h3[text()*="Mehr von"]') # "More from..." links
               authors = []
               author_links = author_h.parent / :a
               author_links.each do |a|

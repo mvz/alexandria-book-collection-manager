@@ -291,15 +291,15 @@ module Alexandria
           authors = []
 
           text.split(/\n/).each do |line|
-            if md = /^Title:\s+(.*)$/.match(line)
+            if (md = /^Title:\s+(.*)$/.match(line))
               title = md[1].sub(/\.$/, '').squeeze(' ')
-            elsif md = /^Added Person Name:\s+(.*),[^,]+$/.match(line)
+            elsif (md = /^Added Person Name:\s+(.*),[^,]+$/.match(line))
               authors << md[1]
-            elsif md = /^ME-Personal Name:\s+(.*),[^,]+$/.match(line)
+            elsif (md = /^ME-Personal Name:\s+(.*),[^,]+$/.match(line))
               authors << md[1]
-            elsif md = /^ISBN:\s+([\dXx]+)/.match(line)
+            elsif (md = /^ISBN:\s+([\dXx]+)/.match(line))
               isbn = Library.canonicalise_ean(md[1])
-            elsif md = /^Imprint:.+\:\s*(.+)\,/.match(line)
+            elsif (md = /^Imprint:.+\:\s*(.+)\,/.match(line))
               publisher = md[1]
             end
           end

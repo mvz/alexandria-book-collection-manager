@@ -227,11 +227,11 @@ module Alexandria
 
       def remove
         prefs = Alexandria::Preferences.instance
-        if ary = prefs.abstract_providers
+        if (ary = prefs.abstract_providers)
           ary.delete(@name)
           prefs.abstract_providers = ary
         end
-        if ary = prefs.providers_priority and ary.include?(@name)
+        if (ary = prefs.providers_priority) and ary.include?(@name)
           ary.delete(@name)
           prefs.providers_priority = ary
         end
@@ -330,7 +330,8 @@ module Alexandria
       @abstract_classes.clear
       providers = {}
       self.class.constants.each do |constant|
-        next unless md = /(.+)Provider$/.match(constant)
+        md = /(.+)Provider$/.match(constant)
+        next unless md
         klass = self.class.module_eval(constant.to_s)
         if klass.ancestors.include?(AbstractProvider) and
             klass != GenericProvider and
@@ -344,7 +345,7 @@ module Alexandria
           end
         end
       end
-      if ary = @prefs.abstract_providers
+      if (ary = @prefs.abstract_providers)
         ary.each do |name|
           md = /^(.+)_/.match(name)
           next unless md
@@ -386,20 +387,20 @@ module Alexandria
       unless priority.empty?
         changed = false
 
-        if ecs_index = priority.index("AmazonECS")
+        if (ecs_index = priority.index("AmazonECS"))
           priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
           priority.uniq! # remove any other "Amazon" from the list
           changed = true
         end
-        if deastore_index = priority.index("DeaStore_it")
+        if (deastore_index = priority.index("DeaStore_it"))
           priority[deastore_index] = "DeaStore"
           changed = true
         end
-        if worldcat_index = priority.index("Worldcat")
+        if (worldcat_index = priority.index("Worldcat"))
           priority[worldcat_index] = "WorldCat"
           changed = true
         end
-        if adlibris_index = priority.index("Adlibris")
+        if (adlibris_index = priority.index("Adlibris"))
           priority[adlibris_index] = "AdLibris"
           changed = true
         end

@@ -87,14 +87,15 @@ module Alexandria
         raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data)
         data = data.convert("UTF-8", "ISO-8859-15")
 
-        raise unless md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
+        md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
+        raise unless md
         title = CGI.unescape(md[1].strip)
-        if md = /<span class="product_heading_volume">([^<]+)/.match(data)
+        if (md = /<span class="product_heading_volume">([^<]+)/.match(data))
           title += " " + CGI.unescape(md[1].strip)
         end
 
         authors = []
-        if md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data)
+        if (md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data))
           this = CGI.unescape(md[0].strip)
           authors = this.scan(/<a href="[^>]+">([^<]+)<\/a>,?/)
           authors = authors.map { |author| author[0] }
@@ -102,26 +103,27 @@ module Alexandria
           #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
-        raise unless md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
+        md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
+        raise unless md
         isbn = Library.canonicalise_ean(md[1].strip)
 
         # raise unless
         md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
         publisher = CGI.unescape(md[1].strip) or md
 
-        if md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
+        if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
           edition = CGI.unescape(md[1].strip) + " p."
         else
           edition = nil
         end
 
         publish_year = nil
-        if md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data)
+        if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip)[-4 .. -1].to_i
           publish_year = nil if publish_year == 0
         end
 
-        if data =~ /javascript:popImage/ and  md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data)
+        if data =~ /javascript:popImage/ and (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
           cover_url = BASE_URI + md[1].strip
           # use "p" instead of "g" for smaller image
           if cover_url[-5] == 103

@@ -79,7 +79,7 @@ module Alexandria
           raise Amazon::RequestError.new("Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account")
         end
 
-        if config = Alexandria::Preferences.instance.http_proxy_config
+        if (config = Alexandria::Preferences.instance.http_proxy_config)
           host, port, user, pass = config
           url = "http://"
           url += user + ":" + pass + "@" if user and pass

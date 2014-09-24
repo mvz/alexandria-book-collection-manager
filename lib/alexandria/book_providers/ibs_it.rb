@@ -85,15 +85,17 @@ module Alexandria
         raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data)
         data = data.convert("UTF-8", "ISO-8859-1")
 
-        raise "No title" unless md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
+        md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
+        raise "No title" unless md
         title = CGI.unescape(md[1].strip)
 
         authors = []
-        if md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data)
+        if (md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data))
           md[0].strip.gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
-        raise "No ISBN" unless md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
+        md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
+        raise "No ISBN" unless md
         isbn = md[1].strip
 
         # raise "No publisher" unless
@@ -105,7 +107,7 @@ module Alexandria
         edition = CGI.unescape(md[1].strip) or md
 
         publish_year = nil
-        if md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data)
+        if (md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
           publish_year = nil if publish_year == 0
         end
