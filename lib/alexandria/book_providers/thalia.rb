@@ -95,7 +95,7 @@ module Alexandria
           data = ""
           item_node.children.each do |n|
             if n.text?
-              data = data + n.to_html
+              data += n.to_html
             end
           end
           data.strip

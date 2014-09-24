@@ -271,7 +271,7 @@ module Amazon
       # Step 1: enter the timestamp
       t = Time.now.getutc # MUST be in UTC
       stamp = t.strftime('%Y-%m-%dT%H:%M:%SZ')
-      param_string = param_string + "&Timestamp=#{stamp}"
+      param_string += "&Timestamp=#{stamp}"
 
       # Step 2 : URL-encode
       param_string = param_string.gsub(',', '%2C').gsub(':', '%3A')

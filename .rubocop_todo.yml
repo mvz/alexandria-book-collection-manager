@@ -160,7 +160,3 @@ Style/RegexpLiteral:
 # Offense count: 3
 Style/RescueModifier:
   Enabled: false
-
-# Offense count: 2
-Style/SelfAssignment:
-  Enabled: false
