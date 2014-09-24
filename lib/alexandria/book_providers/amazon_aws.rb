@@ -105,7 +105,7 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion, { response_group: 'ItemAttributes,Images', country: request_locale })
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
             res.items.each do |item|
               products << item
             end
@@ -129,7 +129,7 @@ module Alexandria
             end
 
           when SEARCH_BY_TITLE
-            res = Amazon::Ecs.item_search(criterion, { response_group: 'ItemAttributes,Images', country: request_locale })
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
               if /#{criterion}/i.match(item.get('itemattributes/title'))
@@ -140,14 +140,14 @@ module Alexandria
 
           when SEARCH_BY_AUTHORS
             criterion = "author:#{criterion}"
-            res = Amazon::Ecs.item_search(criterion, { response_group: 'ItemAttributes,Images', country: request_locale, type: 'Power' })
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale, type: 'Power')
             res.items.each do |item|
               products << item
             end
             # #req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            res = Amazon::Ecs.item_search(criterion, { response_group: 'ItemAttributes,Images', country: request_locale })
+            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
               products << item
