@@ -34,6 +34,8 @@ require 'fileinstall'
 require 'gettextgenerate'
 require 'omfgenerate'
 
+require 'alexandria/version'
+
 stage_dir = ENV['DESTDIR'] || 'tmp'
 prefix_dir = ENV['PREFIX'] || '/usr'
 
@@ -41,8 +43,6 @@ PROJECT = 'alexandria'
 PREFIX = prefix_dir
 share_dir = ENV['SHARE'] || "#{PREFIX}/share"
 SHARE = share_dir
-
-DISPLAY_VERSION = '0.6.8'
 
 GettextGenerateTask.new(PROJECT) do |g|
   g.generate_po_files('po', 'po/*.po', 'share/locale')
@@ -78,7 +78,6 @@ end
 
 FileInstallTask.new(:package_staging, stage_dir, true) do |i|
   install_common(i)
-
 end
 
 task debian_install: :install_package_staging
@@ -213,7 +212,7 @@ end
 
 ## # # # package task # # # ##
 
-Rake::PackageTask.new(PROJECT, DISPLAY_VERSION) do |p|
+Rake::PackageTask.new(PROJECT, Alexandria::DISPLAY_VERSION) do |p|
   p.need_tar_gz = true
   p.package_files.include("README*", "COPYING", "CHANGELOG.md", "INSTALL.rdoc",
                           "NEWS", "Rakefile", "util/**/*",
