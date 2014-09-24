@@ -156,7 +156,3 @@ Style/RaiseArgs:
 # Offense count: 17
 Style/RegexpLiteral:
   MaxSlashes: 8
-
-# Offense count: 3
-Style/RescueModifier:
-  Enabled: false

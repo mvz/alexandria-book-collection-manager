@@ -132,8 +132,15 @@ module Alexandria
 
           cover_filename = isbn + ".tmp"
           Dir.chdir(CACHE_DIR) do
-            File.open(cover_filename, "w") do |file|
-              file.write open(cover_url, "Referer" => REFERER).read rescue nil
+            begin
+              cover_data = open(cover_url, "Referer" => REFERER).read
+            rescue OpenURI::HTTPError
+              cover_data = nil
+            end
+            if cover_data
+              File.open(cover_filename, "w") do |file|
+                file.write cover_data
+              end
             end
           end
 

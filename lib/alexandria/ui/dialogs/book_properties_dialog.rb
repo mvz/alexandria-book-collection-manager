@@ -46,8 +46,7 @@ module Alexandria
         @entry_title.text = @book_properties_dialog.title = book.title
         @entry_isbn.text = (book.isbn or "")
         @entry_publisher.text = book.publisher
-        @entry_publish_date.text = (book.publishing_year.to_s \
-                                  rescue "")
+        @entry_publish_date.text = book.publishing_year.to_s
         @entry_publish_date.signal_connect('focus-out-event') do
           text = @entry_publish_date.text
           if text.empty?

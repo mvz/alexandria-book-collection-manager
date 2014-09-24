@@ -824,7 +824,7 @@ module Alexandria
         iter[Columns::AUTHORS] = book.authors.join(', ')
         iter[Columns::ISBN] = book.isbn.to_s
         iter[Columns::PUBLISHER] = book.publisher
-        iter[Columns::PUBLISH_DATE] = (book.publishing_year.to_s rescue "")
+        iter[Columns::PUBLISH_DATE] = book.publishing_year.to_s
         iter[Columns::EDITION] = book.edition
         iter[Columns::NOTES] = (book.notes or "")
         iter[Columns::LOANED_TO] = (book.loaned_to or "")
