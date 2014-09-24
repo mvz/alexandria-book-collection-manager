@@ -86,7 +86,7 @@ module Alexandria
       #######
 
       def to_books(data)
-        data = CGI::unescapeHTML(data)
+        data = CGI.unescapeHTML(data)
         data = data.convert("UTF-8", "ISO-8859-1")
         raise NoResultsError if /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.match(data)
 

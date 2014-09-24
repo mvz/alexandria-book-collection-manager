@@ -36,7 +36,7 @@ def an_artist_of_the_floating_world
                        "Paperback")
 end
 
-Thread.new { Alexandria::UI::start_gnome_program }
+Thread.new { Alexandria::UI.start_gnome_program }
 Alexandria::UI::Icons.init
 
 module Alexandria

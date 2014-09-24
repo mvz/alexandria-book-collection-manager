@@ -264,7 +264,7 @@ module Alexandria
       end
 
       def on_help(_widget, _event)
-        Alexandria::UI::display_help(@main_app)
+        Alexandria::UI.display_help(@main_app)
       end
 
       def on_about(_widget, _event)

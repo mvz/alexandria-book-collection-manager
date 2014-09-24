@@ -129,7 +129,7 @@ module Alexandria
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 
           if response == Gtk::Dialog::RESPONSE_HELP
-            Alexandria::UI::display_help(self, 'import-library')
+            Alexandria::UI.display_help(self, 'import-library')
             next
           end
           file = File.basename(filename, '.*')

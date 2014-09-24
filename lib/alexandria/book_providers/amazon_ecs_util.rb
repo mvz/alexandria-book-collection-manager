@@ -118,7 +118,7 @@ module Amazon
       request_url = prepare_url(opts)
       log.debug { "Request URL: #{request_url}" }
 
-      res = transport.get_response(URI::parse(request_url))
+      res = transport.get_response(URI.parse(request_url))
       unless res.kind_of? Net::HTTPSuccess
         raise Amazon::RequestError, "HTTP Response: #{res.code} #{res.message}"
       end
@@ -365,7 +365,7 @@ module Amazon
     # Similar to #get_unescaped, except an element object must be passed-in.
     def self.get_unescaped(element, path = '')
       result = get(element, path)
-      CGI::unescapeHTML(result) if result
+      CGI.unescapeHTML(result) if result
     end
 
     # Similar to #get_array, except an element object must be passed-in.

@@ -139,7 +139,7 @@ module Alexandria
         @add_button = add_button(Gtk::Stock::ADD,
                                  Gtk::Dialog::RESPONSE_ACCEPT)
 
-        instances = BookProviders::abstract_classes.map { |x| x.new }
+        instances = BookProviders.abstract_classes.map { |x| x.new }
         @selected_instance = nil
 
         @table = Gtk::Table.new(2, 2)
@@ -297,7 +297,7 @@ module Alexandria
         @buttonbox_prov.set_child_secondary(@button_prov_add, true)
         @buttonbox_prov.set_child_secondary(@button_prov_remove, true)
 
-        if BookProviders::abstract_classes.empty?
+        if BookProviders.abstract_classes.empty?
           @checkbutton_prov_advanced.sensitive = false
         else
           view_advanced = Preferences.instance.view_advanced_settings
@@ -514,7 +514,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI::display_help(@preferences_dialog,
+        Alexandria::UI.display_help(@preferences_dialog,
                                      'alexandria-preferences')
       end
 

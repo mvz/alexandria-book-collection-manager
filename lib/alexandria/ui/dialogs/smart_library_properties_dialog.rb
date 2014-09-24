@@ -36,7 +36,7 @@ module Alexandria
 
         while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
           if response == Gtk::Dialog::RESPONSE_HELP
-            Alexandria::UI::display_help(self, 'edit-smart-library')
+            Alexandria::UI.display_help(self, 'edit-smart-library')
           elsif response == Gtk::Dialog::RESPONSE_OK
             if user_confirms_possible_weirdnesses_before_saving?
               smart_library.rules = smart_library_rules

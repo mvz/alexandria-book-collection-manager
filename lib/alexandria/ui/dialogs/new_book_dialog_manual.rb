@@ -146,7 +146,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI::display_help(@preferences_dialog, 'add-book-manually')
+        Alexandria::UI.display_help(@preferences_dialog, 'add-book-manually')
       end
     end
   end

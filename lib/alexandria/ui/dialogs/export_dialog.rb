@@ -120,7 +120,7 @@ module Alexandria
             response != Gtk::Dialog::RESPONSE_DELETE_EVENT
 
           if response == Gtk::Dialog::RESPONSE_HELP
-            Alexandria::UI::display_help(self, 'exporting')
+            Alexandria::UI.display_help(self, 'exporting')
           else
             begin
               break if on_export(FORMATS[types_combo.active],

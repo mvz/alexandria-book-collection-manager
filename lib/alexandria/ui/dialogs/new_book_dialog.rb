@@ -548,7 +548,7 @@ module Alexandria
 
       def notify_end_add_by_isbn
         MainApp.instance.appbar.children.first.visible = false
-        Gtk::timeout_remove(@progress_pulsing)
+        Gtk.timeout_remove(@progress_pulsing)
       end
 
       def update(status, provider)
@@ -617,7 +617,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI::display_help(@preferences_dialog, 'add-book-by-isbn')
+        Alexandria::UI.display_help(@preferences_dialog, 'add-book-by-isbn')
       end
 
       #######

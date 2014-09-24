@@ -203,7 +203,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI::display_help(@preferences_dialog,
+        Alexandria::UI.display_help(@preferences_dialog,
                                      'editing-book-properties')
       end
     end
