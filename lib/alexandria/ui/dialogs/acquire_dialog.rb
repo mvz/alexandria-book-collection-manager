@@ -154,7 +154,7 @@ module Alexandria
               isbn = iter[0]
               if book_in_library(isbn, library)
                 log.debug { "#{isbn} is a duplicate" }
-              # #elsif isbns.include? isbn
+                # #elsif isbns.include? isbn
                 # this won't work since multiple scans of the same
                 # book have the same isbn (so we can't refrain from removing
                 # one, we'd end up not removing any)
@@ -483,7 +483,7 @@ module Alexandria
         @@debug_index = 0
         @scan_area.signal_connect("key-press-event") do |_button, event|
           # log.debug { event.keyval }
-            # event.keyval == 65293 means Enter key
+          # event.keyval == 65293 means Enter key
           # HACK, this disallows numeric keypad entry of data...
           if event.keyval < 255
             if @scanner_buffer.empty?

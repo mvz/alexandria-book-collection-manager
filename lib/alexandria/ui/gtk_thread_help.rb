@@ -50,19 +50,19 @@ module Gtk
     end
   end
 
-# an optional addition from http://www.ruby-forum.com/topic/125038
-# "I call Gtk.thread_flush right after killing a thread when I ever
-# happen to need kill a thread" -- Mathieu Blondel
+  # an optional addition from http://www.ruby-forum.com/topic/125038
+  # "I call Gtk.thread_flush right after killing a thread when I ever
+  # happen to need kill a thread" -- Mathieu Blondel
 
-#     def self.thread_flush
-#         if PENDING_CALLS_MUTEX.try_lock
-#             for closure in PENDING_CALLS
-#                 closure.call
-#             end
-#             PENDING_CALLS.clear
-#             PENDING_CALLS_MUTEX.unlock
-#         end
-#     end
+  #     def self.thread_flush
+  #         if PENDING_CALLS_MUTEX.try_lock
+  #             for closure in PENDING_CALLS
+  #                 closure.call
+  #             end
+  #             PENDING_CALLS.clear
+  #             PENDING_CALLS_MUTEX.unlock
+  #         end
+  #     end
 
   def Gtk.main_with_queue(timeout = 100) # millis
     Gtk.timeout_add(timeout) do

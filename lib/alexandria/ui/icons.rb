@@ -64,8 +64,8 @@ module Alexandria
       def self.load_icon_images
         Dir.entries(ICONS_DIR).each do |file|
           next unless file =~ /\.png$/    # skip non '.png' files
-            # Don't use upcase and use tr instead
-            # For example in Turkish the upper case of 'i' is still 'i'.
+          # Don't use upcase and use tr instead
+          # For example in Turkish the upper case of 'i' is still 'i'.
           name = File.basename(file, ".png").tr('a-z', 'A-Z')
           const_set(name, Gdk::Pixbuf.new(File.join(ICONS_DIR, file)))
         end
@@ -79,7 +79,7 @@ module Alexandria
             return Gdk::Pixbuf.new(filename)
           end
         rescue Exception => err
-            # report load error; FIX should go to a Logger...
+          # report load error; FIX should go to a Logger...
           puts err.message
           puts err.backtrace.join("\n> ")
           puts "Failed to load Gdk::Pixbuf, please ensure that from #{filename} is a valid image file"

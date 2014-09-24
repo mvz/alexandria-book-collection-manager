@@ -277,7 +277,7 @@ module Alexandria
         renderer = Gtk::CellRendererText.new
         column = Gtk::TreeViewColumn.new("Providers",
                                          renderer)
-                                         # :text => 0)
+        # :text => 0)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           rndr.markup = iter[0]
           # enabled = iter[2]

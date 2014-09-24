@@ -116,7 +116,7 @@ module Alexandria
 
       def on_close
         if @entry_isbn.text == ""
-                  # If set to nil .to_yaml in library.save causes crash
+          # If set to nil .to_yaml in library.save causes crash
           @book.isbn = ""
         else
           ary = @library.select { |book| book.ident == @entry_isbn.text }
