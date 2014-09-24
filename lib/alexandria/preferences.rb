@@ -159,7 +159,7 @@ module Alexandria
           exec_gconf_set(var_path, new_value)
         end
       end
-    rescue Exception => ex
+    rescue => ex
       log.debug { new_value.inspect }
       log.error { "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}" }
       log << ex.message

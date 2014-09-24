@@ -65,7 +65,7 @@ module Alexandria
       ## url
       def url(book)
         create_search_uri(SEARCH_BY_ISBN, book.isbn)
-      rescue Exception => ex
+      rescue => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
       end
@@ -226,7 +226,7 @@ module Alexandria
           book = Book.new(title, authors, isbn, publisher, year, binding)
 
           return [book, image_url]
-        rescue Exception => ex
+        rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
           log.warn {"Failed parsing search results for AdLibris " \

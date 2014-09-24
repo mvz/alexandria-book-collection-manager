@@ -125,7 +125,7 @@ module Alexandria
               book_search_results << [book, image_url]
             end
           end
-        rescue Exception => ex
+        rescue => ex
           log.warn(ex.backtrace.join('\n'))
         end
         book_search_results

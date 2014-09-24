@@ -133,7 +133,7 @@ module Alexandria
               begin
                 book_elements[2] = book_elements[2].strip
                 book_elements[2] = Library.canonicalise_ean(book_elements[2])
-              rescue Exception => ex
+              rescue => ex
                 puts book_elements[2]
                 puts ex.message
                 puts ex.backtrace.join("\n> ")
@@ -259,7 +259,7 @@ module Alexandria
         # Let's preserve the failing isbns so we can report them later.
         begin
           [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
-        rescue Exception => e
+        rescue => e
           puts e.message
           [line.chomp, nil]
         end
@@ -279,7 +279,7 @@ module Alexandria
           else
             bad_isbns << isbn[0]
           end
-        rescue Exception => e
+        rescue => e
           puts e.message
           failed_lookup_isbns << isbn[1]
           puts "NOTE : ignoring on_error_cb #{on_error_cb}"

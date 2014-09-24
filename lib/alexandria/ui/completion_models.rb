@@ -103,7 +103,7 @@ begin
 rescue LoadError => e
   Alexandria.log.debug { "Could not find optional ruby-revolution; Evolution contacts will not be loaded" }
   EVOLUTION_CONTACTS = []
-rescue Exception => e
+rescue => e
   Alexandria.log.warn { e.message }
   EVOLUTION_CONTACTS = []
 end

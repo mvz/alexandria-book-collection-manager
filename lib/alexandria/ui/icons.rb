@@ -78,7 +78,7 @@ module Alexandria
           if File.exist?(filename)
             return Gdk::Pixbuf.new(filename)
           end
-        rescue Exception => err
+        rescue => err
           # report load error; FIX should go to a Logger...
           puts err.message
           puts err.backtrace.join("\n> ")
@@ -90,7 +90,7 @@ module Alexandria
       def self.blank?(filename)
         pixbuf = Gdk::Pixbuf.new(filename)
         pixbuf.width == 1 and pixbuf.height == 1
-      rescue Exception => err
+      rescue => err
         puts err.message
         puts err.backtrace.join("\n> ")
         true

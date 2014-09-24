@@ -156,7 +156,7 @@ module Alexandria
             result[:url] =  "#{SITE}#{slash}#{link_to_description}"
 
             book_search_results << result
-          rescue Exception => ex
+          rescue => ex
             trace = ex.backtrace.join("\n> ")
             log.error { "Failed parsing Siciliano search page #{ex.message}\n#{trace}" }
           end
@@ -220,7 +220,7 @@ module Alexandria
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
         result =  [book, image_urls.first]
         return result
-      rescue Exception => ex
+      rescue => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
         return nil

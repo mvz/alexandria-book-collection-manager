@@ -31,7 +31,7 @@ module Alexandria
         #      forbidding an initial dot also disallows "." and ".."
         #      which are of course pre-existing directories.
         return match
-      rescue Exception => ex
+      rescue => ex
         log.warn { "New library name not valid UTF-8: #{ex.message}" }
         return true
         # /([^\w\s'"()&?!:;.\-])/.match(new_text) # anglocentric!
@@ -184,7 +184,7 @@ module Alexandria
           end
           begin
             Gtk::Drag.finish(drag_context, success, false, 0) # ,time)
-          rescue Exception => ex
+          rescue => ex
             log.error { "Gtk::Drag.finish failed: #{ex}" }
           end
         end

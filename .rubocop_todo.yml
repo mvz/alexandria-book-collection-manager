@@ -27,11 +27,6 @@ Lint/HandleExceptions:
 Lint/LiteralInCondition:
   Enabled: false
 
-# Offense count: 46
-# Cop supports --auto-correct.
-Lint/RescueException:
-  Enabled: false
-
 # Offense count: 5
 Lint/UselessAccessModifier:
   Enabled: false

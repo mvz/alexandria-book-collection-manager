@@ -25,7 +25,7 @@ module Alexandria
         builder.connect_signals do |handler|
           begin
             method(handler)
-          rescue Exception => ex
+          rescue => ex
             puts "Error: #{ex}" if $DEBUG
             nil
           end

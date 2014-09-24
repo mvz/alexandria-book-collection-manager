@@ -122,7 +122,7 @@ module Alexandria
 
       def on_export(_widget, _event)
         ExportDialog.new(@main_app, selected_library, library_sort_order)
-      rescue Exception => ex
+      rescue => ex
         log.error { "problem with immediate export #{ex} try again" }
         ErrorDialog.new(@main_app, _("Export failed"),
                            _("Try letting this library load " \

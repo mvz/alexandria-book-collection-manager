@@ -220,7 +220,7 @@ module Alexandria
               end
 
             end
-          rescue ::Exception => e
+          rescue => e
             log.error { "toggle failed for path #{path} #{e}\n" + e.backtrace.join("\n") }
           end
 

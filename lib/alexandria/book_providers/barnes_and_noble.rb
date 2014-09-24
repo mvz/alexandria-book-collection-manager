@@ -91,7 +91,7 @@ module Alexandria
 
       def url(book)
         create_search_uri(SEARCH_BY_ISBN, book.isbn)
-      rescue Exception => ex
+      rescue => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
       end
@@ -132,7 +132,7 @@ module Alexandria
 
             book_search_results << result
           end
-        rescue Exception => ex
+        rescue => ex
           trace = ex.backtrace.join("\n> ")
           log.warn {"Failed parsing search results for Barnes & Noble " \
             "#{ex.message} #{trace}" }
@@ -216,7 +216,7 @@ module Alexandria
                           book_data[:publication_year],
                           book_data[:binding])
           return [book, book_data[:image_url]]
-        rescue Exception => ex
+        rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
           log.warn {"Failed parsing search results for BarnesAndNoble " \

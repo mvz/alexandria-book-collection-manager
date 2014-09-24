@@ -295,7 +295,7 @@ module Alexandria
           elsif date.visible?
             begin
               value = parse_date(date.text)
-            rescue Exception => ex
+            rescue => ex
               trace = ex.backtrace.join("\n > ")
               log.warn { "Possibly invalid date entered #{ex.message}" }
               log.warn { "Date widget returned #{date.text} / #{trace}" }

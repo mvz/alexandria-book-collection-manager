@@ -418,7 +418,7 @@ module Alexandria
 
                                         Time.now - given_date <= days
                                       end
-                                    rescue Exception => ex
+                                    rescue => ex
                                       trace = ex.backtrace.join("\n >")
                                       log.warn { "Date matching failed #{ex} #{trace}" }
                                       false
@@ -437,7 +437,7 @@ module Alexandria
 
                                             Time.now - given_date > days
                                           end
-                                        rescue Exception => ex
+                                        rescue => ex
                                           trace = ex.backtrace.join("\n >")
                                           log.warn { "Date matching failed #{ex} #{trace}" }
                                           false

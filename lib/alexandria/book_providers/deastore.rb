@@ -160,7 +160,7 @@ module Alexandria
             end
 
             book_search_results << result
-          rescue Exception => ex
+          rescue => ex
             trace = ex.backtrace.join("\n> ")
             log.error { "Failed parsing DeaStore search page #{ex.message}\n#{trace}" }
           end
@@ -260,7 +260,7 @@ module Alexandria
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
         return [book, image_url]
-      rescue Exception => ex
+      rescue => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing DeaStore product page #{ex.message}\n#{trace}" }
         return nil

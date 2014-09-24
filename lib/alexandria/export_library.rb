@@ -47,7 +47,7 @@ module Alexandria
         sorted.reverse!
       end
       sorted
-    rescue Exception => ex
+    rescue => ex
       trace = ex.backtrace.join("\n> ")
       log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
       library
@@ -158,7 +158,7 @@ module Alexandria
       File.open(File.join(Dir.tmpdir, "tellico.xml"), "w") do |io|
         begin
           to_tellico_document.write(io, 0)
-        rescue Exception => ex
+        rescue => ex
           puts ex.message
           puts ex.backtrace
           raise ex
