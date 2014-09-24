@@ -85,10 +85,6 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   Enabled: false
 
-# Offense count: 1
-Style/Lambda:
-  Enabled: false
-
 # Offense count: 313
 # Configuration parameters: AllowURI.
 Style/LineLength:
