@@ -153,7 +153,7 @@ module Amazon
       # Return an array of Amazon::Element item objects.
       def items
         unless @items
-          @items = (@doc / "item").collect { |item| Element.new(item) }
+          @items = (@doc / "item").map { |item| Element.new(item) }
         end
         @items
       end
@@ -233,9 +233,9 @@ module Amazon
         key = d.digest(key)
       end
 
-      ipad_bytes = ipad.bytes.collect { |b| b }
-      opad_bytes = opad.bytes.collect { |b| b }
-      key_bytes = key.bytes.collect { |b| b }
+      ipad_bytes = ipad.bytes.map { |b| b }
+      opad_bytes = opad.bytes.map { |b| b }
+      key_bytes = key.bytes.map { |b| b }
       ipad_xor = ""
       opad_xor = ""
       for i in 0 .. key.size - 1

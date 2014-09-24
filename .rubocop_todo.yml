@@ -99,12 +99,6 @@ Style/ClassMethods:
 Style/ClassVars:
   Enabled: false
 
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredMethods.
-Style/CollectionMethods:
-  Enabled: false
-
 # Offense count: 28
 # Configuration parameters: Keywords.
 Style/CommentAnnotation:

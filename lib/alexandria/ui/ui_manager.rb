@@ -852,7 +852,7 @@ module Alexandria
           icon = icon.tag(Icons::FAVORITE_TAG)
         end
         iter[Columns::COVER_ICON] = icon
-        log.debug { "Full iter: " + (0..15).collect { |num| iter[num].inspect }.join(", ") }
+        log.debug { "Full iter: " + (0..15).map { |num| iter[num].inspect }.join(", ") }
       end
 
       def append_book(book, _tail = nil)
@@ -1144,7 +1144,7 @@ module Alexandria
         @listview.columns.each do |c|
           cols_width[c.title] = [c.widget.size_request.first, c.width].max
         end
-        @prefs.cols_width = '{' + cols_width.to_a.collect do |t, v|
+        @prefs.cols_width = '{' + cols_width.to_a.map do |t, v|
           '"' + t + '": ' + v.to_s
         end.join(', ') + '}'
         log.debug { "cols_width: #{@prefs.cols_width} " }

@@ -27,7 +27,7 @@ require 'singleton'
 
 class Array
   def sum
-    inject(0) { |a, b| a + b }
+    reduce(0) { |a, b| a + b }
   end
 end
 
@@ -292,7 +292,7 @@ module Alexandria
     end
 
     def self.isbn_checksum(numbers)
-      sum = (0 ... numbers.length).inject(0) do |accumulator, i|
+      sum = (0 ... numbers.length).reduce(0) do |accumulator, i|
         accumulator + numbers[i] * (i + 1)
       end % 11
 

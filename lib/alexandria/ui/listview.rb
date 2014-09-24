@@ -286,7 +286,7 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end
-        log.debug { "Columns visibility: " + cols.collect { |col| "#{col.title} #{col.visible?.to_s}" }.join(", ") }
+        log.debug { "Columns visibility: " + cols.map { |col| "#{col.title} #{col.visible?.to_s}" }.join(", ") }
       end
 
       # Sets the width of each column based on any respective
@@ -304,7 +304,7 @@ module Alexandria
             end
           end
         end
-        log.debug { "Columns width: " + @listview.columns.collect { |col| "#{col.title} #{col.width.to_s}" }.join(", ") }
+        log.debug { "Columns width: " + @listview.columns.map { |col| "#{col.title} #{col.width.to_s}" }.join(", ") }
       end
     end
   end
