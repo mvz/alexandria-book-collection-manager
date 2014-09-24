@@ -32,11 +32,6 @@ Lint/LiteralInCondition:
 Lint/RescueException:
   Enabled: false
 
-# Offense count: 3
-# Cop supports --auto-correct.
-Lint/StringConversionInInterpolation:
-  Enabled: false
-
 # Offense count: 5
 Lint/UselessAccessModifier:
   Enabled: false
