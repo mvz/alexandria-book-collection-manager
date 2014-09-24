@@ -4,7 +4,7 @@ alexandria.desktop
 alexandria.desktop.in.h
 .svn-authors
 lib/alexandria/default_preferences.rb
-lib/alexandria/version.rb
 Gemfile.lock
 share/locale/
 share/omf/alexandria/*.omf
+pkg/
