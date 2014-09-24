@@ -40,7 +40,7 @@ module Gtk
   GTK_PENDING_BLOCKS = []
   GTK_PENDING_BLOCKS_LOCK = Monitor.new
 
-  def Gtk.queue(&block)
+  def self.queue(&block)
     if Thread.current == Thread.main
       block.call
     else
@@ -64,7 +64,7 @@ module Gtk
   #         end
   #     end
 
-  def Gtk.main_with_queue(timeout = 100) # millis
+  def self.main_with_queue(timeout = 100) # millis
     Gtk.timeout_add(timeout) do
       GTK_PENDING_BLOCKS_LOCK.synchronize do
         for block in GTK_PENDING_BLOCKS
