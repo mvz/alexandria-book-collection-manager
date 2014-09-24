@@ -97,7 +97,7 @@ module Alexandria
         end
         if (publisher = @entry_publisher.text.strip).empty?
           raise AddError.new(_("A publisher must be provided."))
-       end
+        end
         publishing_year = @entry_publish_date.text.to_i
         # TODO Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?

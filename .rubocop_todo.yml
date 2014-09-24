@@ -9,11 +9,6 @@
 Lint/BlockAlignment:
   Enabled: false
 
-# Offense count: 2
-# Configuration parameters: AlignWith, SupportedStyles.
-Lint/EndAlignment:
-  Enabled: false
-
 # Offense count: 7
 Lint/HandleExceptions:
   Enabled: false

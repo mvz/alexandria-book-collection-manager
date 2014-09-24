@@ -224,7 +224,7 @@ module Alexandria
       end
       raise "Not Recognized" unless is_librarything || is_goodreads
     end
-end
+  end
 
   #   def read_csv_file(csv_file)
 
