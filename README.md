@@ -1,8 +1,4 @@
-= Alexandria
-
-Version:      0.6.8
-Release Date: 2011-11-15
-Home Page:    http://alexandria.rubyforge.org/
+# Alexandria
 
 Alexandria is a GNOME application for managing collections of books.
 
@@ -10,8 +6,34 @@ Alexandria is written in Ruby, and is free software, distributed under
 the terms of the GNU General Public License, version 2 or later. See
 the file COPYING for more information.
 
+What is Alexandria?
+===================
 
-== Features
+Alexandria is an application for managing a personal book library.
+Its main recommending feature is its clean, intuitive interface.
+Alexandria is able to retrieve book information and cover images from
+a wide variety of online data sources. It also features extensive
+import and export options, a loan interface, and smart libraries.
+Alexandria is written in Ruby using ruby-gnome2.
+
+Where can I get it?
+===================
+
+An experimental gem release can be installed by running
+
+    gem install alexandria-book-collection-manager
+
+Alternatively, download the source from the github repository at
+http://www.github.com/mvz/alexandria-book-collection-manager and follow the
+installation instructions.
+
+Where can I find out more?
+==========================
+
+For source code and bug reporting, see the repository on github at
+http://www.github.com/mvz/alexandria-book-collection-manager.
+
+## Features
 
 Alexandria is a simple program designed to allow individuals to keep a
 catalogue of their book collection. In addition, it enables users to
@@ -49,15 +71,9 @@ keep track of books which are on loan.
 
 Alexandria is not without problems. See doc/BUGS for a summary of issues.
 
+## Installation
 
-== 0.6.8 Release
-
-For full release notes, see the file NEWS.
-
-
-== Installation
-
-There are full instructions for installing Alexandria from source in the 
+There are full instructions for installing Alexandria from source in the
 file INSTALL, including information about all the dependencies.
 
 If you are installing on a Debian-based system, things should be

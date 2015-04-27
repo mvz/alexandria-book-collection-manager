@@ -18,7 +18,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  VERSION = '0.6.8'
+  VERSION = '0.6.9.pre1'
   DATA_VERSION = '0.6.3'
-  DISPLAY_VERSION = '0.6.8'
+  DISPLAY_VERSION = '0.6.9.pre1'
 end
