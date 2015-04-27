@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+* Update/fix authorship information and other metadata
+* Fix crash opening preferences dialog
+* Fix crash opening book dialog
+
 ## 0.6.9.pre1
 
 * Start providing a gemspec to allow installation as a gem
