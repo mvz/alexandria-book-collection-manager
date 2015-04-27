@@ -58,7 +58,7 @@ module Alexandria
                end
 
         ## warning: this provider uses pages like http://www.bol.it/libri/scheda/ea978888584104 with 12 numbers, without the checksum
-        criterion = 'ea' + Library.canonicalise_ean(criterion)[0 .. -2] + '.html' if type == SEARCH_BY_ISBN
+        criterion = 'ea' + Library.canonicalise_ean(criterion)[0..-2] + '.html' if type == SEARCH_BY_ISBN
         req += CGI.escape(criterion)
         p req if $DEBUG
         data = transport.get(URI.parse(req))
@@ -78,7 +78,7 @@ module Alexandria
       end
 
       def url(book)
-        BASE_URI + "/#{LOCALE}/scheda/ea" + Library.canonicalise_ean(book.isbn)[0 .. -2] + '.html'
+        BASE_URI + "/#{LOCALE}/scheda/ea" + Library.canonicalise_ean(book.isbn)[0..-2] + '.html'
       end
 
       #######
@@ -126,7 +126,7 @@ module Alexandria
           publish_year = nil if publish_year == 0
         end
 
-        cover_url = BASE_URI + '/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=' + isbn[0 .. 11] + '&tipoOggetto=PIB&cdSito=BL' # use "FRB" instead of "PIB" for smaller images
+        cover_url = BASE_URI + '/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=' + isbn[0..11] + '&tipoOggetto=PIB&cdSito=BL' # use "FRB" instead of "PIB" for smaller images
         cover_filename = isbn + '.tmp'
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, 'w') do |file|

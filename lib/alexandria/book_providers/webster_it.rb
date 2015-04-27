@@ -119,7 +119,7 @@ module Alexandria
 
         publish_year = nil
         if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))
-          publish_year = CGI.unescape(md[1].strip)[-4 .. -1].to_i
+          publish_year = CGI.unescape(md[1].strip)[-4..-1].to_i
           publish_year = nil if publish_year == 0
         end
 

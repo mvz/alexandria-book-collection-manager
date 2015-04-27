@@ -512,7 +512,7 @@ module Alexandria
             @actiongroup['Move'].sensitive =
             @actiongroup['SetRating'].sensitive = !books.empty?
 
-          log.debug { "on_books_selection_changed Delete: #{@actiongroup["Delete"].sensitive?}" }
+          log.debug { "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}" }
 
           if library.is_a?(SmartLibrary)
             @actiongroup['Delete'].sensitive =
@@ -1080,7 +1080,7 @@ module Alexandria
           @actiongroup['Properties'].sensitive = smart
           can_delete = smart || (@libraries.all_regular_libraries.length > 1)
           @actiongroup['Delete'].sensitive = can_delete ## true #(@libraries.all_regular_libraries.length > 1)
-          log.debug { "sensitize_library delete: #{@actiongroup["Delete"].sensitive?}" }
+          log.debug { "sensitize_library delete: #{@actiongroup['Delete'].sensitive?}" }
           false
         end
       end

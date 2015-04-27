@@ -208,21 +208,5 @@ Style/SpaceAroundOperators:
   Enabled: false
 
 # Offense count: 3
-# Cop supports --auto-correct.
-Style/SpaceInsideParens:
-  Enabled: false
-
-# Offense count: 17
-# Cop supports --auto-correct.
-Style/SpaceInsideRangeLiteral:
-  Enabled: false
-
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/StringLiteralsInInterpolation:
-  Enabled: false
-
-# Offense count: 3
 Style/StructInheritance:
   Enabled: false

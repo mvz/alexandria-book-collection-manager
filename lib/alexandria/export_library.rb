@@ -237,7 +237,7 @@ module Alexandria
       File.open(filename, 'w') do |io|
         io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
         each do |book|
-          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or '') + ';' + (book.edition or '') + ';' + (book.isbn or '') + ';' + (book.publishing_year.to_s or '') + ';' + (book.rating.to_s or '0') + ';' + (book.notes or '') + ';' + ( book.want ? '1' : '0') + ';' + ( book.redd ? '1' : '0') + ';' + ( book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
+          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or '') + ';' + (book.edition or '') + ';' + (book.isbn or '') + ';' + (book.publishing_year.to_s or '') + ';' + (book.rating.to_s or '0') + ';' + (book.notes or '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
         end
       end
     end
@@ -415,7 +415,7 @@ EOS
         if File.exist?(cover(book))
           xhtml << <<EOS
   <img class="book_cover"
-       src="#{File.join("pixmaps", final_cover(book))}"
+       src="#{File.join('pixmaps', final_cover(book))}"
        alt="Cover file for '#{xhtml_escape(book.title)}'"
 EOS
           if $IMAGE_SIZE_LOADED

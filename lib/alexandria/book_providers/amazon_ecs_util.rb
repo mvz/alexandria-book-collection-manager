@@ -237,7 +237,7 @@ module Amazon
       key_bytes = key.bytes.map { |b| b }
       ipad_xor = ''
       opad_xor = ''
-      for i in 0 .. key.size - 1
+      for i in 0..key.size - 1
         ipad_xor << (ipad_bytes[i] ^ key_bytes[i])
         opad_xor << (opad_bytes[i] ^ key_bytes[i])
       end

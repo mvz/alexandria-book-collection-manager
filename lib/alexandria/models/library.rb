@@ -292,7 +292,7 @@ module Alexandria
     end
 
     def self.isbn_checksum(numbers)
-      sum = (0 ... numbers.length).reduce(0) do |accumulator, i|
+      sum = (0...numbers.length).reduce(0) do |accumulator, i|
         accumulator + numbers[i] * (i + 1)
       end % 11
 
@@ -314,9 +314,9 @@ module Alexandria
     def self.valid_ean?(ean)
       numbers = extract_numbers(ean)
       (numbers.length == 13 and
-       ean_checksum(numbers[0 .. 11]) == numbers[12]) or
+       ean_checksum(numbers[0..11]) == numbers[12]) or
         (numbers.length == 18 and
-         ean_checksum(numbers[0 .. 11]) == numbers[12])
+         ean_checksum(numbers[0..11]) == numbers[12])
     rescue InvalidISBNError
       false
     end
@@ -329,7 +329,7 @@ module Alexandria
     def self.valid_upc?(upc)
       numbers = extract_numbers(upc)
       (numbers.length == 17 and
-       upc_checksum(numbers[0 .. 10]) == numbers[11])
+       upc_checksum(numbers[0..10]) == numbers[11])
     rescue InvalidISBNError
       false
     end
@@ -373,22 +373,22 @@ module Alexandria
 
     def self.canonicalise_isbn(isbn)
       numbers = extract_numbers(isbn)
-      if self.valid_ean?(isbn)  and numbers[0 .. 2] != [9, 7, 8]
+      if self.valid_ean?(isbn)  and numbers[0..2] != [9, 7, 8]
         return isbn
       end
       canonical = if self.valid_ean?(isbn)
                     # Looks like an EAN number -- extract the intersting part and
                     # calculate a checksum. It would be nice if we could validate
                     # the EAN number somehow.
-                    numbers[3 .. 11] + [isbn_checksum(numbers[3 .. 11])]
+                    numbers[3..11] + [isbn_checksum(numbers[3..11])]
                   elsif self.valid_upc?(isbn)
                     # Seems to be a valid UPC number.
-                    prefix = upc_convert(numbers[0 .. 5])
-                    isbn_sans_chcksm = prefix + numbers[(8 + prefix.length) .. 17]
+                    prefix = upc_convert(numbers[0..5])
+                    isbn_sans_chcksm = prefix + numbers[(8 + prefix.length)..17]
                     isbn_sans_chcksm + [isbn_checksum(isbn_sans_chcksm)]
                   elsif self.valid_isbn?(isbn)
                     # Seems to be a valid ISBN number.
-                    numbers[0 .. -2] + [isbn_checksum(numbers[0 .. -2])]
+                    numbers[0..-2] + [isbn_checksum(numbers[0..-2])]
                   else
                     raise InvalidISBNError.new(isbn)
                   end
