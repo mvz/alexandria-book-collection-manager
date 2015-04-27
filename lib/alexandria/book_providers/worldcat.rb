@@ -121,8 +121,10 @@ module Alexandria
           end
         rescue => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {'Failed parsing search results for WorldCat ' \
-                    "#{ex.message} #{trace}" }
+          log.warn {
+            'Failed parsing search results for WorldCat ' \
+                    "#{ex.message} #{trace}"
+          }
         end
         book_search_results
       end
@@ -241,8 +243,10 @@ module Alexandria
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {'Failed parsing search results for WorldCat ' \
-                    "#{ex.message} #{trace}" }
+          log.warn {
+            'Failed parsing search results for WorldCat ' \
+                    "#{ex.message} #{trace}"
+          }
           raise NoResultsError
         end
       end

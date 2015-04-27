@@ -225,8 +225,10 @@ module Alexandria
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {'Failed parsing search results for AdLibris ' \
-            "#{ex.message} #{trace}" }
+          log.warn {
+            'Failed parsing search results for AdLibris ' \
+            "#{ex.message} #{trace}"
+          }
           raise NoResultsError
         end
       end

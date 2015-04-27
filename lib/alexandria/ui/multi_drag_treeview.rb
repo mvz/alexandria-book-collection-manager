@@ -62,8 +62,8 @@ class Gtk::TreeView
 
     @context.button_press_handler =
       signal_connect('button_press_event') do |_widget, event, _data|
-      button_press_event(event)
-    end
+        button_press_event(event)
+      end
   end
 
   def drag_context

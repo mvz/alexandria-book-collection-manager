@@ -83,7 +83,8 @@ module Alexandria
         isbn = nil
         if @entry_isbn.text != ''
           ary = @library.select { |book|
-            book.ident == @entry_isbn.text }
+            book.ident == @entry_isbn.text
+          }
           raise AddError.new(_('The EAN/ISBN you provided is ' \
                                'already used in this library.')) unless ary.empty?
           isbn = begin
