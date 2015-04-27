@@ -1,7 +1,7 @@
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
-# Modifications Copyright (C) 2011, 2014 Matijs van Zuijlen
+# Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as

@@ -1,4 +1,4 @@
-# Modifications Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011 Matijs van Zuijlen
 module Alexandria
   module UI
     class SidePaneManager
