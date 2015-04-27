@@ -14,7 +14,9 @@ Gem::Specification.new do |s|
 
   s.license = 'GPL-2'
 
-  s.files = `git ls-files -z`.split("\0")
+  s.files = `git ls-files -z`.split("\0") |
+    ['lib/alexandria/default_preferences.rb']
+
   s.executables = s.files.grep(%r{^bin/}).map { |path| File.basename(path) }
 
   s.rdoc_options = ['--main', 'README.md']
