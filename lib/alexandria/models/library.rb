@@ -197,7 +197,10 @@ module Alexandria
         new_yaml.sub!(/^\s*\-+\s*/, '')
         text.sub!(md[0], "loaned_since: #{new_yaml}\n")
       end
+
+      # TODO: Ensure book loading passes through Book#initialize
       book = YAML.load(text)
+
       unless book.isbn.class == String
         # HACK
         md = /isbn: (.+)/.match(text)

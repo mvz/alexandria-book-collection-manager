@@ -196,7 +196,8 @@ module Alexandria
             publishers << book.publisher
             editions << book.edition
             borrowers << book.loaned_to
-            book.tags.each { |tag| tags << tag }
+            # TODO: Ensure #tags is always an array
+            (book.tags || []).each { |tag| tags << tag }
           end
         end
 
