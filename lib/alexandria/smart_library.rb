@@ -125,8 +125,7 @@ module Alexandria
     def self.from_hash(hash)
       SmartLibrary.new(hash[:name],
                        hash[:rules].map { |x| Rule.from_hash(x) },
-                       hash[:predicate_operator_rule] == :all \
-                       ? ALL_RULES : ANY_RULE)
+                       hash[:predicate_operator_rule] == :all ? ALL_RULES : ANY_RULE)
     end
 
     def to_hash

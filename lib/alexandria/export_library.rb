@@ -367,8 +367,7 @@ module Alexandria
             image.add_attribute('format', image_s.get_type)
           else
             image.add_attribute('format',
-                                Library.jpeg?(cover(book)) \
-                                ? 'JPEG' : 'GIF')
+                                Library.jpeg?(cover(book)) ? 'JPEG' : 'GIF')
           end
         end
       end

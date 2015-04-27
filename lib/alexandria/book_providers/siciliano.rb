@@ -64,7 +64,7 @@ module Alexandria
         trying_again = false
         begin
           req = create_search_uri(type, criterion, trying_again)
-          log.debug { "#{name} #{trying_again ? 'retrying ' :  ''}request = #{req}" }
+          log.debug { "#{name} #{trying_again ? 'retrying ' : ''}request = #{req}" }
           data = transport.get(URI.parse(req))
           results = parse_search_result_data(data)
           raise NoResultsError if results.empty?

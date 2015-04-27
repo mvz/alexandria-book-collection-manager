@@ -127,7 +127,7 @@ module Alexandria
       end
     end
 
-    class NewProviderDialog <  ProviderPreferencesBaseDialog
+    class NewProviderDialog < ProviderPreferencesBaseDialog
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 

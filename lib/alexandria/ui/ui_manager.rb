@@ -333,8 +333,7 @@ module Alexandria
           library_already_selected = true
           if (path = widget.get_path_at_pos(event.x, event.y))
             @clicking_on_sidepane = true
-            obj, path = widget.is_a?(Gtk::TreeView) \
-              ? [widget.selection, path.first] : [widget, path]
+            obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
             widget.has_focus = true
 
             unless obj.path_is_selected?(path)
@@ -397,8 +396,7 @@ module Alexandria
           # not a right click
           if (path = widget.get_path_at_pos(event.x, event.y))
             @clicking_on_sidepane = true
-            obj, path = widget.is_a?(Gtk::TreeView) \
-              ? [widget.selection, path.first] : [widget, path]
+            obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
             obj.select_path(path)
             sensitize_library selected_library
 
@@ -409,10 +407,7 @@ module Alexandria
 
       def determine_library_popup(widget, event)
         # widget.grab_focus
-        widget.get_path_at_pos(event.x, event.y).nil? \
-          ? @nolibrary_popup \
-          : selected_library.is_a?(SmartLibrary) \
-          ? @smart_library_popup : @library_popup
+        widget.get_path_at_pos(event.x, event.y).nil? ? @nolibrary_popup : selected_library.is_a?(SmartLibrary) ? @smart_library_popup : @library_popup
       end
 
       def event_is_right_click(event)
@@ -893,8 +888,7 @@ module Alexandria
                  end
         end
 
-        iter[0] = is_smart \
-          ? Icons::SMART_LIBRARY_SMALL : Icons::LIBRARY_SMALL
+        iter[0] = is_smart ? Icons::SMART_LIBRARY_SMALL : Icons::LIBRARY_SMALL
         iter[1] = library.name
         iter[2] = true      # editable?
         iter[3] = false     # separator?

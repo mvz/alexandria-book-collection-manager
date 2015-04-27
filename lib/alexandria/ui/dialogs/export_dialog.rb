@@ -28,8 +28,7 @@ module Alexandria
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                [_('_Replace'), Gtk::Dialog::RESPONSE_OK]],
               _("A file named '%s' already exists.  Do you want " \
-                'to replace it with the one you are generating?') \
-              % filename)
+                'to replace it with the one you are generating?') % filename)
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
         show_all and @response = run
         destroy

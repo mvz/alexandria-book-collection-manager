@@ -18,9 +18,7 @@
 
 class Gdk::Event
   def ==(obj)
-    obj.is_a?(self.class) and time == obj.time \
-    and x == obj.x and y == obj.y \
-    and button == obj.button
+    obj.is_a?(self.class) and time == obj.time and x == obj.x and y == obj.y and button == obj.button
   end
 end
 

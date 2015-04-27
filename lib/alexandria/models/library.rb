@@ -373,7 +373,7 @@ module Alexandria
 
     def self.canonicalise_isbn(isbn)
       numbers = extract_numbers(isbn)
-      if self.valid_ean?(isbn)  and numbers[0..2] != [9, 7, 8]
+      if self.valid_ean?(isbn) and numbers[0..2] != [9, 7, 8]
         return isbn
       end
       canonical = if self.valid_ean?(isbn)

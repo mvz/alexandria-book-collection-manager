@@ -34,8 +34,7 @@ require 'alexandria/about'
 
 module Alexandria
   def self.set_proxy
-    ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
-      and URI.parse(ENV['http_proxy']).userinfo.nil?
+    ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? and URI.parse(ENV['http_proxy']).userinfo.nil?
   end
 
   def self.set_log_level

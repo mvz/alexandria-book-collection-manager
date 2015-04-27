@@ -47,10 +47,8 @@ module Alexandria
       def initialize(parent, library, books = nil)
         # Deleting a library.
         if books.nil?
-          message = _("Are you sure you want to delete '%s'?") \
-          % library.name
-          description = if library.is_a?(SmartLibrary) \
-                          or library.empty?
+          message = _("Are you sure you want to delete '%s'?") % library.name
+          description = if library.is_a?(SmartLibrary) or library.empty?
                           nil
                         else
                           n_('If you continue, %d book will be deleted.',

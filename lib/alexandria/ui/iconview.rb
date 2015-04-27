@@ -83,9 +83,7 @@ module Alexandria
       def setup_books_iconview_sorting
         mode = ICONS_SORTS[@prefs.arrange_icons_mode]
         @iconview_model.set_sort_column_id(mode,
-                                           @prefs.reverse_icons \
-                                           ? Gtk::SORT_DESCENDING \
-                                           : Gtk::SORT_ASCENDING)
+                                           @prefs.reverse_icons ? Gtk::SORT_DESCENDING : Gtk::SORT_ASCENDING)
         @filtered_model.refilter    # force redraw
       end
     end
