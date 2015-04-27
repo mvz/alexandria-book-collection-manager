@@ -1,4 +1,5 @@
 # Copyright (C) 2005-2006 Christopher Cyll
+# Copyright (C) 2014, 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -35,7 +36,7 @@ module Alexandria
       REGISTRY.find { |scanner| scanner.name == name }
     end
 
-    def each_scanner
+    def self.each_scanner
       REGISTRY.each { |scanner| yield scanner }
     end
   end
