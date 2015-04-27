@@ -8,7 +8,29 @@ Gem::Specification.new do |s|
   s.summary = 'GNOME application for managing collections of books'
   s.required_ruby_version = '>= 1.9.3'
 
-  s.authors = ['Matijs van Zuijlen']
+  s.authors = [
+    'Alexander McCormmach',
+    'Aymeric Nys',
+    'Cathal Mc Ginley',
+    'Claudio Belotti',
+    'Constantine Evans',
+    'Dafydd Harries',
+    'Javier Fernandez-Sanguino Pena',
+    'Joseph Method',
+    'Kevin Schultz',
+    'Laurent Sansonetti',
+    'Marco Costantini',
+    'Mathieu Leduc-Hamel',
+    'Matijs van Zuijlen',
+    'Owain Evans',
+    'Pascal Terjan',
+    'Rene Samselnig',
+    'Robby Stephenson',
+    'Sun Ning',
+    'Takayuki Kusano',
+    'Timothy Malone',
+    'Zachary P. Landau'
+  ]
   s.email = ['matijs@matijs.net']
   s.homepage = 'http://www.github.com/mvz/alexandria-book-collection-manager'
 

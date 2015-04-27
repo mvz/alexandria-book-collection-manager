@@ -1,6 +1,7 @@
 # encoding: utf-8
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
+# Copyright (C) 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -23,8 +24,8 @@ module Alexandria
   extend GetText
   bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
   DESCRIPTION = _('A program to help you manage your book collection.')
-  COPYRIGHT = "Copyright (C) 2004,2005,2006 Laurent Sansonetti\n" \
-    'Copyright (C) 2007,2008,2009,2010 Alexandria Contributors'
+  COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" \
+    'Copyright (C) 2007-2010,2014,2015 Alexandria Contributors'
   AUTHORS = [
     'Alexander McCormmach <alexander@tunicate.org>',
     'Aymeric Nys <aymeric@nnx.com>',
@@ -38,6 +39,7 @@ module Alexandria
     'Laurent Sansonetti <lrz@gnome.org>',
     'Marco Costantini <costanti@science.unitn.it>',
     'Mathieu Leduc-Hamel <arrak@arrak.org>',
+    'Matijs van Zuijlen <matijs@matijs.net>',
     'Owain Evans <o.evans@gmail.com>',
     'Pascal Terjan <pterjan@linuxfr.org>',
     'Rene Samselnig <sandman@sdm-net.org>',
@@ -75,8 +77,6 @@ module Alexandria
     'Andreas Nilsson <nisses.mail@home.se>',
     'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
   ]
-  LIST = 'alexandria-list@rubyforge.org'
-  BUGREPORT_URL = 'http://rubyforge.org/tracker/?func=add&group_id=205&atid=863'
-  WEBSITE_URL = 'http://alexandria.rubyforge.org'
-  DONATE_URL = ''
+  BUGREPORT_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager/issues'
+  WEBSITE_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager'
 end
