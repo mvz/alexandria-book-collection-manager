@@ -28,16 +28,16 @@ module Alexandria
     class MCUProvider < GenericProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       LANGUAGES = {
         'es' => '1'
       }
 
       #        BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
-      BASE_URI = "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?"
+      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'
       def initialize
-        super("MCU", _("Spanish Culture Ministry"))
+        super('MCU', _('Spanish Culture Ministry'))
         # No preferences
         prefs.read
       end
@@ -45,13 +45,13 @@ module Alexandria
       def search(criterion, type)
         prefs.read
         begin
-          criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+          criterion = criterion.convert('ISO-8859-1', 'UTF-8') # still needed??
         rescue GLib::ConvertError
           log.info { "Cannot search for non-ISO-8859-1 terms at MCU : #{criterion}" }
           raise NoResultsError
         end
         print "Doing search with MCU #{criterion}, type: #{type}\n" if $DEBUG # for DEBUGing
-        req = BASE_URI + "CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&"
+        req = BASE_URI + 'CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&'
         req += case type
                when SEARCH_BY_ISBN
                  "WGEN-C=&WISB-C=#{CGI.escape(criterion)}&WAUT-C=&WTIT-C=&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
@@ -111,7 +111,7 @@ module Alexandria
           # - CDU      - Last update
 
           # There seems to be an issue with accented chars..
-          line = line.convert("UTF-8", "ISO-8859-1")
+          line = line.convert('UTF-8', 'ISO-8859-1')
           print "Reading line (robotstate #{robotstate}): #{line}" if $DEBUG # for DEBUGing
           if line =~ /^<\/td>$/ or line =~ /^<\/tr>$/
             robotstate = 0

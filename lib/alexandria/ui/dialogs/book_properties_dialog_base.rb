@@ -23,7 +23,7 @@ module Alexandria
     class BookPropertiesDialogBase < BuilderBase
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       COVER_MAXWIDTH = 140    # pixels
 
@@ -56,7 +56,7 @@ module Alexandria
         renderer.signal_connect('editing_started') do |_cell, entry, _path_string|
           entry.complete_authors
         end
-        col = Gtk::TreeViewColumn.new("", renderer,
+        col = Gtk::TreeViewColumn.new('', renderer,
                                       text: 0,
                                       editable: 1)
         @treeview_authors.append_column(col)
@@ -85,7 +85,7 @@ module Alexandria
         # @calendar_popup.border_width = 4
         # @calendar_popup.app_paintable = true
 
-        @calendar_popup.signal_connect("focus-out-event") do |_popup, _event|
+        @calendar_popup.signal_connect('focus-out-event') do |_popup, _event|
           hide_calendar_popup
           false
         end
@@ -93,7 +93,7 @@ module Alexandria
         @calendar = Gtk::Calendar.new
         @calendar_popup.add(@calendar)
 
-        @calendar.signal_connect("day-selected") do
+        @calendar.signal_connect('day-selected') do
           date_arr = @calendar.date
           year = date_arr[0]
           month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
@@ -105,7 +105,7 @@ module Alexandria
 
         end
 
-        @calendar.signal_connect("day-selected-double-click") do
+        @calendar.signal_connect('day-selected-double-click') do
           date_arr = @calendar.date
           year = date_arr[0]
           month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
@@ -130,7 +130,7 @@ module Alexandria
             display_calendar_popup(entry)
           elsif primary.nick == 'secondary'
             clear_date_entry(entry)
-            @label_loaning_duration.label = ""
+            @label_loaning_duration.label = ''
           end
         end
       end
@@ -217,7 +217,7 @@ module Alexandria
       def on_title_changed
         title = @entry_title.text.strip
         @book_properties_dialog.title = if title.empty?
-                                          _("Properties")
+                                          _('Properties')
                                         else
                                           _("Properties for '%s'") % title
                                         end
@@ -225,7 +225,7 @@ module Alexandria
 
       def on_add_author
         iter = @treeview_authors.model.append
-        iter[0] = _("Author")
+        iter[0] = _('Author')
         iter[1] = true
         @treeview_authors.set_cursor(iter.path,
                                      @treeview_authors.get_column(0),
@@ -274,12 +274,12 @@ module Alexandria
 
       @@latest_filechooser_directory = ENV['HOME']
       def on_change_cover
-        backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
-        dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
+        backend = `uname`.chomp == 'FreeBSD' ? 'neant' : 'gnome-vfs'
+        dialog = Gtk::FileChooserDialog.new(_('Select a cover image'),
                                             @book_properties_dialog,
                                             Gtk::FileChooser::ACTION_OPEN,
                                             backend,
-                                            [_("No Cover"), Gtk::Dialog::RESPONSE_REJECT],
+                                            [_('No Cover'), Gtk::Dialog::RESPONSE_REJECT],
                                             [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
                                             [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT])
         dialog.current_folder = @@latest_filechooser_directory
@@ -302,7 +302,7 @@ module Alexandria
               new_width = cover.width / (cover.height / COVER_ABSOLUTE_MAXHEIGHT.to_f)
               puts "Scaling large cover image to #{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
               cover = cover.scale(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT)
-              cover.save(@cover_file, "jpeg")
+              cover.save(@cover_file, 'jpeg')
             else
               FileUtils.cp(dialog.filename, @cover_file)
             end
@@ -343,19 +343,19 @@ module Alexandria
         end
         t = parse_date(@date_loaned_since.text)
         if t.nil?
-          @label_loaning_duration.label = ""
+          @label_loaning_duration.label = ''
           return
         end
         loaned_time = Time.at(t)
         n_days = ((Time.now - loaned_time) / (3600 * 24)).to_i
         if n_days > 365_250 # 1,000 years
-          @label_loaning_duration.label = ""
+          @label_loaning_duration.label = ''
           return
         end
         @label_loaning_duration.label = if n_days > 0
-                                          n_("%d day", "%d days", n_days) % n_days
+                                          n_('%d day', '%d days', n_days) % n_days
                                         else
-                                          ""
+                                          ''
                                         end
       end
 
@@ -382,7 +382,7 @@ module Alexandria
           @image_rating4,
           @image_rating5
         ]
-        raise "out of range" if rating < 0 or rating > images.length
+        raise 'out of range' if rating < 0 or rating > images.length
         images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
         images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }
         @current_rating = rating
@@ -400,8 +400,8 @@ module Alexandria
 
       def loaned_since=(time)
         if time.nil?
-          @date_loaned_since.text = ""
-          @label_loaning_duration.label = ""
+          @date_loaned_since.text = ''
+          @label_loaning_duration.label = ''
         else
           @date_loaned_since.text = format_date(time)
           on_loaned_date_changed

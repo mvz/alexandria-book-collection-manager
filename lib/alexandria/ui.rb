@@ -29,19 +29,19 @@ module Alexandria
   module UI
     include Logging
     def self.init_icons
-      log.info { "Initializing Icons..." }
+      log.info { 'Initializing Icons...' }
       Icons.init
     end
     def self.start_main_app
-      puts "==========================" if $DEBUG
-      log.info { "Starting MainApp..." }
-      puts "==========================" if $DEBUG
+      puts '==========================' if $DEBUG
+      log.info { 'Starting MainApp...' }
+      puts '==========================' if $DEBUG
       MainApp.instance
     end
     def self.start_gtk
-      puts "====================================" if $DEBUG
-      log.info { "Starting Gtk..." }
-      puts "====================================" if $DEBUG
+      puts '====================================' if $DEBUG
+      log.info { 'Starting Gtk...' }
+      puts '====================================' if $DEBUG
       Gtk.main_with_queue
     end
     def self.main

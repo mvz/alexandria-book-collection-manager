@@ -18,14 +18,14 @@
 
 module Alexandria
   module UI
-    BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", Gtk::Drag::TARGET_SAME_APP, 0]]
+    BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', Gtk::Drag::TARGET_SAME_APP, 0]]
 
     module DragAndDropable
       BADGE_MARKUP = "<span weight=\"heavy\" foreground=\"white\">%d</span>"
 
       def setup_view_source_dnd(view)
         # better be Loggable!
-        log.info { "setup_view_source_dnd for %s" % view }
+        log.info { 'setup_view_source_dnd for %s' % view }
         view.signal_connect_after('drag-begin') do |_widget, drag_context|
           n_books = @parent.selected_books.length
           if n_books > 1

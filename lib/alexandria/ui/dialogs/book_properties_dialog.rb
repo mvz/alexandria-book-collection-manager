@@ -21,11 +21,11 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, library, book)
         super(parent, library.cover(book))
-        puts "Initializing Book Properties Dialog..." if $DEBUG
+        puts 'Initializing Book Properties Dialog...' if $DEBUG
 
         cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
         cancel_button.signal_connect('clicked') { on_cancel }
@@ -44,7 +44,7 @@ module Alexandria
         @button_box.set_child_secondary(help_button, true)
 
         @entry_title.text = @book_properties_dialog.title = book.title
-        @entry_isbn.text = (book.isbn or "")
+        @entry_isbn.text = (book.isbn or '')
         @entry_publisher.text = book.publisher
         @entry_publish_date.text = book.publishing_year.to_s
         @entry_publish_date.signal_connect('focus-out-event') do
@@ -54,18 +54,18 @@ module Alexandria
           else
             year = text.to_i
             if year == 0 or year > (Time.now.year + 10) or year < 10
-              @entry_publish_date.text = ""
+              @entry_publish_date.text = ''
               @entry_publish_date.grab_focus
               true
             elsif year < 100
-              @entry_publish_date.text = "19" + year.to_s
+              @entry_publish_date.text = '19' + year.to_s
               false
             end
           end
         end
         @entry_edition.text = book.edition
         if book.tags
-          @entry_tags.text = book.tags.join(",") # tags are comma-separated
+          @entry_tags.text = book.tags.join(',') # tags are comma-separated
         end
 
         book.authors.each do |author|
@@ -75,7 +75,7 @@ module Alexandria
         end
 
         buffer = Gtk::TextBuffer.new
-        buffer.text = (book.notes or "")
+        buffer.text = (book.notes or '')
         @textview_notes.buffer = buffer
 
         @library, @book = library, book
@@ -83,7 +83,7 @@ module Alexandria
         self.rating = (book.rating or Book::DEFAULT_RATING)
 
         if (@checkbutton_loaned.active = book.loaned?)
-          @entry_loaned_to.text = (book.loaned_to or "")
+          @entry_loaned_to.text = (book.loaned_to or '')
           self.loaned_since = book.loaned_since
           @date_loaned_since.sensitive = true
         else
@@ -94,7 +94,7 @@ module Alexandria
         if (@checkbutton_redd.active = book.redd?)
           @redd_date.sensitive = true
           if book.redd_when.nil?
-            puts "no redd_when"
+            puts 'no redd_when'
           else
             @redd_date.text = format_date(book.redd_when)
           end
@@ -114,16 +114,16 @@ module Alexandria
       #######
 
       def on_close
-        if @entry_isbn.text == ""
+        if @entry_isbn.text == ''
           # If set to nil .to_yaml in library.save causes crash
-          @book.isbn = ""
+          @book.isbn = ''
         else
           ary = @library.select { |book| book.ident == @entry_isbn.text }
           unless ary.empty? or (ary.length == 1 and ary.first == @book)
             ErrorDialog.new(@parent,
                             _("Couldn't modify the book"),
-                            _("The EAN/ISBN you provided is already " \
-                              "used in this library."))
+                            _('The EAN/ISBN you provided is already ' \
+                              'used in this library.'))
             return
           end
           @book.isbn = begin
@@ -132,8 +132,8 @@ module Alexandria
                          ErrorDialog.new(@parent,
                                          _("Couldn't modify the book"),
                                          _("Couldn't validate the EAN/ISBN you " \
-                                           "provided.  Make sure it is written " \
-                                           "correcty, and try again."))
+                                           'provided.  Make sure it is written ' \
+                                           'correcty, and try again.'))
                          return
                        end
         end

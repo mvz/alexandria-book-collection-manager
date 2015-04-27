@@ -42,7 +42,7 @@ module Alexandria
 
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
     BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
     include Observable
@@ -55,7 +55,7 @@ module Alexandria
       @updating
     end
     def self.generate_new_name(existing_libraries,
-                               from_base = _("Untitled"))
+                               from_base = _('Untitled'))
       i = 1
       name = nil
       all_libraries = existing_libraries + @@deleted_libraries
@@ -76,7 +76,7 @@ module Alexandria
       library = Library.new(name)
       FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
-        Dir["*" + EXT[:book]].each do |filename|
+        Dir['*' + EXT[:book]].each do |filename|
 
           test[1] = filename if test[0] == 0
 
@@ -146,7 +146,7 @@ module Alexandria
         # '_medium.jpg' have been deprecated for a single medium
         # cover file named '.cover'.
 
-        Dir["*" + '_medium.jpg'].each do |medium_cover|
+        Dir['*' + '_medium.jpg'].each do |medium_cover|
           begin
             FileUtils.mv(medium_cover,
                          medium_cover.sub(/_medium\.jpg$/,
@@ -155,7 +155,7 @@ module Alexandria
           end
         end
 
-        Dir["*" + EXT[:cover]].each do |cover|
+        Dir['*' + EXT[:cover]].each do |cover|
           next if cover[0] == 'g'
           md = /(.+)\.cover/.match(cover)
           begin
@@ -186,7 +186,7 @@ module Alexandria
 
       if /!str:Amazon::Search::Response/.match(text)
         log.debug { "Removing Ruby/Amazon strings from #{name}" }
-        text.gsub!("!str:Amazon::Search::Response", "")
+        text.gsub!('!str:Amazon::Search::Response', '')
       end
 
       # Backward compatibility with versions <= 0.6.0, where the
@@ -241,7 +241,7 @@ module Alexandria
       # Create the default library if there is no library yet.
 
       if a.empty?
-        a << load(_("My Library"))
+        a << load(_('My Library'))
       end
 
       a
@@ -283,7 +283,7 @@ module Alexandria
     end
 
     def self.extract_numbers(isbn)
-      raise NoISBNError.new("Nil ISBN") if isbn.nil? || isbn.empty?
+      raise NoISBNError.new('Nil ISBN') if isbn.nil? || isbn.empty?
 
       isbn.delete('- ').upcase.split('').map do |x|
         raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
@@ -335,18 +335,18 @@ module Alexandria
     end
 
     AMERICAN_UPC_LOOKUP = {
-      "014794" => "08041", "018926" => "0445", "02778" => "0449",
-      "037145" => "0812", "042799" => "0785",  "043144" => "0688",
-      "044903" => "0312", "045863" => "0517", "046594" => "0064",
-      "047132" => "0152", "051487" => "08167", "051488" => "0140",
-      "060771" => "0002", "065373" => "0373", "070992" => "0523",
-      "070993" => "0446", "070999" => "0345", "071001" => "0380",
-      "071009" => "0440", "071125" => "088677", "071136" => "0451",
-      "071149" => "0451", "071152" => "0515", "071162" => "0451",
-      "071268" => "08217", "071831" => "0425", "071842" => "08439",
-      "072742" => "0441", "076714" => "0671", "076783" => "0553",
-      "076814" => "0449", "078021" => "0872", "079808" => "0394",
-      "090129" => "0679", "099455" => "0061", "099769" => "0451"
+      '014794' => '08041', '018926' => '0445', '02778' => '0449',
+      '037145' => '0812', '042799' => '0785',  '043144' => '0688',
+      '044903' => '0312', '045863' => '0517', '046594' => '0064',
+      '047132' => '0152', '051487' => '08167', '051488' => '0140',
+      '060771' => '0002', '065373' => '0373', '070992' => '0523',
+      '070993' => '0446', '070999' => '0345', '071001' => '0380',
+      '071009' => '0440', '071125' => '088677', '071136' => '0451',
+      '071149' => '0451', '071152' => '0515', '071162' => '0451',
+      '071268' => '08217', '071831' => '0425', '071842' => '08439',
+      '072742' => '0441', '076714' => '0671', '076783' => '0553',
+      '076814' => '0449', '078021' => '0872', '079808' => '0394',
+      '090129' => '0679', '099455' => '0061', '099769' => '0451'
     }
 
     def self.upc_convert(upc)
@@ -359,11 +359,11 @@ module Alexandria
       if self.valid_ean?(code)
         return code
       elsif self.valid_isbn?(code)
-        code = "978" + code[0..8]
+        code = '978' + code[0..8]
         return code + String(ean_checksum(extract_numbers(code)))
       elsif self.valid_upc?(code)
         isbn10 =  canonicalise_isbn
-        code = "978" + isbn10[0..8]
+        code = '978' + isbn10[0..8]
         return code + String(ean_checksum(extract_numbers(code)))
         ## raise "fix function Alexandria::Library.canonicalise_ean"
       else
@@ -415,8 +415,8 @@ module Alexandria
       end
       book.saved_ident = book.ident
 
-      filename = book.saved_ident.to_s + ".yaml"
-      File.open(filename, "w") { |io| io.puts book.to_yaml }
+      filename = book.saved_ident.to_s + '.yaml'
+      File.open(filename, 'w') { |io| io.puts book.to_yaml }
       filename
     end
 
@@ -444,7 +444,7 @@ module Alexandria
 
       temp_book = book.dup
       temp_book.library = nil
-      File.open(yaml(temp_book), "w") { |io| io.puts temp_book.to_yaml }
+      File.open(yaml(temp_book), 'w') { |io| io.puts temp_book.to_yaml }
 
       # Do not notify twice.
       if changed?
@@ -463,7 +463,7 @@ module Alexandria
       Dir.chdir(path) do
         # Fetch the cover picture.
         cover_file = cover(book)
-        File.open(cover_file, "w") do |io|
+        File.open(cover_file, 'w') do |io|
           uri = URI.parse(cover_uri)
           if uri.scheme.nil?
             # Regular filename.

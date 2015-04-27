@@ -27,22 +27,22 @@ module Alexandria
     class AmazonProvider < GenericProvider
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       # CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 
       LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us']
 
       def initialize
-        super("Amazon", "Amazon")
+        super('Amazon', 'Amazon')
         # prefs.add("enabled", _("Enabled"), true, [true,false])
-        prefs.add("locale", _("Locale"), "us", AmazonProvider::LOCALES)
-        prefs.add("dev_token", _("Access key ID"), '')
-        prefs.add("secret_key", _("Secret access key"), '')
-        prefs.add("associate_tag", _("Associate Tag"), '')
+        prefs.add('locale', _('Locale'), 'us', AmazonProvider::LOCALES)
+        prefs.add('dev_token', _('Access key ID'), '')
+        prefs.add('secret_key', _('Secret access key'), '')
+        prefs.add('associate_tag', _('Associate Tag'), '')
 
         prefs.read
-        token = prefs.variable_named("dev_token")
+        token = prefs.variable_named('dev_token')
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
 
         if token
@@ -54,14 +54,14 @@ module Alexandria
           token.new_value = ''
         end
 
-        secret = prefs.variable_named("secret_key")
+        secret = prefs.variable_named('secret_key')
         if secret
           if (secret.value != secret.value.strip)
             secret.new_value = secret.value.strip
           end
         end
 
-        associate = prefs.variable_named("associate_tag")
+        associate = prefs.variable_named('associate_tag')
         if associate
           if associate.value.strip.empty?
             associate.new_value = 'rubyalexa-20'
@@ -75,27 +75,27 @@ module Alexandria
       def search(criterion, type)
         prefs.read
 
-        if prefs["secret_key"].empty?
-          raise Amazon::RequestError.new("Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account")
+        if prefs['secret_key'].empty?
+          raise Amazon::RequestError.new('Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account')
         end
 
         if (config = Alexandria::Preferences.instance.http_proxy_config)
           host, port, user, pass = config
-          url = "http://"
-          url += user + ":" + pass + "@" if user and pass
-          url += host + ":" + port.to_s
+          url = 'http://'
+          url += user + ':' + pass + '@' if user and pass
+          url += host + ':' + port.to_s
           ENV['http_proxy'] = url
         end
 
-        access_key_id = prefs["dev_token"]
+        access_key_id = prefs['dev_token']
 
         Amazon::Ecs.options = { aWS_access_key_id: access_key_id,
-                                associateTag: prefs["associate_tag"] }
-        Amazon::Ecs.secret_access_key = prefs["secret_key"]
+                                associateTag: prefs['associate_tag'] }
+        Amazon::Ecs.secret_access_key = prefs['secret_key']
         # #req.cache = Amazon::Search::Cache.new(CACHE_DIR)
         locales = AmazonProvider::LOCALES.dup
-        locales.delete prefs["locale"]
-        locales.unshift prefs["locale"]
+        locales.delete prefs['locale']
+        locales.unshift prefs['locale']
         locales.reverse!
 
         begin
@@ -157,7 +157,7 @@ module Alexandria
             raise InvalidSearchTypeError
           end
           if products.empty?
-            raise Amazon::RequestError, "No products"
+            raise Amazon::RequestError, 'No products'
           end
           # raise NoResultsError if products.empty?
         rescue Amazon::RequestError => re
@@ -209,7 +209,7 @@ module Alexandria
           if results.size == 1
             return results.first
           else
-            log.info { "Found multiple results for lookup: checking each" }
+            log.info { 'Found multiple results for lookup: checking each' }
             query_isbn_canon = Library.canonicalise_ean(criterion)
             results.each do |rslt|
               book = rslt[0]
@@ -220,7 +220,7 @@ module Alexandria
               log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result
-            log.info { "no more results to check. Returning first result, just an approximation" }
+            log.info { 'no more results to check. Returning first result, just an approximation' }
             return results.first
           end
         else
@@ -230,19 +230,19 @@ module Alexandria
 
       def url(book)
         isbn = Library.canonicalise_isbn(book.isbn)
-        url = case prefs["locale"]
-              when "fr"
-                "http://www.amazon.fr/exec/obidos/ASIN/%s"
-              when "uk"
-                "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
-              when "de"
-                "http://www.amazon.de/exec/obidos/ASIN/%s"
-              when "ca"
-                "http://www.amazon.ca/exec/obidos/ASIN/%s"
-              when "jp"
-                "http://www.amazon.jp/exec/obidos/ASIN/%s"
-              when "us"
-                "http://www.amazon.com/exec/obidos/ASIN/%s"
+        url = case prefs['locale']
+              when 'fr'
+                'http://www.amazon.fr/exec/obidos/ASIN/%s'
+              when 'uk'
+                'http://www.amazon.co.uk/exec/obidos/ASIN/%s'
+              when 'de'
+                'http://www.amazon.de/exec/obidos/ASIN/%s'
+              when 'ca'
+                'http://www.amazon.ca/exec/obidos/ASIN/%s'
+              when 'jp'
+                'http://www.amazon.jp/exec/obidos/ASIN/%s'
+              when 'us'
+                'http://www.amazon.com/exec/obidos/ASIN/%s'
               end
         url % isbn
       rescue => ex

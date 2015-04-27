@@ -84,9 +84,9 @@ class FileInstallTask < Rake::TaskLib
 
     # INSTALL TASK
 
-    description = "Install package files"
+    description = 'Install package files'
     if @stage_dir
-      description += " to staging directory"
+      description += ' to staging directory'
     end
     desc description
     task tasknames[:install] do
@@ -124,9 +124,9 @@ class FileInstallTask < Rake::TaskLib
       end
     end
 
-    uninstall_description = "Uninstall package files"
+    uninstall_description = 'Uninstall package files'
     if @stage_dir
-      uninstall_description += " from staging directory"
+      uninstall_description += ' from staging directory'
     end
     desc uninstall_description
     task tasknames[:uninstall] => [tasknames[:uninstall_files],
@@ -164,7 +164,7 @@ class FileInstallTask < Rake::TaskLib
         icon_size = Pathname.new(icon_dir).basename
         icon_dest_dir = "#{dest_dir}/#{theme}/#{icon_size}/#{icon_type}"
         group = FileGroup.new(icon_dir, f, icon_dest_dir)
-        group.description = "icons"
+        group.description = 'icons'
         @file_groups << group
       end
     end
@@ -203,13 +203,13 @@ class FileInstallTask < Rake::TaskLib
 
   def glob2regex(pathglob)
     if pathglob =~ /\*\*$/
-      pathglob += "/"
+      pathglob += '/'
     end
-    real_parts = pathglob.split("**/")
+    real_parts = pathglob.split('**/')
     real_parts.each do |part|
-      part.gsub!(".", "\\.")
-      part.gsub!("*", "[^\\/]*")
-      part.gsub!("?", "[^\\/]")
+      part.gsub!('.', '\\.')
+      part.gsub!('*', '[^\\/]*')
+      part.gsub!('?', '[^\\/]')
     end
     pattern = real_parts.join("([^\/]+\/)*")
     /(#{pattern})/
@@ -251,7 +251,7 @@ class FileInstallTask < Rake::TaskLib
       @file_glob = file_glob
       @dest_dir = dest_dir
       @mode = mode
-      @description = "files"
+      @description = 'files'
     end
 
     def to_s

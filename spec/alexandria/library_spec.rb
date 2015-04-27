@@ -24,13 +24,13 @@ describe Alexandria::Library do
     FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
   end
 
-  it "has symbolic references to file extensions" do
+  it 'has symbolic references to file extensions' do
     extensions = Alexandria::Library::EXT
     expect(extensions[:book]).not_to be_nil
     expect(extensions[:cover]).not_to be_nil
   end
 
-  it "disallows multiple deletion of the same copy of a book" do
+  it 'disallows multiple deletion of the same copy of a book' do
     my_library = Alexandria::Library.loadall[0]
     first_copy = an_artist_of_the_floating_world
     my_library << first_copy
@@ -38,7 +38,7 @@ describe Alexandria::Library do
     expect { my_library.delete(first_copy) }.to raise_error
   end
 
-  it "allows multiple copies of a book to be added and deleted in turn" do
+  it 'allows multiple copies of a book to be added and deleted in turn' do
     my_library = Alexandria::Library.loadall[0]
     first_copy = an_artist_of_the_floating_world
     # puts "first_copy #{first_copy.object_id}"
@@ -66,14 +66,14 @@ describe Alexandria::Library do
 
 end
 
-describe Alexandria::Library, " imported from 0.6.1 data files" do
+describe Alexandria::Library, ' imported from 0.6.1 data files' do
 
   before(:each) do
     lib_version = File.join(LIBDIR, '0.6.1')
     FileUtils.cp_r(lib_version, TESTDIR)
   end
 
-  it "imports cleanly from version 0.6.1 data format" do
+  it 'imports cleanly from version 0.6.1 data format' do
     libs = Alexandria::Library.loadall
     expect(libs.size).to eq(1)
     my_library = libs[0]
@@ -96,14 +96,14 @@ describe Alexandria::Library, " imported from 0.6.1 data files" do
 
 end
 
-describe Alexandria::Library, " with books without an ISBN" do
+describe Alexandria::Library, ' with books without an ISBN' do
 
   before(:each) do
     lib_version = File.join(LIBDIR, '0.6.1-noisbn')
     FileUtils.cp_r(lib_version, TESTDIR)
   end
 
-  it "allows books to have no ISBN" do
+  it 'allows books to have no ISBN' do
     libs = Alexandria::Library.loadall
     expect(libs.size).to eq(1)
     my_library = libs[0]
@@ -148,7 +148,7 @@ describe Alexandria::Library, " with books without an ISBN" do
 
 end
 
-describe Alexandria::Library, " export sort order" do
+describe Alexandria::Library, ' export sort order' do
 
   before(:all) do
     require 'tmpdir'
@@ -158,8 +158,8 @@ describe Alexandria::Library, " export sort order" do
   before(:each) do
     lib_version = File.join(LIBDIR, '0.6.2')
     FileUtils.cp_r(lib_version, TESTDIR)
-    @format = Alexandria::ExportFormat.new("CSV list", "csv", :export_as_csv_list)
-    @outfile = File.join(Dir.tmpdir, "my_library-0.6.2.csv")
+    @format = Alexandria::ExportFormat.new('CSV list', 'csv', :export_as_csv_list)
+    @outfile = File.join(Dir.tmpdir, 'my_library-0.6.2.csv')
     @my_library = Alexandria::Library.loadall[0]
   end
 
@@ -167,7 +167,7 @@ describe Alexandria::Library, " export sort order" do
     CSV.read(@outfile, col_sep: ';')
   end
 
-  it "can sort by title" do
+  it 'can sort by title' do
     sort_by_title = Alexandria::LibrarySortOrder.new(:title)
     @format.invoke(@my_library, sort_by_title, @outfile)
     expect(File.exist?(@outfile)).to be_truthy
@@ -181,7 +181,7 @@ describe Alexandria::Library, " export sort order" do
     end
   end
 
-  it "can sort in descending order" do
+  it 'can sort in descending order' do
     sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
     @format.invoke(@my_library, sort_by_date_desc, @outfile)
     expect(File.exist?(@outfile)).to be_truthy

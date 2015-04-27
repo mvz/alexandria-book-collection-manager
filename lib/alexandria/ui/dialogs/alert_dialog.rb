@@ -20,7 +20,7 @@ module Alexandria
   module UI
     class AlertDialog < Gtk::Dialog
       def initialize(parent, title, stock_icon, buttons, message = nil)
-        super("", parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
+        super('', parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
 
         self.border_width = 6
         self.resizable = false

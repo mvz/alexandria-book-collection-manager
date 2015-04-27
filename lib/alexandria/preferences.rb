@@ -26,12 +26,12 @@ module Alexandria
     include Singleton
     include Logging
 
-    APP_DIR = "/apps/alexandria"
-    HTTP_PROXY_DIR = "/system/http_proxy"
-    HTTP_PROXY_MODE = "/system/proxy/mode"
-    URL_HANDLERS_DIR = "/desktop/gnome/url-handlers"
+    APP_DIR = '/apps/alexandria'
+    HTTP_PROXY_DIR = '/system/http_proxy'
+    HTTP_PROXY_MODE = '/system/proxy/mode'
+    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'
 
-    GCONFTOOL = "gconftool-2"
+    GCONFTOOL = 'gconftool-2'
 
     def initialize
       @alexandria_settings = {}
@@ -78,7 +78,7 @@ module Alexandria
     end
 
     def save!
-      log.debug { "preferences save!" }
+      log.debug { 'preferences save!' }
       @changed_settings.each do |variable_name|
         log.debug { "saving preference #{variable_name} / #{@alexandria_settings[variable_name].class}" }
         generic_save_setting(variable_name, @alexandria_settings[variable_name])
@@ -141,7 +141,7 @@ module Alexandria
     end
 
     def generic_save_setting(variable_name, new_value)
-      var_path = APP_DIR + "/" + variable_name
+      var_path = APP_DIR + '/' + variable_name
       if new_value.is_a?(Array)
         # when setting array, first remove nil elements (fixing #9007)
         new_value.compact!
@@ -172,13 +172,13 @@ module Alexandria
 
     def get_gconf_type(value)
       if value.is_a?(String)
-        "string"
+        'string'
       elsif value.is_a?(Fixnum)
-        "int"
+        'int'
       elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
-        "bool"
+        'bool'
       else
-        "string"
+        'string'
       end
     end
 
@@ -199,11 +199,11 @@ module Alexandria
     end
 
     def make_list_string(list)
-      if get_gconf_type(list.first) == "string"
+      if get_gconf_type(list.first) == 'string'
         list.map! { |x| x.gsub(/\"/, "\\\"") }
       end
-      contents = list.join(",")
-      "[" + contents + "]"
+      contents = list.join(',')
+      '[' + contents + ']'
     end
 
     def exec_gconf_set(var_path, new_value)
@@ -225,7 +225,7 @@ module Alexandria
     end
 
     def exec_gconf_unset(variable_name)
-      `#{GCONFTOOL} --unset #{APP_DIR + "/" + variable_name}`
+      `#{GCONFTOOL} --unset #{APP_DIR + '/' + variable_name}`
     end
 
     ##
@@ -250,13 +250,13 @@ module Alexandria
     # TODO: Enforce this.
     def load_url_handler_settings
       # /desktop/gnome/url-handlers/http
-      http_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + "/http"}`
+      http_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + '/http'}`
       http_handler = gconftool_values_to_hash(http_handler_vars)
       if http_handler['enabled']
         @http_command = http_handler['command']
       end
 
-      mailto_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + "/mailto"}`
+      mailto_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + '/mailto'}`
       mailto_handler = gconftool_values_to_hash(mailto_handler_vars)
       if mailto_handler['enabled']
         @mailto_command = mailto_handler['command']
@@ -271,7 +271,7 @@ module Alexandria
       http_proxy = gconftool_values_to_hash(http_proxy_vars)
       if http_proxy['use_http_proxy']
         proxy_mode = `#{GCONFTOOL} --get #{HTTP_PROXY_MODE}`.chomp
-        if proxy_mode == "manual"
+        if proxy_mode == 'manual'
           @use_http_proxy = true
           @proxy_host = http_proxy['host']
           @proxy_port = http_proxy['port']
@@ -301,17 +301,17 @@ module Alexandria
     # gconftool. This is not fool-proof, but it *does* work for the
     # range of values used by Alexandria.
     def discriminate(value)
-      if value == "true"        # bool
+      if value == 'true'        # bool
         return true
-      elsif value == "false"    # bool
+      elsif value == 'false'    # bool
         return false
       elsif value =~ /^[0-9]+$/   # int
         return value.to_i
       elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
-        return Regexp.last_match[1].split(",")
+        return Regexp.last_match[1].split(',')
       elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
         begin
-          pair = Regexp.last_match[1].split(",")
+          pair = Regexp.last_match[1].split(',')
           return [discriminate(pair.first), discriminate(pair.last)]
         rescue
           return [0, 0]

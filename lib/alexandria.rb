@@ -42,7 +42,7 @@ module Alexandria
     if $DEBUG
       Alexandria.log.level = Logger::DEBUG
     end
-    Alexandria.log.debug { "Initializing Alexandria..." }
+    Alexandria.log.debug { 'Initializing Alexandria...' }
   end
 
   def self.main

@@ -27,7 +27,7 @@ module Alexandria
     include Singleton
     include Observable
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
     SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS,
     SEARCH_BY_KEYWORD = (0..3).to_a
@@ -45,9 +45,9 @@ module Alexandria
 
       begin
         factory = instance[factory_n]
-        puts factory.fullname + " lookup" if $DEBUG
+        puts factory.fullname + ' lookup' if $DEBUG
         unless factory.enabled
-          puts factory.fullname + " disabled!, skipping..." if $DEBUG
+          puts factory.fullname + ' disabled!, skipping...' if $DEBUG
           raise ProviderSkippedError
         end
         instance.changed
@@ -62,7 +62,7 @@ module Alexandria
           instance.notify_observers(:not_found, factory.fullname) # new
           raise NoResultsError
         else
-          log.info { "found at " + factory.fullname }
+          log.info { 'found at ' + factory.fullname }
           instance.changed
           instance.notify_observers(:found, factory.fullname) # new
           return results
@@ -86,27 +86,27 @@ module Alexandria
           message = case boom
                     when Timeout::Error
                       _("Couldn't reach the provider '%s': timeout " \
-                        "expired.") % factory.name
+                        'expired.') % factory.name
 
                     when SocketError
                       _("Couldn't reach the provider '%s': socket " \
-                        "error (%s).") % [factory.name, boom.message]
+                        'error (%s).') % [factory.name, boom.message]
 
                     when NoResultsError
-                      _("No results were found.  Make sure your " \
-                        "search criterion is spelled correctly, and " \
-                        "try again.")
+                      _('No results were found.  Make sure your ' \
+                        'search criterion is spelled correctly, and ' \
+                        'try again.')
 
                     when ProviderSkippedError
-                      _("No results were found.  Make sure your " \
-                        "search criterion is spelled correctly, and " \
-                        "try again.")
+                      _('No results were found.  Make sure your ' \
+                        'search criterion is spelled correctly, and ' \
+                        'try again.')
 
                     when TooManyResultsError
-                      _("Too many results for that search.")
+                      _('Too many results for that search.')
 
                     when InvalidSearchTypeError
-                      _("Invalid search type.")
+                      _('Invalid search type.')
 
                     else
                       boom.message
@@ -187,7 +187,7 @@ module Alexandria
         each do |var|
           message = @provider.variable_name(var)
           val = Alexandria::Preferences.instance.send(message)
-          var.value = val unless val.nil? or (val == "" and var.mandatory?)
+          var.value = val unless val.nil? or (val == '' and var.mandatory?)
         end
       end
     end
@@ -201,7 +201,7 @@ module Alexandria
         @name = name
         @fullname = (fullname or name)
         @prefs = Preferences.new(self)
-        @prefs.add("enabled", _("Enabled"), true, [true, false])
+        @prefs.add('enabled', _('Enabled'), true, [true, false])
       end
 
       def enabled
@@ -293,7 +293,7 @@ module Alexandria
     # require 'alexandria/book_providers/renaud'
     # require 'alexandria/book_providers/bol_it'
     # require 'alexandria/book_providers/webster_it'
-    log.info { "Not loading IBS, Renaud, BOL, Webster (providers not functional)" }
+    log.info { 'Not loading IBS, Renaud, BOL, Webster (providers not functional)' }
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     require 'alexandria/book_providers/amazon_aws'
@@ -387,21 +387,21 @@ module Alexandria
       unless priority.empty?
         changed = false
 
-        if (ecs_index = priority.index("AmazonECS"))
-          priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
+        if (ecs_index = priority.index('AmazonECS'))
+          priority[ecs_index] = 'Amazon' # replace legacy "AmazonECS" name
           priority.uniq! # remove any other "Amazon" from the list
           changed = true
         end
-        if (deastore_index = priority.index("DeaStore_it"))
-          priority[deastore_index] = "DeaStore"
+        if (deastore_index = priority.index('DeaStore_it'))
+          priority[deastore_index] = 'DeaStore'
           changed = true
         end
-        if (worldcat_index = priority.index("Worldcat"))
-          priority[worldcat_index] = "WorldCat"
+        if (worldcat_index = priority.index('Worldcat'))
+          priority[worldcat_index] = 'WorldCat'
           changed = true
         end
-        if (adlibris_index = priority.index("Adlibris"))
-          priority[adlibris_index] = "AdLibris"
+        if (adlibris_index = priority.index('Adlibris'))
+          priority[adlibris_index] = 'AdLibris'
           changed = true
         end
         @prefs.providers_priority = priority if changed

@@ -32,11 +32,11 @@ module Alexandria
     class DoubanProvider < GenericProvider
       include Alexandria::Logging
 
-      SITE = "http://www.douban.com"
-      BASE_URL = "http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json"
+      SITE = 'http://www.douban.com'
+      BASE_URL = 'http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json'
 
       def initialize
-        super("Douban", "Douban (China)")
+        super('Douban', 'Douban (China)')
         prefs.read
       end
 

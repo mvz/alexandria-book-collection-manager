@@ -43,11 +43,11 @@ module Alexandria
       end
 
       def set_up_pipeline
-        @filesrc = Gst::ElementFactory.make("filesrc")
-        demuxer = Gst::ElementFactory.make("oggdemux")
-        decoder = Gst::ElementFactory.make("vorbisdec")
-        converter = Gst::ElementFactory.make("audioconvert") # #??
-        audiosink = Gst::ElementFactory.make("autoaudiosink")
+        @filesrc = Gst::ElementFactory.make('filesrc')
+        demuxer = Gst::ElementFactory.make('oggdemux')
+        decoder = Gst::ElementFactory.make('vorbisdec')
+        converter = Gst::ElementFactory.make('audioconvert') # #??
+        audiosink = Gst::ElementFactory.make('autoaudiosink')
 
         @ogg_vorbis_pipeline.add(@filesrc, demuxer, decoder,
                                  converter, audiosink)
@@ -56,8 +56,8 @@ module Alexandria
         # this next must be a dynamic link, as demuxers potentially
         # have multiple src pads (for audio/video muxed streams)
 
-        demuxer.signal_connect("pad-added") do |_parser, ogg_src_pad|
-          vorbis_sink_pad = decoder.get_pad("sink")
+        demuxer.signal_connect('pad-added') do |_parser, ogg_src_pad|
+          vorbis_sink_pad = decoder.get_pad('sink')
           ogg_src_pad.link(vorbis_sink_pad)
         end
 
@@ -76,7 +76,7 @@ module Alexandria
               @loop.quit
             when Gst::Message::ERROR
               if $DEBUG
-                puts "ERROR loop.quit"
+                puts 'ERROR loop.quit'
                 p message.parse
               end
               @playing = false

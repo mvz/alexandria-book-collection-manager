@@ -31,13 +31,13 @@ module Alexandria
   module UI
     class SkipEntryDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, message)
-        super(parent, _("Error while importing"),
+        super(parent, _('Error while importing'),
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_("_Continue"), Gtk::Dialog::RESPONSE_OK]],
+               [_('_Continue'), Gtk::Dialog::RESPONSE_OK]],
               message)
         puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
@@ -54,22 +54,22 @@ module Alexandria
       include GetText
       include Logging
 
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       FILTERS = Alexandria::ImportFilter.all
 
       def initialize(parent, &on_accept_cb)
         super()
-        puts "ImportDialog opened." if $DEBUG
+        puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
-        self.title = _("Import a Library")
+        self.title = _('Import a Library')
         self.action = Gtk::FileChooser::ACTION_OPEN
         self.transient_for = parent
         #            self.deletable = false
         running = false
         add_button(Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP)
         add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
-        import_button = add_button(_("_Import"),
+        import_button = add_button(_('_Import'),
                                    Gtk::Dialog::RESPONSE_ACCEPT)
         import_button.sensitive = false
 
@@ -188,9 +188,9 @@ module Alexandria
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
               ErrorDialog.new(parent,
                               _("Couldn't import the library"),
-                              _("The format of the file you " \
-                                "provided is unknown.  Please " \
-                                "retry with another file."))
+                              _('The format of the file you ' \
+                                'provided is unknown.  Please ' \
+                                'retry with another file.'))
             end
             pbar.hide
             self.sensitive = true

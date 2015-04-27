@@ -21,15 +21,15 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 # break this up!
 
 describe CellRendererToggle do
-  it "should work"
+  it 'should work'
 end
 
 describe Gtk::ActionGroup do
-  it "should work"
+  it 'should work'
 end
 
 describe Gtk::IconView do
-  it "should work"
+  it 'should work'
 end
 
 describe Alexandria::UI::MainApp do
@@ -39,7 +39,7 @@ describe Alexandria::UI::MainApp do
                         actiongroup: double(Object), appbar: nil,
                         prefs: nil))
   end
-  it "should be a singleton" do
+  it 'should be a singleton' do
     expect do
       Alexandria::UI::MainApp.new
     end.to raise_error

@@ -38,31 +38,31 @@ describe Alexandria::Scanners::CueCat do
     }
   end
 
-  it "is called CueCat" do
+  it 'is called CueCat' do
     expect(@cuecat.name).to match(/CueCat/i)
   end
 
-  it "should detect a complete scan only " do
+  it 'should detect a complete scan only ' do
     @partials.each { |scan| expect(@cuecat.match?(scan)).not_to be_truthy }
     expect(@cuecat.match?(@scans[:isbn])).to be_truthy
     expect(@cuecat.match?(@scans[:ib5])).to be_truthy
   end
 
-  it "should decode ISBN barcodes" do
+  it 'should decode ISBN barcodes' do
     expect(@cuecat.decode(@scans[:isbn])).to eq('9780571147168')
   end
 
-  it "should decode ISBN+5 barcodes" do
+  it 'should decode ISBN+5 barcodes' do
     expect(@cuecat.decode(@scans[:ib5])).to eq('9780575079038') # 00799
     # TODO are we supposed to keep the +5 bit?
   end
 
-  it "should decode ISSN barcodes" do
-    skip "Test scan ISSN"
+  it 'should decode ISSN barcodes' do
+    skip 'Test scan ISSN'
   end
 
-  it "should decode UPC barcodes" do
-    skip "Test scan UPC"
+  it 'should decode UPC barcodes' do
+    skip 'Test scan UPC'
   end
 
 end

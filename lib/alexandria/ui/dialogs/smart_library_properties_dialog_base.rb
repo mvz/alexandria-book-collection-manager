@@ -21,12 +21,12 @@ module Alexandria
     class SmartLibraryPropertiesDialogBase < Gtk::Dialog
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       attr_reader :predicate_operator_rule
 
       def initialize(parent)
-        super("", parent, Gtk::Dialog::MODAL,
+        super('', parent, Gtk::Dialog::MODAL,
               [Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP])
 
         self.window_position = Gtk::Window::POS_CENTER
@@ -73,7 +73,7 @@ module Alexandria
       def has_weirdnesses?
         fill_smart_library_rules_values
         smart_library_rules.each do |rule|
-          return true if rule.value == ""
+          return true if rule.value == ''
         end
         false
       end
@@ -82,14 +82,14 @@ module Alexandria
         return true unless has_weirdnesses?
         dialog = AlertDialog.new(
                                  self,
-                                 _("Empty or conflictive condition"),
+                                 _('Empty or conflictive condition'),
                                  Gtk::Stock::DIALOG_QUESTION,
                                  [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                                  [_("_Save However"), Gtk::Dialog::RESPONSE_YES]],
-                                 _("This smart library contains one or more conditions " \
-                                   "which are empty or conflict with each other. This is " \
-                                   "likely to result in never matching a book. Are you " \
-                                   "sure you want to save this library?"))
+                                  [_('_Save However'), Gtk::Dialog::RESPONSE_YES]],
+                                 _('This smart library contains one or more conditions ' \
+                                   'which are empty or conflict with each other. This is ' \
+                                   'likely to result in never matching a book. Are you ' \
+                                   'sure you want to save this library?'))
         dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
         dialog.show_all
         confirmed = dialog.run == Gtk::Dialog::RESPONSE_YES
@@ -103,10 +103,10 @@ module Alexandria
         if @rules_box.children.length > 1
           label1 = Gtk::Label.new
           label1.set_alignment(0.0, 0.5)
-          label1.text = _("Match")
+          label1.text = _('Match')
 
           cb = Gtk::ComboBox.new
-          [_("all"), _("any")].each { |x| cb.append_text(x) }
+          [_('all'), _('any')].each { |x| cb.append_text(x) }
           cb.signal_connect('changed') do
             @predicate_operator_rule = cb.active == 0 \
             ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
@@ -116,7 +116,7 @@ module Alexandria
 
           label2 = Gtk::Label.new
           label2.set_alignment(0.0, 0.5)
-          label2.text = _("of the following rules:")
+          label2.text = _('of the following rules:')
 
           @rules_header_box.pack_start(label1, false, false, 0)
           @rules_header_box.pack_start(cb, false, false, 0)
@@ -124,7 +124,7 @@ module Alexandria
         else
           label = Gtk::Label.new
           label.set_alignment(0.0, 0.5)
-          label.text = _("Match the following rule:")
+          label.text = _('Match the following rule:')
           @rules_header_box << label
           @predicate_operator_rule = SmartLibrary::ALL_RULES
         end
@@ -158,16 +158,16 @@ module Alexandria
         # does not seem to do it...
         # ##date_entry.children[2..3].each { |x| date_entry.remove(x) }
         # ##date_entry.spacing = 8
-        entry_label = Gtk::Label.new("")
+        entry_label = Gtk::Label.new('')
 
-        add_button = Gtk::Button.new("")
+        add_button = Gtk::Button.new('')
         add_button.remove(add_button.children.first)
         add_button << Gtk::Image.new(Gtk::Stock::ADD,
                                      Gtk::IconSize::BUTTON)
 
         add_button.signal_connect('clicked') { insert_new_rule }
 
-        remove_button = Gtk::Button.new("")
+        remove_button = Gtk::Button.new('')
         remove_button.remove(remove_button.children.first)
         remove_button << Gtk::Image.new(Gtk::Stock::REMOVE,
                                         Gtk::IconSize::BUTTON)
@@ -326,7 +326,7 @@ module Alexandria
         # @calendar_popup.border_width = 4
         # @calendar_popup.app_paintable = true
 
-        @calendar_popup.signal_connect("focus-out-event") do |_popup, _event|
+        @calendar_popup.signal_connect('focus-out-event') do |_popup, _event|
           hide_calendar_popup
           false
         end
@@ -334,7 +334,7 @@ module Alexandria
         @calendar = Gtk::Calendar.new
         @calendar_popup.add(@calendar)
 
-        @calendar.signal_connect("day-selected") do
+        @calendar.signal_connect('day-selected') do
           date_arr = @calendar.date
           year = date_arr[0]
           month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
@@ -346,7 +346,7 @@ module Alexandria
 
         end
 
-        @calendar.signal_connect("day-selected-double-click") do
+        @calendar.signal_connect('day-selected-double-click') do
           date_arr = @calendar.date
           year = date_arr[0]
           month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index

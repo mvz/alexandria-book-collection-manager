@@ -23,7 +23,7 @@
 require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
 describe Alexandria::BookProviders do
-  it "should be less clever"
+  it 'should be less clever'
 
   def assert_correct_search_result(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
     results = provider.instance.search(query, search_type)
@@ -55,37 +55,37 @@ describe Alexandria::BookProviders do
     results
   end
 
-  it "should not piss off Rich Burridge" do
-    skip "Amazon requires an API key. Remove it altogether as a provider?"
+  it 'should not piss off Rich Burridge' do
+    skip 'Amazon requires an API key. Remove it altogether as a provider?'
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
                                  '033025068X')
   end
 
-  it "amazon should work" do
-    skip "Amazon requires an API key. Remove it altogether as a provider?"
+  it 'amazon should work' do
+    skip 'Amazon requires an API key. Remove it altogether as a provider?'
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
                                  '9780385504201')
   end
 
-  it "amazon title should work" do
-    skip "Amazon requires an API key. Remove it altogether as a provider?"
+  it 'amazon title should work' do
+    skip 'Amazon requires an API key. Remove it altogether as a provider?'
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
                                  'A Confederacy of Dunces', Alexandria::BookProviders::SEARCH_BY_TITLE)
   end
 
-  it "amazon authors should work" do
-    skip "Amazon requires an API key. Remove it altogether as a provider?"
+  it 'amazon authors should work' do
+    skip 'Amazon requires an API key. Remove it altogether as a provider?'
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
                                  'John Kennedy Toole', Alexandria::BookProviders::SEARCH_BY_AUTHORS)
   end
 
-  it "amazon keyword should work" do
-    skip "Amazon requires an API key. Remove it altogether as a provider?"
+  it 'amazon keyword should work' do
+    skip 'Amazon requires an API key. Remove it altogether as a provider?'
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
                                  'Confederacy Dunces', Alexandria::BookProviders::SEARCH_BY_KEYWORD)
   end
 
-  it "dea should work" do
+  it 'dea should work' do
     assert_correct_search_result(Alexandria::BookProviders::DeaStoreProvider,
                                  '9788817012980')
     assert_correct_search_result(Alexandria::BookProviders::DeaStoreProvider,
@@ -94,11 +94,11 @@ describe Alexandria::BookProviders do
 
   # Right? Don't test if dependency isn't present.
 
-  it "LOC should work" do
+  it 'LOC should work' do
     begin
       require 'zoom'
     rescue LoadError
-      skip "This test needs zoom"
+      skip 'This test needs zoom'
     end
     assert_correct_search_result(Alexandria::BookProviders::LOCProvider,
                                  '9780805335583')
@@ -107,22 +107,22 @@ describe Alexandria::BookProviders do
                                  '9782070379248')
   end
 
-  it "BL should work" do
+  it 'BL should work' do
     begin
       require 'zoom'
     rescue LoadError
-      skip "This test needs zoom"
+      skip 'This test needs zoom'
     end
 
     assert_correct_search_result(Alexandria::BookProviders::BLProvider,
                                  '9781853260803')
   end
 
-  it "SBN should work" do
+  it 'SBN should work' do
     begin
       require 'zoom'
     rescue LoadError
-      skip "This test needs zoom"
+      skip 'This test needs zoom'
     end
 
     assert_correct_search_result(Alexandria::BookProviders::SBNProvider,
@@ -131,14 +131,14 @@ describe Alexandria::BookProviders do
 
   # providers supposed to be always working
 
-  it "Barnes and Noble should work" do
-    skip "Needs fixing"
+  it 'Barnes and Noble should work' do
+    skip 'Needs fixing'
     assert_correct_search_result(Alexandria::BookProviders::BarnesAndNobleProvider,
                                  '9780961328917')   # see #1433
   end
 
-  it "MCU should work" do
-    skip "Needs fixing"
+  it 'MCU should work' do
+    skip 'Needs fixing'
     # this book is without binding information, see bug [#2533]
     assert_correct_search_result(Alexandria::BookProviders::MCUProvider,
                                  '9788487982033')
@@ -147,16 +147,16 @@ describe Alexandria::BookProviders do
                                  '9788496075856')
   end
 
-  it "Proxis should work" do
-    skip "Needs fixing"
+  it 'Proxis should work' do
+    skip 'Needs fixing'
     assert_correct_search_result(Alexandria::BookProviders::ProxisProvider,
                                  '9789026965746')
     assert_correct_search_result(Alexandria::BookProviders::ProxisProvider,
                                  '9780586071403')
   end
 
-  it "Thalia should work" do
-    skip "Needs fixing"
+  it 'Thalia should work' do
+    skip 'Needs fixing'
     # german book
     assert_correct_search_result(Alexandria::BookProviders::ThaliaProvider,
                                  '9783896673305')
@@ -171,8 +171,8 @@ describe Alexandria::BookProviders do
                                  '0094638203520')
   end
 
-  it "IBS_it should work" do
-    skip "Marked in code as not working; remove implementation entirely."
+  it 'IBS_it should work' do
+    skip 'Marked in code as not working; remove implementation entirely.'
     # this tests a book without image but with author
     assert_correct_search_result(Alexandria::BookProviders::IBS_itProvider,
                                  '9788886973816')
@@ -181,26 +181,26 @@ describe Alexandria::BookProviders do
                                  '9788807710148')
   end
 
-  it "AdLibris should work" do
-    skip "Needs fixing: site has changed"
+  it 'AdLibris should work' do
+    skip 'Needs fixing: site has changed'
     assert_correct_search_result(Alexandria::BookProviders::AdLibrisProvider,
                                  '9789100109332')
   end
 
-  it "Siciliano should work" do
-    skip "Needs fixing: no results found"
+  it 'Siciliano should work' do
+    skip 'Needs fixing: no results found'
     assert_correct_search_result(Alexandria::BookProviders::SicilianoProvider,
                                  '9788599170380')
   end
 
-  it "BOL_it should work" do
-    skip "Marked in code as not working; remove implementation entirely."
+  it 'BOL_it should work' do
+    skip 'Marked in code as not working; remove implementation entirely.'
     assert_correct_search_result(Alexandria::BookProviders::BOL_itProvider,
                                  '9788817012980')
   end
 
-  it "Webster should work" do
-    skip "Marked in code as not working; remove implementation entirely."
+  it 'Webster should work' do
+    skip 'Marked in code as not working; remove implementation entirely.'
     # BIT
     assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
                                  '9788817012980')
@@ -215,17 +215,17 @@ describe Alexandria::BookProviders do
                                  '9783442460878')
   end
 
-  it "Webster should work with multiple authors" do
-    skip "Marked in code as not working; remove implementation entirely."
+  it 'Webster should work with multiple authors' do
+    skip 'Marked in code as not working; remove implementation entirely.'
     this_book = assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
                                              '9788804559016')
-    assert_kind_of(Array, this_book.authors, "Not an array!")
+    assert_kind_of(Array, this_book.authors, 'Not an array!')
     # puts this_book.authors
-    assert(this_book.authors.length == 3, "Wrong number of authors for this book!")
+    assert(this_book.authors.length == 3, 'Wrong number of authors for this book!')
   end
 
-  it "Renaud should work" do
-    skip "Marked in code as not working; remove implementation entirely."
+  it 'Renaud should work' do
+    skip 'Marked in code as not working; remove implementation entirely.'
     # adultes
     assert_correct_search_result(Alexandria::BookProviders::RENAUDProvider,
                                  '9782894723388')
@@ -234,7 +234,7 @@ describe Alexandria::BookProviders do
                                  '9782764605059')
   end
 
-  it "Worldcat should work" do
+  it 'Worldcat should work' do
     assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
                                  '9780521247108')
     # this one is with <div class=vernacular lang="[^"]+">)
@@ -242,13 +242,13 @@ describe Alexandria::BookProviders do
                                  '9785941454136')
   end
 
-  it "Worldcat should work with multiple authors" do
+  it 'Worldcat should work with multiple authors' do
     results = assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
                                              '9785941454136')
     this_book = results.first
-    assert_kind_of(Array, this_book.authors, "Not an array!")
+    assert_kind_of(Array, this_book.authors, 'Not an array!')
     # puts this_book.authors
-    assert(this_book.authors.length == 2, "Wrong number of authors for this book!")
+    assert(this_book.authors.length == 2, 'Wrong number of authors for this book!')
 
   end
 end

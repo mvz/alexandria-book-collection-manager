@@ -21,9 +21,9 @@ module Alexandria
     class NewBookDialogManual < BookPropertiesDialogBase
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-      TMP_COVER_FILE = File.join(Dir.tmpdir, "tmp_cover")
+      TMP_COVER_FILE = File.join(Dir.tmpdir, 'tmp_cover')
       def initialize(parent, library, &on_add_cb)
         super(parent, TMP_COVER_FILE)
 
@@ -56,7 +56,7 @@ module Alexandria
         title = @entry_title.text.strip
         begin
           @book_properties_dialog.title = if title.empty?
-                                            _("Adding a Book")
+                                            _('Adding a Book')
                                           else
                                             _("Adding '%s'") % title
                                           end
@@ -78,36 +78,36 @@ module Alexandria
 
       def on_add
         if (title = @entry_title.text.strip).empty?
-          raise AddError.new(_("A title must be provided."))
+          raise AddError.new(_('A title must be provided.'))
         end
         isbn = nil
-        if @entry_isbn.text != ""
+        if @entry_isbn.text != ''
           ary = @library.select { |book|
             book.ident == @entry_isbn.text }
-          raise AddError.new(_("The EAN/ISBN you provided is " \
-                               "already used in this library.")) unless ary.empty?
+          raise AddError.new(_('The EAN/ISBN you provided is ' \
+                               'already used in this library.')) unless ary.empty?
           isbn = begin
                    Library.canonicalise_isbn(@entry_isbn.text)
                  rescue Alexandria::Library::InvalidISBNError
                    raise AddError.new(_("Couldn't validate the " \
-                                        "EAN/ISBN you provided.  Make " \
-                                        "sure it is written correcty, " \
-                                        "and try again."))
+                                        'EAN/ISBN you provided.  Make ' \
+                                        'sure it is written correcty, ' \
+                                        'and try again.'))
                  end
         end
         if (publisher = @entry_publisher.text.strip).empty?
-          raise AddError.new(_("A publisher must be provided."))
+          raise AddError.new(_('A publisher must be provided.'))
         end
         publishing_year = @entry_publish_date.text.to_i
         # TODO Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?
-          raise AddError.new(_("A binding must be provided."))
+          raise AddError.new(_('A binding must be provided.'))
         end
         authors = []
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
-          raise AddError.new(_("At least one author must be " \
-                               "provided."))
+          raise AddError.new(_('At least one author must be ' \
+                               'provided.'))
         end
         book = Book.new(title, authors, isbn, publisher,
                        publishing_year == 0 ? nil : publishing_year,

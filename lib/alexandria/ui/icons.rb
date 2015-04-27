@@ -54,7 +54,7 @@ end
 module Alexandria
   module UI
     module Icons
-      ICONS_DIR = File.join(Alexandria::Config::DATA_DIR, "icons")
+      ICONS_DIR = File.join(Alexandria::Config::DATA_DIR, 'icons')
       def self.init
         load_icon_images
       end
@@ -66,7 +66,7 @@ module Alexandria
           next unless file =~ /\.png$/    # skip non '.png' files
           # Don't use upcase and use tr instead
           # For example in Turkish the upper case of 'i' is still 'i'.
-          name = File.basename(file, ".png").tr('a-z', 'A-Z')
+          name = File.basename(file, '.png').tr('a-z', 'A-Z')
           const_set(name, Gdk::Pixbuf.new(File.join(ICONS_DIR, file)))
         end
       end

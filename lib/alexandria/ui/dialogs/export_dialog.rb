@@ -20,15 +20,15 @@ module Alexandria
   module UI
     class ConfirmEraseDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, filename)
-        super(parent, _("File already exists"),
+        super(parent, _('File already exists'),
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_("_Replace"), Gtk::Dialog::RESPONSE_OK]],
+               [_('_Replace'), Gtk::Dialog::RESPONSE_OK]],
               _("A file named '%s' already exists.  Do you want " \
-                "to replace it with the one you are generating?") \
+                'to replace it with the one you are generating?') \
               % filename)
         self.default_response = Gtk::Dialog::RESPONSE_CANCEL
         show_all and @response = run
@@ -43,20 +43,20 @@ module Alexandria
     class ExportDialog < Gtk::FileChooserDialog
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       FORMATS = Alexandria::ExportFormat.all
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
+        backend = `uname`.chomp == 'FreeBSD' ? 'neant' : 'gnome-vfs'
         super(_("Export '%s'") % library.name,
               nil,
               Gtk::FileChooser::ACTION_SAVE,
               backend,
               [Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP],
               [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-              [_("_Export"), Gtk::Dialog::RESPONSE_ACCEPT])
+              [_('_Export'), Gtk::Dialog::RESPONSE_ACCEPT])
 
         self.transient_for = parent
         self.current_name = library.name
@@ -75,19 +75,19 @@ module Alexandria
           preview_image.pixbuf = Gdk::Pixbuf.new(file)
         end
         theme_combo.active = 0
-        theme_label = Gtk::Label.new(_("_Theme:"), true)
+        theme_label = Gtk::Label.new(_('_Theme:'), true)
         theme_label.xalign = 0
         theme_label.mnemonic_widget = theme_combo
 
         types_combo = Gtk::ComboBox.new
         FORMATS.each do |format|
-          text = format.name + " ("
+          text = format.name + ' ('
           if format.ext
-            text += "*." + format.ext
+            text += '*.' + format.ext
           else
-            text += _("directory")
+            text += _('directory')
           end
-          text += ")"
+          text += ')'
           types_combo.append_text(text)
         end
         types_combo.active = 0
@@ -98,7 +98,7 @@ module Alexandria
         end
         types_combo.show
 
-        types_label = Gtk::Label.new(_("Export for_mat:"), true)
+        types_label = Gtk::Label.new(_('Export for_mat:'), true)
         types_label.xalign = 0
         types_label.mnemonic_widget = types_combo
         types_label.show
@@ -126,7 +126,7 @@ module Alexandria
               break if on_export(FORMATS[types_combo.active],
                                  THEMES[theme_combo.active])
             rescue => e
-              ErrorDialog.new(self, _("Export failed"), e.message)
+              ErrorDialog.new(self, _('Export failed'), e.message)
             end
           end
         end
@@ -143,7 +143,7 @@ module Alexandria
         end
         filename = self.filename
         if format.ext
-          filename += "." + format.ext if File.extname(filename).empty?
+          filename += '.' + format.ext if File.extname(filename).empty?
           if File.exist?(filename)
             dialog = ConfirmEraseDialog.new(@parent, filename)
             return unless dialog.erase?
@@ -154,10 +154,10 @@ module Alexandria
           if File.exist?(filename)
             unless File.directory?(filename)
               msg = _("The target, named '%s', is a regular " \
-                      "file.  A directory is needed for this " \
-                      "operation.  Please select a directory and " \
-                      "try again.") % filename
-              ErrorDialog.new(@parent, _("Not a directory"), msg)
+                      'file.  A directory is needed for this ' \
+                      'operation.  Please select a directory and ' \
+                      'try again.') % filename
+              ErrorDialog.new(@parent, _('Not a directory'), msg)
               return
             end
           else
