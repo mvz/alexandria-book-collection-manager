@@ -91,9 +91,7 @@ module Alexandria
         nil
       end
 
-      #######
       private
-      #######
 
       def parseBook(docn, ndoc)
         detailspage = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERDOC&CONF=AEISPA.cnf&BASE=ISBN&DOCN=' + docn + '&NDOC=' + ndoc

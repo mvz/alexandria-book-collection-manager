@@ -370,9 +370,7 @@ module Alexandria
         end
       end
 
-      #######
       private
-      #######
 
       def rating=(rating)
         images = [

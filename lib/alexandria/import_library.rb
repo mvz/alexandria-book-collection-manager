@@ -50,9 +50,7 @@ module Alexandria
                    @on_iterate_cb, @on_error_cb)
     end
 
-    #######
     private
-    #######
 
     def initialize(name, patterns, message)
       @name = name

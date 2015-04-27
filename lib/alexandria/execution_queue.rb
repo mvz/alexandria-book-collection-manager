@@ -71,9 +71,7 @@ module Alexandria
       @@current_queue = nil
     end
 
-    #######
     private
-    #######
 
     def push(procedure, args, need_retval = false)
       @protect_pending_calls.synchronize do

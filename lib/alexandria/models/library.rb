@@ -633,9 +633,7 @@ module Alexandria
       book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
     end
 
-    #########
     protected
-    #########
 
     def initialize(name)
       @name = name
@@ -700,9 +698,7 @@ module Alexandria
       end
     end
 
-    #######
     private
-    #######
 
     def initialize
       @all_libraries = []

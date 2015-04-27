@@ -109,9 +109,7 @@ module Alexandria
         end
       end
 
-      #######
       private
-      #######
 
       def on_close
         if @entry_isbn.text == ''

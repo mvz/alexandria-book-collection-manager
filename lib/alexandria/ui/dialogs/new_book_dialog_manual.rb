@@ -65,9 +65,7 @@ module Alexandria
         end
       end
 
-      #######
       private
-      #######
 
       def on_cancel
         @book_properties_dialog.destroy

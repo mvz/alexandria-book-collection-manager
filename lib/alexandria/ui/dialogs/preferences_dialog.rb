@@ -193,9 +193,7 @@ module Alexandria
         @selected_instance
       end
 
-      #######
       private
-      #######
 
       def sensitize
         entries = @table.children.select { |x| x.is_a?(Gtk::Entry) }
@@ -520,9 +518,7 @@ module Alexandria
                                      'alexandria-preferences')
       end
 
-      #######
       private
-      #######
 
       def reload_providers
         model = @treeview_providers.model

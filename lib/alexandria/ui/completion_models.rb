@@ -68,9 +68,7 @@ class Gtk::Entry
     end
   end
 
-  #######
   private
-  #######
 
   def complete(model_id)
     completion = Gtk::EntryCompletion.new
@@ -174,9 +172,7 @@ module Alexandria
         @models[TAG]
       end
 
-      #######
       private
-      #######
 
       def touch
         @dirty = true

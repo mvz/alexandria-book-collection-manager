@@ -622,9 +622,7 @@ module Alexandria
         Alexandria::UI.display_help(@preferences_dialog, 'add-book-by-isbn')
       end
 
-      #######
       private
-      #######
 
       def assert_not_exist(library, isbn)
         # Check that the book doesn't already exist in the library.

@@ -128,9 +128,7 @@ module Alexandria
       @needs_preview
     end
 
-    #######
     private
-    #######
 
     def initialize(name, ext, message, needs_preview = false)
       @name = name
@@ -242,9 +240,7 @@ module Alexandria
       end
     end
 
-    #######
     private
-    #######
 
     ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'
     def to_onix_document

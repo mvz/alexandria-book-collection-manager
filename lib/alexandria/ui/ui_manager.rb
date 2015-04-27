@@ -640,9 +640,7 @@ module Alexandria
         end
       end
 
-      #######
       # private
-      #######
 
       def open_web_browser(url)
         if url.nil?

@@ -70,9 +70,7 @@ class Gtk::TreeView
     @context.drag_context
   end
 
-  #######
   private
-  #######
 
   def stop_drag_check
     raise if @context.nil?

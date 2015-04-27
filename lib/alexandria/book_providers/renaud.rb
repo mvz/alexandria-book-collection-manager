@@ -81,9 +81,7 @@ module Alexandria
         'http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=' + book.isbn
       end
 
-      #######
       private
-      #######
 
       def to_books(data)
         data = CGI.unescapeHTML(data)

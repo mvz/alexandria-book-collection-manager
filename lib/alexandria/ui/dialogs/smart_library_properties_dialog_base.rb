@@ -61,9 +61,7 @@ module Alexandria
         setup_calendar_widgets
       end
 
-      #########
       protected
-      #########
 
       def smart_library_rules
         fill_smart_library_rules_values

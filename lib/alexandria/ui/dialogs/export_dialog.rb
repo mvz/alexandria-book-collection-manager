@@ -132,9 +132,7 @@ module Alexandria
         destroy
       end
 
-      #######
       private
-      #######
 
       def on_export(format, theme)
         unless @library.respond_to?(format.message)
