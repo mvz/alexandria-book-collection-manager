@@ -2,7 +2,7 @@
 require_relative 'lib/alexandria/version'
 
 Gem::Specification.new do |s|
-  s.name = 'alexandria'
+  s.name = 'alexandria-book-collection-manager'
   s.version = Alexandria::VERSION
 
   s.summary = 'GNOME application for managing collections of books'
