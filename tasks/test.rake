@@ -35,4 +35,4 @@ namespace :test do
 end
 
 desc 'Alias for test:run'
-task :test => 'test:run'
+task test: 'test:run'
