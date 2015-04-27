@@ -73,7 +73,7 @@ module Alexandria
         transport.get(URI.parse(req)).each do |line|
           # line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
-          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[Regexp.last_match[1]]) and (book = parseBook(Regexp.last_match[1], Regexp.last_match[2])) then
+          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[Regexp.last_match[1]]) and (book = parseBook(Regexp.last_match[1], Regexp.last_match[2]))
             products[Regexp.last_match[1]] = book
             puts Regexp.last_match[1] if $DEBUG # for DEBUGing
           end
@@ -115,7 +115,7 @@ module Alexandria
             robotstate = 0
           elsif robotstate == 1 and line =~ /^([^<]+)</
             author = Regexp.last_match[1].gsub('&nbsp;', ' ').sub(/ +$/, '')
-            if author.length > 3 then
+            if author.length > 3
               # Only add authors of appropiate length
               product['authors'] << author
               print "Authors are #{product['authors']}\n" if $DEBUG # for DEBUGing
