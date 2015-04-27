@@ -34,7 +34,7 @@ require 'fileinstall'
 require 'gettextgenerate'
 require 'omfgenerate'
 
-require 'alexandria/version'
+require_relative 'lib/alexandria/version'
 
 stage_dir = ENV['DESTDIR'] || 'tmp'
 prefix_dir = ENV['PREFIX'] || '/usr'
