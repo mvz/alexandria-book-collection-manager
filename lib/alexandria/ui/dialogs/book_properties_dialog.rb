@@ -201,7 +201,7 @@ module Alexandria
 
       def on_help
         Alexandria::UI.display_help(@preferences_dialog,
-                                     'editing-book-properties')
+                                    'editing-book-properties')
       end
     end
   end

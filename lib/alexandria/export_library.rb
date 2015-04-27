@@ -286,11 +286,11 @@ module Alexandria
           # front cover image
           elem.add_element('MediaFileTypeCode').text = '04'
           elem.add_element('MediaFileFormatCode').text =
-          (Library.jpeg?(cover(book)) ? '03' : '02')
+            (Library.jpeg?(cover(book)) ? '03' : '02')
           # filename
           elem.add_element('MediaFileLinkTypeCode').text = '06'
           elem.add_element('MediaFileLink').text =
-          File.join('images', final_cover(book))
+            File.join('images', final_cover(book))
         end
         if book.isbn
           BookProviders.each do |provider|

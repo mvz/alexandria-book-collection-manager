@@ -109,8 +109,8 @@ module Alexandria
                                'provided.'))
         end
         book = Book.new(title, authors, isbn, publisher,
-                       publishing_year == 0 ? nil : publishing_year,
-                       edition)
+                        publishing_year == 0 ? nil : publishing_year,
+                        edition)
         book.rating = @current_rating
         book.notes = @textview_notes.buffer.text
         book.loaned = @checkbutton_loaned.active?

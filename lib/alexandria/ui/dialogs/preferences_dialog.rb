@@ -514,7 +514,7 @@ module Alexandria
 
       def on_help
         Alexandria::UI.display_help(@preferences_dialog,
-                                     'alexandria-preferences')
+                                    'alexandria-preferences')
       end
 
       private

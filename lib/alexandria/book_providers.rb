@@ -131,7 +131,7 @@ module Alexandria
 
       class Variable
         attr_reader :name, :description,
-        :possible_values
+                    :possible_values
         attr_accessor :value
 
         def initialize(provider, name, description, default_value,

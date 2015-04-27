@@ -22,7 +22,7 @@ module Alexandria
     MAX_RATING_STARS = 5
     class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
-        :iconview_model, :filtered_model
+                    :iconview_model, :filtered_model
       attr_reader :model
       include Logging
       include GetText
@@ -497,14 +497,14 @@ module Alexandria
           log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup['Properties'].sensitive = \
             @actiongroup['OnlineInformation'].sensitive = \
-            books.length == 1
+              books.length == 1
           @actiongroup['SelectAll'].sensitive = \
             books.length < library.length
 
           @actiongroup['Delete'].sensitive = \
             @actiongroup['DeselectAll'].sensitive = \
-            @actiongroup['Move'].sensitive =
-            @actiongroup['SetRating'].sensitive = !books.empty?
+              @actiongroup['Move'].sensitive =
+                @actiongroup['SetRating'].sensitive = !books.empty?
 
           log.debug { "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}" }
 
