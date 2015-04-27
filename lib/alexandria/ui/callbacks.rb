@@ -166,9 +166,7 @@ module Alexandria
         Gtk.main_quit
         # @libraries.really_save_all_books
         @libraries.really_delete_deleted_libraries
-        @libraries.all_regular_libraries.each do |library|
-          library.really_delete_deleted_books
-        end
+        @libraries.all_regular_libraries.each(&:really_delete_deleted_books)
       end
 
       def on_undo(_widget, _event)

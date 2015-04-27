@@ -251,8 +251,7 @@ module Alexandria
           operand_idx = operands.index(rule.operand)
           operations =
             SmartLibrary::Rule.operations_for_operand(rule.operand)
-          operation_idx = operations.map \
-          { |x| x.first }.index(rule.operation)
+          operation_idx = operations.map(&:first).index(rule.operation)
 
           if !operand_idx.nil? and !operation_idx.nil?
             left_operand_combo.active = operand_idx

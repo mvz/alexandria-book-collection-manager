@@ -350,7 +350,7 @@ module Alexandria
     }
 
     def self.upc_convert(upc)
-      test_upc = upc.map { |x| x.to_s }.join
+      test_upc = upc.map(&:to_s).join
       extract_numbers(AMERICAN_UPC_LOOKUP[test_upc])
     end
 
@@ -393,7 +393,7 @@ module Alexandria
                     raise InvalidISBNError.new(isbn)
                   end
 
-      canonical.map { |x| x.to_s }.join
+      canonical.map(&:to_s).join
     end
 
     def simple_save(book)

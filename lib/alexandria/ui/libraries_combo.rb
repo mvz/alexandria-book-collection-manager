@@ -22,7 +22,7 @@ class Gtk::ComboBox
   GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
   def populate_with_libraries(libraries, selected_library)
-    libraries_names = libraries.map { |x| x.name }
+    libraries_names = libraries.map(&:name)
     if selected_library
       libraries_names.delete selected_library.name
       libraries_names.unshift selected_library.name

@@ -165,7 +165,7 @@ module Alexandria
           end
 
           isbn_links = doc / '//a.isbn-a'
-          isbns = isbn_links.map { |a| a.inner_text }
+          isbns = isbn_links.map(&:inner_text)
           book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
 
           authors = []

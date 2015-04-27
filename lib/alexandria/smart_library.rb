@@ -77,7 +77,7 @@ module Alexandria
           a << smart_library
         end
       end
-      a.each { |x| x.refilter }
+      a.each(&:refilter)
       a
     end
 
@@ -133,7 +133,7 @@ module Alexandria
       {
         name: @name,
         predicate_operator_rule: @predicate_operator_rule == ALL_RULES ? :all : :any,
-        rules: @rules.map { |x| x.to_hash }
+        rules: @rules.map(&:to_hash)
       }
     end
 
@@ -164,7 +164,7 @@ module Alexandria
       raise 'need predicate operator' if @predicate_operator_rule.nil?
       raise 'need rule' if @rules.nil? or @rules.empty?
 
-      filters = @rules.map { |x| x.filter_proc }
+      filters = @rules.map(&:filter_proc)
       selector = @predicate_operator_rule == ALL_RULES ? :all? : :any?
 
       clear

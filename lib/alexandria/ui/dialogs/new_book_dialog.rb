@@ -463,7 +463,7 @@ module Alexandria
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
         end
-        books_to_add.map { |x| x.first } # array of Books only
+        books_to_add.map(&:first) # array of Books only
       end
 
       def add_book_to_library(library, book, cover_uri)

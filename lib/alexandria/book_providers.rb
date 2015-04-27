@@ -364,7 +364,7 @@ module Alexandria
       clear
       rejig_providers_priority
       priority = (@prefs.providers_priority or [])
-      priority.map! { |x| x.strip }
+      priority.map!(&:strip)
       rest = providers.keys - priority
       priority.each { |pname| self << providers[pname] }
       rest.sort.each { |pname| self << providers[pname] }

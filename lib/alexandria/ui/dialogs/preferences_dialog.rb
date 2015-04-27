@@ -139,7 +139,7 @@ module Alexandria
         @add_button = add_button(Gtk::Stock::ADD,
                                  Gtk::Dialog::RESPONSE_ACCEPT)
 
-        instances = BookProviders.abstract_classes.map { |x| x.new }
+        instances = BookProviders.abstract_classes.map(&:new)
         @selected_instance = nil
 
         @table = Gtk::Table.new(2, 2)

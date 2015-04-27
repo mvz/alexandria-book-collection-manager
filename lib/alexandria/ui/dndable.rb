@@ -67,7 +67,7 @@ module Alexandria
           selection_data, _info,
           _time|
 
-          idents = @parent.selected_books.map { |book| book.ident }
+          idents = @parent.selected_books.map(&:ident)
           unless idents.empty?
             selection_data.set(Gdk::Selection::TYPE_STRING,
                                idents.join(','))
