@@ -174,7 +174,6 @@ module Alexandria
               log.debug { "removing iter #{iter[0]}" }
               model.remove(iter)
             end
-
           end
         else
           model.freeze_notify do
@@ -620,7 +619,6 @@ module Alexandria
 
             cell.pixbuf = pixbuf
           end
-
         end
 
         @barcodes_treeview.append_column(col)

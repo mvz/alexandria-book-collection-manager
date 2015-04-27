@@ -77,7 +77,6 @@ module Alexandria
       FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
         Dir['*' + EXT[:book]].each do |filename|
-
           test[1] = filename if test[0] == 0
 
           unless File.size? test[1]

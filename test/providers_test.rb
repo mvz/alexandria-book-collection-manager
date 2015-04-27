@@ -249,6 +249,5 @@ describe Alexandria::BookProviders do
     assert_kind_of(Array, this_book.authors, 'Not an array!')
     # puts this_book.authors
     assert(this_book.authors.length == 2, 'Wrong number of authors for this book!')
-
   end
 end

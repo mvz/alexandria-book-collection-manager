@@ -355,7 +355,6 @@ module Alexandria
           prov = selected_provider
           prov.toggle_enabled
           adjust_selected_provider(prov)
-
         }
         @enable_disable_providers_menu.append(@enable_item)
         @enable_disable_providers_menu.show_all

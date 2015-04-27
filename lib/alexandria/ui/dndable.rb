@@ -64,7 +64,6 @@ module Alexandria
         end
 
         view.signal_connect('drag-data-get') do |_widget, _drag_context, selection_data, _info, _time|
-
           idents = @parent.selected_books.map(&:ident)
           unless idents.empty?
             selection_data.set(Gdk::Selection::TYPE_STRING,

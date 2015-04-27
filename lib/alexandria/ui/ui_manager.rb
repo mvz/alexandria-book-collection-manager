@@ -208,7 +208,6 @@ module Alexandria
         log.debug { 'setup_book_providers' }
         mid = @uimanager.new_merge_id
         BookProviders.each do |provider|
-
           name = provider.action_name
           ['ui/MainMenubar/ViewMenu/OnlineInformation/',
            'ui/BookPopup/OnlineInformation/',
@@ -924,7 +923,6 @@ module Alexandria
         n = 0
 
         Gtk.idle_add do
-
           block_return = true
           book = library[n]
           if book

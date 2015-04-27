@@ -215,7 +215,6 @@ module Alexandria
           if on_iterate_cb
             on_iterate_cb.call(import_count, max_import)
           end
-
         end
       rescue CSV::IllegalFormatError
         unless failed_once

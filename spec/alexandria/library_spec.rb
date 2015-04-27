@@ -19,7 +19,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Alexandria::Library do
-
   before(:each) do
     FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
   end
@@ -63,11 +62,9 @@ describe Alexandria::Library do
   after(:each) do
     FileUtils.rm_rf(TESTDIR)
   end
-
 end
 
 describe Alexandria::Library, ' imported from 0.6.1 data files' do
-
   before(:each) do
     lib_version = File.join(LIBDIR, '0.6.1')
     FileUtils.cp_r(lib_version, TESTDIR)
@@ -93,11 +90,9 @@ describe Alexandria::Library, ' imported from 0.6.1 data files' do
   after(:each) do
     FileUtils.rm_rf(TESTDIR)
   end
-
 end
 
 describe Alexandria::Library, ' with books without an ISBN' do
-
   before(:each) do
     lib_version = File.join(LIBDIR, '0.6.1-noisbn')
     FileUtils.cp_r(lib_version, TESTDIR)
@@ -139,17 +134,14 @@ describe Alexandria::Library, ' with books without an ISBN' do
     expect(lex_and_yacc_book).not_to be_nil
     expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
     # puts lex_and_yacc_book.title
-
   end
 
   after(:each) do
     FileUtils.rm_rf(TESTDIR)
   end
-
 end
 
 describe Alexandria::Library, ' export sort order' do
-
   before(:all) do
     require 'tmpdir'
     require 'csv'
@@ -201,5 +193,4 @@ describe Alexandria::Library, ' export sort order' do
       File.unlink @outfile
     end
   end
-
 end

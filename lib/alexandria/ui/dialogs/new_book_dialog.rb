@@ -398,7 +398,6 @@ module Alexandria
         @button_add.sensitive = false
         notify_start_add_by_isbn
         Gtk.idle_add do
-
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -459,7 +458,6 @@ module Alexandria
             end
             books_to_add << [book, cover]
           end
-
         end
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
@@ -577,7 +575,6 @@ module Alexandria
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
                 Library.valid_upc?(text)
               Gtk.idle_add do
-
                 @entry_isbn.text = text
                 @entry_isbn.grab_focus
                 @entry_isbn.select_region(0, -1) # select all...

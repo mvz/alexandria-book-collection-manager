@@ -225,7 +225,6 @@ module Alexandria
           # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
-
       end
       # Again, allow the iPod to unmount
       Dir.chdir(tempdir)

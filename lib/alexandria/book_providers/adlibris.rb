@@ -105,7 +105,6 @@ module Alexandria
         return [] unless search_hit
 
         (search_hit / 'ul.ulSearch table').each do |t|
-
           result = {}
           if (title_data = (t % 'div.divTitle'))
             result[:title] = (title_data % :a).inner_text
@@ -114,7 +113,6 @@ module Alexandria
           result[:lookup_url] = "#{SITE}#{lookup_url}"
 
           book_search_results << result
-
         end
         book_search_results
       end

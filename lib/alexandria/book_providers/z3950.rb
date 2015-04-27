@@ -312,7 +312,6 @@ module Alexandria
             book = Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
             results << [book]
           end
-
         end
         results
       end

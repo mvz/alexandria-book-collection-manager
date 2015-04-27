@@ -22,7 +22,6 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../../../lib'))
 require 'alexandria/scanners/cuecat'
 
 describe Alexandria::Scanners::CueCat do
-
   before :all do
     @cuecat = Alexandria::Scanners::CueCat.new
     @partials = ['.',
@@ -64,5 +63,4 @@ describe Alexandria::Scanners::CueCat do
   it 'should decode UPC barcodes' do
     skip 'Test scan UPC'
   end
-
 end
