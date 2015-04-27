@@ -1,5 +1,5 @@
 # Copyright (C) 2009 Cathal Mc Ginley
-# Copyright (C) 2014 Matijs van Zuijlen
+# Copyright (C) 2014,2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -82,8 +82,6 @@ module Alexandria
       def url(book)
         if book.isbn.nil? or book.isbn.empty?
           ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn)
-        else
-          nil
         end
       end
 
@@ -133,8 +131,6 @@ module Alexandria
         td = tr.at('td')
         if td
           text_of(td)
-        else
-          nil
         end
       end
 

@@ -71,11 +71,6 @@ Style/CommentAnnotation:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 3
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/EmptyElse:
-  Enabled: false
-
 # Offense count: 7
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/For:
