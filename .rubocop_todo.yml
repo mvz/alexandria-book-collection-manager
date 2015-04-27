@@ -140,12 +140,6 @@ Style/IfUnlessModifier:
 Style/InfiniteLoop:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/MethodDefParentheses:
-  Enabled: false
-
 # Offense count: 4
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 Style/MethodName:
