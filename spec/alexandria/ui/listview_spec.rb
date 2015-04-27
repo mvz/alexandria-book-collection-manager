@@ -19,7 +19,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Alexandria::UI::ListViewManager do
-  it "should work" do
+  it 'should work' do
     listview = double(Gtk::TreeView).as_null_object
     parent = double(Object, listview: listview).as_null_object
     expect(listview).to receive(:enable_model_drag_source)

@@ -39,7 +39,7 @@ class OmfGenerateTask < Rake::TaskLib
   end
 
   def make_task
-    desc "Generate Open Metadata Framework files"
+    desc 'Generate Open Metadata Framework files'
     task omf: @generated_files
 
     if CLOBBER

@@ -31,11 +31,11 @@ module Alexandria
     class ThaliaProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.thalia.de"
+      SITE = 'http://www.thalia.de'
       BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
 
       def initialize
-        super("Thalia", "Thalia (Germany)")
+        super('Thalia', 'Thalia (Germany)')
         # no preferences for the moment
         prefs.read
       end
@@ -92,7 +92,7 @@ module Alexandria
       def data_from_label(node, label_text)
         label_node = node % "strong[text()*='#{label_text}']"
         if (item_node = label_node.parent)
-          data = ""
+          data = ''
           item_node.children.each do |n|
             if n.text?
               data += n.to_html
@@ -100,14 +100,14 @@ module Alexandria
           end
           data.strip
         else
-          ""
+          ''
         end
       end
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:lookup_url]}" }
         html_data =  transport.get_response(URI.parse(result[:lookup_url]))
-        parse_result_data(html_data.body, "noisbn", true)
+        parse_result_data(html_data.body, 'noisbn', true)
       end
 
       def parse_result_data(html, isbn, recursing = false)
@@ -143,7 +143,7 @@ module Alexandria
         begin
           if (div = doc % 'div#contentFull')
             title_img = ((div % :h2) / :img).first
-            title = title_img["alt"]
+            title = title_img['alt']
 
             # note, the following img also has alt="von Author, Author..."
 
@@ -187,7 +187,7 @@ module Alexandria
           end
         rescue => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for Thalia " \
+          log.warn {'Failed parsing search results for Thalia ' \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end

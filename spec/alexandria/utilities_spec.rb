@@ -22,7 +22,7 @@ describe Alexandria::ExecutionQueue do
 end
 
 describe Alexandria::ExportFormat do
-  it "should justify its existence"
+  it 'should justify its existence'
 end
 
 describe Alexandria::ImportFilter do
@@ -30,11 +30,11 @@ describe Alexandria::ImportFilter do
 end
 
 describe Alexandria::Logger do
-  it "should fulfill its function"
+  it 'should fulfill its function'
 end
 
 describe Alexandria::UndoManager do
-  it "should make right what is wrong"
+  it 'should make right what is wrong'
 end
 
 describe Time do
@@ -42,9 +42,9 @@ describe Time do
 end
 
 describe String do
-  it "should do what it does"
+  it 'should do what it does'
 end
 
 describe Alexandria::WebTheme do
-  it "should be themeable"
+  it 'should be themeable'
 end

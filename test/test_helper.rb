@@ -28,11 +28,11 @@ LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), '/data/libraries'))
 TESTDIR = File.join(LIBDIR, 'test')
 
 def an_artist_of_the_floating_world
-  Alexandria::Book.new("An Artist of the Floating World",
-                       "Kazuo Ishiguro",
-                       "9780571147168",
-                       "Faber and Faber", 1999,
-                       "Paperback")
+  Alexandria::Book.new('An Artist of the Floating World',
+                       'Kazuo Ishiguro',
+                       '9780571147168',
+                       'Faber and Faber', 1999,
+                       'Paperback')
 end
 
 module Alexandria

@@ -25,11 +25,11 @@ module Alexandria
     # like this.)
     class KeyboardWedge
       def name
-        "KeyboardWedge"
+        'KeyboardWedge'
       end
 
       def display_name
-        "Keyboard Wedge"
+        'Keyboard Wedge'
       end
 
       # Checks if data looks like a completed scan

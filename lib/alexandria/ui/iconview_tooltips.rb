@@ -78,7 +78,7 @@ class IconViewTooltips
 
   def label_for_book(title, authors, publisher, year)
     # This is much too complex... but it works for now!
-    html = ""
+    html = ''
     if title.size > 0
       html += "<b>#{CGI.escapeHTML(title)}</b>"
       if authors.size > 0
@@ -92,19 +92,19 @@ class IconViewTooltips
       html += "\n"
     end
 
-    html += "<small>"
+    html += '<small>'
     if publisher and publisher.size > 0
       html += "#{CGI.escapeHTML(publisher)}"
     end
 
     if year and year.size > 0
       if publisher and publisher.size > 0
-        html += " "
+        html += ' '
       end
       html += "(#{year})"
     end
 
-    html + "</small>"
+    html + '</small>'
   end
 
   def on_motion(view, event)

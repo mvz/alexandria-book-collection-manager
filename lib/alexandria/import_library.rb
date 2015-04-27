@@ -24,15 +24,15 @@ module Alexandria
 
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
     def self.all
       [
-        new(_("Autodetect"), ['*'], :import_autodetect),
-        new(_("Archived Tellico XML (*.bc, *.tc)"),
+        new(_('Autodetect'), ['*'], :import_autodetect),
+        new(_('Archived Tellico XML (*.bc, *.tc)'),
             ['*.tc', '*.bc'], :import_as_tellico_xml_archive),
-        new(_("ISBN List (*.txt)"), ['*.txt'], :import_as_isbn_list),
-        new(_("GoodReads CSV"), ['*.csv'], :import_as_csv_file)
+        new(_('ISBN List (*.txt)'), ['*.txt'], :import_as_isbn_list),
+        new(_('GoodReads CSV'), ['*.csv'], :import_as_csv_file)
       ]
     end
 
@@ -67,28 +67,28 @@ module Alexandria
       filename = args[1]
       puts "Filename is #{filename} and ext is #{filename[-4..-1]}"
       puts "Beginning import: #{args[0]}, #{args[1]}"
-      if filename[-4..-1] == ".txt"
+      if filename[-4..-1] == '.txt'
         import_as_isbn_list(*args)
-      elsif [".tc", ".bc"].include? filename[-3..-1]
+      elsif ['.tc', '.bc'].include? filename[-3..-1]
         begin
           import_as_tellico_xml_archive(*args)
         rescue => e
           puts e.message
           puts e.backtrace.join("\n>> ")
         end
-      elsif [".csv"].include? filename[-4..-1]
+      elsif ['.csv'].include? filename[-4..-1]
         import_as_csv_file(*args)
       else
-        puts "Bailing on this import!"
-        raise "Not supported type"
+        puts 'Bailing on this import!'
+        raise 'Not supported type'
       end
     end
 
     def self.import_as_tellico_xml_archive(name, filename,
                                            on_iterate_cb, _on_error_cb)
-      puts "Starting import_as_tellico_xml_archive... "
+      puts 'Starting import_as_tellico_xml_archive... '
       return nil unless system("unzip -qqt \"#{filename}\"")
-      tmpdir = File.join(Dir.tmpdir, "tellico_export")
+      tmpdir = File.join(Dir.tmpdir, 'tellico_export')
       FileUtils.rm_rf(tmpdir) if File.exist?(tmpdir)
       Dir.mkdir(tmpdir)
       Dir.chdir(tmpdir) do
@@ -161,7 +161,7 @@ module Alexandria
           content.each do |book, cover|
             unless cover.nil?
               library.save_cover(book,
-                                 File.join(Dir.pwd, "images",
+                                 File.join(Dir.pwd, 'images',
                                            cover))
             end
             library << book
@@ -227,7 +227,7 @@ module Alexandria
           # this is a hack to fix up such files
           data = File.read(filename)
           data.gsub!(/\,\=\"/, ',"')
-          csv_fixed = Tempfile.new("alexandria_import_csv_fixed_")
+          csv_fixed = Tempfile.new('alexandria_import_csv_fixed_')
           csv_fixed.write(data)
           csv_fixed.close
 
@@ -253,7 +253,7 @@ module Alexandria
 
     def self.import_as_isbn_list(name, filename, on_iterate_cb,
                                  on_error_cb)
-      puts "Starting import_as_isbn_list... "
+      puts 'Starting import_as_isbn_list... '
       isbn_list = IO.readlines(filename).map do |line|
         puts "Trying line #{line}" if $DEBUG
         # Let's preserve the failing isbns so we can report them later.

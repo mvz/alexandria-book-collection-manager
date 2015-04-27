@@ -19,16 +19,16 @@
 require File.expand_path('test_helper.rb', File.dirname(__FILE__))
 
 describe Alexandria::Book do
-  it "should be a thing" do
+  it 'should be a thing' do
     an_artist_of_the_floating_world
   end
 
-  it "should establish equality only with books with the same identity" do
+  it 'should establish equality only with books with the same identity' do
     book = an_artist_of_the_floating_world
     same_book = an_artist_of_the_floating_world
     same_book.must_equal book
     different_book = an_artist_of_the_floating_world
-    different_book.isbn = "9780571147999"
+    different_book.isbn = '9780571147999'
     different_book.wont_equal book
   end
 end

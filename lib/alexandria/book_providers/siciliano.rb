@@ -32,18 +32,18 @@ module Alexandria
     class SicilianoProvider < WebsiteBasedProvider
       include Logging
 
-      SITE = "http://www.siciliano.com.br"
+      SITE = 'http://www.siciliano.com.br'
 
       # The string interpolations in this URL are the search term and search
       # type, respectively.
       BASE_SEARCH_URL = "#{SITE}/pesquisaweb/pesquisaweb.dll/pesquisa?" \
-        "&FIL_ID=102" \
-        "&PALAVRASN1=%s" \
-        "&FILTRON1=%s" \
-        "&ESTRUTN1=0301&ORDEMN2=E"
+        '&FIL_ID=102' \
+        '&PALAVRASN1=%s' \
+        '&FILTRON1=%s' \
+        '&ESTRUTN1=0301&ORDEMN2=E'
 
       def initialize
-        super("Siciliano", "Livraria Siciliano (Brasil)")
+        super('Siciliano', 'Livraria Siciliano (Brasil)')
         # no preferences for the moment
         prefs.read
       end
@@ -56,7 +56,7 @@ module Alexandria
 
       def search(criterion, type)
         begin
-          criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+          criterion = criterion.convert('ISO-8859-1', 'UTF-8') # still needed??
         rescue GLib::ConvertError
           log.info { "Cannot search for non-ISO-8859-1 terms at Siciliano : #{criterion}" }
           raise NoResultsError
@@ -64,7 +64,7 @@ module Alexandria
         trying_again = false
         begin
           req = create_search_uri(type, criterion, trying_again)
-          log.debug { "#{name} #{trying_again ? 'retrying ' :  ''}request = #{req}" }
+          log.debug { "#{name} #{trying_again ? 'retrying ' : ''}request = #{req}" }
           data = transport.get(URI.parse(req))
           results = parse_search_result_data(data)
           raise NoResultsError if results.empty?
@@ -184,17 +184,17 @@ module Alexandria
         details_div = doc % 'div#tab-caracteristica'
         details = string_array_to_map(lines_of_text_as_array(details_div))
         # ISBN
-        isbn =  details["ISBN"]
+        isbn =  details['ISBN']
         ## ean = details["CdBarras"]
-        translator = details["Tradutor"]
+        translator = details['Tradutor']
         if translator
           authors << translator
         end
-        binding = details["Acabamento"]
+        binding = details['Acabamento']
         publisher = search_result[:publisher]
         # publish year
         publish_year = nil
-        edition = details["Edio"]
+        edition = details['Edio']
         if edition
           if edition =~ /([12][0-9]{3})/ # publication date
             publish_year = Regexp.last_match[1].to_i
@@ -203,7 +203,7 @@ module Alexandria
         # cover
         # ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
         image_urls = []
-        (doc / "script").each do |script|
+        (doc / 'script').each do |script|
           next if script.children.nil?
           script.children.each do |ch|
             ch_text = ch.to_s

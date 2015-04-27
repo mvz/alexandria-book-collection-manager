@@ -37,11 +37,11 @@ module Alexandria
     class WorldCatProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.worldcat.org"
+      SITE = 'http://www.worldcat.org'
       BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
 
       def initialize
-        super("WorldCat", "WorldCat")
+        super('WorldCat', 'WorldCat')
         # prefs.add("enabled", _("Enabled"), true, [true,false])
         prefs.read
       end
@@ -98,7 +98,7 @@ module Alexandria
       end
 
       def parse_search_result_data(html)
-        doc = html_to_doc(html, "UTF-8")
+        doc = html_to_doc(html, 'UTF-8')
         book_search_results = []
         begin
           result_cells = doc / 'td.result/div.name/..'
@@ -121,27 +121,27 @@ module Alexandria
           end
         rescue => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for WorldCat " \
+          log.warn {'Failed parsing search results for WorldCat ' \
                     "#{ex.message} #{trace}" }
         end
         book_search_results
       end
 
       def parse_result_data(html, search_isbn = nil, recursing = false)
-        doc = html_to_doc(html, "UTF-8")
+        doc = html_to_doc(html, 'UTF-8')
 
         begin
           if doc % 'div#div-results-none'
-            log.debug { "WorldCat reports no results" }
+            log.debug { 'WorldCat reports no results' }
             raise NoResultsError
           end
 
           if doc % 'table.table-results'
             if recursing
-              log.warn { "Infinite loop prevented redirecting through WorldCat" }
+              log.warn { 'Infinite loop prevented redirecting through WorldCat' }
               raise NoResultsError
             end
-            log.info { "Found multiple results for lookup: checking each" }
+            log.info { 'Found multiple results for lookup: checking each' }
             search_results = parse_search_result_data(html)
             book = nil
             cover_url = nil
@@ -166,7 +166,7 @@ module Alexandria
                   log.info { "book #{book} is a match" }
                   return [book, cover_url]
                 end
-                log.debug { "not a match, checking next" }
+                log.debug { 'not a match, checking next' }
               else
                 # no constraint to match isbn, just return first result
                 return [book, cover_url]
@@ -174,7 +174,7 @@ module Alexandria
             end
 
             # gone through all and no ISBN match, so just return first result
-            log.info { "no more results to check. Returning first result, just an approximation" }
+            log.info { 'no more results to check. Returning first result, just an approximation' }
             return first_result
 
           end
@@ -182,7 +182,7 @@ module Alexandria
           title_header = doc % 'h1.title'
           title = title_header.inner_text if title_header
           unless title
-            log.warn { "Unexpected lack of title from WorldCat lookup" }
+            log.warn { 'Unexpected lack of title from WorldCat lookup' }
             raise NoResultsError
           end
           log.info { "Found book #{title} at WorldCat" }
@@ -226,11 +226,11 @@ module Alexandria
               isbns = (isbn_row / 'td').last.inner_text.split
               isbn = Library.canonicalise_isbn(isbns.first)
             else
-              log.warn { "No ISBN found on page" }
+              log.warn { 'No ISBN found on page' }
             end
           end
 
-          binding = "" # not given on WorldCat website (as far as I can tell)
+          binding = '' # not given on WorldCat website (as far as I can tell)
 
           book = Book.new(title, authors, isbn, publisher, year, binding)
 
@@ -241,7 +241,7 @@ module Alexandria
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for WorldCat " \
+          log.warn {'Failed parsing search results for WorldCat ' \
                     "#{ex.message} #{trace}" }
           raise NoResultsError
         end

@@ -22,12 +22,12 @@ module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
     class ListViewManager
       include Logging
       include GetText
       include DragAndDropable
-      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", Gtk::Drag::TARGET_SAME_APP, 0]]
+      BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', Gtk::Drag::TARGET_SAME_APP, 0]]
 
       MAX_RATING_STARS = 5
       module Columns
@@ -48,8 +48,8 @@ module Alexandria
       end
 
       def setup_title_column
-        title = _("Title")
-        log.debug { "Create listview column for %s" % title }
+        title = _('Title')
+        log.debug { 'Create listview column for %s' % title }
         column = Gtk::TreeViewColumn.new(title)
         column.widget = Gtk::Label.new(title).show
         renderer = Gtk::CellRendererPixbuf.new
@@ -78,14 +78,13 @@ module Alexandria
       end
 
       def make_renderer_editable(renderer)
-        renderer.signal_connect('editing_started') do |_cell, entry,
-          _path_string|
-          log.debug { "editing_started" }
+        renderer.signal_connect('editing_started') do |_cell, entry, _path_string|
+          log.debug { 'editing_started' }
           entry.complete_titles
         end
 
         renderer.signal_connect('edited') do |_cell, path_string, new_string|
-          log.debug { "edited" }
+          log.debug { 'edited' }
           path = Gtk::TreePath.new(path_string)
           path = @listview_model.convert_path_to_child_path(path)
           path = @filtered_model.convert_path_to_child_path(path)
@@ -101,21 +100,21 @@ module Alexandria
       end
 
       TEXT_COLUMNS = [
-        [_("Authors"), Columns::AUTHORS],
-        [_("ISBN"), Columns::ISBN],
-        [_("Publisher"), Columns::PUBLISHER],
-        [_("Publish Year"), Columns::PUBLISH_DATE],
-        [_("Binding"), Columns::EDITION],
-        [_("Loaned To"), Columns::LOANED_TO]
+        [_('Authors'), Columns::AUTHORS],
+        [_('ISBN'), Columns::ISBN],
+        [_('Publisher'), Columns::PUBLISHER],
+        [_('Publish Year'), Columns::PUBLISH_DATE],
+        [_('Binding'), Columns::EDITION],
+        [_('Loaned To'), Columns::LOANED_TO]
       ]
       CHECK_COLUMNS = [
-        [_("Read"), Columns::REDD],
-        [_("Own"), Columns::OWN],
-        [_("Want"), Columns::WANT]
+        [_('Read'), Columns::REDD],
+        [_('Own'), Columns::OWN],
+        [_('Want'), Columns::WANT]
       ]
 
       def setup_books_listview
-        log.debug { "setup_books_listview" }
+        log.debug { 'setup_books_listview' }
         @listview.model = @listview_model
         setup_title_column
         TEXT_COLUMNS.each do |title, iterid|
@@ -127,7 +126,7 @@ module Alexandria
         setup_rating_column
         @listview.selection.mode = Gtk::SELECTION_MULTIPLE
         @listview.selection.signal_connect('changed') do
-          log.debug { "changed" }
+          log.debug { 'changed' }
           @parent.on_books_selection_changed
         end
         setup_tags_column
@@ -137,8 +136,8 @@ module Alexandria
 
       def setup_tags_column
         # adding tags column...
-        title = _("Tags")
-        log.debug { "Create listview column for tags..." }
+        title = _('Tags')
+        log.debug { 'Create listview column for tags...' }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
@@ -153,17 +152,17 @@ module Alexandria
         @listview.signal_connect('row-activated') do
           # Dirty hack to avoid the beginning of a drag within this
           # handler.
-          log.debug { "row-activated" }
+          log.debug { 'row-activated' }
           Gtk.timeout_add(100) do
-            @actiongroup["Properties"].activate
+            @actiongroup['Properties'].activate
             false
           end
         end
       end
 
       def setup_rating_column
-        title = _("Rating")
-        log.debug { "Create listview column for %s..." % title }
+        title = _('Rating')
+        log.debug { 'Create listview column for %s...' % title }
         column = Gtk::TreeViewColumn.new(title)
         column.widget = Gtk::Label.new(title).show
         column.sizing = Gtk::TreeViewColumn::FIXED
@@ -229,7 +228,7 @@ module Alexandria
         column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
-        log.debug { "Create listview column for %s..." % title }
+        log.debug { 'Create listview column for %s...' % title }
         setup_column = proc do |iter, cell, col|
           state = iter[col]
           cell.set_active(state)
@@ -255,7 +254,7 @@ module Alexandria
       end
 
       def setup_text_column(title, iterid)
-        log.debug { "Create listview column for %s..." % title }
+        log.debug { 'Create listview column for %s...' % title }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
@@ -267,7 +266,7 @@ module Alexandria
       end
 
       def setup_listview_columns_visibility
-        log.debug { "setup_listview_columns_visibility" }
+        log.debug { 'setup_listview_columns_visibility' }
         # Show or hide list view columns according to the preferences.
         cols_visibility = [
           @prefs.col_authors_visible,
@@ -286,7 +285,7 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end
-        log.debug { "Columns visibility: " + cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ") }
+        log.debug { 'Columns visibility: ' + cols.map { |col| "#{col.title} #{col.visible?}" }.join(', ') }
       end
 
       # Sets the width of each column based on any respective
@@ -304,7 +303,7 @@ module Alexandria
             end
           end
         end
-        log.debug { "Columns width: " + @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(", ") }
+        log.debug { 'Columns width: ' + @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(', ') }
       end
     end
   end

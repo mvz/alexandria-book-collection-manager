@@ -23,7 +23,7 @@ module Alexandria
     def self.all
       themes_dir = [
         # System dir
-        File.join(Alexandria::Config::DATA_DIR, "web-themes"),
+        File.join(Alexandria::Config::DATA_DIR, 'web-themes'),
 
         # User dir
         File.join(ENV['HOME'], '.alexandria', '.web-themes')
@@ -51,13 +51,13 @@ module Alexandria
           # ignore CVS directories
           next if file == 'CVS'
 
-          css_file = File.join(path, file + ".css")
-          preview_file = File.join(path, "preview.jpg")
+          css_file = File.join(path, file + '.css')
+          preview_file = File.join(path, 'preview.jpg')
           [css_file, preview_file].each do |helper_file|
             raise "#{helper_file} not found" unless File.exist?(helper_file)
           end
           themes << WebTheme.new(css_file, preview_file,
-                                 File.join(path, file, "pixmaps"))
+                                 File.join(path, file, 'pixmaps'))
         end
       else
         FileUtils.mkdir_p(themes_dir)
@@ -66,7 +66,7 @@ module Alexandria
     end
 
     def initialize(css_file, preview_file, pixmaps_directory)
-      @name = File.basename(css_file, ".css").capitalize
+      @name = File.basename(css_file, '.css').capitalize
       @css_file = css_file
       @preview_file = preview_file
       @pixmaps_directory = pixmaps_directory

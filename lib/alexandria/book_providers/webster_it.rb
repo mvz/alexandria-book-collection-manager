@@ -25,23 +25,23 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class Webster_itProvider < GenericProvider
-      BASE_URI = "http://www.libreriauniversitaria.it" # also "http://www.webster.it"
+      BASE_URI = 'http://www.libreriauniversitaria.it' # also "http://www.webster.it"
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.webster_it_cache')
       REFERER = BASE_URI
-      LOCALE = "BIT" # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
+      LOCALE = 'BIT' # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
       def initialize
-        super("Webster_it", "Webster (Italy)")
+        super('Webster_it', 'Webster (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
         # no preferences for the moment
         at_exit { clean_cache }
       end
 
       def search(criterion, type)
-        criterion = criterion.convert("ISO-8859-15", "UTF-8")
-        req = BASE_URI + "/"
+        criterion = criterion.convert('ISO-8859-15', 'UTF-8')
+        req = BASE_URI + '/'
         req += case type
                when SEARCH_BY_ISBN
-                 "isbn/" # "#{LOCALE}/"
+                 'isbn/' # "#{LOCALE}/"
 
                when SEARCH_BY_TITLE
                  "c_search.php?noinput=1&shelf=#{LOCALE}&title_query="
@@ -76,7 +76,7 @@ module Alexandria
       end
 
       def url(book)
-        BASE_URI + "/isbn/" + book.isbn
+        BASE_URI + '/isbn/' + book.isbn
       end
 
       #######
@@ -85,13 +85,13 @@ module Alexandria
 
       def to_book(data)
         raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data)
-        data = data.convert("UTF-8", "ISO-8859-15")
+        data = data.convert('UTF-8', 'ISO-8859-15')
 
         md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
         raise unless md
         title = CGI.unescape(md[1].strip)
         if (md = /<span class="product_heading_volume">([^<]+)/.match(data))
-          title += " " + CGI.unescape(md[1].strip)
+          title += ' ' + CGI.unescape(md[1].strip)
         end
 
         authors = []
@@ -112,14 +112,14 @@ module Alexandria
         publisher = CGI.unescape(md[1].strip) or md
 
         if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
-          edition = CGI.unescape(md[1].strip) + " p."
+          edition = CGI.unescape(md[1].strip) + ' p.'
         else
           edition = nil
         end
 
         publish_year = nil
         if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))
-          publish_year = CGI.unescape(md[1].strip)[-4 .. -1].to_i
+          publish_year = CGI.unescape(md[1].strip)[-4..-1].to_i
           publish_year = nil if publish_year == 0
         end
 
@@ -130,26 +130,26 @@ module Alexandria
             cover_url[-5] = 112
           end
 
-          cover_filename = isbn + ".tmp"
+          cover_filename = isbn + '.tmp'
           Dir.chdir(CACHE_DIR) do
             begin
-              cover_data = open(cover_url, "Referer" => REFERER).read
+              cover_data = open(cover_url, 'Referer' => REFERER).read
             rescue OpenURI::HTTPError
               cover_data = nil
             end
             if cover_data
-              File.open(cover_filename, "w") do |file|
+              File.open(cover_filename, 'w') do |file|
                 file.write cover_data
               end
             end
           end
 
-          medium_cover = CACHE_DIR + "/" + cover_filename
+          medium_cover = CACHE_DIR + '/' + cover_filename
           if File.size(medium_cover) > 0
-            puts medium_cover + " has non-0 size" if $DEBUG
+            puts medium_cover + ' has non-0 size' if $DEBUG
             return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
           end
-          puts medium_cover + " has 0 size, removing ..." if $DEBUG
+          puts medium_cover + ' has 0 size, removing ...' if $DEBUG
           File.delete(medium_cover)
         end
         [Book.new(title, authors, isbn, publisher, publish_year, edition)]
@@ -162,8 +162,8 @@ module Alexandria
       def clean_cache
         # FIXME begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
-          Dir.glob("*.tmp") do |file|
-            puts "removing " + file if $DEBUG
+          Dir.glob('*.tmp') do |file|
+            puts 'removing ' + file if $DEBUG
             File.delete(file)
           end
         end

@@ -35,16 +35,16 @@ module Alexandria
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.barnesandnoble.com"
+      SITE = 'http://www.barnesandnoble.com'
 
-      BASE_ISBN_SEARCH_URL = "http://search.barnesandnoble.com/books" \
-        "/product.aspx?ISBSRC=Y&ISBN=%s"
+      BASE_ISBN_SEARCH_URL = 'http://search.barnesandnoble.com/books' \
+        '/product.aspx?ISBSRC=Y&ISBN=%s'
 
-      BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" \
-        "/results.asp?%s=%s" # type, term
+      BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
+        '/results.asp?%s=%s' # type, term
 
       def initialize
-        super("BarnesAndNoble", "BarnesAndNoble")
+        super('BarnesAndNoble', 'BarnesAndNoble')
         @agent = nil
         prefs.read
       end
@@ -134,7 +134,7 @@ module Alexandria
           end
         rescue => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for Barnes & Noble " \
+          log.warn {'Failed parsing search results for Barnes & Noble ' \
             "#{ex.message} #{trace}" }
         end
         book_search_results
@@ -146,15 +146,15 @@ module Alexandria
           book_data = {}
           title_header = doc % '//div.wgt-productTitle/h1'
           if title_header
-            title = ""
+            title = ''
             title_header.children.each do |node|
               if node.text?
-                title += " " + node.to_s
+                title += ' ' + node.to_s
               end
             end
             title.strip!
             if title.empty?
-              log.warn { "Unexpectedly found no title in BarnesAndNoble lookup" }
+              log.warn { 'Unexpectedly found no title in BarnesAndNoble lookup' }
               raise NoResultsError
             end
             book_data[:title] = title.strip.squeeze(' ')
@@ -165,7 +165,7 @@ module Alexandria
           end
 
           isbn_links = doc / '//a.isbn-a'
-          isbns = isbn_links.map { |a| a.inner_text }
+          isbns = isbn_links.map(&:inner_text)
           book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
 
           authors = []
@@ -188,7 +188,7 @@ module Alexandria
             book_data[:publication_year] = year
           end
 
-          book_data[:binding] = ""
+          book_data[:binding] = ''
           format_list_items = doc / '//div.col-one/ul/li'
           format_list_items.each do |li|
             if li.inner_text =~ /Format:\s*(.*),/
@@ -219,7 +219,7 @@ module Alexandria
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for BarnesAndNoble " \
+          log.warn {'Failed parsing search results for BarnesAndNoble ' \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end

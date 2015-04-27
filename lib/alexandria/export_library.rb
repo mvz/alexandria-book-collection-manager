@@ -66,7 +66,7 @@ module Alexandria
       end
 
       def to_s
-        "default order"
+        'default order'
       end
     end
   end
@@ -100,17 +100,17 @@ module Alexandria
     include GetText
     include Logging
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
     def self.all
       [
-        new(_("Archived ONIX XML"), "onix.tbz2", :export_as_onix_xml_archive),
-        new(_("Archived Tellico XML"), "tc", :export_as_tellico_xml_archive),
-        new(_("BibTeX"), "bib", :export_as_bibtex),
-        new(_("CSV list"), "csv", :export_as_csv_list),
-        new(_("ISBN List"), "txt", :export_as_isbn_list),
-        new(_("iPod Notes"), nil, :export_as_ipod_notes),
-        new(_("HTML Web Page"), nil, :export_as_html, true)
+        new(_('Archived ONIX XML'), 'onix.tbz2', :export_as_onix_xml_archive),
+        new(_('Archived Tellico XML'), 'tc', :export_as_tellico_xml_archive),
+        new(_('BibTeX'), 'bib', :export_as_bibtex),
+        new(_('CSV list'), 'csv', :export_as_csv_list),
+        new(_('ISBN List'), 'txt', :export_as_isbn_list),
+        new(_('iPod Notes'), nil, :export_as_ipod_notes),
+        new(_('HTML Web Page'), nil, :export_as_html, true)
       ]
     end
 
@@ -142,20 +142,20 @@ module Alexandria
 
   module Exportable
     def export_as_onix_xml_archive(filename)
-      File.open(File.join(Dir.tmpdir, "onix.xml"), "w") do |io|
+      File.open(File.join(Dir.tmpdir, 'onix.xml'), 'w') do |io|
         to_onix_document.write(io, 0)
       end
-      copy_covers(File.join(Dir.tmpdir, "images"))
+      copy_covers(File.join(Dir.tmpdir, 'images'))
       Dir.chdir(Dir.tmpdir) do
         output = `tar -cjf \"#{filename}\" onix.xml images 2>&1`
         raise output unless $CHILD_STATUS.success?
       end
-      FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
-      FileUtils.rm(File.join(Dir.tmpdir, "onix.xml"))
+      FileUtils.rm_rf(File.join(Dir.tmpdir, 'images'))
+      FileUtils.rm(File.join(Dir.tmpdir, 'onix.xml'))
     end
 
     def export_as_tellico_xml_archive(filename)
-      File.open(File.join(Dir.tmpdir, "tellico.xml"), "w") do |io|
+      File.open(File.join(Dir.tmpdir, 'tellico.xml'), 'w') do |io|
         begin
           to_tellico_document.write(io, 0)
         rescue => ex
@@ -164,19 +164,19 @@ module Alexandria
           raise ex
         end
       end
-      copy_covers(File.join(Dir.tmpdir, "images"))
+      copy_covers(File.join(Dir.tmpdir, 'images'))
       Dir.chdir(Dir.tmpdir) do
         output = `zip -q -r \"#{filename}\" tellico.xml images 2>&1`
         raise output unless $CHILD_STATUS.success?
       end
-      FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
-      FileUtils.rm(File.join(Dir.tmpdir, "tellico.xml"))
+      FileUtils.rm_rf(File.join(Dir.tmpdir, 'images'))
+      FileUtils.rm(File.join(Dir.tmpdir, 'tellico.xml'))
     end
 
     def export_as_isbn_list(filename)
       File.open(filename, 'w') do |io|
         each do |book|
-          io.puts((book.isbn or ""))
+          io.puts((book.isbn or ''))
         end
       end
     end
@@ -184,18 +184,18 @@ module Alexandria
     def export_as_html(filename, theme)
       FileUtils.mkdir(filename) unless File.exist?(filename)
       Dir.chdir(filename) do
-        copy_covers("pixmaps")
+        copy_covers('pixmaps')
         FileUtils.cp_r(theme.pixmaps_directory,
-                       "pixmaps") if theme.has_pixmaps?
-        FileUtils.cp(theme.css_file, ".")
-        File.open("index.html", "w") do |io|
+                       'pixmaps') if theme.has_pixmaps?
+        FileUtils.cp(theme.css_file, '.')
+        File.open('index.html', 'w') do |io|
           io << to_xhtml(File.basename(theme.css_file))
         end
       end
     end
 
     def export_as_bibtex(filename)
-      File.open(filename, "w") do |io|
+      File.open(filename, 'w') do |io|
         io << to_bibtex
       end
     end
@@ -204,8 +204,8 @@ module Alexandria
       FileUtils.mkdir(filename) unless File.exist?(filename)
       tempdir = Dir.getwd
       Dir.chdir(filename)
-      copy_covers("pixmaps")
-      File.open("index.linx", 'w') do |io|
+      copy_covers('pixmaps')
+      File.open('index.linx', 'w') do |io|
         io.puts '<TITLE>' + name + '</TITLE>'
         each do |book|
           io.puts '<A HREF="' + book.ident + '">' + book.title + '</A>'
@@ -223,7 +223,7 @@ module Alexandria
           end
           io.puts book.authors.join(', ')
           io.puts book.edition
-          io.puts((book.isbn or ""))
+          io.puts((book.isbn or ''))
           # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
@@ -235,9 +235,9 @@ module Alexandria
 
     def export_as_csv_list(filename)
       File.open(filename, 'w') do |io|
-        io.puts "Title" + ';' + "Authors" + ';' + "Publisher" + ';' + "Edition" + ';' + "ISBN" + ';' + "Year Published" + ';' + "Rating" + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + "Notes" + ';' + "Want?" + ';' + "Read?" + ';' + "Own?" + ';' + "Tags"
+        io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
         each do |book|
-          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or "") + ';' + (book.edition or "") + ';' + (book.isbn or "") + ';' + (book.publishing_year.to_s or "") + ';' + (book.rating.to_s or "0") + ';' + (book.notes or "") + ';' + ( book.want ? "1" : "0") + ';' + ( book.redd ? "1" : "0") + ';' + ( book.own ? "1" : "0") + ';' + (book.tags ? book.tags.join(', ') : "")
+          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or '') + ';' + (book.edition or '') + ';' + (book.isbn or '') + ';' + (book.publishing_year.to_s or '') + ';' + (book.rating.to_s or '0') + ';' + (book.notes or '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
         end
       end
     end
@@ -246,7 +246,7 @@ module Alexandria
     private
     #######
 
-    ONIX_DTD_URL = "http://www.editeur.org/onix/2.1/reference/onix-international.dtd"
+    ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'
     def to_onix_document
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
@@ -254,10 +254,10 @@ module Alexandria
                                 "SYSTEM \"#{ONIX_DTD_URL}\"")
       msg = doc.add_element('ONIXMessage')
       header = msg.add_element('Header')
-      header.add_element('FromCompany').text = "Alexandria"
+      header.add_element('FromCompany').text = 'Alexandria'
       header.add_element('FromPerson').text = Etc.getlogin
       now = Time.now
-      header.add_element('SentDate').text = "%.4d%.2d%.2d%.2d%.2d" % [
+      header.add_element('SentDate').text = '%.4d%.2d%.2d%.2d%.2d' % [
         now.year, now.month, now.day, now.hour, now.min
       ]
       header.add_element('MessageNote').text = name
@@ -265,10 +265,10 @@ module Alexandria
         # fields that are missing: edition and rating.
         prod = msg.add_element('Product')
         prod.add_element('RecordReference').text = idx
-        prod.add_element('NotificationType').text = "03"  # confirmed
+        prod.add_element('NotificationType').text = '03'  # confirmed
         prod.add_element('RecordSourceName').text =
-          "Alexandria " + Alexandria::DISPLAY_VERSION
-        prod.add_element('ISBN').text = (book.isbn or "")
+          'Alexandria ' + Alexandria::DISPLAY_VERSION
+        prod.add_element('ISBN').text = (book.isbn or '')
         prod.add_element('ProductForm').text = 'BA'       # book
         prod.add_element('DistinctiveTitle').text = book.title
         unless book.authors.empty?
@@ -321,16 +321,16 @@ module Alexandria
       doc << REXML::XMLDecl.new
       doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V7.0//EN\" \"http://periapsis.org/tellico/dtd/v7/tellico.dtd\"")
       tellico = doc.add_element('tellico')
-      tellico.add_attribute('syntaxVersion', "7")
+      tellico.add_attribute('syntaxVersion', '7')
       tellico.add_namespace('http://periapsis.org/tellico/')
       collection = tellico.add_element('collection')
       collection.add_attribute('title', name)
-      collection.add_attribute('type', "2")
+      collection.add_attribute('type', '2')
       fields = collection.add_element('fields')
       field1 = fields.add_element('field')
       # a field named _default implies adding all default book
       # collection fields
-      field1.add_attribute('name', "_default")
+      field1.add_attribute('name', '_default')
       images = collection.add_element('images')
       each_with_index do |book, idx|
         entry = collection.add_element('entry')
@@ -338,7 +338,7 @@ module Alexandria
         entry.add_attribute('id', new_index)
         # translate the binding
         entry.add_element('title').text = book.title
-        entry.add_element('isbn').text = (book.isbn or "")
+        entry.add_element('isbn').text = (book.isbn or '')
         entry.add_element('pub_year').text = book.publishing_year
         entry.add_element('binding').text = book.edition
         entry.add_element('publisher').text = book.publisher
@@ -367,8 +367,7 @@ module Alexandria
             image.add_attribute('format', image_s.get_type)
           else
             image.add_attribute('format',
-                                Library.jpeg?(cover(book)) \
-                                ? "JPEG" : "GIF")
+                                Library.jpeg?(cover(book)) ? 'JPEG' : 'GIF')
           end
         end
       end
@@ -386,8 +385,8 @@ module Alexandria
     end
 
     def to_xhtml(css)
-      generator = "Alexandria " + Alexandria::DISPLAY_VERSION
-      xhtml = ""
+      generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
+      xhtml = ''
       xhtml << <<EOS
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -415,7 +414,7 @@ EOS
         if File.exist?(cover(book))
           xhtml << <<EOS
   <img class="book_cover"
-       src="#{File.join("pixmaps", final_cover(book))}"
+       src="#{File.join('pixmaps', final_cover(book))}"
        alt="Cover file for '#{xhtml_escape(book.title)}'"
 EOS
           if $IMAGE_SIZE_LOADED
@@ -446,7 +445,7 @@ EOS
 <li class="book_author">#{xhtml_escape(author)}</li>
 EOS
           end
-          xhtml << "</ul>"
+          xhtml << '</ul>'
         end
 
         unless book.edition.nil?
@@ -475,15 +474,15 @@ EOS
     end
 
     def to_bibtex
-      generator = "Alexandria " + Alexandria::DISPLAY_VERSION
-      bibtex = ""
+      generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
+      bibtex = ''
       bibtex << "\%Generated on #{Date.today} by: #{generator}\n"
       bibtex << "\%\n"
       bibtex << "\n"
 
       auths = Hash.new(0)
       each do |book|
-        k = (book.authors[0] or "Anonymous").split[0]
+        k = (book.authors[0] or 'Anonymous').split[0]
         if auths.key?(k)
           auths[k] += 1
         else
@@ -505,22 +504,22 @@ EOS
           bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
         end
         # year is a required field in bibtex @BOOK
-        bibtex << "year = " + (book.publishing_year or "\"n/a\"").to_s + "\n"
+        bibtex << 'year = ' + (book.publishing_year or "\"n/a\"").to_s + "\n"
         bibtex << "}\n\n"
       end
       bibtex
     end
 
     def latex_escape(str)
-      return "" if str.nil?
+      return '' if str.nil?
       my_str = str.dup
-      my_str.gsub!(/%/, "\\%")
-      my_str.gsub!(/~/, "\\textasciitilde")
-      my_str.gsub!(/\&/, "\\\\&")
-      my_str.gsub!(/\#/, "\\\\#")
-      my_str.gsub!(/\{/, "\\{")
-      my_str.gsub!(/\}/, "\\}")
-      my_str.gsub!(/_/, "\\_")
+      my_str.gsub!(/%/, '\\%')
+      my_str.gsub!(/~/, '\\textasciitilde')
+      my_str.gsub!(/\&/, '\\\\&')
+      my_str.gsub!(/\#/, '\\\\#')
+      my_str.gsub!(/\{/, '\\{')
+      my_str.gsub!(/\}/, '\\}')
+      my_str.gsub!(/_/, '\\_')
       my_str.gsub!(/\$/, "\\\$")
       my_str.gsub!(/\"(.+)\"/, "``\1''")
       my_str

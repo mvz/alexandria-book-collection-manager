@@ -39,7 +39,7 @@ class GettextGenerateTask < Rake::TaskLib
   end
 
   def make_task
-    desc "Generate gettext localization files"
+    desc 'Generate gettext localization files'
     task gettext: @generated_files
 
     if CLOBBER
@@ -72,7 +72,7 @@ class GettextGenerateTask < Rake::TaskLib
     @generated_files << outfile
     file outfile => [infile, *po_files] do |_f|
       unless `intltool-merge --version`
-        raise Exception, "Need to install intltool"
+        raise Exception, 'Need to install intltool'
       end
       system("intltool-merge -d #{@po_dir} #{infile} #{outfile}")
     end

@@ -44,14 +44,14 @@ class Gtk::Entry
     completion.signal_connect('match-selected') do |c, model, iter|
       cur_text = c.entry.text
       new_tag = model.get_value(iter, 0)
-      cur_text_split = cur_text.split(",")
+      cur_text_split = cur_text.split(',')
       cur_text_split.delete_at(-1)
       cur_text_split << new_tag
-      c.entry.text = cur_text_split.join(",")
+      c.entry.text = cur_text_split.join(',')
       true
     end
     completion.set_match_func do |_comp, key, iter|
-      cur_tag = key.split(",").last.strip
+      cur_tag = key.split(',').last.strip
       if cur_tag.size >= min
         begin
           if iter[0] =~ /^#{cur_tag}/
@@ -101,7 +101,7 @@ begin
     first and last ? first + ' ' + last : first ? first : last
   end
 rescue LoadError => e
-  Alexandria.log.debug { "Could not find optional ruby-revolution; Evolution contacts will not be loaded" }
+  Alexandria.log.debug { 'Could not find optional ruby-revolution; Evolution contacts will not be loaded' }
   EVOLUTION_CONTACTS = []
 rescue => e
   Alexandria.log.warn { e.message }

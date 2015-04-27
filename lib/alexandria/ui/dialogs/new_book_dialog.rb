@@ -25,17 +25,16 @@ module Alexandria
   module UI
     class KeepBadISBNDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, book)
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_("_Keep"), Gtk::Dialog::RESPONSE_OK]],
+               [_('_Keep'), Gtk::Dialog::RESPONSE_OK]],
               _("The book titled '%s' has an invalid ISBN, but still " \
-                "exists in the providers libraries.  Do you want to " \
-                "keep the book but change the ISBN or cancel the add?") \
-                % book.title)
+                'exists in the providers libraries.  Do you want to ' \
+                'keep the book but change the ISBN or cancel the add?') % book.title)
         self.default_response = Gtk::Dialog::RESPONSE_OK
         show_all and @response = run
         destroy
@@ -50,11 +49,11 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, selected_library = nil, &block)
         super('new_book_dialog__builder.glade', widget_names)
-        log.info { "New Book Dialog" }
+        log.info { 'New Book Dialog' }
         @new_book_dialog.transient_for = @parent = parent
         @block = block
         @destroyed = false
@@ -90,7 +89,7 @@ module Alexandria
         end
 
         renderer = Gtk::CellRendererPixbuf.new
-        col = Gtk::TreeViewColumn.new("", renderer)
+        col = Gtk::TreeViewColumn.new('', renderer)
         col.set_cell_data_func(renderer) do |_column, cell, _model, iter|
           pixbuf = iter[2]
           max_height = 25
@@ -104,7 +103,7 @@ module Alexandria
         end
         @treeview_results.append_column(col)
 
-        col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new,
+        col = Gtk::TreeViewColumn.new('', Gtk::CellRendererText.new,
                                       text: 0)
         @treeview_results.append_column(col)
 
@@ -115,7 +114,7 @@ module Alexandria
         begin
           @title_radiobutton.active = @@last_criterion_was_not_isbn
         rescue NameError
-          log.debug { "initialize @@last_criterion_was_not_isbn as false" }
+          log.debug { 'initialize @@last_criterion_was_not_isbn as false' }
           @@last_criterion_was_not_isbn = false
         end
 
@@ -128,14 +127,14 @@ module Alexandria
         @find_thread = nil
         @image_thread = nil
 
-        @new_book_dialog.signal_connect("destroy") {
+        @new_book_dialog.signal_connect('destroy') {
           @new_book_dialog.destroy
           @destroyed = true
         }
       end
 
       def on_criterion_toggled(item)
-        log.debug { "on_criterion_toggled" }
+        log.debug { 'on_criterion_toggled' }
         return unless item.active?
 
         # There used to be a strange effect here (pre SVN r1022).
@@ -187,12 +186,12 @@ module Alexandria
       def image_error_dialog(error)
         ErrorDialog.new(
           @parent,
-          _("A problem occurred while downloading images"),
+          _('A problem occurred while downloading images'),
           error)
       end
 
       def get_images_async
-        log.info { "get_images_async" }
+        log.info { 'get_images_async' }
         @images = {}
         @image_error = nil
         @image_thread = Thread.new do
@@ -202,7 +201,7 @@ module Alexandria
               uri = result[1]
               if uri
                 if URI.parse(uri).scheme.nil?
-                  File.open(uri, "r") do |io|
+                  File.open(uri, 'r') do |io|
                     @images[i] = io.read
                   end
                 else
@@ -228,7 +227,7 @@ module Alexandria
                 if pixbuf.width > 1
                   iter = @treeview_results.model.get_iter(key.to_s)
                   unless @treeview_results.model.iter_is_valid?(iter)
-                    raise "Iter is invalid! %s" % iter
+                    raise 'Iter is invalid! %s' % iter
                   end
                   iter[2] = pixbuf # I bet you this is it!
                 end
@@ -252,7 +251,7 @@ module Alexandria
       end
 
       def on_find
-        log.info { "on_find" }
+        log.info { 'on_find' }
         mode = case @combo_search.active
                when 0
                  BookProviders::SEARCH_BY_TITLE
@@ -274,7 +273,7 @@ module Alexandria
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
-        log.info { "TreeStore Model: %s columns; ref_counts: %s" %
+        log.info { 'TreeStore Model: %s columns; ref_counts: %s' %
                    [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
 
         @find_error = nil
@@ -309,13 +308,13 @@ module Alexandria
           # Err... continue == false if @find_error
           continue = if @find_error
                        ErrorDialog.new(@parent,
-                                       _("Unable to find matches for your search"),
+                                       _('Unable to find matches for your search'),
                                        @find_error)
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
                        @results.each do |book, _cover|
-                         s = _("%s, by %s") % [book.title,
+                         s = _('%s, by %s') % [book.title,
                                                book.authors.join(', ')]
                          similar_books = @results.find { |book2, _cover2|
                            book.title == book2.title and
@@ -324,7 +323,7 @@ module Alexandria
                          if similar_books.length > 1
                            s += " (#{book.edition}, #{book.publisher})"
                          end
-                         log.info { "Copying %s into tree view." % book.title }
+                         log.info { 'Copying %s into tree view.' % book.title }
                          iter = @treeview_results.model.append
                          iter[0] = s
                          iter[1] = book.ident
@@ -390,8 +389,8 @@ module Alexandria
                  Library.canonicalise_isbn(@entry_isbn.text)
                rescue
                  raise _("Couldn't validate the EAN/ISBN you " \
-                         "provided.  Make sure it is written " \
-                         "correctly, and try again.")
+                         'provided.  Make sure it is written ' \
+                         'correctly, and try again.')
                end
         assert_not_exist(library, @entry_isbn.text)
         @button_add.sensitive = false
@@ -446,7 +445,7 @@ module Alexandria
             begin
               next unless assert_not_exist(library, book.isbn)
             rescue Alexandria::Library::NoISBNError
-              puts "noisbn"
+              puts 'noisbn'
               book.isbn = book.saved_ident = nil
               books_to_add << [book, cover]
               next
@@ -463,7 +462,7 @@ module Alexandria
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
         end
-        books_to_add.map { |x| x.first } # array of Books only
+        books_to_add.map(&:first) # array of Books only
       end
 
       def add_book_to_library(library, book, cover_uri)
@@ -631,7 +630,7 @@ module Alexandria
         puts isbn13
         if (book = library.find { |bk| bk.isbn == isbn13 })
           raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
-            [isbn, library.name, book.title.sub("&", "&amp;")]
+            [isbn, library.name, book.title.sub('&', '&amp;')]
         end
         true
       end

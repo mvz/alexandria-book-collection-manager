@@ -47,21 +47,21 @@ module Alexandria
   class GoodreadsCSVImport < CSVImport
     def initialize(header)
       super(header)
-      @title = index_of("Title")
-      @author = index_of("Author")
-      @additional_authors = index_of("Additional Authors")
-      @isbn = index_of("ISBN")
-      @publisher = index_of("Publisher")
-      @publishing_year = index_of("Year Published")
-      @edition = index_of("Binding")
+      @title = index_of('Title')
+      @author = index_of('Author')
+      @additional_authors = index_of('Additional Authors')
+      @isbn = index_of('ISBN')
+      @publisher = index_of('Publisher')
+      @publishing_year = index_of('Year Published')
+      @edition = index_of('Binding')
 
       # optional extras
-      @notes = index_of("Private Notes")
-      @rating =  index_of("My Rating")
-      @read_count = index_of("Read Count")
-      @date_read = index_of("Date Read")
-      @bookshelves = index_of("Bookshelves") # save names as tags
-      @mainshelf = index_of("Exclusive Shelf")
+      @notes = index_of('Private Notes')
+      @rating =  index_of('My Rating')
+      @read_count = index_of('Read Count')
+      @date_read = index_of('Date Read')
+      @bookshelves = index_of('Bookshelves') # save names as tags
+      @mainshelf = index_of('Exclusive Shelf')
     end
 
     def row_to_book(row)
@@ -107,14 +107,14 @@ module Alexandria
         end
       end
       if row[@mainshelf]
-        if row[@mainshelf] == "read"
+        if row[@mainshelf] == 'read'
           book.redd = true
-        elsif row[@mainshelf] == "to-read"
+        elsif row[@mainshelf] == 'to-read'
           book.redd = false
-          book.tags = ["to read"]
-        elsif row[@mainshelf] == "currently-reading"
+          book.tags = ['to read']
+        elsif row[@mainshelf] == 'currently-reading'
           book.redd = false
-          book.tags = ["currently reading"]
+          book.tags = ['currently reading']
         end
       end
       if row[@bookshelves]
@@ -212,7 +212,7 @@ module Alexandria
         if head == "'PUBLICATION INFO'"
           is_librarything = true
           break
-        elsif head == "Year Published"
+        elsif head == 'Year Published'
           is_goodreads = true
           break
         end
@@ -222,7 +222,7 @@ module Alexandria
       elsif is_goodreads
         return GoodreadsCSVImport.new(header)
       end
-      raise "Not Recognized" unless is_librarything || is_goodreads
+      raise 'Not Recognized' unless is_librarything || is_goodreads
     end
   end
 

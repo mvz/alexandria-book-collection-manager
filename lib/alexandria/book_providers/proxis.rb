@@ -34,14 +34,14 @@ module Alexandria
       # it adds most to Alexandria (Amazon already has French and
       # English titles).
 
-      SITE = "http://www.proxis.nl"
+      SITE = 'http://www.proxis.nl'
       BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" \
-        "&shop=100001NL&SelRubricLevel1Id=100001NL"
+        '&shop=100001NL&SelRubricLevel1Id=100001NL'
       ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" \
-        "&shop=100001NL&SelRubricLevel1Id=100001NL"
+        '&shop=100001NL&SelRubricLevel1Id=100001NL'
 
       def initialize
-        super("Proxis", "Proxis (Belgium)")
+        super('Proxis', 'Proxis (Belgium)')
         # prefs.add("lang", _("Language"), "fr",
         #          LANGUAGES.keys)
         prefs.read

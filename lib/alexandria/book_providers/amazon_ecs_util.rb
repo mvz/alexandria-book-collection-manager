@@ -78,7 +78,7 @@ module Amazon
     end
 
     def self.configure(&_proc)
-      raise ArgumentError, "Block is required." unless block_given?
+      raise ArgumentError, 'Block is required.' unless block_given?
       yield @@options
     end
 
@@ -137,7 +137,7 @@ module Amazon
 
       # Return true if request is valid.
       def is_valid_request?
-        (@doc / "isvalid").inner_html == "True"
+        (@doc / 'isvalid').inner_html == 'True'
       end
 
       # Return true if response has an error.
@@ -147,13 +147,13 @@ module Amazon
 
       # Return error message.
       def error
-        Element.get(@doc, "error/message")
+        Element.get(@doc, 'error/message')
       end
 
       # Return an array of Amazon::Element item objects.
       def items
         unless @items
-          @items = (@doc / "item").map { |item| Element.new(item) }
+          @items = (@doc / 'item').map { |item| Element.new(item) }
         end
         @items
       end
@@ -166,7 +166,7 @@ module Amazon
       # Return current page no if :item_page option is when initiating the request.
       def item_page
         unless @item_page
-          @item_page = (@doc / "itemsearchrequest/itempage").inner_html.to_i
+          @item_page = (@doc / 'itemsearchrequest/itempage').inner_html.to_i
         end
         @item_page
       end
@@ -174,7 +174,7 @@ module Amazon
       # Return total results.
       def total_results
         unless @total_results
-          @total_results = (@doc / "totalresults").inner_html.to_i
+          @total_results = (@doc / 'totalresults').inner_html.to_i
         end
         @total_results
       end
@@ -182,7 +182,7 @@ module Amazon
       # Return total pages.
       def total_pages
         unless @total_pages
-          @total_pages = (@doc / "totalpages").inner_html.to_i
+          @total_pages = (@doc / 'totalpages').inner_html.to_i
         end
         @total_pages
       end
@@ -220,7 +220,7 @@ module Amazon
     end
 
     def self.camelize(s)
-      s.to_s.gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
+      s.to_s.gsub(/\/(.?)/) { '::' + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
     end
 
     def self.hmac_sha256(message, key)
@@ -235,9 +235,9 @@ module Amazon
       ipad_bytes = ipad.bytes.map { |b| b }
       opad_bytes = opad.bytes.map { |b| b }
       key_bytes = key.bytes.map { |b| b }
-      ipad_xor = ""
-      opad_xor = ""
-      for i in 0 .. key.size - 1
+      ipad_xor = ''
+      opad_xor = ''
+      for i in 0..key.size - 1
         ipad_xor << (ipad_bytes[i] ^ key_bytes[i])
         opad_xor << (opad_bytes[i] ^ key_bytes[i])
       end

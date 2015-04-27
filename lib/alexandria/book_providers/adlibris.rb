@@ -33,15 +33,15 @@ module Alexandria
     class AdLibrisProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.adlibris.com/se/"
+      SITE = 'http://www.adlibris.com/se/'
 
       BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" \
-        "&fromproduct=False" # type/term
+        '&fromproduct=False' # type/term
 
       PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
 
       def initialize
-        super("AdLibris", "AdLibris (Sweden)")
+        super('AdLibris', 'AdLibris (Sweden)')
         prefs.read
         # @ent = HTMLEntities.new
       end
@@ -149,7 +149,7 @@ module Alexandria
           if (h1 = doc.at('div.productTitleFormat h1'))
             title = text_of(h1)
           else
-            raise NoResultsError, "title not found on page"
+            raise NoResultsError, 'title not found on page'
           end
 
           product = doc.at('div.product')
@@ -192,7 +192,7 @@ module Alexandria
             unless isbn =~ /[0-9x]{10,13}/i
               next
             end
-            isbn.gsub(/(\n|\r)/, " ")
+            isbn.gsub(/(\n|\r)/, ' ')
             if isbn =~ /:[\s]*([0-9x]+)/i
               isbn = Regexp.last_match[1]
             end
@@ -225,7 +225,7 @@ module Alexandria
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {"Failed parsing search results for AdLibris " \
+          log.warn {'Failed parsing search results for AdLibris ' \
             "#{ex.message} #{trace}" }
           raise NoResultsError
         end

@@ -67,13 +67,13 @@ module Alexandria
       end
 
       def set_active
-        @canvas.set_property(:background_color, "white")
-        @barcode_bars.each { |rect| rect.set_property(:fill_color, "white") }
+        @canvas.set_property(:background_color, 'white')
+        @barcode_bars.each { |rect| rect.set_property(:fill_color, 'white') }
       end
 
       def set_passive
         if @canvas
-          passive_bg = "#F4F4F4"
+          passive_bg = '#F4F4F4'
           @canvas.set_property(:background_color, passive_bg)
           @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
         end

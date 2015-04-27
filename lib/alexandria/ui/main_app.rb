@@ -44,7 +44,7 @@ module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
     class MainApp
       include Logging
@@ -54,7 +54,7 @@ module Alexandria
       attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs
       attr_accessor :ui_manager
       def initialize
-        log.info { "Starting MainApp" }
+        log.info { 'Starting MainApp' }
         @ui_manager = UIManager.new self
         @actiongroup = @ui_manager.actiongroup
         @appbar = @ui_manager.appbar

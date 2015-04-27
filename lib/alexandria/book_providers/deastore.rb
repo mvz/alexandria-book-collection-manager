@@ -31,11 +31,11 @@ module Alexandria
     class DeaStoreProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.deastore.com"
+      SITE = 'http://www.deastore.com'
       BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s" # type/term
 
       def initialize
-        super("DeaStore", "DeaStore (Italy)")
+        super('DeaStore', 'DeaStore (Italy)')
         prefs.read
         @agent = nil
       end
@@ -59,7 +59,7 @@ module Alexandria
 
       def search(criterion, type)
         begin
-          criterion = criterion.convert("ISO-8859-1", "UTF-8") # still needed??
+          criterion = criterion.convert('ISO-8859-1', 'UTF-8') # still needed??
         rescue GLib::ConvertError
           log.info { "Cannot search for non-ISO-8859-1 terms at DeaStore : #{criterion}" }
           raise NoResultsError

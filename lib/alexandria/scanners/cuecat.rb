@@ -24,11 +24,11 @@ module Alexandria
       include Alexandria::Logging
 
       def name
-        "CueCat"
+        'CueCat'
       end
 
       def display_name
-        "CueCat"
+        'CueCat'
       end
 
       # Checks if data looks like cuecat input
@@ -102,7 +102,7 @@ module Alexandria
         length = array.length % 4
 
         if length != 0
-          raise "Error parsing CueCat input" if length == 1
+          raise 'Error parsing CueCat input' if length == 1
 
           length = 4 - length
           length.times { array.push(0) }

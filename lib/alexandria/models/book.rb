@@ -31,7 +31,7 @@ module Alexandria
       @isbn = isbn
       @publisher = publisher
       @edition = edition # actually used for binding! (i.e. paperback or hardback)
-      @notes = ""
+      @notes = ''
       @saved_ident = ident
       @publishing_year = publishing_year
       @redd = false

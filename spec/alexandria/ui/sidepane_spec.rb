@@ -19,7 +19,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Alexandria::UI::SidePaneManager do
-  it "should work" do
+  it 'should work' do
     library_listview = double(Gtk::TreeView).as_null_object
     parent = double(Object, main_app: nil)
     Alexandria::UI::SidePaneManager.new library_listview, parent
