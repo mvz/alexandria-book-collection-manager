@@ -491,7 +491,7 @@ module Alexandria
         when 'Time'
           TIME_OPERATORS.map do |x|
             if x == Operators::IS_IN_LAST or
-              x == Operators::IS_NOT_IN_LAST
+                x == Operators::IS_NOT_IN_LAST
 
               [x, Operands::DAYS]
             else

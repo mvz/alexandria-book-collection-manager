@@ -36,6 +36,10 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   MaxLineLength: 60
 
+# Visually mark multiline operations by indenting
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
 Style/TrivialAccessors:
   ExactNameMatch: true
 

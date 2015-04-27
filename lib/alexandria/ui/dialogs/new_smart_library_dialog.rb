@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -41,13 +42,7 @@ module Alexandria
           elsif response == Gtk::Dialog::RESPONSE_OK
             if user_confirms_possible_weirdnesses_before_saving?
               rules = smart_library_rules
-              basename = if rules.length == 1 and
-                             rules.first.value.is_a?(String) and
-                             !rules.first.value.strip.empty?
-                           rules.first.value
-                         else
-                           _('Smart Library')
-                         end
+              basename = smart_library_base_name(rules) || _('Smart Library')
               name = Library.generate_new_name(
                                                Libraries.instance.all_libraries,
                                                basename)
@@ -61,6 +56,17 @@ module Alexandria
         end
 
         destroy
+      end
+
+      private
+
+      def smart_library_base_name(rules)
+        if rules.length == 1
+          value = rules.first.value
+          if value.is_a?(String) and !value.strip.empty?
+            return value
+          end
+        end
       end
     end
   end

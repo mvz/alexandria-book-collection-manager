@@ -273,8 +273,10 @@ module Alexandria
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
-        log.info { 'TreeStore Model: %s columns; ref_counts: %s' %
-                   [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
+        log.info {
+          'TreeStore Model: %s columns; ref_counts: %s' %
+            [@treeview_results.model.n_columns, @treeview_results.model.ref_count]
+        }
 
         @find_error = nil
         @results = nil
@@ -377,7 +379,7 @@ module Alexandria
       def on_results_button_press_event(_widget, event)
         # double left click
         if event.event_type == Gdk::Event::BUTTON2_PRESS and
-          event.button == 1
+            event.button == 1
 
           on_add
         end
@@ -573,7 +575,7 @@ module Alexandria
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
           if (text = clipboard.wait_for_text)
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
-              Library.valid_upc?(text)
+                Library.valid_upc?(text)
               Gtk.idle_add do
 
                 @entry_isbn.text = text
@@ -594,7 +596,7 @@ module Alexandria
 
       def on_clicked(widget, event)
         if event.event_type == Gdk::Event::BUTTON_PRESS and
-          event.button == 1
+            event.button == 1
 
           radio, target_widget, box2, box3 = case widget
                                              when @eventbox_entry_search
