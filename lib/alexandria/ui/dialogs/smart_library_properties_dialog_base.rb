@@ -61,9 +61,7 @@ module Alexandria
         setup_calendar_widgets
       end
 
-      #########
       protected
-      #########
 
       def smart_library_rules
         fill_smart_library_rules_values
@@ -81,15 +79,15 @@ module Alexandria
       def user_confirms_possible_weirdnesses_before_saving?
         return true unless has_weirdnesses?
         dialog = AlertDialog.new(
-                                 self,
-                                 _('Empty or conflictive condition'),
-                                 Gtk::Stock::DIALOG_QUESTION,
-                                 [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                                  [_('_Save However'), Gtk::Dialog::RESPONSE_YES]],
-                                 _('This smart library contains one or more conditions ' \
-                                   'which are empty or conflict with each other. This is ' \
-                                   'likely to result in never matching a book. Are you ' \
-                                   'sure you want to save this library?'))
+          self,
+          _('Empty or conflictive condition'),
+          Gtk::Stock::DIALOG_QUESTION,
+          [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
+           [_('_Save However'), Gtk::Dialog::RESPONSE_YES]],
+          _('This smart library contains one or more conditions ' \
+            'which are empty or conflict with each other. This is ' \
+            'likely to result in never matching a book. Are you ' \
+            'sure you want to save this library?'))
         dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
         dialog.show_all
         confirmed = dialog.run == Gtk::Dialog::RESPONSE_YES
@@ -341,7 +339,6 @@ module Alexandria
             time = Time.gm(year, month, day)
             @calendar_popup_for_entry.text = format_date(time)
           end
-
         end
 
         @calendar.signal_connect('day-selected-double-click') do
@@ -364,7 +361,6 @@ module Alexandria
         self.modal = true
 
         Gtk.timeout_add(150) do
-
           # If we set @popup_displayed=false immediately, then a click
           # event on the primary icon of the Entry simultaneous with
           # the focus-out-event of the Calendar causes the Calendar to

@@ -109,9 +109,7 @@ module Alexandria
         end
       end
 
-      #######
       private
-      #######
 
       def on_close
         if @entry_isbn.text == ''
@@ -203,7 +201,7 @@ module Alexandria
 
       def on_help
         Alexandria::UI.display_help(@preferences_dialog,
-                                     'editing-book-properties')
+                                    'editing-book-properties')
       end
     end
   end

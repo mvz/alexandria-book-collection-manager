@@ -102,7 +102,6 @@ module Alexandria
             time = Time.gm(year, month, day)
             @calendar_popup_for_entry.text = format_date(time)
           end
-
         end
 
         @calendar.signal_connect('day-selected-double-click') do
@@ -146,7 +145,6 @@ module Alexandria
         @book_properties_dialog.modal = true
 
         Gtk.timeout_add(150) do
-
           # If we set @popup_displayed=false immediately, then a click
           # event on the primary icon of the Entry simultaneous with
           # the focus-out-event of the Calendar causes the Calendar to
@@ -370,9 +368,7 @@ module Alexandria
         end
       end
 
-      #######
       private
-      #######
 
       def rating=(rating)
         images = [

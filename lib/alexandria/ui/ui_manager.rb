@@ -22,7 +22,7 @@ module Alexandria
     MAX_RATING_STARS = 5
     class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
-        :iconview_model, :filtered_model
+                    :iconview_model, :filtered_model
       attr_reader :model
       include Logging
       include GetText
@@ -208,7 +208,6 @@ module Alexandria
         log.debug { 'setup_book_providers' }
         mid = @uimanager.new_merge_id
         BookProviders.each do |provider|
-
           name = provider.action_name
           ['ui/MainMenubar/ViewMenu/OnlineInformation/',
            'ui/BookPopup/OnlineInformation/',
@@ -498,14 +497,14 @@ module Alexandria
           log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup['Properties'].sensitive = \
             @actiongroup['OnlineInformation'].sensitive = \
-            books.length == 1
+              books.length == 1
           @actiongroup['SelectAll'].sensitive = \
             books.length < library.length
 
           @actiongroup['Delete'].sensitive = \
             @actiongroup['DeselectAll'].sensitive = \
-            @actiongroup['Move'].sensitive =
-            @actiongroup['SetRating'].sensitive = !books.empty?
+              @actiongroup['Move'].sensitive =
+                @actiongroup['SetRating'].sensitive = !books.empty?
 
           log.debug { "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}" }
 
@@ -640,9 +639,7 @@ module Alexandria
         end
       end
 
-      #######
       # private
-      #######
 
       def open_web_browser(url)
         if url.nil?
@@ -926,7 +923,6 @@ module Alexandria
         n = 0
 
         Gtk.idle_add do
-
           block_return = true
           book = library[n]
           if book

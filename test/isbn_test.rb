@@ -47,14 +47,14 @@ class TestISBN < MiniTest::Test
 
   def test_canonical_ISBN
     assert_equal '014143984X',
-    Alexandria::Library.canonicalise_isbn('014143984X')
+                 Alexandria::Library.canonicalise_isbn('014143984X')
     assert_equal '0345431928',
-    Alexandria::Library.canonicalise_isbn('0-345-43192-8')
+                 Alexandria::Library.canonicalise_isbn('0-345-43192-8')
     assert_equal '3522105907',
-    Alexandria::Library.canonicalise_isbn('3522105907')
+                 Alexandria::Library.canonicalise_isbn('3522105907')
     # EAN number
     assert_equal '0345431928',
-    Alexandria::Library.canonicalise_isbn('9780345431929')
+                 Alexandria::Library.canonicalise_isbn('9780345431929')
   end
 
   # Doesn't work quite yet.

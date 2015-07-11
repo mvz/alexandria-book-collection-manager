@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2010 Cathal Mc Ginley
-# Copyright (C) 2014 Matijs van Zuijlen
+# Copyright (C) 2014,2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -50,9 +50,7 @@ module Alexandria
                    @on_iterate_cb, @on_error_cb)
     end
 
-    #######
     private
-    #######
 
     def initialize(name, patterns, message)
       @name = name
@@ -122,8 +120,6 @@ module Alexandria
             book_elements += keys.map {|key|
               if elements[key]
                 neaten(elements[key].text)
-              else
-                nil
               end
             }
             # isbn
@@ -217,7 +213,6 @@ module Alexandria
           if on_iterate_cb
             on_iterate_cb.call(import_count, max_import)
           end
-
         end
       rescue CSV::IllegalFormatError
         unless failed_once

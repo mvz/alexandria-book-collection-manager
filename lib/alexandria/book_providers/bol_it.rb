@@ -81,9 +81,7 @@ module Alexandria
         BASE_URI + "/#{LOCALE}/scheda/ea" + Library.canonicalise_ean(book.isbn)[0..-2] + '.html'
       end
 
-      #######
       private
-      #######
 
       def to_book(data)
         raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data)

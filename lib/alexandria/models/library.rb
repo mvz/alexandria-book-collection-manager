@@ -59,7 +59,7 @@ module Alexandria
       i = 1
       name = nil
       all_libraries = existing_libraries + @@deleted_libraries
-      while true
+      loop do
         name = i == 1 ? from_base : from_base + " #{i}"
         break unless all_libraries.find { |x| x.name == name }
         i += 1
@@ -77,7 +77,6 @@ module Alexandria
       FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
         Dir['*' + EXT[:book]].each do |filename|
-
           test[1] = filename if test[0] == 0
 
           unless File.size? test[1]
@@ -633,9 +632,7 @@ module Alexandria
       book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
     end
 
-    #########
     protected
-    #########
 
     def initialize(name)
       @name = name
@@ -700,9 +697,7 @@ module Alexandria
       end
     end
 
-    #######
     private
-    #######
 
     def initialize
       @all_libraries = []

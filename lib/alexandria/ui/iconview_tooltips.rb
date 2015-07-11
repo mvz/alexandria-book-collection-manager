@@ -40,10 +40,12 @@ class IconViewTooltips
     @tooltip_window.app_paintable = true
 
     @tooltip_window.signal_connect('expose_event') { |window, event|
-      on_expose(window, event) }
+      on_expose(window, event)
+    }
 
     @tooltip_window.signal_connect('leave_notify_event') { |vw, event|
-      on_leave(vw, event) }
+      on_leave(vw, event)
+    }
 
     @label = Gtk::Label.new('')
     @label.wrap = true
@@ -57,9 +59,11 @@ class IconViewTooltips
 
   def set_view(view)
     view.signal_connect('motion_notify_event') { |vw, event|
-      on_motion(vw, event) }
+      on_motion(vw, event)
+    }
     view.signal_connect('leave_notify_event') { |vw, event|
-      on_leave(vw, event) }
+      on_leave(vw, event)
+    }
   end
 
   def on_expose(window, _event)

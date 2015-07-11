@@ -93,7 +93,7 @@ module Alexandria
         types_combo.signal_connect('changed') do
           theme_label.visible = theme_combo.visible =
             preview_image.visible =
-            FORMATS[types_combo.active].needs_preview?
+              FORMATS[types_combo.active].needs_preview?
         end
         types_combo.show
 
@@ -132,9 +132,7 @@ module Alexandria
         destroy
       end
 
-      #######
       private
-      #######
 
       def on_export(format, theme)
         unless @library.respond_to?(format.message)

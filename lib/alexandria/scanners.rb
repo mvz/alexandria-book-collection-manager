@@ -24,7 +24,7 @@ module Alexandria
   module Scanners
     REGISTRY = []
 
-    def self.register scanner
+    def self.register(scanner)
       REGISTRY.push(scanner)
     end
 
@@ -32,7 +32,7 @@ module Alexandria
       REGISTRY.first
     end
 
-    def self.find_scanner name
+    def self.find_scanner(name)
       REGISTRY.find { |scanner| scanner.name == name }
     end
 

@@ -80,12 +80,12 @@ module Alexandria
         book_search_results = []
         results_divs = doc / 'div.articlePresentationSearchCH'
         results_divs.each do |div|
-         result = {}
-         title_link = div % 'div.articleText/h2/a'
-         result[:title] = title_link.inner_html
-         result[:lookup_url] = title_link['href']
-         book_search_results << result
-       end
+          result = {}
+          title_link = div % 'div.articleText/h2/a'
+          result[:title] = title_link.inner_html
+          result[:lookup_url] = title_link['href']
+          book_search_results << result
+        end
         book_search_results
       end
 
@@ -187,8 +187,10 @@ module Alexandria
           end
         rescue => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {'Failed parsing search results for Thalia ' \
-            "#{ex.message} #{trace}" }
+          log.warn {
+            'Failed parsing search results for Thalia ' \
+            "#{ex.message} #{trace}"
+          }
           raise NoResultsError
         end
       end

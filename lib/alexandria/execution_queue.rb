@@ -71,9 +71,7 @@ module Alexandria
       @@current_queue = nil
     end
 
-    #######
     private
-    #######
 
     def push(procedure, args, need_retval = false)
       @protect_pending_calls.synchronize do
@@ -81,7 +79,7 @@ module Alexandria
         @pending_calls << [@id, procedure, args, need_retval]
       end
       if need_retval
-        while true
+        loop do
           @protect_pending_retvals.synchronize do
             ary = @pending_retvals.find { |id, _retval| id == @id }
             if ary

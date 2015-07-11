@@ -244,11 +244,10 @@ describe Alexandria::BookProviders do
 
   it 'Worldcat should work with multiple authors' do
     results = assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
-                                             '9785941454136')
+                                           '9785941454136')
     this_book = results.first
     assert_kind_of(Array, this_book.authors, 'Not an array!')
     # puts this_book.authors
     assert(this_book.authors.length == 2, 'Wrong number of authors for this book!')
-
   end
 end

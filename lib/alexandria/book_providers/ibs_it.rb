@@ -77,9 +77,7 @@ module Alexandria
         'http://www.internetbookshop.it/ser/serdsp.asp?isbn=' + book.isbn
       end
 
-      #######
       private
-      #######
 
       def to_book(data)
         raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data)

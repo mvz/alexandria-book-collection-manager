@@ -59,9 +59,7 @@ module Alexandria
       end
     end
 
-    #######
     private
-    #######
 
     def action(array)
       action = array.pop

@@ -105,7 +105,6 @@ module Alexandria
         return [] unless search_hit
 
         (search_hit / 'ul.ulSearch table').each do |t|
-
           result = {}
           if (title_data = (t % 'div.divTitle'))
             result[:title] = (title_data % :a).inner_text
@@ -114,7 +113,6 @@ module Alexandria
           result[:lookup_url] = "#{SITE}#{lookup_url}"
 
           book_search_results << result
-
         end
         book_search_results
       end
@@ -225,8 +223,10 @@ module Alexandria
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
-          log.warn {'Failed parsing search results for AdLibris ' \
-            "#{ex.message} #{trace}" }
+          log.warn {
+            'Failed parsing search results for AdLibris ' \
+            "#{ex.message} #{trace}"
+          }
           raise NoResultsError
         end
       end

@@ -34,9 +34,9 @@ class Gdk::Pixbuf
 
     # Copies the current pixbuf there (south-west).
     copy_area(0, 0,
-                   width, height,
-                   new_pixbuf,
-                   0, tweak_y)
+              width, height,
+              new_pixbuf,
+              0, tweak_y)
 
     # Copies the tag pixbuf there (north-est).
     tag_pixbuf_x = width - (tweak_x * 2)

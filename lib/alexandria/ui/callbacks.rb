@@ -125,8 +125,8 @@ module Alexandria
       rescue => ex
         log.error { "problem with immediate export #{ex} try again" }
         ErrorDialog.new(@main_app, _('Export failed'),
-                           _('Try letting this library load ' \
-                             'completely before exporting.'))
+                        _('Try letting this library load ' \
+                          'completely before exporting.'))
       end
 
       def on_acquire(_widget, _event)

@@ -70,9 +70,7 @@ module Alexandria
         nil
       end
 
-      #######
       private
-      #######
 
       def marc_to_book(marc_txt)
         begin
@@ -273,9 +271,7 @@ module Alexandria
         nil
       end
 
-      #######
       private
-      #######
 
       def books_from_sutrs(resultset)
         results = []
@@ -316,7 +312,6 @@ module Alexandria
             book = Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
             results << [book]
           end
-
         end
         results
       end
@@ -365,9 +360,7 @@ module Alexandria
         nil
       end
 
-      #######
       private
-      #######
 
       def canonicalise_isbn_with_dashes(isbn)
         # The reference for the position of the dashes is

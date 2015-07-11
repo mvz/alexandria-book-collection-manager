@@ -273,8 +273,10 @@ module Alexandria
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
-        log.info { 'TreeStore Model: %s columns; ref_counts: %s' %
-                   [@treeview_results.model.n_columns, @treeview_results.model.ref_count] }
+        log.info {
+          'TreeStore Model: %s columns; ref_counts: %s' %
+            [@treeview_results.model.n_columns, @treeview_results.model.ref_count]
+        }
 
         @find_error = nil
         @results = nil
@@ -377,7 +379,7 @@ module Alexandria
       def on_results_button_press_event(_widget, event)
         # double left click
         if event.event_type == Gdk::Event::BUTTON2_PRESS and
-          event.button == 1
+            event.button == 1
 
           on_add
         end
@@ -396,7 +398,6 @@ module Alexandria
         @button_add.sensitive = false
         notify_start_add_by_isbn
         Gtk.idle_add do
-
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -457,7 +458,6 @@ module Alexandria
             end
             books_to_add << [book, cover]
           end
-
         end
         books_to_add.each do |book, cover_uri|
           add_book_to_library(library, book, cover_uri)
@@ -573,9 +573,8 @@ module Alexandria
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
           if (text = clipboard.wait_for_text)
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
-              Library.valid_upc?(text)
+                Library.valid_upc?(text)
               Gtk.idle_add do
-
                 @entry_isbn.text = text
                 @entry_isbn.grab_focus
                 @entry_isbn.select_region(0, -1) # select all...
@@ -594,7 +593,7 @@ module Alexandria
 
       def on_clicked(widget, event)
         if event.event_type == Gdk::Event::BUTTON_PRESS and
-          event.button == 1
+            event.button == 1
 
           radio, target_widget, box2, box3 = case widget
                                              when @eventbox_entry_search
@@ -620,9 +619,7 @@ module Alexandria
         Alexandria::UI.display_help(@preferences_dialog, 'add-book-by-isbn')
       end
 
-      #######
       private
-      #######
 
       def assert_not_exist(library, isbn)
         # Check that the book doesn't already exist in the library.

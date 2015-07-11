@@ -28,6 +28,12 @@ Style/SignalException:
 Style/RedundantReturn:
   AllowMultipleReturnValues: true
 
+# Offense count: 10
+# Cop supports --auto-correct.
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+Style/FirstParameterIndentation:
+  EnforcedStyle: consistent
+
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
@@ -35,6 +41,10 @@ Style/GuardClause:
 # Don't use if or unless as modifier if the line gets too long
 Style/IfUnlessModifier:
   MaxLineLength: 60
+
+# Visually mark multiline operations by indenting
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
 
 Style/TrivialAccessors:
   ExactNameMatch: true
@@ -51,10 +61,6 @@ Style/AccessorMethodName:
 
 # Support use of and and or for control flow.
 Style/AndOr:
-  Enabled: false
-
-# RuboCop has no setting to accept how vim aligns parameters.
-Style/AlignParameters:
   Enabled: false
 
 # Allow semantic choice of trailing comma

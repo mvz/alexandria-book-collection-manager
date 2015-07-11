@@ -128,9 +128,7 @@ module Alexandria
       @needs_preview
     end
 
-    #######
     private
-    #######
 
     def initialize(name, ext, message, needs_preview = false)
       @name = name
@@ -227,7 +225,6 @@ module Alexandria
           # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
-
       end
       # Again, allow the iPod to unmount
       Dir.chdir(tempdir)
@@ -242,9 +239,7 @@ module Alexandria
       end
     end
 
-    #######
     private
-    #######
 
     ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'
     def to_onix_document
@@ -291,11 +286,11 @@ module Alexandria
           # front cover image
           elem.add_element('MediaFileTypeCode').text = '04'
           elem.add_element('MediaFileFormatCode').text =
-          (Library.jpeg?(cover(book)) ? '03' : '02')
+            (Library.jpeg?(cover(book)) ? '03' : '02')
           # filename
           elem.add_element('MediaFileLinkTypeCode').text = '06'
           elem.add_element('MediaFileLink').text =
-          File.join('images', final_cover(book))
+            File.join('images', final_cover(book))
         end
         if book.isbn
           BookProviders.each do |provider|

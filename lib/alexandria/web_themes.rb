@@ -35,9 +35,7 @@ module Alexandria
       File.exist?(@pixmaps_directory)
     end
 
-    #######
     private
-    #######
 
     def self.load(themes_dir)
       themes = []

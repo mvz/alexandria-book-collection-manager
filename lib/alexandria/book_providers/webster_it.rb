@@ -79,9 +79,7 @@ module Alexandria
         BASE_URI + '/isbn/' + book.isbn
       end
 
-      #######
       private
-      #######
 
       def to_book(data)
         raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data)

@@ -138,8 +138,7 @@ module Alexandria
           BOOKS_TARGET_TABLE,
           Gdk::DragContext::ACTION_MOVE)
 
-        @library_listview.signal_connect('drag-motion') do
-          |_widget, drag_context, x, y, time, _data|
+        @library_listview.signal_connect('drag-motion') do |_widget, drag_context, x, y, time, _data|
           log.debug { 'drag-motion' }
 
           path, column, _, _ =
@@ -171,8 +170,7 @@ module Alexandria
             time)
         end
 
-        @library_listview.signal_connect('drag-drop') do
-          |widget, drag_context, _x, _y, time, _data|
+        @library_listview.signal_connect('drag-drop') do |widget, drag_context, _x, _y, time, _data|
           log.debug { 'drag-drop' }
 
           Gtk::Drag.get_data(widget,
@@ -182,8 +180,7 @@ module Alexandria
           true
         end
 
-        @library_listview.signal_connect('drag-data-received') do
-          |_widget, drag_context, x, y, selection_data, _info, _time|
+        @library_listview.signal_connect('drag-data-received') do |_widget, drag_context, x, y, selection_data, _info, _time|
           log.debug { 'drag-data-received' }
 
           success = false

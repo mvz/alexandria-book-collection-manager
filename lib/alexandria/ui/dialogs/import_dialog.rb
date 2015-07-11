@@ -135,8 +135,8 @@ module Alexandria
           file = File.basename(filename, '.*')
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
-                                                       Libraries.instance.all_libraries,
-                                                       base)
+            Libraries.instance.all_libraries,
+            base)
 
           filter = filters[self.filter]
           puts "Going forward with filter: #{filter.name}" if $DEBUG
@@ -166,7 +166,7 @@ module Alexandria
           thread = Thread.start do
             begin
               library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
-                                                  filename)
+                                                                 filename)
             rescue => ex
               trace = ex.backtrace.join("\n> ")
               log.error { "Import failed: #{ex.message} #{trace}" }

@@ -65,9 +65,7 @@ module Alexandria
         end
       end
 
-      #######
       private
-      #######
 
       def on_cancel
         @book_properties_dialog.destroy
@@ -83,7 +81,8 @@ module Alexandria
         isbn = nil
         if @entry_isbn.text != ''
           ary = @library.select { |book|
-            book.ident == @entry_isbn.text }
+            book.ident == @entry_isbn.text
+          }
           raise AddError.new(_('The EAN/ISBN you provided is ' \
                                'already used in this library.')) unless ary.empty?
           isbn = begin
@@ -110,8 +109,8 @@ module Alexandria
                                'provided.'))
         end
         book = Book.new(title, authors, isbn, publisher,
-                       publishing_year == 0 ? nil : publishing_year,
-                       edition)
+                        publishing_year == 0 ? nil : publishing_year,
+                        edition)
         book.rating = @current_rating
         book.notes = @textview_notes.buffer.text
         book.loaned = @checkbutton_loaned.active?
