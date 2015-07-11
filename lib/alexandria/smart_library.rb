@@ -177,7 +177,7 @@ module Alexandria
         filtered_library.each { |x| @cache[x] = library }
         concat(filtered_library)
       end
-      @n_rated = select { |x| !x.rating.nil? and x.rating > 0 }.length
+      @n_rated = count { |x| !x.rating.nil? and x.rating > 0 }
     end
 
     def cover(book)
