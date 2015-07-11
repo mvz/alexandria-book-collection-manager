@@ -155,7 +155,8 @@ module Alexandria
           options['user'] = prefs['username']
           options['password'] = prefs['password']
         end
-        hostname, port = prefs['hostname'], prefs['port'].to_i
+        hostname = prefs['hostname']
+        port = prefs['port'].to_i
         log.debug { "hostname #{hostname} port #{port} options #{options}" }
         conn = ZOOM::Connection.new(options).connect(hostname, port)
         conn.database_name = prefs['database']

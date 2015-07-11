@@ -84,7 +84,8 @@ begin
 
   EVOLUTION_CONTACTS =
     Revolution::Revolution.new.get_all_contacts.map do |contact|
-      first, last = contact.first_name, contact.last_name
+      first = contact.first_name
+      last = contact.last_name
 
       if first
         first.strip!
@@ -114,7 +115,8 @@ module Alexandria
       TITLE, AUTHOR, PUBLISHER, EDITION, BORROWER, TAG = (0..6).to_a
 
       def initialize
-        @models, @libraries = [], []
+        @models = []
+        @libraries = []
         5.times { @models << Gtk::ListStore.new(String) }
         @models << Gtk::ListStore.new(String)
         touch
@@ -183,7 +185,11 @@ module Alexandria
       end
 
       def rebuild_models
-        titles, authors, publishers, editions, borrowers = [], [], [], [], []
+        titles = []
+        authors = []
+        publishers = []
+        editions = []
+        borrowers = []
         tags = []
         @libraries.each do |library|
           library.each do |book|

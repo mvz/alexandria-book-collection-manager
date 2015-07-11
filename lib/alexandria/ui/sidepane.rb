@@ -117,7 +117,8 @@ module Alexandria
         column.pack_start(renderer, true)
         column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           # log.debug { "sidepane: editable #{cell}, #{iter} #{iter[1]}: #{iter[2]}" }
-          cell.text, cell.editable = iter[1], iter[2]
+          cell.text = iter[1]
+          cell.editable = iter[2]
           # log.debug { "exit sidepane: editable #{cell}, #{iter}" }
         end
         renderer.signal_connect('edited', &method(:on_edited_library))

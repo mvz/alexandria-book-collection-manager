@@ -26,7 +26,8 @@ module Alexandria
     extend GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-    ALL_RULES, ANY_RULE = 1, 2
+    ALL_RULES = 1
+    ANY_RULE = 2
     attr_reader :name
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
