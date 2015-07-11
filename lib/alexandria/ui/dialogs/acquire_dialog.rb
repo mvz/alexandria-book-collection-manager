@@ -552,7 +552,7 @@ module Alexandria
       def play_sound(effect)
         # HACK, do some thread waiting, if possible
         puts "scanning sound : #{@prefs.play_scanning_sound}"
-        puts "scan sound:      #{ @prefs.play_scan_sound}"
+        puts "scan sound:      #{@prefs.play_scan_sound}"
         if effect == 'scanning'
           puts effect
           return unless  @prefs.play_scanning_sound
