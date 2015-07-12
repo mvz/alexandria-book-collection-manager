@@ -117,7 +117,8 @@ module Alexandria
         column.pack_start(renderer, true)
         column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           # log.debug { "sidepane: editable #{cell}, #{iter} #{iter[1]}: #{iter[2]}" }
-          cell.text, cell.editable = iter[1], iter[2]
+          cell.text = iter[1]
+          cell.editable = iter[2]
           # log.debug { "exit sidepane: editable #{cell}, #{iter}" }
         end
         renderer.signal_connect('edited', &method(:on_edited_library))
@@ -141,7 +142,7 @@ module Alexandria
         @library_listview.signal_connect('drag-motion') do |_widget, drag_context, x, y, time, _data|
           log.debug { 'drag-motion' }
 
-          path, column, _, _ =
+          path, column, =
             @library_listview.get_path_at_pos(x, y)
 
           if path
@@ -185,7 +186,7 @@ module Alexandria
 
           success = false
           if selection_data.type == Gdk::Selection::TYPE_STRING
-            path, _ =
+            path, =
               @library_listview.get_dest_row_at_pos(x, y)
 
             if path

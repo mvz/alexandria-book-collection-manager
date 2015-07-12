@@ -69,7 +69,8 @@ module Alexandria
         column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           iter = @listview_model.convert_iter_to_child_iter(iter)
           iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.text, cell.editable = iter[Columns::TITLE], false # true
+          cell.text = iter[Columns::TITLE]
+          cell.editable = false # true
         end
 
         column.sort_column_id = Columns::TITLE
@@ -293,7 +294,7 @@ module Alexandria
         log.debug { "setup_listview_columns_width #{@prefs.cols_width}" }
         if @prefs.cols_width
           cols_width = YAML.load(@prefs.cols_width)
-          log.debug { "cols_width: #{cols_width.inspect }" }
+          log.debug { "cols_width: #{cols_width.inspect}" }
           @listview.columns.each do |c|
             if cols_width.key?(c.title)
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
