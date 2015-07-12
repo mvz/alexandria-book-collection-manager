@@ -86,6 +86,7 @@ describe Alexandria::BookProviders do
   end
 
   it 'dea should work' do
+    skip 'DEAStore is not operational at the moment'
     assert_correct_search_result(Alexandria::BookProviders::DeaStoreProvider,
                                  '9788817012980')
     assert_correct_search_result(Alexandria::BookProviders::DeaStoreProvider,
