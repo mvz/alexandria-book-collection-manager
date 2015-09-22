@@ -33,16 +33,9 @@ describe Gtk::IconView do
 end
 
 describe Alexandria::UI::MainApp do
-  before do
-    allow(Alexandria::UI::UIManager).to receive(:new).
-      and_return(double(Alexandria::UI::UIManager,
-                        actiongroup: double(Object), appbar: nil,
-                        prefs: nil))
-  end
   it 'should be a singleton' do
     expect do
       Alexandria::UI::MainApp.new
     end.to raise_error
-    # Alexandria::UI::MainApp.instance
   end
 end
