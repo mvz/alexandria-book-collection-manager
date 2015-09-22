@@ -1,5 +1,5 @@
 # Copyright (C) 2007 Joseph Method
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -16,7 +16,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require File.expand_path('test_helper.rb', File.dirname(__FILE__))
+require 'spec_helper'
 
 describe Alexandria::Book do
   it 'should be a thing' do
@@ -26,9 +26,9 @@ describe Alexandria::Book do
   it 'should establish equality only with books with the same identity' do
     book = an_artist_of_the_floating_world
     same_book = an_artist_of_the_floating_world
-    same_book.must_equal book
+    expect(same_book).to eq book
     different_book = an_artist_of_the_floating_world
     different_book.isbn = '9780571147999'
-    different_book.wont_equal book
+    expect(different_book).not_to eq book
   end
 end
