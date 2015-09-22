@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.files = `git ls-files -z`.split("\0") |
     ['lib/alexandria/default_preferences.rb']
 
-  s.executables = s.files.grep(%r{^bin/}).map { |path| File.basename(path) }
+  s.executables = ['alexandria']
 
   s.rdoc_options = ['--main', 'README.md']
 
