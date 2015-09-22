@@ -1,6 +1,7 @@
 #-- -*- ruby -*-
+# Copyright (C) 2004-2006 Dafydd Harries
 # Copyright (C) 2007 Cathal Mc Ginley
-# Copyright (C) 2014, 2015 Matijs van Zuijlen
+# Copyright (C) 2011, 2014, 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -25,6 +26,34 @@ describe Alexandria::Library do
       extensions = Alexandria::Library::EXT
       expect(extensions[:book]).not_to be_nil
       expect(extensions[:cover]).not_to be_nil
+    end
+  end
+
+  describe '#valid_isbn?' do
+    it 'returns a true value for valid isbns' do
+      for x in ['014143984X', '0-345-43192-8']
+        expect(Alexandria::Library.valid_isbn?(x)).to be_truthy
+      end
+    end
+  end
+
+  describe '#valid_ean?' do
+    it 'returns a true value for valid EANs' do
+      expect(Alexandria::Library.valid_ean?('9780345431929')).to be_truthy
+
+      # Regression test: this EAN has a checksum of 10, which should be
+      # treated like a checksum of 0.
+      expect(Alexandria::Library.valid_ean?('9784047041790')).to be_truthy
+    end
+  end
+
+  describe '#canonicalise_isbn' do
+    it 'returns the correct value for several examples' do
+    expect(Alexandria::Library.canonicalise_isbn('014143984X')).to eq '014143984X'
+    expect(Alexandria::Library.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
+    expect(Alexandria::Library.canonicalise_isbn('3522105907')).to eq '3522105907'
+    # EAN number
+    expect(Alexandria::Library.canonicalise_isbn('9780345431929')).to eq '0345431928'
     end
   end
 
@@ -65,6 +94,29 @@ describe Alexandria::Library do
 
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
+    end
+  end
+
+  describe '.import_as_isbn_list' do
+    before :all do
+      require 'alexandria/import_library'
+    end
+
+    def __test_fake_import_isbns
+      libraries = Alexandria::Libraries.instance
+      library = Alexandria::Library.new('Test Library')
+      libraries.add_library(library)
+      [library, libraries]
+    end
+
+    it "doesn't work quite yet" do
+      skip
+      # Doesn't work quite yet.
+      on_iterate_cb = proc { }
+      on_error_cb = proc { }
+      library, libraries = __test_fake_import_isbns
+      test_file = "data/isbns.txt"
+      library.import_as_isbn_list("Test Library", test_file, on_iterate_cb, on_error_cb)
     end
   end
 
