@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-# Copyright (C) 2005-2006 Laurent Sansonetti
+# Copyright (C) 2007 Joseph Method
+# Copyright (C) 2007 Cathal Mc Ginley
 # Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
