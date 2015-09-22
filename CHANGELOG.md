@@ -1,10 +1,13 @@
 # Changelog
 
-## Unreleased
+## 0.6.9
 
 * Update/fix authorship information and other metadata
 * Fix crash opening preferences dialog
 * Fix crash opening book dialog
+* Clean up code
+* Merge tests into specs
+* Update dependencies to latest gtk2 and gstreamer gems
 
 ## 0.6.9.pre1
 
@@ -12,7 +15,6 @@
 * Disable some broken web scrapers
 * Update specs and tests
 * Modernize build environment
-
 
 ## 0.6.8
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2014 Matijs van Zuijlen
+# Copyright (C) 2014, 2015 Matijs van Zuijlen
 #
 # This file is part of Alexandria.
 #
@@ -18,7 +18,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  VERSION = '0.6.9.pre1'
+  VERSION = '0.6.9'
   DATA_VERSION = '0.6.3'
-  DISPLAY_VERSION = '0.6.9.pre1'
+  DISPLAY_VERSION = '0.6.9'
 end

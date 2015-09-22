@@ -19,7 +19,7 @@ Alexandria is written in Ruby using ruby-gnome2.
 Where can I get it?
 ===================
 
-An experimental gem release can be installed by running
+You can install alexandria as a gem by running
 
     gem install alexandria-book-collection-manager
 
