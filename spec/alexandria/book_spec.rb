@@ -1,8 +1,5 @@
-#!/usr/bin/env ruby
-# Copyright (C) 2005-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
-#
-# This file is part of Alexandria, a GNOME book collection manager.
+# Copyright (C) 2007 Joseph Method
+# Copyright (C) 2011, 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -19,21 +16,19 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require File.expand_path('test_helper.rb', File.dirname(__FILE__))
+require 'spec_helper'
 
-ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? \
- and URI.parse(ENV['http_proxy']).userinfo.nil?
+describe Alexandria::Book do
+  it 'should be a thing' do
+    an_artist_of_the_floating_world
+  end
 
-class TestAlexandriaApplication < MiniTest::Test
-  def test_application_runs
-    Alexandria::UI::Icons.init
-    @main_app = Alexandria::UI::MainApp.instance
-
-    Gtk.timeout_add(100) do
-      @main_app.main_app.destroy
-      Gtk.main_quit
-    end
-
-    Gtk.main
+  it 'should establish equality only with books with the same identity' do
+    book = an_artist_of_the_floating_world
+    same_book = an_artist_of_the_floating_world
+    expect(same_book).to eq book
+    different_book = an_artist_of_the_floating_world
+    different_book.isbn = '9780571147999'
+    expect(different_book).not_to eq book
   end
 end

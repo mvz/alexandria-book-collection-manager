@@ -1,5 +1,6 @@
 # Copyright (C) 2007 Joseph Method
-# Copyright (C) 2014 Matijs van Zuijlen
+# Copyright (C) 2007 Cathal Mc Ginley
+# Copyright (C) 2011, 2014, 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -33,16 +34,20 @@ describe Gtk::IconView do
 end
 
 describe Alexandria::UI::MainApp do
-  before do
-    allow(Alexandria::UI::UIManager).to receive(:new).
-      and_return(double(Alexandria::UI::UIManager,
-                        actiongroup: double(Object), appbar: nil,
-                        prefs: nil))
-  end
   it 'should be a singleton' do
     expect do
       Alexandria::UI::MainApp.new
     end.to raise_error
-    # Alexandria::UI::MainApp.instance
+  end
+
+  it 'runs' do
+    @main_app = Alexandria::UI::MainApp.instance
+
+    Gtk.timeout_add(100) do
+      @main_app.main_app.destroy
+      Gtk.main_quit
+    end
+
+    Gtk.main
   end
 end
