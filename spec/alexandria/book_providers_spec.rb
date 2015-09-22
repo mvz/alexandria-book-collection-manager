@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # Copyright (C) 2005-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
-# Incorporates code Copyright (C) 2007 Joseph Method
+# Copyright (C) 2007 Joseph Method
+# Copyright (C) 2011, 2014, 2015 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
 #
@@ -20,7 +20,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require File.expand_path('test_helper.rb', File.dirname(__FILE__))
+require 'spec_helper'
 
 describe Alexandria::BookProviders do
   it 'should be less clever'
@@ -30,27 +30,29 @@ describe Alexandria::BookProviders do
 
     puts results.inspect if $DEBUG
 
-    assert_kind_of(Array, results, "Results are not an array for #{provider}")
-    assert(!results.empty?, "Results are empty for #{provider}")
+    expect(results).to be_instance_of(Array), "Results are not an array for #{provider}"
+    expect(results).not_to be_empty, "Results are empty for #{provider}"
 
     if search_type == Alexandria::BookProviders::SEARCH_BY_ISBN
-      assert(results.length <= 2, "Results are greater than 2 for #{provider}")
+      expect(results.length).to be <= 2, "Results are greater than 2 for #{provider}"
 
       book = results.first
 
-      assert_kind_of(Alexandria::Book, book, "Result is not a Book for #{provider}")
+      expect(book).to be_instance_of(Alexandria::Book), "Result is not a Book for #{provider}"
 
       canonical_query = Alexandria::Library.canonicalise_ean(query)
       canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
-      assert_equal(canonical_query, canonical_result,
-                   "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}")
+      expect(canonical_query).to eq(canonical_result),
+                   "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
 
       if results.length == 2
         cover_url = results.last
-        assert(cover_url.nil? || cover_url.is_a?(String), "Unexpected cover_url #{cover_url.inspect} for #{provider}")
+        if cover_url
+          expect(cover_url).to be_instance_of(String), "Unexpected cover_url #{cover_url.inspect} for #{provider}"
+        end
       end
     else
-      assert_kind_of(Alexandria::Book, results.first.first, "Result item is not a Book for #{provider}")
+      expect(results.first.first).to be_instance_of(Alexandria::Book), "Result item is not a Book for #{provider}"
     end
     results
   end
@@ -247,8 +249,8 @@ describe Alexandria::BookProviders do
     results = assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
                                            '9785941454136')
     this_book = results.first
-    assert_kind_of(Array, this_book.authors, 'Not an array!')
+    expect(this_book.authors).to be_instance_of(Array), 'Not an array!'
     # puts this_book.authors
-    assert(this_book.authors.length == 2, 'Wrong number of authors for this book!')
+    expect(this_book.authors.length).to eq(2), 'Wrong number of authors for this book!'
   end
 end
