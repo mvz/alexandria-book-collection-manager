@@ -220,7 +220,7 @@ Rake::PackageTask.new(PROJECT, Alexandria::DISPLAY_VERSION) do |p|
                           'alexandria.desktop.in',
                           'bin/**/*', 'data/**/*', 'misc/**/*',
                           'doc/**/*', 'lib/**/*', 'po/**/*',
-                          'schemas/**/*', 'spec/**/*', 'tests/**/*')
+                          'schemas/**/*', 'spec/**/*')
 end
 
 task tgz: [:build] do
