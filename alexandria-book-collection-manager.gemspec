@@ -46,8 +46,8 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('gettext', ['~> 3.1'])
   s.add_runtime_dependency('hpricot', ['~> 0.8.5'])
   s.add_runtime_dependency('htmlentities', ['~> 4.3'])
-  s.add_runtime_dependency('gtk2', ['~> 2.2'])
-  s.add_runtime_dependency('gstreamer', ['~> 2.2'])
+  s.add_runtime_dependency('gtk2', ['~> 3.0'])
+  s.add_runtime_dependency('gstreamer', ['~> 3.0'])
 
   s.add_development_dependency('minitest', ['~> 5.0'])
   s.add_development_dependency('rake', ['~> 10.0'])
