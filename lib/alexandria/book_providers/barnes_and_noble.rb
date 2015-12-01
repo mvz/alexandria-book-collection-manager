@@ -57,14 +57,14 @@ module Alexandria
 
       def fetch_redirectly(uri_str, limit = 5)
         raise NoResultsError, 'HTTP redirect too deep' if limit == 0
-        response = agent.get(uri_str)
         if limit < 10
           sleep 0.1
-          puts "Redirectly :: #{uri_str}"
+          log.debug { "Redirectly :: #{uri_str}" }
         else
-          puts "Fetching   :: #{uri_str}"
+          log.debug { "Fetching   :: #{uri_str}" }
         end
-        puts response.inspect
+        response = agent.get(uri_str)
+        log.debug { response.inspect }
         case response
         when Net::HTTPSuccess     then response
         when Net::HTTPRedirection then
