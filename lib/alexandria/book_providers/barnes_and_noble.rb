@@ -37,8 +37,7 @@ module Alexandria
 
       SITE = 'http://www.barnesandnoble.com'
 
-      BASE_ISBN_SEARCH_URL = 'http://search.barnesandnoble.com/books' \
-        '/product.aspx?ISBSRC=Y&ISBN=%s'
+      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'
 
       BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
         '/results.asp?%s=%s' # type, term
@@ -58,17 +57,22 @@ module Alexandria
 
       def fetch_redirectly(uri_str, limit = 5)
         raise NoResultsError, 'HTTP redirect too deep' if limit == 0
-        response = agent.get(uri_str)
         if limit < 10
           sleep 0.1
-          puts "Redirectly :: #{uri_str}"
+          log.debug { "Redirectly :: #{uri_str}" }
         else
-          puts "Fetching   :: #{uri_str}"
+          log.debug { "Fetching   :: #{uri_str}" }
         end
-        puts response.inspect
+        response = agent.get(uri_str)
+        log.debug { response.inspect }
         case response
         when Net::HTTPSuccess     then response
-        when Net::HTTPRedirection then fetch_redirectly(response['Location'], (limit - 1))
+        when Net::HTTPRedirection then
+          redirect = URI.parse response['Location']
+          if redirect.relative?
+            redirect = URI.parse(uri_str) + redirect
+          end
+          fetch_redirectly(redirect.to_s, (limit - 1))
         else
           response.error!
         end
@@ -146,71 +150,46 @@ module Alexandria
         doc = html_to_doc(html)
         begin
           book_data = {}
-          title_header = doc % '//div.wgt-productTitle/h1'
-          if title_header
-            title = ''
-            title_header.children.each do |node|
-              if node.text?
-                title += ' ' + node.to_s
-              end
-            end
-            title.strip!
-            if title.empty?
-              log.warn { 'Unexpectedly found no title in BarnesAndNoble lookup' }
-              raise NoResultsError
-            end
-            book_data[:title] = title.strip.squeeze(' ')
-            subtitle_span = title_header % 'span.subtitle'
-            if subtitle_span
-              book_data[:title] += " #{subtitle_span.inner_text}"
+
+          dl = (doc / 'dl').first
+          dts = dl.children_of_type('dt')
+          dts.each do |dt|
+            value = dt.next_sibling.inner_text
+            case dt.inner_text
+            when /ISBN-13/
+              book_data[:isbn] = Library.canonicalise_ean(value)
+            when /Publisher/
+              book_data[:publisher] = value
+            when /Publication data/
+              value =~ /\d{2}.\d{2}.(\d{4})/
+              year = Regexp.last_match[1]
+              require 'pry'
+              binding.pry
+              book_data[:publisher] = year
             end
           end
 
-          isbn_links = doc / '//a.isbn-a'
-          isbns = isbn_links.map(&:inner_text)
-          book_data[:isbn] =  Library.canonicalise_ean(isbns.first)
-
-          authors = []
-          author_links = title_header / 'a[@href*="ATH"]'
-          author_links.each do |a|
-            authors << a.inner_text
+          meta = doc / 'meta'
+          meta.each do |it|
+            attrs = it.attributes
+            property = attrs['property']
+            next unless property
+            case property
+            when 'og:title'
+              book_data[:title] = attrs['content']
+            when 'og:image'
+              book_data[:image_url] = attrs['content']
+            end
           end
+
+          author_links = doc / 'span.contributors a'
+          authors = author_links.map(&:inner_text)
           book_data[:authors] = authors
 
-          publisher_item = doc % 'li.publisher'
-          if publisher_item
-            publisher_item.inner_text =~ /Publisher:\s*(.+)/
-            book_data[:publisher] = Regexp.last_match[1]
-          end
-
-          date_item = doc % 'li.pubDate'
-          if date_item
-            date_item.inner_text =~ /Date: ([^\s]*)\s*([\d]{4})/
-            year = Regexp.last_match[2].to_i if Regexp.last_match[2]
-            book_data[:publication_year] = year
-          end
-
           book_data[:binding] = ''
-          format_list_items = doc / '//div.col-one/ul/li'
-          format_list_items.each do |li|
-            if li.inner_text =~ /Format:\s*(.*),/
-              book_data[:binding] = Regexp.last_match[1]
-            end
-          end
-
-          product_image_div = doc % 'div#product-image'
-          if product_image_div
-            images = product_image_div / 'img'
-            if images.size == 1
-              book_data[:image_url] = images.first['src']
-            else
-              if images.first['src'] =~ /see_inside.gif/
-                # the first image is the "See Inside!" label
-                book_data[:image_url] = images[1]['src']
-              else
-                book_data[:image_url] = images.first['src']
-              end
-            end
+          selected_format = (doc / '#availableFormats li.selected a.tabTitle').first
+          if selected_format
+            book_data[:binding] = selected_format.inner_text
           end
 
           book = Book.new(book_data[:title], book_data[:authors],

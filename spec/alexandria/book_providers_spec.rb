@@ -135,7 +135,6 @@ describe Alexandria::BookProviders do
   # providers supposed to be always working
 
   it 'Barnes and Noble should work' do
-    skip 'Needs fixing'
     assert_correct_search_result(Alexandria::BookProviders::BarnesAndNobleProvider,
                                  '9780961328917')   # see #1433
   end
