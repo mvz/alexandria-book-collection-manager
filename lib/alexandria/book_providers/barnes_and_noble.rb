@@ -37,8 +37,7 @@ module Alexandria
 
       SITE = 'http://www.barnesandnoble.com'
 
-      BASE_ISBN_SEARCH_URL = 'http://search.barnesandnoble.com/books' \
-        '/product.aspx?ISBSRC=Y&ISBN=%s'
+      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'
 
       BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
         '/results.asp?%s=%s' # type, term
