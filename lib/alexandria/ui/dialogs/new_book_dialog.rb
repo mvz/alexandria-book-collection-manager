@@ -561,10 +561,7 @@ module Alexandria
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
-
-          # @parent.appbar.status = message
-          MainApp.instance.appbar.status = message # HACKish
-          # false
+          MainApp.instance.ui_manager.set_status_label(message)
         end
       end
 
