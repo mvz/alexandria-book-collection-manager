@@ -68,7 +68,12 @@ module Alexandria
         puts response.inspect
         case response
         when Net::HTTPSuccess     then response
-        when Net::HTTPRedirection then fetch_redirectly(response['Location'], (limit - 1))
+        when Net::HTTPRedirection then
+          redirect = URI.parse response['Location']
+          if redirect.relative?
+            redirect = URI.parse(uri_str) + redirect
+          end
+          fetch_redirectly(redirect.to_s, (limit - 1))
         else
           response.error!
         end
