@@ -26,7 +26,11 @@ describe Alexandria::BookProviders do
   it 'should be less clever'
 
   def assert_correct_search_result(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
-    results = provider.instance.search(query, search_type)
+    begin
+      results = provider.instance.search(query, search_type)
+    rescue SocketError
+      skip 'Service is offline'
+    end
 
     puts results.inspect if $DEBUG
 
