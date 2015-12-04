@@ -67,7 +67,7 @@ describe Alexandria::Library do
       first_copy = an_artist_of_the_floating_world
       my_library << first_copy
       my_library.delete(first_copy)
-      expect { my_library.delete(first_copy) }.to raise_error
+      expect { my_library.delete(first_copy) }.to raise_error ArgumentError
     end
 
     it 'allows multiple copies of a book to be added and deleted in turn' do
@@ -85,7 +85,6 @@ describe Alexandria::Library do
       # puts "AAA my_library.size #{my_library.size}"
 
       # puts "second_copy #{second_copy.object_id}"
-      # lambda {  my_library.delete(second_copy) }.should raise_error
       expect { my_library.delete(second_copy) }.not_to raise_error
 
       # puts "BBB my_library.size #{my_library.size}"

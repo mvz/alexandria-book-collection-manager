@@ -37,7 +37,7 @@ describe Alexandria::UI::MainApp do
   it 'should be a singleton' do
     expect do
       Alexandria::UI::MainApp.new
-    end.to raise_error
+    end.to raise_error NoMethodError
   end
 
   it 'runs' do
