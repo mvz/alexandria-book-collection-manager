@@ -298,8 +298,10 @@ module Alexandria
           @listview.columns.each do |c|
             if cols_width.key?(c.title)
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
+              width = cols_width[c.title]
+              next if width == 0
               c.sizing = Gtk::TreeViewColumn::FIXED
-              c.fixed_width = cols_width[c.title]
+              c.fixed_width = width
             end
           end
         end
