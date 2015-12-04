@@ -196,7 +196,7 @@ module Alexandria
       if book
         @cache[book].save(book)
       else
-        FileUtils.mkdir_p(DIR)
+        FileUtils.mkdir_p(DIR) unless File.exist? DIR
         File.open(yaml, 'w') { |io| io.puts to_hash.to_yaml }
       end
     end
