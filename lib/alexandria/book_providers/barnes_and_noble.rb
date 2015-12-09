@@ -163,8 +163,6 @@ module Alexandria
             when /Publication data/
               value =~ /\d{2}.\d{2}.(\d{4})/
               year = Regexp.last_match[1]
-              require 'pry'
-              binding.pry
               book_data[:publisher] = year
             end
           end
