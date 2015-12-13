@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -420,11 +420,7 @@ module Alexandria
               else
                 post_addition([], library, is_new)
               end
-            rescue => e
-              unless e.is_a? Alexandria::BookProviders::NoResultsError
-                puts e.message
-                puts e.backtrace.join("\n> ")
-              end
+            rescue Alexandria::BookProviders::NoResultsError => e
               @find_error = e.message
               @button_add.sensitive = true
               notify_end_add_by_isbn
