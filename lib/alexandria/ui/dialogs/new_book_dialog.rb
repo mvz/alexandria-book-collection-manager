@@ -50,6 +50,7 @@ module Alexandria
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      @@last_criterion_was_not_isbn = false
 
       def initialize(parent, selected_library = nil, &block)
         super('new_book_dialog__builder.glade', widget_names)
@@ -111,12 +112,7 @@ module Alexandria
 
         # Re-select the last selected criterion.
         # TODO let's do this from a Gconf setting instead, maybe?
-        begin
-          @title_radiobutton.active = @@last_criterion_was_not_isbn
-        rescue NameError
-          log.debug { 'initialize @@last_criterion_was_not_isbn as false' }
-          @@last_criterion_was_not_isbn = false
-        end
+        @title_radiobutton.active = @@last_criterion_was_not_isbn
 
         if @@last_criterion_was_not_isbn
           @entry_search.grab_focus
