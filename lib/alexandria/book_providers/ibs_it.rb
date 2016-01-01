@@ -35,7 +35,7 @@ module Alexandria
       end
 
       def search(criterion, type)
-        criterion = criterion.convert('ISO-8859-1', 'UTF-8')
+        criterion = criterion.encode('ISO-8859-1')
         req = BASE_URI + '/ser/'
         req += case type
                when SEARCH_BY_ISBN
@@ -81,7 +81,7 @@ module Alexandria
 
       def to_book(data)
         raise NoResultsError if data =~ /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/
-        data = data.convert('UTF-8', 'ISO-8859-1')
+        data = data.encode('UTF-8')
 
         md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
         raise 'No title' unless md
