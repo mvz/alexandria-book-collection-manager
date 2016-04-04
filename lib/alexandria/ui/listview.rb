@@ -197,21 +197,12 @@ module Alexandria
           cell.set_active(state)
           cell.activatable = true
         end
-        log.debug { "Setting cell_data_func for #{renderer}" }
-        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
-          iter = @listview_model.convert_iter_to_child_iter(iter)
-          iter = @filtered_model.convert_iter_to_child_iter(iter)
-          case iterid
-          when 12
-            setup_column.call(iter, cell, Columns::REDD)
-          when 13
-            setup_column.call(iter, cell, Columns::OWN)
-          when 14
-            setup_column.call(iter, cell, Columns::WANT)
-            own_state = iter[Columns::OWN]
-            cell.inconsistent = own_state
-          end
+
+        column.add_attribute(renderer, 'active', iterid)
+        if iterid == Columns::WANT
+          column.add_attribute(renderer, 'inconsistent', Columns::OWN)
         end
+
         log.debug { "append_column #{column}" }
         @listview.append_column(column)
       end
