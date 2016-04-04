@@ -97,7 +97,7 @@ module Alexandria
           @parent.on_books_selection_changed
         end
         setup_tags_column
-        setup_listview_hack
+        setup_row_activation
         setup_view_source_dnd(@listview)
       end
 
@@ -114,15 +114,11 @@ module Alexandria
         @listview.append_column(column)
       end
 
-      def setup_listview_hack
+      def setup_row_activation
         @listview.signal_connect('row-activated') do
-          # Dirty hack to avoid the beginning of a drag within this
-          # handler.
           log.debug { 'row-activated' }
-          Gtk.timeout_add(100) do
-            @actiongroup['Properties'].activate
-            false
-          end
+          @actiongroup['Properties'].activate
+          false
         end
       end
 

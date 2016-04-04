@@ -61,13 +61,9 @@ module Alexandria
 
         @iconview.signal_connect('item-activated') do
           log.debug { 'item-activated' }
-          # Dirty hack to avoid the beginning of a drag within this
-          # handler.
           @tooltips.hide_tooltip
-          Gtk.timeout_add(100) do
-            @actiongroup['Properties'].activate
-            false
-          end
+          @actiongroup['Properties'].activate
+          false
         end
 
         # DND support for Gtk::IconView is shipped since GTK+ 2.8.0.
