@@ -540,7 +540,10 @@ module Alexandria
 
       def notify_end_add_by_isbn
         MainApp.instance.appbar.children.first.visible = false
-        Gtk.timeout_remove(@progress_pulsing)
+        if @progress_pulsing
+          Gtk.timeout_remove(@progress_pulsing)
+          @progress_pulsing = nil
+        end
       end
 
       def update(status, provider)
