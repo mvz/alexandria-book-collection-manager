@@ -51,53 +51,19 @@ module Alexandria
         title = _('Title')
         log.debug { 'Create listview column for %s' % title }
         column = Gtk::TreeViewColumn.new(title)
-        column.widget = Gtk::Label.new(title).show
+
         renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
-          iter = @listview_model.convert_iter_to_child_iter(iter)
-          iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.pixbuf = iter[Columns::COVER_LIST]
-        end
+        column.add_attribute(renderer, 'pixbuf', Columns::COVER_LIST)
+
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
-        # Editable tree views are behaving strangely
-        # make_renderer_editable renderer
-
         column.pack_start(renderer, true)
-
-        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
-          iter = @listview_model.convert_iter_to_child_iter(iter)
-          iter = @filtered_model.convert_iter_to_child_iter(iter)
-          cell.text = iter[Columns::TITLE]
-          cell.editable = false # true
-        end
+        column.add_attribute(renderer, 'text', Columns::TITLE)
 
         column.sort_column_id = Columns::TITLE
         column.resizable = true
         @listview.append_column(column)
-      end
-
-      def make_renderer_editable(renderer)
-        renderer.signal_connect('editing_started') do |_cell, entry, _path_string|
-          log.debug { 'editing_started' }
-          entry.complete_titles
-        end
-
-        renderer.signal_connect('edited') do |_cell, path_string, new_string|
-          log.debug { 'edited' }
-          path = Gtk::TreePath.new(path_string)
-          path = @listview_model.convert_path_to_child_path(path)
-          path = @filtered_model.convert_path_to_child_path(path)
-          iter = @listview.model.get_iter(path)
-          book = @parent.book_from_iter(@parent.selected_library, iter)
-          book.title = new_string
-          @listview.freeze
-          @iconview.freeze
-          @parent.fill_iter_with_book(iter, book)
-          @iconview.unfreeze
-          @listview.unfreeze
-        end
       end
 
       TEXT_COLUMNS = [
