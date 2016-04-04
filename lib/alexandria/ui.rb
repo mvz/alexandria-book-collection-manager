@@ -16,8 +16,8 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gdk_pixbuf2'
+require 'gtk2'
 
-require 'alexandria/ui/gtk_thread_help'
 require 'alexandria/ui/icons'
 require 'alexandria/ui/builder_base'
 require 'alexandria/ui/completion_models'
@@ -42,7 +42,7 @@ module Alexandria
       puts '====================================' if $DEBUG
       log.info { 'Starting Gtk...' }
       puts '====================================' if $DEBUG
-      Gtk.main_with_queue
+      Gtk.main
     end
     def self.main
       init_icons
