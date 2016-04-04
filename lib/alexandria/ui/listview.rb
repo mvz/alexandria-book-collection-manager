@@ -137,8 +137,6 @@ module Alexandria
           renderer = Gtk::CellRendererPixbuf.new
           column.pack_start(renderer, false)
           column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
-            iter = @listview_model.convert_iter_to_child_iter(iter)
-            iter = @filtered_model.convert_iter_to_child_iter(iter)
             rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
             cell.pixbuf = rating >= i.succ ?
               Icons::STAR_SET : Icons::STAR_UNSET
