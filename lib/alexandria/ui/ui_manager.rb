@@ -933,11 +933,8 @@ module Alexandria
                 trace = ex.backtrace.join("\n > ")
                 log.error { "append_books failed #{ex.message} #{trace}" }
               end
-              # convert to percents
-              coeff = total / 100.0
-              percent = n / coeff
-              fraction = percent / 100
-              log.debug { "#index #{n} percent #{percent} fraction #{fraction}" }
+              fraction = n * 1.0 / total
+              log.debug { "#index #{n} fraction #{fraction}" }
               @progressbar.fraction = fraction
               n += 1
             end

@@ -144,12 +144,8 @@ module Alexandria
 
           filter.on_iterate do |n, total|
             unless @destroyed
-              # convert to percents
-              coeff = total / 100.0
-              percent = n / coeff
-              # fraction between 0 and 1
-              fraction = percent / 100
-              puts "#{inspect} Percentage: #{fraction}" if $DEBUG
+              fraction = n * 1.0 / total
+              puts "#{inspect} fraction: #{fraction}" if $DEBUG
               exec_queue.call(on_progress, fraction)
             end
           end
