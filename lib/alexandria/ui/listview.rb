@@ -109,7 +109,6 @@ module Alexandria
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
                                          text: Columns::TAGS)
-        column.widget = Gtk::Label.new(title).show
         column.sort_column_id = Columns::TAGS
         column.resizable = true
         @listview.append_column(column)
@@ -131,7 +130,6 @@ module Alexandria
         title = _('Rating')
         log.debug { 'Create listview column for %s...' % title }
         column = Gtk::TreeViewColumn.new(title)
-        column.widget = Gtk::Label.new(title).show
         column.sizing = Gtk::TreeViewColumn::FIXED
         column.fixed_width = column.min_width = column.max_width =
           (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
@@ -191,7 +189,6 @@ module Alexandria
           end
         end
         column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)
-        column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { 'Create listview column for %s...' % title }
@@ -225,7 +222,6 @@ module Alexandria
         renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
         column = Gtk::TreeViewColumn.new(title, renderer,
                                          text: iterid)
-        column.widget = Gtk::Label.new(title).show
         column.sort_column_id = iterid
         column.resizable = true
         @listview.append_column(column)

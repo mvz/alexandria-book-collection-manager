@@ -1132,7 +1132,7 @@ module Alexandria
         @prefs.selected_library = selected_library.name
         cols_width = {}
         @listview.columns.each do |c|
-          cols_width[c.title] = [c.widget.size_request.first, c.width].max
+          cols_width[c.title] = c.width
         end
         @prefs.cols_width = '{' + cols_width.to_a.map do |t, v|
           '"' + t + '": ' + v.to_s
