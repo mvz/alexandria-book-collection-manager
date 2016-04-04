@@ -372,7 +372,7 @@ module Alexandria
             cover_uri = results[1]
             @book_results[isbn] = results
             set_cover_image_async(isbn, cover_uri)
-            # TODO add this as a block to Gtk.queue (needs new overall gui design)
+
             @barcodes_treeview.model.freeze_notify do
               @barcodes_treeview.model.each do |model, path, iter|
                 if iter[0] == isbn

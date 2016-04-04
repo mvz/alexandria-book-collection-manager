@@ -606,9 +606,7 @@ module Alexandria
           @actiongroup['Redo'].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
           unless caller.updating?
-            Gtk.queue do
-              handle_update_caller_library ary
-            end
+            handle_update_caller_library ary
           end
         else
           raise 'unrecognized update event'
@@ -926,32 +924,28 @@ module Alexandria
           block_return = true
           book = library[n]
           if book
-            Gtk.queue do
-              begin
-                append_book(book)
-              rescue => ex
-                trace = ex.backtrace.join("\n > ")
-                log.error { "append_books failed #{ex.message} #{trace}" }
-              end
-              fraction = n * 1.0 / total
-              log.debug { "#index #{n} fraction #{fraction}" }
-              @progressbar.fraction = fraction
-              n += 1
+            begin
+              append_book(book)
+            rescue => ex
+              trace = ex.backtrace.join("\n > ")
+              log.error { "append_books failed #{ex.message} #{trace}" }
             end
+            fraction = n * 1.0 / total
+            log.debug { "#index #{n} fraction #{fraction}" }
+            @progressbar.fraction = fraction
+            n += 1
           else
-            Gtk.queue do
-              @iconview.unfreeze
-              @listview.unfreeze # NEW / bdewey
-              @filtered_model.refilter
-              @listview.columns_autosize
-              @progressbar.fraction = 1
-              # Hide the progress bar.
-              @appbar.children.first.visible = false
-              # Refresh the status bar.
-              on_books_selection_changed
-              @library_listview.set_sensitive(true)
-              block_return = false
-            end
+            @iconview.unfreeze
+            @listview.unfreeze # NEW / bdewey
+            @filtered_model.refilter
+            @listview.columns_autosize
+            @progressbar.fraction = 1
+            # Hide the progress bar.
+            @appbar.children.first.visible = false
+            # Refresh the status bar.
+            on_books_selection_changed
+            @library_listview.set_sensitive(true)
+            block_return = false
           end
 
           block_return

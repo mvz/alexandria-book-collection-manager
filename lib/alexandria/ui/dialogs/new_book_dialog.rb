@@ -544,17 +544,15 @@ module Alexandria
       end
 
       def update(status, provider)
-        Gtk.queue do
-          messages = {
-            searching: _("Searching Provider '%s'..."),
-            error: _("Error while Searching Provider '%s'"),
-            not_found: _("Not Found at Provider '%s'"),
-            found: _("Found at Provider '%s'")
-          }
-          message = messages[status] % provider
-          log.debug { "update message : #{message}" }
-          MainApp.instance.ui_manager.set_status_label(message)
-        end
+        messages = {
+          searching: _("Searching Provider '%s'..."),
+          error: _("Error while Searching Provider '%s'"),
+          not_found: _("Not Found at Provider '%s'"),
+          found: _("Found at Provider '%s'")
+        }
+        message = messages[status] % provider
+        log.debug { "update message : #{message}" }
+        MainApp.instance.ui_manager.set_status_label(message)
       end
 
       def on_focus
