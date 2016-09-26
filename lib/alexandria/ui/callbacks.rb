@@ -369,17 +369,61 @@ module Alexandria
         log.debug { 'Adding actions to @actiongroup' }
 
         @actiongroup = Gtk::ActionGroup.new('actions')
-        @actiongroup.add_actions(standard_actions)
-        @actiongroup.add_actions(providers_actions)
-        @actiongroup.add_toggle_actions(toggle_actions)
-        @actiongroup.add_radio_actions(view_as_actions) do |_action, current|
+
+        standard_actions.each do |name, stock_id, label, accelerator, tooltip, callback|
+          action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          @actiongroup.add_action_with_accel(action, accelerator)
+          if callback
+            action.signal_connect('activate', &callback)
+          end
+        end
+
+        providers_actions.each do |name, stock_id, label, accelerator, tooltip, callback|
+          action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          @actiongroup.add_action_with_accel(action, accelerator)
+          if callback
+            action.signal_connect('activate', &callback)
+          end
+        end
+
+        toggle_actions.each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
+          action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          action.set_active is_active
+          @actiongroup.add_action_with_accel(action, accelerator)
+          if callback
+            action.signal_connect('toggled', &callback)
+          end
+        end
+
+        group = nil
+        first_action = nil
+        view_as_actions.each do |name, stock_id, label, accelerator, tooltip, value|
+          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
+          first_action = action if !group
+          action.set_group group
+          group = action.group
+          @actiongroup.add_action_with_accel(action, accelerator)
+        end
+
+        first_action.signal_connect 'changed' do |_action, current, _user_data|
           @notebook.page = current.current_value
           hid = @toolbar_view_as_signal_hid
           @toolbar_view_as.signal_handler_block(hid) do
             @toolbar_view_as.active = current.current_value
           end
         end
-        @actiongroup.add_radio_actions(arrange_icons_actions) do |_action, current|
+
+        group = nil
+        first_action = nil
+        arrange_icons_actions.each do |name, stock_id, label, accelerator, tooltip, value|
+          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
+          first_action = action if !group
+          action.set_group group
+          group = action.group
+          @actiongroup.add_action_with_accel(action, accelerator)
+        end
+
+        first_action.signal_connect 'changed' do |_action, current, _user_data|
           @prefs.arrange_icons_mode = current.current_value
           setup_books_iconview_sorting
         end
