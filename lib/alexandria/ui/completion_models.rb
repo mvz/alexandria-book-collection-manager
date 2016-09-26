@@ -1,5 +1,5 @@
 # Copyright (C) 2005-2006 Laurent Sansonetti
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -16,68 +16,72 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-class Gtk::Entry
-  def complete_titles
-    complete(Alexandria::UI::CompletionModels::TITLE)
-  end
-
-  def complete_authors
-    complete(Alexandria::UI::CompletionModels::AUTHOR)
-  end
-
-  def complete_publishers
-    complete(Alexandria::UI::CompletionModels::PUBLISHER)
-  end
-
-  def complete_editions
-    complete(Alexandria::UI::CompletionModels::EDITION)
-  end
-
-  def complete_borrowers
-    complete(Alexandria::UI::CompletionModels::BORROWER)
-  end
-
-  def complete_tags
-    complete(Alexandria::UI::CompletionModels::TAG)
-    # min = self.completion.minimum_key_length
-    min = 2
-    completion.signal_connect('match-selected') do |c, model, iter|
-      cur_text = c.entry.text
-      new_tag = model.get_value(iter, 0)
-      cur_text_split = cur_text.split(',')
-      cur_text_split.delete_at(-1)
-      cur_text_split << new_tag
-      c.entry.text = cur_text_split.join(',')
-      true
+module Alexandria
+  module EntryOverrides
+    def complete_titles
+      complete(Alexandria::UI::CompletionModels::TITLE)
     end
-    completion.set_match_func do |_comp, key, iter|
-      cur_tag = key.split(',').last.strip
-      if cur_tag.size >= min
-        begin
-          if iter[0] =~ /^#{cur_tag}/
-            true
-          else
+
+    def complete_authors
+      complete(Alexandria::UI::CompletionModels::AUTHOR)
+    end
+
+    def complete_publishers
+      complete(Alexandria::UI::CompletionModels::PUBLISHER)
+    end
+
+    def complete_editions
+      complete(Alexandria::UI::CompletionModels::EDITION)
+    end
+
+    def complete_borrowers
+      complete(Alexandria::UI::CompletionModels::BORROWER)
+    end
+
+    def complete_tags
+      complete(Alexandria::UI::CompletionModels::TAG)
+      # min = self.completion.minimum_key_length
+      min = 2
+      completion.signal_connect('match-selected') do |c, model, iter|
+        cur_text = c.entry.text
+        new_tag = model.get_value(iter, 0)
+        cur_text_split = cur_text.split(',')
+        cur_text_split.delete_at(-1)
+        cur_text_split << new_tag
+        c.entry.text = cur_text_split.join(',')
+        true
+      end
+      completion.set_match_func do |_comp, key, iter|
+        cur_tag = key.split(',').last.strip
+        if cur_tag.size >= min
+          begin
+            if iter[0] =~ /^#{cur_tag}/
+              true
+            else
+              false
+            end
+          rescue
             false
           end
-        rescue
+        else
           false
         end
-      else
-        false
       end
     end
-  end
 
-  private
+    private
 
-  def complete(model_id)
-    completion = Gtk::EntryCompletion.new
-    model = Alexandria::UI::CompletionModels.instance.models[model_id]
-    completion.model = model
-    completion.text_column = 0
-    self.completion = completion
+    def complete(model_id)
+      completion = Gtk::EntryCompletion.new
+      model = Alexandria::UI::CompletionModels.instance.models[model_id]
+      completion.model = model
+      completion.text_column = 0
+      self.completion = completion
+    end
   end
 end
+
+Gtk::Entry.prepend Alexandria::EntryOverrides
 
 begin
   require 'revolution'
