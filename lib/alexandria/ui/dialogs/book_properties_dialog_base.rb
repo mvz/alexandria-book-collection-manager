@@ -46,7 +46,7 @@ module Alexandria
         @entry_tags.complete_tags
 
         @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
-        @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
+        @treeview_authors.selection.mode = :single
         renderer = Gtk::CellRendererText.new
         renderer.signal_connect('edited') do |_cell, path_string, new_text|
           path = Gtk::TreePath.new(path_string)
@@ -62,7 +62,7 @@ module Alexandria
         @treeview_authors.append_column(col)
 
         setup_calendar_widgets
-        Gtk.timeout_add(150) do
+        GLib::Timeout.add(150) do
           @setup_finished = true
 
           false
@@ -76,10 +76,10 @@ module Alexandria
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
-        @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
+        @calendar_popup.events = [:focus_change_mask]
 
         @calendar_popup.set_transient_for(@book_properties_dialog)
-        @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)
+        @calendar_popup.set_type_hint :dialog
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4

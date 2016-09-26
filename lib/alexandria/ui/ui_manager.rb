@@ -394,7 +394,7 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+        event.event_type == :button_press and event.button == 3
       end
 
       def on_books_button_press_event(widget, event)
