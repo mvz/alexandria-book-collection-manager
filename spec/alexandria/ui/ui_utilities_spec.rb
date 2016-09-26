@@ -35,8 +35,8 @@ end
 
 # from icons
 
-describe Gdk::Pixbuf do
-  it 'should extend Gdk::PixBuf'
+describe GdkPixbuf::Pixbuf do
+  it 'should extend GdkPixbuf::PixBuf'
 end
 
 describe Alexandria::UI::Icons do

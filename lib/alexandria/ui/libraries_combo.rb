@@ -1,4 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
+# Copyright (C) 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -31,7 +32,7 @@ class Gtk::ComboBox
     set_row_separator_func do |_model, iter|
       iter[1] == '-'
     end
-    self.model = Gtk::ListStore.new(Gdk::Pixbuf, String, TrueClass)
+    self.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf, String, TrueClass)
     libraries_names.each do |library_name|
       iter = model.append
       iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL

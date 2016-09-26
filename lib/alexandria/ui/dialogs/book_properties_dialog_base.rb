@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
+# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -285,7 +285,7 @@ module Alexandria
         if response == Gtk::Dialog::RESPONSE_ACCEPT
           begin
             @delete_cover_file = false
-            cover = Gdk::Pixbuf.new(dialog.filename)
+            cover = GdkPixbuf::Pixbuf.new(file: dialog.filename)
             # At this stage the file format is recognized.
 
             if File.exist?(@cover_file)

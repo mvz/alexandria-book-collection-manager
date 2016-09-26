@@ -71,7 +71,7 @@ module Alexandria
         end
         theme_combo.signal_connect('changed') do
           file = THEMES[theme_combo.active].preview_file
-          preview_image.pixbuf = Gdk::Pixbuf.new(file)
+          preview_image.pixbuf = GdkPixbuf::Pixbuf.new(file: file)
         end
         theme_combo.active = 0
         theme_label = Gtk::Label.new(_('_Theme:'), true)
