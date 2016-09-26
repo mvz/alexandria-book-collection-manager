@@ -124,9 +124,9 @@ module Alexandria
         renderer.signal_connect('edited', &method(:on_edited_library))
         @library_listview.append_column(column)
 
-        @library_listview.set_row_separator_func do |_model, iter|
+        @library_listview.set_row_separator_func do |model, iter|
           # log.debug { "library_listview row_separator #{iter}" }
-          iter[3]
+          model.get_value(iter, 3)
         end
 
         @library_listview.selection.signal_connect('changed') do
@@ -135,9 +135,7 @@ module Alexandria
           @parent.refresh_books
         end
 
-        @library_listview.enable_model_drag_dest(
-          BOOKS_TARGET_TABLE,
-          Gdk::DragContext::ACTION_MOVE)
+        @library_listview.enable_model_drag_dest(BOOKS_TARGET_TABLE, :move)
 
         @library_listview.signal_connect('drag-motion') do |_widget, drag_context, x, y, time, _data|
           log.debug { 'drag-motion' }

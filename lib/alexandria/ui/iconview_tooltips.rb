@@ -33,13 +33,13 @@ class IconViewTooltips
   include Alexandria::Logging
 
   def initialize(view)
-    @tooltip_window = Gtk::Window.new(Gtk::Window::POPUP)
+    @tooltip_window = Gtk::Window.new(:popup)
     @tooltip_window.name = 'gtk-tooltips'
     @tooltip_window.resizable = false
     @tooltip_window.border_width = 4
     @tooltip_window.app_paintable = true
 
-    @tooltip_window.signal_connect('expose_event') { |window, event|
+    @tooltip_window.signal_connect('draw') { |window, event|
       on_expose(window, event)
     }
 
@@ -69,13 +69,16 @@ class IconViewTooltips
   def on_expose(window, _event)
     # this paints a nice outline around the label
     size = window.size_request
-    window.style.paint_flat_box(window.window,
-                                Gtk::STATE_NORMAL,
-                                Gtk::SHADOW_OUT,
-                                nil,
-                                @tooltip_window,
-                                'tooltip',
-                                0, 0, size[0], size[1])
+    style = window.style
+    gdk_window = window.window
+
+    Gtk.paint_flat_box(style,
+                       gdk_window.create_cairo_context,
+                       :normal,
+                       :out,
+                       @tooltip_window,
+                       'tooltip',
+                       0, 0, size[0], size[1])
     # must return nil so the label contents get drawn correctly
     nil
   end
@@ -112,7 +115,7 @@ class IconViewTooltips
   end
 
   def on_motion(view, event)
-    tree_path = view.get_path(event.x, event.y)
+    tree_path = view.get_path_at_pos(event.x, event.y)
     # TODO translate path a few times, for sorting & filtering...
     # hmmm, actually seems to work. Report a bug if you can spot a failure
     if tree_path
@@ -120,7 +123,7 @@ class IconViewTooltips
       if @latest_iter.nil?
         @latest_iter = iter
 
-        @tooltip_timeout_id = Gtk.timeout_add(250) do
+        @tooltip_timeout_id = GLib::Timeout.add(250) do
           if @latest_iter == iter
 
             title = iter[2] # HACK hardcoded, should use column names...
@@ -152,7 +155,7 @@ class IconViewTooltips
     unless @tooltip_window.nil?
       @tooltip_window.hide
       if @tooltip_timeout_id
-        Gtk.timeout_remove(@tooltip_timeout_id)
+        GLib::Source.remove(@tooltip_timeout_id)
         @tooltip_timeout_id = nil
       end
       @latest_iter = nil

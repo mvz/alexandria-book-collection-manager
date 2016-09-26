@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
+# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -82,7 +82,7 @@ module Alexandria
       def on_window_state_event(_window, event)
         log.debug { 'window-state-event' }
         if event.is_a?(Gdk::EventWindowState)
-          @maximized = event.new_window_state == Gdk::EventWindowState::MAXIMIZED
+          @maximized = event.new_window_state == :maximized
         end
         log.debug { 'end window-state-event' }
       end

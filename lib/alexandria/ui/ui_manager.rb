@@ -89,8 +89,8 @@ module Alexandria
       end
 
       def setup_dependents
-        @listview_model = Gtk::TreeModelSort.new(@filtered_model)
-        @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
+        @listview_model = Gtk::TreeModelSort.new(model: @filtered_model)
+        @iconview_model = Gtk::TreeModelSort.new(model: @filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
         @sidepane_manager = SidePaneManager.new @library_listview, self
@@ -115,10 +115,10 @@ module Alexandria
         add_main_toolbar_items
         @toolbar = @uimanager.get_widget('/MainToolbar')
         @toolbar.show_arrow = true
-        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+        @toolbar.insert(Gtk::SeparatorToolItem.new, -1)
         setup_toolbar_combobox
         setup_toolbar_filter_entry
-        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+        @toolbar.insert(Gtk::SeparatorToolItem.new, -1)
         setup_toolbar_viewas
         @toolbar.show_all
         @actiongroup['Undo'].sensitive = @actiongroup['Redo'].sensitive = false
@@ -129,15 +129,15 @@ module Alexandria
       def add_main_toolbar_items
         mid = @uimanager.new_merge_id
         @uimanager.add_ui(mid, 'ui/', 'MainToolbar', 'MainToolbar',
-                          Gtk::UIManager::TOOLBAR, false)
+                          :toolbar, false)
         @uimanager.add_ui(mid, 'ui/MainToolbar/', 'New', 'New',
-                          Gtk::UIManager::TOOLITEM, false)
+                          :toolitem, false)
         @uimanager.add_ui(mid, 'ui/MainToolbar/', 'AddBook', 'AddBook',
-                          Gtk::UIManager::TOOLITEM, false)
+                          :toolitem, false)
         # @uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
-        #                  Gtk::UIManager::SEPARATOR, false)
+        #                  :separator, false)
         # @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
-        #                  Gtk::UIManager::TOOLITEM, false)
+        #                  :toolitem, false)
       end
 
       def setup_toolbar_filter_entry
@@ -146,19 +146,16 @@ module Alexandria
         @toolitem = Gtk::ToolItem.new
         @toolitem.expand = true
         @toolitem.border_width = 5
-        @tooltips.set_tip(@filter_entry,
-                          _('Type here the search criterion'), nil)
+        @filter_entry.set_tooltip_text _('Type here the search criterion')
         @toolitem << @filter_entry
-        @toolbar.insert(-1, @toolitem)
+        @toolbar.insert(@toolitem, -1)
       end
 
       def setup_toolbar_combobox
-        @tooltips = Gtk::Tooltips.new
-
-        cb = Gtk::ComboBox.new
-        cb.set_row_separator_func do |_model, iter|
+        cb = Gtk::ComboBoxText.new
+        cb.set_row_separator_func do |model, iter|
           # log.debug { "row_separator" }
-          iter[0] == '-'
+          model.get_value(iter, 0) == '-'
         end
         [_('Match everything'),
          '-',
@@ -181,12 +178,12 @@ module Alexandria
         @toolitem = Gtk::ToolItem.new
         @toolitem.border_width = 5
         @toolitem << eb
-        @toolbar.insert(-1, @toolitem)
-        @tooltips.set_tip(eb, _('Change the search type'), nil)
+        @toolbar.insert(@toolitem, -1)
+        eb.set_tooltip_text _('Change the search type')
       end
 
       def setup_toolbar_viewas
-        @toolbar_view_as = Gtk::ComboBox.new
+        @toolbar_view_as = Gtk::ComboBoxText.new
         @toolbar_view_as.append_text(_('View as Icons'))
         @toolbar_view_as.append_text(_('View as List'))
         @toolbar_view_as.active = 0
@@ -200,8 +197,8 @@ module Alexandria
         @toolitem = Gtk::ToolItem.new
         @toolitem.border_width = 5
         @toolitem << eb
-        @toolbar.insert(-1, @toolitem)
-        @tooltips.set_tip(eb, _('Choose how to show books'), nil)
+        @toolbar.insert(@toolitem, -1)
+        eb.set_tooltip_text _('Choose how to show books')
       end
 
       def setup_book_providers
@@ -214,7 +211,7 @@ module Alexandria
            'ui/NoBookPopup/OnlineInformation/'].each do |path|
              log.debug { "Adding #{name} to #{path}" }
              @uimanager.add_ui(mid, path, name, name,
-                               Gtk::UIManager::MENUITEM, false)
+                               :menuitem, false)
            end
         end
       end
@@ -920,7 +917,7 @@ module Alexandria
         log.debug { "library #{library.name} length #{library.length}" }
         n = 0
 
-        Gtk.idle_add do
+        GLib::Idle.add do
           block_return = true
           book = library[n]
           if book
@@ -1003,7 +1000,7 @@ module Alexandria
         view = page == 0 ? @iconview : @listview
         selection = page == 0 ? @iconview : @listview.selection
 
-        selection.selected_each do |_the_view, path|
+        selection.selected_foreach do |_the_view, path|
           # don't use the_view which is passed in by this block
           # as it doesn't consider the filtering for some reason
           # see bug #24568
@@ -1055,7 +1052,7 @@ module Alexandria
       def sensitize_library(library)
         smart = library.is_a?(SmartLibrary)
         log.debug { "sensitize_library: smartlibrary = #{smart}" }
-        Gtk.idle_add do
+        GLib::Idle.add do
           @actiongroup['AddBook'].sensitive = !smart
           @actiongroup['AddBookManual'].sensitive = !smart
           @actiongroup['Properties'].sensitive = smart
@@ -1169,7 +1166,7 @@ module Alexandria
           ['ui/MainMenubar/EditMenu/Move/',
            'ui/BookPopup/Move/'].each do |path|
             @uimanager.add_ui(@move_mid, path, name, name,
-                              Gtk::UIManager::MENUITEM, false)
+                              :menuitem, false)
           end
         end
       end
@@ -1285,7 +1282,7 @@ module Alexandria
       ]
 
       def setup_books_iconview_sorting
-        sort_order = @prefs.reverse_icons ? Gtk::SORT_DESCENDING : Gtk::SORT_ASCENDING
+        sort_order = @prefs.reverse_icons ? :descending : :ascending
         mode = ICONS_SORTS[@prefs.arrange_icons_mode]
         @iconview_model.set_sort_column_id(mode, sort_order)
         @filtered_model.refilter # force redraw

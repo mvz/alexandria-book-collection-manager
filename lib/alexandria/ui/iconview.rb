@@ -1,5 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
+# Copyright (C) 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -45,10 +46,10 @@ module Alexandria
         log.info { "setup_books_iconview #{@iconview_model.inspect}" }
         @iconview.model = @iconview_model
         log.info { "now @iconview.model = #{@iconview.model.inspect}" }
-        @iconview.selection_mode = Gtk::SELECTION_MULTIPLE
+        @iconview.selection_mode = :multiple
         @iconview.text_column = Columns::TITLE_REDUCED
         @iconview.pixbuf_column = Columns::COVER_ICON
-        @iconview.orientation = Gtk::ORIENTATION_VERTICAL
+        @iconview.item_orientation = :vertical
         @iconview.row_spacing = 4
         @iconview.column_spacing = 16
         @iconview.item_width = ICON_WIDTH + 16
