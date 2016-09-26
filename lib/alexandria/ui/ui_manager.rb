@@ -60,7 +60,6 @@ module Alexandria
         setup_accel_group
         setup_popups
         setup_window_events
-        setup_dialog_hooks
         setup_books_iconview_sorting
         on_books_selection_changed
         restore_preferences
@@ -232,18 +231,6 @@ module Alexandria
       def setup_menus
         @menubar = @uimanager.get_widget('/MainMenubar')
         @vbox1.add(@menubar,  position: 0, expand: false, fill: false)
-      end
-
-      def setup_dialog_hooks
-        log.debug { 'setup_dialog_hooks' }
-        Gtk::AboutDialog.set_url_hook do |_about, link|
-          log.debug { 'set_url_hook' }
-          open_web_browser(link)
-        end
-        Gtk::AboutDialog.set_email_hook do |_about, link|
-          log.debug { 'set_email_hook' }
-          open_email_client('mailto:' + link)
-        end
       end
 
       def setup_popups
