@@ -23,11 +23,11 @@ class GdkPixbuf::Pixbuf
     tweak_y = tag_pixbuf.height / 3
 
     # Creates the destination pixbuf.
-    new_pixbuf = GdkPixbuf::Pixbuf.new(GdkPixbuf::Pixbuf::COLORSPACE_RGB,
-                                 true,
-                                 8,
-                                 width + tweak_x,
-                                 height + tweak_y)
+    new_pixbuf = GdkPixbuf::Pixbuf.new(colorspace: :rgb,
+                                       has_alpha: true,
+                                       bits_per_sample: 8,
+                                       width: width + tweak_x,
+                                       height: height + tweak_y)
 
     # Fills with blank.
     new_pixbuf.fill!(0)
@@ -41,12 +41,12 @@ class GdkPixbuf::Pixbuf
     # Copies the tag pixbuf there (north-est).
     tag_pixbuf_x = width - (tweak_x * 2)
     new_pixbuf.composite!(tag_pixbuf,
-                          0, 0,
-                          tag_pixbuf.width + tag_pixbuf_x,
-                          tag_pixbuf.height,
-                          tag_pixbuf_x, 0,
-                          1, 1,
-                          GdkPixbuf::Pixbuf::INTERP_HYPER, 255)
+                          dest_x: 0, dest_y: 0,
+                          dest_width: tag_pixbuf.width + tag_pixbuf_x,
+                          dest_height: tag_pixbuf.height,
+                          offset_x: tag_pixbuf_x, offset_y: 0,
+                          scale_x: 1, scale_y: 1,
+                          interpolation_type: :hyper, overall_alpha: 255)
     new_pixbuf
   end
 end
@@ -76,7 +76,7 @@ module Alexandria
           return BOOK_ICON if library.nil?
           filename = library.cover(book)
           if File.exist?(filename)
-            return GdkPixbuf::Pixbuf.new(filename)
+            return GdkPixbuf::Pixbuf.new(file: filename)
           end
         rescue => err
           # report load error; FIX should go to a Logger...
@@ -88,7 +88,7 @@ module Alexandria
       end
 
       def self.blank?(filename)
-        pixbuf = GdkPixbuf::Pixbuf.new(filename)
+        pixbuf = GdkPixbuf::Pixbuf.new(file: filename)
         pixbuf.width == 1 and pixbuf.height == 1
       rescue => err
         puts err.message
