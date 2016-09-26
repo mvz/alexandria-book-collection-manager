@@ -1,4 +1,5 @@
 # Copyright (C) 2007 Joseph Method
+# Copyright (C) 2015 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -82,7 +83,10 @@ describe Alexandria::UI::AlertDialog do
 end
 
 describe Alexandria::UI::AcquireDialog do
-  it 'should work'
+  it 'should work' do
+    parent = Gtk::Window.new :toplevel
+    Alexandria::UI::AcquireDialog.new parent
+  end
 end
 
 describe Alexandria::UI::AboutDialog do
