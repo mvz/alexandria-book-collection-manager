@@ -22,7 +22,7 @@ module Alexandria
     module Callbacks
       include Logging
 
-      def on_new(_widget, _event)
+      def on_new(*)
         name = Library.generate_new_name(@libraries.all_libraries)
         library = Library.load(name)
         @libraries.add_library(library)
@@ -31,7 +31,7 @@ module Alexandria
         library.add_observer(self)
       end
 
-      def on_new_smart(_widget, _event)
+      def on_new_smart(*)
         NewSmartLibraryDialog.new(@main_app) do |smart_library|
           smart_library.refilter
           @libraries.add_library(smart_library)
@@ -40,7 +40,7 @@ module Alexandria
         end
       end
 
-      def on_add_book(_widget, _event)
+      def on_add_book(*)
         log.info { 'on_add_book' }
         NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
           if is_new
@@ -52,14 +52,14 @@ module Alexandria
         end
       end
 
-      def on_add_book_manual(_widget, _event)
+      def on_add_book_manual(*)
         library = selected_library
         NewBookDialogManual.new(@main_app, library) { |_book|
           refresh_books
         }
       end
 
-      def on_import(_widget, _event)
+      def on_import(*)
         ImportDialog.new(@main_app) do |library, bad_isbns, failed_isbns|
           unless bad_isbns.empty?
             log.debug { 'bad_isbn' }
@@ -120,7 +120,7 @@ module Alexandria
         @iconview.unfreeze
       end
 
-      def on_export(_widget, _event)
+      def on_export(*)
         ExportDialog.new(@main_app, selected_library, library_sort_order)
       rescue => ex
         log.error { "problem with immediate export #{ex} try again" }
@@ -129,7 +129,7 @@ module Alexandria
                           'completely before exporting.'))
       end
 
-      def on_acquire(_widget, _event)
+      def on_acquire(*)
         AcquireDialog.new(@main_app,
                           selected_library) do |_books, library, is_new|
                             if is_new
@@ -141,7 +141,7 @@ module Alexandria
                           end
       end
 
-      def on_properties(_widget, _event)
+      def on_properties(*)
         if @library_listview.focus? or selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
@@ -161,7 +161,7 @@ module Alexandria
         end
       end
 
-      def on_quit(_widget, _event)
+      def on_quit(*)
         save_preferences
         Gtk.main_quit
         # @libraries.really_save_all_books
@@ -169,15 +169,15 @@ module Alexandria
         @libraries.all_regular_libraries.each(&:really_delete_deleted_books)
       end
 
-      def on_undo(_widget, _event)
+      def on_undo(*)
         UndoManager.instance.undo!
       end
 
-      def on_redo(_widget, _event)
+      def on_redo(*)
         UndoManager.instance.redo!
       end
 
-      def on_select_all(_widget, _event)
+      def on_select_all(*)
         log.debug { 'on_select_all' }
         case @notebook.page
         when 0
@@ -187,7 +187,7 @@ module Alexandria
         end
       end
 
-      def on_deselect_all(_widget, _event)
+      def on_deselect_all(*)
         log.debug { 'on_deselect_all' }
         case @notebook.page
         when 0
@@ -211,14 +211,14 @@ module Alexandria
         end
       end
 
-      def on_rename(_widget, _event)
+      def on_rename(*)
         iter = @library_listview.selection.selected
         @library_listview.set_cursor(iter.path,
                                      @library_listview.get_column(0),
                                      true)
       end
 
-      def on_delete(_widget, _event)
+      def on_delete(*)
         library = selected_library
 
         if selected_books.empty?
@@ -240,32 +240,32 @@ module Alexandria
         end
       end
 
-      def on_clear_search_results(_widget, _event)
+      def on_clear_search_results(*)
         @filter_entry.text = ''
         @iconview.freeze
         @filtered_model.refilter
         @iconview.unfreeze
       end
 
-      def on_search(_widget, _event)
+      def on_search(*)
         @filter_entry.grab_focus
       end
 
-      def on_preferences(_widget, _event)
+      def on_preferences(*)
         PreferencesDialog.new(@main_app) do
           @listview_manager.setup_listview_columns_visibility
         end
       end
 
-      def on_submit_bug_report(_widget, _event)
+      def on_submit_bug_report(*)
         open_web_browser(BUGREPORT_URL)
       end
 
-      def on_help(_widget, _event)
+      def on_help(*)
         Alexandria::UI.display_help(@main_app)
       end
 
-      def on_about(_widget, _event)
+      def on_about(*)
         ad = AboutDialog.new(@main_app)
         ad.signal_connect('response') do
           log.debug { 'destroy about' }
