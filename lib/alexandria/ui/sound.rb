@@ -65,25 +65,23 @@ module Alexandria
       end
 
       def set_up_glib_loop
-        unless @loop
-          @loop = GLib::MainLoop.new(nil, false)
+        @loop = GLib::MainLoop.new(nil, false)
 
-          @bus = @ogg_vorbis_pipeline.bus
-          @bus.add_watch do |_bus, message|
-            case message.type
-            when Gst::Message::EOS
-              @playing = false
-              @loop.quit
-            when Gst::Message::ERROR
-              if $DEBUG
-                puts 'ERROR loop.quit'
-                p message.parse
-              end
-              @playing = false
-              @loop.quit
+        @bus = @ogg_vorbis_pipeline.bus
+        @bus.add_watch do |_bus, message|
+          case message.type
+          when Gst::Message::EOS
+            @playing = false
+            @loop.quit
+          when Gst::Message::ERROR
+            if $DEBUG
+              puts 'ERROR loop.quit'
+              p message.parse
             end
-            true
+            @playing = false
+            @loop.quit
           end
+          true
         end
       end
 
