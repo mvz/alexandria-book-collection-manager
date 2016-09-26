@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+* Various small bug fixes
+* Update to ruby-gnome2 3.0.9
+* Improve specs
+
 ## 0.6.9
 
 * Update/fix authorship information and other metadata
