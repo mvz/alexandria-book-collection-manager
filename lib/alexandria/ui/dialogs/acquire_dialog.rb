@@ -22,7 +22,8 @@ require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
 
 require 'alexandria/ui/sound'
-require 'alexandria/ui/dialogs/barcode_animation'
+# FIXME: Doesn't work due to goocanvas
+# require 'alexandria/ui/dialogs/barcode_animation'
 
 module Alexandria
   module UI
@@ -257,7 +258,7 @@ module Alexandria
       end
 
       def read_barcode_scan
-        @animation.start
+        #@animation.start
         play_sound('scanning') if @test_scan
         log.debug { "reading scanner data #{@scanner_buffer}" }
         barcode_text = nil
@@ -435,7 +436,7 @@ module Alexandria
         MainApp.instance.ui_manager.set_status_label('')
         notify_end_add_by_isbn
         # TODO possibly make sure all threads have stopped running
-        @animation.destroy
+        #@animation.destroy
       end
 
       def setup_scanner_area
@@ -452,8 +453,8 @@ module Alexandria
         @prev_time = 0
         @interval = 0
 
-        @animation = BarcodeAnimation.new
-        @scan_frame.add(@animation.canvas)
+        #@animation = BarcodeAnimation.new
+        #@scan_frame.add(@animation.canvas)
 
         # attach signals
         @scan_area.signal_connect('button-press-event') do |_widget, _event|
@@ -462,16 +463,12 @@ module Alexandria
         @scan_area.signal_connect('focus-in-event') do |_widget, _event|
           @barcode_label.label = _('%s _Barcode Scanner Ready' % _(@scanner.display_name))
           @scanner_buffer = ''
-          begin
-            @animation.set_active
-          rescue StandardError => err
-            log << err if log.error?
-          end
+          #@animation.set_active
         end
         @scan_area.signal_connect('focus-out-event') do |_widget, _event|
           @barcode_label.label = _('Click below to scan _barcodes')
           @scanner_buffer = ''
-          @animation.set_passive
+          #@animation.set_passive
           # @scanner_background.destroy
         end
 
@@ -515,7 +512,7 @@ module Alexandria
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
                 log.debug { 'Waiting for more scanner input...' }
                 Gtk.idle_add do
-                  @animation.manual_input
+                  #@animation.manual_input
                   false
                 end
                 time_to_wait = [3, interval * 4].min
@@ -523,7 +520,7 @@ module Alexandria
                 if buffer == @scanner_buffer
                   log.debug { 'Buffer unchanged; scanning complete' }
                   Gtk.idle_add do
-                    @animation.scanner_input
+                    #@animation.scanner_input
                     false
                   end
                   read_barcode_scan
