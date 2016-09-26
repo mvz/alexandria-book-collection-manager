@@ -113,7 +113,7 @@ describe Alexandria::Library do
       # Doesn't work quite yet.
       on_iterate_cb = proc { }
       on_error_cb = proc { }
-      library, libraries = __test_fake_import_isbns
+      library, _libraries = __test_fake_import_isbns
       test_file = "data/isbns.txt"
       library.import_as_isbn_list("Test Library", test_file, on_iterate_cb, on_error_cb)
     end
