@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2015 Matijs van Zuijlen
+# Copyright (C) 2011, 2015, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -83,7 +83,7 @@ module Alexandria
                                                  @selected_library)
 
         @treeview_results.model = Gtk::ListStore.new(String, String,
-                                                     Gdk::Pixbuf)
+                                                     GdkPixbuf::Pixbuf)
         @treeview_results.selection.mode = Gtk::SELECTION_MULTIPLE
         @treeview_results.selection.signal_connect('changed') do
           @button_add.sensitive = true
@@ -216,7 +216,7 @@ module Alexandria
           else
             @images.each_pair do |key, value|
               begin
-                loader = Gdk::PixbufLoader.new
+                loader = GdkPixbuf::PixbufLoader.new
                 loader.last_write(value)
                 pixbuf = loader.pixbuf
 
