@@ -563,8 +563,7 @@ module Alexandria
           unless view.model
             next
           end
-          path = view.model.convert_path_to_child_path(path)
-          path = @filtered_model.convert_path_to_child_path(path)
+          path = view_path_to_model_path(view, path)
           log.debug { "Path for #{bk.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
           selection.unselect_all
@@ -982,39 +981,33 @@ module Alexandria
       end
 
       def collate_selected_books(page)
-        a = []
+        result = []
         library = selected_library
-        view = page == 0 ? @iconview : @listview
-        selection = page == 0 ? @iconview : @listview.selection
 
-        selection.selected_foreach do |_the_view, path|
-          # don't use the_view which is passed in by this block
-          # as it doesn't consider the filtering for some reason
-          # see bug #24568
-          unless view.model
-            next
-          end
-          path = view.model.convert_path_to_child_path(path)
-          if path
-            path = @filtered_model.convert_path_to_child_path(path)
+        if page == 0
+          @iconview.selected_foreach do |the_view, path|
+            path = view_path_to_model_path(the_view, path)
             # FIX this sometimes returns a nil path for iconview...
-            if path
-              iter = @model.get_iter(path)
-              if iter
-                a << book_from_iter(library, iter)
-              end
-            end
-            # This used to cause a crash when manually adding the first
-            # book to a Library displayed in an Iconview
-            # TODO find root cause of this
+            next unless path
+            iter = @model.get_iter(path)
+            next unless iter
+            result << book_from_iter(library, iter)
+          end
+        else
+          selection = @listview.selection
+          selection.selected_each do |the_view, path|
+            path = view_path_to_model_path(the_view, path)
+            iter = @model.get_iter(path)
+            next unless iter
+            result << book_from_iter(library, iter)
           end
         end
-        a
+
+        result
       end
 
       def selected_books
-        a = collate_selected_books(@notebook.page)
-        selected = a.select { |x| !x.nil? }
+        selected = collate_selected_books(@notebook.page).compact
         log.debug { "Selected books = #{selected.inspect}" }
         selected
       end
@@ -1273,6 +1266,13 @@ module Alexandria
         mode = ICONS_SORTS[@prefs.arrange_icons_mode]
         @iconview_model.set_sort_column_id(mode, sort_order)
         @filtered_model.refilter # force redraw
+      end
+
+      private
+
+      def view_path_to_model_path(view, path)
+        path = view.model.convert_path_to_child_path(path)
+        @filtered_model.convert_path_to_child_path(path) if path
       end
     end
   end
