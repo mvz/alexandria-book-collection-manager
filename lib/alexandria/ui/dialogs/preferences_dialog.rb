@@ -394,7 +394,7 @@ module Alexandria
               message = already_enabled ? _('Disable Provider') : _('Enable Provider')
               @enable_item.label = message
 
-              @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME)
+              @enable_disable_providers_menu.popup(nil, nil, 0, :current_time)
               false
             end
           else
@@ -404,7 +404,7 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+        event.event_type == :button_press and event.button == 3
       end
 
       def prefs_empty(prefs)
@@ -500,9 +500,7 @@ module Alexandria
 
       def on_providers_button_press_event(_widget, event)
         # double left click
-        if event.event_type == Gdk::Event::BUTTON2_PRESS and
-            event.button == 1
-
+        if event.event_type == :'2button_press' and event.button == 1
           on_provider_setup
         end
       end

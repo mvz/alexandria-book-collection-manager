@@ -313,7 +313,7 @@ module Alexandria
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
-        @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
+        @calendar_popup.events = [:focus_change_mask]
 
         @calendar_popup.set_transient_for(self)
         @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)

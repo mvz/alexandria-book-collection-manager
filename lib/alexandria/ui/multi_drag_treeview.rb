@@ -110,7 +110,7 @@ module Alexandria
         return true
       end
 
-      return false if event.event_type == Gdk::Event::BUTTON2_PRESS
+      return false if event.event_type == :'2button_press'
 
       path, _, cell_x, cell_y = get_path_at_pos(event.x, event.y)
       return false if path.nil?

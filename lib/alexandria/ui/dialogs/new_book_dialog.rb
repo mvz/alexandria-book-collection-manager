@@ -374,9 +374,7 @@ module Alexandria
 
       def on_results_button_press_event(_widget, event)
         # double left click
-        if event.event_type == Gdk::Event::BUTTON2_PRESS and
-            event.button == 1
-
+        if event.event_type == :'2button_press' and event.button == 1
           on_add
         end
       end
@@ -582,7 +580,7 @@ module Alexandria
       end
 
       def on_clicked(widget, event)
-        if event.event_type == Gdk::Event::BUTTON_PRESS and
+        if event.event_type == :button_press and
             event.button == 1
 
           radio, target_widget, box2, box3 = case widget
