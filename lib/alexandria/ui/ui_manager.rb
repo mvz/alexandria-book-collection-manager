@@ -985,21 +985,16 @@ module Alexandria
         library = selected_library
 
         if page == 0
-          @iconview.selected_foreach do |the_view, path|
-            path = view_path_to_model_path(the_view, path)
-            # FIX this sometimes returns a nil path for iconview...
-            next unless path
-            iter = @model.get_iter(path)
-            next unless iter
-            result << book_from_iter(library, iter)
+          result = @iconview.selected_items.map do |path|
+            path = view_path_to_model_path(@iconview, path)
+            book_from_iter(library, @model.get_iter(path))
           end
         else
           selection = @listview.selection
-          selection.selected_each do |the_view, path|
-            path = view_path_to_model_path(the_view, path)
-            iter = @model.get_iter(path)
-            next unless iter
-            result << book_from_iter(library, iter)
+          rows, the_model = selection.selected_rows
+          result = rows.map do |path|
+            path = view_path_to_model_path(@listview, path)
+            book_from_iter(library, @model.get_iter(path))
           end
         end
 
