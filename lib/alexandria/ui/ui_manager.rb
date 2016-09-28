@@ -520,9 +520,9 @@ module Alexandria
         @clicking_on_sidepane = false
       end
 
-      def on_switch_page
+      def on_switch_page(_notebook, _page, page_num)
         log.debug { 'on_switch_page' }
-        @actiongroup['ArrangeIcons'].sensitive = @notebook.page == 0
+        @actiongroup['ArrangeIcons'].sensitive = page_num == 0
         on_books_selection_changed
       end
 

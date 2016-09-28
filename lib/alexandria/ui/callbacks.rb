@@ -274,6 +274,28 @@ module Alexandria
         ad.show
       end
 
+      def on_view_sidepane(action)
+        log.debug { 'on_view_sidepane' }
+        @paned.child1.visible = action.active?
+      end
+
+      def on_view_toolbar(action)
+        log.debug { 'on_view_toolbar' }
+        @toolbar.visible = action.active?
+      end
+
+      def on_view_statusbar(action)
+        log.debug { 'on_view_statusbar' }
+        @appbar.visible = action.active?
+      end
+
+      def on_reverse_order(action)
+        log.debug { 'on_reverse_order' }
+        Preferences.instance.reverse_icons = action.active?
+        Preferences.instance.save!
+        setup_books_iconview_sorting
+      end
+
       def connect_signals
         standard_actions = [
           ['LibraryMenu', nil, _('_Library')],
@@ -314,37 +336,11 @@ module Alexandria
           ['About', Gtk::Stock::ABOUT, _('_About'), nil, _('Show information about Alexandria'), method(:on_about)],
         ]
 
-        on_view_sidepane = proc do |_actiongroup, action|
-          log.debug { 'on_view_sidepane' }
-          @paned.child1.visible = action.active?
-        end
-
-        on_view_toolbar = proc do |_actiongroup, action|
-          log.debug { 'on_view_toolbar' }
-          @toolbar.parent.visible = action.active?
-        end
-
-        on_view_statusbar = proc do |_actiongroup, action|
-          log.debug { 'on_view_statusbar' }
-          @appbar.visible = action.active?
-        end
-
-        on_reverse_order = proc do |_actiongroup, action|
-          log.debug { 'on_reverse_order' }
-          Preferences.instance.reverse_icons = action.active?
-          Preferences.instance.save!
-          setup_books_iconview_sorting
-        end
-
         toggle_actions = [
-          ['Sidepane', nil, _('Side _Pane'), 'F9', nil,
-           on_view_sidepane, true],
-          ['Toolbar', nil, _('_Toolbar'), nil, nil,
-           on_view_toolbar, true],
-          ['Statusbar', nil, _('_Statusbar'), nil, nil,
-           on_view_statusbar, true],
-          ['ReversedOrder', nil, _('Re_versed Order'), nil, nil,
-           on_reverse_order],
+          ['Sidepane', nil, _('Side _Pane'), 'F9', nil, method(:on_view_sidepane), true],
+          ['Toolbar', nil, _('_Toolbar'), nil, nil, method(:on_view_toolbar), true],
+          ['Statusbar', nil, _('_Statusbar'), nil, nil, method(:on_view_statusbar), true],
+          ['ReversedOrder', nil, _('Re_versed Order'), nil, nil, method(:on_reverse_order)],
         ]
 
         view_as_actions = [
