@@ -113,7 +113,7 @@ module Alexandria
           cell.pixbuf = iter[0]
         end
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+        renderer.ellipsize = Pango::ELLIPSIZE_END
         column.pack_start(renderer, true)
         column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
           # log.debug { "sidepane: editable #{cell}, #{iter} #{iter[1]}: #{iter[2]}" }

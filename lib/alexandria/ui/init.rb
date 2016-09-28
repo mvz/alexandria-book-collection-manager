@@ -68,12 +68,6 @@ class Alexandria::BookProviders::AbstractProvider
   end
 end
 
-module Pango
-  def self.ellipsizable?
-    @ellipsizable ||= Pango.constants.include?('ELLIPSIZE_END')
-  end
-end
-
 module Alexandria
   module UI
     def self.display_help(parent = nil, section = nil)
