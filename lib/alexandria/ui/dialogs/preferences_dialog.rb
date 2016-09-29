@@ -32,9 +32,8 @@ module Alexandria
       def initialize(*args)
         super(*args)
 
-        self.has_separator = false
         self.resizable = false
-        vbox.border_width = 12
+        child.border_width = 12
 
         @controls = []
       end
@@ -73,7 +72,7 @@ module Alexandria
             entry.text = variable.value.to_s
             entry.mandatory = variable.mandatory?
           else
-            entry = Gtk::ComboBox.new
+            entry = Gtk::ComboBoxText.new
             variable.possible_values.each do |value|
               entry.append_text(value.to_s)
             end
@@ -107,17 +106,14 @@ module Alexandria
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, provider)
-        super(_('Preferences for %s') % provider.fullname,
-              parent,
-              Gtk::Dialog::MODAL,
-              [Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE])
-        self.has_separator = false
-        self.resizable = false
-        vbox.border_width = 12
+        super(title: _('Preferences for %s') % provider.fullname,
+              parent: parent,
+              flags: :modal,
+              buttons: [[Gtk::Stock::CLOSE, :close]])
 
         table = Gtk::Table.new(0, 0)
         fill_table(table, provider)
-        vbox.pack_start(table)
+        child.pack_start(table)
 
         signal_connect('destroy') { sync_variables }
 
