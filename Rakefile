@@ -85,7 +85,7 @@ task debian_install: :install_package_staging
 FileInstallTask.new(:package) do |j|
   install_common(j)
 
-  docs = %w(README.rdoc NEWS INSTALL.rdoc COPYING TODO)
+  docs = %w(README.rdoc NEWS INSTALL.rdoc COPYING TODO.md)
   devel_docs = ['doc/AUTHORS', 'doc/BUGS', 'doc/FAQ',
                 'doc/cuecat_support.rdoc']
   j.install('', docs, "#{SHARE}/doc/#{PROJECT}")
@@ -215,7 +215,7 @@ Rake::PackageTask.new(PROJECT, Alexandria::DISPLAY_VERSION) do |p|
   p.need_tar_gz = true
   p.package_files.include('README*', 'COPYING', 'CHANGELOG.md', 'INSTALL.rdoc',
                           'NEWS', 'Rakefile', 'util/**/*',
-                          'TODO', 'alexandria.desktop',
+                          'TODO.md', 'alexandria.desktop',
                           'alexandria.desktop.in',
                           'bin/**/*', 'data/**/*', 'misc/**/*',
                           'doc/**/*', 'lib/**/*', 'po/**/*',
