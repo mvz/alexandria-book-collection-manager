@@ -137,18 +137,18 @@ module Alexandria
         # When item is first toggled to "Search" the entry_search
         # field was unselectable. One used to have to click the dialog
         # title bar to be able to focus it again. Putting the GUI
-        # modifications in an Gtk.idle_add block fixed the problem.
+        # modifications in an GLib::Idle.add block fixed the problem.
 
         is_isbn = item == @isbn_radiobutton
         if is_isbn
-          Gtk.idle_add do
+          GLib::Idle.add do
             @latest_size = @new_book_dialog.size
             @new_book_dialog.resizable = false
             @entry_isbn.grab_focus
             false
           end
         else
-          Gtk.idle_add do
+          GLib::Idle.add do
             @new_book_dialog.resizable = true
             @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
             @entry_search.grab_focus
@@ -281,7 +281,7 @@ module Alexandria
         @image_thread.kill if @image_thread
 
         notify_start_add_by_isbn
-        Gtk.idle_add do
+        GLib::Idle.add do
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -391,7 +391,7 @@ module Alexandria
         assert_not_exist(library, @entry_isbn.text)
         @button_add.sensitive = false
         notify_start_add_by_isbn
-        Gtk.idle_add do
+        GLib::Idle.add do
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -562,7 +562,7 @@ module Alexandria
           if (text = clipboard.wait_for_text)
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
                 Library.valid_upc?(text)
-              Gtk.idle_add do
+              GLib::Idle.add do
                 @entry_isbn.text = text
                 @entry_isbn.grab_focus
                 @entry_isbn.select_region(0, -1) # select all...

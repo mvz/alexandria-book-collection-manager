@@ -328,7 +328,7 @@ module Alexandria
               sensitize_library selected_library
 
               if widget.is_a?(Gtk::TreeView)
-                Gtk.idle_add do
+                GLib::Idle.add do
                   # cur_path, focus_col = widget.cursor
 
                   widget.focus = true
@@ -361,13 +361,13 @@ module Alexandria
           if library_already_selected
             sensitize_library selected_library
 
-            Gtk.idle_add do
+            GLib::Idle.add do
               menu.popup(nil, nil, event.button, event.time)
               # @clicking_on_sidepane = false
               false
             end
           else
-            Gtk.idle_add do
+            GLib::Idle.add do
               menu.popup(nil, nil, event.button, event.time)
               # @clicking_on_sidepane = false
 
@@ -529,7 +529,7 @@ module Alexandria
       def on_focus(widget, _event_focus)
         if @clicking_on_sidepane or widget == @library_listview
           log.debug { 'on_focus: @library_listview' }
-          Gtk.idle_add do
+          GLib::Idle.add do
             %w(OnlineInformation SelectAll DeselectAll).each do |action|
               @actiongroup[action].sensitive = false
             end
@@ -718,7 +718,7 @@ module Alexandria
             prog_percentage = 0
 
             @libraries.ruined_books.reverse!
-            Gtk.idle_add do
+            GLib::Idle.add do
               ruined_book = @libraries.ruined_books.pop
               if ruined_book
                 book, isbn, library = ruined_book

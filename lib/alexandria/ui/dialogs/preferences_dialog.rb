@@ -369,7 +369,7 @@ module Alexandria
                 already_enabled = sel[2]
                 message = already_enabled ? _('Disable Provider') : _('Enable Provider')
                 @enable_item.label = message
-                Gtk.idle_add do
+                GLib::Idle.add do
                   @enable_disable_providers_menu.popup(nil, nil, event.button, event.time)
                   false
                 end
@@ -385,7 +385,7 @@ module Alexandria
           selected_prov = @treeview_providers.selection.selected
           puts selected_prov.inspect
           if selected_prov
-            Gtk.idle_add do
+            GLib::Idle.add do
               already_enabled = selected_prov[2]
               message = already_enabled ? _('Disable Provider') : _('Enable Provider')
               @enable_item.label = message
