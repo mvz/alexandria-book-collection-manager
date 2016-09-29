@@ -350,7 +350,7 @@ module Alexandria
       def setup_enable_disable_popup
         # New Enable/Disable pop-up menu...
         @enable_disable_providers_menu = Gtk::Menu.new
-        @enable_item = Gtk::MenuItem.new(_('Disable Provider'))
+        @enable_item = Gtk::MenuItem.new(label: _('Disable Provider'))
         @enable_item.signal_connect('activate') {
           prov = selected_provider
           prov.toggle_enabled
