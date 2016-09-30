@@ -312,7 +312,7 @@ module Alexandria
       def notify_end_add_by_isbn
         GLib::Idle.add do
           MainApp.instance.appbar.children.first.visible = false
-          Gtk.timeout_remove(@progress_pulsing) if @progress_pulsing
+          GLib::Source.remove(@progress_pulsing) if @progress_pulsing
           false
         end
       end

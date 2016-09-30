@@ -348,7 +348,7 @@ module Alexandria
           unless continue
             unless @find_thread.alive? # This happens after find_thread is done
               unless @destroyed
-                # Gtk.timeout_remove(progress_pulsing)
+                # GLib::Source.remove(progress_pulsing)
                 # @progressbar.hide
                 notify_end_add_by_isbn
                 @button_add.sensitive = false
@@ -539,7 +539,7 @@ module Alexandria
       def notify_end_add_by_isbn
         MainApp.instance.appbar.children.first.visible = false
         if @progress_pulsing
-          Gtk.timeout_remove(@progress_pulsing)
+          GLib::Source.remove(@progress_pulsing)
           @progress_pulsing = nil
         end
       end
