@@ -87,15 +87,14 @@ module Alexandria
     end
 
     def motion_notify_event(event)
-      if Gtk::Drag.threshold?(self, @context.x, @context.y, event.x, event.y)
+      if drag_check_threshold(@context.x, @context.y, event.x, event.y)
         stop_drag_check
         paths = []
-        selection.selected_each { |_model, path, _iter| paths << path }
-        @context.drag_context = Gtk::Drag.begin(self,
-                                                @context.source_targets,
-                                                @context.source_actions,
-                                                @context.pressed_button,
-                                                event)
+        selection.each { |_model, path, _iter| paths << path }
+        @context.drag_context = drag_begin(@context.source_targets,
+                                           @context.source_actions,
+                                           @context.pressed_button,
+                                           event)
       end
       true
     end
