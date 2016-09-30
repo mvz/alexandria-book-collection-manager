@@ -57,7 +57,7 @@ module Alexandria
         # have multiple src pads (for audio/video muxed streams)
 
         demuxer.signal_connect('pad-added') do |_parser, ogg_src_pad|
-          vorbis_sink_pad = decoder.get_pad('sink')
+          vorbis_sink_pad = decoder.sinkpads.first
           ogg_src_pad.link(vorbis_sink_pad)
         end
 
@@ -70,10 +70,10 @@ module Alexandria
         @bus = @ogg_vorbis_pipeline.bus
         @bus.add_watch do |_bus, message|
           case message.type
-          when Gst::Message::EOS
+          when Gst::MessageType::EOS
             @playing = false
             @loop.quit
-          when Gst::Message::ERROR
+          when Gst::MessageType::ERROR
             if $DEBUG
               puts 'ERROR loop.quit'
               p message.parse
