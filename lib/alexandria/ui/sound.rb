@@ -57,7 +57,7 @@ module Alexandria
         # have multiple src pads (for audio/video muxed streams)
 
         demuxer.signal_connect('pad-added') do |_parser, ogg_src_pad|
-          vorbis_sink_pad = decoder.get_pad('sink')
+          vorbis_sink_pad = decoder.sinkpads.first
           ogg_src_pad.link(vorbis_sink_pad)
         end
 
