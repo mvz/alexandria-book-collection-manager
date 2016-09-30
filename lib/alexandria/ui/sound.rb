@@ -70,10 +70,10 @@ module Alexandria
         @bus = @ogg_vorbis_pipeline.bus
         @bus.add_watch do |_bus, message|
           case message.type
-          when Gst::Message::EOS
+          when Gst::MessageType::EOS
             @playing = false
             @loop.quit
-          when Gst::Message::ERROR
+          when Gst::MessageType::ERROR
             if $DEBUG
               puts 'ERROR loop.quit'
               p message.parse
