@@ -210,7 +210,7 @@ module Alexandria
           end
         end
 
-        Gtk.timeout_add(100) do
+        GLib::Timeout.add(100) do
           if @image_error
             image_error_dialog(@image_error)
           else
@@ -258,7 +258,7 @@ module Alexandria
                end
 
         # @progressbar.show
-        # progress_pulsing = Gtk.timeout_add(100) do
+        # progress_pulsing = GLib::Timeout.add(100) do
         #  if @destroyed
         #    false
         #  else
@@ -299,7 +299,7 @@ module Alexandria
           false
         end
 
-        Gtk.timeout_add(100) do
+        GLib::Timeout.add(100) do
           # This block copies results into the tree view, or shows an
           # error if the search failed.
 
@@ -336,14 +336,14 @@ module Alexandria
                          log.info { "@find_thread (#{@find_thread}) asleep now." }
                          # Not really async now.
                          get_images_async
-                         false # continue == false if you get to here. Stop timeout_add.
+                         false # continue == false if you get to here. Stop timeout.
                        end
                      else
                        # Stop if the book find thread has stopped.
                        @find_thread.alive?
                      end
           # continue == false if @find_error OR if results are returned
-          # timeout_add ends if continue is false!
+          # timeout ends if continue is false!
 
           unless continue
             unless @find_thread.alive? # This happens after find_thread is done
@@ -356,7 +356,7 @@ module Alexandria
             end
           end
 
-          continue # timeout_add loop condition
+          continue # timeout loop condition
         end
       end
 
@@ -526,7 +526,7 @@ module Alexandria
       def notify_start_add_by_isbn
         main_progress_bar = MainApp.instance.appbar.children.first
         main_progress_bar.visible = true
-        @progress_pulsing = Gtk.timeout_add(100) do
+        @progress_pulsing = GLib::Timeout.add(100) do
           if @destroyed
             false
           else

@@ -43,7 +43,7 @@ describe Alexandria::UI::MainApp do
   it 'runs' do
     @main_app = Alexandria::UI::MainApp.instance
 
-    Gtk.timeout_add(100) do
+    GLib::Timeout.add(100) do
       @main_app.main_app.destroy
       Gtk.main_quit
     end
