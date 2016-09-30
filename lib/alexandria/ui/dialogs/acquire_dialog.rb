@@ -588,7 +588,7 @@ module Alexandria
       def init_treeview
         liststore = Gtk::ListStore.new(String, GdkPixbuf::Pixbuf, String)
 
-        @barcodes_treeview.selection.mode = Gtk::SELECTION_MULTIPLE
+        @barcodes_treeview.selection.mode = :multiple
 
         @barcodes_treeview.model = liststore
 
