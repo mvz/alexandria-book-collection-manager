@@ -151,7 +151,7 @@ module Alexandria
             unless link_to_description =~ /^\//
               slash = '/'
             end
-            result[:url] =  "#{SITE}#{slash}#{link_to_description}"
+            result[:url] = "#{SITE}#{slash}#{link_to_description}"
 
             book_search_results << result
           rescue => ex
@@ -212,7 +212,7 @@ module Alexandria
           end
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-        result =  [book, image_urls.first]
+        result = [book, image_urls.first]
         return result
       rescue => ex
         trace = ex.backtrace.join("\n> ")

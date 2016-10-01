@@ -104,7 +104,7 @@ module Alexandria
         (search_type_code = {
           SEARCH_BY_AUTHORS => 'ATH',
           SEARCH_BY_TITLE => 'TTL',
-          SEARCH_BY_KEYWORD => 'WRD'    # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
+          SEARCH_BY_KEYWORD => 'WRD' # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
         }[search_type]) || ''
         if search_type == SEARCH_BY_ISBN
           BASE_ISBN_SEARCH_URL % Library.canonicalise_ean(search_term) # isbn-13
@@ -116,7 +116,7 @@ module Alexandria
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
-        html_data =  transport.get_response(URI.parse(result[:url]))
+        html_data = transport.get_response(URI.parse(result[:url]))
         parse_result_data(html_data.body)
       end
 

@@ -25,7 +25,7 @@ module Alexandria
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-      COVER_MAXWIDTH = 140    # pixels
+      COVER_MAXWIDTH = 140 # pixels
 
       COVER_ABSOLUTE_MAXHEIGHT = 250 # pixels, above this we scale down...
 
@@ -319,7 +319,7 @@ module Alexandria
         dialog.destroy
       end
 
-      def on_destroy; end     # no action by default
+      def on_destroy; end # no action by default
 
       def on_loaned
         loaned = @checkbutton_loaned.active?

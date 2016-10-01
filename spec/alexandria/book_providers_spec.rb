@@ -140,7 +140,7 @@ describe Alexandria::BookProviders do
 
   it 'Barnes and Noble should work' do
     assert_correct_search_result(Alexandria::BookProviders::BarnesAndNobleProvider,
-                                 '9780961328917')   # see #1433
+                                 '9780961328917') # see #1433
   end
 
   it 'MCU should work' do

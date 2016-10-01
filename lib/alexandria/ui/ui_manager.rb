@@ -38,7 +38,7 @@ module Alexandria
       MAX_RATING_STARS = 5
 
       def initialize(parent)
-        super('main_app__builder.glade',  widget_names)
+        super('main_app__builder.glade', widget_names)
         @parent = parent
 
         @library_separator_iter = nil
@@ -122,7 +122,7 @@ module Alexandria
         @toolbar.show_all
         @actiongroup['Undo'].sensitive = @actiongroup['Redo'].sensitive = false
         UndoManager.instance.add_observer(self)
-        @vbox1.add(@toolbar,  position: 1, expand: false, fill: false)
+        @vbox1.add(@toolbar, position: 1, expand: false, fill: false)
       end
 
       def add_main_toolbar_items
@@ -230,7 +230,7 @@ module Alexandria
 
       def setup_menus
         @menubar = @uimanager.get_widget('/MainMenubar')
-        @vbox1.add(@menubar,  position: 0, expand: false, fill: false)
+        @vbox1.add(@menubar, position: 0, expand: false, fill: false)
       end
 
       def setup_popups
@@ -677,7 +677,7 @@ module Alexandria
           if response_type == :ok
             # progress indicator...
             @progressbar.fraction = 0
-            @appbar.children.first.visible = true   # show the progress bar
+            @appbar.children.first.visible = true # show the progress bar
 
             total_book_count = @libraries.ruined_books.size
             fraction_per_book = 1.0 / total_book_count
@@ -863,7 +863,7 @@ module Alexandria
         @iconview.freeze
         @listview.freeze # NEW / bdewey
         @progressbar.fraction = 0
-        @appbar.children.first.visible = true   # show the progress bar
+        @appbar.children.first.visible = true # show the progress bar
         set_status_label(_("Loading '%s'...") % library.name)
         total = library.length
         log.debug { "library #{library.name} length #{library.length}" }

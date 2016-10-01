@@ -364,7 +364,7 @@ module Alexandria
         code = '978' + code[0..8]
         return code + String(ean_checksum(extract_numbers(code)))
       elsif self.valid_upc?(code)
-        isbn10 =  canonicalise_isbn
+        isbn10 = canonicalise_isbn
         code = '978' + isbn10[0..8]
         return code + String(ean_checksum(extract_numbers(code)))
         ## raise "fix function Alexandria::Library.canonicalise_ean"

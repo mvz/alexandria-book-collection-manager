@@ -22,7 +22,7 @@
 # iPod Notes support added 20 January 2008 by Tim Malone
 # require 'cgi'
 
-begin        # image_size is optional
+begin # image_size is optional
   $IMAGE_SIZE_LOADED = true
   require 'image_size'
 rescue LoadError
@@ -277,7 +277,7 @@ module Alexandria
           elem = prod.add_element('OtherText')
           # reader description
           elem.add_element('TextTypeCode').text = '12'
-          elem.add_element('TextFormat').text = '00'  # ASCII
+          elem.add_element('TextFormat').text = '00' # ASCII
           elem.add_element('Text').text = book.notes
         end
         if File.exist?(cover(book))

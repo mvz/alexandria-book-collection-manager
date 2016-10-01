@@ -140,7 +140,7 @@ module Alexandria
             title_link = (content / :a).first
             title = normalize(title_link.inner_text)
             link_to_description = title_link['href']
-            lookup_url =  "#{SITE}#{link_to_description}"
+            lookup_url = "#{SITE}#{link_to_description}"
 
             authors = []
             (content / 'a.info').each do |link|

@@ -177,12 +177,6 @@ Style/EmptyLineBetweenDefs:
     - 'lib/alexandria/models/library.rb'
     - 'lib/alexandria/ui.rb'
 
-# Offense count: 31
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Style/ExtraSpacing:
-  Enabled: false
-
 # Offense count: 6
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: for, each

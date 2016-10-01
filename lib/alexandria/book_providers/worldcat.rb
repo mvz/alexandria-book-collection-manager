@@ -91,7 +91,7 @@ module Alexandria
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
-        html_data =  transport.get_response(URI.parse(result[:url]))
+        html_data = transport.get_response(URI.parse(result[:url]))
         parse_result_data(html_data.body)
       end
 

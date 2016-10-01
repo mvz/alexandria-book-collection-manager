@@ -276,7 +276,7 @@ module Alexandria
           return [0, 0]
         end
       else
-        return value           # string
+        return value # string
       end
     end
   end

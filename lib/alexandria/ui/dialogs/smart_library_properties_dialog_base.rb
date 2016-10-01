@@ -262,7 +262,7 @@ module Alexandria
           left_operand_combo.active = 0
         end
 
-        @rules_box.check_resize     # force a layout
+        @rules_box.check_resize # force a layout
         update_rules_header_box
         sensitize_remove_rule_buttons
       end

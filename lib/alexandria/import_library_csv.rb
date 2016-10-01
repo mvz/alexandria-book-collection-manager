@@ -57,7 +57,7 @@ module Alexandria
 
       # optional extras
       @notes = index_of('Private Notes')
-      @rating =  index_of('My Rating')
+      @rating = index_of('My Rating')
       @read_count = index_of('Read Count')
       @date_read = index_of('Date Read')
       @bookshelves = index_of('Bookshelves') # save names as tags

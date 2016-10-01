@@ -149,7 +149,7 @@ module Alexandria
               path = nil
             else
               iter = @library_listview.model.get_iter(path)
-              if iter[3]  # separator?
+              if iter[3] # separator?
                 path = nil
               else
                 library = @libraries.all_libraries.find do |lib|

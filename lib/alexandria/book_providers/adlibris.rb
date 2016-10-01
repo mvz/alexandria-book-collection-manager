@@ -196,7 +196,7 @@ module Alexandria
             end
             isbns << isbn
           end
-          isbn =  isbns.first
+          isbn = isbns.first
           if isbn
             isbn = Library.canonicalise_isbn(isbn)
           end
