@@ -54,6 +54,7 @@ module Alexandria
     def updating?
       @updating
     end
+
     def self.generate_new_name(existing_libraries,
                                from_base = _('Untitled'))
       i = 1
