@@ -45,8 +45,7 @@ module Amazon
                      ca: 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
                      de: 'http://webservices.amazon.de/onca/xml?Service=AWSECommerceService',
                      jp: 'http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService',
-                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService'
-    }
+                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService' }
 
     @@options = {}
     @@debug = false

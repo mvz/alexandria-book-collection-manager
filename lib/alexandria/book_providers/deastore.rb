@@ -90,8 +90,7 @@ module Alexandria
         search_type_code = { SEARCH_BY_ISBN => 'isbn',
                              SEARCH_BY_TITLE => 'title',
                              SEARCH_BY_AUTHORS => 'author',
-                             SEARCH_BY_KEYWORD => 'keywords'
-        }[search_type] or 'keywords'
+                             SEARCH_BY_KEYWORD => 'keywords' }[search_type] or 'keywords'
 
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 Library.canonicalise_isbn(search_term) # isbn-10

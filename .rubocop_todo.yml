@@ -291,17 +291,6 @@ Style/MultilineArrayBraceLayout:
     - 'lib/alexandria/ui/ui_manager.rb'
     - 'spec/alexandria/scanners/cuecat_spec.rb'
 
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineHashBraceLayout:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/book_providers/deastore.rb'
-    - 'lib/alexandria/book_providers/siciliano.rb'
-    - 'lib/alexandria/book_providers/worldcat.rb'
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

@@ -79,8 +79,7 @@ module Alexandria
         search_type_code = { SEARCH_BY_ISBN => 'isbn:',
                              SEARCH_BY_AUTHORS => 'au:',
                              SEARCH_BY_TITLE => 'ti:',
-                             SEARCH_BY_KEYWORD => ''
-        }[search_type] or ''
+                             SEARCH_BY_KEYWORD => '' }[search_type] or ''
         search_type_code = CGI.escape(search_type_code)
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 Library.canonicalise_ean(search_term) # isbn-13
