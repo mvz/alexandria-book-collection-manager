@@ -117,7 +117,7 @@ module Alexandria
                              else
                                [[]]
                              end
-            book_elements += keys.map {|key|
+            book_elements += keys.map { |key|
               if elements[key]
                 neaten(elements[key].text)
               end
