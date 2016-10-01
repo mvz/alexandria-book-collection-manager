@@ -187,7 +187,7 @@ module Alexandria
         each do |var|
           message = @provider.variable_name(var)
           val = Alexandria::Preferences.instance.send(message)
-          var.value = val unless val.nil? or (val == '' and var.mandatory?)
+          var.value = val unless val.nil? || ((val == '') && var.mandatory?)
         end
       end
     end
@@ -199,7 +199,7 @@ module Alexandria
 
       def initialize(name, fullname = nil)
         @name = name
-        @fullname = (fullname or name)
+        @fullname = (fullname || name)
         @prefs = Preferences.new(self)
         @prefs.add('enabled', _('Enabled'), true, [true, false])
       end
@@ -231,7 +231,7 @@ module Alexandria
           ary.delete(@name)
           prefs.abstract_providers = ary
         end
-        if (ary = prefs.providers_priority) and ary.include?(@name)
+        if (ary = prefs.providers_priority) && ary.include?(@name)
           ary.delete(@name)
           prefs.providers_priority = ary
         end
@@ -333,10 +333,10 @@ module Alexandria
         md = /(.+)Provider$/.match(constant)
         next unless md
         klass = self.class.module_eval(constant.to_s)
-        if klass.ancestors.include?(AbstractProvider) and
-            klass != GenericProvider and
-            klass != WebsiteBasedProvider and
-            klass != AbstractProvider
+        if klass.ancestors.include?(AbstractProvider) &&
+            (klass != GenericProvider) &&
+            (klass != WebsiteBasedProvider) &&
+            (klass != AbstractProvider)
 
           if klass.abstract?
             @abstract_classes << klass
@@ -363,7 +363,7 @@ module Alexandria
       end
       clear
       rejig_providers_priority
-      priority = (@prefs.providers_priority or [])
+      priority = (@prefs.providers_priority || [])
       priority.map!(&:strip)
       rest = providers.keys - priority
       priority.each { |pname| self << providers[pname] }
@@ -383,7 +383,7 @@ module Alexandria
     private
 
     def rejig_providers_priority
-      priority = (@prefs.providers_priority or [])
+      priority = (@prefs.providers_priority || [])
       unless priority.empty?
         changed = false
 

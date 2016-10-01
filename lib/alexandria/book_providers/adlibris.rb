@@ -76,11 +76,11 @@ module Alexandria
         if search_type == SEARCH_BY_ISBN
           PRODUCT_URL % Library.canonicalise_isbn(search_term)
         else
-          search_type_code = {
+          (search_type_code = {
             SEARCH_BY_AUTHORS => 'author',
             SEARCH_BY_TITLE => 'title',
             SEARCH_BY_KEYWORD => 'keyword'
-          }[search_type] or 'keyword'
+          }[search_type]) || 'keyword'
           search_term_encoded = CGI.escape(search_term)
           BASE_SEARCH_URL % [search_type_code, search_term_encoded]
         end

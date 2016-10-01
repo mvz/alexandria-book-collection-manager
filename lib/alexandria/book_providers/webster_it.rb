@@ -107,7 +107,7 @@ module Alexandria
 
         # raise unless
         md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
-        publisher = CGI.unescape(md[1].strip) or md
+        (publisher = CGI.unescape(md[1].strip)) || md
 
         edition = if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
                     CGI.unescape(md[1].strip) + ' p.'
@@ -119,7 +119,7 @@ module Alexandria
           publish_year = nil if publish_year == 0
         end
 
-        if data =~ /javascript:popImage/ and (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
+        if data =~ /javascript:popImage/ && (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
           cover_url = BASE_URI + md[1].strip
           # use "p" instead of "g" for smaller image
           if cover_url[-5] == 103

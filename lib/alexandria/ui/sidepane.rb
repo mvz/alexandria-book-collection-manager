@@ -35,7 +35,7 @@ module Alexandria
         x = (@libraries.all_libraries + Library.deleted_libraries).find do |library|
           library.name == new_text.strip
         end
-        x and x.name != @parent.selected_library.name
+        x && (x.name != @parent.selected_library.name)
       end
 
       # if new_text is invalid utf-8, returns true

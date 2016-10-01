@@ -50,7 +50,7 @@ module Alexandria
             token.new_value = token.value.strip
           end
         end
-        if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
+        if token && ((token.value.size != 20) || (token.value == '0J356Z09CN88KB743582'))
           token.new_value = ''
         end
 
@@ -82,7 +82,7 @@ module Alexandria
         if (config = Alexandria::Preferences.instance.http_proxy_config)
           host, port, user, pass = config
           url = 'http://'
-          url += user + ':' + pass + '@' if user and pass
+          url += user + ':' + pass + '@' if user && pass
           url += host + ':' + port.to_s
           ENV['http_proxy'] = url
         end
@@ -186,7 +186,7 @@ module Alexandria
           media = nil if media == 'Unknown Binding'
 
           isbn = normalize(atts.get('isbn'))
-          isbn = if isbn and Library.valid_isbn?(isbn)
+          isbn = if isbn && Library.valid_isbn?(isbn)
                    Library.canonicalise_ean(isbn)
                  end
           # hack, extract year by regexp (not Y10K compatible :-)

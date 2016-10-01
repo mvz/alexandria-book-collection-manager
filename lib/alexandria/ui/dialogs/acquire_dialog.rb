@@ -197,7 +197,7 @@ module Alexandria
               end
             end
             # remove list items
-            if isbn_duplicates.empty? and !adding_a_selection
+            if isbn_duplicates.empty? && !adding_a_selection
               model.clear # TODO unless!!!
               row_iters.clear
             else

@@ -100,14 +100,14 @@ module Alexandria
 
         return if marc.title.nil? # or marc.authors.empty?
 
-        isbn = isbn or marc.isbn
+        (isbn = isbn) || marc.isbn
         isbn = Library.canonicalise_ean(isbn)
 
         book = Book.new(marc.title, marc.authors,
                         isbn,
-                        (marc.publisher or ''),
+                        (marc.publisher || ''),
                         marc.respond_to?(:publish_year) ? marc.publish_year.to_i : nil,
-                        (marc.edition or ''))
+                        (marc.edition || ''))
         book
       end
 
@@ -151,7 +151,7 @@ module Alexandria
 
       def search_records(criterion, type, conn_count)
         options = {}
-        unless prefs['username'].empty? or prefs['password'].empty?
+        unless prefs['username'].empty? || prefs['password'].empty?
           options['user'] = prefs['username']
           options['password'] = prefs['password']
         end
@@ -188,7 +188,7 @@ module Alexandria
           conn.search(pqf)
         rescue => ex
           if /1005/ =~ ex.message
-            if prefs.variable_named('piggyback') and prefs['piggyback']
+            if prefs.variable_named('piggyback') && prefs['piggyback']
               log.error { "Z39.50 search failed:: #{ex.message}" }
               log.info { 'Turning off piggybacking for this provider' }
               prefs.variable_named('piggyback').new_value = false
@@ -310,7 +310,7 @@ module Alexandria
           }
 
           if title # and !authors.empty?
-            book = Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
+            book = Book.new(title, authors, isbn, (publisher || nil), (publish_year || nil), (edition || nil))
             results << [book]
           end
         end
@@ -371,7 +371,7 @@ module Alexandria
 
         if isbn[0..1] == '88'
           # Italian speaking area
-          if isbn > '8895000' and isbn <= '8899999996'
+          if isbn > '8895000' && (isbn <= '8899999996')
             return isbn[0..1] + '-' + isbn[2..6] + '-' + isbn[7..8] + '-' + isbn[9..9]
           elsif isbn > '88900000'
             return isbn[0..1] + '-' + isbn[2..7] + '-' + isbn[8..8] + '-' + isbn[9..9]

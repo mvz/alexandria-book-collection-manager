@@ -150,7 +150,7 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
     varname = File.basename(element.elements['key'].text)
     type = element.elements['type'].text
 
-    if type == 'list' or type == 'pair'
+    if (type == 'list') || (type == 'pair')
       ary = default[1..-2].split(',')
       next if ary.empty?
       if type == 'list'
@@ -234,7 +234,7 @@ task :scrollkeeper do
   unless system('which scrollkeeper-update')
     raise 'scrollkeeper-update cannot be found, is Scrollkeeper correctly installed?'
   end
-  system('scrollkeeper-update -q') or raise 'Scrollkeeper update failed'
+  system('scrollkeeper-update -q') || raise('Scrollkeeper update failed')
 end
 
 task :gconf do

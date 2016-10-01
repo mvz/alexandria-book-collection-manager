@@ -101,7 +101,7 @@ begin
         last = nil if last.empty?
       end
 
-      first and last ? first + ' ' + last : first ? first : last
+      first && last ? first + ' ' + last : first ? first : last
     end
 rescue LoadError => e
   Alexandria.log.debug { 'Could not find optional ruby-revolution; Evolution contacts will not be loaded' }

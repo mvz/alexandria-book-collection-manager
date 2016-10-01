@@ -64,17 +64,17 @@ class IconViewTooltips
     if authors.size > 0
       html += "<i>#{CGI.escapeHTML(authors)}</i>"
     end
-    if (title.size > 0) or (authors.size > 0)
+    if (title.size > 0) || (authors.size > 0)
       html += "\n"
     end
 
     html += '<small>'
-    if publisher and publisher.size > 0
+    if publisher && publisher.size > 0
       html += "#{CGI.escapeHTML(publisher)}"
     end
 
-    if year and year.size > 0
-      if publisher and publisher.size > 0
+    if year && year.size > 0
+      if publisher && publisher.size > 0
         html += ' '
       end
       html += "(#{year})"

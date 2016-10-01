@@ -89,7 +89,7 @@ module Alexandria
 
       def self.blank?(filename)
         pixbuf = GdkPixbuf::Pixbuf.new(file: filename)
-        pixbuf.width == 1 and pixbuf.height == 1
+        (pixbuf.width == 1) && (pixbuf.height == 1)
       rescue => err
         puts err.message
         puts err.backtrace.join("\n> ")

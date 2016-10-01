@@ -31,7 +31,7 @@ module Alexandria
                 'to replace it with the one you are generating?') % filename)
         # FIXME: Should accept just :cancel
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 
@@ -114,8 +114,8 @@ module Alexandria
         grid.attach preview_image, 2, 0, 1, 3
         set_extra_widget grid
 
-        while (response = run) != :cancel and
-            response != :delete_event
+        while ((response = run) != :cancel) &&
+            (response != :delete_event)
 
           if response == :help
             Alexandria::UI.display_help(self, 'exporting')

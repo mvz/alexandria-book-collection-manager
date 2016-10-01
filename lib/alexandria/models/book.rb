@@ -43,30 +43,30 @@ module Alexandria
     end
 
     def ident
-      if (!@isbn.nil?) and @isbn.empty?
+      if (!@isbn.nil?) && @isbn.empty?
         @isbn = nil
       end
-      @isbn or @title.hash.to_s
+      @isbn || @title.hash.to_s
     end
 
     def loaned?
-      loaned or false
+      loaned || false
     end
 
     def redd?
-      redd or false
+      redd || false
     end
 
     def want?
-      want or false
+      want || false
     end
 
     def own?
-      own or false
+      own || false
     end
 
     def ==(obj)
-      obj.is_a?(self.class) and ident == obj.ident
+      obj.is_a?(self.class) && (ident == obj.ident)
     end
   end
 end

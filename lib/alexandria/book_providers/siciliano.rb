@@ -76,7 +76,7 @@ module Alexandria
           end
 
         rescue NoResultsError => err
-          if (type == SEARCH_BY_ISBN) and (trying_again == false)
+          if (type == SEARCH_BY_ISBN) && (trying_again == false)
             trying_again = true
             retry
           else
@@ -94,10 +94,10 @@ module Alexandria
       private
 
       def create_search_uri(search_type, search_term, trying_again = false)
-        search_type_code = { SEARCH_BY_ISBN => 'G',
-                             SEARCH_BY_TITLE => 'A',
-                             SEARCH_BY_AUTHORS => 'B',
-                             SEARCH_BY_KEYWORD => 'X' }[search_type] or 'X'
+        (search_type_code = { SEARCH_BY_ISBN => 'G',
+                              SEARCH_BY_TITLE => 'A',
+                              SEARCH_BY_AUTHORS => 'B',
+                              SEARCH_BY_KEYWORD => 'X' }[search_type]) || 'X'
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 if trying_again
                                   # on second attempt, try ISBN-10...

@@ -41,7 +41,7 @@ module Alexandria
               message)
         puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 
@@ -92,8 +92,7 @@ module Alexandria
         end
 
         signal_connect('selection_changed') do
-          import_button.sensitive =
-            filename and File.file?(filename)
+          (import_button.sensitive = filename) && File.file?(filename)
         end
 
         # before adding the (hidden) progress bar, we must re-set the
@@ -122,9 +121,9 @@ module Alexandria
 
         exec_queue = ExecutionQueue.new
 
-        while !@destroyed and
-            (response = run) != :cancel and
-            response != :delete_event
+        while !@destroyed &&
+            ((response = run) != :cancel) &&
+            (response != :delete_event)
 
           if response == :help
             Alexandria::UI.display_help(self, 'import-library')
@@ -134,8 +133,7 @@ module Alexandria
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             Libraries.instance.all_libraries,
-            base
-          )
+            base)
 
           filter = filters[self.filter]
           puts "Going forward with filter: #{filter.name}" if $DEBUG
@@ -168,7 +166,7 @@ module Alexandria
             end
           end
 
-          while thread.alive? and !@destroyed
+          while thread.alive? && !@destroyed
             # puts "Thread #{thread} still alive."
             running = true
             exec_queue.iterate

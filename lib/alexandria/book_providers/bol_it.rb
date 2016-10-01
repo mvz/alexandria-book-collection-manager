@@ -103,18 +103,18 @@ module Alexandria
 
         # raise unless
         md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
-        publisher = CGI.unescape(md[1].strip) or md
+        (publisher = CGI.unescape(md[1].strip)) || md
 
         # raise unless
         md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
-        edition = CGI.unescape(md[1].strip) or md
+        (edition = CGI.unescape(md[1].strip)) || md
 
         if (md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         elsif (md = / (\d+) pagine \| /.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         end
-        if nr_pages != '0' and !nr_pages.nil?
+        if (nr_pages != '0') && !nr_pages.nil?
           edition = nr_pages + ' p., ' + edition
         end
 
@@ -133,7 +133,7 @@ module Alexandria
         end
 
         medium_cover = CACHE_DIR + '/' + cover_filename
-        if File.size(medium_cover) > 43 and File.size(medium_cover) != 2382 # 2382 is the size of the fake image "copertina non disponibile"
+        if File.size(medium_cover) > 43 && (File.size(medium_cover) != 2382) # 2382 is the size of the fake image "copertina non disponibile"
           puts medium_cover + ' has non-0 size' if $DEBUG
           return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end

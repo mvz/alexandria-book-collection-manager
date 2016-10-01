@@ -36,7 +36,7 @@ module Alexandria
 
     def initialize(name, rules, predicate_operator_rule)
       super()
-      raise if name.nil? or rules.nil? or predicate_operator_rule.nil?
+      raise if name.nil? || rules.nil? || predicate_operator_rule.nil?
       @name = name
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
@@ -162,7 +162,7 @@ module Alexandria
       raise 'need libraries' if @libraries.nil?
       raise 'no libraries' if @libraries.empty?
       raise 'need predicate operator' if @predicate_operator_rule.nil?
-      raise 'need rule' if @rules.nil? or @rules.empty?
+      raise 'need rule' if @rules.nil? || @rules.empty?
 
       filters = @rules.map(&:filter_proc)
       selector = @predicate_operator_rule == ALL_RULES ? :all? : :any?
@@ -177,7 +177,7 @@ module Alexandria
         filtered_library.each { |x| @cache[x] = library }
         concat(filtered_library)
       end
-      @n_rated = count { |x| !x.rating.nil? and x.rating > 0 }
+      @n_rated = count { |x| !x.rating.nil? && x.rating > 0 }
     end
 
     def cover(book)
@@ -281,7 +281,7 @@ module Alexandria
       attr_accessor :operand, :operation, :value
 
       def initialize(operand, operation, value)
-        raise if operand.nil? or operation.nil? # value can be nil
+        raise if operand.nil? || operation.nil? # value can be nil
         @operand = operand
         @operation = operation
         @value = value
@@ -395,15 +395,15 @@ module Alexandria
                                     proc { |x, y| x < y })
         IS_AFTER = Operator.new(:is_after,
                                 _('is after'),
-                                proc { |x, y| x.to_i > y.to_i and !x.nil? })
+                                proc { |x, y| x.to_i > y.to_i && !x.nil? })
         IS_BEFORE = Operator.new(:is_before,
                                  _('is before'),
-                                 proc { |x, y| x.to_i < y.to_i and !x.nil? })
+                                 proc { |x, y| x.to_i < y.to_i && !x.nil? })
         IS_IN_LAST = Operator.new(:is_in_last_days,
                                   _('is in last'),
                                   proc { |x, y|
                                     begin
-                                      if x.nil? or x.empty?
+                                      if x.nil? || x.empty?
                                         false
                                       else
                                         log.debug { "Given Date: #{x.inspect} #{x.class}" }
@@ -422,7 +422,7 @@ module Alexandria
                                       _('is not in last'),
                                       proc { |x, y|
                                         begin
-                                          if x.nil? or x.empty?
+                                          if x.nil? || x.empty?
                                             false
                                           else
                                             log.debug { "Given Date: #{x.inspect} #{x.class}" }
@@ -491,8 +491,8 @@ module Alexandria
           BOOLEAN_OPERATORS.map { |x| [x, nil] }
         when 'Time'
           TIME_OPERATORS.map do |x|
-            if x == Operators::IS_IN_LAST or
-                x == Operators::IS_NOT_IN_LAST
+            if (x == Operators::IS_IN_LAST) ||
+                (x == Operators::IS_NOT_IN_LAST)
 
               [x, Operands::DAYS]
             else

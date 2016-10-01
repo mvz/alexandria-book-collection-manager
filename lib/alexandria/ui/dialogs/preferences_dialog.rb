@@ -400,11 +400,11 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == :button_press and event.button == 3
+        (event.event_type == :button_press) && (event.button == 3)
       end
 
       def prefs_empty(prefs)
-        prefs.empty? or (prefs.size == 1 and prefs.first.name == 'enabled')
+        prefs.empty? || ((prefs.size == 1) && (prefs.first.name == 'enabled'))
       end
 
       def on_provider_setup
@@ -496,7 +496,7 @@ module Alexandria
 
       def on_providers_button_press_event(_widget, event)
         # double left click
-        if event.event_type == :'2button_press' and event.button == 1
+        if (event.event_type == :'2button_press') && (event.button == 1)
           on_provider_setup
         end
       end

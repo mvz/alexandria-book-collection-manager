@@ -173,7 +173,7 @@ module Alexandria
     def export_as_isbn_list(filename)
       File.open(filename, 'w') do |io|
         each do |book|
-          io.puts((book.isbn or ''))
+          io.puts((book.isbn || ''))
         end
       end
     end
@@ -220,7 +220,7 @@ module Alexandria
           end
           io.puts book.authors.join(', ')
           io.puts book.edition
-          io.puts((book.isbn or ''))
+          io.puts((book.isbn || ''))
           # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
           io.close
         end
@@ -233,7 +233,7 @@ module Alexandria
       File.open(filename, 'w') do |io|
         io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
         each do |book|
-          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher or '') + ';' + (book.edition or '') + ';' + (book.isbn or '') + ';' + (book.publishing_year.to_s or '') + ';' + (book.rating.to_s or '0') + ';' + (book.notes or '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
+          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher || '') + ';' + (book.edition || '') + ';' + (book.isbn || '') + ';' + (book.publishing_year.to_s || '') + ';' + (book.rating.to_s || '0') + ';' + (book.notes || '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
         end
       end
     end
@@ -262,7 +262,7 @@ module Alexandria
         prod.add_element('NotificationType').text = '03'  # confirmed
         prod.add_element('RecordSourceName').text =
           'Alexandria ' + Alexandria::DISPLAY_VERSION
-        prod.add_element('ISBN').text = (book.isbn or '')
+        prod.add_element('ISBN').text = (book.isbn || '')
         prod.add_element('ProductForm').text = 'BA'       # book
         prod.add_element('DistinctiveTitle').text = book.title
         unless book.authors.empty?
@@ -273,7 +273,7 @@ module Alexandria
             elem.add_element('PersonName').text = author
           end
         end
-        if book.notes and !book.notes.empty?
+        if book.notes && !book.notes.empty?
           elem = prod.add_element('OtherText')
           # reader description
           elem.add_element('TextTypeCode').text = '12'
@@ -332,7 +332,7 @@ module Alexandria
         entry.add_attribute('id', new_index)
         # translate the binding
         entry.add_element('title').text = book.title
-        entry.add_element('isbn').text = (book.isbn or '')
+        entry.add_element('isbn').text = (book.isbn || '')
         entry.add_element('pub_year').text = book.publishing_year
         entry.add_element('binding').text = book.edition
         entry.add_element('publisher').text = book.publisher
@@ -347,7 +347,7 @@ module Alexandria
         unless book.rating == Book::DEFAULT_RATING
           entry.add_element('rating').text = book.rating
         end
-        if book.notes and !book.notes.empty?
+        if book.notes && !book.notes.empty?
           entry.add_element('comments').text = book.notes
         end
         if File.exist?(cover(book))
@@ -476,7 +476,7 @@ EOS
 
       auths = Hash.new(0)
       each do |book|
-        k = (book.authors[0] or 'Anonymous').split[0]
+        k = (book.authors[0] || 'Anonymous').split[0]
         if auths.key?(k)
           auths[k] += 1
         else
@@ -494,11 +494,11 @@ EOS
         bibtex << "\",\n"
         bibtex << "title = \"#{latex_escape(book.title)}\",\n"
         bibtex << "publisher = \"#{latex_escape(book.publisher)}\",\n"
-        if book.notes and !book.notes.empty?
+        if book.notes && !book.notes.empty?
           bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
         end
         # year is a required field in bibtex @BOOK
-        bibtex << 'year = ' + (book.publishing_year or "\"n/a\"").to_s + "\n"
+        bibtex << 'year = ' + (book.publishing_year || "\"n/a\"").to_s + "\n"
         bibtex << "}\n\n"
       end
       bibtex

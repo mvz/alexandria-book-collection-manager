@@ -143,7 +143,7 @@ module Alexandria
       end
 
       def on_properties(*)
-        if @library_listview.focus? or selected_books.empty?
+        if @library_listview.focus? || selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
             SmartLibraryPropertiesDialog.new(@main_app, library) do
@@ -234,7 +234,7 @@ module Alexandria
           log.warn { 'Attempted to delete last library, fix GUI' }
           return
         end
-        if library.empty? or ReallyDeleteDialog.new(@main_app,
+        if library.empty? || ReallyDeleteDialog.new(@main_app,
                                                     library,
                                                     books).ok?
           undoable_delete(library, books)

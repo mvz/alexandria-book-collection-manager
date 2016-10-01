@@ -129,7 +129,7 @@ module Alexandria
           end
         end
 
-        if title.nil? and isbn.nil?
+        if title.nil? && isbn.nil?
           # probably didn't undertand the MARC dialect
           return nil
         end

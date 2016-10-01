@@ -100,7 +100,7 @@ module Alexandria
           collection = xml.root.elements[1]
           raise unless collection.name == 'collection'
           type = collection.attribute('type').value.to_i
-          raise unless type == 2 or type == 5
+          raise unless (type == 2) || (type == 5)
 
           content = []
           entries = collection.elements.to_a('entry')
@@ -123,7 +123,7 @@ module Alexandria
               end
             }
             # isbn
-            if book_elements[2].nil? or book_elements[2].strip.empty?
+            if book_elements[2].nil? || book_elements[2].strip.empty?
               book_elements[2] = nil
             else
               begin
@@ -143,7 +143,7 @@ module Alexandria
                     end
             puts cover
             book = Book.new(*book_elements)
-            if elements['rating'] and (0..UI::MainApp::MAX_RATING_STARS).map.member? elements['rating'].text.to_i
+            if elements['rating'] && (0..UI::MainApp::MAX_RATING_STARS).map.member?(elements['rating'].text.to_i)
               book.rating = elements['rating'].text.to_i
             end
             book.notes = neaten(elements['comments'].text) if elements['comments']

@@ -101,11 +101,11 @@ module Alexandria
       end
 
       def create_search_uri(search_type, search_term)
-        search_type_code = {
+        (search_type_code = {
           SEARCH_BY_AUTHORS => 'ATH',
           SEARCH_BY_TITLE => 'TTL',
           SEARCH_BY_KEYWORD => 'WRD'    # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
-        }[search_type] or ''
+        }[search_type]) || ''
         if search_type == SEARCH_BY_ISBN
           BASE_ISBN_SEARCH_URL % Library.canonicalise_ean(search_term) # isbn-13
         else

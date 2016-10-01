@@ -113,7 +113,7 @@ module Alexandria
           editions << md[0].strip
           publish_years << md[0].strip.split(/-/)[0].to_i
         }
-        raise if editions.empty? or publish_years.empty?
+        raise if editions.empty? || publish_years.empty?
         publishers = []
         data.scan(/diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each {|md|
           publishers << md[0].strip

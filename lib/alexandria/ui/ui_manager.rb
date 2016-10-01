@@ -285,12 +285,12 @@ module Alexandria
           else
             data = case @filter_books_mode
                    when 0 then
-                     (iter[Columns::TITLE] or '') +
-                       (iter[Columns::AUTHORS] or '') +
-                       (iter[Columns::ISBN] or '') +
-                       (iter[Columns::PUBLISHER] or '') +
-                       (iter[Columns::NOTES] or '') +
-                       (iter[Columns::TAGS] or '')
+                     (iter[Columns::TITLE] || '') +
+                       (iter[Columns::AUTHORS] || '') +
+                       (iter[Columns::ISBN] || '') +
+                       (iter[Columns::PUBLISHER] || '') +
+                       (iter[Columns::NOTES] || '') +
+                       (iter[Columns::TAGS] || '')
                    when 2 then iter[Columns::TITLE]
                    when 3 then iter[Columns::AUTHORS]
                    when 4 then iter[Columns::ISBN]
@@ -298,7 +298,7 @@ module Alexandria
                    when 6 then iter[Columns::NOTES]
                    when 7 then iter[Columns::TAGS]
                    end
-            !data.nil? and data.downcase.include?(filter.downcase)
+            !data.nil? && data.downcase.include?(filter.downcase)
           end
         end
 
@@ -394,7 +394,7 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == :button_press and event.button == 3
+        (event.event_type == :button_press) && (event.button == 3)
       end
 
       def on_books_button_press_event(widget, event)
@@ -471,7 +471,7 @@ module Alexandria
         # selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
         # Focus is the wrong idiom here.
-        unless @clicking_on_sidepane or (@main_app.focus == @library_listview)
+        unless @clicking_on_sidepane || (@main_app.focus == @library_listview)
           # unless @main_app.focus == @library_listview
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
@@ -505,7 +505,7 @@ module Alexandria
             BookProviders.each do |provider|
               has_no_url = true
               begin
-                has_no_url = (b.isbn.nil? or b.isbn.strip.empty? or provider.url(b).nil?)
+                has_no_url = (b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?)
               rescue => ex
                 log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
               end
@@ -527,7 +527,7 @@ module Alexandria
       end
 
       def on_focus(widget, _event_focus)
-        if @clicking_on_sidepane or widget == @library_listview
+        if @clicking_on_sidepane || (widget == @library_listview)
           log.debug { 'on_focus: @library_listview' }
           GLib::Idle.add do
             %w(OnlineInformation SelectAll DeselectAll).each do |action|
@@ -543,7 +543,7 @@ module Alexandria
       end
 
       def determine_delete_option
-        sensitive = (@libraries.all_regular_libraries.length > 1 or selected_library.is_a?(SmartLibrary))
+        sensitive = (@libraries.all_regular_libraries.length > 1 || selected_library.is_a?(SmartLibrary))
         sensitive
       end
 
@@ -666,7 +666,7 @@ module Alexandria
         # entries.\n" )
 
         @libraries.ruined_books.each { |bi|
-          new_message += "\n#{bi[1] or bi[1].inspect}"
+          new_message += "\n#{bi[1] || bi[1].inspect}"
         }
         recovery_dialog = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL,
                                                  Gtk::MessageDialog::WARNING,
@@ -765,9 +765,9 @@ module Alexandria
         iter[Columns::PUBLISHER] = book.publisher
         iter[Columns::PUBLISH_DATE] = book.publishing_year.to_s
         iter[Columns::EDITION] = book.edition
-        iter[Columns::NOTES] = (book.notes or '')
-        iter[Columns::LOANED_TO] = (book.loaned_to or '')
-        rating = (book.rating or Book::DEFAULT_RATING)
+        iter[Columns::NOTES] = (book.notes || '')
+        iter[Columns::LOANED_TO] = (book.loaned_to || '')
+        rating = (book.rating || Book::DEFAULT_RATING)
         iter[Columns::RATING] = MAX_RATING_STARS - rating # ascending order is the default
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
@@ -1078,7 +1078,7 @@ module Alexandria
 
       def move_selected_books_to_library(library)
         books = selected_books.select do |book|
-          !library.include?(book) or
+          !library.include?(book) ||
             ConflictWhileCopyingDialog.new(@main_app,
                                            library,
                                            book).replace?
@@ -1186,7 +1186,7 @@ module Alexandria
       end
 
       def remove_library_separator
-        if !@library_separator_iter.nil? and @libraries.all_smart_libraries.empty?
+        if !@library_separator_iter.nil? && @libraries.all_smart_libraries.empty?
           @library_listview.model.remove(@library_separator_iter)
           @library_separator_iter = nil
         end

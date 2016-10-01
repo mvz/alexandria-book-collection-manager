@@ -219,7 +219,7 @@ module Alexandria
           book.saved_ident = string_saved_ident
         end
       end
-      if book.isbn.class == String and book.isbn.length == 0
+      if (book.isbn.class == String) && (book.isbn.length == 0)
         book.isbn = nil # save trouble later
       end
       book
@@ -303,7 +303,7 @@ module Alexandria
 
     def self.valid_isbn?(isbn)
       numbers = extract_numbers(isbn)
-      numbers.length == 10 and isbn_checksum(numbers) == 0
+      (numbers.length == 10) && (isbn_checksum(numbers) == 0)
     rescue InvalidISBNError
       false
     end
@@ -315,10 +315,10 @@ module Alexandria
 
     def self.valid_ean?(ean)
       numbers = extract_numbers(ean)
-      (numbers.length == 13 and
-       ean_checksum(numbers[0..11]) == numbers[12]) or
-        (numbers.length == 18 and
-         ean_checksum(numbers[0..11]) == numbers[12])
+      ((numbers.length == 13) &&
+       (ean_checksum(numbers[0..11]) == numbers[12])) ||
+        ((numbers.length == 18) &&
+         (ean_checksum(numbers[0..11]) == numbers[12]))
     rescue InvalidISBNError
       false
     end
@@ -330,8 +330,8 @@ module Alexandria
 
     def self.valid_upc?(upc)
       numbers = extract_numbers(upc)
-      (numbers.length == 17 and
-       upc_checksum(numbers[0..10]) == numbers[11])
+      ((numbers.length == 17) &&
+       (upc_checksum(numbers[0..10]) == numbers[11]))
     rescue InvalidISBNError
       false
     end
@@ -375,7 +375,7 @@ module Alexandria
 
     def self.canonicalise_isbn(isbn)
       numbers = extract_numbers(isbn)
-      if self.valid_ean?(isbn) and numbers[0..2] != [9, 7, 8]
+      if self.valid_ean?(isbn) && (numbers[0..2] != [9, 7, 8])
         return isbn
       end
       canonical = if self.valid_ean?(isbn)
@@ -402,7 +402,7 @@ module Alexandria
       # Let's initialize the saved identifier if not already
       # (backward compatibility from 0.4.0)
       # book.saved_ident ||= book.ident
-      if book.saved_ident.nil? or book.saved_ident.empty?
+      if book.saved_ident.nil? || book.saved_ident.empty?
         book.saved_ident = book.ident
       end
       if book.ident != book.saved_ident
@@ -441,7 +441,7 @@ module Alexandria
         book.saved_ident = book.ident
       end
       # #was File.exist? but that returns true for empty files... CathalMagus
-      already_there = (File.size?(yaml(book)) and
+      already_there = (File.size?(yaml(book)) &&
                        !@deleted_books.include?(book))
 
       temp_book = book.dup
@@ -519,7 +519,7 @@ module Alexandria
         # We check object IDs there because the user could have added
         # a book with the same identifier as another book he/she
         # previously deleted and that he/she is trying to redo.
-        if i and self[i].equal? book
+        if i && self[i].equal?(book)
           changed
           old_delete(book) # FIX this will old_delete all '==' books
           notify_observers(self, BOOK_REMOVED, book)
@@ -602,7 +602,7 @@ module Alexandria
     end
 
     def n_rated
-      count { |x| !x.rating.nil? and x.rating > 0 }
+      count { |x| !x.rating.nil? && x.rating > 0 }
     end
 
     def n_unrated
