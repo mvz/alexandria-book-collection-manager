@@ -56,13 +56,11 @@ module Alexandria
 
         @iconview.signal_connect('selection-changed') do
           log.debug { 'selection-changed' }
-          @tooltips.hide_tooltip
           @parent.on_books_selection_changed
         end
 
         @iconview.signal_connect('item-activated') do
           log.debug { 'item-activated' }
-          @tooltips.hide_tooltip
           @actiongroup['Properties'].activate
           false
         end
