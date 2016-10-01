@@ -24,7 +24,6 @@ module Alexandria
 
         self.border_width = 6
         self.resizable = false
-        self.has_separator = false
         vbox.spacing = 12
 
         hbox = Gtk::HBox.new(false, 12)
