@@ -183,13 +183,6 @@ Style/IndentAssignment:
     - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb'
     - 'lib/alexandria/ui/listview.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: Width.
-Style/IndentationWidth:
-  Exclude:
-    - 'spec/alexandria/library_spec.rb'
-
 # Offense count: 2
 Style/MethodMissing:
   Exclude:

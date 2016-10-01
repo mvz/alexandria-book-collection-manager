@@ -49,11 +49,11 @@ describe Alexandria::Library do
 
   describe '#canonicalise_isbn' do
     it 'returns the correct value for several examples' do
-    expect(Alexandria::Library.canonicalise_isbn('014143984X')).to eq '014143984X'
-    expect(Alexandria::Library.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
-    expect(Alexandria::Library.canonicalise_isbn('3522105907')).to eq '3522105907'
-    # EAN number
-    expect(Alexandria::Library.canonicalise_isbn('9780345431929')).to eq '0345431928'
+      expect(Alexandria::Library.canonicalise_isbn('014143984X')).to eq '014143984X'
+      expect(Alexandria::Library.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
+      expect(Alexandria::Library.canonicalise_isbn('3522105907')).to eq '3522105907'
+      # EAN number
+      expect(Alexandria::Library.canonicalise_isbn('9780345431929')).to eq '0345431928'
     end
   end
 
