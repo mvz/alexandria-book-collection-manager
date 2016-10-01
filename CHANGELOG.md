@@ -5,6 +5,7 @@
 * Various small bug fixes
 * Update to ruby-gnome2 3.0.9
 * Improve specs
+* Port to Gtk+ 3
 
 ## 0.6.9
 
