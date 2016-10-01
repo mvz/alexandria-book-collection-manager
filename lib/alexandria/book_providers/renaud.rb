@@ -61,7 +61,7 @@ module Alexandria
             to_books(data).each { |book|
               results << book
             }
-            while /Suivant/.match(data)
+            while /Suivant/ =~ data
               md = /Enteterouge\">([\d]*)<\/b>/.match(data)
               num = md[1].to_i + 1
               data = transport.get(URI.parse(req + '&PageActuelle=' + num.to_s))
@@ -86,7 +86,7 @@ module Alexandria
       def to_books(data)
         data = CGI.unescapeHTML(data)
         data = data.convert('UTF-8', 'ISO-8859-1')
-        raise NoResultsError if /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.match(data)
+        raise NoResultsError if data =~ /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/
 
         titles = []
         data.scan(/"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each { |md|

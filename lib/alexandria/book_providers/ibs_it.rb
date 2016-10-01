@@ -80,7 +80,7 @@ module Alexandria
       private
 
       def to_book(data)
-        raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data)
+        raise NoResultsError if data =~ /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/
         data = data.convert('UTF-8', 'ISO-8859-1')
 
         md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)

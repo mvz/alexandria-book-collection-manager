@@ -84,7 +84,7 @@ module Alexandria
       private
 
       def to_book(data)
-        raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data)
+        raise NoResultsError if data =~ /Scheda libro non completa  \(TP null\)/
         data = data.convert('UTF-8', 'ISO-8859-1')
 
         md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)

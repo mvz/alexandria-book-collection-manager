@@ -79,18 +79,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 29
 
-# Offense count: 9
-# Cop supports --auto-correct.
-Performance/RedundantMatch:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_aws.rb'
-    - 'lib/alexandria/book_providers/bol_it.rb'
-    - 'lib/alexandria/book_providers/ibs_it.rb'
-    - 'lib/alexandria/book_providers/renaud.rb'
-    - 'lib/alexandria/book_providers/webster_it.rb'
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.

@@ -183,7 +183,7 @@ module Alexandria
 
       # The string is removed on load, but can't make it stick, maybe has to do with cache
 
-      if /!str:Amazon::Search::Response/.match(text)
+      if text =~ /!str:Amazon::Search::Response/
         log.debug { "Removing Ruby/Amazon strings from #{name}" }
         text.gsub!('!str:Amazon::Search::Response', '')
       end
@@ -230,7 +230,7 @@ module Alexandria
       begin
         Dir.entries(DIR).each do |file|
           # Skip hidden files.
-          next if /^\./.match(file)
+          next if file =~ /^\./
           # Skip non-directory files.
           next unless File.stat(File.join(DIR, file)).directory?
 

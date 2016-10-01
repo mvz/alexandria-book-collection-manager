@@ -132,7 +132,7 @@ module Alexandria
             res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
-              if /#{criterion}/i.match(item.get('itemattributes/title'))
+              if item.get('itemattributes/title') =~ /#{criterion}/i
                 products << item
               end
             end

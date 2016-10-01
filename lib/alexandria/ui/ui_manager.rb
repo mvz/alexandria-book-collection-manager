@@ -1088,7 +1088,7 @@ module Alexandria
 
       def setup_move_actions
         @actiongroup.actions.each do |action|
-          next unless /^MoveIn/.match(action.name)
+          next unless /^MoveIn/ =~ action.name
           @actiongroup.remove_action(action)
         end
         actions = []
