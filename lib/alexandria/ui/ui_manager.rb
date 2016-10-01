@@ -1159,11 +1159,8 @@ module Alexandria
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
         log.debug { "library_sort_order #{@notebook.page}: #{@iconview.model.inspect} #{@listview.model.inspect}" }
-        sorted_on = current_view.model.sort_column_id
-        if sorted_on
-          sort_column = sorted_on[0]
-          sort_order = sorted_on[1]
-
+        result, sort_column, sort_order = current_view.model.sort_column_id
+        if result
           column_ids_to_attributes = { 2 => :title,
                                        4 => :authors,
                                        5 => :isbn,
@@ -1175,8 +1172,8 @@ module Alexandria
                                        14 => :want,
                                        9 => :rating }
 
-          sort_attribute = column_ids_to_attributes[sort_column]
-          ascending = (sort_order == Gtk::SORT_ASCENDING)
+          sort_attribute = column_ids_to_attributes.fetch sort_column
+          ascending = (sort_order == :ascending)
           LibrarySortOrder.new(sort_attribute, ascending)
         else
           LibrarySortOrder::Unsorted.new

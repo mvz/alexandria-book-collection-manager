@@ -48,8 +48,7 @@ module Alexandria
       end
       sorted
     rescue => ex
-      trace = ex.backtrace.join("\n> ")
-      log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
+      log.warn { "Could not sort library by #{@book_attribute.inspect}: #{ex.message}" }
       library
     end
 
