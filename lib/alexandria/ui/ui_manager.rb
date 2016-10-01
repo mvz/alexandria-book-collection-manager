@@ -627,41 +627,7 @@ module Alexandria
           log.warn('Attempt to open browser with nil url')
           return
         end
-        if (cmd = Preferences.instance.www_browser)
-          launch_command = cmd
-          if cmd.downcase.index('%u')
-            launch_command = cmd.gsub(/%U/i, "\"" + url + "\"")
-          else
-            launch_command = cmd + " \"" + url + "\""
-          end
-          Thread.new { system(launch_command) }
-        else
-          ErrorDialog.new(@main_app,
-                          _('Unable to launch the web browser'),
-                          _('Check out that a web browser is ' \
-                            'configured as default (Desktop ' \
-                            'Preferences -> Advanced -> Preferred ' \
-                            'Applications) and try again.'))
-        end
-      end
-
-      def open_email_client(url)
-        if (cmd = Preferences.instance.email_client)
-          launch_command = cmd
-          if cmd.downcase.index('%u')
-            launch_command = cmd.gsub(/%u/i, "\"" + url + "\"")
-          else
-            launch_command = cmd + " \"" + url + "\""
-          end
-          Thread.new { system(launch_command) }
-        else
-          ErrorDialog.new(@main_app,
-                          _('Unable to launch the mail reader'),
-                          _('Check out that a mail reader is ' \
-                            'configured as default (Desktop ' \
-                            'Preferences -> Advanced -> Preferred ' \
-                            'Applications) and try again.'))
-        end
+        Gtk.show_uri url
       end
 
       def detach_old_libraries

@@ -49,23 +49,6 @@ module Alexandria
       @proxy_password = nil
 
       load_alexandria_settings
-      # load_system_settings
-    end
-
-    def www_browser
-      unless @url_handlers_loaded
-        load_url_handler_settings
-      end
-      puts @http_command
-      @http_command
-    end
-
-    def email_client
-      unless @url_handlers_loaded
-        load_url_handler_settings
-      end
-      puts @mailto_command
-      @mailto_command
     end
 
     def http_proxy_config
@@ -238,30 +221,6 @@ module Alexandria
     def load_alexandria_settings
       all_vals = `#{GCONFTOOL} --recursive-list #{APP_DIR}`
       @alexandria_settings.merge!(gconftool_values_to_hash(all_vals))
-    end
-
-    # May be useful to pre-load these settings
-    def load_system_settings
-      load_url_handler_settingss
-      load_http_proxy_settings
-    end
-
-    # Called at most once, by #web_browser or #email_client
-    # TODO: Enforce this.
-    def load_url_handler_settings
-      # /desktop/gnome/url-handlers/http
-      http_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + '/http'}`
-      http_handler = gconftool_values_to_hash(http_handler_vars)
-      if http_handler['enabled']
-        @http_command = http_handler['command']
-      end
-
-      mailto_handler_vars = `#{GCONFTOOL} --recursive-list #{URL_HANDLERS_DIR + '/mailto'}`
-      mailto_handler = gconftool_values_to_hash(mailto_handler_vars)
-      if mailto_handler['enabled']
-        @mailto_command = mailto_handler['command']
-      end
-      @url_handlers_loaded = true
     end
 
     # Called at most once, by #http_proxy_config
