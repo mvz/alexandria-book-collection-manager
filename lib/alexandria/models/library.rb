@@ -219,7 +219,7 @@ module Alexandria
           book.saved_ident = string_saved_ident
         end
       end
-      if (book.isbn.class == String) && (book.isbn.length == 0)
+      if (book.isbn.class == String) && book.isbn.empty?
         book.isbn = nil # save trouble later
       end
       book

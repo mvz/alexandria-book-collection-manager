@@ -478,17 +478,3 @@ Style/UnneededInterpolation:
   Exclude:
     - 'lib/alexandria/ui/iconview_tooltips.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
-
-# Offense count: 19
-# Cop supports --auto-correct.
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'lib/alexandria/book_providers.rb'
-    - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/book_providers/douban.rb'
-    - 'lib/alexandria/book_providers/z3950.rb'
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/scanners/cuecat.rb'
-    - 'lib/alexandria/ui/dialogs/barcode_animation.rb'
-    - 'lib/alexandria/ui/iconview_tooltips.rb'
-    - 'lib/alexandria/undo_manager.rb'

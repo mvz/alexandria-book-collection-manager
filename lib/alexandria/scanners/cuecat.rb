@@ -87,7 +87,7 @@ module Alexandria
 
       def calc(values)
         result = ''
-        while values.length > 0
+        until values.empty?
           num = ((values[0] << 6 | values[1]) << 6 | values[2]) << 6 | values[3]
           result += ((num >> 16) ^ 67).chr
           result += ((num >> 8 & 255) ^ 67).chr

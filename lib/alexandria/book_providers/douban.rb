@@ -51,7 +51,7 @@ module Alexandria
         search_response = transport.get_response(URI.parse(request_url))
 
         results = parse_search_result(search_response.body)
-        if results.length == 0
+        if results.empty?
           raise NoResultsError
         end
 

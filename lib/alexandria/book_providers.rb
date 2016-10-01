@@ -57,7 +57,7 @@ module Alexandria
         # sanity check if at least one valid result is actually found
         results.delete_if { |book, _cover| book.nil? }
 
-        if results.length == 0
+        if results.empty?
           instance.changed
           instance.notify_observers(:not_found, factory.fullname) # new
           raise NoResultsError

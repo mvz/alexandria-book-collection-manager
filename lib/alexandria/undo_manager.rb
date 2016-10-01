@@ -34,11 +34,11 @@ module Alexandria
     end
 
     def can_undo?
-      @undo_actions.length > 0
+      !@undo_actions.empty?
     end
 
     def can_redo?
-      @redo_actions.length > 0
+      !@redo_actions.empty?
     end
 
     def undo!

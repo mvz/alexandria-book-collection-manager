@@ -316,7 +316,7 @@ module Amazon
     # Find Hpricot::Elements matching the given path. Example: element/"author".
     def /(path)
       elements = @element / path
-      return nil if elements.size == 0
+      return nil if elements.empty?
       elements
     end
 
