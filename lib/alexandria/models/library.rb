@@ -243,9 +243,7 @@ module Alexandria
       end
       # Create the default library if there is no library yet.
 
-      if a.empty?
-        a << load(_('My Library'))
-      end
+      a << load(_('My Library')) if a.empty?
 
       a
     end

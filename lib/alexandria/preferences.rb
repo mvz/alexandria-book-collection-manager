@@ -52,9 +52,7 @@ module Alexandria
     end
 
     def http_proxy_config
-      unless @http_proxy_loaded
-        load_http_proxy_settings
-      end
+      load_http_proxy_settings unless @http_proxy_loaded
       if @use_http_proxy && @proxy_host && @proxy_port
         [@proxy_host, @proxy_port, @proxy_user, @proxy_password]
       end
@@ -201,9 +199,7 @@ module Alexandria
         new_value.gsub!(/\"/, "\\\"")
         value_str = "\"#{new_value}\""
       end
-      if /cols_width/ =~ var_path
-        puts value_str
-      end
+      puts value_str if /cols_width/ =~ var_path
       `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 

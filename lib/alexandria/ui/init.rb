@@ -72,9 +72,7 @@ module Alexandria
   module UI
     def self.display_help(parent = nil, section = nil)
       section_index = ''
-      if section
-        section_index = "##{section}"
-      end
+      section_index = "##{section}" if section
       exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
     rescue
       log.error(self) { 'Unable to load help browser' }

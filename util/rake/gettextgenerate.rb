@@ -32,9 +32,7 @@ class GettextGenerateTask < Rake::TaskLib
   def initialize(projectname)
     @projectname = projectname
     @generated_files = []
-    if block_given?
-      yield self
-    end
+    yield self if block_given?
     make_task
   end
 

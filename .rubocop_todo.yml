@@ -167,12 +167,6 @@ Style/IfInsideElse:
     - 'lib/alexandria/preferences.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
 
-# Offense count: 63
-# Cop supports --auto-correct.
-# Configuration parameters: MaxLineLength.
-Style/IfUnlessModifier:
-  Enabled: false
-
 # Offense count: 5
 # Cop supports --auto-correct.
 # Configuration parameters: IndentationWidth.

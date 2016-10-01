@@ -43,9 +43,7 @@ module Alexandria
       sorted = library.sort_by do |book|
         book.send(@book_attribute)
       end
-      unless @ascending
-        sorted.reverse!
-      end
+      sorted.reverse! unless @ascending
       sorted
     rescue => ex
       log.warn { "Could not sort library by #{@book_attribute.inspect}: #{ex.message}" }

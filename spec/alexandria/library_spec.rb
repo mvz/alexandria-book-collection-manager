@@ -244,9 +244,7 @@ describe Alexandria::Library do
 
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
-      if File.exist? @outfile
-        File.unlink @outfile
-      end
+      File.unlink @outfile if File.exist? @outfile
     end
   end
 end

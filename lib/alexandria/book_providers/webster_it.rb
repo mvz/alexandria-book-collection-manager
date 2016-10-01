@@ -122,9 +122,7 @@ module Alexandria
         if data =~ /javascript:popImage/ && (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
           cover_url = BASE_URI + md[1].strip
           # use "p" instead of "g" for smaller image
-          if cover_url[-5] == 103
-            cover_url[-5] = 112
-          end
+          cover_url[-5] = 112 if cover_url[-5] == 103
 
           cover_filename = isbn + '.tmp'
           Dir.chdir(CACHE_DIR) do

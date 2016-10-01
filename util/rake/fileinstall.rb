@@ -65,9 +65,7 @@ class FileInstallTask < Rake::TaskLib
     @stage_dir = dirname # || @prefix
     @file_groups = []
     @dirs_to_remove_globs = []
-    if block_given?
-      yield self
-    end
+    yield self if block_given?
     make_tasks
   end
 
@@ -85,9 +83,7 @@ class FileInstallTask < Rake::TaskLib
     # INSTALL TASK
 
     description = 'Install package files'
-    if @stage_dir
-      description += ' to staging directory'
-    end
+    description += ' to staging directory' if @stage_dir
     desc description
     task tasknames[:install] do
       @file_groups.each { |g| g.install(@stage_dir) }
@@ -107,19 +103,13 @@ class FileInstallTask < Rake::TaskLib
       @dirs_to_remove_globs.each do |glob|
         regex = glob2regex(glob)
         all_dirs.each do |dir|
-          unless dir =~ /\/$/
-            dir += '/'
-          end
-          if regex =~ dir
-            to_delete << Regexp.last_match[1]
-          end
+          dir += '/' unless dir =~ /\/$/
+          to_delete << Regexp.last_match[1] if regex =~ dir
         end
       end
       to_delete.each do |dirname|
         dir = dirname
-        if @stage_dir
-          dir = File.join(@stage_dir, dirname)
-        end
+        dir = File.join(@stage_dir, dirname) if @stage_dir
         delete_empty(dir)
       end
     end
@@ -202,9 +192,7 @@ class FileInstallTask < Rake::TaskLib
   end
 
   def glob2regex(pathglob)
-    if pathglob =~ /\*\*$/
-      pathglob += '/'
-    end
+    pathglob += '/' if pathglob =~ /\*\*$/
     real_parts = pathglob.split('**/')
     real_parts.each do |part|
       part.gsub!('.', '\\.')
@@ -220,18 +208,14 @@ class FileInstallTask < Rake::TaskLib
   def delete_empty(dirs)
     dirs.each do |d|
       p = Pathname.new(d)
-      if p.exist?
-        delete_if_empty(p.realpath)
-      end
+      delete_if_empty(p.realpath) if p.exist?
     end
   end
 
   # Delete the directory at the given Pathname +p+ if all its children
   # can be similarly deleted, and if it is then empty.
   def delete_if_empty(p)
-    unless p.directory?
-      return false
-    end
+    return false unless p.directory?
     p.children.each do |c|
       delete_if_empty(c)
     end

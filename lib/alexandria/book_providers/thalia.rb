@@ -93,9 +93,7 @@ module Alexandria
         if (item_node = label_node.parent)
           data = ''
           item_node.children.each do |n|
-            if n.text?
-              data += n.to_html
-            end
+            data += n.to_html if n.text?
           end
           data.strip
         else

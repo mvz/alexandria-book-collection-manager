@@ -148,9 +148,7 @@ module Alexandria
             result[:title] = link.inner_text.strip
             link_to_description = link['href']
             slash = ''
-            unless link_to_description =~ /^\//
-              slash = '/'
-            end
+            slash = '/' unless link_to_description =~ /^\//
             result[:url] = "#{SITE}#{slash}#{link_to_description}"
 
             book_search_results << result
@@ -185,9 +183,7 @@ module Alexandria
         isbn =  details['ISBN']
         ## ean = details["CdBarras"]
         translator = details['Tradutor']
-        if translator
-          authors << translator
-        end
+        authors << translator if translator
         binding = details['Acabamento']
         publisher = search_result[:publisher]
         # publish year
@@ -253,9 +249,7 @@ module Alexandria
         arr.each do |str|
           key, val = str.split(':')
           # a real hack for not handling encoding properly :^)
-          if val
-            map[key.gsub(/[^a-zA-Z]/, '')] = val.strip
-          end
+          map[key.gsub(/[^a-zA-Z]/, '')] = val.strip if val
         end
         map
       end

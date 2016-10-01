@@ -336,9 +336,7 @@ module Alexandria
           matches_regex = regex.match(@date_loaned_since.text)
           break if matches_regex
         end
-        unless matches_regex
-          return
-        end
+        return unless matches_regex
         t = parse_date(@date_loaned_since.text)
         if t.nil?
           @label_loaning_duration.label = ''

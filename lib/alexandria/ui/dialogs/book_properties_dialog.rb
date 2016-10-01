@@ -175,9 +175,7 @@ module Alexandria
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split(',') # tags are comma separated
 
-        if @delete_cover_file
-          FileUtils.rm_f(@cover_file)
-        end
+        FileUtils.rm_f(@cover_file) if @delete_cover_file
 
         if @original_cover_file
           FileUtils.rm_f(@original_cover_file)

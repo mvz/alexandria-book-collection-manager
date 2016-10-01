@@ -556,13 +556,9 @@ module Alexandria
         select_this_book = proc do |bk, view|
           @filtered_model.refilter
           iter = iter_from_book bk
-          unless iter
-            next
-          end
+          next unless iter
           path = iter.path
-          unless view.model
-            next
-          end
+          next unless view.model
           path = view_path_to_model_path(view, path)
           log.debug { "Path for #{bk.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
@@ -606,9 +602,7 @@ module Alexandria
             append_book(book)
           when Library::BOOK_UPDATED
             iter = iter_from_ident(book.saved_ident)
-            if iter
-              fill_iter_with_book(iter, book)
-            end
+            fill_iter_with_book(iter, book) if iter
           when Library::BOOK_REMOVED
             @model.remove(iter_from_book(book))
           end
@@ -933,9 +927,7 @@ module Alexandria
         iter = @model.iter_first
         ok = true
         while ok
-          if iter[Columns::IDENT] == ident
-            return iter
-          end
+          return iter if iter[Columns::IDENT] == ident
           ok = iter.next!
         end
         nil
@@ -983,9 +975,7 @@ module Alexandria
         # Disable the selected library in the move libraries actions.
         @libraries.all_regular_libraries.each do |i_library|
           action = @actiongroup[i_library.action_name]
-          if action
-            action.sensitive = i_library != library
-          end
+          action.sensitive = i_library != library if action
         end
         sensitize_library library
       end

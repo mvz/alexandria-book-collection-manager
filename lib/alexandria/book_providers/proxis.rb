@@ -129,9 +129,7 @@ module Alexandria
       def data_for_header(th)
         tr = th.parent
         td = tr.at('td')
-        if td
-          text_of(td)
-        end
+        text_of(td) if td
       end
 
       def parse_result_data(html)
@@ -186,9 +184,7 @@ module Alexandria
                       else
                         "#{SITE}/#{cover_img['src']}" # TODO: use html <base>
                       end
-          if image_url =~ /ProductNoCover/
-            image_url = nil
-          end
+          image_url = nil if image_url =~ /ProductNoCover/
         end
 
         book = Book.new(book_data[:title], book_data[:authors],

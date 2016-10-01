@@ -187,9 +187,7 @@ module Alexandria
 
           isbn_tds.each do |isbn_td|
             isbn = isbn_td.inner_text
-            unless isbn =~ /[0-9x]{10,13}/i
-              next
-            end
+            next unless isbn =~ /[0-9x]{10,13}/i
             isbn.gsub(/(\n|\r)/, ' ')
             if isbn =~ /:[\s]*([0-9x]+)/i
               isbn = Regexp.last_match[1]
@@ -197,9 +195,7 @@ module Alexandria
             isbns << isbn
           end
           isbn = isbns.first
-          if isbn
-            isbn = Library.canonicalise_isbn(isbn)
-          end
+          isbn = Library.canonicalise_isbn(isbn) if isbn
 
           # cover
           image_url = nil

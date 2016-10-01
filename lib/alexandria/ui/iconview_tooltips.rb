@@ -57,16 +57,12 @@ class IconViewTooltips
     html = ''
     unless title.empty?
       html += "<b>#{CGI.escapeHTML(title)}</b>"
-      unless authors.empty?
-        html += "\n"
-      end
+      html += "\n" unless authors.empty?
     end
     unless authors.empty?
       html += "<i>#{CGI.escapeHTML(authors)}</i>"
     end
-    if !title.empty? || !authors.empty?
-      html += "\n"
-    end
+    html += "\n" if !title.empty? || !authors.empty?
 
     html += '<small>'
     if publisher && !publisher.empty?
@@ -74,9 +70,7 @@ class IconViewTooltips
     end
 
     if year && !year.empty?
-      if publisher && !publisher.empty?
-        html += ' '
-      end
+      html += ' ' if publisher && !publisher.empty?
       html += "(#{year})"
     end
 

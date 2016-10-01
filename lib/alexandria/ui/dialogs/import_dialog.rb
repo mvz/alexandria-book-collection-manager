@@ -189,9 +189,7 @@ module Alexandria
             self.sensitive = true
           end
         end
-        unless @destroyed
-          destroy
-        end
+        destroy unless @destroyed
       end
     end
   end

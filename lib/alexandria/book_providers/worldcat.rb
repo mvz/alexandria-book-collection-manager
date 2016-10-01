@@ -107,9 +107,7 @@ module Alexandria
             name_div = td % 'div.name'
             title = name_div.inner_text
             anchor = name_div % :a
-            if anchor
-              url = anchor['href']
-            end
+            url = anchor['href'] if anchor
             lookup_url = "#{SITE}#{url}"
             result = {}
             result[:title] = title

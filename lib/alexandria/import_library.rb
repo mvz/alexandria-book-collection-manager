@@ -118,9 +118,7 @@ module Alexandria
                                [[]]
                              end
             book_elements += keys.map { |key|
-              if elements[key]
-                neaten(elements[key].text)
-              end
+              neaten(elements[key].text) if elements[key]
             }
             # isbn
             if book_elements[2].nil? || book_elements[2].strip.empty?

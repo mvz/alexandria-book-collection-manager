@@ -52,9 +52,7 @@ module Alexandria
         # We only decode MARC at the moment.
         # SUTRS needs to be decoded separately, because each Z39.50 server has a
         # different one.
-        unless marc?
-          raise NoResultsError
-        end
+        raise NoResultsError unless marc?
 
         isbn = type == SEARCH_BY_ISBN ? criterion : nil
         criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN

@@ -38,9 +38,7 @@ module Alexandria
   end
 
   def self.set_log_level
-    if $DEBUG
-      Alexandria.log.level = Logger::DEBUG
-    end
+    Alexandria.log.level = Logger::DEBUG if $DEBUG
     Alexandria.log.debug { 'Initializing Alexandria...' }
   end
 

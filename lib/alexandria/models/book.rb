@@ -43,9 +43,7 @@ module Alexandria
     end
 
     def ident
-      if (!@isbn.nil?) && @isbn.empty?
-        @isbn = nil
-      end
+      @isbn = nil if (!@isbn.nil?) && @isbn.empty?
       @isbn || @title.hash.to_s
     end
 

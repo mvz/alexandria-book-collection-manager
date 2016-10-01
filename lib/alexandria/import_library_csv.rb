@@ -32,9 +32,7 @@ module Alexandria
 
     def index_of(header_name)
       @header.each_with_index do |h, i|
-        if h == header_name
-          return i
-        end
+        return i if h == header_name
       end
       -1
     end
@@ -73,9 +71,7 @@ module Alexandria
         authors << normalize(add)
       end
       isbn = row[@isbn] # TODO: canonicalize_ean...
-      if isbn
-        isbn = Library.canonicalise_ean(isbn)
-      end
+      isbn = Library.canonicalise_ean(isbn) if isbn
       publisher = normalize(row[@publisher])
       year = row[@publishing_year].to_i
       edition = normalize(row[@edition])
@@ -85,17 +81,11 @@ module Alexandria
                                   publisher,
                                   year,
                                   edition)
-      if row[@notes]
-        book.notes = normalize(row[@notes])
-      end
-      if row[@rating]
-        book.rating = row[@rating].to_i
-      end
+      book.notes = normalize(row[@notes]) if row[@notes]
+      book.rating = row[@rating].to_i if row[@rating]
       if row[@read_count]
         count = row[@read_count].to_i
-        if count > 0
-          book.redd = true
-        end
+        book.redd = true if count > 0
       end
       if row[@date_read]
         begin
@@ -121,9 +111,7 @@ module Alexandria
         shelves = normalize(row[@bookshelves]).split
         shelves.each do |shelf|
           tag = shelf.tr('-', ' ')
-          unless book.tags.include? tag
-            book.tags << tag
-          end
+          book.tags << tag unless book.tags.include? tag
         end
       end
       puts "Goodreads loading #{book.title}" if $DEBUG
@@ -179,19 +167,13 @@ module Alexandria
                                   publisher,
                                   year,
                                   edition)
-      if row[@notes]
-        book.notes = normalize(row[@notes])
-      end
+      book.notes = normalize(row[@notes]) if row[@notes]
 
-      if row[@rating]
-        book.rating = row[@rating].to_i
-      end
+      book.rating = row[@rating].to_i if row[@rating]
       if row[@tags]
         tags = normalize(row[@tags]).split(',')
         tags.each do |tag|
-          unless book.tags.include? tag
-            book.tags << tag
-          end
+          book.tags << tag unless book.tags.include? tag
         end
       end
 

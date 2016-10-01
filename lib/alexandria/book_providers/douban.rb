@@ -51,9 +51,7 @@ module Alexandria
         search_response = transport.get_response(URI.parse(request_url))
 
         results = parse_search_result(search_response.body)
-        if results.empty?
-          raise NoResultsError
-        end
+        raise NoResultsError if results.empty?
 
         if type == SEARCH_BY_ISBN
           return results.first
@@ -97,9 +95,7 @@ module Alexandria
               pubdate = nil
               binding = nil
               for av in item['db:attribute']
-                if av['@name'] == 'isbn13'
-                  isbn = av['$t']
-                end
+                isbn = av['$t'] if av['@name'] == 'isbn13'
                 if av['@name'] == 'publisher'
                   publisher = av['$t']
                 end

@@ -48,15 +48,11 @@ module Alexandria
             part_data = Regexp.last_match[1]
             part_data = part_data.strip
           end
-          if field != ''
-            field += ': '
-          end
+          field += ': ' if field != ''
           field += part_data
         end
       end
-      if field == ''
-        field = nil
-      end
+      field = nil if field == ''
       field
     end
 
@@ -67,9 +63,7 @@ module Alexandria
         title_data = details[m[:title][0]]
         if title_data
           title_data_all = get_fields(title_data, :title, /(.*)[\/:]$/, m)
-          if title_data_all
-            title = title_data_all
-          end
+          title = title_data_all if title_data_all
         end
 
         authors = []
@@ -123,9 +117,7 @@ module Alexandria
         if notes_data
           notes_data.each do |note|
             txt = note[m[:notes][1]]
-            if txt
-              notes += txt
-            end
+            notes += txt if txt
           end
         end
 
@@ -171,9 +163,7 @@ module Alexandria
           end
 
           unless this_line_data.empty?
-            unless details.key?(code)
-              details[code] = []
-            end
+            details[code] = [] unless details.key?(code)
             details[code] << this_line_data
           end
 
