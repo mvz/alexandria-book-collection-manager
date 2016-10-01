@@ -291,18 +291,6 @@ Style/MultilineArrayBraceLayout:
     - 'lib/alexandria/ui/ui_manager.rb'
     - 'spec/alexandria/scanners/cuecat_spec.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'lib/alexandria/ui/dialogs/import_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/new_smart_library_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb'
-    - 'lib/alexandria/ui/init.rb'
-
 # Offense count: 1
 Style/MultilineTernaryOperator:
   Exclude:

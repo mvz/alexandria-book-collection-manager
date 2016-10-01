@@ -183,7 +183,8 @@ module Alexandria
         ErrorDialog.new(
           @parent,
           _('A problem occurred while downloading images'),
-          error)
+          error
+        )
       end
 
       def get_images_async

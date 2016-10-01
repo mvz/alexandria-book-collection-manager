@@ -88,7 +88,8 @@ module Alexandria
           _('This smart library contains one or more conditions ' \
             'which are empty or conflict with each other. This is ' \
             'likely to result in never matching a book. Are you ' \
-            'sure you want to save this library?'))
+            'sure you want to save this library?')
+        )
         dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
         confirmed = dialog.run == :yes

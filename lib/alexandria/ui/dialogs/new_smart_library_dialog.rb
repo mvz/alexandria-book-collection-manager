@@ -46,7 +46,8 @@ module Alexandria
               basename = smart_library_base_name(rules) || _('Smart Library')
               name = Library.generate_new_name(
                 Libraries.instance.all_libraries,
-                basename)
+                basename
+              )
               library = SmartLibrary.new(name,
                                          rules,
                                          predicate_operator_rule)

@@ -25,7 +25,8 @@ class CellRendererToggle < Gtk::CellRendererToggle
     'text',
     'Some damn value',
     '',
-    GLib::Param::READABLE | GLib::Param::WRITABLE))
+    GLib::Param::READABLE | GLib::Param::WRITABLE
+  ))
 end
 
 class Gtk::ActionGroup

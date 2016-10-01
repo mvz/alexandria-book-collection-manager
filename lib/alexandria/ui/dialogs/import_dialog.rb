@@ -134,7 +134,8 @@ module Alexandria
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             Libraries.instance.all_libraries,
-            base)
+            base
+          )
 
           filter = filters[self.filter]
           puts "Going forward with filter: #{filter.name}" if $DEBUG
