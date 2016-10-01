@@ -66,12 +66,12 @@ module Alexandria
         }[search_type] or ''
         search_type_code = CGI.escape(search_type_code)
         search_term_encoded = search_term
-        if search_type == SEARCH_BY_ISBN
-          # search_term_encoded = search_term.as_isbn_13
-          search_term_encoded = Library.canonicalise_isbn(search_term) # check this!
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                # search_term_encoded = search_term.as_isbn_13
+                                Library.canonicalise_isbn(search_term) # check this!
+                              else
+                                CGI.escape(search_term)
+                              end
         BASE_SEARCH_URL % [search_type_code, search_term_encoded]
       end
 

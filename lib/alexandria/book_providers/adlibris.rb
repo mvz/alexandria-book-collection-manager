@@ -204,11 +204,11 @@ module Alexandria
           # cover
           image_url = nil
           if (cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first)
-            if cover_img['src'] =~ /^http\:\/\//
-              image_url = cover_img['src']
-            else
-              image_url = "#{SITE}/#{cover_img['src']}" # HACK use html base
-            end
+            image_url = if cover_img['src'] =~ /^http\:\/\//
+                          cover_img['src']
+                        else
+                          "#{SITE}/#{cover_img['src']}" # HACK use html base
+                        end
             if image_url =~ /noimage.gif$/
               # no point downloading a "no image" graphic
               # Alexandria has its own generic book icon...

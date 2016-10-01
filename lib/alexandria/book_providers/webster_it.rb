@@ -109,11 +109,9 @@ module Alexandria
         md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
         publisher = CGI.unescape(md[1].strip) or md
 
-        if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
-          edition = CGI.unescape(md[1].strip) + ' p.'
-        else
-          edition = nil
-        end
+        edition = if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
+                    CGI.unescape(md[1].strip) + ' p.'
+                  end
 
         publish_year = nil
         if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))

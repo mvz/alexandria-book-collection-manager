@@ -260,11 +260,11 @@ module Alexandria
       end
 
       def own_toggled
-        if @checkbutton_own.active?
-          @checkbutton_want.inconsistent = true
-        else
-          @checkbutton_want.inconsistent = false
-        end
+        @checkbutton_want.inconsistent = if @checkbutton_own.active?
+                                           true
+                                         else
+                                           false
+                                         end
       end
 
       def want_toggled

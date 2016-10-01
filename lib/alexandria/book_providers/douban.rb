@@ -110,11 +110,11 @@ module Alexandria
                   binding = av['$t']
                 end
               end
-              if item['author']
-                authors = item['author'].map { |a| a['name']['$t'] }
-              else
-                authors = []
-              end
+              authors = if item['author']
+                          item['author'].map { |a| a['name']['$t'] }
+                        else
+                          []
+                        end
               image_url = nil
               for av in item['link']
                 if av['@rel'] == 'image'

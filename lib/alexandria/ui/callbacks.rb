@@ -222,11 +222,11 @@ module Alexandria
       def on_delete(*)
         library = selected_library
 
-        if selected_books.empty?
-          books = nil
-        else
-          books = selected_books
-        end
+        books = if selected_books.empty?
+                  nil
+                else
+                  selected_books
+                end
         # books = @library_listview.focus? ? nil : selected_books
         is_smart = library.is_a?(SmartLibrary)
         last_library = (@libraries.all_regular_libraries.length == 1)

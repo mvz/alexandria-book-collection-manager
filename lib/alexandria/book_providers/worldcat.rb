@@ -83,11 +83,11 @@ module Alexandria
         }[search_type] or ''
         search_type_code = CGI.escape(search_type_code)
         search_term_encoded = search_term # TODO, remove attack stuff
-        if search_type == SEARCH_BY_ISBN
-          search_term_encoded = Library.canonicalise_ean(search_term) # isbn-13
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                Library.canonicalise_ean(search_term) # isbn-13
+                              else
+                                CGI.escape(search_term)
+                              end
         BASE_SEARCH_URL % [search_type_code, search_term_encoded]
       end
 
@@ -205,13 +205,13 @@ module Alexandria
           if publisher_row
             publication_info = (publisher_row / 'td').last.inner_text
 
-            if publication_info.index(';')
-              publication_info =~ /;[\s]*([^\d]+)[\s]*[\d]*/
-            elsif publication_info.index(':')
-              publication_info =~ /:[\s]*([^;:,]+)/
-            else
-              publication_info =~ /([^;,]+)/
-            end
+            publication_info =~ if publication_info.index(';')
+                                  /;[\s]*([^\d]+)[\s]*[\d]*/
+                                elsif publication_info.index(':')
+                                  /:[\s]*([^;:,]+)/
+                                else
+                                  /([^;,]+)/
+                                end
 
             publisher = Regexp.last_match[1]
             publication_info =~ /([12][0-9]{3})/

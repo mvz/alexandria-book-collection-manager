@@ -181,11 +181,11 @@ module Alexandria
 
         image_url = nil
         if (cover_img = doc.at("img[@id$='imgProduct']"))
-          if cover_img['src'] =~ /^http/
-            image_url = cover_img['src']
-          else
-            image_url = "#{SITE}/#{cover_img['src']}" # TODO use html <base>
-          end
+          image_url = if cover_img['src'] =~ /^http/
+                        cover_img['src']
+                      else
+                        "#{SITE}/#{cover_img['src']}" # TODO use html <base>
+                      end
           if image_url =~ /ProductNoCover/
             image_url = nil
           end

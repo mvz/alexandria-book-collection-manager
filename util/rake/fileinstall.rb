@@ -181,11 +181,11 @@ class FileInstallTask < Rake::TaskLib
   def calculate_ruby_dir
     ruby_prefix = RbConfig::CONFIG['prefix']
 
-    if @install_to_rubylibdir
-      ruby_libdir = RbConfig::CONFIG['rubylibdir']
-    else
-      ruby_libdir = RbConfig::CONFIG['sitelibdir']
-    end
+    ruby_libdir = if @install_to_rubylibdir
+                    RbConfig::CONFIG['rubylibdir']
+                  else
+                    RbConfig::CONFIG['sitelibdir']
+                  end
     if ENV.key?('RUBYLIBDIR')
       ruby_libdir = ENV['RUBYLIBDIR']
     end

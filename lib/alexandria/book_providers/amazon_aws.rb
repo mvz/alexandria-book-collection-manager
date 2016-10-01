@@ -186,11 +186,9 @@ module Alexandria
           media = nil if media == 'Unknown Binding'
 
           isbn = normalize(atts.get('isbn'))
-          if isbn and Library.valid_isbn?(isbn)
-            isbn = Library.canonicalise_ean(isbn)
-          else
-            isbn = nil # it may be an ASIN which is not an ISBN
-          end
+          isbn = if isbn and Library.valid_isbn?(isbn)
+                   Library.canonicalise_ean(isbn)
+                 end
           # hack, extract year by regexp (not Y10K compatible :-)
           /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
           publishing_year = Regexp.last_match[1] ? Regexp.last_match[1].to_i : nil

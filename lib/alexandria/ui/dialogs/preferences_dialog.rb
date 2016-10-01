@@ -518,11 +518,11 @@ module Alexandria
         model.clear
         BookProviders.each_with_index do |x, index|
           iter = model.append
-          if x.enabled
-            iter[0] = x.fullname
-          else
-            iter[0] = "<i>#{x.fullname}</i>"
-          end
+          iter[0] = if x.enabled
+                      x.fullname
+                    else
+                      "<i>#{x.fullname}</i>"
+                    end
           iter[1] = x.name
           iter[2] = x.enabled
           iter[3] = index
@@ -538,11 +538,11 @@ module Alexandria
 
       def adjust_selected_provider(prov)
         iter = @treeview_providers.selection.selected
-        if prov.enabled
-          iter[0] = prov.fullname
-        else
-          iter[0] = "<i>#{prov.fullname}</i>"
-        end
+        iter[0] = if prov.enabled
+                    prov.fullname
+                  else
+                    "<i>#{prov.fullname}</i>"
+                  end
         iter[2] = prov.enabled
       end
 

@@ -772,11 +772,11 @@ module Alexandria
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
         iter[Columns::WANT] = book.want?
-        if book.tags
-          iter[Columns::TAGS] = book.tags.join(',')
-        else
-          iter[Columns::TAGS] = ''
-        end
+        iter[Columns::TAGS] = if book.tags
+                                book.tags.join(',')
+                              else
+                                ''
+                              end
 
         icon = Icons.cover(selected_library, book)
         log.debug { "Setting icon #{icon} for book #{book.title}" }

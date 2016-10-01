@@ -111,12 +111,12 @@ module Alexandria
             keys = ['isbn', 'publisher', 'pub_year', 'binding']
 
             book_elements = [neaten(elements['title'].text)]
-            if !elements['authors'].nil?
-              book_elements += [elements['authors'].elements.to_a.map \
-                                { |x| neaten(x.text) }]
-            else
-              book_elements += [[]]
-            end
+            book_elements += if !elements['authors'].nil?
+                               [elements['authors'].elements.to_a.map \
+                                                 { |x| neaten(x.text) }]
+                             else
+                               [[]]
+                             end
             book_elements += keys.map {|key|
               if elements[key]
                 neaten(elements[key].text)
@@ -138,11 +138,9 @@ module Alexandria
             end
             book_elements[4] = book_elements[4].to_i unless book_elements[4].nil? # publishing_year
             puts book_elements.inspect
-            if elements['cover']
-              cover = neaten(elements['cover'].text)
-            else
-              cover = nil
-            end
+            cover = if elements['cover']
+                      neaten(elements['cover'].text)
+                    end
             puts cover
             book = Book.new(*book_elements)
             if elements['rating'] and (0..UI::MainApp::MAX_RATING_STARS).map.member? elements['rating'].text.to_i

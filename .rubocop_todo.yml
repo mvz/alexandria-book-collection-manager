@@ -179,22 +179,6 @@ Style/ClassVars:
 Style/CommentAnnotation:
   Enabled: false
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, SingleLineConditionsOnly.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_aws.rb'
-    - 'lib/alexandria/book_providers/douban.rb'
-    - 'lib/alexandria/book_providers/worldcat.rb'
-    - 'lib/alexandria/import_library.rb'
-    - 'lib/alexandria/ui/callbacks.rb'
-    - 'lib/alexandria/ui/dialogs/export_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/preferences_dialog.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-    - 'util/rake/fileinstall.rb'
-
 # Offense count: 126
 Style/Documentation:
   Enabled: false

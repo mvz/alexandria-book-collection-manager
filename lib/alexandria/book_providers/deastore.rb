@@ -94,11 +94,11 @@ module Alexandria
         }[search_type] or 'keywords'
 
         search_term_encoded = search_term
-        if search_type == SEARCH_BY_ISBN
-          search_term_encoded = Library.canonicalise_isbn(search_term) # isbn-10
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                Library.canonicalise_isbn(search_term) # isbn-10
+                              else
+                                CGI.escape(search_term)
+                              end
 
         uri = BASE_SEARCH_URL % [search_type_code, search_term_encoded]
         log.debug { uri }
@@ -245,17 +245,17 @@ module Alexandria
         # cover
         image_url = nil
         if cover_link
-          if cover_link =~ /^http/
-            # e.g. http://images.btol.com/ContentCafe/Jacket.aspx?\
-            # Return=1&amp;Type=M&amp;Value=9788873641803&amp;password=\
-            # CC70580&amp;userID=DEA40305
-            # seems not to work, or to be blank anyway, so set to nil
-            image_url = nil
-          elsif cover_link[0..0] != '/'
-            image_url = "#{SITE}/#{cover_link}"
-          else
-            image_url = "#{SITE}#{cover_link}"
-          end
+          image_url = if cover_link =~ /^http/
+                        # e.g. http://images.btol.com/ContentCafe/Jacket.aspx?\
+                        # Return=1&amp;Type=M&amp;Value=9788873641803&amp;password=\
+                        # CC70580&amp;userID=DEA40305
+                        # seems not to work, or to be blank anyway, so set to nil
+                        nil
+                      elsif cover_link[0..0] != '/'
+                        "#{SITE}/#{cover_link}"
+                      else
+                        "#{SITE}#{cover_link}"
+                      end
           log.debug { "Cover Image URL:: #{image_url}" }
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)

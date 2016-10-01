@@ -84,11 +84,11 @@ module Alexandria
         types_combo.valign = :center
         FORMATS.each do |format|
           text = format.name + ' ('
-          if format.ext
-            text += '*.' + format.ext
-          else
-            text += _('directory')
-          end
+          text += if format.ext
+                    '*.' + format.ext
+                  else
+                    _('directory')
+                  end
           text += ')'
           types_combo.append_text(text)
         end

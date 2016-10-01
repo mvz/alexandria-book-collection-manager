@@ -100,17 +100,17 @@ module Alexandria
                              SEARCH_BY_KEYWORD => 'X'
         }[search_type] or 'X'
         search_term_encoded = search_term
-        if search_type == SEARCH_BY_ISBN
-          if trying_again
-            # on second attempt, try ISBN-10...
-            search_term_encoded = Library.canonicalise_isbn(search_term) # isbn-10
-          else
-            # search by ISBN-13 first
-            search_term_encoded = Library.canonicalise_ean(search_term) # isbn-13
-          end
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                if trying_again
+                                  # on second attempt, try ISBN-10...
+                                  Library.canonicalise_isbn(search_term) # isbn-10
+                                else
+                                  # search by ISBN-13 first
+                                  Library.canonicalise_ean(search_term) # isbn-13
+                                                      end
+                              else
+                                CGI.escape(search_term)
+                              end
 
         BASE_SEARCH_URL % [search_term_encoded, search_type_code]
       end
