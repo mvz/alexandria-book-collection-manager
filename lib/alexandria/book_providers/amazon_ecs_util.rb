@@ -45,7 +45,7 @@ module Amazon
                      ca: 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
                      de: 'http://webservices.amazon.de/onca/xml?Service=AWSECommerceService',
                      jp: 'http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService',
-                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService' }
+                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService' }.freeze
 
     @@options = {}
     @@debug = false
@@ -201,7 +201,7 @@ module Amazon
 
     def self.prepare_url(opts)
       country = opts.delete(:country)
-      country = (country.nil?) ? 'us' : country
+      country = country.nil? ? 'us' : country
       request_url = SERVICE_URLS[country.to_sym]
       raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
 

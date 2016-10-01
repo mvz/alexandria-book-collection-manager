@@ -35,12 +35,12 @@ module Alexandria
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.barnesandnoble.com'
+      SITE = 'http://www.barnesandnoble.com'.freeze
 
-      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'
+      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'.freeze
 
       BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
-        '/results.asp?%s=%s' # type, term
+        '/results.asp?%s=%s'.freeze # type, term
 
       def initialize
         super('BarnesAndNoble', 'BarnesAndNoble')
@@ -54,7 +54,7 @@ module Alexandria
       end
 
       def fetch_redirectly(uri_str, limit = 5)
-        raise NoResultsError, 'HTTP redirect too deep' if limit == 0
+        raise NoResultsError, 'HTTP redirect too deep' if limit.zero?
         if limit < 10
           sleep 0.1
           log.debug { "Redirectly :: #{uri_str}" }

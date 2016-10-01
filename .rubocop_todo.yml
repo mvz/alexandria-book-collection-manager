@@ -180,52 +180,16 @@ Style/MethodName:
   Exclude:
     - 'lib/alexandria/book_providers/mcu.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: symmetrical, new_line, same_line
-Style/MultilineArrayBraceLayout:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/alexandria/ui/ui_manager.rb'
-    - 'spec/alexandria/scanners/cuecat_spec.rb'
-
 # Offense count: 1
 Style/MultilineTernaryOperator:
   Exclude:
     - 'lib/alexandria/ui/listview.rb'
-
-# Offense count: 73
-# Cop supports --auto-correct.
-Style/MutableConstant:
-  Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/NegatedIf:
-  Exclude:
-    - 'lib/alexandria/ui/callbacks.rb'
 
 # Offense count: 2
 Style/NestedTernaryOperator:
   Exclude:
     - 'lib/alexandria/ui/completion_models.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedOctalStyle, SupportedOctalStyles.
-# SupportedOctalStyles: zero_with_o, zero_only
-Style/NumericLiteralPrefix:
-  Exclude:
-    - 'util/rake/fileinstall.rb'
-
-# Offense count: 26
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Enabled: false
 
 # Offense count: 8
 Style/OpMethod:
@@ -236,26 +200,6 @@ Style/OpMethod:
     - 'lib/alexandria/models/library.rb'
     - 'lib/alexandria/smart_library.rb'
     - 'lib/alexandria/ui/multi_drag_treeview.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/ParallelAssignment:
-  Exclude:
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/ui/dialogs/book_properties_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/book_properties_dialog_base.rb'
-    - 'lib/alexandria/ui/dialogs/export_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog_manual.rb'
-    - 'lib/alexandria/ui/dialogs/preferences_dialog.rb'
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: AllowSafeAssignment.
-Style/ParenthesesAroundCondition:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_aws.rb'
-    - 'lib/alexandria/ui/dialogs/acquire_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/preferences_dialog.rb'
 
 # Offense count: 4
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist.
@@ -269,34 +213,6 @@ Style/PredicateName:
     - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb'
     - 'lib/alexandria/web_themes.rb'
 
-# Offense count: 11
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_aws.rb'
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog_manual.rb'
-
-# Offense count: 6
-# Cop supports --auto-correct.
-Style/RedundantParentheses:
-  Exclude:
-    - 'lib/alexandria/book_providers.rb'
-    - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/book_providers/proxis.rb'
-    - 'lib/alexandria/models/book.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog_manual.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
-# Offense count: 9
-# Cop supports --auto-correct.
-Style/RedundantSelf:
-  Exclude:
-    - 'lib/alexandria/book_providers.rb'
-    - 'lib/alexandria/models/library.rb'
-
 # Offense count: 41
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
@@ -304,48 +220,8 @@ Style/RedundantSelf:
 Style/RegexpLiteral:
   Enabled: false
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/RescueEnsureAlignment:
-  Exclude:
-    - 'lib/alexandria/book_providers/z3950.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/RescueModifier:
-  Exclude:
-    - 'lib/alexandria/execution_queue.rb'
-
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'lib/alexandria/book_providers/z3950.rb'
-    - 'lib/alexandria/export_library.rb'
-    - 'lib/alexandria/preferences.rb'
-    - 'lib/alexandria/ui/dndable.rb'
-    - 'spec/alexandria/library_spec.rb'
-
 # Offense count: 3
 Style/StructInheritance:
   Exclude:
     - 'lib/alexandria/smart_library.rb'
     - 'lib/alexandria/ui/multi_drag_treeview.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowSafeAssignment.
-# SupportedStyles: require_parentheses, require_no_parentheses
-Style/TernaryParentheses:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Style/UnneededInterpolation:
-  Exclude:
-    - 'lib/alexandria/ui/iconview_tooltips.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'

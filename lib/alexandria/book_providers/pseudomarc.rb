@@ -27,7 +27,7 @@ module Alexandria
       year: ['210', 'd'],
       binding: ['225', 'a'],
       notes: ['520', 'a']
-    }
+    }.freeze
 
     USMARC_MAPPINGS = {
       title: ['245', 'a', 'b'],
@@ -37,7 +37,7 @@ module Alexandria
       year: ['260', 'c'],
       binding: ['020', 'a'], # listed with isbn here
       notes: ['520', 'a']
-    }
+    }.freeze
 
     def self.get_fields(data, type, stripping, m = USMARC_MAPPINGS)
       field = ''

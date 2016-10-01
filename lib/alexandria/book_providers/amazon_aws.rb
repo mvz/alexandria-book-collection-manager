@@ -31,7 +31,7 @@ module Alexandria
 
       # CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 
-      LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us']
+      LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us'].freeze
 
       def initialize
         super('Amazon', 'Amazon')
@@ -46,7 +46,7 @@ module Alexandria
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
 
         if token
-          if (token.value != token.value.strip)
+          if token.value != token.value.strip
             token.new_value = token.value.strip
           end
         end
@@ -56,7 +56,7 @@ module Alexandria
 
         secret = prefs.variable_named('secret_key')
         if secret
-          if (secret.value != secret.value.strip)
+          if secret.value != secret.value.strip
             secret.new_value = secret.value.strip
           end
         end
@@ -66,7 +66,7 @@ module Alexandria
           if associate.value.strip.empty?
             associate.new_value = 'rubyalexa-20'
           end
-          if (associate.value != associate.value.strip)
+          if associate.value != associate.value.strip
             associate.new_value = associate.value.strip
           end
         end
@@ -76,7 +76,7 @@ module Alexandria
         prefs.read
 
         if prefs['secret_key'].empty?
-          raise Amazon::RequestError.new('Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account')
+          raise Amazon::RequestError, 'Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account'
         end
 
         if (config = Alexandria::Preferences.instance.http_proxy_config)

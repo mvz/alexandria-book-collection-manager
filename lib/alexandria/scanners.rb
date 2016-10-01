@@ -22,7 +22,7 @@
 
 module Alexandria
   module Scanners
-    REGISTRY = []
+    REGISTRY = [].freeze
 
     def self.register(scanner)
       REGISTRY.push(scanner)

@@ -32,10 +32,10 @@ module Alexandria
 
       LANGUAGES = {
         'es' => '1'
-      }
+      }.freeze
 
       #        BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
-      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'
+      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'.freeze
       def initialize
         super('MCU', _('Spanish Culture Ministry'))
         # No preferences

@@ -78,10 +78,10 @@ module Alexandria
           log.error { ex.backtrace.join("> \n") }
           begin
             marc = MARC::Record.new(marc_txt)
-            rescue => ex2
-              log.error { ex2.message }
-              log.error { ex2.backtrace.join("> \n") }
-              raise ex2
+          rescue => ex2
+            log.error { ex2.message }
+            log.error { ex2.backtrace.join("> \n") }
+            raise ex2
           end
         end
 
@@ -173,7 +173,7 @@ module Alexandria
                end
         pqf = ''
         attr.each { |att| pqf += "@attr 1=#{att} " }
-        pqf += "\"" + criterion.upcase + "\""
+        pqf += '"' + criterion.upcase + '"'
         log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
 
         begin

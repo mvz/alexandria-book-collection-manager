@@ -33,12 +33,12 @@ module Alexandria
     class AdLibrisProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.adlibris.com/se/'
+      SITE = 'http://www.adlibris.com/se/'.freeze
 
       BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" \
-        '&fromproduct=False' # type/term
+        '&fromproduct=False'.freeze # type/term
 
-      PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
+      PRODUCT_URL = "#{SITE}product.aspx?isbn=%s".freeze
 
       def initialize
         super('AdLibris', 'AdLibris (Sweden)')

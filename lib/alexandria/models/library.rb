@@ -38,7 +38,7 @@ module Alexandria
     attr_reader :name
     attr_accessor :ruined_books, :updating, :deleted_books
     DIR = File.join(ENV['HOME'], '.alexandria')
-    EXT = { book: '.yaml', cover: '.cover' }
+    EXT = { book: '.yaml', cover: '.cover' }.freeze
 
     include GetText
     extend GetText
@@ -78,7 +78,7 @@ module Alexandria
       FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
         Dir['*' + EXT[:book]].each do |filename|
-          test[1] = filename if test[0] == 0
+          test[1] = filename if (test[0]).zero?
 
           unless File.size? test[1]
             log.warn { "Book file #{test[1]} was empty" }
@@ -284,10 +284,10 @@ module Alexandria
     end
 
     def self.extract_numbers(isbn)
-      raise NoISBNError.new('Nil ISBN') if isbn.nil? || isbn.empty?
+      raise NoISBNError, 'Nil ISBN' if isbn.nil? || isbn.empty?
 
       isbn.delete('- ').upcase.split('').map do |x|
-        raise InvalidISBNError.new(isbn) unless x =~ /[\dX]/
+        raise InvalidISBNError, isbn unless x =~ /[\dX]/
         x == 'X' ? 10 : x.to_i
       end
     end
@@ -302,7 +302,7 @@ module Alexandria
 
     def self.valid_isbn?(isbn)
       numbers = extract_numbers(isbn)
-      (numbers.length == 10) && (isbn_checksum(numbers) == 0)
+      (numbers.length == 10) && isbn_checksum(numbers).zero?
     rescue InvalidISBNError
       false
     end
@@ -348,7 +348,7 @@ module Alexandria
       '072742' => '0441', '076714' => '0671', '076783' => '0553',
       '076814' => '0449', '078021' => '0872', '079808' => '0394',
       '090129' => '0679', '099455' => '0061', '099769' => '0451'
-    }
+    }.freeze
 
     def self.upc_convert(upc)
       test_upc = upc.map(&:to_s).join
@@ -357,41 +357,41 @@ module Alexandria
 
     def self.canonicalise_ean(code)
       code = code.to_s.delete('- ')
-      if self.valid_ean?(code)
+      if valid_ean?(code)
         return code
-      elsif self.valid_isbn?(code)
+      elsif valid_isbn?(code)
         code = '978' + code[0..8]
         return code + String(ean_checksum(extract_numbers(code)))
-      elsif self.valid_upc?(code)
+      elsif valid_upc?(code)
         isbn10 = canonicalise_isbn
         code = '978' + isbn10[0..8]
         return code + String(ean_checksum(extract_numbers(code)))
         ## raise "fix function Alexandria::Library.canonicalise_ean"
       else
-        raise InvalidISBNError.new(code)
+        raise InvalidISBNError, code
       end
     end
 
     def self.canonicalise_isbn(isbn)
       numbers = extract_numbers(isbn)
-      if self.valid_ean?(isbn) && (numbers[0..2] != [9, 7, 8])
+      if valid_ean?(isbn) && (numbers[0..2] != [9, 7, 8])
         return isbn
       end
-      canonical = if self.valid_ean?(isbn)
+      canonical = if valid_ean?(isbn)
                     # Looks like an EAN number -- extract the intersting part and
                     # calculate a checksum. It would be nice if we could validate
                     # the EAN number somehow.
                     numbers[3..11] + [isbn_checksum(numbers[3..11])]
-                  elsif self.valid_upc?(isbn)
+                  elsif valid_upc?(isbn)
                     # Seems to be a valid UPC number.
                     prefix = upc_convert(numbers[0..5])
                     isbn_sans_chcksm = prefix + numbers[(8 + prefix.length)..17]
                     isbn_sans_chcksm + [isbn_checksum(isbn_sans_chcksm)]
-                  elsif self.valid_isbn?(isbn)
+                  elsif valid_isbn?(isbn)
                     # Seems to be a valid ISBN number.
                     numbers[0..-2] + [isbn_checksum(numbers[0..-2])]
                   else
-                    raise InvalidISBNError.new(isbn)
+                    raise InvalidISBNError, isbn
                   end
 
       canonical.map(&:to_s).join
@@ -538,7 +538,7 @@ module Alexandria
       else
         raise unless @deleted_books.include?(book)
         @deleted_books.delete(book)
-        unless self.include?(book)
+        unless include?(book)
           changed
           self << book
           notify_observers(self, BOOK_ADDED, book)
@@ -673,7 +673,8 @@ module Alexandria
     #      @all_libraries.select { |x| x.is_a?(SmartLibrary) }
     # end
 
-    LIBRARY_ADDED, LIBRARY_REMOVED = 1, 2
+    LIBRARY_ADDED = 1
+    LIBRARY_REMOVED = 2
 
     def add_library(library)
       @all_libraries << library

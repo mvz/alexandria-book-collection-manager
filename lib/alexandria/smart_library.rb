@@ -32,7 +32,7 @@ module Alexandria
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
     DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
-    EXT = '.yaml'
+    EXT = '.yaml'.freeze
 
     def initialize(name, rules, predicate_operator_rule)
       super()

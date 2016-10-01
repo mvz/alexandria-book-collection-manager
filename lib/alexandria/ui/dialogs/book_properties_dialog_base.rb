@@ -33,7 +33,8 @@ module Alexandria
         super('book_properties_dialog__builder.glade', widget_names)
         @setup_finished = false
         @book_properties_dialog.transient_for = parent
-        @parent, @cover_file = parent, cover_file
+        @parent = parent
+        @cover_file = cover_file
         @original_cover_file = nil
         @delete_cover_file = false # fixing bug #16707
 

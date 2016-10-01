@@ -24,7 +24,7 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class IBS_itProvider < GenericProvider
-      BASE_URI = 'http://www.internetbookshop.it'
+      BASE_URI = 'http://www.internetbookshop.it'.freeze
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
       REFERER = BASE_URI
       def initialize
@@ -107,7 +107,7 @@ module Alexandria
         publish_year = nil
         if (md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
-          publish_year = nil if publish_year == 0
+          publish_year = nil if publish_year.zero?
         end
 
         md = /src="http:\/\/giotto.ibs.it\/cop\/copt13.asp\?f=(\d+)">/.match(data)

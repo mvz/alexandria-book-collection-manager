@@ -332,7 +332,7 @@ module Alexandria
           iter = @scanner_device_model.append
           iter[0] = scanner.display_name
           iter[1] = scanner.name
-          if (chosen_scanner_name == scanner.name)
+          if chosen_scanner_name == scanner.name
             @scanner_device_type.active = index
           end
           index += 1
@@ -358,7 +358,8 @@ module Alexandria
           if event_is_right_click(event)
             if (path = widget.get_path_at_pos(event.x, event.y))
               widget.grab_focus
-              obj, path = widget.selection, path.first
+              obj = widget.selection
+              path = path.first
               unless obj.path_is_selected?(path)
                 widget.unselect_all
                 obj.select_path(path)

@@ -26,12 +26,12 @@ module Alexandria
     include Singleton
     include Logging
 
-    APP_DIR = '/apps/alexandria'
-    HTTP_PROXY_DIR = '/system/http_proxy'
-    HTTP_PROXY_MODE = '/system/proxy/mode'
-    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'
+    APP_DIR = '/apps/alexandria'.freeze
+    HTTP_PROXY_DIR = '/system/http_proxy'.freeze
+    HTTP_PROXY_MODE = '/system/proxy/mode'.freeze
+    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'.freeze
 
-    GCONFTOOL = 'gconftool-2'
+    GCONFTOOL = 'gconftool-2'.freeze
 
     def initialize
       @alexandria_settings = {}
@@ -181,7 +181,7 @@ module Alexandria
 
     def make_list_string(list)
       if get_gconf_type(list.first) == 'string'
-        list.map! { |x| x.gsub(/\"/, "\\\"") }
+        list.map! { |x| x.gsub(/\"/, '\\"') }
       end
       contents = list.join(',')
       '[' + contents + ']'
@@ -196,7 +196,7 @@ module Alexandria
       type = get_gconf_type(new_value)
       value_str = new_value
       if new_value.is_a? String
-        new_value.gsub!(/\"/, "\\\"")
+        new_value.gsub!(/\"/, '\\"')
         value_str = "\"#{new_value}\""
       end
       puts value_str if /cols_width/ =~ var_path

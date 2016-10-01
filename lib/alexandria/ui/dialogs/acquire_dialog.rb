@@ -47,7 +47,7 @@ module Alexandria
 
       def end_search
         synchronize do
-          @count -= 1 unless (@count == 0)
+          @count -= 1 unless @count.zero?
         end
       end
     end
@@ -337,7 +337,7 @@ module Alexandria
 
       def start_search
         @search_thread_counter.synchronize do
-          if @search_thread_counter.count == 0
+          if @search_thread_counter.count.zero?
             @search_thread_counter.new_search
             @progress_bar_thread = Thread.new do
               notify_start_add_by_isbn

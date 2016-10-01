@@ -396,7 +396,7 @@ module Alexandria
         first_action = nil
         view_as_actions.each do |name, stock_id, label, accelerator, tooltip, value|
           action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
-          first_action = action if !group
+          first_action = action unless group
           action.set_group group
           group = action.group
           @actiongroup.add_action_with_accel(action, accelerator)
@@ -414,7 +414,7 @@ module Alexandria
         first_action = nil
         arrange_icons_actions.each do |name, stock_id, label, accelerator, tooltip, value|
           action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
-          first_action = action if !group
+          first_action = action unless group
           action.set_group group
           group = action.group
           @actiongroup.add_action_with_accel(action, accelerator)

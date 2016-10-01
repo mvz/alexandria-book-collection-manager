@@ -59,7 +59,9 @@ module Alexandria
         self.current_name = library.name
         signal_connect('destroy') { hide }
 
-        @parent, @library, @sort_order = parent, library, sort_order
+        @parent = parent
+        @library = library
+        @sort_order = sort_order
 
         preview_image = Gtk::Image.new
 

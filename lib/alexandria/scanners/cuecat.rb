@@ -101,7 +101,7 @@ module Alexandria
       def pad(array)
         length = array.length % 4
 
-        if length != 0
+        if length.nonzero?
           raise 'Error parsing CueCat input' if length == 1
 
           length = 4 - length

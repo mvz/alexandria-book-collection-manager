@@ -140,7 +140,7 @@ class FileInstallTask < Rake::TaskLib
   # Install files the same way as +install+, but setting the mode of
   # the installed file to be executable.
   def install_exe(src_dir, file_glob, dest_dir)
-    @file_groups << FileGroup.new(src_dir, file_glob, dest_dir, 0755)
+    @file_groups << FileGroup.new(src_dir, file_glob, dest_dir, 0o755)
   end
 
   # Install icon files. This method splits up the source file name and
@@ -183,7 +183,7 @@ class FileInstallTask < Rake::TaskLib
     @prefix = ENV['PREFIX'] || ruby_prefix
     if @prefix == ruby_prefix
       @rubylib = ruby_libdir
-    elsif ruby_libdir.index(ruby_prefix) == 0
+    elsif ruby_libdir.index(ruby_prefix).zero?
       libpart = ruby_libdir[ruby_prefix.size..-1]
       @rubylib = File.join(@prefix, libpart)
     else
@@ -230,7 +230,7 @@ class FileInstallTask < Rake::TaskLib
   class FileGroup
     attr_reader :mode
     attr_accessor :description
-    def initialize(src_dir, file_glob, dest_dir, mode = 0644)
+    def initialize(src_dir, file_glob, dest_dir, mode = 0o644)
       @src_dir = src_dir
       @file_glob = file_glob
       @dest_dir = dest_dir

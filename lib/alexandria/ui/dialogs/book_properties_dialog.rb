@@ -54,7 +54,7 @@ module Alexandria
             false
           else
             year = text.to_i
-            if (year == 0) || year > (Time.now.year + 10) || year < 10
+            if year.zero? || year > (Time.now.year + 10) || year < 10
               @entry_publish_date.text = ''
               @entry_publish_date.grab_focus
               true
@@ -79,7 +79,8 @@ module Alexandria
         buffer.text = (book.notes || '')
         @textview_notes.buffer = buffer
 
-        @library, @book = library, book
+        @library = library
+        @book = book
         self.cover = Icons.cover(library, book)
         self.rating = (book.rating || Book::DEFAULT_RATING)
 
@@ -139,7 +140,7 @@ module Alexandria
         @book.title = @entry_title.text
         @book.publisher = @entry_publisher.text
         year = @entry_publish_date.text.to_i
-        @book.publishing_year = year == 0 ? nil : year
+        @book.publishing_year = year.zero? ? nil : year
         @book.edition = @entry_edition.text
         @book.authors = []
         @treeview_authors.model.each { |_m, _p, i| @book.authors << i[0] }

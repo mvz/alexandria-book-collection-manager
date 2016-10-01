@@ -25,10 +25,10 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class BOL_itProvider < GenericProvider
-      BASE_URI = 'http://www.bol.it'
+      BASE_URI = 'http://www.bol.it'.freeze
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.bol_it_cache')
       REFERER = BASE_URI
-      LOCALE = 'libri' # possible locales are: "libri", "inglesi", "video", "musica", "choco"
+      LOCALE = 'libri'.freeze # possible locales are: "libri", "inglesi", "video", "musica", "choco"
       def initialize
         super('BOL_it', 'BOL (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
@@ -121,7 +121,7 @@ module Alexandria
         publish_year = nil
         if (md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
-          publish_year = nil if publish_year == 0
+          publish_year = nil if publish_year.zero?
         end
 
         cover_url = BASE_URI + '/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=' + isbn[0..11] + '&tipoOggetto=PIB&cdSito=BL' # use "FRB" instead of "PIB" for smaller images

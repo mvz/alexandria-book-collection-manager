@@ -238,7 +238,7 @@ module Alexandria
 
     private
 
-    ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'
+    ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'.freeze
     def to_onix_document
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
@@ -311,7 +311,7 @@ module Alexandria
       # http://periapsis.org/tellico/doc/hacking.html
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
-      doc << REXML::DocType.new('tellico', "PUBLIC \"-//Robby Stephenson/DTD Tellico V7.0//EN\" \"http://periapsis.org/tellico/dtd/v7/tellico.dtd\"")
+      doc << REXML::DocType.new('tellico', 'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN" "http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
       tellico = doc.add_element('tellico')
       tellico.add_attribute('syntaxVersion', '7')
       tellico.add_namespace('http://periapsis.org/tellico/')
@@ -431,7 +431,7 @@ EOS
         end
 
         unless book.authors.empty?
-          xhtml << "<ul class=\"book_authors\">"
+          xhtml << '<ul class="book_authors">'
           book.authors.each do |author|
             xhtml << <<EOS
 <li class="book_author">#{xhtml_escape(author)}</li>
@@ -482,7 +482,7 @@ EOS
         end
         cite_key = k + auths[k].to_s
         bibtex << "@BOOK{#{cite_key},\n"
-        bibtex << "author = \""
+        bibtex << 'author = "'
         if book.authors != []
           bibtex << book.authors[0]
           book.authors[1..-1].each do |author|
@@ -496,7 +496,7 @@ EOS
           bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
         end
         # year is a required field in bibtex @BOOK
-        bibtex << 'year = ' + (book.publishing_year || "\"n/a\"").to_s + "\n"
+        bibtex << 'year = ' + (book.publishing_year || '"n/a"').to_s + "\n"
         bibtex << "}\n\n"
       end
       bibtex

@@ -266,7 +266,7 @@ module Alexandria
       end
 
       def self.abstract?
-        (!included_modules.include?(Singleton))
+        !included_modules.include?(Singleton)
       end
 
       def <=>(provider)
@@ -368,7 +368,7 @@ module Alexandria
       rest = providers.keys - priority
       priority.each { |pname| self << providers[pname] }
       rest.sort.each { |pname| self << providers[pname] }
-      self.compact!
+      compact!
     end
 
     # FIXME: Define the handful of methods that use this.

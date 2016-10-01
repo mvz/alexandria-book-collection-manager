@@ -107,7 +107,7 @@ module Alexandria
           cb = Gtk::ComboBoxText.new
           [_('all'), _('any')].each { |x| cb.append_text(x) }
           cb.signal_connect('changed') do
-            @predicate_operator_rule = cb.active == 0 ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
+            @predicate_operator_rule = cb.active.zero? ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
           end
           cb.active =
             predicate_operator_rule == SmartLibrary::ALL_RULES ? 0 : 1

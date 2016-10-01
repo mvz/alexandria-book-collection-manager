@@ -66,7 +66,7 @@ class IconViewTooltips
 
     html += '<small>'
     if publisher && !publisher.empty?
-      html += "#{CGI.escapeHTML(publisher)}"
+      html += CGI.escapeHTML(publisher).to_s
     end
 
     if year && !year.empty?

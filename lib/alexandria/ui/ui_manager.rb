@@ -163,8 +163,7 @@ module Alexandria
          _('ISBN contains'),
          _('Publisher contains'),
          _('Notes contain'),
-         _('Tags contain')
-        ].each do |item|
+         _('Tags contain')].each do |item|
           cb.append_text(item)
         end
         cb.active = 0
@@ -414,7 +413,7 @@ module Alexandria
             widget.unselect_all
           end
 
-          menu = (selected_books.empty?) ? @nobook_popup : @book_popup
+          menu = selected_books.empty? ? @nobook_popup : @book_popup
           menu.popup(nil, nil, event.button, event.time)
         end
       end
@@ -431,7 +430,7 @@ module Alexandria
                "Library '%s' selected, %d unrated books",
                library.length) % [library.name,
                                   library.length]
-          elsif n_unrated == 0
+          elsif n_unrated.zero?
             n_("Library '%s' selected, %d book",
                "Library '%s' selected, %d books",
                library.length) % [library.name,
@@ -522,7 +521,7 @@ module Alexandria
 
       def on_switch_page(_notebook, _page, page_num)
         log.debug { 'on_switch_page' }
-        @actiongroup['ArrangeIcons'].sensitive = page_num == 0
+        @actiongroup['ArrangeIcons'].sensitive = page_num.zero?
         on_books_selection_changed
       end
 
@@ -923,7 +922,7 @@ module Alexandria
       end
 
       def iter_from_ident(ident)
-        log.debug { "#{ident}" }
+        log.debug { ident.to_s }
         iter = @model.iter_first
         ok = true
         while ok
@@ -934,7 +933,7 @@ module Alexandria
       end
 
       def iter_from_book(book)
-        log.debug { "#{book}" }
+        log.debug { book.to_s }
         iter_from_ident(book.ident)
       end
 
@@ -942,7 +941,7 @@ module Alexandria
         result = []
         library = selected_library
 
-        if page == 0
+        if page.zero?
           result = @iconview.selected_items.map do |path|
             path = view_path_to_model_path(@iconview, path)
             book_from_iter(library, @model.get_iter(path))
@@ -1207,7 +1206,7 @@ module Alexandria
       ICONS_SORTS = [
         Columns::TITLE, Columns::AUTHORS, Columns::ISBN,
         Columns::PUBLISHER, Columns::EDITION, Columns::RATING, Columns::REDD, Columns::OWN, Columns::WANT
-      ]
+      ].freeze
 
       def setup_books_iconview_sorting
         sort_order = @prefs.reverse_icons ? :descending : :ascending

@@ -34,11 +34,11 @@ module Alexandria
       # it adds most to Alexandria (Amazon already has French and
       # English titles).
 
-      SITE = 'http://www.proxis.nl'
+      SITE = 'http://www.proxis.nl'.freeze
       BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" \
-        '&shop=100001NL&SelRubricLevel1Id=100001NL'
+        '&shop=100001NL&SelRubricLevel1Id=100001NL'.freeze
       ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" \
-        '&shop=100001NL&SelRubricLevel1Id=100001NL'
+        '&shop=100001NL&SelRubricLevel1Id=100001NL'.freeze
 
       def initialize
         super('Proxis', 'Proxis (Belgium)')
@@ -107,7 +107,7 @@ module Alexandria
       def parse_search_result_data(html)
         doc = html_to_doc(html)
         book_search_results = []
-        items = (doc.search('table.searchResult tr'))
+        items = doc.search('table.searchResult tr')
         items.each do |item|
           result = {}
           title_link = item % 'h5 a'

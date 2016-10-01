@@ -19,13 +19,13 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  TITLE = 'Alexandria'
-  TEXTDOMAIN = 'alexandria'
+  TITLE = 'Alexandria'.freeze
+  TEXTDOMAIN = 'alexandria'.freeze
   extend GetText
   bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
   DESCRIPTION = _('A program to help you manage your book collection.')
   COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" \
-    'Copyright (C) 2007-2010,2014,2015 Alexandria Contributors'
+    'Copyright (C) 2007-2010,2014,2015 Alexandria Contributors'.freeze
   AUTHORS = [
     'Alexander McCormmach <alexander@tunicate.org>',
     'Aymeric Nys <aymeric@nnx.com>',
@@ -48,11 +48,11 @@ module Alexandria
     'Takayuki Kusano <AE5T-KSN@asahi-net.or.jp>',
     'Timothy Malone <timothy.malone@gmail.com>',
     'Zachary P. Landau <kapheine@hypa.net>'
-  ]
+  ].freeze
   DOCUMENTERS = [
     'Cathal Mc Ginley <cathal.alexandria@gnostai.org>',
     'Liam Davison <registrations@liamjdavison.info>'
-  ]
+  ].freeze
   TRANSLATORS = [
     'Adrián Chaves Fernández <adriyetichaves@gmail.com> (gl)',
     'Cathal Mc Ginley <cathal.alexandria@gnostai.org> (ga)',
@@ -72,11 +72,11 @@ module Alexandria
     'Petr Vanek <vanous@penguin.cz> (cs)',
     'Piotr Drąg <piotrdrag@gmail.com> (pl)',
     'Serhij Dubyk <dubyk@library.lviv.ua> (uk)'
-  ]
+  ].freeze
   ARTISTS = [
     'Andreas Nilsson <nisses.mail@home.se>',
     'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
-  ]
-  BUGREPORT_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager/issues'
-  WEBSITE_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager'
+  ].freeze
+  BUGREPORT_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager/issues'.freeze
+  WEBSITE_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager'.freeze
 end
