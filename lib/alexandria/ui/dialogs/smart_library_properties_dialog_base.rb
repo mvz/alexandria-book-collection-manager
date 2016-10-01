@@ -83,15 +83,15 @@ module Alexandria
           self,
           _('Empty or conflictive condition'),
           Gtk::Stock::DIALOG_QUESTION,
-          [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-           [_('_Save However'), Gtk::Dialog::RESPONSE_YES]],
+          [[Gtk::Stock::CANCEL, :cancel],
+           [_('_Save However'), :yes]],
           _('This smart library contains one or more conditions ' \
             'which are empty or conflict with each other. This is ' \
             'likely to result in never matching a book. Are you ' \
             'sure you want to save this library?'))
-        dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
-        confirmed = dialog.run == Gtk::Dialog::RESPONSE_YES
+        confirmed = dialog.run == :yes
         dialog.destroy
         confirmed
       end

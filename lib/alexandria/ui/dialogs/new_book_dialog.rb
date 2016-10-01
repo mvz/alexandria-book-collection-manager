@@ -30,18 +30,18 @@ module Alexandria
       def initialize(parent, book)
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
               Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_('_Keep'), Gtk::Dialog::RESPONSE_OK]],
+              [[Gtk::Stock::CANCEL, :cancel],
+               [_('_Keep'), :ok]],
               _("The book titled '%s' has an invalid ISBN, but still " \
                 'exists in the providers libraries.  Do you want to ' \
                 'keep the book but change the ISBN or cancel the addition?') % book.title)
-        self.default_response = Gtk::Dialog::RESPONSE_OK
+        self.default_response = Gtk::ResponseType::OK
         show_all and @response = run
         destroy
       end
 
       def keep?
-        @response == Gtk::Dialog::RESPONSE_OK
+        @response == :ok
       end
     end
 
