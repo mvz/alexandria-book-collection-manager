@@ -167,16 +167,6 @@ Style/IfInsideElse:
     - 'lib/alexandria/preferences.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: IndentationWidth.
-Style/IndentAssignment:
-  Exclude:
-    - 'lib/alexandria/ui/dialogs/export_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/preferences_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb'
-    - 'lib/alexandria/ui/listview.rb'
-
 # Offense count: 2
 Style/MethodMissing:
   Exclude:

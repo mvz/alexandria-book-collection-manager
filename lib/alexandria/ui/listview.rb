@@ -127,8 +127,8 @@ module Alexandria
         log.debug { 'Create listview column for %s...' % title }
         column = Gtk::TreeViewColumn.new(title)
         column.sizing = :fixed
-        column.fixed_width = column.min_width = column.max_width =
-          (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
+        width = (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
+        column.fixed_width = column.min_width = column.max_width = width
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
           renderer.xalign = 0.0

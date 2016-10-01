@@ -184,8 +184,7 @@ module Alexandria
           operations = SmartLibrary::Rule.operations_for_operand(operand)
           operation = operations[operator_combo.active]
 
-          value_entry.visible = date_entry.visible =
-            entry_label.visible = false
+          value_entry.visible = date_entry.visible = entry_label.visible = false
           right_operand = operation.last
           unless right_operand.nil?
             entry = case right_operand.klass.name
@@ -235,8 +234,7 @@ module Alexandria
         rule_box.pack_end(add_button, expand: false, fill: false)
 
         rule_box.show_all
-        value_entry.visible = date_entry.visible = entry_label.visible =
-          false
+        value_entry.visible = date_entry.visible = entry_label.visible = false
 
         @rules_box.pack_start(rule_box, expand: false, fill: true)
 

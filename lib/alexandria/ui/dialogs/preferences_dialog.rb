@@ -287,8 +287,7 @@ module Alexandria
         { sensitize_providers }
 
         @button_prov_setup.sensitive = false
-        @button_prov_up.sensitive =  @button_prov_down.sensitive =
-          BookProviders.length > 1
+        @button_prov_up.sensitive = @button_prov_down.sensitive = BookProviders.length > 1
 
         @buttonbox_prov.set_child_secondary(@button_prov_add, true)
         @buttonbox_prov.set_child_secondary(@button_prov_remove, true)

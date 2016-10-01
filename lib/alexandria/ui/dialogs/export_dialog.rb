@@ -93,9 +93,8 @@ module Alexandria
         end
         types_combo.active = 0
         types_combo.signal_connect('changed') do
-          theme_label.visible = theme_combo.visible =
-            preview_image.visible =
-              FORMATS[types_combo.active].needs_preview?
+          visible = FORMATS[types_combo.active].needs_preview?
+          theme_label.visible = theme_combo.visible = preview_image.visible = visible
         end
         types_combo.show
 
