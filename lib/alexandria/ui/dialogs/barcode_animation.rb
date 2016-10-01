@@ -23,13 +23,37 @@
 
 # require 'goocanvas'
 
+require 'gobject-introspection'
+
+module GooCanvas
+  class << self
+    def const_missing(name)
+      init
+      if const_defined?(name)
+        const_get(name)
+      else
+        super
+      end
+    end
+
+    def init
+      class << self
+        remove_method(:init)
+        remove_method(:const_missing)
+      end
+      loader = GObjectIntrospection::Loader.new(self)
+      loader.load('GooCanvas')
+    end
+  end
+end
+
 module Alexandria
   module UI
     class BarcodeAnimation
       attr_reader :canvas
 
       def initialize
-        @canvas = Goo::Canvas.new
+        @canvas = GooCanvas::Canvas.new
         @canvas.set_size_request(300, 70)
         @canvas.set_bounds(0, 0, 350, 70)
         @root = @canvas.root_item
@@ -105,11 +129,11 @@ module Alexandria
       def draw_barcode_bars
         @barcode_data.each do |space_width, bar_width|
           @hpos += space_width
-          rect_item = Goo::CanvasRect.new(@root,
-                                          @bar_left_edge + @scale * @hpos, @bar_top,
-                                          @scale * bar_width, @bar_height,
-                                          line_width: 0,
-                                          fill_color: 'white')
+          rect_item = GooCanvas::CanvasRect.new(@root,
+                                                @bar_left_edge + @scale * @hpos, @bar_top,
+                                                @scale * bar_width, @bar_height,
+                                                line_width: 0,
+                                                fill_color: 'white')
           @hpos += bar_width
           @barcode_bars << rect_item
         end
