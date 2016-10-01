@@ -1,7 +1,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2011 Cathal Mc Ginley
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
 #
