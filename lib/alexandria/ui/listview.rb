@@ -131,8 +131,9 @@ module Alexandria
           (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
+          renderer.xalign = 0.0
           column.pack_start(renderer, false)
-          column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
+          column.set_cell_data_func(renderer) do |_tree_column, cell, _tree_model, iter|
             rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
             cell.pixbuf = rating >= i.succ ?
               Icons::STAR_SET : Icons::STAR_UNSET
