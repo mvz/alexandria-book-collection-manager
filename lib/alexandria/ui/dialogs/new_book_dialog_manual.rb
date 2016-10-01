@@ -98,7 +98,7 @@ module Alexandria
           raise AddError.new(_('A publisher must be provided.'))
         end
         publishing_year = @entry_publish_date.text.to_i
-        # TODO Get rid of this silly requirement
+        # TODO: Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?
           raise AddError.new(_('A binding must be provided.'))
         end

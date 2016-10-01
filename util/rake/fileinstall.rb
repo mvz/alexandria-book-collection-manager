@@ -236,7 +236,7 @@ class FileInstallTask < Rake::TaskLib
       delete_if_empty(c)
     end
     if p.children.empty?
-      p.delete # TODO optional verbose output here
+      p.delete # TODO: optional verbose output here
       true
     else
       false

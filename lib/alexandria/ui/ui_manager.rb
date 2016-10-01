@@ -693,7 +693,7 @@ module Alexandria
                   book = book_rslt[0]
                   cover_uri = book_rslt[1]
 
-                  # TODO if the book was saved okay, make sure the old
+                  # TODO: if the book was saved okay, make sure the old
                   # empty yaml file doesn't stick around esp if doing
                   # isbn-10 --> isbn-13 conversion...
                   if isbn.size == 10

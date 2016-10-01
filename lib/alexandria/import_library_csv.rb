@@ -72,7 +72,7 @@ module Alexandria
       additional.split(',').each do |add|
         authors << normalize(add)
       end
-      isbn = row[@isbn] # TODO canonicalize_ean...
+      isbn = row[@isbn] # TODO: canonicalize_ean...
       if isbn
         isbn = Library.canonicalise_ean(isbn)
       end

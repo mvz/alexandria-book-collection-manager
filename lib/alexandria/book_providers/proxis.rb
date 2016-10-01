@@ -184,7 +184,7 @@ module Alexandria
           image_url = if cover_img['src'] =~ /^http/
                         cover_img['src']
                       else
-                        "#{SITE}/#{cover_img['src']}" # TODO use html <base>
+                        "#{SITE}/#{cover_img['src']}" # TODO: use html <base>
                       end
           if image_url =~ /ProductNoCover/
             image_url = nil

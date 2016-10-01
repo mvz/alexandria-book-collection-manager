@@ -43,7 +43,7 @@ class IconViewTooltips
       if tree_path
         iter = view.model.get_iter(tree_path)
 
-        title = iter[2] # HACK hardcoded, should use column names...
+        title = iter[2] # HACK: hardcoded, should use column names...
         authors = iter[4]
         publisher = iter[6]
         year = iter[7]

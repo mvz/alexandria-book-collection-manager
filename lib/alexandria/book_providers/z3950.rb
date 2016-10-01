@@ -161,7 +161,7 @@ module Alexandria
         conn = ZOOM::Connection.new(options).connect(hostname, port)
         conn.database_name = prefs['database']
 
-        # HACK turn off piggybacking, just to see CMcG
+        # HACK: turn off piggybacking, just to see CMcG
         # #conn.piggyback = false
 
         conn.preferred_record_syntax = prefs['record_syntax']

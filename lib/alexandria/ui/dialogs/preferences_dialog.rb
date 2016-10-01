@@ -168,7 +168,7 @@ module Alexandria
           @selected_instance = instances[cb.active]
           fill_table(@table, @selected_instance)
           sensitize
-          # FIXME this should be re-written once we have multiple
+          # FIXME: this should be re-written once we have multiple
           # abstract providers.
         end
         combo_type.active = 0

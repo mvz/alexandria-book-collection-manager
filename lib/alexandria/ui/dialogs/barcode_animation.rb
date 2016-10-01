@@ -102,12 +102,12 @@ module Alexandria
       end
 
       def manual_input
-        # TODO distinguish between scanner and manual input
+        # TODO: distinguish between scanner and manual input
         # @canvas.set_property(:background_color, "#FFF8C0")
       end
 
       def scanner_input
-        # TODO distinguish between scanner and manual input
+        # TODO: distinguish between scanner and manual input
         # @canvas.set_property(:background_color, "white")
       end
 

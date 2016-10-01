@@ -111,7 +111,7 @@ module Alexandria
             pbar.show unless pbar.visible?
             pbar.fraction = fraction
           rescue
-            # TODO check if destroyed instead...
+            # TODO: check if destroyed instead...
           end
         end
 

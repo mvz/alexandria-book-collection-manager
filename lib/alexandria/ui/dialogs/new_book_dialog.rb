@@ -471,7 +471,7 @@ module Alexandria
         @block.call(books, library, is_new_library)
 
         if @keep_open.active?
-          # TODO reset and clear fields
+          # TODO: reset and clear fields
           if @@last_criterion_was_not_isbn
             @entry_search.select_region(0, -1) # select all, ready to delete
             @treeview_results.model.clear

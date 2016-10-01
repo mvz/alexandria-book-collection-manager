@@ -134,7 +134,7 @@ module Alexandria
       end
 
       def clean_cache
-        # FIXME begin ... rescue ... end?
+        # FIXME: begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob('*.tmp') do |file|
             puts 'removing ' + file if $DEBUG

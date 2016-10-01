@@ -86,7 +86,7 @@ module Alexandria
         end
       end
 
-      # TODO use Iconv to pre-convert the html.body to UTF-8 everywhere
+      # TODO: use Iconv to pre-convert the html.body to UTF-8 everywhere
       # before sending it to the parser methods
 
       def get_book_from_search_result(rslt)
@@ -207,7 +207,7 @@ module Alexandria
             image_url = if cover_img['src'] =~ /^http\:\/\//
                           cover_img['src']
                         else
-                          "#{SITE}/#{cover_img['src']}" # HACK use html base
+                          "#{SITE}/#{cover_img['src']}" # HACK: use html base
                         end
             if image_url =~ /noimage.gif$/
               # no point downloading a "no image" graphic

@@ -87,7 +87,7 @@ module Alexandria
               ruined_books << [nil, file_isbn, library]
             else
               log.warn { "Filename #{filename} does not contain an ISBN" }
-              # TODO delete this file...
+              # TODO: delete this file...
             end
             next
           end
@@ -628,7 +628,7 @@ module Alexandria
     end
 
     def final_cover(book)
-      # TODO what about PNG?
+      # TODO: what about PNG?
       book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
     end
 
