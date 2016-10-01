@@ -957,7 +957,7 @@ module Alexandria
           end
         else
           selection = @listview.selection
-          rows, the_model = selection.selected_rows
+          rows, _model = selection.selected_rows
           result = rows.map do |path|
             path = view_path_to_model_path(@listview, path)
             book_from_iter(library, @model.get_iter(path))

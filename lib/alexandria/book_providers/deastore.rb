@@ -93,7 +93,6 @@ module Alexandria
                              SEARCH_BY_KEYWORD => 'keywords'
         }[search_type] or 'keywords'
 
-        search_term_encoded = search_term
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 Library.canonicalise_isbn(search_term) # isbn-10
                               else

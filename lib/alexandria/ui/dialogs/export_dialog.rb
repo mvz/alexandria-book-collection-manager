@@ -49,7 +49,6 @@ module Alexandria
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        backend = `uname`.chomp == 'FreeBSD' ? 'neant' : 'gnome-vfs'
         super(title: _("Export '%s'") % library.name,
               action: :save,
               buttons: [[Gtk::Stock::HELP, :help],

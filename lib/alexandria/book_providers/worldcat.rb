@@ -82,7 +82,6 @@ module Alexandria
                              SEARCH_BY_KEYWORD => ''
         }[search_type] or ''
         search_type_code = CGI.escape(search_type_code)
-        search_term_encoded = search_term # TODO, remove attack stuff
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 Library.canonicalise_ean(search_term) # isbn-13
                               else

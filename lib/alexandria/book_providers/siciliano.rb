@@ -99,7 +99,6 @@ module Alexandria
                              SEARCH_BY_AUTHORS => 'B',
                              SEARCH_BY_KEYWORD => 'X'
         }[search_type] or 'X'
-        search_term_encoded = search_term
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 if trying_again
                                   # on second attempt, try ISBN-10...

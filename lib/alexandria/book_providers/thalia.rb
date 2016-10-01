@@ -65,7 +65,6 @@ module Alexandria
           SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
         }[search_type] or ''
         search_type_code = CGI.escape(search_type_code)
-        search_term_encoded = search_term
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 # search_term_encoded = search_term.as_isbn_13
                                 Library.canonicalise_isbn(search_term) # check this!

@@ -187,11 +187,6 @@ module Alexandria
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { 'Create listview column for %s...' % title }
-        setup_column = proc do |iter, cell, col|
-          state = iter[col]
-          cell.set_active(state)
-          cell.activatable = true
-        end
 
         column.add_attribute(renderer, 'active', iterid)
         if iterid == Columns::WANT
