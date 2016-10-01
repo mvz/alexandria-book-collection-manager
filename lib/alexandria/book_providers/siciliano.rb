@@ -106,7 +106,7 @@ module Alexandria
                                 else
                                   # search by ISBN-13 first
                                   Library.canonicalise_ean(search_term) # isbn-13
-                                                      end
+                                end
                               else
                                 CGI.escape(search_term)
                               end
