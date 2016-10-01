@@ -36,17 +36,17 @@ module Alexandria
       def initialize(parent, message)
         super(parent, _('Error while importing'),
               Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_('_Continue'), Gtk::Dialog::RESPONSE_OK]],
+              [[Gtk::Stock::CANCEL, :cancel],
+               [_('_Continue'), :ok]],
               message)
         puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
-        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        self.default_response = :cancel
         show_all and @response = run
         destroy
       end
 
       def continue?
-        @response == Gtk::Dialog::RESPONSE_OK
+        @response == :ok
       end
     end
 
@@ -63,14 +63,14 @@ module Alexandria
         puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
         self.title = _('Import a Library')
-        self.action = Gtk::FileChooser::ACTION_OPEN
+        self.action = :open
         self.transient_for = parent
         #            self.deletable = false
         running = false
-        add_button(Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP)
-        add_button(Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL)
+        add_button(Gtk::Stock::HELP, :help)
+        add_button(Gtk::Stock::CANCEL, :cancel)
         import_button = add_button(_('_Import'),
-                                   Gtk::Dialog::RESPONSE_ACCEPT)
+                                   :accept)
         import_button.sensitive = false
 
         signal_connect('destroy') {
@@ -99,15 +99,13 @@ module Alexandria
         # before adding the (hidden) progress bar, we must re-set the
         # packing of the button box (currently packed at the end),
         # because the progressbar will be *after* the button box.
-        buttonbox = vbox.children.last
-        options = vbox.query_child_packing(buttonbox)
-        options[-1] = Gtk::PACK_START
-        vbox.set_child_packing(buttonbox, *options)
-        vbox.reorder_child(buttonbox, 1)
+        buttonbox = child.children.last
+        child.set_child_packing(buttonbox, pack_type: :start)
+        child.reorder_child(buttonbox, 1)
 
         pbar = Gtk::ProgressBar.new
         pbar.show_text = true
-        vbox.pack_start(pbar, false)
+        child.pack_start(pbar, expand: false)
 
         on_progress = proc do |fraction|
           begin
@@ -125,10 +123,10 @@ module Alexandria
         exec_queue = ExecutionQueue.new
 
         while !@destroyed and
-            (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
-            response != Gtk::Dialog::RESPONSE_DELETE_EVENT
+            (response = run) != :cancel and
+            response != :delete_event
 
-          if response == Gtk::Dialog::RESPONSE_HELP
+          if response == :help
             Alexandria::UI.display_help(self, 'import-library')
             next
           end
