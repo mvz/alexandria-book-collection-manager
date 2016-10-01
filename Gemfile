@@ -6,4 +6,5 @@ gemspec
 group :development, :test do
   gem 'rdoc', '~> 4.0'
   gem 'pry'
+  gem 'rubocop', '~> 0.43.0'
 end
