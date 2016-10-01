@@ -79,14 +79,6 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Max: 29
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: prefer_alias, prefer_alias_method
-Style/Alias:
-  Exclude:
-    - 'lib/alexandria/models/library.rb'
-
 # Offense count: 3
 Style/ClassAndModuleCamelCase:
   Exclude:

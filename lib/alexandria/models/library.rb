@@ -503,7 +503,7 @@ module Alexandria
       end
     end
 
-    alias_method :old_delete, :delete
+    alias old_delete delete
     def delete(book = nil)
       if book.nil?
         # Delete the whole library.
@@ -547,7 +547,7 @@ module Alexandria
       end
     end
 
-    alias_method :old_select, :select
+    alias old_select select
     def select
       filtered_library = Library.new(@name)
       each do |book|
