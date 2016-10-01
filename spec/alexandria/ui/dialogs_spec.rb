@@ -1,5 +1,5 @@
 # Copyright (C) 2007 Joseph Method
-# Copyright (C) 2015 Matijs van Zuijlen
+# Copyright (C) 2015, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
