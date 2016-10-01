@@ -33,51 +33,23 @@ class IconViewTooltips
   include Alexandria::Logging
 
   def initialize(view)
-    @tooltip_window = Gtk::Window.new(Gtk::Window::POPUP)
-    @tooltip_window.name = 'gtk-tooltips'
-    @tooltip_window.resizable = false
-    @tooltip_window.border_width = 4
-    @tooltip_window.app_paintable = true
-
-    @tooltip_window.signal_connect('expose_event') { |window, event|
-      on_expose(window, event)
-    }
-
-    @tooltip_window.signal_connect('leave_notify_event') { |vw, event|
-      on_leave(vw, event)
-    }
-
-    @label = Gtk::Label.new('')
-    @label.wrap = true
-    @label.set_alignment(0.5, 0.5)
-    @label.use_markup = true
-    @label.show
-
-    @tooltip_window.add(@label)
     set_view(view)
   end
 
   def set_view(view)
-    view.signal_connect('motion_notify_event') { |vw, event|
-      on_motion(vw, event)
-    }
-    view.signal_connect('leave_notify_event') { |vw, event|
-      on_leave(vw, event)
-    }
-  end
+    view.has_tooltip = true
+    view.signal_connect('query-tooltip') do |widget, x, y, keyboard_mode, tooltip|
+      tree_path = view.get_path_at_pos(x, y)
+      if tree_path
+        iter = view.model.get_iter(tree_path)
 
-  def on_expose(window, _event)
-    # this paints a nice outline around the label
-    size = window.size_request
-    window.style.paint_flat_box(window.window,
-                                Gtk::STATE_NORMAL,
-                                Gtk::SHADOW_OUT,
-                                nil,
-                                @tooltip_window,
-                                'tooltip',
-                                0, 0, size[0], size[1])
-    # must return nil so the label contents get drawn correctly
-    nil
+        title = iter[2] # HACK hardcoded, should use column names...
+        authors = iter[4]
+        publisher = iter[6]
+        year = iter[7]
+        tooltip.set_markup label_for_book(title, authors, publisher, year)
+      end
+    end
   end
 
   def label_for_book(title, authors, publisher, year)
@@ -109,57 +81,5 @@ class IconViewTooltips
     end
 
     html + '</small>'
-  end
-
-  def on_motion(view, event)
-    tree_path = view.get_path(event.x, event.y)
-    # TODO translate path a few times, for sorting & filtering...
-    # hmmm, actually seems to work. Report a bug if you can spot a failure
-    if tree_path
-      iter = view.model.get_iter(tree_path)
-      if @latest_iter.nil?
-        @latest_iter = iter
-
-        @tooltip_timeout_id = Gtk.timeout_add(250) do
-          if @latest_iter == iter
-
-            title = iter[2] # HACK hardcoded, should use column names...
-            authors = iter[4]
-            publisher = iter[6]
-            year = iter[7]
-            @label.markup = label_for_book(title, authors, publisher, year)
-            ## "<b>#{title}</b>\n<i>#{authors}</i>\n<small>#{publisher} <i>(#{year})</i></small>"
-            size = @tooltip_window.size_request
-            @tooltip_window.move(event.x_root - size[0],
-                                 event.y_root + 12)
-            @tooltip_window.show
-            @tooltip_timeout_id = nil
-            # don't run again
-            false
-          end
-        end
-
-      elsif @latest_iter != iter
-        hide_tooltip
-      end
-
-    else
-      hide_tooltip
-    end
-  end
-
-  def hide_tooltip
-    unless @tooltip_window.nil?
-      @tooltip_window.hide
-      if @tooltip_timeout_id
-        Gtk.timeout_remove(@tooltip_timeout_id)
-        @tooltip_timeout_id = nil
-      end
-      @latest_iter = nil
-    end
-  end
-
-  def on_leave(_view, _event)
-    @tooltip_window.hide
   end
 end

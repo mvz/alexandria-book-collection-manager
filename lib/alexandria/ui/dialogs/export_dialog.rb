@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2014 Matijs van Zuijlen
+# Copyright (C) 2014, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -25,17 +25,18 @@ module Alexandria
       def initialize(parent, filename)
         super(parent, _('File already exists'),
               Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_('_Replace'), Gtk::Dialog::RESPONSE_OK]],
+              [[Gtk::Stock::CANCEL, :cancel],
+               [_('_Replace'), :ok]],
               _("A file named '%s' already exists.  Do you want " \
                 'to replace it with the one you are generating?') % filename)
-        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        # FIXME: Should accept just :cancel
+        self.default_response = Gtk::ResponseType::CANCEL
         show_all and @response = run
         destroy
       end
 
       def erase?
-        @response == Gtk::Dialog::RESPONSE_OK
+        @response == :ok
       end
     end
 
@@ -49,13 +50,11 @@ module Alexandria
 
       def initialize(parent, library, sort_order)
         backend = `uname`.chomp == 'FreeBSD' ? 'neant' : 'gnome-vfs'
-        super(_("Export '%s'") % library.name,
-              nil,
-              Gtk::FileChooser::ACTION_SAVE,
-              backend,
-              [Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP],
-              [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-              [_('_Export'), Gtk::Dialog::RESPONSE_ACCEPT])
+        super(title: _("Export '%s'") % library.name,
+              action: :save,
+              buttons: [[Gtk::Stock::HELP, :help],
+                        [Gtk::Stock::CANCEL, :cancel],
+                        [_('_Export'), :accept]])
 
         self.transient_for = parent
         self.current_name = library.name
@@ -65,7 +64,9 @@ module Alexandria
 
         preview_image = Gtk::Image.new
 
-        theme_combo = Gtk::ComboBox.new
+        theme_combo = Gtk::ComboBoxText.new
+        theme_combo.valign = :center
+        theme_combo.vexpand = false
         THEMES.each do |theme|
           theme_combo.append_text(theme.name)
         end
@@ -74,11 +75,13 @@ module Alexandria
           preview_image.pixbuf = GdkPixbuf::Pixbuf.new(file: file)
         end
         theme_combo.active = 0
-        theme_label = Gtk::Label.new(_('_Theme:'), true)
+        theme_label = Gtk::Label.new(_('_Theme:'), use_underline: true)
         theme_label.xalign = 0
         theme_label.mnemonic_widget = theme_combo
 
-        types_combo = Gtk::ComboBox.new
+        types_combo = Gtk::ComboBoxText.new
+        types_combo.vexpand = false
+        types_combo.valign = :center
         FORMATS.each do |format|
           text = format.name + ' ('
           if format.ext
@@ -97,34 +100,32 @@ module Alexandria
         end
         types_combo.show
 
-        types_label = Gtk::Label.new(_('Export for_mat:'), true)
+        types_label = Gtk::Label.new(_('Export for_mat:'), use_underline: true)
         types_label.xalign = 0
         types_label.mnemonic_widget = types_combo
         types_label.show
 
-        # Ugly hack to add more rows in the internal Gtk::Table of the
-        # widget, which is needed because we want the export type to be
-        # aligned against the other widgets, and #extra_widget doesn't do
-        # that...
-        internal_table =
-          children[0].children[0].children[0].children[0].children[0]
-        internal_table.resize(4, 3)
-        internal_table.attach(types_label, 0, 1, 2, 3)
-        internal_table.attach(types_combo, 1, 2, 2, 3)
-        internal_table.attach(theme_label, 0, 1, 3, 4)
-        internal_table.attach(theme_combo, 1, 2, 3, 4)
-        internal_table.attach(preview_image, 2, 3, 0, 4)
+        # TODO: Re-design extra widget layout
+        grid = Gtk::Grid.new
+        grid.column_spacing = 6
+        grid.attach types_label, 0, 0, 1, 1
+        grid.attach types_combo, 1, 0, 1, 1
+        grid.attach theme_label, 0, 1, 1, 1
+        grid.attach theme_combo, 1, 1, 1, 1
+        grid.attach preview_image, 2, 0, 1, 3
+        set_extra_widget grid
 
-        while (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
-            response != Gtk::Dialog::RESPONSE_DELETE_EVENT
+        while (response = run) != :cancel and
+            response != :delete_event
 
-          if response == Gtk::Dialog::RESPONSE_HELP
+          if response == :help
             Alexandria::UI.display_help(self, 'exporting')
           else
             begin
               break if on_export(FORMATS[types_combo.active],
                                  THEMES[theme_combo.active])
             rescue => e
+              raise
               ErrorDialog.new(self, _('Export failed'), e.message)
             end
           end

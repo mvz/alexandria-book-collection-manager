@@ -20,23 +20,24 @@ module Alexandria
   module UI
     class AlertDialog < Gtk::Dialog
       def initialize(parent, title, stock_icon, buttons, message = nil)
-        super('', parent, Gtk::Dialog::DESTROY_WITH_PARENT, *buttons)
+        super(title: '', parent: parent, flags: :destroy_with_parent, buttons: buttons)
 
         self.border_width = 6
         self.resizable = false
-        self.has_separator = false
-        vbox.spacing = 12
+        child.spacing = 12
 
-        hbox = Gtk::HBox.new(false, 12)
+        hbox = Gtk::Box.new(:horizontal, 12)
+        hbox.homogeneous = false
         hbox.border_width = 6
-        vbox.pack_start(hbox)
+        child.pack_start(hbox)
 
-        image = Gtk::Image.new(stock_icon,
-                               Gtk::IconSize::DIALOG)
+        image = Gtk::Image.new(stock: stock_icon,
+                               size: Gtk::IconSize::DIALOG)
         image.set_alignment(0.5, 0)
         hbox.pack_start(image)
 
-        vbox = Gtk::VBox.new(false, 6)
+        vbox = Gtk::Box.new(:vertical, 6)
+        vbox.homogeneous = false
         hbox.pack_start(vbox)
 
         label = Gtk::Label.new
@@ -58,8 +59,9 @@ module Alexandria
     class ErrorDialog < AlertDialog
       def initialize(parent, title, message = nil)
         super(parent, title, Gtk::Stock::DIALOG_ERROR,
-              [[Gtk::Stock::OK, Gtk::Dialog::RESPONSE_OK]], message)
-        self.default_response = Gtk::Dialog::RESPONSE_OK
+              [[Gtk::Stock::OK, :ok]], message)
+        # FIXME: Should accept just :ok
+        self.default_response = Gtk::ResponseType::OK
         show_all and run
         destroy
       end

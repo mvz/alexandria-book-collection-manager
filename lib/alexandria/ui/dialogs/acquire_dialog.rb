@@ -294,10 +294,10 @@ module Alexandria
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
-        Gtk.idle_add do
+        GLib::Idle.add do
           main_progress_bar = MainApp.instance.appbar.children.first
           main_progress_bar.visible = true
-          @progress_pulsing = Gtk.timeout_add(100) do
+          @progress_pulsing = GLib::Timeout.add(100) do
             if @destroyed
               false
             else
@@ -310,15 +310,15 @@ module Alexandria
       end
 
       def notify_end_add_by_isbn
-        Gtk.idle_add do
+        GLib::Idle.add do
           MainApp.instance.appbar.children.first.visible = false
-          Gtk.timeout_remove(@progress_pulsing) if @progress_pulsing
+          GLib::Source.remove(@progress_pulsing) if @progress_pulsing
           false
         end
       end
 
       def update(status, provider)
-        Gtk.idle_add do
+        GLib::Idle.add do
           messages = {
             searching: _("Searching Provider '%s'..."),
             error: _("Error while Searching Provider '%s'"),
@@ -511,7 +511,7 @@ module Alexandria
 
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
                 log.debug { 'Waiting for more scanner input...' }
-                Gtk.idle_add do
+                GLib::Idle.add do
                   #@animation.manual_input
                   false
                 end
@@ -519,7 +519,7 @@ module Alexandria
                 sleep(time_to_wait)
                 if buffer == @scanner_buffer
                   log.debug { 'Buffer unchanged; scanning complete' }
-                  Gtk.idle_add do
+                  GLib::Idle.add do
                     #@animation.scanner_input
                     false
                   end
@@ -552,14 +552,14 @@ module Alexandria
         if effect == 'scanning'
           puts effect
           return unless  @prefs.play_scanning_sound
-          Gtk.idle_add do
+          GLib::Idle.add do
             @sound_players['scanning'].play('scanning')
             false
           end
         else
           puts effect
           return unless @prefs.play_scan_sound
-          Gtk.idle_add do
+          GLib::Idle.add do
             # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
             @sound_players[effect].play(effect)
             false
@@ -588,7 +588,7 @@ module Alexandria
       def init_treeview
         liststore = Gtk::ListStore.new(String, GdkPixbuf::Pixbuf, String)
 
-        @barcodes_treeview.selection.mode = Gtk::SELECTION_MULTIPLE
+        @barcodes_treeview.selection.mode = :multiple
 
         @barcodes_treeview.model = liststore
 

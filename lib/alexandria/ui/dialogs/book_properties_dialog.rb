@@ -28,17 +28,17 @@ module Alexandria
         super(parent, library.cover(book))
         puts 'Initializing Book Properties Dialog...' if $DEBUG
 
-        cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
+        cancel_button = Gtk::Button.new(stock_id: Gtk::Stock::CANCEL)
         cancel_button.signal_connect('clicked') { on_cancel }
         cancel_button.show
         @button_box << cancel_button
 
-        close_button = Gtk::Button.new(Gtk::Stock::SAVE)
+        close_button = Gtk::Button.new(stock_id: Gtk::Stock::SAVE)
         close_button.signal_connect('clicked') { on_close }
         close_button.show
         @button_box << close_button
 
-        help_button = Gtk::Button.new(Gtk::Stock::HELP)
+        help_button = Gtk::Button.new(stock_id: Gtk::Stock::HELP)
         help_button.signal_connect('clicked') { on_help }
         help_button.show
         @button_box << help_button

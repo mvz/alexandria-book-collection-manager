@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
+# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -22,7 +22,7 @@ module Alexandria
     module Callbacks
       include Logging
 
-      def on_new(_widget, _event)
+      def on_new(*)
         name = Library.generate_new_name(@libraries.all_libraries)
         library = Library.load(name)
         @libraries.add_library(library)
@@ -31,7 +31,7 @@ module Alexandria
         library.add_observer(self)
       end
 
-      def on_new_smart(_widget, _event)
+      def on_new_smart(*)
         NewSmartLibraryDialog.new(@main_app) do |smart_library|
           smart_library.refilter
           @libraries.add_library(smart_library)
@@ -40,7 +40,7 @@ module Alexandria
         end
       end
 
-      def on_add_book(_widget, _event)
+      def on_add_book(*)
         log.info { 'on_add_book' }
         NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
           if is_new
@@ -52,14 +52,14 @@ module Alexandria
         end
       end
 
-      def on_add_book_manual(_widget, _event)
+      def on_add_book_manual(*)
         library = selected_library
         NewBookDialogManual.new(@main_app, library) { |_book|
           refresh_books
         }
       end
 
-      def on_import(_widget, _event)
+      def on_import(*)
         ImportDialog.new(@main_app) do |library, bad_isbns, failed_isbns|
           unless bad_isbns.empty?
             log.debug { 'bad_isbn' }
@@ -82,7 +82,7 @@ module Alexandria
       def on_window_state_event(_window, event)
         log.debug { 'window-state-event' }
         if event.is_a?(Gdk::EventWindowState)
-          @maximized = event.new_window_state == Gdk::EventWindowState::MAXIMIZED
+          @maximized = event.new_window_state == :maximized
         end
         log.debug { 'end window-state-event' }
       end
@@ -120,8 +120,9 @@ module Alexandria
         @iconview.unfreeze
       end
 
-      def on_export(_widget, _event)
+      def on_export(*)
         ExportDialog.new(@main_app, selected_library, library_sort_order)
+        # FIXME: Remove this hack and fix the underlying problem.
       rescue => ex
         log.error { "problem with immediate export #{ex} try again" }
         ErrorDialog.new(@main_app, _('Export failed'),
@@ -129,7 +130,7 @@ module Alexandria
                           'completely before exporting.'))
       end
 
-      def on_acquire(_widget, _event)
+      def on_acquire(*)
         AcquireDialog.new(@main_app,
                           selected_library) do |_books, library, is_new|
                             if is_new
@@ -141,7 +142,7 @@ module Alexandria
                           end
       end
 
-      def on_properties(_widget, _event)
+      def on_properties(*)
         if @library_listview.focus? or selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
@@ -161,7 +162,7 @@ module Alexandria
         end
       end
 
-      def on_quit(_widget, _event)
+      def on_quit(*)
         save_preferences
         Gtk.main_quit
         # @libraries.really_save_all_books
@@ -169,15 +170,15 @@ module Alexandria
         @libraries.all_regular_libraries.each(&:really_delete_deleted_books)
       end
 
-      def on_undo(_widget, _event)
+      def on_undo(*)
         UndoManager.instance.undo!
       end
 
-      def on_redo(_widget, _event)
+      def on_redo(*)
         UndoManager.instance.redo!
       end
 
-      def on_select_all(_widget, _event)
+      def on_select_all(*)
         log.debug { 'on_select_all' }
         case @notebook.page
         when 0
@@ -187,7 +188,7 @@ module Alexandria
         end
       end
 
-      def on_deselect_all(_widget, _event)
+      def on_deselect_all(*)
         log.debug { 'on_deselect_all' }
         case @notebook.page
         when 0
@@ -211,14 +212,14 @@ module Alexandria
         end
       end
 
-      def on_rename(_widget, _event)
+      def on_rename(*)
         iter = @library_listview.selection.selected
         @library_listview.set_cursor(iter.path,
                                      @library_listview.get_column(0),
                                      true)
       end
 
-      def on_delete(_widget, _event)
+      def on_delete(*)
         library = selected_library
 
         if selected_books.empty?
@@ -240,38 +241,60 @@ module Alexandria
         end
       end
 
-      def on_clear_search_results(_widget, _event)
+      def on_clear_search_results(*)
         @filter_entry.text = ''
         @iconview.freeze
         @filtered_model.refilter
         @iconview.unfreeze
       end
 
-      def on_search(_widget, _event)
+      def on_search(*)
         @filter_entry.grab_focus
       end
 
-      def on_preferences(_widget, _event)
+      def on_preferences(*)
         PreferencesDialog.new(@main_app) do
           @listview_manager.setup_listview_columns_visibility
         end
       end
 
-      def on_submit_bug_report(_widget, _event)
+      def on_submit_bug_report(*)
         open_web_browser(BUGREPORT_URL)
       end
 
-      def on_help(_widget, _event)
+      def on_help(*)
         Alexandria::UI.display_help(@main_app)
       end
 
-      def on_about(_widget, _event)
+      def on_about(*)
         ad = AboutDialog.new(@main_app)
         ad.signal_connect('response') do
           log.debug { 'destroy about' }
           ad.destroy
         end
         ad.show
+      end
+
+      def on_view_sidepane(action)
+        log.debug { 'on_view_sidepane' }
+        @paned.child1.visible = action.active?
+      end
+
+      def on_view_toolbar(action)
+        log.debug { 'on_view_toolbar' }
+        @toolbar.visible = action.active?
+      end
+
+      def on_view_statusbar(action)
+        log.debug { 'on_view_statusbar' }
+        @appbar.visible = action.active?
+      end
+
+      def on_reverse_order(action)
+        log.debug { 'on_reverse_order' }
+        Preferences.instance.reverse_icons = action.active?
+        Preferences.instance.save!
+        setup_books_iconview_sorting
       end
 
       def connect_signals
@@ -314,37 +337,11 @@ module Alexandria
           ['About', Gtk::Stock::ABOUT, _('_About'), nil, _('Show information about Alexandria'), method(:on_about)],
         ]
 
-        on_view_sidepane = proc do |_actiongroup, action|
-          log.debug { 'on_view_sidepane' }
-          @paned.child1.visible = action.active?
-        end
-
-        on_view_toolbar = proc do |_actiongroup, action|
-          log.debug { 'on_view_toolbar' }
-          @toolbar.parent.visible = action.active?
-        end
-
-        on_view_statusbar = proc do |_actiongroup, action|
-          log.debug { 'on_view_statusbar' }
-          @appbar.visible = action.active?
-        end
-
-        on_reverse_order = proc do |_actiongroup, action|
-          log.debug { 'on_reverse_order' }
-          Preferences.instance.reverse_icons = action.active?
-          Preferences.instance.save!
-          setup_books_iconview_sorting
-        end
-
         toggle_actions = [
-          ['Sidepane', nil, _('Side _Pane'), 'F9', nil,
-           on_view_sidepane, true],
-          ['Toolbar', nil, _('_Toolbar'), nil, nil,
-           on_view_toolbar, true],
-          ['Statusbar', nil, _('_Statusbar'), nil, nil,
-           on_view_statusbar, true],
-          ['ReversedOrder', nil, _('Re_versed Order'), nil, nil,
-           on_reverse_order],
+          ['Sidepane', nil, _('Side _Pane'), 'F9', nil, method(:on_view_sidepane), true],
+          ['Toolbar', nil, _('_Toolbar'), nil, nil, method(:on_view_toolbar), true],
+          ['Statusbar', nil, _('_Statusbar'), nil, nil, method(:on_view_statusbar), true],
+          ['ReversedOrder', nil, _('Re_versed Order'), nil, nil, method(:on_reverse_order)],
         ]
 
         view_as_actions = [
@@ -369,17 +366,61 @@ module Alexandria
         log.debug { 'Adding actions to @actiongroup' }
 
         @actiongroup = Gtk::ActionGroup.new('actions')
-        @actiongroup.add_actions(standard_actions)
-        @actiongroup.add_actions(providers_actions)
-        @actiongroup.add_toggle_actions(toggle_actions)
-        @actiongroup.add_radio_actions(view_as_actions) do |_action, current|
+
+        standard_actions.each do |name, stock_id, label, accelerator, tooltip, callback|
+          action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          @actiongroup.add_action_with_accel(action, accelerator)
+          if callback
+            action.signal_connect('activate', &callback)
+          end
+        end
+
+        providers_actions.each do |name, stock_id, label, accelerator, tooltip, callback|
+          action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          @actiongroup.add_action_with_accel(action, accelerator)
+          if callback
+            action.signal_connect('activate', &callback)
+          end
+        end
+
+        toggle_actions.each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
+          action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          action.set_active is_active
+          @actiongroup.add_action_with_accel(action, accelerator)
+          if callback
+            action.signal_connect('toggled', &callback)
+          end
+        end
+
+        group = nil
+        first_action = nil
+        view_as_actions.each do |name, stock_id, label, accelerator, tooltip, value|
+          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
+          first_action = action if !group
+          action.set_group group
+          group = action.group
+          @actiongroup.add_action_with_accel(action, accelerator)
+        end
+
+        first_action.signal_connect 'changed' do |_action, current, _user_data|
           @notebook.page = current.current_value
           hid = @toolbar_view_as_signal_hid
           @toolbar_view_as.signal_handler_block(hid) do
             @toolbar_view_as.active = current.current_value
           end
         end
-        @actiongroup.add_radio_actions(arrange_icons_actions) do |_action, current|
+
+        group = nil
+        first_action = nil
+        arrange_icons_actions.each do |name, stock_id, label, accelerator, tooltip, value|
+          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
+          first_action = action if !group
+          action.set_group group
+          group = action.group
+          @actiongroup.add_action_with_accel(action, accelerator)
+        end
+
+        first_action.signal_connect 'changed' do |_action, current, _user_data|
           @prefs.arrange_icons_mode = current.current_value
           setup_books_iconview_sorting
         end

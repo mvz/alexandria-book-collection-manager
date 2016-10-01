@@ -23,7 +23,7 @@ module Alexandria
       def initialize(parent, message = nil, list = nil)
         message = _("There's a problem") unless message
         super(parent, Gtk::Dialog::MODAL, Gtk::MessageDialog::WARNING,  Gtk::MessageDialog::BUTTONS_CLOSE, message)
-        isbn_container = Gtk::HBox.new
+        isbn_container = Gtk::Box.new :horizontal
         the_vbox = children.first
         the_vbox.pack_start(isbn_container)
         the_vbox.reorder_child(isbn_container, 3)

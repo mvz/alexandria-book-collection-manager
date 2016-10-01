@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2015 Matijs van Zuijlen
+# Copyright (C) 2015, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -25,21 +25,22 @@ module Alexandria
       def initialize(parent, &block)
         super(parent)
 
-        add_buttons([Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                    [Gtk::Stock::NEW, Gtk::Dialog::RESPONSE_OK])
+        add_buttons([Gtk::Stock::CANCEL, :cancel],
+                    [Gtk::Stock::NEW, :ok])
 
         self.title = _('New Smart Library')
-        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        # FIXME: Should accept just :cancel
+        self.default_response = Gtk::ResponseType::CANCEL
 
         show_all
         insert_new_rule
 
-        while (response = run) != Gtk::Dialog::RESPONSE_CANCEL and
-            response != Gtk::Dialog::RESPONSE_DELETE_EVENT
+        while (response = run) != :cancel and
+            response != :delete_event
 
-          if response == Gtk::Dialog::RESPONSE_HELP
+          if response == :help
             Alexandria::UI.display_help(self, 'new-smart-library')
-          elsif response == Gtk::Dialog::RESPONSE_OK
+          elsif response == :ok
             if user_confirms_possible_weirdnesses_before_saving?
               rules = smart_library_rules
               basename = smart_library_base_name(rules) || _('Smart Library')

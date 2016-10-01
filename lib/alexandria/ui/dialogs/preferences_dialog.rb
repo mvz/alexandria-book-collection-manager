@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -32,9 +32,8 @@ module Alexandria
       def initialize(*args)
         super(*args)
 
-        self.has_separator = false
         self.resizable = false
-        vbox.border_width = 12
+        child.border_width = 12
 
         @controls = []
       end
@@ -73,7 +72,7 @@ module Alexandria
             entry.text = variable.value.to_s
             entry.mandatory = variable.mandatory?
           else
-            entry = Gtk::ComboBox.new
+            entry = Gtk::ComboBoxText.new
             variable.possible_values.each do |value|
               entry.append_text(value.to_s)
             end
@@ -107,17 +106,14 @@ module Alexandria
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent, provider)
-        super(_('Preferences for %s') % provider.fullname,
-              parent,
-              Gtk::Dialog::MODAL,
-              [Gtk::Stock::CLOSE, Gtk::Dialog::RESPONSE_CLOSE])
-        self.has_separator = false
-        self.resizable = false
-        vbox.border_width = 12
+        super(title: _('Preferences for %s') % provider.fullname,
+              parent: parent,
+              flags: :modal,
+              buttons: [[Gtk::Stock::CLOSE, :close]])
 
         table = Gtk::Table.new(0, 0)
         fill_table(table, provider)
-        vbox.pack_start(table)
+        child.pack_start(table)
 
         signal_connect('destroy') { sync_variables }
 
@@ -135,9 +131,9 @@ module Alexandria
         super(_('New Provider'),
               parent,
               Gtk::Dialog::MODAL,
-              [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL])
+              [Gtk::Stock::CANCEL, :cancel])
         @add_button = add_button(Gtk::Stock::ADD,
-                                 Gtk::Dialog::RESPONSE_ACCEPT)
+                                 :accept)
 
         instances = BookProviders.abstract_classes.map(&:new)
         @selected_instance = nil
@@ -180,7 +176,7 @@ module Alexandria
         @table.attach_defaults(combo_type, 1, 2, 1, 2)
 
         show_all
-        if run == Gtk::Dialog::RESPONSE_ACCEPT
+        if run == :accept
           @selected_instance.reinitialize(entry_name.text)
           sync_variables
         else
@@ -350,7 +346,7 @@ module Alexandria
       def setup_enable_disable_popup
         # New Enable/Disable pop-up menu...
         @enable_disable_providers_menu = Gtk::Menu.new
-        @enable_item = Gtk::MenuItem.new(_('Disable Provider'))
+        @enable_item = Gtk::MenuItem.new(label: _('Disable Provider'))
         @enable_item.signal_connect('activate') {
           prov = selected_provider
           prov.toggle_enabled
@@ -373,7 +369,7 @@ module Alexandria
                 already_enabled = sel[2]
                 message = already_enabled ? _('Disable Provider') : _('Enable Provider')
                 @enable_item.label = message
-                Gtk.idle_add do
+                GLib::Idle.add do
                   @enable_disable_providers_menu.popup(nil, nil, event.button, event.time)
                   false
                 end
@@ -389,12 +385,12 @@ module Alexandria
           selected_prov = @treeview_providers.selection.selected
           puts selected_prov.inspect
           if selected_prov
-            Gtk.idle_add do
+            GLib::Idle.add do
               already_enabled = selected_prov[2]
               message = already_enabled ? _('Disable Provider') : _('Enable Provider')
               @enable_item.label = message
 
-              @enable_disable_providers_menu.popup(nil, nil, 0, Gdk::Event::CURRENT_TIME)
+              @enable_disable_providers_menu.popup(nil, nil, 0, :current_time)
               false
             end
           else
@@ -404,7 +400,7 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+        event.event_type == :button_press and event.button == 3
       end
 
       def prefs_empty(prefs)
@@ -474,15 +470,15 @@ module Alexandria
                                    "'%s'?") % provider.fullname,
                                  Gtk::Stock::DIALOG_QUESTION,
                                  [[Gtk::Stock::CANCEL,
-                                   Gtk::Dialog::RESPONSE_CANCEL],
+                                   :cancel],
                                   [Gtk::Stock::DELETE,
-                                   Gtk::Dialog::RESPONSE_OK]],
+                                   :ok]],
                                  _('If you continue, the provider and ' \
                                    'all of its preferences will be ' \
                                    'permanently deleted.'))
-        dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
-        if dialog.run == Gtk::Dialog::RESPONSE_OK
+        if dialog.run == :ok
           provider.remove
           BookProviders.update_priority
           reload_providers
@@ -500,9 +496,7 @@ module Alexandria
 
       def on_providers_button_press_event(_widget, event)
         # double left click
-        if event.event_type == Gdk::Event::BUTTON2_PRESS and
-            event.button == 1
-
+        if event.event_type == :'2button_press' and event.button == 1
           on_provider_setup
         end
       end

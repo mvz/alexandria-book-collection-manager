@@ -46,7 +46,7 @@ module Alexandria
         @entry_tags.complete_tags
 
         @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
-        @treeview_authors.selection.mode = Gtk::SELECTION_SINGLE
+        @treeview_authors.selection.mode = :single
         renderer = Gtk::CellRendererText.new
         renderer.signal_connect('edited') do |_cell, path_string, new_text|
           path = Gtk::TreePath.new(path_string)
@@ -62,7 +62,7 @@ module Alexandria
         @treeview_authors.append_column(col)
 
         setup_calendar_widgets
-        Gtk.timeout_add(150) do
+        GLib::Timeout.add(150) do
           @setup_finished = true
 
           false
@@ -76,10 +76,10 @@ module Alexandria
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
-        @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
+        @calendar_popup.events = [:focus_change_mask]
 
         @calendar_popup.set_transient_for(@book_properties_dialog)
-        @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)
+        @calendar_popup.set_type_hint :dialog
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4
@@ -144,7 +144,7 @@ module Alexandria
         @calendar_popup.hide_all
         @book_properties_dialog.modal = true
 
-        Gtk.timeout_add(150) do
+        GLib::Timeout.add(150) do
           # If we set @popup_displayed=false immediately, then a click
           # event on the primary icon of the Entry simultaneous with
           # the focus-out-event of the Calendar causes the Calendar to
@@ -277,12 +277,12 @@ module Alexandria
                                             @book_properties_dialog,
                                             Gtk::FileChooser::ACTION_OPEN,
                                             backend,
-                                            [_('No Cover'), Gtk::Dialog::RESPONSE_REJECT],
-                                            [Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                                            [Gtk::Stock::OPEN, Gtk::Dialog::RESPONSE_ACCEPT])
+                                            [_('No Cover'), :reject],
+                                            [Gtk::Stock::CANCEL, :cancel],
+                                            [Gtk::Stock::OPEN, :accept])
         dialog.current_folder = @@latest_filechooser_directory
         response = dialog.run
-        if response == Gtk::Dialog::RESPONSE_ACCEPT
+        if response == :accept
           begin
             @delete_cover_file = false
             cover = GdkPixbuf::Pixbuf.new(file: dialog.filename)
@@ -310,7 +310,7 @@ module Alexandria
           rescue RuntimeError => e
             ErrorDialog.new(@book_properties_dialog, e.message)
           end
-        elsif response == Gtk::Dialog::RESPONSE_REJECT
+        elsif response == :reject
           ## FileUtils.rm_f(@cover_file) # fixing bug #16707
           @delete_cover_file = true
 

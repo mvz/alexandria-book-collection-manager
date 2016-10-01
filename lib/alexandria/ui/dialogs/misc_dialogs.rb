@@ -26,17 +26,17 @@ module Alexandria
               _("The book '%s' already exists in '%s'. Would you like " \
                 'to replace it?') % [book.title, library.name],
               Gtk::Stock::DIALOG_QUESTION,
-              [[_('_Skip'), Gtk::Dialog::RESPONSE_CANCEL],
-               [_('_Replace'), Gtk::Dialog::RESPONSE_OK]],
+              [[_('_Skip'), :cancel],
+               [_('_Replace'), :ok]],
               _('If you replace the existing book, its contents will ' \
                 'be overwritten.'))
-        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        self.default_response = Gtk::ResponseType::CANCEL
         show_all and @response = run
         destroy
       end
 
       def replace?
-        @response == Gtk::Dialog::RESPONSE_OK
+        @response == :ok
       end
     end
 
@@ -68,17 +68,17 @@ module Alexandria
         end
 
         super(parent, message, Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [Gtk::Stock::DELETE, Gtk::Dialog::RESPONSE_OK]],
+              [[Gtk::Stock::CANCEL, :cancel],
+               [Gtk::Stock::DELETE, :ok]],
               description)
 
-        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        self.default_response = Gtk::ResponseType::CANCEL
         show_all and @response = run
         destroy
       end
 
       def ok?
-        @response == Gtk::Dialog::RESPONSE_OK
+        @response == :ok
       end
     end
   end

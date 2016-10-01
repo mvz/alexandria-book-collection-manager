@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -65,12 +65,6 @@ end
 class Alexandria::BookProviders::AbstractProvider
   def action_name
     'At' + name
-  end
-end
-
-module Pango
-  def self.ellipsizable?
-    @ellipsizable ||= Pango.constants.include?('ELLIPSIZE_END')
   end
 end
 

@@ -17,60 +17,65 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 # Ideally this would be a subclass of GtkComboBox, but...
-class Gtk::ComboBox
-  include GetText
-  extend GetText
-  GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-  def populate_with_libraries(libraries, selected_library)
-    libraries_names = libraries.map(&:name)
-    if selected_library
-      libraries_names.delete selected_library.name
-      libraries_names.unshift selected_library.name
-    end
-    clear
-    set_row_separator_func do |_model, iter|
-      iter[1] == '-'
-    end
-    self.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf, String, TrueClass)
-    libraries_names.each do |library_name|
+module Alexandria
+  module ComboBoxOverrides
+    include GetText
+    extend GetText
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+
+    def populate_with_libraries(libraries, selected_library)
+      libraries_names = libraries.map(&:name)
+      if selected_library
+        libraries_names.delete selected_library.name
+        libraries_names.unshift selected_library.name
+      end
+      clear
+      set_row_separator_func do |model, iter|
+        model.get_value(iter, 1) == '-'
+      end
+      self.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf, String, TrueClass)
+      libraries_names.each do |library_name|
+        iter = model.append
+        iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
+        iter[1] = library_name
+        iter[2] = false
+      end
+      model.append[1] = '-'
       iter = model.append
       iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
-      iter[1] = library_name
-      iter[2] = false
+      iter[1] = _('New Library')
+      iter[2] = true
+      renderer = Gtk::CellRendererPixbuf.new
+      pack_start(renderer, false)
+      set_attributes(renderer, pixbuf: 0)
+      renderer = Gtk::CellRendererText.new
+      pack_start(renderer, true)
+      set_attributes(renderer, text: 1)
+      self.active = 0
+      # self.sensitive = libraries.length > 1
+      # This prohibits us from adding a "New Library" from this combo
+      # when we only have a single library
     end
-    model.append[1] = '-'
-    iter = model.append
-    iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
-    iter[1] = _('New Library')
-    iter[2] = true
-    renderer = Gtk::CellRendererPixbuf.new
-    pack_start(renderer, false)
-    set_attributes(renderer, pixbuf: 0)
-    renderer = Gtk::CellRendererText.new
-    pack_start(renderer, true)
-    set_attributes(renderer, text: 1)
-    self.active = 0
-    # self.sensitive = libraries.length > 1
-    # This prohibits us from adding a "New Library" from this combo
-    # when we only have a single library
-  end
 
-  def selection_from_libraries(libraries)
-    iter = active_iter
-    is_new = false
-    library = nil
-    if iter[2]
-      name = Alexandria::Library.generate_new_name(libraries)
-      library = Alexandria::Library.load(name)
-      libraries << library
-      is_new = true
-    else
-      library = libraries.find do |x|
-        x.name == active_iter[1]
+    def selection_from_libraries(libraries)
+      iter = active_iter
+      is_new = false
+      library = nil
+      if iter[2]
+        name = Alexandria::Library.generate_new_name(libraries)
+        library = Alexandria::Library.load(name)
+        libraries << library
+        is_new = true
+      else
+        library = libraries.find do |x|
+          x.name == active_iter[1]
+        end
       end
+      raise unless library
+      [library, is_new]
     end
-    raise unless library
-    [library, is_new]
   end
 end
+
+Gtk::ComboBox.prepend Alexandria::ComboBoxOverrides

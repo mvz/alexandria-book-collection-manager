@@ -1,6 +1,6 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007 Cathal Mc Ginley
-# Copyright (C) 2014 Matijs van Zuijlen
+# Copyright (C) 2014, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -48,8 +48,7 @@ module Alexandria
       end
       sorted
     rescue => ex
-      trace = ex.backtrace.join("\n> ")
-      log.warn { "Could not sort library by #{@book_attribute} #{ex.message} #{trace}" }
+      log.warn { "Could not sort library by #{@book_attribute.inspect}: #{ex.message}" }
       library
     end
 

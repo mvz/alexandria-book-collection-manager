@@ -24,20 +24,21 @@ module Alexandria
       def initialize(parent, smart_library, &block)
         super(parent)
 
-        add_buttons([Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-                    [Gtk::Stock::SAVE, Gtk::Dialog::RESPONSE_OK])
+        add_buttons([Gtk::Stock::CANCEL, :cancel],
+                    [Gtk::Stock::SAVE, :ok])
 
         self.title = _("Properties for '%s'") % smart_library.name
-        self.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        # FIXME: Should accept just :cancel
+        self.default_response = Gtk::ResponseType::CANCEL
 
         show_all
         smart_library.rules.each { |x| insert_new_rule(x) }
         update_rules_header_box(smart_library.predicate_operator_rule)
 
-        while (response = run) != Gtk::Dialog::RESPONSE_CANCEL
-          if response == Gtk::Dialog::RESPONSE_HELP
+        while (response = run) != :cancel
+          if response == :help
             Alexandria::UI.display_help(self, 'edit-smart-library')
-          elsif response == Gtk::Dialog::RESPONSE_OK
+          elsif response == :ok
             if user_confirms_possible_weirdnesses_before_saving?
               smart_library.rules = smart_library_rules
               smart_library.predicate_operator_rule =

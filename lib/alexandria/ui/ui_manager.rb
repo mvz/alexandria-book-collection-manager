@@ -60,7 +60,6 @@ module Alexandria
         setup_accel_group
         setup_popups
         setup_window_events
-        setup_dialog_hooks
         setup_books_iconview_sorting
         on_books_selection_changed
         restore_preferences
@@ -89,8 +88,8 @@ module Alexandria
       end
 
       def setup_dependents
-        @listview_model = Gtk::TreeModelSort.new(@filtered_model)
-        @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
+        @listview_model = Gtk::TreeModelSort.new(model: @filtered_model)
+        @iconview_model = Gtk::TreeModelSort.new(model: @filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
         @sidepane_manager = SidePaneManager.new @library_listview, self
@@ -115,10 +114,10 @@ module Alexandria
         add_main_toolbar_items
         @toolbar = @uimanager.get_widget('/MainToolbar')
         @toolbar.show_arrow = true
-        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+        @toolbar.insert(Gtk::SeparatorToolItem.new, -1)
         setup_toolbar_combobox
         setup_toolbar_filter_entry
-        @toolbar.insert(-1, Gtk::SeparatorToolItem.new)
+        @toolbar.insert(Gtk::SeparatorToolItem.new, -1)
         setup_toolbar_viewas
         @toolbar.show_all
         @actiongroup['Undo'].sensitive = @actiongroup['Redo'].sensitive = false
@@ -129,15 +128,15 @@ module Alexandria
       def add_main_toolbar_items
         mid = @uimanager.new_merge_id
         @uimanager.add_ui(mid, 'ui/', 'MainToolbar', 'MainToolbar',
-                          Gtk::UIManager::TOOLBAR, false)
+                          :toolbar, false)
         @uimanager.add_ui(mid, 'ui/MainToolbar/', 'New', 'New',
-                          Gtk::UIManager::TOOLITEM, false)
+                          :toolitem, false)
         @uimanager.add_ui(mid, 'ui/MainToolbar/', 'AddBook', 'AddBook',
-                          Gtk::UIManager::TOOLITEM, false)
+                          :toolitem, false)
         # @uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
-        #                  Gtk::UIManager::SEPARATOR, false)
+        #                  :separator, false)
         # @uimanager.add_ui(mid, "ui/MainToolbar/", "Refresh", "Refresh",
-        #                  Gtk::UIManager::TOOLITEM, false)
+        #                  :toolitem, false)
       end
 
       def setup_toolbar_filter_entry
@@ -146,19 +145,16 @@ module Alexandria
         @toolitem = Gtk::ToolItem.new
         @toolitem.expand = true
         @toolitem.border_width = 5
-        @tooltips.set_tip(@filter_entry,
-                          _('Type here the search criterion'), nil)
+        @filter_entry.set_tooltip_text _('Type here the search criterion')
         @toolitem << @filter_entry
-        @toolbar.insert(-1, @toolitem)
+        @toolbar.insert(@toolitem, -1)
       end
 
       def setup_toolbar_combobox
-        @tooltips = Gtk::Tooltips.new
-
-        cb = Gtk::ComboBox.new
-        cb.set_row_separator_func do |_model, iter|
+        cb = Gtk::ComboBoxText.new
+        cb.set_row_separator_func do |model, iter|
           # log.debug { "row_separator" }
-          iter[0] == '-'
+          model.get_value(iter, 0) == '-'
         end
         [_('Match everything'),
          '-',
@@ -181,12 +177,12 @@ module Alexandria
         @toolitem = Gtk::ToolItem.new
         @toolitem.border_width = 5
         @toolitem << eb
-        @toolbar.insert(-1, @toolitem)
-        @tooltips.set_tip(eb, _('Change the search type'), nil)
+        @toolbar.insert(@toolitem, -1)
+        eb.set_tooltip_text _('Change the search type')
       end
 
       def setup_toolbar_viewas
-        @toolbar_view_as = Gtk::ComboBox.new
+        @toolbar_view_as = Gtk::ComboBoxText.new
         @toolbar_view_as.append_text(_('View as Icons'))
         @toolbar_view_as.append_text(_('View as List'))
         @toolbar_view_as.active = 0
@@ -200,8 +196,8 @@ module Alexandria
         @toolitem = Gtk::ToolItem.new
         @toolitem.border_width = 5
         @toolitem << eb
-        @toolbar.insert(-1, @toolitem)
-        @tooltips.set_tip(eb, _('Choose how to show books'), nil)
+        @toolbar.insert(@toolitem, -1)
+        eb.set_tooltip_text _('Choose how to show books')
       end
 
       def setup_book_providers
@@ -214,7 +210,7 @@ module Alexandria
            'ui/NoBookPopup/OnlineInformation/'].each do |path|
              log.debug { "Adding #{name} to #{path}" }
              @uimanager.add_ui(mid, path, name, name,
-                               Gtk::UIManager::MENUITEM, false)
+                               :menuitem, false)
            end
         end
       end
@@ -235,18 +231,6 @@ module Alexandria
       def setup_menus
         @menubar = @uimanager.get_widget('/MainMenubar')
         @vbox1.add(@menubar,  position: 0, expand: false, fill: false)
-      end
-
-      def setup_dialog_hooks
-        log.debug { 'setup_dialog_hooks' }
-        Gtk::AboutDialog.set_url_hook do |_about, link|
-          log.debug { 'set_url_hook' }
-          open_web_browser(link)
-        end
-        Gtk::AboutDialog.set_email_hook do |_about, link|
-          log.debug { 'set_email_hook' }
-          open_email_client('mailto:' + link)
-        end
       end
 
       def setup_popups
@@ -344,7 +328,7 @@ module Alexandria
               sensitize_library selected_library
 
               if widget.is_a?(Gtk::TreeView)
-                Gtk.idle_add do
+                GLib::Idle.add do
                   # cur_path, focus_col = widget.cursor
 
                   widget.focus = true
@@ -377,13 +361,13 @@ module Alexandria
           if library_already_selected
             sensitize_library selected_library
 
-            Gtk.idle_add do
+            GLib::Idle.add do
               menu.popup(nil, nil, event.button, event.time)
               # @clicking_on_sidepane = false
               false
             end
           else
-            Gtk.idle_add do
+            GLib::Idle.add do
               menu.popup(nil, nil, event.button, event.time)
               # @clicking_on_sidepane = false
 
@@ -410,7 +394,7 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == Gdk::Event::BUTTON_PRESS and event.button == 3
+        event.event_type == :button_press and event.button == 3
       end
 
       def on_books_button_press_event(widget, event)
@@ -536,16 +520,16 @@ module Alexandria
         @clicking_on_sidepane = false
       end
 
-      def on_switch_page
+      def on_switch_page(_notebook, _page, page_num)
         log.debug { 'on_switch_page' }
-        @actiongroup['ArrangeIcons'].sensitive = @notebook.page == 0
+        @actiongroup['ArrangeIcons'].sensitive = page_num == 0
         on_books_selection_changed
       end
 
       def on_focus(widget, _event_focus)
         if @clicking_on_sidepane or widget == @library_listview
           log.debug { 'on_focus: @library_listview' }
-          Gtk.idle_add do
+          GLib::Idle.add do
             %w(OnlineInformation SelectAll DeselectAll).each do |action|
               @actiongroup[action].sensitive = false
             end
@@ -579,8 +563,7 @@ module Alexandria
           unless view.model
             next
           end
-          path = view.model.convert_path_to_child_path(path)
-          path = @filtered_model.convert_path_to_child_path(path)
+          path = view_path_to_model_path(view, path)
           log.debug { "Path for #{bk.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
           selection.unselect_all
@@ -644,41 +627,7 @@ module Alexandria
           log.warn('Attempt to open browser with nil url')
           return
         end
-        if (cmd = Preferences.instance.www_browser)
-          launch_command = cmd
-          if cmd.downcase.index('%u')
-            launch_command = cmd.gsub(/%U/i, "\"" + url + "\"")
-          else
-            launch_command = cmd + " \"" + url + "\""
-          end
-          Thread.new { system(launch_command) }
-        else
-          ErrorDialog.new(@main_app,
-                          _('Unable to launch the web browser'),
-                          _('Check out that a web browser is ' \
-                            'configured as default (Desktop ' \
-                            'Preferences -> Advanced -> Preferred ' \
-                            'Applications) and try again.'))
-        end
-      end
-
-      def open_email_client(url)
-        if (cmd = Preferences.instance.email_client)
-          launch_command = cmd
-          if cmd.downcase.index('%u')
-            launch_command = cmd.gsub(/%u/i, "\"" + url + "\"")
-          else
-            launch_command = cmd + " \"" + url + "\""
-          end
-          Thread.new { system(launch_command) }
-        else
-          ErrorDialog.new(@main_app,
-                          _('Unable to launch the mail reader'),
-                          _('Check out that a mail reader is ' \
-                            'configured as default (Desktop ' \
-                            'Preferences -> Advanced -> Preferred ' \
-                            'Applications) and try again.'))
-        end
+        Gtk.show_uri url
       end
 
       def detach_old_libraries
@@ -725,7 +674,7 @@ module Alexandria
                                                  new_message).show
         recovery_dialog.signal_connect('response') do |_dialog, response_type|
           recovery_dialog.destroy
-          if response_type == Gtk::Dialog::RESPONSE_OK
+          if response_type == :ok
             # progress indicator...
             @progressbar.fraction = 0
             @appbar.children.first.visible = true   # show the progress bar
@@ -735,7 +684,7 @@ module Alexandria
             prog_percentage = 0
 
             @libraries.ruined_books.reverse!
-            Gtk.idle_add do
+            GLib::Idle.add do
               ruined_book = @libraries.ruined_books.pop
               if ruined_book
                 book, isbn, library = ruined_book
@@ -920,7 +869,7 @@ module Alexandria
         log.debug { "library #{library.name} length #{library.length}" }
         n = 0
 
-        Gtk.idle_add do
+        GLib::Idle.add do
           block_return = true
           book = library[n]
           if book
@@ -998,39 +947,28 @@ module Alexandria
       end
 
       def collate_selected_books(page)
-        a = []
+        result = []
         library = selected_library
-        view = page == 0 ? @iconview : @listview
-        selection = page == 0 ? @iconview : @listview.selection
 
-        selection.selected_each do |_the_view, path|
-          # don't use the_view which is passed in by this block
-          # as it doesn't consider the filtering for some reason
-          # see bug #24568
-          unless view.model
-            next
+        if page == 0
+          result = @iconview.selected_items.map do |path|
+            path = view_path_to_model_path(@iconview, path)
+            book_from_iter(library, @model.get_iter(path))
           end
-          path = view.model.convert_path_to_child_path(path)
-          if path
-            path = @filtered_model.convert_path_to_child_path(path)
-            # FIX this sometimes returns a nil path for iconview...
-            if path
-              iter = @model.get_iter(path)
-              if iter
-                a << book_from_iter(library, iter)
-              end
-            end
-            # This used to cause a crash when manually adding the first
-            # book to a Library displayed in an Iconview
-            # TODO find root cause of this
+        else
+          selection = @listview.selection
+          rows, the_model = selection.selected_rows
+          result = rows.map do |path|
+            path = view_path_to_model_path(@listview, path)
+            book_from_iter(library, @model.get_iter(path))
           end
         end
-        a
+
+        result
       end
 
       def selected_books
-        a = collate_selected_books(@notebook.page)
-        selected = a.select { |x| !x.nil? }
+        selected = collate_selected_books(@notebook.page).compact
         log.debug { "Selected books = #{selected.inspect}" }
         selected
       end
@@ -1055,7 +993,7 @@ module Alexandria
       def sensitize_library(library)
         smart = library.is_a?(SmartLibrary)
         log.debug { "sensitize_library: smartlibrary = #{smart}" }
-        Gtk.idle_add do
+        GLib::Idle.add do
           @actiongroup['AddBook'].sensitive = !smart
           @actiongroup['AddBookManual'].sensitive = !smart
           @actiongroup['Properties'].sensitive = smart
@@ -1169,7 +1107,7 @@ module Alexandria
           ['ui/MainMenubar/EditMenu/Move/',
            'ui/BookPopup/Move/'].each do |path|
             @uimanager.add_ui(@move_mid, path, name, name,
-                              Gtk::UIManager::MENUITEM, false)
+                              :menuitem, false)
           end
         end
       end
@@ -1187,11 +1125,8 @@ module Alexandria
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
         log.debug { "library_sort_order #{@notebook.page}: #{@iconview.model.inspect} #{@listview.model.inspect}" }
-        sorted_on = current_view.model.sort_column_id
-        if sorted_on
-          sort_column = sorted_on[0]
-          sort_order = sorted_on[1]
-
+        result, sort_column, sort_order = current_view.model.sort_column_id
+        if result
           column_ids_to_attributes = { 2 => :title,
                                        4 => :authors,
                                        5 => :isbn,
@@ -1203,8 +1138,8 @@ module Alexandria
                                        14 => :want,
                                        9 => :rating }
 
-          sort_attribute = column_ids_to_attributes[sort_column]
-          ascending = (sort_order == Gtk::SORT_ASCENDING)
+          sort_attribute = column_ids_to_attributes.fetch sort_column
+          ascending = (sort_order == :ascending)
           LibrarySortOrder.new(sort_attribute, ascending)
         else
           LibrarySortOrder::Unsorted.new
@@ -1285,10 +1220,17 @@ module Alexandria
       ]
 
       def setup_books_iconview_sorting
-        sort_order = @prefs.reverse_icons ? Gtk::SORT_DESCENDING : Gtk::SORT_ASCENDING
+        sort_order = @prefs.reverse_icons ? :descending : :ascending
         mode = ICONS_SORTS[@prefs.arrange_icons_mode]
         @iconview_model.set_sort_column_id(mode, sort_order)
         @filtered_model.refilter # force redraw
+      end
+
+      private
+
+      def view_path_to_model_path(view, path)
+        path = view.model.convert_path_to_child_path(path)
+        @filtered_model.convert_path_to_child_path(path) if path
       end
     end
   end

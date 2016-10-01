@@ -1,7 +1,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2011 Cathal Mc Ginley
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # This file is part of Alexandria, a GNOME book collection manager.
 #
@@ -55,7 +55,7 @@ module Alexandria
       end
 
       def start
-        @timeout = Gtk.timeout_add(20) do
+        @timeout = GLib::Timeout.add(20) do
           scan_animation
           (@index >= 0)
         end
@@ -130,9 +130,9 @@ module Alexandria
           @index += 1
         else
           @index = -1
-          Gtk.timeout_add(5) do
+          GLib::Timeout.add(5) do
             @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, 0x000000C0) }
-            Gtk.timeout_add(15) do
+            GLib::Timeout.add(15) do
               fade_animation
               (@fade_opacity != -1)
             end

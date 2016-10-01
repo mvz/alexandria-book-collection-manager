@@ -30,18 +30,18 @@ module Alexandria
       def initialize(parent, book)
         super(parent, _("Invalid ISBN '%s'") % book.isbn,
               Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-               [_('_Keep'), Gtk::Dialog::RESPONSE_OK]],
+              [[Gtk::Stock::CANCEL, :cancel],
+               [_('_Keep'), :ok]],
               _("The book titled '%s' has an invalid ISBN, but still " \
                 'exists in the providers libraries.  Do you want to ' \
                 'keep the book but change the ISBN or cancel the addition?') % book.title)
-        self.default_response = Gtk::Dialog::RESPONSE_OK
+        self.default_response = Gtk::ResponseType::OK
         show_all and @response = run
         destroy
       end
 
       def keep?
-        @response == Gtk::Dialog::RESPONSE_OK
+        @response == :ok
       end
     end
 
@@ -137,18 +137,18 @@ module Alexandria
         # When item is first toggled to "Search" the entry_search
         # field was unselectable. One used to have to click the dialog
         # title bar to be able to focus it again. Putting the GUI
-        # modifications in an Gtk.idle_add block fixed the problem.
+        # modifications in an GLib::Idle.add block fixed the problem.
 
         is_isbn = item == @isbn_radiobutton
         if is_isbn
-          Gtk.idle_add do
+          GLib::Idle.add do
             @latest_size = @new_book_dialog.size
             @new_book_dialog.resizable = false
             @entry_isbn.grab_focus
             false
           end
         else
-          Gtk.idle_add do
+          GLib::Idle.add do
             @new_book_dialog.resizable = true
             @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
             @entry_search.grab_focus
@@ -210,7 +210,7 @@ module Alexandria
           end
         end
 
-        Gtk.timeout_add(100) do
+        GLib::Timeout.add(100) do
           if @image_error
             image_error_dialog(@image_error)
           else
@@ -258,7 +258,7 @@ module Alexandria
                end
 
         # @progressbar.show
-        # progress_pulsing = Gtk.timeout_add(100) do
+        # progress_pulsing = GLib::Timeout.add(100) do
         #  if @destroyed
         #    false
         #  else
@@ -281,7 +281,7 @@ module Alexandria
         @image_thread.kill if @image_thread
 
         notify_start_add_by_isbn
-        Gtk.idle_add do
+        GLib::Idle.add do
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -299,7 +299,7 @@ module Alexandria
           false
         end
 
-        Gtk.timeout_add(100) do
+        GLib::Timeout.add(100) do
           # This block copies results into the tree view, or shows an
           # error if the search failed.
 
@@ -336,19 +336,19 @@ module Alexandria
                          log.info { "@find_thread (#{@find_thread}) asleep now." }
                          # Not really async now.
                          get_images_async
-                         false # continue == false if you get to here. Stop timeout_add.
+                         false # continue == false if you get to here. Stop timeout.
                        end
                      else
                        # Stop if the book find thread has stopped.
                        @find_thread.alive?
                      end
           # continue == false if @find_error OR if results are returned
-          # timeout_add ends if continue is false!
+          # timeout ends if continue is false!
 
           unless continue
             unless @find_thread.alive? # This happens after find_thread is done
               unless @destroyed
-                # Gtk.timeout_remove(progress_pulsing)
+                # GLib::Source.remove(progress_pulsing)
                 # @progressbar.hide
                 notify_end_add_by_isbn
                 @button_add.sensitive = false
@@ -356,7 +356,7 @@ module Alexandria
             end
           end
 
-          continue # timeout_add loop condition
+          continue # timeout loop condition
         end
       end
 
@@ -374,9 +374,7 @@ module Alexandria
 
       def on_results_button_press_event(_widget, event)
         # double left click
-        if event.event_type == Gdk::Event::BUTTON2_PRESS and
-            event.button == 1
-
+        if event.event_type == :'2button_press' and event.button == 1
           on_add
         end
       end
@@ -393,7 +391,7 @@ module Alexandria
         assert_not_exist(library, @entry_isbn.text)
         @button_add.sensitive = false
         notify_start_add_by_isbn
-        Gtk.idle_add do
+        GLib::Idle.add do
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -528,7 +526,7 @@ module Alexandria
       def notify_start_add_by_isbn
         main_progress_bar = MainApp.instance.appbar.children.first
         main_progress_bar.visible = true
-        @progress_pulsing = Gtk.timeout_add(100) do
+        @progress_pulsing = GLib::Timeout.add(100) do
           if @destroyed
             false
           else
@@ -541,7 +539,7 @@ module Alexandria
       def notify_end_add_by_isbn
         MainApp.instance.appbar.children.first.visible = false
         if @progress_pulsing
-          Gtk.timeout_remove(@progress_pulsing)
+          GLib::Source.remove(@progress_pulsing)
           @progress_pulsing = nil
         end
       end
@@ -564,7 +562,7 @@ module Alexandria
           if (text = clipboard.wait_for_text)
             if Library.valid_isbn?(text) or Library.valid_ean?(text) or
                 Library.valid_upc?(text)
-              Gtk.idle_add do
+              GLib::Idle.add do
                 @entry_isbn.text = text
                 @entry_isbn.grab_focus
                 @entry_isbn.select_region(0, -1) # select all...
@@ -582,7 +580,7 @@ module Alexandria
       end
 
       def on_clicked(widget, event)
-        if event.event_type == Gdk::Event::BUTTON_PRESS and
+        if event.event_type == :button_press and
             event.button == 1
 
           radio, target_widget, box2, box3 = case widget

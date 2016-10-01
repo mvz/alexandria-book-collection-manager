@@ -16,7 +16,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'gdk_pixbuf2'
-require 'gtk2'
+require 'gtk3'
 
 require 'alexandria/ui/icons'
 require 'alexandria/ui/builder_base'

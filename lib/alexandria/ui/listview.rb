@@ -1,7 +1,7 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
 # Copyright (C) 2010 Cathal Mc Ginley
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License aso
@@ -27,7 +27,7 @@ module Alexandria
       include Logging
       include GetText
       include DragAndDropable
-      BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', Gtk::Drag::TARGET_SAME_APP, 0]]
+      BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', :same_app, 0]]
 
       MAX_RATING_STARS = 5
       module Columns
@@ -57,7 +57,7 @@ module Alexandria
         column.add_attribute(renderer, 'pixbuf', Columns::COVER_LIST)
 
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+        renderer.ellipsize = Pango::ELLIPSIZE_END
         column.pack_start(renderer, true)
         column.add_attribute(renderer, 'text', Columns::TITLE)
 
@@ -91,7 +91,7 @@ module Alexandria
           setup_check_column title, iterid
         end
         setup_rating_column
-        @listview.selection.mode = Gtk::SELECTION_MULTIPLE
+        @listview.selection.mode = :multiple
         @listview.selection.signal_connect('changed') do
           log.debug { 'changed' }
           @parent.on_books_selection_changed
@@ -106,7 +106,7 @@ module Alexandria
         title = _('Tags')
         log.debug { 'Create listview column for tags...' }
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+        renderer.ellipsize = Pango::ELLIPSIZE_END
         column = Gtk::TreeViewColumn.new(title, renderer,
                                          text: Columns::TAGS)
         column.sort_column_id = Columns::TAGS
@@ -126,13 +126,14 @@ module Alexandria
         title = _('Rating')
         log.debug { 'Create listview column for %s...' % title }
         column = Gtk::TreeViewColumn.new(title)
-        column.sizing = Gtk::TreeViewColumn::FIXED
+        column.sizing = :fixed
         column.fixed_width = column.min_width = column.max_width =
           (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
+          renderer.xalign = 0.0
           column.pack_start(renderer, false)
-          column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
+          column.set_cell_data_func(renderer) do |_tree_column, cell, _tree_model, iter|
             rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
             cell.pixbuf = rating >= i.succ ?
               Icons::STAR_SET : Icons::STAR_UNSET
@@ -204,7 +205,7 @@ module Alexandria
       def setup_text_column(title, iterid)
         log.debug { 'Create listview column for %s...' % title }
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END if Pango.ellipsizable?
+        renderer.ellipsize = Pango::ELLIPSIZE_END
         column = Gtk::TreeViewColumn.new(title, renderer,
                                          text: iterid)
         column.sort_column_id = iterid
@@ -247,7 +248,7 @@ module Alexandria
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
               width = cols_width[c.title]
               next if width == 0
-              c.sizing = Gtk::TreeViewColumn::FIXED
+              c.sizing = :fixed
               c.fixed_width = width
             end
           end

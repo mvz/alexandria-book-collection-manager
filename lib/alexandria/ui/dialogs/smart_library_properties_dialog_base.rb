@@ -1,5 +1,5 @@
 # Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -26,37 +26,38 @@ module Alexandria
       attr_reader :predicate_operator_rule
 
       def initialize(parent)
-        super('', parent, Gtk::Dialog::MODAL,
-              [Gtk::Stock::HELP, Gtk::Dialog::RESPONSE_HELP])
+        super(title: '',
+              parent: parent,
+              flags: :modal,
+              buttons: [[Gtk::Stock::HELP, :help]])
 
-        self.window_position = Gtk::Window::POS_CENTER
-        self.has_separator = false
+        self.window_position = :center
         self.resizable = true
         self.border_width = 4
-        vbox.border_width = 12
+        child.border_width = 12
 
-        main_box = Gtk::VBox.new
+        main_box = Gtk::Box.new :vertical
         main_box.border_width = 4
         main_box.spacing = 8
 
-        vbox << main_box
+        child << main_box
 
         @smart_library_rules = []
 
-        @rules_header_box = Gtk::HBox.new
+        @rules_header_box = Gtk::Box.new :horizontal
         @rules_header_box.spacing = 2
 
-        @rules_box = Gtk::VBox.new
+        @rules_box = Gtk::Box.new :vertical
         @rules_box.spacing = 8
         @rules_box.border_width = 8
 
         scrollview = Gtk::ScrolledWindow.new
-        scrollview.hscrollbar_policy = Gtk::POLICY_NEVER
-        scrollview.vscrollbar_policy = Gtk::POLICY_AUTOMATIC
+        scrollview.hscrollbar_policy = :never
+        scrollview.vscrollbar_policy = :automatic
         scrollview.set_size_request(-1, 125)
         scrollview.add_with_viewport(@rules_box)
 
-        main_box.pack_start(@rules_header_box, false, false, 0)
+        main_box.pack_start(@rules_header_box, expand: false, fill: false)
         main_box << scrollview
         setup_calendar_widgets
       end
@@ -82,15 +83,15 @@ module Alexandria
           self,
           _('Empty or conflictive condition'),
           Gtk::Stock::DIALOG_QUESTION,
-          [[Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_CANCEL],
-           [_('_Save However'), Gtk::Dialog::RESPONSE_YES]],
+          [[Gtk::Stock::CANCEL, :cancel],
+           [_('_Save However'), :yes]],
           _('This smart library contains one or more conditions ' \
             'which are empty or conflict with each other. This is ' \
             'likely to result in never matching a book. Are you ' \
             'sure you want to save this library?'))
-        dialog.default_response = Gtk::Dialog::RESPONSE_CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
-        confirmed = dialog.run == Gtk::Dialog::RESPONSE_YES
+        confirmed = dialog.run == :yes
         dialog.destroy
         confirmed
       end
@@ -103,7 +104,7 @@ module Alexandria
           label1.set_alignment(0.0, 0.5)
           label1.text = _('Match')
 
-          cb = Gtk::ComboBox.new
+          cb = Gtk::ComboBoxText.new
           [_('all'), _('any')].each { |x| cb.append_text(x) }
           cb.signal_connect('changed') do
             @predicate_operator_rule = cb.active == 0 ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
@@ -115,9 +116,9 @@ module Alexandria
           label2.set_alignment(0.0, 0.5)
           label2.text = _('of the following rules:')
 
-          @rules_header_box.pack_start(label1, false, false, 0)
-          @rules_header_box.pack_start(cb, false, false, 0)
-          @rules_header_box.pack_start(label2, false, false, 0)
+          @rules_header_box.pack_start(label1, expand: false, fill: false)
+          @rules_header_box.pack_start(cb, expand: false, fill: false)
+          @rules_header_box.pack_start(label2, expand: false, fill: false)
         else
           label = Gtk::Label.new
           label.set_alignment(0.0, 0.5)
@@ -130,15 +131,11 @@ module Alexandria
       end
 
       def insert_new_rule(rule = nil)
-        rule_box = Gtk::HBox.new
+        rule_box = Gtk::Box.new :horizontal
         rule_box.spacing = 8
 
-        left_operand_combo = Gtk::ComboBox.new
-        operator_combo = Gtk::ComboBox.new
-        operator_model = Gtk::ListStore.new(String)
-        # we can't just pass the model to the combo constructor,
-        # it doesn't seem to work properly
-        operator_combo.model = operator_model
+        left_operand_combo = Gtk::ComboBoxText.new
+        operator_combo = Gtk::ComboBoxText.new
 
         value_entry = Gtk::Entry.new
 
@@ -157,17 +154,17 @@ module Alexandria
         # ##date_entry.spacing = 8
         entry_label = Gtk::Label.new('')
 
-        add_button = Gtk::Button.new('')
+        add_button = Gtk::Button.new(label: '')
         add_button.remove(add_button.children.first)
-        add_button << Gtk::Image.new(Gtk::Stock::ADD,
-                                     Gtk::IconSize::BUTTON)
+        add_button << Gtk::Image.new(stock: Gtk::Stock::ADD,
+                                     size: Gtk::IconSize::BUTTON)
 
         add_button.signal_connect('clicked') { insert_new_rule }
 
-        remove_button = Gtk::Button.new('')
+        remove_button = Gtk::Button.new(label: '')
         remove_button.remove(remove_button.children.first)
-        remove_button << Gtk::Image.new(Gtk::Stock::REMOVE,
-                                        Gtk::IconSize::BUTTON)
+        remove_button << Gtk::Image.new(stock: Gtk::Stock::REMOVE,
+                                        size: Gtk::IconSize::BUTTON)
 
         remove_button.signal_connect('clicked') do |_button|
           idx = @rules_box.children.index(rule_box)
@@ -219,30 +216,29 @@ module Alexandria
         left_operand_combo.signal_connect('changed') do
           operand = operands[left_operand_combo.active]
           operator_combo.freeze_notify do
-            operator_combo.model.clear
+            operator_combo.remove_all
             operations = SmartLibrary::Rule.operations_for_operand(operand)
             operations.each do |operation|
               operator = operation.first
-              iter = operator_combo.model.append
-              iter[0] = operator.name
+              operator_combo.append_text(operator.name)
             end
             operator_combo.active = 0
           end
         end
 
-        rule_box.pack_start(left_operand_combo, false, false, 0)
-        rule_box.pack_start(operator_combo, false, false, 0)
+        rule_box.pack_start(left_operand_combo, expand: false, fill: false)
+        rule_box.pack_start(operator_combo, expand: false, fill: false)
         rule_box.pack_start(value_entry)
         rule_box.pack_start(date_entry)
-        rule_box.pack_start(entry_label, false, false, 0)
-        rule_box.pack_end(remove_button, false, false, 0)
-        rule_box.pack_end(add_button, false, false, 0)
+        rule_box.pack_start(entry_label, expand: false, fill: false)
+        rule_box.pack_end(remove_button, expand: false, fill: false)
+        rule_box.pack_end(add_button, expand: false, fill: false)
 
         rule_box.show_all
         value_entry.visible = date_entry.visible = entry_label.visible =
           false
 
-        @rules_box.pack_start(rule_box, false, true, 0)
+        @rules_box.pack_start(rule_box, expand: false, fill: true)
 
         if rule
           operand_idx = operands.index(rule.operand)
@@ -313,10 +309,10 @@ module Alexandria
         @calendar_popup.decorated = false
         @calendar_popup.skip_taskbar_hint = true
         @calendar_popup.skip_pager_hint = true
-        @calendar_popup.events = [Gdk::Event::FOCUS_CHANGE_MASK]
+        @calendar_popup.events = [:focus_change_mask]
 
         @calendar_popup.set_transient_for(self)
-        @calendar_popup.set_type_hint(Gdk::Window::TYPE_HINT_DIALOG)
+        @calendar_popup.set_type_hint(:dialog)
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4
@@ -360,7 +356,7 @@ module Alexandria
         @calendar_popup.hide_all
         self.modal = true
 
-        Gtk.timeout_add(150) do
+        GLib::Timeout.add(150) do
           # If we set @popup_displayed=false immediately, then a click
           # event on the primary icon of the Entry simultaneous with
           # the focus-out-event of the Calendar causes the Calendar to
