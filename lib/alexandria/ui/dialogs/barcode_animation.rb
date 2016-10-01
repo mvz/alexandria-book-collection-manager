@@ -129,9 +129,9 @@ module Alexandria
       def draw_barcode_bars
         @barcode_data.each do |space_width, bar_width|
           @hpos += space_width
-          rect_item = GooCanvas::CanvasRect.new(@root,
-                                                @bar_left_edge + @scale * @hpos, @bar_top,
-                                                @scale * bar_width, @bar_height,
+          rect_item = GooCanvas::CanvasRect.new(parent: @root,
+                                                x: @bar_left_edge + @scale * @hpos, y: @bar_top,
+                                                width: @scale * bar_width, height: @bar_height,
                                                 line_width: 0,
                                                 fill_color: 'white')
           @hpos += bar_width
