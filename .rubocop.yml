@@ -64,7 +64,7 @@ Style/AndOr:
   Enabled: false
 
 # Allow semantic choice of trailing comma
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 # Alexandria uses regular arrays
