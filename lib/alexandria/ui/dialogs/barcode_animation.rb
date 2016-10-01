@@ -21,8 +21,6 @@
 # Boston, MA 02110-1301 USA.
 #++
 
-# require 'goocanvas'
-
 require 'gobject-introspection'
 
 module GooCanvas
