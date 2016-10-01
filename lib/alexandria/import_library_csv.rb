@@ -120,7 +120,7 @@ module Alexandria
       if row[@bookshelves]
         shelves = normalize(row[@bookshelves]).split
         shelves.each do |shelf|
-          tag = shelf.gsub(/-/, ' ')
+          tag = shelf.tr('-', ' ')
           unless book.tags.include? tag
             book.tags << tag
           end

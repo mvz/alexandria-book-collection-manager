@@ -129,7 +129,7 @@ module Alexandria
           chosen = results.first # fallback!
           results.each do |rslt|
             if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
-              if Regexp.last_match[1].gsub('-', '') == isbn10
+              if Regexp.last_match[1].delete('-') == isbn10
                 chosen = rslt
                 break
               end
