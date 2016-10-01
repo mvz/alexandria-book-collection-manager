@@ -22,7 +22,7 @@ module Alexandria
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-      def initialize(parent, &block)
+      def initialize(parent)
         super(parent)
 
         add_buttons([Gtk::Stock::CANCEL, :cancel],
@@ -50,7 +50,7 @@ module Alexandria
               library = SmartLibrary.new(name,
                                          rules,
                                          predicate_operator_rule)
-              block.call(library)
+              yield(library)
               break
             end
           end

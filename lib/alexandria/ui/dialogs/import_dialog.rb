@@ -58,7 +58,7 @@ module Alexandria
 
       FILTERS = Alexandria::ImportFilter.all
 
-      def initialize(parent, &on_accept_cb)
+      def initialize(parent)
         super()
         puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
@@ -175,7 +175,7 @@ module Alexandria
 
           unless @destroyed
             if library
-              on_accept_cb.call(library, @bad_isbns, @failed_isbns)
+              yield(library, @bad_isbns, @failed_isbns)
               break
             elsif not_cancelled
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG

@@ -32,13 +32,6 @@ Lint/UnreachableCode:
     - 'lib/alexandria/ui/dialogs/export_dialog.rb'
 
 # Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'lib/alexandria/ui/iconview_tooltips.rb'
-
-# Offense count: 2
 # Configuration parameters: ContextCreatingMethods.
 Lint/UselessAccessModifier:
   Exclude:
@@ -85,14 +78,6 @@ Metrics/ParameterLists:
 # Offense count: 76
 Metrics/PerceivedComplexity:
   Max: 29
-
-# Offense count: 3
-# Cop supports --auto-correct.
-Performance/RedundantBlockCall:
-  Exclude:
-    - 'lib/alexandria/ui/dialogs/import_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/new_smart_library_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb'
 
 # Offense count: 9
 # Cop supports --auto-correct.

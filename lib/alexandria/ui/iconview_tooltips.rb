@@ -38,7 +38,7 @@ class IconViewTooltips
 
   def set_view(view)
     view.has_tooltip = true
-    view.signal_connect('query-tooltip') do |widget, x, y, keyboard_mode, tooltip|
+    view.signal_connect('query-tooltip') do |_widget, x, y, _keyboard_mode, tooltip|
       tree_path = view.get_path_at_pos(x, y)
       if tree_path
         iter = view.model.get_iter(tree_path)
