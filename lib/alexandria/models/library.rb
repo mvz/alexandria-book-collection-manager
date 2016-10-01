@@ -570,9 +570,9 @@ module Alexandria
                 end
               when String
                 something
-              when Bignum
+              when Integer
                 something
-              when Fixnum
+              when Integer
                 something
               else
                 raise "#{something} is a #{something.class}"
@@ -586,9 +586,9 @@ module Alexandria
                 something.ident
               when String
                 something
-              when Bignum
+              when Integer
                 something
-              when Fixnum
+              when Integer
                 something
               else
                 raise "#{something} is #{something.class}"

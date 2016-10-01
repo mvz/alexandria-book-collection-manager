@@ -26,13 +26,6 @@ Lint/LiteralInCondition:
   Exclude:
     - 'util/rake/gettextgenerate.rb'
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Lint/UnifiedInteger:
-  Exclude:
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/preferences.rb'
-
 # Offense count: 1
 Lint/UnreachableCode:
   Exclude:

@@ -156,7 +156,7 @@ module Alexandria
     def get_gconf_type(value)
       if value.is_a?(String)
         'string'
-      elsif value.is_a?(Fixnum)
+      elsif value.is_a?(Integer)
         'int'
       elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
         'bool'
