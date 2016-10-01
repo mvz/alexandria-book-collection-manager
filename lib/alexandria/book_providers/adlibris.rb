@@ -33,12 +33,12 @@ module Alexandria
     class AdLibrisProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.adlibris.com/se/'
+      SITE = 'http://www.adlibris.com/se/'.freeze
 
       BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" \
-        '&fromproduct=False' # type/term
+        '&fromproduct=False'.freeze # type/term
 
-      PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
+      PRODUCT_URL = "#{SITE}product.aspx?isbn=%s".freeze
 
       def initialize
         super('AdLibris', 'AdLibris (Sweden)')
@@ -76,17 +76,17 @@ module Alexandria
         if search_type == SEARCH_BY_ISBN
           PRODUCT_URL % Library.canonicalise_isbn(search_term)
         else
-          search_type_code = {
+          (search_type_code = {
             SEARCH_BY_AUTHORS => 'author',
             SEARCH_BY_TITLE => 'title',
             SEARCH_BY_KEYWORD => 'keyword'
-          }[search_type] or 'keyword'
+          }[search_type]) || 'keyword'
           search_term_encoded = CGI.escape(search_term)
           BASE_SEARCH_URL % [search_type_code, search_term_encoded]
         end
       end
 
-      # TODO use Iconv to pre-convert the html.body to UTF-8 everywhere
+      # TODO: use Iconv to pre-convert the html.body to UTF-8 everywhere
       # before sending it to the parser methods
 
       def get_book_from_search_result(rslt)
@@ -187,28 +187,24 @@ module Alexandria
 
           isbn_tds.each do |isbn_td|
             isbn = isbn_td.inner_text
-            unless isbn =~ /[0-9x]{10,13}/i
-              next
-            end
+            next unless isbn =~ /[0-9x]{10,13}/i
             isbn.gsub(/(\n|\r)/, ' ')
             if isbn =~ /:[\s]*([0-9x]+)/i
               isbn = Regexp.last_match[1]
             end
             isbns << isbn
           end
-          isbn =  isbns.first
-          if isbn
-            isbn = Library.canonicalise_isbn(isbn)
-          end
+          isbn = isbns.first
+          isbn = Library.canonicalise_isbn(isbn) if isbn
 
           # cover
           image_url = nil
           if (cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first)
-            if cover_img['src'] =~ /^http\:\/\//
-              image_url = cover_img['src']
-            else
-              image_url = "#{SITE}/#{cover_img['src']}" # HACK use html base
-            end
+            image_url = if cover_img['src'] =~ /^http\:\/\//
+                          cover_img['src']
+                        else
+                          "#{SITE}/#{cover_img['src']}" # HACK: use html base
+                        end
             if image_url =~ /noimage.gif$/
               # no point downloading a "no image" graphic
               # Alexandria has its own generic book icon...

@@ -87,7 +87,7 @@ module Alexandria
 
       def calc(values)
         result = ''
-        while values.length > 0
+        until values.empty?
           num = ((values[0] << 6 | values[1]) << 6 | values[2]) << 6 | values[3]
           result += ((num >> 16) ^ 67).chr
           result += ((num >> 8 & 255) ^ 67).chr
@@ -101,7 +101,7 @@ module Alexandria
       def pad(array)
         length = array.length % 4
 
-        if length != 0
+        if length.nonzero?
           raise 'Error parsing CueCat input' if length == 1
 
           length = 4 - length

@@ -31,8 +31,8 @@ module Alexandria
     class ThaliaProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.thalia.de'
-      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
+      SITE = 'http://www.thalia.de'.freeze
+      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s".freeze # type,term
 
       def initialize
         super('Thalia', 'Thalia (Germany)')
@@ -58,20 +58,19 @@ module Alexandria
       end
 
       def create_search_uri(search_type, search_term)
-        search_type_code = {
+        (search_type_code = {
           SEARCH_BY_ISBN => 'sq',
           SEARCH_BY_AUTHORS => 'sa', # Autor
           SEARCH_BY_TITLE => 'st', # Titel
           SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
-        }[search_type] or ''
+        }[search_type]) || ''
         search_type_code = CGI.escape(search_type_code)
-        search_term_encoded = search_term
-        if search_type == SEARCH_BY_ISBN
-          # search_term_encoded = search_term.as_isbn_13
-          search_term_encoded = Library.canonicalise_isbn(search_term) # check this!
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                # search_term_encoded = search_term.as_isbn_13
+                                Library.canonicalise_isbn(search_term) # check this!
+                              else
+                                CGI.escape(search_term)
+                              end
         BASE_SEARCH_URL % [search_type_code, search_term_encoded]
       end
 
@@ -94,9 +93,7 @@ module Alexandria
         if (item_node = label_node.parent)
           data = ''
           item_node.children.each do |n|
-            if n.text?
-              data += n.to_html
-            end
+            data += n.to_html if n.text?
           end
           data.strip
         else
@@ -106,7 +103,7 @@ module Alexandria
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:lookup_url]}" }
-        html_data =  transport.get_response(URI.parse(result[:lookup_url]))
+        html_data = transport.get_response(URI.parse(result[:lookup_url]))
         parse_result_data(html_data.body, 'noisbn', true)
       end
 
@@ -130,7 +127,7 @@ module Alexandria
           chosen = results.first # fallback!
           results.each do |rslt|
             if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
-              if Regexp.last_match[1].gsub('-', '') == isbn10
+              if Regexp.last_match[1].delete('-') == isbn10
                 chosen = rslt
                 break
               end

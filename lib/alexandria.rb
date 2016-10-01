@@ -34,13 +34,11 @@ require 'alexandria/about'
 
 module Alexandria
   def self.set_proxy
-    ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? and URI.parse(ENV['http_proxy']).userinfo.nil?
+    ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? && URI.parse(ENV['http_proxy']).userinfo.nil?
   end
 
   def self.set_log_level
-    if $DEBUG
-      Alexandria.log.level = Logger::DEBUG
-    end
+    Alexandria.log.level = Logger::DEBUG if $DEBUG
     Alexandria.log.debug { 'Initializing Alexandria...' }
   end
 

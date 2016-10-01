@@ -38,7 +38,7 @@ module Alexandria
       MAX_RATING_STARS = 5
 
       def initialize(parent)
-        super('main_app__builder.glade',  widget_names)
+        super('main_app__builder.glade', widget_names)
         @parent = parent
 
         @library_separator_iter = nil
@@ -122,7 +122,7 @@ module Alexandria
         @toolbar.show_all
         @actiongroup['Undo'].sensitive = @actiongroup['Redo'].sensitive = false
         UndoManager.instance.add_observer(self)
-        @vbox1.add(@toolbar,  position: 1, expand: false, fill: false)
+        @vbox1.add(@toolbar, position: 1, expand: false, fill: false)
       end
 
       def add_main_toolbar_items
@@ -163,8 +163,7 @@ module Alexandria
          _('ISBN contains'),
          _('Publisher contains'),
          _('Notes contain'),
-         _('Tags contain')
-        ].each do |item|
+         _('Tags contain')].each do |item|
           cb.append_text(item)
         end
         cb.active = 0
@@ -230,7 +229,7 @@ module Alexandria
 
       def setup_menus
         @menubar = @uimanager.get_widget('/MainMenubar')
-        @vbox1.add(@menubar,  position: 0, expand: false, fill: false)
+        @vbox1.add(@menubar, position: 0, expand: false, fill: false)
       end
 
       def setup_popups
@@ -285,12 +284,12 @@ module Alexandria
           else
             data = case @filter_books_mode
                    when 0 then
-                     (iter[Columns::TITLE] or '') +
-                       (iter[Columns::AUTHORS] or '') +
-                       (iter[Columns::ISBN] or '') +
-                       (iter[Columns::PUBLISHER] or '') +
-                       (iter[Columns::NOTES] or '') +
-                       (iter[Columns::TAGS] or '')
+                     (iter[Columns::TITLE] || '') +
+                       (iter[Columns::AUTHORS] || '') +
+                       (iter[Columns::ISBN] || '') +
+                       (iter[Columns::PUBLISHER] || '') +
+                       (iter[Columns::NOTES] || '') +
+                       (iter[Columns::TAGS] || '')
                    when 2 then iter[Columns::TITLE]
                    when 3 then iter[Columns::AUTHORS]
                    when 4 then iter[Columns::ISBN]
@@ -298,7 +297,7 @@ module Alexandria
                    when 6 then iter[Columns::NOTES]
                    when 7 then iter[Columns::TAGS]
                    end
-            !data.nil? and data.downcase.include?(filter.downcase)
+            !data.nil? && data.downcase.include?(filter.downcase)
           end
         end
 
@@ -394,7 +393,7 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == :button_press and event.button == 3
+        (event.event_type == :button_press) && (event.button == 3)
       end
 
       def on_books_button_press_event(widget, event)
@@ -414,7 +413,7 @@ module Alexandria
             widget.unselect_all
           end
 
-          menu = (selected_books.empty?) ? @nobook_popup : @book_popup
+          menu = selected_books.empty? ? @nobook_popup : @book_popup
           menu.popup(nil, nil, event.button, event.time)
         end
       end
@@ -431,7 +430,7 @@ module Alexandria
                "Library '%s' selected, %d unrated books",
                library.length) % [library.name,
                                   library.length]
-          elsif n_unrated == 0
+          elsif n_unrated.zero?
             n_("Library '%s' selected, %d book",
                "Library '%s' selected, %d books",
                library.length) % [library.name,
@@ -471,7 +470,7 @@ module Alexandria
         # selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
         # Focus is the wrong idiom here.
-        unless @clicking_on_sidepane or (@main_app.focus == @library_listview)
+        unless @clicking_on_sidepane || (@main_app.focus == @library_listview)
           # unless @main_app.focus == @library_listview
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
@@ -505,7 +504,7 @@ module Alexandria
             BookProviders.each do |provider|
               has_no_url = true
               begin
-                has_no_url = (b.isbn.nil? or b.isbn.strip.empty? or provider.url(b).nil?)
+                has_no_url = (b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?)
               rescue => ex
                 log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
               end
@@ -522,12 +521,12 @@ module Alexandria
 
       def on_switch_page(_notebook, _page, page_num)
         log.debug { 'on_switch_page' }
-        @actiongroup['ArrangeIcons'].sensitive = page_num == 0
+        @actiongroup['ArrangeIcons'].sensitive = page_num.zero?
         on_books_selection_changed
       end
 
       def on_focus(widget, _event_focus)
-        if @clicking_on_sidepane or widget == @library_listview
+        if @clicking_on_sidepane || (widget == @library_listview)
           log.debug { 'on_focus: @library_listview' }
           GLib::Idle.add do
             %w(OnlineInformation SelectAll DeselectAll).each do |action|
@@ -543,7 +542,7 @@ module Alexandria
       end
 
       def determine_delete_option
-        sensitive = (@libraries.all_regular_libraries.length > 1 or selected_library.is_a?(SmartLibrary))
+        sensitive = (@libraries.all_regular_libraries.length > 1 || selected_library.is_a?(SmartLibrary))
         sensitive
       end
 
@@ -556,13 +555,9 @@ module Alexandria
         select_this_book = proc do |bk, view|
           @filtered_model.refilter
           iter = iter_from_book bk
-          unless iter
-            next
-          end
+          next unless iter
           path = iter.path
-          unless view.model
-            next
-          end
+          next unless view.model
           path = view_path_to_model_path(view, path)
           log.debug { "Path for #{bk.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
@@ -606,9 +601,7 @@ module Alexandria
             append_book(book)
           when Library::BOOK_UPDATED
             iter = iter_from_ident(book.saved_ident)
-            if iter
-              fill_iter_with_book(iter, book)
-            end
+            fill_iter_with_book(iter, book) if iter
           when Library::BOOK_REMOVED
             @model.remove(iter_from_book(book))
           end
@@ -666,7 +659,7 @@ module Alexandria
         # entries.\n" )
 
         @libraries.ruined_books.each { |bi|
-          new_message += "\n#{bi[1] or bi[1].inspect}"
+          new_message += "\n#{bi[1] || bi[1].inspect}"
         }
         recovery_dialog = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL,
                                                  Gtk::MessageDialog::WARNING,
@@ -677,7 +670,7 @@ module Alexandria
           if response_type == :ok
             # progress indicator...
             @progressbar.fraction = 0
-            @appbar.children.first.visible = true   # show the progress bar
+            @appbar.children.first.visible = true # show the progress bar
 
             total_book_count = @libraries.ruined_books.size
             fraction_per_book = 1.0 / total_book_count
@@ -693,7 +686,7 @@ module Alexandria
                   book = book_rslt[0]
                   cover_uri = book_rslt[1]
 
-                  # TODO if the book was saved okay, make sure the old
+                  # TODO: if the book was saved okay, make sure the old
                   # empty yaml file doesn't stick around esp if doing
                   # isbn-10 --> isbn-13 conversion...
                   if isbn.size == 10
@@ -765,18 +758,18 @@ module Alexandria
         iter[Columns::PUBLISHER] = book.publisher
         iter[Columns::PUBLISH_DATE] = book.publishing_year.to_s
         iter[Columns::EDITION] = book.edition
-        iter[Columns::NOTES] = (book.notes or '')
-        iter[Columns::LOANED_TO] = (book.loaned_to or '')
-        rating = (book.rating or Book::DEFAULT_RATING)
+        iter[Columns::NOTES] = (book.notes || '')
+        iter[Columns::LOANED_TO] = (book.loaned_to || '')
+        rating = (book.rating || Book::DEFAULT_RATING)
         iter[Columns::RATING] = MAX_RATING_STARS - rating # ascending order is the default
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
         iter[Columns::WANT] = book.want?
-        if book.tags
-          iter[Columns::TAGS] = book.tags.join(',')
-        else
-          iter[Columns::TAGS] = ''
-        end
+        iter[Columns::TAGS] = if book.tags
+                                book.tags.join(',')
+                              else
+                                ''
+                              end
 
         icon = Icons.cover(selected_library, book)
         log.debug { "Setting icon #{icon} for book #{book.title}" }
@@ -863,7 +856,7 @@ module Alexandria
         @iconview.freeze
         @listview.freeze # NEW / bdewey
         @progressbar.fraction = 0
-        @appbar.children.first.visible = true   # show the progress bar
+        @appbar.children.first.visible = true # show the progress bar
         set_status_label(_("Loading '%s'...") % library.name)
         total = library.length
         log.debug { "library #{library.name} length #{library.length}" }
@@ -929,20 +922,18 @@ module Alexandria
       end
 
       def iter_from_ident(ident)
-        log.debug { "#{ident}" }
+        log.debug { ident.to_s }
         iter = @model.iter_first
         ok = true
         while ok
-          if iter[Columns::IDENT] == ident
-            return iter
-          end
+          return iter if iter[Columns::IDENT] == ident
           ok = iter.next!
         end
         nil
       end
 
       def iter_from_book(book)
-        log.debug { "#{book}" }
+        log.debug { book.to_s }
         iter_from_ident(book.ident)
       end
 
@@ -950,14 +941,14 @@ module Alexandria
         result = []
         library = selected_library
 
-        if page == 0
+        if page.zero?
           result = @iconview.selected_items.map do |path|
             path = view_path_to_model_path(@iconview, path)
             book_from_iter(library, @model.get_iter(path))
           end
         else
           selection = @listview.selection
-          rows, the_model = selection.selected_rows
+          rows, _model = selection.selected_rows
           result = rows.map do |path|
             path = view_path_to_model_path(@listview, path)
             book_from_iter(library, @model.get_iter(path))
@@ -983,9 +974,7 @@ module Alexandria
         # Disable the selected library in the move libraries actions.
         @libraries.all_regular_libraries.each do |i_library|
           action = @actiongroup[i_library.action_name]
-          if action
-            action.sensitive = i_library != library
-          end
+          action.sensitive = i_library != library if action
         end
         sensitize_library library
       end
@@ -1078,7 +1067,7 @@ module Alexandria
 
       def move_selected_books_to_library(library)
         books = selected_books.select do |book|
-          !library.include?(book) or
+          !library.include?(book) ||
             ConflictWhileCopyingDialog.new(@main_app,
                                            library,
                                            book).replace?
@@ -1088,7 +1077,7 @@ module Alexandria
 
       def setup_move_actions
         @actiongroup.actions.each do |action|
-          next unless /^MoveIn/.match(action.name)
+          next unless /^MoveIn/ =~ action.name
           @actiongroup.remove_action(action)
         end
         actions = []
@@ -1186,7 +1175,7 @@ module Alexandria
       end
 
       def remove_library_separator
-        if !@library_separator_iter.nil? and @libraries.all_smart_libraries.empty?
+        if !@library_separator_iter.nil? && @libraries.all_smart_libraries.empty?
           @library_listview.model.remove(@library_separator_iter)
           @library_separator_iter = nil
         end
@@ -1217,7 +1206,7 @@ module Alexandria
       ICONS_SORTS = [
         Columns::TITLE, Columns::AUTHORS, Columns::ISBN,
         Columns::PUBLISHER, Columns::EDITION, Columns::RATING, Columns::REDD, Columns::OWN, Columns::WANT
-      ]
+      ].freeze
 
       def setup_books_iconview_sorting
         sort_order = @prefs.reverse_icons ? :descending : :ascending

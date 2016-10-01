@@ -45,8 +45,7 @@ module Amazon
                      ca: 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
                      de: 'http://webservices.amazon.de/onca/xml?Service=AWSECommerceService',
                      jp: 'http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService',
-                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService'
-    }
+                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService' }.freeze
 
     @@options = {}
     @@debug = false
@@ -202,12 +201,12 @@ module Amazon
 
     def self.prepare_url(opts)
       country = opts.delete(:country)
-      country = (country.nil?) ? 'us' : country
+      country = country.nil? ? 'us' : country
       request_url = SERVICE_URLS[country.to_sym]
       raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
 
       qs = ''
-      opts.each {|k, v|
+      opts.each { |k, v|
         next unless v
         v = v.join(',') if v.is_a? Array
         qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
@@ -317,7 +316,7 @@ module Amazon
     # Find Hpricot::Elements matching the given path. Example: element/"author".
     def /(path)
       elements = @element / path
-      return nil if elements.size == 0
+      return nil if elements.empty?
       elements
     end
 
@@ -374,7 +373,7 @@ module Amazon
       result = element / path
       if (result.is_a? Hpricot::Elements) || (result.is_a? Array)
         parsed_result = []
-        result.each {|item|
+        result.each { |item|
           parsed_result << Element.get(item)
         }
         parsed_result

@@ -65,9 +65,7 @@ class FileInstallTask < Rake::TaskLib
     @stage_dir = dirname # || @prefix
     @file_groups = []
     @dirs_to_remove_globs = []
-    if block_given?
-      yield self
-    end
+    yield self if block_given?
     make_tasks
   end
 
@@ -85,9 +83,7 @@ class FileInstallTask < Rake::TaskLib
     # INSTALL TASK
 
     description = 'Install package files'
-    if @stage_dir
-      description += ' to staging directory'
-    end
+    description += ' to staging directory' if @stage_dir
     desc description
     task tasknames[:install] do
       @file_groups.each { |g| g.install(@stage_dir) }
@@ -107,19 +103,13 @@ class FileInstallTask < Rake::TaskLib
       @dirs_to_remove_globs.each do |glob|
         regex = glob2regex(glob)
         all_dirs.each do |dir|
-          unless dir =~ /\/$/
-            dir += '/'
-          end
-          if regex =~ dir
-            to_delete << Regexp.last_match[1]
-          end
+          dir += '/' unless dir =~ /\/$/
+          to_delete << Regexp.last_match[1] if regex =~ dir
         end
       end
       to_delete.each do |dirname|
         dir = dirname
-        if @stage_dir
-          dir = File.join(@stage_dir, dirname)
-        end
+        dir = File.join(@stage_dir, dirname) if @stage_dir
         delete_empty(dir)
       end
     end
@@ -150,7 +140,7 @@ class FileInstallTask < Rake::TaskLib
   # Install files the same way as +install+, but setting the mode of
   # the installed file to be executable.
   def install_exe(src_dir, file_glob, dest_dir)
-    @file_groups << FileGroup.new(src_dir, file_glob, dest_dir, 0755)
+    @file_groups << FileGroup.new(src_dir, file_glob, dest_dir, 0o755)
   end
 
   # Install icon files. This method splits up the source file name and
@@ -181,11 +171,11 @@ class FileInstallTask < Rake::TaskLib
   def calculate_ruby_dir
     ruby_prefix = RbConfig::CONFIG['prefix']
 
-    if @install_to_rubylibdir
-      ruby_libdir = RbConfig::CONFIG['rubylibdir']
-    else
-      ruby_libdir = RbConfig::CONFIG['sitelibdir']
-    end
+    ruby_libdir = if @install_to_rubylibdir
+                    RbConfig::CONFIG['rubylibdir']
+                  else
+                    RbConfig::CONFIG['sitelibdir']
+                  end
     if ENV.key?('RUBYLIBDIR')
       ruby_libdir = ENV['RUBYLIBDIR']
     end
@@ -193,7 +183,7 @@ class FileInstallTask < Rake::TaskLib
     @prefix = ENV['PREFIX'] || ruby_prefix
     if @prefix == ruby_prefix
       @rubylib = ruby_libdir
-    elsif ruby_libdir.index(ruby_prefix) == 0
+    elsif ruby_libdir.index(ruby_prefix).zero?
       libpart = ruby_libdir[ruby_prefix.size..-1]
       @rubylib = File.join(@prefix, libpart)
     else
@@ -202,9 +192,7 @@ class FileInstallTask < Rake::TaskLib
   end
 
   def glob2regex(pathglob)
-    if pathglob =~ /\*\*$/
-      pathglob += '/'
-    end
+    pathglob += '/' if pathglob =~ /\*\*$/
     real_parts = pathglob.split('**/')
     real_parts.each do |part|
       part.gsub!('.', '\\.')
@@ -220,23 +208,19 @@ class FileInstallTask < Rake::TaskLib
   def delete_empty(dirs)
     dirs.each do |d|
       p = Pathname.new(d)
-      if p.exist?
-        delete_if_empty(p.realpath)
-      end
+      delete_if_empty(p.realpath) if p.exist?
     end
   end
 
   # Delete the directory at the given Pathname +p+ if all its children
   # can be similarly deleted, and if it is then empty.
   def delete_if_empty(p)
-    unless p.directory?
-      return false
-    end
+    return false unless p.directory?
     p.children.each do |c|
       delete_if_empty(c)
     end
     if p.children.empty?
-      p.delete # TODO optional verbose output here
+      p.delete # TODO: optional verbose output here
       true
     else
       false
@@ -246,7 +230,7 @@ class FileInstallTask < Rake::TaskLib
   class FileGroup
     attr_reader :mode
     attr_accessor :description
-    def initialize(src_dir, file_glob, dest_dir, mode = 0644)
+    def initialize(src_dir, file_glob, dest_dir, mode = 0o644)
       @src_dir = src_dir
       @file_glob = file_glob
       @dest_dir = dest_dir

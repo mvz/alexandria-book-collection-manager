@@ -31,7 +31,7 @@ module Alexandria
               _('If you replace the existing book, its contents will ' \
                 'be overwritten.'))
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 
@@ -48,7 +48,7 @@ module Alexandria
         # Deleting a library.
         if books.nil?
           message = _("Are you sure you want to delete '%s'?") % library.name
-          description = if library.is_a?(SmartLibrary) or library.empty?
+          description = if library.is_a?(SmartLibrary) || library.empty?
                           nil
                         else
                           n_('If you continue, %d book will be deleted.',
@@ -73,7 +73,7 @@ module Alexandria
               description)
 
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 

@@ -31,7 +31,7 @@ module Alexandria
 
       # CACHE_DIR = File.join(Alexandria::Library::DIR, '.amazon_cache')
 
-      LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us']
+      LOCALES = ['ca', 'de', 'fr', 'jp', 'uk', 'us'].freeze
 
       def initialize
         super('Amazon', 'Amazon')
@@ -46,17 +46,17 @@ module Alexandria
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
 
         if token
-          if (token.value != token.value.strip)
+          if token.value != token.value.strip
             token.new_value = token.value.strip
           end
         end
-        if token and (token.value.size != 20 or token.value == '0J356Z09CN88KB743582')
+        if token && ((token.value.size != 20) || (token.value == '0J356Z09CN88KB743582'))
           token.new_value = ''
         end
 
         secret = prefs.variable_named('secret_key')
         if secret
-          if (secret.value != secret.value.strip)
+          if secret.value != secret.value.strip
             secret.new_value = secret.value.strip
           end
         end
@@ -66,7 +66,7 @@ module Alexandria
           if associate.value.strip.empty?
             associate.new_value = 'rubyalexa-20'
           end
-          if (associate.value != associate.value.strip)
+          if associate.value != associate.value.strip
             associate.new_value = associate.value.strip
           end
         end
@@ -76,13 +76,13 @@ module Alexandria
         prefs.read
 
         if prefs['secret_key'].empty?
-          raise Amazon::RequestError.new('Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account')
+          raise Amazon::RequestError, 'Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account'
         end
 
         if (config = Alexandria::Preferences.instance.http_proxy_config)
           host, port, user, pass = config
           url = 'http://'
-          url += user + ':' + pass + '@' if user and pass
+          url += user + ':' + pass + '@' if user && pass
           url += host + ':' + port.to_s
           ENV['http_proxy'] = url
         end
@@ -105,7 +105,7 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
+            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
             res.items.each do |item|
               products << item
             end
@@ -129,10 +129,10 @@ module Alexandria
             end
 
           when SEARCH_BY_TITLE
-            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
+            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
-              if /#{criterion}/i.match(item.get('itemattributes/title'))
+              if item.get('itemattributes/title') =~ /#{criterion}/i
                 products << item
               end
             end
@@ -140,14 +140,14 @@ module Alexandria
 
           when SEARCH_BY_AUTHORS
             criterion = "author:#{criterion}"
-            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale, type: 'Power')
+            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale, type: 'Power')
             res.items.each do |item|
               products << item
             end
             # #req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            res = Amazon::Ecs.item_search(criterion,  response_group: 'ItemAttributes,Images', country: request_locale)
+            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
               products << item
@@ -186,11 +186,9 @@ module Alexandria
           media = nil if media == 'Unknown Binding'
 
           isbn = normalize(atts.get('isbn'))
-          if isbn and Library.valid_isbn?(isbn)
-            isbn = Library.canonicalise_ean(isbn)
-          else
-            isbn = nil # it may be an ASIN which is not an ISBN
-          end
+          isbn = if isbn && Library.valid_isbn?(isbn)
+                   Library.canonicalise_ean(isbn)
+                 end
           # hack, extract year by regexp (not Y10K compatible :-)
           /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
           publishing_year = Regexp.last_match[1] ? Regexp.last_match[1].to_i : nil
@@ -251,9 +249,7 @@ module Alexandria
       end
 
       def normalize(str)
-        unless str.nil?
-          str = str.squeeze(' ').strip
-        end
+        str = str.squeeze(' ').strip unless str.nil?
         str
       end
     end

@@ -32,10 +32,10 @@ module Alexandria
 
       LANGUAGES = {
         'es' => '1'
-      }
+      }.freeze
 
       #        BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
-      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'
+      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'.freeze
       def initialize
         super('MCU', _('Spanish Culture Ministry'))
         # No preferences
@@ -73,7 +73,7 @@ module Alexandria
         transport.get(URI.parse(req)).each do |line|
           # line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
-          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) and (!products[Regexp.last_match[1]]) and (book = parseBook(Regexp.last_match[1], Regexp.last_match[2]))
+          if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) && (!products[Regexp.last_match[1]]) && (book = parseBook(Regexp.last_match[1], Regexp.last_match[2]))
             products[Regexp.last_match[1]] = book
             puts Regexp.last_match[1] if $DEBUG # for DEBUGing
           end
@@ -111,9 +111,9 @@ module Alexandria
           # There seems to be an issue with accented chars..
           line = line.convert('UTF-8', 'ISO-8859-1')
           print "Reading line (robotstate #{robotstate}): #{line}" if $DEBUG # for DEBUGing
-          if line =~ /^<\/td>$/ or line =~ /^<\/tr>$/
+          if line =~ /^<\/td>$/ || line =~ /^<\/tr>$/
             robotstate = 0
-          elsif robotstate == 1 and line =~ /^([^<]+)</
+          elsif (robotstate == 1) && line =~ /^([^<]+)</
             author = Regexp.last_match[1].gsub('&nbsp;', ' ').sub(/ +$/, '')
             if author.length > 3
               # Only add authors of appropiate length
@@ -121,20 +121,20 @@ module Alexandria
               print "Authors are #{product['authors']}\n" if $DEBUG # for DEBUGing
               robotstate = 0
             end
-          elsif robotstate == 2 and line =~ /^(.*)$/ # The title es the next line to title declaration and has not tags on web src code
+          elsif (robotstate == 2) && line =~ /^(.*)$/ # The title es the next line to title declaration and has not tags on web src code
             product['name'] = Regexp.last_match[1].strip
             print "Name is #{product['name']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
-          elsif robotstate == 3 and line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]).*/
+          elsif (robotstate == 3) && line =~ /^([0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]).*/
             product['isbn'] = Regexp.last_match[1]
             print "ISBN is #{product['isbn']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
-          elsif robotstate == 4 and line =~ /^([^<]+)</
+          elsif (robotstate == 4) && line =~ /^([^<]+)</
             product['manufacturer'] = Regexp.last_match[1].strip
             print "Manufacturer is #{product['manufacturer']}\n" if $DEBUG # for DEBUGing
             robotstate = 0
             #                elsif robotstate == 5 and line =~ /^([^<]+)</
-          elsif robotstate == 5 and line =~ /<span>([^<]+)</
+          elsif (robotstate == 5) && line =~ /<span>([^<]+)</
             product['media'] = Regexp.last_match[1].strip
             print "Media is #{product['media']}\n" if $DEBUG # for DEBUGing
             robotstate = 0

@@ -22,7 +22,7 @@ module Alexandria
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-      def initialize(parent, &block)
+      def initialize(parent)
         super(parent)
 
         add_buttons([Gtk::Stock::CANCEL, :cancel],
@@ -35,8 +35,8 @@ module Alexandria
         show_all
         insert_new_rule
 
-        while (response = run) != :cancel and
-            response != :delete_event
+        while ((response = run) != :cancel) &&
+            (response != :delete_event)
 
           if response == :help
             Alexandria::UI.display_help(self, 'new-smart-library')
@@ -50,7 +50,7 @@ module Alexandria
               library = SmartLibrary.new(name,
                                          rules,
                                          predicate_operator_rule)
-              block.call(library)
+              yield(library)
               break
             end
           end
@@ -64,7 +64,7 @@ module Alexandria
       def smart_library_base_name(rules)
         if rules.length == 1
           value = rules.first.value
-          if value.is_a?(String) and !value.strip.empty?
+          if value.is_a?(String) && !value.strip.empty?
             return value
           end
         end

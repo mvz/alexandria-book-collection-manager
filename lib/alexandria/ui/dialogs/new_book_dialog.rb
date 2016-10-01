@@ -36,7 +36,7 @@ module Alexandria
                 'exists in the providers libraries.  Do you want to ' \
                 'keep the book but change the ISBN or cancel the addition?') % book.title)
         self.default_response = Gtk::ResponseType::OK
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 
@@ -315,8 +315,8 @@ module Alexandria
                          s = _('%s, by %s') % [book.title,
                                                book.authors.join(', ')]
                          similar_books = @results.find { |book2, _cover2|
-                           book.title == book2.title and
-                             book.authors == book2.authors
+                           (book.title == book2.title) &&
+                             (book.authors == book2.authors)
                          }
                          if similar_books.length > 1
                            s += " (#{book.edition}, #{book.publisher})"
@@ -374,7 +374,7 @@ module Alexandria
 
       def on_results_button_press_event(_widget, event)
         # double left click
-        if event.event_type == :'2button_press' and event.button == 1
+        if (event.event_type == :'2button_press') && (event.button == 1)
           on_add
         end
       end
@@ -471,7 +471,7 @@ module Alexandria
         @block.call(books, library, is_new_library)
 
         if @keep_open.active?
-          # TODO reset and clear fields
+          # TODO: reset and clear fields
           if @@last_criterion_was_not_isbn
             @entry_search.select_region(0, -1) # select all, ready to delete
             @treeview_results.model.clear
@@ -557,10 +557,10 @@ module Alexandria
       end
 
       def on_focus
-        if @isbn_radiobutton.active? and @entry_isbn.text.strip.empty?
+        if @isbn_radiobutton.active? && @entry_isbn.text.strip.empty?
           clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
           if (text = clipboard.wait_for_text)
-            if Library.valid_isbn?(text) or Library.valid_ean?(text) or
+            if Library.valid_isbn?(text) || Library.valid_ean?(text) ||
                 Library.valid_upc?(text)
               GLib::Idle.add do
                 @entry_isbn.text = text
@@ -580,8 +580,8 @@ module Alexandria
       end
 
       def on_clicked(widget, event)
-        if event.event_type == :button_press and
-            event.button == 1
+        if (event.event_type == :button_press) &&
+            (event.button == 1)
 
           radio, target_widget, box2, box3 = case widget
                                              when @eventbox_entry_search

@@ -47,7 +47,7 @@ describe Alexandria::BookProviders do
       canonical_query = Alexandria::Library.canonicalise_ean(query)
       canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
       expect(canonical_query).to eq(canonical_result),
-                   "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
+                                 "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
 
       if results.length == 2
         cover_url = results.last
@@ -140,7 +140,7 @@ describe Alexandria::BookProviders do
 
   it 'Barnes and Noble should work' do
     assert_correct_search_result(Alexandria::BookProviders::BarnesAndNobleProvider,
-                                 '9780961328917')   # see #1433
+                                 '9780961328917') # see #1433
   end
 
   it 'MCU should work' do

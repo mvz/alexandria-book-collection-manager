@@ -52,16 +52,14 @@ module Alexandria
         # We only decode MARC at the moment.
         # SUTRS needs to be decoded separately, because each Z39.50 server has a
         # different one.
-        unless marc?
-          raise NoResultsError
-        end
+        raise NoResultsError unless marc?
 
         isbn = type == SEARCH_BY_ISBN ? criterion : nil
         criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
         conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.length == 0
+        raise NoResultsError if resultset.empty?
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -80,10 +78,10 @@ module Alexandria
           log.error { ex.backtrace.join("> \n") }
           begin
             marc = MARC::Record.new(marc_txt)
-            rescue => ex2
-              log.error { ex2.message }
-              log.error { ex2.backtrace.join("> \n") }
-              raise ex2
+          rescue => ex2
+            log.error { ex2.message }
+            log.error { ex2.backtrace.join("> \n") }
+            raise ex2
           end
         end
 
@@ -100,14 +98,14 @@ module Alexandria
 
         return if marc.title.nil? # or marc.authors.empty?
 
-        isbn = isbn or marc.isbn
+        (isbn = isbn) || marc.isbn
         isbn = Library.canonicalise_ean(isbn)
 
         book = Book.new(marc.title, marc.authors,
                         isbn,
-                        (marc.publisher or ''),
+                        (marc.publisher || ''),
                         marc.respond_to?(:publish_year) ? marc.publish_year.to_i : nil,
-                        (marc.edition or ''))
+                        (marc.edition || ''))
         book
       end
 
@@ -151,7 +149,7 @@ module Alexandria
 
       def search_records(criterion, type, conn_count)
         options = {}
-        unless prefs['username'].empty? or prefs['password'].empty?
+        unless prefs['username'].empty? || prefs['password'].empty?
           options['user'] = prefs['username']
           options['password'] = prefs['password']
         end
@@ -161,7 +159,7 @@ module Alexandria
         conn = ZOOM::Connection.new(options).connect(hostname, port)
         conn.database_name = prefs['database']
 
-        # HACK turn off piggybacking, just to see CMcG
+        # HACK: turn off piggybacking, just to see CMcG
         # #conn.piggyback = false
 
         conn.preferred_record_syntax = prefs['record_syntax']
@@ -175,7 +173,7 @@ module Alexandria
                end
         pqf = ''
         attr.each { |att| pqf += "@attr 1=#{att} " }
-        pqf += "\"" + criterion.upcase + "\""
+        pqf += '"' + criterion.upcase + '"'
         log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
 
         begin
@@ -188,7 +186,7 @@ module Alexandria
           conn.search(pqf)
         rescue => ex
           if /1005/ =~ ex.message
-            if prefs.variable_named('piggyback') and prefs['piggyback']
+            if prefs.variable_named('piggyback') && prefs['piggyback']
               log.error { "Z39.50 search failed:: #{ex.message}" }
               log.info { 'Turning off piggybacking for this provider' }
               prefs.variable_named('piggyback').new_value = false
@@ -260,7 +258,7 @@ module Alexandria
         conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.length == 0
+        raise NoResultsError if resultset.empty?
         results = books_from_sutrs(resultset)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -310,7 +308,7 @@ module Alexandria
           }
 
           if title # and !authors.empty?
-            book = Book.new(title, authors, isbn, (publisher or nil), (publish_year or nil), (edition or nil))
+            book = Book.new(title, authors, isbn, (publisher || nil), (publish_year || nil), (edition || nil))
             results << [book]
           end
         end
@@ -344,7 +342,7 @@ module Alexandria
         criterion = canonicalise_isbn_with_dashes(criterion)
         resultset = search_records(criterion, type, 0)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.length == 0
+        raise NoResultsError if resultset.empty?
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -371,7 +369,7 @@ module Alexandria
 
         if isbn[0..1] == '88'
           # Italian speaking area
-          if isbn > '8895000' and isbn <= '8899999996'
+          if isbn > '8895000' && (isbn <= '8899999996')
             return isbn[0..1] + '-' + isbn[2..6] + '-' + isbn[7..8] + '-' + isbn[9..9]
           elsif isbn > '88900000'
             return isbn[0..1] + '-' + isbn[2..7] + '-' + isbn[8..8] + '-' + isbn[9..9]

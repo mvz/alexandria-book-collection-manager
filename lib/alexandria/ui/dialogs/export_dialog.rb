@@ -31,7 +31,7 @@ module Alexandria
                 'to replace it with the one you are generating?') % filename)
         # FIXME: Should accept just :cancel
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 
@@ -49,7 +49,6 @@ module Alexandria
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        backend = `uname`.chomp == 'FreeBSD' ? 'neant' : 'gnome-vfs'
         super(title: _("Export '%s'") % library.name,
               action: :save,
               buttons: [[Gtk::Stock::HELP, :help],
@@ -60,7 +59,9 @@ module Alexandria
         self.current_name = library.name
         signal_connect('destroy') { hide }
 
-        @parent, @library, @sort_order = parent, library, sort_order
+        @parent = parent
+        @library = library
+        @sort_order = sort_order
 
         preview_image = Gtk::Image.new
 
@@ -84,19 +85,18 @@ module Alexandria
         types_combo.valign = :center
         FORMATS.each do |format|
           text = format.name + ' ('
-          if format.ext
-            text += '*.' + format.ext
-          else
-            text += _('directory')
-          end
+          text += if format.ext
+                    '*.' + format.ext
+                  else
+                    _('directory')
+                  end
           text += ')'
           types_combo.append_text(text)
         end
         types_combo.active = 0
         types_combo.signal_connect('changed') do
-          theme_label.visible = theme_combo.visible =
-            preview_image.visible =
-              FORMATS[types_combo.active].needs_preview?
+          visible = FORMATS[types_combo.active].needs_preview?
+          theme_label.visible = theme_combo.visible = preview_image.visible = visible
         end
         types_combo.show
 
@@ -115,8 +115,8 @@ module Alexandria
         grid.attach preview_image, 2, 0, 1, 3
         set_extra_widget grid
 
-        while (response = run) != :cancel and
-            response != :delete_event
+        while ((response = run) != :cancel) &&
+            (response != :delete_event)
 
           if response == :help
             Alexandria::UI.display_help(self, 'exporting')

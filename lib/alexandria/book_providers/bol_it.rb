@@ -25,10 +25,10 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class BOL_itProvider < GenericProvider
-      BASE_URI = 'http://www.bol.it'
+      BASE_URI = 'http://www.bol.it'.freeze
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.bol_it_cache')
       REFERER = BASE_URI
-      LOCALE = 'libri' # possible locales are: "libri", "inglesi", "video", "musica", "choco"
+      LOCALE = 'libri'.freeze # possible locales are: "libri", "inglesi", "video", "musica", "choco"
       def initialize
         super('BOL_it', 'BOL (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
@@ -84,7 +84,7 @@ module Alexandria
       private
 
       def to_book(data)
-        raise NoResultsError if /Scheda libro non completa  \(TP null\)/.match(data)
+        raise NoResultsError if data =~ /Scheda libro non completa  \(TP null\)/
         data = data.convert('UTF-8', 'ISO-8859-1')
 
         md = /<INPUT type =hidden name ="mailTitolo" value="([^"]+)/.match(data)
@@ -103,25 +103,25 @@ module Alexandria
 
         # raise unless
         md = /<INPUT type =HIDDEN name ="mailEditore" value="([^"]+)/.match(data)
-        publisher = CGI.unescape(md[1].strip) or md
+        (publisher = CGI.unescape(md[1].strip)) || md
 
         # raise unless
         md = /<INPUT type =HIDDEN name ="mailFormato" value="([^"]+)/.match(data)
-        edition = CGI.unescape(md[1].strip) or md
+        (edition = CGI.unescape(md[1].strip)) || md
 
         if (md = /#{edition}\&nbsp\;\|\&nbsp\;(\d+)\&nbsp\;\|\&nbsp\;/.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         elsif (md = / (\d+) pagine \| /.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         end
-        if nr_pages != '0' and !nr_pages.nil?
+        if (nr_pages != '0') && !nr_pages.nil?
           edition = nr_pages + ' p., ' + edition
         end
 
         publish_year = nil
         if (md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
-          publish_year = nil if publish_year == 0
+          publish_year = nil if publish_year.zero?
         end
 
         cover_url = BASE_URI + '/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=' + isbn[0..11] + '&tipoOggetto=PIB&cdSito=BL' # use "FRB" instead of "PIB" for smaller images
@@ -133,7 +133,7 @@ module Alexandria
         end
 
         medium_cover = CACHE_DIR + '/' + cover_filename
-        if File.size(medium_cover) > 43 and File.size(medium_cover) != 2382 # 2382 is the size of the fake image "copertina non disponibile"
+        if File.size(medium_cover) > 43 && (File.size(medium_cover) != 2382) # 2382 is the size of the fake image "copertina non disponibile"
           puts medium_cover + ' has non-0 size' if $DEBUG
           return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
@@ -147,7 +147,7 @@ module Alexandria
       end
 
       def clean_cache
-        # FIXME begin ... rescue ... end?
+        # FIXME: begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob('*.tmp') do |file|
             puts 'removing ' + file if $DEBUG

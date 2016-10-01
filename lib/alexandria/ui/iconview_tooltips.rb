@@ -38,12 +38,12 @@ class IconViewTooltips
 
   def set_view(view)
     view.has_tooltip = true
-    view.signal_connect('query-tooltip') do |widget, x, y, keyboard_mode, tooltip|
+    view.signal_connect('query-tooltip') do |_widget, x, y, _keyboard_mode, tooltip|
       tree_path = view.get_path_at_pos(x, y)
       if tree_path
         iter = view.model.get_iter(tree_path)
 
-        title = iter[2] # HACK hardcoded, should use column names...
+        title = iter[2] # HACK: hardcoded, should use column names...
         authors = iter[4]
         publisher = iter[6]
         year = iter[7]
@@ -55,28 +55,22 @@ class IconViewTooltips
   def label_for_book(title, authors, publisher, year)
     # This is much too complex... but it works for now!
     html = ''
-    if title.size > 0
+    unless title.empty?
       html += "<b>#{CGI.escapeHTML(title)}</b>"
-      if authors.size > 0
-        html += "\n"
-      end
+      html += "\n" unless authors.empty?
     end
-    if authors.size > 0
+    unless authors.empty?
       html += "<i>#{CGI.escapeHTML(authors)}</i>"
     end
-    if (title.size > 0) or (authors.size > 0)
-      html += "\n"
-    end
+    html += "\n" if !title.empty? || !authors.empty?
 
     html += '<small>'
-    if publisher and publisher.size > 0
-      html += "#{CGI.escapeHTML(publisher)}"
+    if publisher && !publisher.empty?
+      html += CGI.escapeHTML(publisher).to_s
     end
 
-    if year and year.size > 0
-      if publisher and publisher.size > 0
-        html += ' '
-      end
+    if year && !year.empty?
+      html += ' ' if publisher && !publisher.empty?
       html += "(#{year})"
     end
 

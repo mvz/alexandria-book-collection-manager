@@ -41,7 +41,7 @@ module Alexandria
               message)
         puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all and @response = run
+        show_all && (@response = run)
         destroy
       end
 
@@ -58,7 +58,7 @@ module Alexandria
 
       FILTERS = Alexandria::ImportFilter.all
 
-      def initialize(parent, &on_accept_cb)
+      def initialize(parent)
         super()
         puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
@@ -92,8 +92,7 @@ module Alexandria
         end
 
         signal_connect('selection_changed') do
-          import_button.sensitive =
-            filename and File.file?(filename)
+          import_button.sensitive = filename && File.file?(filename)
         end
 
         # before adding the (hidden) progress bar, we must re-set the
@@ -112,7 +111,7 @@ module Alexandria
             pbar.show unless pbar.visible?
             pbar.fraction = fraction
           rescue
-            # TODO check if destroyed instead...
+            # TODO: check if destroyed instead...
           end
         end
 
@@ -122,9 +121,9 @@ module Alexandria
 
         exec_queue = ExecutionQueue.new
 
-        while !@destroyed and
-            (response = run) != :cancel and
-            response != :delete_event
+        while !@destroyed &&
+            ((response = run) != :cancel) &&
+            (response != :delete_event)
 
           if response == :help
             Alexandria::UI.display_help(self, 'import-library')
@@ -167,7 +166,7 @@ module Alexandria
             end
           end
 
-          while thread.alive? and !@destroyed
+          while thread.alive? && !@destroyed
             # puts "Thread #{thread} still alive."
             running = true
             exec_queue.iterate
@@ -176,7 +175,7 @@ module Alexandria
 
           unless @destroyed
             if library
-              on_accept_cb.call(library, @bad_isbns, @failed_isbns)
+              yield(library, @bad_isbns, @failed_isbns)
               break
             elsif not_cancelled
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
@@ -190,9 +189,7 @@ module Alexandria
             self.sensitive = true
           end
         end
-        unless @destroyed
-          destroy
-        end
+        destroy unless @destroyed
       end
     end
   end

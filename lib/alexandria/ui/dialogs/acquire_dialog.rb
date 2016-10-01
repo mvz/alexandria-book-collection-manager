@@ -47,7 +47,7 @@ module Alexandria
 
       def end_search
         synchronize do
-          @count -= 1 unless (@count == 0)
+          @count -= 1 unless @count.zero?
         end
       end
     end
@@ -197,8 +197,8 @@ module Alexandria
               end
             end
             # remove list items
-            if isbn_duplicates.empty? and !adding_a_selection
-              model.clear # TODO unless!!!
+            if isbn_duplicates.empty? && !adding_a_selection
+              model.clear # TODO: unless!!!
               row_iters.clear
             else
               row_iters.each do |iter|
@@ -266,7 +266,7 @@ module Alexandria
           barcode_text = @scanner.decode(@scanner_buffer)
           log.debug { "got barcode text #{barcode_text}" }
           isbn = Library.canonicalise_isbn(barcode_text)
-          # TODO :: use an AppFacade
+          # TODO: : use an AppFacade
           # isbn =  LookupBook.get_isbn(barcode_text)
         rescue StandardError => err
           log.error { "Bad scan:  #{@scanner_buffer} #{err}" }
@@ -337,7 +337,7 @@ module Alexandria
 
       def start_search
         @search_thread_counter.synchronize do
-          if @search_thread_counter.count == 0
+          if @search_thread_counter.count.zero?
             @search_thread_counter.new_search
             @progress_bar_thread = Thread.new do
               notify_start_add_by_isbn
@@ -434,7 +434,7 @@ module Alexandria
       def on_destroy
         MainApp.instance.ui_manager.set_status_label('')
         notify_end_add_by_isbn
-        # TODO possibly make sure all threads have stopped running
+        # TODO: possibly make sure all threads have stopped running
         @animation.destroy
       end
 

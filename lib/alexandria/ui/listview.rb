@@ -27,7 +27,7 @@ module Alexandria
       include Logging
       include GetText
       include DragAndDropable
-      BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', :same_app, 0]]
+      BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', :same_app, 0]].freeze
 
       MAX_RATING_STARS = 5
       module Columns
@@ -73,12 +73,12 @@ module Alexandria
         [_('Publish Year'), Columns::PUBLISH_DATE],
         [_('Binding'), Columns::EDITION],
         [_('Loaned To'), Columns::LOANED_TO]
-      ]
+      ].freeze
       CHECK_COLUMNS = [
         [_('Read'), Columns::REDD],
         [_('Own'), Columns::OWN],
         [_('Want'), Columns::WANT]
-      ]
+      ].freeze
 
       def setup_books_listview
         log.debug { 'setup_books_listview' }
@@ -127,8 +127,8 @@ module Alexandria
         log.debug { 'Create listview column for %s...' % title }
         column = Gtk::TreeViewColumn.new(title)
         column.sizing = :fixed
-        column.fixed_width = column.min_width = column.max_width =
-          (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
+        width = (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
+        column.fixed_width = column.min_width = column.max_width = width
         MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
           renderer.xalign = 0.0
@@ -187,11 +187,6 @@ module Alexandria
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { 'Create listview column for %s...' % title }
-        setup_column = proc do |iter, cell, col|
-          state = iter[col]
-          cell.set_active(state)
-          cell.activatable = true
-        end
 
         column.add_attribute(renderer, 'active', iterid)
         if iterid == Columns::WANT
@@ -247,7 +242,7 @@ module Alexandria
             if cols_width.key?(c.title)
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
               width = cols_width[c.title]
-              next if width == 0
+              next if width.zero?
               c.sizing = :fixed
               c.fixed_width = width
             end

@@ -6,33 +6,26 @@ AllCops:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# Require lines to fit in pull requests.
+# This config is commented out temporarily to allow .rubocop_todo.yml to
+# configure this cop.
+#Metrics/LineLength:
+  #Max: 92
+
+Style/AccessorMethodName:
+  Enabled: false
+
 # Allow multi-line blocks of all sorts
 Style/BlockDelimiters:
   Enabled: false
 
+# Allow and/or for control flow only
+Style/AndOr:
+  Enabled: conditionals
+
 # Dot at end of line makes it clearer that the line is not done
 Style/DotPosition:
   EnforcedStyle: trailing
-
-# Require lines to fit in pull requests.
-# This config is commented out temporarily to allow .rubocop_todo.yml to
-# configure this cop.
-#Style/LineLength:
-  #Max: 92
-
-# Always use raise to raise exceptions
-Style/SignalException:
-  EnforcedStyle: only_raise
-
-# Allow explicit return with multiple return values
-Style/RedundantReturn:
-  AllowMultipleReturnValues: true
-
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-Style/FirstParameterIndentation:
-  EnforcedStyle: consistent
 
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
@@ -42,29 +35,40 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   MaxLineLength: 60
 
-# Visually mark multiline operations by indenting
+# Multi-line assignment should be simply indented. Aligning them makes it even
+# harder to keep a sane line length.
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
 
-Style/TrivialAccessors:
-  ExactNameMatch: true
+Style/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
 
-Style/SingleLineBlockParams:
-  Enabled: false
+# Multi-line method calls should be simply indented. Aligning them makes it
+# even harder to keep a sane line length.
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 # Sometimes an if statement just looks better than next with a guard clause
 Style/Next:
   Enabled: false
 
-Style/AccessorMethodName:
+# Allow explicit return with multiple return values
+Style/RedundantReturn:
+  AllowMultipleReturnValues: true
+
+# Always use raise to raise exceptions
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/SingleLineBlockParams:
   Enabled: false
 
-# Support use of and and or for control flow.
-Style/AndOr:
-  Enabled: false
+# Accessors are only trivial if they match the ivar name.
+Style/TrivialAccessors:
+  ExactNameMatch: true
 
 # Allow semantic choice of trailing comma
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   Enabled: false
 
 # Alexandria uses regular arrays

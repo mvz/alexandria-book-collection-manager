@@ -27,7 +27,8 @@ module Alexandria
       def initialize(parent, library, &on_add_cb)
         super(parent, TMP_COVER_FILE)
 
-        @library, @on_add_cb = library, on_add_cb
+        @library = library
+        @on_add_cb = on_add_cb
         FileUtils.rm_f(TMP_COVER_FILE)
 
         cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
@@ -76,40 +77,40 @@ module Alexandria
 
       def on_add
         if (title = @entry_title.text.strip).empty?
-          raise AddError.new(_('A title must be provided.'))
+          raise AddError, _('A title must be provided.')
         end
         isbn = nil
         if @entry_isbn.text != ''
           ary = @library.select { |book|
             book.ident == @entry_isbn.text
           }
-          raise AddError.new(_('The EAN/ISBN you provided is ' \
-                               'already used in this library.')) unless ary.empty?
+          raise AddError, _('The EAN/ISBN you provided is ' \
+                               'already used in this library.') unless ary.empty?
           isbn = begin
                    Library.canonicalise_isbn(@entry_isbn.text)
                  rescue Alexandria::Library::InvalidISBNError
-                   raise AddError.new(_("Couldn't validate the " \
+                   raise AddError, _("Couldn't validate the " \
                                         'EAN/ISBN you provided.  Make ' \
                                         'sure it is written correcty, ' \
-                                        'and try again.'))
+                                        'and try again.')
                  end
         end
         if (publisher = @entry_publisher.text.strip).empty?
-          raise AddError.new(_('A publisher must be provided.'))
+          raise AddError, _('A publisher must be provided.')
         end
         publishing_year = @entry_publish_date.text.to_i
-        # TODO Get rid of this silly requirement
+        # TODO: Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?
-          raise AddError.new(_('A binding must be provided.'))
+          raise AddError, _('A binding must be provided.')
         end
         authors = []
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
-          raise AddError.new(_('At least one author must be ' \
-                               'provided.'))
+          raise AddError, _('At least one author must be ' \
+                               'provided.')
         end
         book = Book.new(title, authors, isbn, publisher,
-                        publishing_year == 0 ? nil : publishing_year,
+                        publishing_year.zero? ? nil : publishing_year,
                         edition)
         book.rating = @current_rating
         book.notes = @textview_notes.buffer.text
@@ -123,7 +124,7 @@ module Alexandria
         book.tags = @entry_tags.text.split
         @library << book
         @library.save(book)
-        if File.exist?(TMP_COVER_FILE) and (!@delete_cover_file)
+        if File.exist?(TMP_COVER_FILE) && !@delete_cover_file
           FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
         end
         @on_add_cb.call(book)

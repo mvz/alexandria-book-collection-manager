@@ -19,7 +19,7 @@
 module Alexandria
   module EventOverrides
     def ==(obj)
-      obj.is_a?(self.class) and time == obj.time and x == obj.x and y == obj.y and button == obj.button
+      obj.is_a?(self.class) && (time == obj.time) && (x == obj.x) && (y == obj.y) && (button == obj.button)
     end
   end
 
@@ -115,8 +115,8 @@ module Alexandria
       return false if path.nil?
 
       # call_parent = (event.state.control_mask? or event.state.shift_mask?) or !selected or event.button != 1
-      call_parent = !selection.path_is_selected?(path) or
-        event.button != 1
+      (call_parent = !selection.path_is_selected?(path)) ||
+        (event.button != 1)
 
       if call_parent
         signal_handler_block(@context.button_press_handler) do

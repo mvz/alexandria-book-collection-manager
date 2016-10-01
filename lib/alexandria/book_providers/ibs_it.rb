@@ -24,7 +24,7 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class IBS_itProvider < GenericProvider
-      BASE_URI = 'http://www.internetbookshop.it'
+      BASE_URI = 'http://www.internetbookshop.it'.freeze
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
       REFERER = BASE_URI
       def initialize
@@ -80,7 +80,7 @@ module Alexandria
       private
 
       def to_book(data)
-        raise NoResultsError if /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/.match(data)
+        raise NoResultsError if data =~ /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/
         data = data.convert('UTF-8', 'ISO-8859-1')
 
         md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
@@ -98,16 +98,16 @@ module Alexandria
 
         # raise "No publisher" unless
         md = /<b>Editore<\/b><\/td>.+<b>([^<]+)/.match(data)
-        publisher = CGI.unescape(md[1].strip) or md
+        (publisher = CGI.unescape(md[1].strip)) || md
 
         # raise "No edition" unless
         md = /Dati<\/b><\/td><td valign="top">([^<]+)/.match(data)
-        edition = CGI.unescape(md[1].strip) or md
+        (edition = CGI.unescape(md[1].strip)) || md
 
         publish_year = nil
         if (md = /Anno<\/b><\/td><td valign="top">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip).to_i
-          publish_year = nil if publish_year == 0
+          publish_year = nil if publish_year.zero?
         end
 
         md = /src="http:\/\/giotto.ibs.it\/cop\/copt13.asp\?f=(\d+)">/.match(data)
@@ -120,7 +120,7 @@ module Alexandria
         end
 
         medium_cover = CACHE_DIR + '/' + cover_filename
-        if File.size(medium_cover) > 0 and File.size(medium_cover) != 1822 # 1822 is the size of the fake image "copertina non disponibile"
+        if File.size(medium_cover) > 0 && (File.size(medium_cover) != 1822) # 1822 is the size of the fake image "copertina non disponibile"
           puts medium_cover + ' has non-0 size' if $DEBUG
           return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
@@ -134,7 +134,7 @@ module Alexandria
       end
 
       def clean_cache
-        # FIXME begin ... rescue ... end?
+        # FIXME: begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob('*.tmp') do |file|
             puts 'removing ' + file if $DEBUG

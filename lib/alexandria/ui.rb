@@ -32,18 +32,21 @@ module Alexandria
       log.info { 'Initializing Icons...' }
       Icons.init
     end
+
     def self.start_main_app
       puts '==========================' if $DEBUG
       log.info { 'Starting MainApp...' }
       puts '==========================' if $DEBUG
       MainApp.instance
     end
+
     def self.start_gtk
       puts '====================================' if $DEBUG
       log.info { 'Starting Gtk...' }
       puts '====================================' if $DEBUG
       Gtk.main
     end
+
     def self.main
       init_icons
       start_main_app

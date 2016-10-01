@@ -26,12 +26,12 @@ module Alexandria
     include Singleton
     include Logging
 
-    APP_DIR = '/apps/alexandria'
-    HTTP_PROXY_DIR = '/system/http_proxy'
-    HTTP_PROXY_MODE = '/system/proxy/mode'
-    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'
+    APP_DIR = '/apps/alexandria'.freeze
+    HTTP_PROXY_DIR = '/system/http_proxy'.freeze
+    HTTP_PROXY_MODE = '/system/proxy/mode'.freeze
+    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'.freeze
 
-    GCONFTOOL = 'gconftool-2'
+    GCONFTOOL = 'gconftool-2'.freeze
 
     def initialize
       @alexandria_settings = {}
@@ -52,9 +52,7 @@ module Alexandria
     end
 
     def http_proxy_config
-      unless @http_proxy_loaded
-        load_http_proxy_settings
-      end
+      load_http_proxy_settings unless @http_proxy_loaded
       if @use_http_proxy && @proxy_host && @proxy_port
         [@proxy_host, @proxy_port, @proxy_user, @proxy_password]
       end
@@ -156,7 +154,7 @@ module Alexandria
     def get_gconf_type(value)
       if value.is_a?(String)
         'string'
-      elsif value.is_a?(Fixnum)
+      elsif value.is_a?(Integer)
         'int'
       elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
         'bool'
@@ -183,7 +181,7 @@ module Alexandria
 
     def make_list_string(list)
       if get_gconf_type(list.first) == 'string'
-        list.map! { |x| x.gsub(/\"/, "\\\"") }
+        list.map! { |x| x.gsub(/\"/, '\\"') }
       end
       contents = list.join(',')
       '[' + contents + ']'
@@ -198,12 +196,10 @@ module Alexandria
       type = get_gconf_type(new_value)
       value_str = new_value
       if new_value.is_a? String
-        new_value.gsub!(/\"/, "\\\"")
+        new_value.gsub!(/\"/, '\\"')
         value_str = "\"#{new_value}\""
       end
-      if /cols_width/ =~ var_path
-        puts value_str
-      end
+      puts value_str if /cols_width/ =~ var_path
       `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
@@ -276,7 +272,7 @@ module Alexandria
           return [0, 0]
         end
       else
-        return value           # string
+        return value # string
       end
     end
   end

@@ -39,7 +39,7 @@ require_relative 'lib/alexandria/version'
 stage_dir = ENV['DESTDIR'] || 'tmp'
 prefix_dir = ENV['PREFIX'] || '/usr'
 
-PROJECT = 'alexandria'
+PROJECT = 'alexandria'.freeze
 PREFIX = prefix_dir
 share_dir = ENV['SHARE'] || "#{PREFIX}/share"
 SHARE = share_dir
@@ -56,12 +56,12 @@ end
 
 SHARE_FILE_GLOBS = ['data/alexandria/**/*', 'data/gnome/**/*.*',
                     'data/locale/**/*.mo', 'data/omf/**/*.omf',
-                    'data/sounds/**/*.ogg'] # , 'data/menu/*']
+                    'data/sounds/**/*.ogg'].freeze # , 'data/menu/*']
 
 ICON_FILE_GLOBS = ['data/app-icon/**/*.png',
-                   'data/app-icon/scalable/*.svg']
+                   'data/app-icon/scalable/*.svg'].freeze
 
-PIXMAP_GLOBS = 'data/app-icon/32x32/*.xpm'
+PIXMAP_GLOBS = 'data/app-icon/32x32/*.xpm'.freeze
 
 def install_common(install_task)
   install_task.install_exe('bin', 'bin/*', "#{PREFIX}/bin")
@@ -92,8 +92,7 @@ FileInstallTask.new(:package) do |j|
   j.install('doc', devel_docs, "#{SHARE}/doc/#{PROJECT}")
 
   j.uninstall_empty_dirs(["#{SHARE}/**/#{PROJECT}/",
-                          "#{j.rubylib}/#{PROJECT}/"
-                         ])
+                          "#{j.rubylib}/#{PROJECT}/"])
 end
 
 task :clobberp do
@@ -134,7 +133,7 @@ def convert_with_type(value, type)
   end
 end
 
-SCHEMA_PATH = 'schemas/alexandria.schemas'
+SCHEMA_PATH = 'schemas/alexandria.schemas'.freeze
 
 # This generates default_preferences.rb by copying over values from
 # providers_priority key in alexandria.schemas (necessary?)
@@ -150,7 +149,7 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
     varname = File.basename(element.elements['key'].text)
     type = element.elements['type'].text
 
-    if type == 'list' or type == 'pair'
+    if (type == 'list') || (type == 'pair')
       ary = default[1..-2].split(',')
       next if ary.empty?
       if type == 'list'
@@ -203,7 +202,7 @@ task default: [:build]
 
 # pre-release tasks
 
-ULTRA_CLOBBER = []
+ULTRA_CLOBBER = [].freeze
 task ultra_clobber: :clobber do
   ULTRA_CLOBBER.each do |file|
     FileUtils::Verbose.rm_f(file)
@@ -234,7 +233,7 @@ task :scrollkeeper do
   unless system('which scrollkeeper-update')
     raise 'scrollkeeper-update cannot be found, is Scrollkeeper correctly installed?'
   end
-  system('scrollkeeper-update -q') or raise 'Scrollkeeper update failed'
+  system('scrollkeeper-update -q') || raise('Scrollkeeper update failed')
 end
 
 task :gconf do

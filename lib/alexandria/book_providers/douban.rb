@@ -32,8 +32,8 @@ module Alexandria
     class DoubanProvider < GenericProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.douban.com'
-      BASE_URL = 'http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json'
+      SITE = 'http://www.douban.com'.freeze
+      BASE_URL = 'http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json'.freeze
 
       def initialize
         super('Douban', 'Douban (China)')
@@ -51,9 +51,7 @@ module Alexandria
         search_response = transport.get_response(URI.parse(request_url))
 
         results = parse_search_result(search_response.body)
-        if results.length == 0
-          raise NoResultsError
-        end
+        raise NoResultsError if results.empty?
 
         if type == SEARCH_BY_ISBN
           return results.first
@@ -97,9 +95,7 @@ module Alexandria
               pubdate = nil
               binding = nil
               for av in item['db:attribute']
-                if av['@name'] == 'isbn13'
-                  isbn = av['$t']
-                end
+                isbn = av['$t'] if av['@name'] == 'isbn13'
                 if av['@name'] == 'publisher'
                   publisher = av['$t']
                 end
@@ -110,11 +106,11 @@ module Alexandria
                   binding = av['$t']
                 end
               end
-              if item['author']
-                authors = item['author'].map { |a| a['name']['$t'] }
-              else
-                authors = []
-              end
+              authors = if item['author']
+                          item['author'].map { |a| a['name']['$t'] }
+                        else
+                          []
+                        end
               image_url = nil
               for av in item['link']
                 if av['@rel'] == 'image'

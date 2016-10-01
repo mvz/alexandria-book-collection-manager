@@ -36,7 +36,7 @@ module Alexandria
       @extra_request_headers.each_pair do |header_name, value|
         req.add_field(header_name, value)
       end
-      res = WWWAgent.transport.start(uri.host, uri.port) {|http|
+      res = WWWAgent.transport.start(uri.host, uri.port) { |http|
         http.request(req)
       }
       res

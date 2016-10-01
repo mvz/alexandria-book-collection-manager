@@ -34,11 +34,11 @@ module Alexandria
       # it adds most to Alexandria (Amazon already has French and
       # English titles).
 
-      SITE = 'http://www.proxis.nl'
+      SITE = 'http://www.proxis.nl'.freeze
       BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" \
-        '&shop=100001NL&SelRubricLevel1Id=100001NL'
+        '&shop=100001NL&SelRubricLevel1Id=100001NL'.freeze
       ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" \
-        '&shop=100001NL&SelRubricLevel1Id=100001NL'
+        '&shop=100001NL&SelRubricLevel1Id=100001NL'.freeze
 
       def initialize
         super('Proxis', 'Proxis (Belgium)')
@@ -75,12 +75,12 @@ module Alexandria
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:lookup_url]}" }
-        html_data =  transport.get_response(URI.parse(result[:lookup_url]))
+        html_data = transport.get_response(URI.parse(result[:lookup_url]))
         parse_result_data(html_data.body)
       end
 
       def url(book)
-        if book.isbn.nil? or book.isbn.empty?
+        if book.isbn.nil? || book.isbn.empty?
           ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn)
         end
       end
@@ -107,7 +107,7 @@ module Alexandria
       def parse_search_result_data(html)
         doc = html_to_doc(html)
         book_search_results = []
-        items = (doc.search('table.searchResult tr'))
+        items = doc.search('table.searchResult tr')
         items.each do |item|
           result = {}
           title_link = item % 'h5 a'
@@ -129,9 +129,7 @@ module Alexandria
       def data_for_header(th)
         tr = th.parent
         td = tr.at('td')
-        if td
-          text_of(td)
-        end
+        text_of(td) if td
       end
 
       def parse_result_data(html)
@@ -181,14 +179,12 @@ module Alexandria
 
         image_url = nil
         if (cover_img = doc.at("img[@id$='imgProduct']"))
-          if cover_img['src'] =~ /^http/
-            image_url = cover_img['src']
-          else
-            image_url = "#{SITE}/#{cover_img['src']}" # TODO use html <base>
-          end
-          if image_url =~ /ProductNoCover/
-            image_url = nil
-          end
+          image_url = if cover_img['src'] =~ /^http/
+                        cover_img['src']
+                      else
+                        "#{SITE}/#{cover_img['src']}" # TODO: use html <base>
+                      end
+          image_url = nil if image_url =~ /ProductNoCover/
         end
 
         book = Book.new(book_data[:title], book_data[:authors],

@@ -25,7 +25,7 @@ module Alexandria
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
-      COVER_MAXWIDTH = 140    # pixels
+      COVER_MAXWIDTH = 140 # pixels
 
       COVER_ABSOLUTE_MAXHEIGHT = 250 # pixels, above this we scale down...
 
@@ -33,7 +33,8 @@ module Alexandria
         super('book_properties_dialog__builder.glade', widget_names)
         @setup_finished = false
         @book_properties_dialog.transient_for = parent
-        @parent, @cover_file = parent, cover_file
+        @parent = parent
+        @cover_file = cover_file
         @original_cover_file = nil
         @delete_cover_file = false # fixing bug #16707
 
@@ -260,11 +261,11 @@ module Alexandria
       end
 
       def own_toggled
-        if @checkbutton_own.active?
-          @checkbutton_want.inconsistent = true
-        else
-          @checkbutton_want.inconsistent = false
-        end
+        @checkbutton_want.inconsistent = if @checkbutton_own.active?
+                                           true
+                                         else
+                                           false
+                                         end
       end
 
       def want_toggled
@@ -319,7 +320,7 @@ module Alexandria
         dialog.destroy
       end
 
-      def on_destroy; end     # no action by default
+      def on_destroy; end # no action by default
 
       def on_loaned
         loaned = @checkbutton_loaned.active?
@@ -336,9 +337,7 @@ module Alexandria
           matches_regex = regex.match(@date_loaned_since.text)
           break if matches_regex
         end
-        unless matches_regex
-          return
-        end
+        return unless matches_regex
         t = parse_date(@date_loaned_since.text)
         if t.nil?
           @label_loaning_duration.label = ''
@@ -378,7 +377,7 @@ module Alexandria
           @image_rating4,
           @image_rating5
         ]
-        raise 'out of range' if rating < 0 or rating > images.length
+        raise 'out of range' if rating < 0 || rating > images.length
         images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
         images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }
         @current_rating = rating

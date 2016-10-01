@@ -107,7 +107,7 @@ module Alexandria
           cb = Gtk::ComboBoxText.new
           [_('all'), _('any')].each { |x| cb.append_text(x) }
           cb.signal_connect('changed') do
-            @predicate_operator_rule = cb.active == 0 ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
+            @predicate_operator_rule = cb.active.zero? ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
           end
           cb.active =
             predicate_operator_rule == SmartLibrary::ALL_RULES ? 0 : 1
@@ -184,8 +184,7 @@ module Alexandria
           operations = SmartLibrary::Rule.operations_for_operand(operand)
           operation = operations[operator_combo.active]
 
-          value_entry.visible = date_entry.visible =
-            entry_label.visible = false
+          value_entry.visible = date_entry.visible = entry_label.visible = false
           right_operand = operation.last
           unless right_operand.nil?
             entry = case right_operand.klass.name
@@ -235,8 +234,7 @@ module Alexandria
         rule_box.pack_end(add_button, expand: false, fill: false)
 
         rule_box.show_all
-        value_entry.visible = date_entry.visible = entry_label.visible =
-          false
+        value_entry.visible = date_entry.visible = entry_label.visible = false
 
         @rules_box.pack_start(rule_box, expand: false, fill: true)
 
@@ -246,7 +244,7 @@ module Alexandria
             SmartLibrary::Rule.operations_for_operand(rule.operand)
           operation_idx = operations.map(&:first).index(rule.operation)
 
-          if !operand_idx.nil? and !operation_idx.nil?
+          if !operand_idx.nil? && !operation_idx.nil?
             left_operand_combo.active = operand_idx
             operator_combo.active = operation_idx
             unless rule.value.nil?
@@ -262,7 +260,7 @@ module Alexandria
           left_operand_combo.active = 0
         end
 
-        @rules_box.check_resize     # force a layout
+        @rules_box.check_resize # force a layout
         update_rules_header_box
         sensitize_remove_rule_buttons
       end

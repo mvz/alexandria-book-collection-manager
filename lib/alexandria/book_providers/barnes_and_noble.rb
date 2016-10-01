@@ -35,12 +35,12 @@ module Alexandria
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.barnesandnoble.com'
+      SITE = 'http://www.barnesandnoble.com'.freeze
 
-      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'
+      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'.freeze
 
       BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
-        '/results.asp?%s=%s' # type, term
+        '/results.asp?%s=%s'.freeze # type, term
 
       def initialize
         super('BarnesAndNoble', 'BarnesAndNoble')
@@ -49,14 +49,12 @@ module Alexandria
       end
 
       def agent
-        unless @agent
-          @agent = Alexandria::WWWAgent.new
-        end
+        @agent = Alexandria::WWWAgent.new unless @agent
         @agent
       end
 
       def fetch_redirectly(uri_str, limit = 5)
-        raise NoResultsError, 'HTTP redirect too deep' if limit == 0
+        raise NoResultsError, 'HTTP redirect too deep' if limit.zero?
         if limit < 10
           sleep 0.1
           log.debug { "Redirectly :: #{uri_str}" }
@@ -101,11 +99,11 @@ module Alexandria
       end
 
       def create_search_uri(search_type, search_term)
-        search_type_code = {
+        (search_type_code = {
           SEARCH_BY_AUTHORS => 'ATH',
           SEARCH_BY_TITLE => 'TTL',
-          SEARCH_BY_KEYWORD => 'WRD'    # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
-        }[search_type] or ''
+          SEARCH_BY_KEYWORD => 'WRD' # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
+        }[search_type]) || ''
         if search_type == SEARCH_BY_ISBN
           BASE_ISBN_SEARCH_URL % Library.canonicalise_ean(search_term) # isbn-13
         else
@@ -116,7 +114,7 @@ module Alexandria
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
-        html_data =  transport.get_response(URI.parse(result[:url]))
+        html_data = transport.get_response(URI.parse(result[:url]))
         parse_result_data(html_data.body)
       end
 

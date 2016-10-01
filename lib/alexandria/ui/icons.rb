@@ -63,7 +63,7 @@ module Alexandria
       # Alexandria::UI::Icons namespace, e.g., Icons::STAR_SET
       def self.load_icon_images
         Dir.entries(ICONS_DIR).each do |file|
-          next unless file =~ /\.png$/    # skip non '.png' files
+          next unless file =~ /\.png$/ # skip non '.png' files
           # Don't use upcase and use tr instead
           # For example in Turkish the upper case of 'i' is still 'i'.
           name = File.basename(file, '.png').tr('a-z', 'A-Z')
@@ -89,7 +89,7 @@ module Alexandria
 
       def self.blank?(filename)
         pixbuf = GdkPixbuf::Pixbuf.new(file: filename)
-        pixbuf.width == 1 and pixbuf.height == 1
+        (pixbuf.width == 1) && (pixbuf.height == 1)
       rescue => err
         puts err.message
         puts err.backtrace.join("\n> ")

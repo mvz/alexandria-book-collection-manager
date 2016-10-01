@@ -45,7 +45,7 @@ module Alexandria
         @button_box.set_child_secondary(help_button, true)
 
         @entry_title.text = @book_properties_dialog.title = book.title
-        @entry_isbn.text = (book.isbn or '')
+        @entry_isbn.text = (book.isbn || '')
         @entry_publisher.text = book.publisher
         @entry_publish_date.text = book.publishing_year.to_s
         @entry_publish_date.signal_connect('focus-out-event') do
@@ -54,7 +54,7 @@ module Alexandria
             false
           else
             year = text.to_i
-            if year == 0 or year > (Time.now.year + 10) or year < 10
+            if year.zero? || year > (Time.now.year + 10) || year < 10
               @entry_publish_date.text = ''
               @entry_publish_date.grab_focus
               true
@@ -76,15 +76,16 @@ module Alexandria
         end
 
         buffer = Gtk::TextBuffer.new
-        buffer.text = (book.notes or '')
+        buffer.text = (book.notes || '')
         @textview_notes.buffer = buffer
 
-        @library, @book = library, book
+        @library = library
+        @book = book
         self.cover = Icons.cover(library, book)
-        self.rating = (book.rating or Book::DEFAULT_RATING)
+        self.rating = (book.rating || Book::DEFAULT_RATING)
 
         if (@checkbutton_loaned.active = book.loaned?)
-          @entry_loaned_to.text = (book.loaned_to or '')
+          @entry_loaned_to.text = (book.loaned_to || '')
           self.loaned_since = book.loaned_since
           @date_loaned_since.sensitive = true
         else
@@ -118,7 +119,7 @@ module Alexandria
           @book.isbn = ''
         else
           ary = @library.select { |book| book.ident == @entry_isbn.text }
-          unless ary.empty? or (ary.length == 1 and ary.first == @book)
+          unless ary.empty? || ((ary.length == 1) && (ary.first == @book))
             ErrorDialog.new(@parent,
                             _("Couldn't modify the book"),
                             _('The EAN/ISBN you provided is already ' \
@@ -139,7 +140,7 @@ module Alexandria
         @book.title = @entry_title.text
         @book.publisher = @entry_publisher.text
         year = @entry_publish_date.text.to_i
-        @book.publishing_year = year == 0 ? nil : year
+        @book.publishing_year = year.zero? ? nil : year
         @book.edition = @entry_edition.text
         @book.authors = []
         @treeview_authors.model.each { |_m, _p, i| @book.authors << i[0] }
@@ -175,9 +176,7 @@ module Alexandria
         @book.want = @checkbutton_want.active?
         @book.tags = @entry_tags.text.split(',') # tags are comma separated
 
-        if @delete_cover_file
-          FileUtils.rm_f(@cover_file)
-        end
+        FileUtils.rm_f(@cover_file) if @delete_cover_file
 
         if @original_cover_file
           FileUtils.rm_f(@original_cover_file)

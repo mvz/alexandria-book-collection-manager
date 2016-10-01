@@ -168,7 +168,7 @@ module Alexandria
           @selected_instance = instances[cb.active]
           fill_table(@table, @selected_instance)
           sensitize
-          # FIXME this should be re-written once we have multiple
+          # FIXME: this should be re-written once we have multiple
           # abstract providers.
         end
         combo_type.active = 0
@@ -287,8 +287,7 @@ module Alexandria
         { sensitize_providers }
 
         @button_prov_setup.sensitive = false
-        @button_prov_up.sensitive =  @button_prov_down.sensitive =
-          BookProviders.length > 1
+        @button_prov_up.sensitive = @button_prov_down.sensitive = BookProviders.length > 1
 
         @buttonbox_prov.set_child_secondary(@button_prov_add, true)
         @buttonbox_prov.set_child_secondary(@button_prov_remove, true)
@@ -333,7 +332,7 @@ module Alexandria
           iter = @scanner_device_model.append
           iter[0] = scanner.display_name
           iter[1] = scanner.name
-          if (chosen_scanner_name == scanner.name)
+          if chosen_scanner_name == scanner.name
             @scanner_device_type.active = index
           end
           index += 1
@@ -359,7 +358,8 @@ module Alexandria
           if event_is_right_click(event)
             if (path = widget.get_path_at_pos(event.x, event.y))
               widget.grab_focus
-              obj, path = widget.selection, path.first
+              obj = widget.selection
+              path = path.first
               unless obj.path_is_selected?(path)
                 widget.unselect_all
                 obj.select_path(path)
@@ -400,11 +400,11 @@ module Alexandria
       end
 
       def event_is_right_click(event)
-        event.event_type == :button_press and event.button == 3
+        (event.event_type == :button_press) && (event.button == 3)
       end
 
       def prefs_empty(prefs)
-        prefs.empty? or (prefs.size == 1 and prefs.first.name == 'enabled')
+        prefs.empty? || ((prefs.size == 1) && (prefs.first.name == 'enabled'))
       end
 
       def on_provider_setup
@@ -496,7 +496,7 @@ module Alexandria
 
       def on_providers_button_press_event(_widget, event)
         # double left click
-        if event.event_type == :'2button_press' and event.button == 1
+        if (event.event_type == :'2button_press') && (event.button == 1)
           on_provider_setup
         end
       end
@@ -518,11 +518,11 @@ module Alexandria
         model.clear
         BookProviders.each_with_index do |x, index|
           iter = model.append
-          if x.enabled
-            iter[0] = x.fullname
-          else
-            iter[0] = "<i>#{x.fullname}</i>"
-          end
+          iter[0] = if x.enabled
+                      x.fullname
+                    else
+                      "<i>#{x.fullname}</i>"
+                    end
           iter[1] = x.name
           iter[2] = x.enabled
           iter[3] = index
@@ -538,11 +538,11 @@ module Alexandria
 
       def adjust_selected_provider(prov)
         iter = @treeview_providers.selection.selected
-        if prov.enabled
-          iter[0] = prov.fullname
-        else
-          iter[0] = "<i>#{prov.fullname}</i>"
-        end
+        iter[0] = if prov.enabled
+                    prov.fullname
+                  else
+                    "<i>#{prov.fullname}</i>"
+                  end
         iter[2] = prov.enabled
       end
 

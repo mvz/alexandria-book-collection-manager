@@ -32,9 +32,7 @@ class GettextGenerateTask < Rake::TaskLib
   def initialize(projectname)
     @projectname = projectname
     @generated_files = []
-    if block_given?
-      yield self
-    end
+    yield self if block_given?
     make_task
   end
 
@@ -59,7 +57,7 @@ class GettextGenerateTask < Rake::TaskLib
       FileUtils.makedirs(dest_dir) unless FileTest.exists?(dest_dir)
       puts "Generating #{t.name}"
       system("msgfmt #{t.source} -o #{t.name}")
-      raise "msgfmt failed for #{t.source}" if $CHILD_STATUS != 0
+      raise "msgfmt failed for #{t.source}" if $CHILD_STATUS.nonzero?
     end
     mo_files.each { |mo| @generated_files << mo }
   end

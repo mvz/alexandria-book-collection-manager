@@ -31,8 +31,8 @@ module Alexandria
     class DeaStoreProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.deastore.com'
-      BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s" # type/term
+      SITE = 'http://www.deastore.com'.freeze
+      BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s".freeze # type/term
 
       def initialize
         super('DeaStore', 'DeaStore (Italy)')
@@ -87,18 +87,16 @@ module Alexandria
 
       def create_search_uri(search_type, search_term)
         # bah! very, very similar to the siciliano code! refactor out this duplication
-        search_type_code = { SEARCH_BY_ISBN => 'isbn',
-                             SEARCH_BY_TITLE => 'title',
-                             SEARCH_BY_AUTHORS => 'author',
-                             SEARCH_BY_KEYWORD => 'keywords'
-        }[search_type] or 'keywords'
+        (search_type_code = { SEARCH_BY_ISBN => 'isbn',
+                              SEARCH_BY_TITLE => 'title',
+                              SEARCH_BY_AUTHORS => 'author',
+                              SEARCH_BY_KEYWORD => 'keywords' }[search_type]) || 'keywords'
 
-        search_term_encoded = search_term
-        if search_type == SEARCH_BY_ISBN
-          search_term_encoded = Library.canonicalise_isbn(search_term) # isbn-10
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                Library.canonicalise_isbn(search_term) # isbn-10
+                              else
+                                CGI.escape(search_term)
+                              end
 
         uri = BASE_SEARCH_URL % [search_type_code, search_term_encoded]
         log.debug { uri }
@@ -142,7 +140,7 @@ module Alexandria
             title_link = (content / :a).first
             title = normalize(title_link.inner_text)
             link_to_description = title_link['href']
-            lookup_url =  "#{SITE}#{link_to_description}"
+            lookup_url = "#{SITE}#{link_to_description}"
 
             authors = []
             (content / 'a.info').each do |link|
@@ -245,17 +243,17 @@ module Alexandria
         # cover
         image_url = nil
         if cover_link
-          if cover_link =~ /^http/
-            # e.g. http://images.btol.com/ContentCafe/Jacket.aspx?\
-            # Return=1&amp;Type=M&amp;Value=9788873641803&amp;password=\
-            # CC70580&amp;userID=DEA40305
-            # seems not to work, or to be blank anyway, so set to nil
-            image_url = nil
-          elsif cover_link[0..0] != '/'
-            image_url = "#{SITE}/#{cover_link}"
-          else
-            image_url = "#{SITE}#{cover_link}"
-          end
+          image_url = if cover_link =~ /^http/
+                        # e.g. http://images.btol.com/ContentCafe/Jacket.aspx?\
+                        # Return=1&amp;Type=M&amp;Value=9788873641803&amp;password=\
+                        # CC70580&amp;userID=DEA40305
+                        # seems not to work, or to be blank anyway, so set to nil
+                        nil
+                      elsif cover_link[0..0] != '/'
+                        "#{SITE}/#{cover_link}"
+                      else
+                        "#{SITE}#{cover_link}"
+                      end
           log.debug { "Cover Image URL:: #{image_url}" }
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
@@ -267,9 +265,7 @@ module Alexandria
       end
 
       def normalize(str)
-        unless str.nil?
-          str = str.squeeze(' ').strip
-        end
+        str = str.squeeze(' ').strip unless str.nil?
         str
       end
     end

@@ -143,7 +143,7 @@ module Alexandria
       end
 
       def on_properties(*)
-        if @library_listview.focus? or selected_books.empty?
+        if @library_listview.focus? || selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
             SmartLibraryPropertiesDialog.new(@main_app, library) do
@@ -222,11 +222,11 @@ module Alexandria
       def on_delete(*)
         library = selected_library
 
-        if selected_books.empty?
-          books = nil
-        else
-          books = selected_books
-        end
+        books = if selected_books.empty?
+                  nil
+                else
+                  selected_books
+                end
         # books = @library_listview.focus? ? nil : selected_books
         is_smart = library.is_a?(SmartLibrary)
         last_library = (@libraries.all_regular_libraries.length == 1)
@@ -234,7 +234,7 @@ module Alexandria
           log.warn { 'Attempted to delete last library, fix GUI' }
           return
         end
-        if library.empty? or ReallyDeleteDialog.new(@main_app,
+        if library.empty? || ReallyDeleteDialog.new(@main_app,
                                                     library,
                                                     books).ok?
           undoable_delete(library, books)
@@ -396,7 +396,7 @@ module Alexandria
         first_action = nil
         view_as_actions.each do |name, stock_id, label, accelerator, tooltip, value|
           action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
-          first_action = action if !group
+          first_action = action unless group
           action.set_group group
           group = action.group
           @actiongroup.add_action_with_accel(action, accelerator)
@@ -414,7 +414,7 @@ module Alexandria
         first_action = nil
         arrange_icons_actions.each do |name, stock_id, label, accelerator, tooltip, value|
           action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
-          first_action = action if !group
+          first_action = action unless group
           action.set_group group
           group = action.group
           @actiongroup.add_action_with_accel(action, accelerator)

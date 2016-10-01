@@ -37,8 +37,8 @@ module Alexandria
     class WorldCatProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.worldcat.org'
-      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
+      SITE = 'http://www.worldcat.org'.freeze
+      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced".freeze # type, term
 
       def initialize
         super('WorldCat', 'WorldCat')
@@ -76,24 +76,22 @@ module Alexandria
       private
 
       def create_search_uri(search_type, search_term)
-        search_type_code = { SEARCH_BY_ISBN => 'isbn:',
-                             SEARCH_BY_AUTHORS => 'au:',
-                             SEARCH_BY_TITLE => 'ti:',
-                             SEARCH_BY_KEYWORD => ''
-        }[search_type] or ''
+        (search_type_code = { SEARCH_BY_ISBN => 'isbn:',
+                              SEARCH_BY_AUTHORS => 'au:',
+                              SEARCH_BY_TITLE => 'ti:',
+                              SEARCH_BY_KEYWORD => '' }[search_type]) || ''
         search_type_code = CGI.escape(search_type_code)
-        search_term_encoded = search_term # TODO, remove attack stuff
-        if search_type == SEARCH_BY_ISBN
-          search_term_encoded = Library.canonicalise_ean(search_term) # isbn-13
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                Library.canonicalise_ean(search_term) # isbn-13
+                              else
+                                CGI.escape(search_term)
+                              end
         BASE_SEARCH_URL % [search_type_code, search_term_encoded]
       end
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:url]}" }
-        html_data =  transport.get_response(URI.parse(result[:url]))
+        html_data = transport.get_response(URI.parse(result[:url]))
         parse_result_data(html_data.body)
       end
 
@@ -105,13 +103,11 @@ module Alexandria
           # puts result_cells.length
           result_cells.each do |td|
             type_icon = (td % 'div.type/img.icn')
-            next unless type_icon and type_icon['src'] =~ /icon-bks/
+            next unless type_icon && type_icon['src'] =~ /icon-bks/
             name_div = td % 'div.name'
             title = name_div.inner_text
             anchor = name_div % :a
-            if anchor
-              url = anchor['href']
-            end
+            url = anchor['href'] if anchor
             lookup_url = "#{SITE}#{url}"
             result = {}
             result[:title] = title
@@ -205,13 +201,13 @@ module Alexandria
           if publisher_row
             publication_info = (publisher_row / 'td').last.inner_text
 
-            if publication_info.index(';')
-              publication_info =~ /;[\s]*([^\d]+)[\s]*[\d]*/
-            elsif publication_info.index(':')
-              publication_info =~ /:[\s]*([^;:,]+)/
-            else
-              publication_info =~ /([^;,]+)/
-            end
+            publication_info =~ if publication_info.index(';')
+                                  /;[\s]*([^\d]+)[\s]*[\d]*/
+                                elsif publication_info.index(':')
+                                  /:[\s]*([^;:,]+)/
+                                else
+                                  /([^;,]+)/
+                                end
 
             publisher = Regexp.last_match[1]
             publication_info =~ /([12][0-9]{3})/

@@ -25,10 +25,10 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class Webster_itProvider < GenericProvider
-      BASE_URI = 'http://www.libreriauniversitaria.it' # also "http://www.webster.it"
+      BASE_URI = 'http://www.libreriauniversitaria.it'.freeze # also "http://www.webster.it"
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.webster_it_cache')
       REFERER = BASE_URI
-      LOCALE = 'BIT' # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
+      LOCALE = 'BIT'.freeze # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
       def initialize
         super('Webster_it', 'Webster (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
@@ -82,7 +82,7 @@ module Alexandria
       private
 
       def to_book(data)
-        raise NoResultsError if /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/.match(data)
+        raise NoResultsError if data =~ /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/
         data = data.convert('UTF-8', 'ISO-8859-15')
 
         md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
@@ -107,26 +107,22 @@ module Alexandria
 
         # raise unless
         md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
-        publisher = CGI.unescape(md[1].strip) or md
+        (publisher = CGI.unescape(md[1].strip)) || md
 
-        if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
-          edition = CGI.unescape(md[1].strip) + ' p.'
-        else
-          edition = nil
-        end
+        edition = if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
+                    CGI.unescape(md[1].strip) + ' p.'
+                  end
 
         publish_year = nil
         if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))
           publish_year = CGI.unescape(md[1].strip)[-4..-1].to_i
-          publish_year = nil if publish_year == 0
+          publish_year = nil if publish_year.zero?
         end
 
-        if data =~ /javascript:popImage/ and (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
+        if data =~ /javascript:popImage/ && (md = /<img border="0" alt="[^"]+" src="([^"]+)/.match(data))
           cover_url = BASE_URI + md[1].strip
           # use "p" instead of "g" for smaller image
-          if cover_url[-5] == 103
-            cover_url[-5] = 112
-          end
+          cover_url[-5] = 112 if cover_url[-5] == 103
 
           cover_filename = isbn + '.tmp'
           Dir.chdir(CACHE_DIR) do
@@ -158,7 +154,7 @@ module Alexandria
       end
 
       def clean_cache
-        # FIXME begin ... rescue ... end?
+        # FIXME: begin ... rescue ... end?
         Dir.chdir(CACHE_DIR) do
           Dir.glob('*.tmp') do |file|
             puts 'removing ' + file if $DEBUG

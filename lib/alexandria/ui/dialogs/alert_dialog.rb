@@ -62,7 +62,7 @@ module Alexandria
               [[Gtk::Stock::OK, :ok]], message)
         # FIXME: Should accept just :ok
         self.default_response = Gtk::ResponseType::OK
-        show_all and run
+        show_all && run
         destroy
       end
     end

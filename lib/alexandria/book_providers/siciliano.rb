@@ -32,7 +32,7 @@ module Alexandria
     class SicilianoProvider < WebsiteBasedProvider
       include Logging
 
-      SITE = 'http://www.siciliano.com.br'
+      SITE = 'http://www.siciliano.com.br'.freeze
 
       # The string interpolations in this URL are the search term and search
       # type, respectively.
@@ -40,7 +40,7 @@ module Alexandria
         '&FIL_ID=102' \
         '&PALAVRASN1=%s' \
         '&FILTRON1=%s' \
-        '&ESTRUTN1=0301&ORDEMN2=E'
+        '&ESTRUTN1=0301&ORDEMN2=E'.freeze
 
       def initialize
         super('Siciliano', 'Livraria Siciliano (Brasil)')
@@ -76,7 +76,7 @@ module Alexandria
           end
 
         rescue NoResultsError => err
-          if (type == SEARCH_BY_ISBN) and (trying_again == false)
+          if (type == SEARCH_BY_ISBN) && (trying_again == false)
             trying_again = true
             retry
           else
@@ -94,23 +94,21 @@ module Alexandria
       private
 
       def create_search_uri(search_type, search_term, trying_again = false)
-        search_type_code = { SEARCH_BY_ISBN => 'G',
-                             SEARCH_BY_TITLE => 'A',
-                             SEARCH_BY_AUTHORS => 'B',
-                             SEARCH_BY_KEYWORD => 'X'
-        }[search_type] or 'X'
-        search_term_encoded = search_term
-        if search_type == SEARCH_BY_ISBN
-          if trying_again
-            # on second attempt, try ISBN-10...
-            search_term_encoded = Library.canonicalise_isbn(search_term) # isbn-10
-          else
-            # search by ISBN-13 first
-            search_term_encoded = Library.canonicalise_ean(search_term) # isbn-13
-          end
-        else
-          search_term_encoded = CGI.escape(search_term)
-        end
+        (search_type_code = { SEARCH_BY_ISBN => 'G',
+                              SEARCH_BY_TITLE => 'A',
+                              SEARCH_BY_AUTHORS => 'B',
+                              SEARCH_BY_KEYWORD => 'X' }[search_type]) || 'X'
+        search_term_encoded = if search_type == SEARCH_BY_ISBN
+                                if trying_again
+                                  # on second attempt, try ISBN-10...
+                                  Library.canonicalise_isbn(search_term) # isbn-10
+                                else
+                                  # search by ISBN-13 first
+                                  Library.canonicalise_ean(search_term) # isbn-13
+                                end
+                              else
+                                CGI.escape(search_term)
+                              end
 
         BASE_SEARCH_URL % [search_term_encoded, search_type_code]
       end
@@ -150,10 +148,8 @@ module Alexandria
             result[:title] = link.inner_text.strip
             link_to_description = link['href']
             slash = ''
-            unless link_to_description =~ /^\//
-              slash = '/'
-            end
-            result[:url] =  "#{SITE}#{slash}#{link_to_description}"
+            slash = '/' unless link_to_description =~ /^\//
+            result[:url] = "#{SITE}#{slash}#{link_to_description}"
 
             book_search_results << result
           rescue => ex
@@ -187,9 +183,7 @@ module Alexandria
         isbn =  details['ISBN']
         ## ean = details["CdBarras"]
         translator = details['Tradutor']
-        if translator
-          authors << translator
-        end
+        authors << translator if translator
         binding = details['Acabamento']
         publisher = search_result[:publisher]
         # publish year
@@ -214,7 +208,7 @@ module Alexandria
           end
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-        result =  [book, image_urls.first]
+        result = [book, image_urls.first]
         return result
       rescue => ex
         trace = ex.backtrace.join("\n> ")
@@ -255,9 +249,7 @@ module Alexandria
         arr.each do |str|
           key, val = str.split(':')
           # a real hack for not handling encoding properly :^)
-          if val
-            map[key.gsub(/[^a-zA-Z]/, '')] = val.strip
-          end
+          map[key.gsub(/[^a-zA-Z]/, '')] = val.strip if val
         end
         map
       end
