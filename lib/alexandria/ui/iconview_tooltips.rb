@@ -37,11 +37,6 @@ class IconViewTooltips
     @tooltip_window.name = 'gtk-tooltips'
     @tooltip_window.resizable = false
     @tooltip_window.border_width = 4
-    @tooltip_window.app_paintable = true
-
-    @tooltip_window.signal_connect('draw') { |window, event|
-      on_expose(window, event)
-    }
 
     @tooltip_window.signal_connect('leave_notify_event') { |vw, event|
       on_leave(vw, event)
@@ -64,23 +59,6 @@ class IconViewTooltips
     view.signal_connect('leave_notify_event') { |vw, event|
       on_leave(vw, event)
     }
-  end
-
-  def on_expose(window, _event)
-    # this paints a nice outline around the label
-    size = window.size_request
-    style = window.style
-    gdk_window = window.window
-
-    Gtk.paint_flat_box(style,
-                       gdk_window.create_cairo_context,
-                       :normal,
-                       :out,
-                       @tooltip_window,
-                       'tooltip',
-                       0, 0, size[0], size[1])
-    # must return nil so the label contents get drawn correctly
-    nil
   end
 
   def label_for_book(title, authors, publisher, year)
