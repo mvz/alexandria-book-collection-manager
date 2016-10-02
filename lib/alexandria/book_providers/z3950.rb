@@ -47,7 +47,7 @@ module Alexandria
 
       def search(criterion, type)
         prefs.read
-        criterion = criterion.convert(prefs['charset'], 'UTF-8')
+        criterion = criterion.encode(prefs['charset'])
 
         # We only decode MARC at the moment.
         # SUTRS needs to be decoded separately, because each Z39.50 server has a
@@ -114,7 +114,6 @@ module Alexandria
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs['charset'], 'UTF-8') # (prefs['record_syntax'], 'USMARC')
           log.debug { marc_txt }
-          # marc_txt = marc_txt.convert("UTF-8", prefs['charset'])
           if $DEBUG
             File.open(',marc.txt', 'wb') do |f| # DEBUG
               f.write(marc_txt)
@@ -278,7 +277,6 @@ module Alexandria
           text = record.render(prefs['charset'], 'UTF-8')
           # File.open(',bl.marc', 'wb') {|f| f.write(text) }
           log.debug { text }
-          # text = text.convert("UTF-8", prefs['charset'])
 
           title = isbn = publisher = publish_year = edition = nil
           authors = []

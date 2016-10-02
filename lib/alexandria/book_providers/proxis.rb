@@ -47,10 +47,6 @@ module Alexandria
         prefs.read
       end
 
-      ## criterion = criterion.convert("windows-1252", "UTF-8")
-      ## is the above still needed??
-      ## current pages are returned in UTF-8, so I think probably not!
-
       def search(criterion, type)
         req = create_search_uri(type, criterion)
         puts req if $DEBUG

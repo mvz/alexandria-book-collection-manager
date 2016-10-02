@@ -37,7 +37,7 @@ module Alexandria
       end
 
       def search(criterion, type)
-        criterion = criterion.convert('ISO-8859-15', 'UTF-8')
+        criterion = criterion.encode('ISO-8859-15')
         req = BASE_URI + '/'
         req += case type
                when SEARCH_BY_ISBN
@@ -83,7 +83,7 @@ module Alexandria
 
       def to_book(data)
         raise NoResultsError if data =~ /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/
-        data = data.convert('UTF-8', 'ISO-8859-15')
+        data = data.encode('UTF-8')
 
         md = /<li><span class="product_label">Titolo:<\/span><span class="product_text"> ([^<]+)/.match(data)
         raise unless md
