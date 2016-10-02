@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
 
 * Various small bug fixes
 * Update to ruby-gnome2 3.0.9
