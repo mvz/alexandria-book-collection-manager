@@ -281,6 +281,7 @@ module Alexandria
           main_progress_bar.visible = true
           @progress_pulsing = GLib::Timeout.add(100) do
             if @destroyed
+              @progress_pulsing = nil
               false
             else
               main_progress_bar.pulse
