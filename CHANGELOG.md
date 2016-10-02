@@ -6,6 +6,9 @@
 * Update to ruby-gnome2 3.0.9
 * Improve specs
 * Port to Gtk+ 3
+* Restore Barcode animation
+* Remove old String#convert monkey-patch
+* Simplify sound system and stop it from hanging Alexandria
 
 ## 0.6.9
 
