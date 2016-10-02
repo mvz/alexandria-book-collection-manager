@@ -55,12 +55,7 @@ module Alexandria
       end
 
       def search(criterion, type)
-        begin
-          criterion = criterion.convert('ISO-8859-1', 'UTF-8') # still needed??
-        rescue GLib::ConvertError
-          log.info { "Cannot search for non-ISO-8859-1 terms at Siciliano : #{criterion}" }
-          raise NoResultsError
-        end
+        criterion = criterion.encode('ISO-8859-1') # still needed??
         trying_again = false
         begin
           req = create_search_uri(type, criterion, trying_again)

@@ -62,7 +62,6 @@ require 'alexandria/version'
 #    VERSION = OSX::NSBundle.mainBundle.infoDictionary.objectForKey('CFBundleVersion').to_s
 #  end
 # end
-require 'alexandria/utils'
 
 require 'alexandria/models/book'
 require 'alexandria/models/library'

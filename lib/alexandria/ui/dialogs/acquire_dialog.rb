@@ -136,16 +136,6 @@ module Alexandria
                 isbns << isbn
               end
             end
-            # remove list items (complex, cf. tutorial...)
-            # http://ruby-gnome2.sourceforge.jp/hiki.cgi?tut-treeview-model-remove
-            # row_refs = []
-            # paths = selection.selected_rows
-            # paths.each do |path|
-            #    row_refs << Gtk::TreeRowReference.new(model, path)
-            # end
-            # row_refs.each do |ref|
-            #    model.remove(model.get_iter(ref.path))
-            # end
 
             # try it this way... works because of persistent iters
             row_iters = []
@@ -154,13 +144,6 @@ module Alexandria
               isbn = iter[0]
               if book_in_library(isbn, library)
                 log.debug { "#{isbn} is a duplicate" }
-                # #elsif isbns.include? isbn
-                # this won't work since multiple scans of the same
-                # book have the same isbn (so we can't refrain from removing
-                # one, we'd end up not removing any)
-                ## TODO add another column in the iter, like "isbn/01"
-                # that would allow this kind of behaviour...
-
               elsif !@book_results.key?(isbn) # HAX
                 log.debug { "no book found for #{isbn}, not adding" }
 

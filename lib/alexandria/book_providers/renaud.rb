@@ -33,7 +33,7 @@ module Alexandria
       end
 
       def search(criterion, type)
-        criterion = criterion.convert('ISO-8859-1', 'UTF-8')
+        criterion = criterion.encode('ISO-8859-1')
         req = BASE_URI + 'francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri='
         #        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
         req += case type
@@ -85,7 +85,7 @@ module Alexandria
 
       def to_books(data)
         data = CGI.unescapeHTML(data)
-        data = data.convert('UTF-8', 'ISO-8859-1')
+        data = data.encode('UTF-8')
         raise NoResultsError if data =~ /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/
 
         titles = []

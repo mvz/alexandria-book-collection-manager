@@ -1,7 +1,7 @@
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
+# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -59,8 +59,8 @@ module Alexandria
 
       def search(criterion, type)
         begin
-          criterion = criterion.convert('ISO-8859-1', 'UTF-8') # still needed??
-        rescue GLib::ConvertError
+          criterion = criterion.encode('ISO-8859-1') # still needed??
+        rescue Encoding::UndefinedConversionError
           log.info { "Cannot search for non-ISO-8859-1 terms at DeaStore : #{criterion}" }
           raise NoResultsError
         end

@@ -44,12 +44,7 @@ module Alexandria
 
       def search(criterion, type)
         prefs.read
-        begin
-          criterion = criterion.convert('ISO-8859-1', 'UTF-8') # still needed??
-        rescue GLib::ConvertError
-          log.info { "Cannot search for non-ISO-8859-1 terms at MCU : #{criterion}" }
-          raise NoResultsError
-        end
+        criterion = criterion.encode('ISO-8859-1') # still needed??
         print "Doing search with MCU #{criterion}, type: #{type}\n" if $DEBUG # for DEBUGing
         req = BASE_URI + 'CMD=VERLST&BASE=ISBN&DOCS=1-15&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1-1000&SEPARADOR=&'
         req += case type
@@ -71,7 +66,6 @@ module Alexandria
         products = {}
         print "Request page is #{req}\n" if $DEBUG # for DEBUGing
         transport.get(URI.parse(req)).each do |line|
-          # line = line.convert("ISO-8859-1", "UTF-8")
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
           if (line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/) && (!products[Regexp.last_match[1]]) && (book = parseBook(Regexp.last_match[1], Regexp.last_match[2]))
             products[Regexp.last_match[1]] = book
@@ -109,7 +103,7 @@ module Alexandria
           # - CDU      - Last update
 
           # There seems to be an issue with accented chars..
-          line = line.convert('UTF-8', 'ISO-8859-1')
+          line = line.encode('UTF-8')
           print "Reading line (robotstate #{robotstate}): #{line}" if $DEBUG # for DEBUGing
           if line =~ /^<\/td>$/ || line =~ /^<\/tr>$/
             robotstate = 0
