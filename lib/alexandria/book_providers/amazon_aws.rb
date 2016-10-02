@@ -172,16 +172,6 @@ module Alexandria
           atts = item.search_and_convert('itemattributes')
           title = normalize(atts.get('title'))
 
-          # Work around Amazon US encoding bug. Amazon US apparently
-          # interprets UTF-8 titles as ISO-8859 titles and then converts
-          # the garbled titles to UTF-8. This tries to convert back into
-          # valid UTF-8. It does not always work - see isbn 2259196098
-          # (from the mailing list) for an example.
-          # if req.locale == 'us'
-          #    title = title.convert('ISO-8859-1','UTF-8')
-          # end
-          # Cathal Mc Ginley 2008-02-18, still a problem for that ISBN!! Yep 2009-12-09!
-
           media = normalize(atts.get('binding'))
           media = nil if media == 'Unknown Binding'
 
