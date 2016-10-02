@@ -533,24 +533,15 @@ module Alexandria
       end
 
       def play_sound(effect)
-        # HACK, do some thread waiting, if possible
-        puts "scanning sound : #{@prefs.play_scanning_sound}"
-        puts "scan sound:      #{@prefs.play_scan_sound}"
         if effect == 'scanning'
-          puts effect
+          puts "Effect: #{effect}, playing: #{@prefs.play_scanning_sound}" if $DEBUG
           return unless  @prefs.play_scanning_sound
-          GLib::Idle.add do
-            @sound_players['scanning'].play('scanning')
-            false
-          end
+          @sound_players['scanning'].play('scanning')
         else
-          puts effect
+          puts "Effect: #{effect}, playing: #{@prefs.play_scan_sound}" if $DEBUG
           return unless @prefs.play_scan_sound
-          GLib::Idle.add do
-            # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
-            @sound_players[effect].play(effect)
-            false
-          end
+          # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
+          @sound_players[effect].play(effect)
         end
       end
 
