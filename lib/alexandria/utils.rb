@@ -15,16 +15,9 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'glib2'
-
 class String
   # Converts this string into the desired charset.
-  #
-  # Note that this may raise a GLib::ConvertError if the
-  # desired_charset cannot accommodate all the characters present in
-  # the string, e.g. trying to convert Japanese Kanji to ISO-8859-1
-  # will obviously not work.
   def convert(desired_charset, source_data_charset)
-    GLib.convert(self, desired_charset, source_data_charset)
+    encode desired_charset
   end
 end
