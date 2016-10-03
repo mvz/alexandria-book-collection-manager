@@ -39,15 +39,4 @@ describe Alexandria::UI::MainApp do
       Alexandria::UI::MainApp.new
     end.to raise_error NoMethodError
   end
-
-  it 'runs' do
-    @main_app = Alexandria::UI::MainApp.instance
-
-    GLib::Timeout.add(100) do
-      @main_app.main_app.destroy
-      Gtk.main_quit
-    end
-
-    Gtk.main
-  end
 end
