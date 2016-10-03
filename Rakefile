@@ -261,3 +261,5 @@ task install: [:pre_install, :install_package, :post_install]
 
 desc 'Uninstall Alexandria'
 task uninstall: [:uninstall_package] # TODO: gconf etc...
+
+task default: [:spec, :dogtail]
