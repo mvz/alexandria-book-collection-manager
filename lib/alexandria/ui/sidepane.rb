@@ -125,7 +125,7 @@ module Alexandria
         @library_listview.append_column(column)
 
         @library_listview.set_row_separator_func do |model, iter|
-          # log.debug { "library_listview row_separator #{iter}" }
+          # TODO: Replace with iter[3] if possible
           model.get_value(iter, 3)
         end
 

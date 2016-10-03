@@ -44,6 +44,7 @@ module Alexandria
       min = 2
       completion.signal_connect('match-selected') do |c, model, iter|
         cur_text = c.entry.text
+        # TODO: Replace with iter[0] if possible
         new_tag = model.get_value(iter, 0)
         cur_text_split = cur_text.split(',')
         cur_text_split.delete_at(-1)

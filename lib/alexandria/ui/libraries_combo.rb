@@ -32,6 +32,7 @@ module Alexandria
       end
       clear
       set_row_separator_func do |model, iter|
+        # TODO: Replace with iter[1] if possible
         model.get_value(iter, 1) == '-'
       end
       self.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf, String, TrueClass)

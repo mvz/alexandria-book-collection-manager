@@ -153,7 +153,7 @@ module Alexandria
       def setup_toolbar_combobox
         cb = Gtk::ComboBoxText.new
         cb.set_row_separator_func do |model, iter|
-          # log.debug { "row_separator" }
+          # TODO: Replace with iter[0] if possible
           model.get_value(iter, 0) == '-'
         end
         [_('Match everything'),
