@@ -264,9 +264,6 @@ module Alexandria
     end
 
     class NoISBNError < StandardError
-      def initialize(msg)
-        super(msg)
-      end
     end
 
     class InvalidISBNError < StandardError
