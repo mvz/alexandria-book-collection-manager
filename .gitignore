@@ -8,5 +8,6 @@ Gemfile.lock
 share/locale/
 share/omf/alexandria/*.omf
 pkg/
+coverage/
 tmp/
 *.gem
