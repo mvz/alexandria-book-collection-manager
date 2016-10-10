@@ -25,12 +25,6 @@ require 'open-uri'
 require 'observer'
 require 'singleton'
 
-class Array
-  def sum
-    reduce(0) { |a, b| a + b }
-  end
-end
-
 module Alexandria
   class Library < Array
     include Logging
