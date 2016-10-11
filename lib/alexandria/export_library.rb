@@ -229,7 +229,7 @@ module Alexandria
 
     def export_as_csv_list(filename)
       File.open(filename, 'w') do |io|
-        io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
+        io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(#{Book::DEFAULT_RATING} to #{Book::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
         each do |book|
           io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher || '') + ';' + (book.edition || '') + ';' + (book.isbn || '') + ';' + (book.publishing_year.to_s || '') + ';' + (book.rating.to_s || '0') + ';' + (book.notes || '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
         end

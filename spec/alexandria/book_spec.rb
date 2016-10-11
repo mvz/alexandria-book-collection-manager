@@ -31,4 +31,27 @@ describe Alexandria::Book do
     different_book.isbn = '9780571147999'
     expect(different_book).not_to eq book
   end
+
+  describe '#rating' do
+    let(:book) { an_artist_of_the_floating_world }
+    it 'returns 0 by default' do
+      expect(book.rating).to eq 0
+    end
+  end
+
+  describe '#rating=' do
+    let(:book) { an_artist_of_the_floating_world }
+    it 'assigns rating' do
+      book.rating = 5
+      expect(book.rating).to eq 5
+    end
+
+    it 'does not allow higher rating than 5 to be assigned' do
+      expect { book.rating = 6 }.to raise_error
+    end
+
+    it 'does not allow lower rating than 0 to be assigned' do
+      expect { book.rating = -1 }.to raise_error
+    end
+  end
 end

@@ -21,7 +21,6 @@ require 'alexandria/ui/columns'
 
 module Alexandria
   module UI
-    MAX_RATING_STARS = 5
     class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
                     :iconview_model, :filtered_model
@@ -29,9 +28,6 @@ module Alexandria
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
-
-      # The maximum number of rating stars displayed.
-      MAX_RATING_STARS = 5
 
       def initialize(parent)
         super('main_app__builder.glade', widget_names)
@@ -757,7 +753,7 @@ module Alexandria
         iter[Columns::NOTES] = (book.notes || '')
         iter[Columns::LOANED_TO] = (book.loaned_to || '')
         rating = (book.rating || Book::DEFAULT_RATING)
-        iter[Columns::RATING] = MAX_RATING_STARS - rating # ascending order is the default
+        iter[Columns::RATING] = Book::MAX_RATING_STARS - rating # ascending order is the default
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
         iter[Columns::WANT] = book.want?
@@ -776,7 +772,7 @@ module Alexandria
           new_height = [ICON_HEIGHT, icon.height].min
           icon = cache_scaled_icon(icon, new_width, new_height)
         end
-        if rating == MAX_RATING_STARS
+        if rating == Book::MAX_RATING_STARS
           icon = icon.tag(Icons::FAVORITE_TAG)
         end
         iter[Columns::COVER_ICON] = icon

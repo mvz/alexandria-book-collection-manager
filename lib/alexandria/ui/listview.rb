@@ -31,8 +31,6 @@ module Alexandria
       include DragAndDropable
       BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', :same_app, 0]].freeze
 
-      MAX_RATING_STARS = 5
-
       def initialize(_listview, parent)
         @parent = parent
         @prefs = @parent.prefs
@@ -124,14 +122,14 @@ module Alexandria
         log.debug { 'Create listview column for %s...' % title }
         column = Gtk::TreeViewColumn.new(title)
         column.sizing = :fixed
-        width = (Icons::STAR_SET.width + 1) * MAX_RATING_STARS
+        width = (Icons::STAR_SET.width + 1) * Book::MAX_RATING_STARS
         column.fixed_width = column.min_width = column.max_width = width
-        MAX_RATING_STARS.times do |i|
+        Book::MAX_RATING_STARS.times do |i|
           renderer = Gtk::CellRendererPixbuf.new
           renderer.xalign = 0.0
           column.pack_start(renderer, false)
           column.set_cell_data_func(renderer) do |_tree_column, cell, _tree_model, iter|
-            rating = (iter[Columns::RATING] - MAX_RATING_STARS).abs
+            rating = (iter[Columns::RATING] - Book::MAX_RATING_STARS).abs
             cell.pixbuf = rating >= i.succ ?
               Icons::STAR_SET : Icons::STAR_UNSET
           end
