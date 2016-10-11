@@ -17,16 +17,11 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+require 'alexandria/ui/columns'
 require 'alexandria/ui/iconview_tooltips'
 
 module Alexandria
   module UI
-    module Columns
-      COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
-        ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT,
-        NOTES, REDD, OWN, WANT, TAGS = (0..16).to_a
-    end
-
     class IconViewManager
       ICON_WIDTH = 60
       include Logging

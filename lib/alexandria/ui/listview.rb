@@ -18,6 +18,8 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
+require 'alexandria/ui/columns'
+
 module Alexandria
   module UI
     include Logging
@@ -30,11 +32,6 @@ module Alexandria
       BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', :same_app, 0]].freeze
 
       MAX_RATING_STARS = 5
-      module Columns
-        COVER_LIST, COVER_ICON, TITLE, TITLE_REDUCED, AUTHORS,
-          ISBN, PUBLISHER, PUBLISH_DATE, EDITION, RATING, IDENT,
-          NOTES, REDD, OWN, WANT, TAGS, LOANED_TO = (0..17).to_a
-      end
 
       def initialize(_listview, parent)
         @parent = parent
