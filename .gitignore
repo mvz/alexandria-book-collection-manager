@@ -5,9 +5,11 @@ alexandria.desktop.in.h
 .svn-authors
 lib/alexandria/default_preferences.rb
 Gemfile.lock
+.yardoc/
 share/locale/
 share/omf/alexandria/*.omf
 pkg/
 coverage/
+doc/
 tmp/
 *.gem

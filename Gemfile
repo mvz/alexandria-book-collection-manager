@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'rdoc', '~> 4.0'
+  gem 'yard', '~> 0.9.5'
   gem 'pry'
   gem 'simplecov'
   gem 'rubocop', '~> 0.43.0'
