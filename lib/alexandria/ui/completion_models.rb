@@ -84,34 +84,6 @@ end
 
 Gtk::Entry.prepend Alexandria::EntryOverrides
 
-begin
-  require 'revolution'
-
-  EVOLUTION_CONTACTS =
-    Revolution::Revolution.new.get_all_contacts.map do |contact|
-      first = contact.first_name
-      last = contact.last_name
-
-      if first
-        first.strip!
-        first = nil if first.empty?
-      end
-
-      if last
-        last.strip!
-        last = nil if last.empty?
-      end
-
-      first && last ? first + ' ' + last : first ? first : last
-    end
-rescue LoadError => e
-  Alexandria.log.debug { 'Could not find optional ruby-revolution; Evolution contacts will not be loaded' }
-  EVOLUTION_CONTACTS = [].freeze
-rescue => e
-  Alexandria.log.warn { e.message }
-  EVOLUTION_CONTACTS = [].freeze
-end
-
 module Alexandria
   module UI
     class CompletionModels
@@ -208,7 +180,6 @@ module Alexandria
           end
         end
 
-        borrowers.concat(EVOLUTION_CONTACTS)
         borrowers.uniq!
 
         tags.uniq!
