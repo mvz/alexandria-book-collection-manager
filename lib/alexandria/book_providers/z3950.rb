@@ -59,7 +59,7 @@ module Alexandria
         conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.empty?
+        raise NoResultsError if resultset.length == 0
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -214,7 +214,7 @@ module Alexandria
         prefs.variable_named('port').default_value = 7090
         prefs.variable_named('database').default_value = 'Voyager'
         prefs.variable_named('record_syntax').default_value = 'USMARC'
-        prefs.variable_named('charset').default_value = 'ISO_6937'
+        prefs.variable_named('charset').default_value = 'ISO-8859-1'
         prefs.read
       end
 
@@ -257,7 +257,7 @@ module Alexandria
         conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.empty?
+        raise NoResultsError if resultset.length == 0
         results = books_from_sutrs(resultset)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -340,7 +340,7 @@ module Alexandria
         criterion = canonicalise_isbn_with_dashes(criterion)
         resultset = search_records(criterion, type, 0)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.empty?
+        raise NoResultsError if resultset.length == 0
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
       end
