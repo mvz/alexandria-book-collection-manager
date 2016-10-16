@@ -20,12 +20,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-begin
-  require 'gettext'
-rescue LoadError
-  require 'rubygems'
-  require 'gettext'
-end
+require 'gettext'
 require 'alexandria'
 require 'optparse'
 require 'ostruct'
