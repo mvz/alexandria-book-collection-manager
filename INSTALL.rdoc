@@ -65,8 +65,6 @@ Note that these files are pre-generated in tar.gz releases, so you'll
 only need them if you're building from the SVN version, or want to
 change the translations.
 
-== Optional Dependencies
-
 === Ruby/ZOOM and Yaz
 
 For Z39.50 support and and the <b>Library of Congress</b> and
@@ -87,12 +85,6 @@ libraries and information-related systems.
 You will need
 <tt>image_size</tt>[http://rubyforge.org/projects/imagesize/] for
 optimizing the cover images in exported libraries.
-
-=== Revolution
-
-If you want to auto-complete the names of people you loan books to
-from your Evolution contacts database, you can install
-+revolution+[ http://revolution.rubyforge.org/].
 
 == Build and Install
 
