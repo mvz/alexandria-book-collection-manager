@@ -23,14 +23,7 @@
 # require 'cgi'
 
 require 'csv'
-
-begin # image_size is optional
-  $IMAGE_SIZE_LOADED = true
-  require 'image_size'
-rescue LoadError
-  $IMAGE_SIZE_LOADED = false
-  puts "Can't load image_size, hence exported libraries are not optimized" if $DEBUG
-end
+require 'image_size'
 
 module Alexandria
   class LibrarySortOrder
@@ -359,15 +352,10 @@ module Alexandria
           entry.add_element('cover').text = final_cover(book)
           image = images.add_element('image')
           image.add_attribute('id', final_cover(book))
-          if $IMAGE_SIZE_LOADED
-            image_s = ImageSize.new(IO.read(cover(book)))
-            image.add_attribute('height', image_s.get_height.to_s)
-            image.add_attribute('width', image_s.get_width.to_s)
-            image.add_attribute('format', image_s.get_type)
-          else
-            image.add_attribute('format',
-                                Library.jpeg?(cover(book)) ? 'JPEG' : 'GIF')
-          end
+          image_s = ImageSize.new(IO.read(cover(book)))
+          image.add_attribute('height', image_s.get_height.to_s)
+          image.add_attribute('width', image_s.get_width.to_s)
+          image.add_attribute('format', image_s.get_type)
         end
       end
       doc
@@ -416,12 +404,10 @@ EOS
        src="#{File.join('pixmaps', final_cover(book))}"
        alt="Cover file for '#{xhtml_escape(book.title)}'"
 EOS
-          if $IMAGE_SIZE_LOADED
-            image_s = ImageSize.new(IO.read(cover(book)))
-            xhtml << <<EOS
+          image_s = ImageSize.new(IO.read(cover(book)))
+          xhtml << <<EOS
        height="#{image_s.get_height}" width="#{image_s.get_width}"
 EOS
-          end
           xhtml << <<EOS
   />
 EOS
