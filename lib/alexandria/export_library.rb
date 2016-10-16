@@ -22,6 +22,8 @@
 # iPod Notes support added 20 January 2008 by Tim Malone
 # require 'cgi'
 
+require 'csv'
+
 begin # image_size is optional
   $IMAGE_SIZE_LOADED = true
   require 'image_size'
@@ -228,10 +230,15 @@ module Alexandria
     end
 
     def export_as_csv_list(filename)
-      File.open(filename, 'w') do |io|
-        io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(#{Book::DEFAULT_RATING} to #{Book::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
+      CSV.open(filename, 'w', col_sep: ';') do |csv|
+        csv << ['Title', 'Authors', 'Publisher', 'Edition', 'ISBN', 'Year Published',
+                "Rating(#{Book::DEFAULT_RATING} to #{Book::MAX_RATING_STARS})", 'Notes',
+                'Want?', 'Read?', 'Own?', 'Tags']
         each do |book|
-          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher || '') + ';' + (book.edition || '') + ';' + (book.isbn || '') + ';' + (book.publishing_year.to_s || '') + ';' + (book.rating.to_s || '0') + ';' + (book.notes || '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
+          csv << [book.title, book.authors.join(', '), book.publisher, book.edition, book.isbn,
+                  book.publishing_year, book.rating, book.notes,
+                  (book.want ? '1' : '0'), (book.redd ? '1' : '0'), (book.own ? '1' : '0'),
+                  (book.tags ? book.tags.join(', ') : '')]
         end
       end
     end
