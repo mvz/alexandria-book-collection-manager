@@ -45,7 +45,7 @@ module Alexandria
             node.to_html
           elsif node.elem?
             if node.children.nil?
-              return nil
+              nil
             else
               node_text = node.children.map { |n| text_of(n) }.join
               node_text.strip.squeeze(' ')
