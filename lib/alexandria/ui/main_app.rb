@@ -49,7 +49,6 @@ module Alexandria
     class MainApp
       include Logging
       include GetText
-      MAX_RATING_STARS = 5
       include Singleton
       attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs
       attr_accessor :ui_manager

@@ -22,13 +22,8 @@
 # iPod Notes support added 20 January 2008 by Tim Malone
 # require 'cgi'
 
-begin # image_size is optional
-  $IMAGE_SIZE_LOADED = true
-  require 'image_size'
-rescue LoadError
-  $IMAGE_SIZE_LOADED = false
-  puts "Can't load image_size, hence exported libraries are not optimized" if $DEBUG
-end
+require 'csv'
+require 'image_size'
 
 module Alexandria
   class LibrarySortOrder
@@ -228,10 +223,15 @@ module Alexandria
     end
 
     def export_as_csv_list(filename)
-      File.open(filename, 'w') do |io|
-        io.puts 'Title' + ';' + 'Authors' + ';' + 'Publisher' + ';' + 'Edition' + ';' + 'ISBN' + ';' + 'Year Published' + ';' + 'Rating' + "(0 to #{UI::MainApp::MAX_RATING_STARS})" + ';' + 'Notes' + ';' + 'Want?' + ';' + 'Read?' + ';' + 'Own?' + ';' + 'Tags'
+      CSV.open(filename, 'w', col_sep: ';') do |csv|
+        csv << ['Title', 'Authors', 'Publisher', 'Edition', 'ISBN', 'Year Published',
+                "Rating(#{Book::DEFAULT_RATING} to #{Book::MAX_RATING_STARS})", 'Notes',
+                'Want?', 'Read?', 'Own?', 'Tags']
         each do |book|
-          io.puts book.title + ';' + book.authors.join(', ') + ';' + (book.publisher || '') + ';' + (book.edition || '') + ';' + (book.isbn || '') + ';' + (book.publishing_year.to_s || '') + ';' + (book.rating.to_s || '0') + ';' + (book.notes || '') + ';' + (book.want ? '1' : '0') + ';' + (book.redd ? '1' : '0') + ';' + (book.own ? '1' : '0') + ';' + (book.tags ? book.tags.join(', ') : '')
+          csv << [book.title, book.authors.join(', '), book.publisher, book.edition, book.isbn,
+                  book.publishing_year, book.rating, book.notes,
+                  (book.want ? '1' : '0'), (book.redd ? '1' : '0'), (book.own ? '1' : '0'),
+                  (book.tags ? book.tags.join(', ') : '')]
         end
       end
     end
@@ -352,15 +352,10 @@ module Alexandria
           entry.add_element('cover').text = final_cover(book)
           image = images.add_element('image')
           image.add_attribute('id', final_cover(book))
-          if $IMAGE_SIZE_LOADED
-            image_s = ImageSize.new(IO.read(cover(book)))
-            image.add_attribute('height', image_s.get_height.to_s)
-            image.add_attribute('width', image_s.get_width.to_s)
-            image.add_attribute('format', image_s.get_type)
-          else
-            image.add_attribute('format',
-                                Library.jpeg?(cover(book)) ? 'JPEG' : 'GIF')
-          end
+          image_s = ImageSize.new(IO.read(cover(book)))
+          image.add_attribute('height', image_s.get_height.to_s)
+          image.add_attribute('width', image_s.get_width.to_s)
+          image.add_attribute('format', image_s.get_type)
         end
       end
       doc
@@ -409,12 +404,10 @@ EOS
        src="#{File.join('pixmaps', final_cover(book))}"
        alt="Cover file for '#{xhtml_escape(book.title)}'"
 EOS
-          if $IMAGE_SIZE_LOADED
-            image_s = ImageSize.new(IO.read(cover(book)))
-            xhtml << <<EOS
+          image_s = ImageSize.new(IO.read(cover(book)))
+          xhtml << <<EOS
        height="#{image_s.get_height}" width="#{image_s.get_width}"
 EOS
-          end
           xhtml << <<EOS
   />
 EOS

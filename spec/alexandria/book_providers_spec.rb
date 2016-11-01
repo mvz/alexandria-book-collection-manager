@@ -102,11 +102,6 @@ describe Alexandria::BookProviders do
   # Right? Don't test if dependency isn't present.
 
   it 'LOC should work' do
-    begin
-      require 'zoom'
-    rescue LoadError
-      skip 'This test needs zoom'
-    end
     assert_correct_search_result(Alexandria::BookProviders::LOCProvider,
                                  '9780805335583')
     # this book has non-ASCII letters
@@ -115,23 +110,11 @@ describe Alexandria::BookProviders do
   end
 
   it 'BL should work' do
-    begin
-      require 'zoom'
-    rescue LoadError
-      skip 'This test needs zoom'
-    end
-
     assert_correct_search_result(Alexandria::BookProviders::BLProvider,
                                  '9781853260803')
   end
 
   it 'SBN should work' do
-    begin
-      require 'zoom'
-    rescue LoadError
-      skip 'This test needs zoom'
-    end
-
     assert_correct_search_result(Alexandria::BookProviders::SBNProvider,
                                  '9788835926436')
   end

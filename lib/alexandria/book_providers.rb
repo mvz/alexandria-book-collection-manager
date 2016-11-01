@@ -307,12 +307,8 @@ module Alexandria
     require 'alexandria/book_providers/thalia'
     require 'alexandria/book_providers/worldcat'
 
-    # Ruby/ZOOM is optional
-    begin
-      require 'alexandria/book_providers/z3950'
-    rescue LoadError
-      log.info { "Can't load Ruby/ZOOM, hence Z39.50 and providers Library of Congress, British Library not available" }
-    end
+    # Z39.50 based providers
+    require 'alexandria/book_providers/z3950'
 
     attr_reader :abstract_classes
 

@@ -141,7 +141,7 @@ module Alexandria
                     end
             puts cover
             book = Book.new(*book_elements)
-            if elements['rating'] && (0..UI::MainApp::MAX_RATING_STARS).map.member?(elements['rating'].text.to_i)
+            if elements['rating'] && Book::VALID_RATINGS.member?(elements['rating'].text.to_i)
               book.rating = elements['rating'].text.to_i
             end
             book.notes = neaten(elements['comments'].text) if elements['comments']

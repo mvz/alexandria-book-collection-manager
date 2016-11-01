@@ -199,7 +199,7 @@ module Alexandria
       end
 
       def on_set_rating
-        (0..MAX_RATING_STARS).map do |rating|
+        Book::VALID_RATINGS.map do |rating|
           proc do
             books = selected_books
             library = selected_library

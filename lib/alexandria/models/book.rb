@@ -18,10 +18,14 @@
 module Alexandria
   class Book
     attr_accessor :title, :authors, :isbn, :publisher, :publishing_year,
-                  :edition, :rating, :notes, :loaned, :loaned_since,
+                  :edition, :notes, :loaned, :loaned_since,
                   :loaned_to, :saved_ident, :redd, :redd_when, :own, :want, :tags, :version, :library
 
+    attr_reader :rating
+
     DEFAULT_RATING = 0
+    MAX_RATING_STARS = 5
+    VALID_RATINGS = (DEFAULT_RATING..MAX_RATING_STARS)
 
     def initialize(title, authors, isbn, publisher, publishing_year,
                    edition)
@@ -38,6 +42,7 @@ module Alexandria
       @own = true
       @want = true
       @tags = []
+      @rating = DEFAULT_RATING
       # Need to implement bulk save function to update this
       @version = Alexandria::DATA_VERSION
     end
@@ -45,6 +50,11 @@ module Alexandria
     def ident
       @isbn = nil if !@isbn.nil? && @isbn.empty?
       @isbn || @title.hash.to_s
+    end
+
+    def rating=(rating)
+      raise ArgumentError unless VALID_RATINGS.include? rating
+      @rating = rating
     end
 
     def loaned?
