@@ -36,12 +36,12 @@ module Alexandria
 
       def play(effect)
         file = File.join(@sounds_dir, "#{effect}.ogg")
-        unless @playing
+        if @playing
+          puts "Already playing #{effect}." if $DEBUG
+        else
           puts "Not playing. Starting #{effect}." if $DEBUG
           @filesrc.location = file
           start_playback
-        else
-          puts "Already playing #{effect}." if $DEBUG
         end
       end
 
