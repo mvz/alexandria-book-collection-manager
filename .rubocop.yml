@@ -48,6 +48,10 @@ Style/MultilineMethodCallBraceLayout:
 Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+# Not all objects that handle #== 0 also handle #zero?
+Style/NumericPredicate:
+  Enabled: false
+
 # Sometimes an if statement just looks better than next with a guard clause
 Style/Next:
   Enabled: false
@@ -73,6 +77,10 @@ Style/TrailingCommaInLiteral:
 
 # Alexandria uses regular arrays
 Style/WordArray:
+  Enabled: false
+
+# Not all objects that handle #length also handle #empty?
+Style/ZeroLengthPredicate:
   Enabled: false
 
 inherit_from: .rubocop_todo.yml
