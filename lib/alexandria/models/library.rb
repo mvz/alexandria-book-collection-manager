@@ -562,8 +562,6 @@ module Alexandria
                 something
               when Integer
                 something
-              when Integer
-                something
               else
                 raise "#{something} is a #{something.class}"
               end
@@ -575,8 +573,6 @@ module Alexandria
               when Book
                 something.ident
               when String
-                something
-              when Integer
                 something
               when Integer
                 something
