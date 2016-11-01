@@ -278,8 +278,9 @@ module Alexandria
           #  (on_error_cb and on_error_cb.call(e.message))
         end
 
-        on_iterate_cb.call(current_iteration += 1,
-                           max_iterations) if on_iterate_cb
+        if on_iterate_cb
+          on_iterate_cb.call(current_iteration += 1, max_iterations)
+        end
       end
       puts "Bad Isbn list: #{bad_isbns.inspect}" if bad_isbns
       library = load(name)
@@ -290,8 +291,9 @@ module Alexandria
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)
-        on_iterate_cb.call(current_iteration += 1,
-                           max_iterations) if on_iterate_cb
+        if on_iterate_cb
+          on_iterate_cb.call(current_iteration += 1, max_iterations)
+        end
       end
       [library, bad_isbns, failed_lookup_isbns]
     end

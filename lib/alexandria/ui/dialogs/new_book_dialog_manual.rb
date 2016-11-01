@@ -84,8 +84,9 @@ module Alexandria
           ary = @library.select { |book|
             book.ident == @entry_isbn.text
           }
-          raise AddError, _('The EAN/ISBN you provided is ' \
-                               'already used in this library.') unless ary.empty?
+          unless ary.empty?
+            raise AddError, _('The EAN/ISBN you provided is already used in this library.')
+          end
           isbn = begin
                    Library.canonicalise_isbn(@entry_isbn.text)
                  rescue Alexandria::Library::InvalidISBNError

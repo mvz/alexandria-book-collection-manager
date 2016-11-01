@@ -257,13 +257,13 @@ module Alexandria
     # range of values used by Alexandria.
     def discriminate(value)
       if value == 'true'        # bool
-        return true
+        true
       elsif value == 'false'    # bool
-        return false
+        false
       elsif value =~ /^[0-9]+$/   # int
-        return value.to_i
+        value.to_i
       elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
-        return Regexp.last_match[1].split(',')
+        Regexp.last_match[1].split(',')
       elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
         begin
           pair = Regexp.last_match[1].split(',')
@@ -272,7 +272,7 @@ module Alexandria
           return [0, 0]
         end
       else
-        return value # string
+        value # string
       end
     end
   end

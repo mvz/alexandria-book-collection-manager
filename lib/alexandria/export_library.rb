@@ -175,8 +175,9 @@ module Alexandria
       FileUtils.mkdir(filename) unless File.exist?(filename)
       Dir.chdir(filename) do
         copy_covers('pixmaps')
-        FileUtils.cp_r(theme.pixmaps_directory,
-                       'pixmaps') if theme.has_pixmaps?
+        if theme.has_pixmaps?
+          FileUtils.cp_r(theme.pixmaps_directory, 'pixmaps')
+        end
         FileUtils.cp(theme.css_file, '.')
         File.open('index.html', 'w') do |io|
           io << to_xhtml(File.basename(theme.css_file))
