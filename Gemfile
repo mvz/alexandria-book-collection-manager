@@ -4,8 +4,8 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'yard', '~> 0.9.5'
   gem 'pry'
+  gem 'rubocop', '~> 0.46.0'
   gem 'simplecov'
-  gem 'rubocop', '~> 0.45.0'
+  gem 'yard', '~> 0.9.5'
 end

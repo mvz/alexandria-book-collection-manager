@@ -268,8 +268,7 @@ module Alexandria
                                          end
       end
 
-      def want_toggled
-      end
+      def want_toggled; end
 
       @@latest_filechooser_directory = ENV['HOME']
       def on_change_cover
