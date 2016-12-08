@@ -236,8 +236,7 @@ module Alexandria
         @acquire_dialog.destroy
       end
 
-      def on_help
-      end
+      def on_help; end
 
       def read_barcode_scan
         @animation.start

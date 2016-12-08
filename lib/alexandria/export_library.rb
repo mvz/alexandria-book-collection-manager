@@ -50,8 +50,7 @@ module Alexandria
     end
 
     class Unsorted < LibrarySortOrder
-      def initialize
-      end
+      def initialize; end
 
       def sort(library)
         library
