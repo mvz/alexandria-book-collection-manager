@@ -37,7 +37,6 @@ def an_artist_of_the_floating_world
 end
 
 Alexandria::UI::Icons.init
-Alexandria::UI.start_main_app
 
 module Alexandria
   class Library
