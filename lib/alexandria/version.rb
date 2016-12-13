@@ -18,7 +18,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  VERSION = '0.7.0'.freeze
+  VERSION = '0.7.1'.freeze
   DATA_VERSION = '0.6.3'.freeze
-  DISPLAY_VERSION = '0.7.0'.freeze
+  DISPLAY_VERSION = '0.7.1'.freeze
 end

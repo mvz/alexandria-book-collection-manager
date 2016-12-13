@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.1 / 2016-12-13
+
+* Various code cleanups
+* Update dependencies
+* Don't crash if smart library name uses non-UTF-8 encoding
+
 ## 0.7.0
 
 * Various small bug fixes
