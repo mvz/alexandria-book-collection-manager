@@ -37,7 +37,7 @@ module Alexandria
     def initialize(name, rules, predicate_operator_rule)
       super()
       raise if name.nil? || rules.nil? || predicate_operator_rule.nil?
-      @name = name
+      @name = name.dup.force_encoding('UTF-8')
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
       libraries = Libraries.instance

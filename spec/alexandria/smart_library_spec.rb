@@ -18,5 +18,15 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Alexandria::SmartLibrary do
-  it 'should be clever'
+  it 'can be instantiated simply' do
+    lib = described_class.new('Hello', [], :all)
+    expect(lib.name).to eq 'Hello'
+  end
+
+  it 'normalizes the encoding for name' do
+    bad_name = 'Prêts'.force_encoding('ascii')
+    lib = described_class.new(bad_name, [], :all)
+    expect(lib.name.encoding.name).to eq 'UTF-8'
+    expect(bad_name.encoding.name).to eq 'US-ASCII'
+  end
 end
