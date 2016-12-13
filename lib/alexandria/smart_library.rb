@@ -37,10 +37,9 @@ module Alexandria
     def initialize(name, rules, predicate_operator_rule)
       super()
       raise if name.nil? || rules.nil? || predicate_operator_rule.nil?
-      @name = name
+      @name = name.dup.force_encoding('UTF-8')
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
-      save
       libraries = Libraries.instance
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
@@ -159,11 +158,6 @@ module Alexandria
     end
 
     def refilter
-      raise 'need libraries' if @libraries.nil?
-      raise 'no libraries' if @libraries.empty?
-      raise 'need predicate operator' if @predicate_operator_rule.nil?
-      raise 'need rule' if @rules.nil? || @rules.empty?
-
       filters = @rules.map(&:filter_proc)
       selector = @predicate_operator_rule == ALL_RULES ? :all? : :any?
 
