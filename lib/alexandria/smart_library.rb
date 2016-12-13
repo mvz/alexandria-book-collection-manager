@@ -159,11 +159,6 @@ module Alexandria
     end
 
     def refilter
-      raise 'need libraries' if @libraries.nil?
-      raise 'no libraries' if @libraries.empty?
-      raise 'need predicate operator' if @predicate_operator_rule.nil?
-      raise 'need rule' if @rules.nil? || @rules.empty?
-
       filters = @rules.map(&:filter_proc)
       selector = @predicate_operator_rule == ALL_RULES ? :all? : :any?
 
