@@ -40,7 +40,6 @@ module Alexandria
       @name = name
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
-      save
       libraries = Libraries.instance
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
