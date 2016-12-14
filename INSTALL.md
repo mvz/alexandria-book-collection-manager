@@ -80,9 +80,17 @@ You will need
 [`image_size`](https://github.com/toy/image_size) for
 optimizing the cover images in exported libraries.
 
-## Build and Install
+## Installing Alexandria
 
-To build Alexandria from a subversion checkout, go to the base project
+After installing all the non-Ruby dependencies, you should be able to install alexandria using
+
+    gem install alexandria-book-collection-manager
+
+## Installing from Source
+
+**These instructions are outdated and you should for now install alexandria as a gem**
+
+To build Alexandria from a git checkout, go to the base project
 directory (where the Rakefile and this INSTALL file are located) and
 issue the command
 
