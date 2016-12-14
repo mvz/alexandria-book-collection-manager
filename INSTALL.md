@@ -19,28 +19,28 @@ involves a number of packages:
 
 You should have GTK+ 3, and use Ruby-GNOME2 `~> 3.1.0`.
 
-[`ruby-gettext`](http://ponx.s5.xrea.com/hiki/ruby-gettext.html)
+[`ruby-gettext`](http://ruby-gettext.github.io/)
 is required for the internationalisation of the user interface.
 Requires version `~> 3.1`.
 
 ### Hpricot
 
-Alexandria uses [hpricot](http://code.whytheluckystiff.net/hpricot) to
+Alexandria uses [hpricot](https://github.com/hpricot/hpricot) to
 parse the HTML from web pages for providers such as DeaStore and
 Siciliano. It is also used to parse the XML for the Amazon web
 service.
 
 ## HTMLEntities
 
-This is used by all website-based providers except MCU. 
-[htmlentities](http://htmlentities.rubyforge.org/) is used to
+This is used by all website-based providers except MCU.
+[htmlentities](https://github.com/threedaymonk/htmlentities) is used to
 provide more flexible HTML parsing.
 
 ## Build Dependencies
 
 ### Ruby Dependencies
 
-[`rake`](http://rake.rubyforge.org) is required to build Alexandria from
+[`rake`](https://github.com/ruby/rake) is required to build Alexandria from
 the project `Rakefile`.
 
 You also need [`rubygems`](http://www.rubygems.org/) and
@@ -77,7 +77,7 @@ libraries and information-related systems.
 ### image_size
 
 You will need
-[`image_size`](http://rubyforge.org/projects/imagesize/) for
+[`image_size`](https://github.com/toy/image_size) for
 optimizing the cover images in exported libraries.
 
 ## Build and Install
