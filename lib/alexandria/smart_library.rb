@@ -58,7 +58,7 @@ module Alexandria
             next unless File.stat(filename).file?
 
             text = IO.read(filename)
-            hash = YAML.safe_load(text)
+            hash = YAML.safe_load(text, whitelist_classes = [Symbol])
             begin
               smart_library = from_hash(hash)
               a << smart_library
