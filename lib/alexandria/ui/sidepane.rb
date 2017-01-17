@@ -163,7 +163,7 @@ module Alexandria
           @library_listview.set_drag_dest_row(path, :into_or_after)
 
           Gdk.drag_status(drag_context,
-                          !path.nil? ? drag_context.suggested_action : 0,
+                          path ? drag_context.suggested_action : 0,
                           time)
         end
 
