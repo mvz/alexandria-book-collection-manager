@@ -193,7 +193,7 @@ module Alexandria
       end
 
       # TODO: Ensure book loading passes through Book#initialize
-      book = YAML.load(text)
+      book = YAML.safe_load(text, whitelist_classes = [Book, Time])
 
       unless book.isbn.class == String
         # HACK

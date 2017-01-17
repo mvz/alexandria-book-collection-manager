@@ -320,8 +320,11 @@ module Alexandria
 
       def start_search
         @search_thread_counter.synchronize do
-          if @search_thread_counter.count.zero?
-            @search_thread_counter.new_search
+          first_search = @search_thread_counter.count.zero?
+
+          @search_thread_counter.new_search
+
+          if first_search
             @progress_bar_thread = Thread.new do
               notify_start_add_by_isbn
               Alexandria::BookProviders.instance.add_observer(self)
@@ -333,8 +336,6 @@ module Alexandria
               notify_end_add_by_isbn
               Alexandria::BookProviders.instance.add_observer(self)
             end
-          else
-            @search_thread_counter.new_search
           end
         end
       end
