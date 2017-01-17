@@ -231,7 +231,7 @@ module Alexandria
       def setup_listview_columns_width
         log.debug { "setup_listview_columns_width #{@prefs.cols_width}" }
         if @prefs.cols_width
-          cols_width = YAML.load(@prefs.cols_width)
+          cols_width = YAML.safe_load(@prefs.cols_width)
           log.debug { "cols_width: #{cols_width.inspect}" }
           @listview.columns.each do |c|
             if cols_width.key?(c.title)
