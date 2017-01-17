@@ -6,6 +6,11 @@ AllCops:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# Blocks in specs can be any size
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 # Require lines to fit in pull requests.
 # This config is commented out temporarily to allow .rubocop_todo.yml to
 # configure this cop.
