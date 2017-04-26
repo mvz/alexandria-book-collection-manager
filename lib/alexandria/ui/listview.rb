@@ -52,7 +52,7 @@ module Alexandria
         column.add_attribute(renderer, 'pixbuf', Columns::COVER_LIST)
 
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END
+        renderer.ellipsize = :end
         column.pack_start(renderer, true)
         column.add_attribute(renderer, 'text', Columns::TITLE)
 
@@ -101,7 +101,7 @@ module Alexandria
         title = _('Tags')
         log.debug { 'Create listview column for tags...' }
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END
+        renderer.ellipsize = :end
         column = Gtk::TreeViewColumn.new(title, renderer,
                                          text: Columns::TAGS)
         column.sort_column_id = Columns::TAGS
@@ -195,7 +195,7 @@ module Alexandria
       def setup_text_column(title, iterid)
         log.debug { 'Create listview column for %s...' % title }
         renderer = Gtk::CellRendererText.new
-        renderer.ellipsize = Pango::ELLIPSIZE_END
+        renderer.ellipsize = :end
         column = Gtk::TreeViewColumn.new(title, renderer,
                                          text: iterid)
         column.sort_column_id = iterid
