@@ -10,6 +10,5 @@ share/locale/
 share/omf/alexandria/*.omf
 pkg/
 coverage/
-doc/
 tmp/
 *.gem
