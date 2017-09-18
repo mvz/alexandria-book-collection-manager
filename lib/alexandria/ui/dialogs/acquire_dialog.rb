@@ -404,7 +404,6 @@ module Alexandria
                 end
               end
             end
-
           rescue StandardError => err
             log.error {
               "Failed to load cover image icon: #{err.message}"

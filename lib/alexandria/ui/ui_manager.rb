@@ -694,7 +694,6 @@ module Alexandria
                   library << book
                   library.save(book)
                   set_status_label(format(_("Added '%s' to library '%s'"), book.title, library.name))
-
                 rescue => ex
                   log.error { "Couldn't add book #{isbn}: #{ex}" }
                   log.error { ex.backtrace.join("\n") }

@@ -130,7 +130,6 @@ module Alexandria
             # retries the Dir.each block...
             # but gives up after three tries
             redo unless test[0] > 2
-
           else
             test = [0, nil]
           end
@@ -231,7 +230,6 @@ module Alexandria
 
           a << load(file)
         end
-
       rescue Errno::ENOENT
         FileUtils.mkdir_p(DIR)
       end

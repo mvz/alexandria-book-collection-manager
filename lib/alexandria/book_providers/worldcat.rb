@@ -235,7 +235,6 @@ module Alexandria
           image_url = nil # hm, it's on the website, but uses JavaScript...
 
           return [book, image_url]
-
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")
