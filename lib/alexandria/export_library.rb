@@ -249,9 +249,7 @@ module Alexandria
       header.add_element('FromCompany').text = 'Alexandria'
       header.add_element('FromPerson').text = Etc.getlogin
       now = Time.now
-      header.add_element('SentDate').text = '%.4d%.2d%.2d%.2d%.2d' % [
-        now.year, now.month, now.day, now.hour, now.min
-      ]
+      header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d', now.year, now.month, now.day, now.hour, now.min)
       header.add_element('MessageNote').text = name
       each_with_index do |book, idx|
         # fields that are missing: edition and rating.

@@ -44,7 +44,7 @@ module Alexandria
 
       def setup_title_column
         title = _('Title')
-        log.debug { 'Create listview column for %s' % title }
+        log.debug { format('Create listview column for %s', title) }
         column = Gtk::TreeViewColumn.new(title)
 
         renderer = Gtk::CellRendererPixbuf.new
@@ -119,7 +119,7 @@ module Alexandria
 
       def setup_rating_column
         title = _('Rating')
-        log.debug { 'Create listview column for %s...' % title }
+        log.debug { format('Create listview column for %s...', title) }
         column = Gtk::TreeViewColumn.new(title)
         column.sizing = :fixed
         width = (Icons::STAR_SET.width + 1) * Book::MAX_RATING_STARS
@@ -181,7 +181,7 @@ module Alexandria
         column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)
         column.sort_column_id = iterid
         column.resizable = true
-        log.debug { 'Create listview column for %s...' % title }
+        log.debug { format('Create listview column for %s...', title) }
 
         column.add_attribute(renderer, 'active', iterid)
         if iterid == Columns::WANT
@@ -193,7 +193,7 @@ module Alexandria
       end
 
       def setup_text_column(title, iterid)
-        log.debug { 'Create listview column for %s...' % title }
+        log.debug { format('Create listview column for %s...', title) }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
         column = Gtk::TreeViewColumn.new(title, renderer,

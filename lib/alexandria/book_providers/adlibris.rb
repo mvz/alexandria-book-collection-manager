@@ -82,7 +82,7 @@ module Alexandria
             SEARCH_BY_KEYWORD => 'keyword'
           }[search_type]) || 'keyword'
           search_term_encoded = CGI.escape(search_term)
-          BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+          format(BASE_SEARCH_URL, search_type_code, search_term_encoded)
         end
       end
 

@@ -23,8 +23,8 @@ module Alexandria
 
       def initialize(parent, library, book)
         super(parent,
-              _("The book '%s' already exists in '%s'. Would you like " \
-                'to replace it?') % [book.title, library.name],
+              format(_("The book '%s' already exists in '%s'. Would you like " \
+                'to replace it?'), book.title, library.name),
               Gtk::Stock::DIALOG_QUESTION,
               [[_('_Skip'), :cancel],
                [_('_Replace'), :ok]],
@@ -58,8 +58,8 @@ module Alexandria
           # Deleting books.
         else
           message = if books.length == 1
-                      _("Are you sure you want to delete '%s' " \
-                        "from '%s'?") % [books.first.title, library.name]
+                      format(_("Are you sure you want to delete '%s' " \
+                        "from '%s'?"), books.first.title, library.name)
                     else
                       _('Are you sure you want to delete the ' \
                         "selected books from '%s'?") % library.name

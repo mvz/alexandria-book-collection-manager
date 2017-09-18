@@ -98,7 +98,7 @@ module Alexandria
                                 CGI.escape(search_term)
                               end
 
-        uri = BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+        uri = format(BASE_SEARCH_URL, search_type_code, search_term_encoded)
         log.debug { uri }
         uri
       end

@@ -89,8 +89,8 @@ module Alexandria
                         'expired.') % factory.name
 
                     when SocketError
-                      _("Couldn't reach the provider '%s': socket " \
-                        'error (%s).') % [factory.name, boom.message]
+                      format(_("Couldn't reach the provider '%s': socket " \
+                        'error (%s).'), factory.name, boom.message)
 
                     when NoResultsError
                       _('No results were found.  Make sure your ' \

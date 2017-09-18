@@ -223,7 +223,7 @@ module Alexandria
                 if pixbuf.width > 1
                   iter = @treeview_results.model.get_iter(key.to_s)
                   unless @treeview_results.model.iter_is_valid?(iter)
-                    raise 'Iter is invalid! %s' % iter
+                    raise format('Iter is invalid! %s', iter)
                   end
                   iter[2] = pixbuf # I bet you this is it!
                 end
@@ -270,8 +270,7 @@ module Alexandria
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
         log.info {
-          'TreeStore Model: %s columns; ref_counts: %s' %
-            [@treeview_results.model.n_columns, @treeview_results.model.ref_count]
+          format('TreeStore Model: %s columns; ref_counts: %s', @treeview_results.model.n_columns, @treeview_results.model.ref_count)
         }
 
         @find_error = nil
@@ -312,8 +311,7 @@ module Alexandria
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
                        @results.each do |book, _cover|
-                         s = _('%s, by %s') % [book.title,
-                                               book.authors.join(', ')]
+                         s = format(_('%s, by %s'), book.title, book.authors.join(', '))
                          similar_books = @results.find { |book2, _cover2|
                            (book.title == book2.title) &&
                              (book.authors == book2.authors)
@@ -321,7 +319,7 @@ module Alexandria
                          if similar_books.length > 1
                            s += " (#{book.edition}, #{book.publisher})"
                          end
-                         log.info { 'Copying %s into tree view.' % book.title }
+                         log.info { format('Copying %s into tree view.', book.title) }
                          iter = @treeview_results.model.append
                          iter[0] = s
                          iter[1] = book.ident
@@ -614,8 +612,7 @@ module Alexandria
         isbn13 = Library.canonicalise_ean(isbn)
         puts isbn13
         if (book = library.find { |bk| bk.isbn == isbn13 })
-          raise DuplicateBookException, _("'%s' already exists in '%s' (titled '%s').") % \
-            [isbn, library.name, book.title.sub('&', '&amp;')]
+          raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."), isbn, library.name, book.title.sub('&', '&amp;'))
         end
         true
       end
