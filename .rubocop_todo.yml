@@ -6,43 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Layout/EmptyLineAfterMagicComment:
-  Exclude:
-    - 'alexandria-book-collection-manager.gemspec'
-    - 'lib/alexandria/about.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundBeginBody:
-  Exclude:
-    - 'lib/alexandria/book_providers/adlibris.rb'
-    - 'lib/alexandria/ui/dialogs/acquire_dialog.rb'
-
-# Offense count: 8
-# Cop supports --auto-correct.
-Layout/EmptyLinesAroundExceptionHandlingKeywords:
-  Exclude:
-    - 'lib/alexandria/book_providers/siciliano.rb'
-    - 'lib/alexandria/book_providers/worldcat.rb'
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/smart_library.rb'
-    - 'lib/alexandria/ui/dialogs/acquire_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
-# Offense count: 12
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: auto_detection, squiggly, active_support, powerpack, unindent
-Layout/IndentHeredoc:
-  Exclude:
-    - 'Rakefile'
-    - 'bin/alexandria'
-    - 'lib/alexandria/export_library.rb'
-    - 'lib/alexandria/ui/dialogs/about_dialog.rb'
-
 # Offense count: 6
 Lint/HandleExceptions:
   Exclude:
@@ -65,12 +28,6 @@ Lint/LiteralInCondition:
 # Offense count: 81
 Lint/RescueWithoutErrorClass:
   Enabled: false
-
-# Offense count: 1
-# Cop supports --auto-correct.
-Lint/ScriptPermission:
-  Exclude:
-    - 'spec/alexandria/book_providers_spec.rb'
 
 # Offense count: 1
 Lint/UnreachableCode:
@@ -188,13 +145,6 @@ Naming/PredicateName:
     - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb'
     - 'lib/alexandria/web_themes.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: AutoCorrect.
-Performance/HashEachMethods:
-  Exclude:
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
-
 # Offense count: 8
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: nested, compact
@@ -217,24 +167,9 @@ Style/ClassVars:
     - 'lib/alexandria/ui/dialogs/book_properties_dialog_base.rb'
     - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-Style/Dir:
-  Exclude:
-    - 'tasks/setup.rb'
-
 # Offense count: 121
 Style/Documentation:
   Enabled: false
-
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AutoCorrectEncodingComment.
-# SupportedStyles: when_needed, always, never
-Style/Encoding:
-  Exclude:
-    - 'alexandria-book-collection-manager.gemspec'
-    - 'lib/alexandria/about.rb'
 
 # Offense count: 6
 # Configuration parameters: EnforcedStyle, SupportedStyles.
@@ -245,27 +180,6 @@ Style/For:
     - 'lib/alexandria/book_providers/douban.rb'
     - 'lib/alexandria/book_providers/renaud.rb'
     - 'spec/alexandria/library_spec.rb'
-
-# Offense count: 25
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: format, sprintf, percent
-Style/FormatString:
-  Exclude:
-    - 'lib/alexandria/book_providers.rb'
-    - 'lib/alexandria/book_providers/adlibris.rb'
-    - 'lib/alexandria/book_providers/barnes_and_noble.rb'
-    - 'lib/alexandria/book_providers/deastore.rb'
-    - 'lib/alexandria/book_providers/siciliano.rb'
-    - 'lib/alexandria/book_providers/thalia.rb'
-    - 'lib/alexandria/book_providers/worldcat.rb'
-    - 'lib/alexandria/export_library.rb'
-    - 'lib/alexandria/ui/dialogs/acquire_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/misc_dialogs.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
-    - 'lib/alexandria/ui/dndable.rb'
-    - 'lib/alexandria/ui/listview.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
 
 # Offense count: 34
 # Configuration parameters: MinBodyLength.
@@ -286,13 +200,6 @@ Style/IfInsideElse:
     - 'lib/alexandria/preferences.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
 
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'lib/alexandria/models/library.rb'
-
 # Offense count: 2
 Style/MethodMissing:
   Exclude:
@@ -308,22 +215,6 @@ Style/MultilineTernaryOperator:
 Style/NestedTernaryOperator:
   Exclude:
     - 'lib/alexandria/ui/ui_manager.rb'
-
-# Offense count: 7
-# Cop supports --auto-correct.
-Style/OrAssignment:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/book_providers/barnes_and_noble.rb'
-    - 'lib/alexandria/book_providers/deastore.rb'
-    - 'lib/alexandria/ui/dialogs/bad_isbns_dialog.rb'
-
-# Offense count: 41
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Enabled: false
 
 # Offense count: 3
 Style/StructInheritance:
