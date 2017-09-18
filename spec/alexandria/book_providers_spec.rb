@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby
 # Copyright (C) 2005-2006 Laurent Sansonetti
 # Copyright (C) 2007 Joseph Method
 # Copyright (C) 2011, 2014, 2015 Matijs van Zuijlen
