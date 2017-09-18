@@ -2,6 +2,23 @@ AllCops:
   Exclude:
     - 'pkg/**/*'
 
+# Dot at end of line makes it clearer that the line is not done
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+# Multi-line assignment should be simply indented. Aligning them makes it even
+# harder to keep a sane line length.
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: same_line
+
+# Multi-line method calls should be simply indented. Aligning them makes it
+# even harder to keep a sane line length.
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
@@ -17,7 +34,7 @@ Metrics/BlockLength:
 #Metrics/LineLength:
   #Max: 92
 
-Style/AccessorMethodName:
+Naming/AccessorMethodName:
   Enabled: false
 
 # Allow multi-line blocks of all sorts
@@ -28,10 +45,6 @@ Style/BlockDelimiters:
 Style/AndOr:
   Enabled: conditionals
 
-# Dot at end of line makes it clearer that the line is not done
-Style/DotPosition:
-  EnforcedStyle: trailing
-
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
@@ -39,19 +52,6 @@ Style/GuardClause:
 # Don't use if or unless as modifier if the line gets too long
 Style/IfUnlessModifier:
   MaxLineLength: 60
-
-# Multi-line assignment should be simply indented. Aligning them makes it even
-# harder to keep a sane line length.
-Style/MultilineOperationIndentation:
-  EnforcedStyle: indented
-
-Style/MultilineMethodCallBraceLayout:
-  EnforcedStyle: same_line
-
-# Multi-line method calls should be simply indented. Aligning them makes it
-# even harder to keep a sane line length.
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
 
 # Not all objects that handle #== 0 also handle #zero?
 Style/NumericPredicate:
