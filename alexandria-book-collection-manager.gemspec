@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 require_relative 'lib/alexandria/version'
 
 Gem::Specification.new do |s|
