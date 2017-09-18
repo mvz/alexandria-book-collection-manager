@@ -339,11 +339,3 @@ Style/StructInheritance:
   Exclude:
     - 'lib/alexandria/smart_library.rb'
     - 'lib/alexandria/ui/multi_drag_treeview.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: all_comparison_operators, equality_operators_only
-Style/YodaCondition:
-  Exclude:
-    - 'lib/alexandria/models/library.rb'

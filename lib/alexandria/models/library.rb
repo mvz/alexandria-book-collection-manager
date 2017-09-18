@@ -610,7 +610,7 @@ module Alexandria
     end
 
     def self.jpeg?(file)
-      'JFIF' == IO.read(file, 10)[6..9]
+      IO.read(file, 10)[6..9] == 'JFIF'
     end
 
     def final_cover(book)
