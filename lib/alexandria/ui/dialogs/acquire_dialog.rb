@@ -409,7 +409,6 @@ module Alexandria
               "Failed to load cover image icon: #{err.message}"
             }
             log << err if log.error?
-
           end
         end
       end

@@ -142,7 +142,6 @@ module Alexandria
         # doc = Hpricot(html)
         doc = html_to_doc(html)
         begin
-
           title = nil
           if (h1 = doc.at('div.productTitleFormat h1'))
             title = text_of(h1)
