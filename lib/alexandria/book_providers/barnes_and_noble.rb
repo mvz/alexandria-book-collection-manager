@@ -49,7 +49,7 @@ module Alexandria
       end
 
       def agent
-        @agent = Alexandria::WWWAgent.new unless @agent
+        @agent ||= Alexandria::WWWAgent.new
         @agent
       end
 

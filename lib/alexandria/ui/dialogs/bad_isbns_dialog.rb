@@ -21,7 +21,7 @@ module Alexandria
     # be used for on_load library conversions.
     class BadIsbnsDialog < Gtk::MessageDialog
       def initialize(parent, message = nil, list = nil)
-        message = _("There's a problem") unless message
+        message ||= _("There's a problem")
         super(parent, Gtk::Dialog::MODAL, Gtk::MessageDialog::WARNING, Gtk::MessageDialog::BUTTONS_CLOSE, message)
         isbn_container = Gtk::Box.new :horizontal
         the_vbox = children.first

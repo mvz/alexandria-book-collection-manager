@@ -182,9 +182,7 @@ module Alexandria
         # author(s)
         authors = []
         author_span = data % 'span.int_scheda[text()*=Autore]'
-        unless author_span
-          author_span = data % 'span.int_scheda[text()*=cura]' # editor
-        end
+        author_span ||= data % 'span.int_scheda[text()*=cura]'
         if author_span
           author_links = author_span / 'a.info'
           authors = []
