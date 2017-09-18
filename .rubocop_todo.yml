@@ -340,13 +340,6 @@ Style/StructInheritance:
     - 'lib/alexandria/smart_library.rb'
     - 'lib/alexandria/ui/multi_drag_treeview.rb'
 
-# Offense count: 10
-# Cop supports --auto-correct.
-# Configuration parameters: MinSize, SupportedStyles.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: brackets
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
