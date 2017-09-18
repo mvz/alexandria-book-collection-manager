@@ -86,7 +86,7 @@ module Alexandria
                               else
                                 CGI.escape(search_term)
                               end
-        BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+        format(BASE_SEARCH_URL, search_type_code, search_term_encoded)
       end
 
       def get_book_from_search_result(result)
@@ -235,7 +235,6 @@ module Alexandria
           image_url = nil # hm, it's on the website, but uses JavaScript...
 
           return [book, image_url]
-
         rescue => ex
           raise ex if ex.instance_of? NoResultsError
           trace = ex.backtrace.join("\n> ")

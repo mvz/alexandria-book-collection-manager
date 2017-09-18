@@ -68,7 +68,6 @@ module Alexandria
             end
           end
         end
-
       rescue Errno::ENOENT
         # First run and no smart libraries yet? Provide some default
         # ones.

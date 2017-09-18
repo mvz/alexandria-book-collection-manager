@@ -1,4 +1,3 @@
-# encoding: utf-8
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
 # Copyright (C) 2015 Matijs van Zuijlen

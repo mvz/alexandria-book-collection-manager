@@ -26,7 +26,7 @@ module Alexandria
 
       def setup_view_source_dnd(view)
         # better be Loggable!
-        log.info { 'setup_view_source_dnd for %s' % view }
+        log.info { format('setup_view_source_dnd for %s', view) }
         view.signal_connect_after('drag-begin') do |_widget, drag_context|
           n_books = @parent.selected_books.length
           if n_books > 1

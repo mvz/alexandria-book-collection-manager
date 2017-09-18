@@ -404,13 +404,11 @@ module Alexandria
                 end
               end
             end
-
           rescue StandardError => err
             log.error {
               "Failed to load cover image icon: #{err.message}"
             }
             log << err if log.error?
-
           end
         end
       end
@@ -444,7 +442,7 @@ module Alexandria
           @scan_area.grab_focus
         end
         @scan_area.signal_connect('focus-in-event') do |_widget, _event|
-          @barcode_label.label = _('%s _Barcode Scanner Ready' % _(@scanner.display_name))
+          @barcode_label.label = _(format('%s _Barcode Scanner Ready', _(@scanner.display_name)))
           @scanner_buffer = ''
           begin
             @animation.set_active

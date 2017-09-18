@@ -69,7 +69,6 @@ module Alexandria
           else
             results.map { |result| get_book_from_search_result(result) }
           end
-
         rescue NoResultsError => err
           if (type == SEARCH_BY_ISBN) && (trying_again == false)
             trying_again = true
@@ -105,7 +104,7 @@ module Alexandria
                                 CGI.escape(search_term)
                               end
 
-        BASE_SEARCH_URL % [search_term_encoded, search_type_code]
+        format(BASE_SEARCH_URL, search_term_encoded, search_type_code)
       end
 
       def parse_search_result_data(html)

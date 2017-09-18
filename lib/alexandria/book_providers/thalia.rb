@@ -71,7 +71,7 @@ module Alexandria
                               else
                                 CGI.escape(search_term)
                               end
-        BASE_SEARCH_URL % [search_type_code, search_term_encoded]
+        format(BASE_SEARCH_URL, search_type_code, search_term_encoded)
       end
 
       def parse_search_result_data(html)

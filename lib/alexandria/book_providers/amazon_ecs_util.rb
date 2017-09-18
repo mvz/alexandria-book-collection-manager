@@ -151,9 +151,7 @@ module Amazon
 
       # Return an array of Amazon::Element item objects.
       def items
-        unless @items
-          @items = (@doc / 'item').map { |item| Element.new(item) }
-        end
+        @items ||= (@doc / 'item').map { |item| Element.new(item) }
         @items
       end
 
@@ -164,25 +162,19 @@ module Amazon
 
       # Return current page no if :item_page option is when initiating the request.
       def item_page
-        unless @item_page
-          @item_page = (@doc / 'itemsearchrequest/itempage').inner_html.to_i
-        end
+        @item_page ||= (@doc / 'itemsearchrequest/itempage').inner_html.to_i
         @item_page
       end
 
       # Return total results.
       def total_results
-        unless @total_results
-          @total_results = (@doc / 'totalresults').inner_html.to_i
-        end
+        @total_results ||= (@doc / 'totalresults').inner_html.to_i
         @total_results
       end
 
       # Return total pages.
       def total_pages
-        unless @total_pages
-          @total_pages = (@doc / 'totalpages').inner_html.to_i
-        end
+        @total_pages ||= (@doc / 'totalpages').inner_html.to_i
         @total_pages
       end
     end

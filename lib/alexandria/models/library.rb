@@ -130,7 +130,6 @@ module Alexandria
             # retries the Dir.each block...
             # but gives up after three tries
             redo unless test[0] > 2
-
           else
             test = [0, nil]
           end
@@ -231,7 +230,6 @@ module Alexandria
 
           a << load(file)
         end
-
       rescue Errno::ENOENT
         FileUtils.mkdir_p(DIR)
       end
@@ -501,7 +499,7 @@ module Alexandria
         @@deleted_libraries << self
       else
         if @deleted_books.include?(book)
-          doubles = @deleted_books.reject { |b| !b.equal?(book) }
+          doubles = @deleted_books.select { |b| b.equal?(book) }
           raise ArgumentError, "Book #{book.isbn} was already deleted" unless doubles.empty?
         end
         @deleted_books << book
@@ -610,7 +608,7 @@ module Alexandria
     end
 
     def self.jpeg?(file)
-      'JFIF' == IO.read(file, 10)[6..9]
+      IO.read(file, 10)[6..9] == 'JFIF'
     end
 
     def final_cover(book)

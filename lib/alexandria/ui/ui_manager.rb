@@ -418,23 +418,19 @@ module Alexandria
         else
           n_unrated = library.n_unrated
           if n_unrated == library.length
-            n_("Library '%s' selected, %d unrated book",
-               "Library '%s' selected, %d unrated books",
-               library.length) % [library.name,
-                                  library.length]
+            format(n_("Library '%s' selected, %d unrated book",
+                      "Library '%s' selected, %d unrated books",
+                      library.length), library.name, library.length)
           elsif n_unrated.zero?
-            n_("Library '%s' selected, %d book",
-               "Library '%s' selected, %d books",
-               library.length) % [library.name,
-                                  library.length]
+            format(n_("Library '%s' selected, %d book",
+                      "Library '%s' selected, %d books",
+                      library.length), library.name, library.length)
           else
-            n_("Library '%s' selected, %d book, " \
+            format(n_("Library '%s' selected, %d book, " \
                '%d unrated',
-               "Library '%s' selected, %d books, " \
-               '%d unrated',
-               library.length) % [library.name,
-                                  library.length,
-                                  n_unrated]
+                      "Library '%s' selected, %d books, " \
+                      '%d unrated',
+                      library.length), library.name, library.length, n_unrated)
           end
         end
       end
@@ -697,8 +693,7 @@ module Alexandria
                   end
                   library << book
                   library.save(book)
-                  set_status_label(_("Added '%s' to library '%s'") % [book.title, library.name])
-
+                  set_status_label(format(_("Added '%s' to library '%s'"), book.title, library.name))
                 rescue => ex
                   log.error { "Couldn't add book #{isbn}: #{ex}" }
                   log.error { ex.backtrace.join("\n") }
