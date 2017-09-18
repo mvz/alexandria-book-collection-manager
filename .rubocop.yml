@@ -61,6 +61,11 @@ Style/NumericPredicate:
 Style/Next:
   Enabled: false
 
+# Use older RuboCop default
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': ()
+
 # Allow explicit return with multiple return values
 Style/RedundantReturn:
   AllowMultipleReturnValues: true

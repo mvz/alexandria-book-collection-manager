@@ -318,15 +318,6 @@ Style/OrAssignment:
     - 'lib/alexandria/book_providers/deastore.rb'
     - 'lib/alexandria/ui/dialogs/bad_isbns_dialog.rb'
 
-# Offense count: 3
-# Cop supports --auto-correct.
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'Rakefile'
-    - 'lib/alexandria/default_preferences.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
 # Offense count: 41
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
