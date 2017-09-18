@@ -499,7 +499,7 @@ module Alexandria
         @@deleted_libraries << self
       else
         if @deleted_books.include?(book)
-          doubles = @deleted_books.reject { |b| !b.equal?(book) }
+          doubles = @deleted_books.select { |b| b.equal?(book) }
           raise ArgumentError, "Book #{book.isbn} was already deleted" unless doubles.empty?
         end
         @deleted_books << book
