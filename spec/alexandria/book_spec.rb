@@ -47,11 +47,11 @@ describe Alexandria::Book do
     end
 
     it 'does not allow higher rating than 5 to be assigned' do
-      expect { book.rating = 6 }.to raise_error
+      expect { book.rating = 6 }.to raise_error ArgumentError
     end
 
     it 'does not allow lower rating than 0 to be assigned' do
-      expect { book.rating = -1 }.to raise_error
+      expect { book.rating = -1 }.to raise_error ArgumentError
     end
   end
 end
