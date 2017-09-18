@@ -310,7 +310,7 @@ module Alexandria
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
-                       @results.each do |book, _cover|
+                       @results.each_key do |book|
                          s = format(_('%s, by %s'), book.title, book.authors.join(', '))
                          similar_books = @results.find { |book2, _cover2|
                            (book.title == book2.title) &&
