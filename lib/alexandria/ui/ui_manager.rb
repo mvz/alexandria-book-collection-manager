@@ -419,18 +419,18 @@ module Alexandria
           n_unrated = library.n_unrated
           if n_unrated == library.length
             format(n_("Library '%s' selected, %d unrated book",
-               "Library '%s' selected, %d unrated books",
-               library.length), library.name, library.length)
+                      "Library '%s' selected, %d unrated books",
+                      library.length), library.name, library.length)
           elsif n_unrated.zero?
             format(n_("Library '%s' selected, %d book",
-               "Library '%s' selected, %d books",
-               library.length), library.name, library.length)
+                      "Library '%s' selected, %d books",
+                      library.length), library.name, library.length)
           else
             format(n_("Library '%s' selected, %d book, " \
                '%d unrated',
-               "Library '%s' selected, %d books, " \
-               '%d unrated',
-               library.length), library.name, library.length, n_unrated)
+                      "Library '%s' selected, %d books, " \
+                      '%d unrated',
+                      library.length), library.name, library.length, n_unrated)
           end
         end
       end
