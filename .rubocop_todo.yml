@@ -31,11 +31,6 @@ Lint/IneffectiveAccessModifier:
     - 'lib/alexandria/logging.rb'
     - 'lib/alexandria/web_themes.rb'
 
-# Offense count: 1
-Lint/LiteralAsCondition:
-  Exclude:
-    - 'util/rake/gettextgenerate.rb'
-
 # Offense count: 81
 Lint/RescueWithoutErrorClass:
   Enabled: false
