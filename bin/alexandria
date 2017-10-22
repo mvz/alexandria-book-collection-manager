@@ -58,7 +58,7 @@ end.parse!
 begin
   Alexandria.main
 rescue => e
-  $stderr.puts <<EOS
+  warn <<EOS
 -----------------------
 Alexandria just crashed
 -----------------------
