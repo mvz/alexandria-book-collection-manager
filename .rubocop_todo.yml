@@ -32,7 +32,7 @@ Lint/IneffectiveAccessModifier:
     - 'lib/alexandria/web_themes.rb'
 
 # Offense count: 81
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Enabled: false
 
 # Offense count: 1

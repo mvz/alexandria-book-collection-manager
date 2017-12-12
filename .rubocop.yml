@@ -49,10 +49,6 @@ Style/AndOr:
 Style/GuardClause:
   MinBodyLength: 2
 
-# Don't use if or unless as modifier if the line gets too long
-Style/IfUnlessModifier:
-  MaxLineLength: 60
-
 # Not all objects that handle #== 0 also handle #zero?
 Style/NumericPredicate:
   Enabled: false
