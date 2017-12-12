@@ -67,9 +67,7 @@ module Alexandria
         when Net::HTTPSuccess     then response
         when Net::HTTPRedirection then
           redirect = URI.parse response['Location']
-          if redirect.relative?
-            redirect = URI.parse(uri_str) + redirect
-          end
+          redirect = URI.parse(uri_str) + redirect if redirect.relative?
           fetch_redirectly(redirect.to_s, (limit - 1))
         else
           response.error!
@@ -184,9 +182,7 @@ module Alexandria
 
           book_data[:binding] = ''
           selected_format = (doc / '#availableFormats li.selected a.tabTitle').first
-          if selected_format
-            book_data[:binding] = selected_format.inner_text
-          end
+          book_data[:binding] = selected_format.inner_text if selected_format
 
           book = Book.new(book_data[:title], book_data[:authors],
                           book_data[:isbn], book_data[:publisher],

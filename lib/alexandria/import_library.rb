@@ -136,9 +136,7 @@ module Alexandria
             end
             book_elements[4] = book_elements[4].to_i unless book_elements[4].nil? # publishing_year
             puts book_elements.inspect
-            cover = if elements['cover']
-                      neaten(elements['cover'].text)
-                    end
+            cover = (neaten(elements['cover'].text) if elements['cover'])
             puts cover
             book = Book.new(*book_elements)
             if elements['rating'] && Book::VALID_RATINGS.member?(elements['rating'].text.to_i)
@@ -194,9 +192,7 @@ module Alexandria
                 # available
                 book.authors = dl_book.authors
               end
-              unless book.edition
-                book.edition = dl_book.edition
-              end
+              book.edition = dl_book.edition unless book.edition
               cover = dl_cover
             rescue
               puts "failed to get cover for #{book.title} #{book.isbn}" if $DEBUG
@@ -206,9 +202,7 @@ module Alexandria
 
           books_and_covers << [book, cover]
           import_count += 1
-          if on_iterate_cb
-            on_iterate_cb.call(import_count, max_import)
-          end
+          on_iterate_cb.call(import_count, max_import) if on_iterate_cb
         end
       rescue CSV::IllegalFormatError
         unless failed_once
@@ -278,9 +272,7 @@ module Alexandria
           #  (on_error_cb and on_error_cb.call(e.message))
         end
 
-        if on_iterate_cb
-          on_iterate_cb.call(current_iteration += 1, max_iterations)
-        end
+        on_iterate_cb.call(current_iteration += 1, max_iterations) if on_iterate_cb
       end
       puts "Bad Isbn list: #{bad_isbns.inspect}" if bad_isbns
       library = load(name)
@@ -291,9 +283,7 @@ module Alexandria
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)
-        if on_iterate_cb
-          on_iterate_cb.call(current_iteration += 1, max_iterations)
-        end
+        on_iterate_cb.call(current_iteration += 1, max_iterations) if on_iterate_cb
       end
       [library, bad_isbns, failed_lookup_isbns]
     end

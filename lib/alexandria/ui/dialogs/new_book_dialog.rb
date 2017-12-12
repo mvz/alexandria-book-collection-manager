@@ -76,9 +76,7 @@ module Alexandria
 
       def setup_dialog_gui
         libraries = Libraries.instance.all_regular_libraries
-        if @selected_library.is_a?(SmartLibrary)
-          @selected_library = libraries.first
-        end
+        @selected_library = libraries.first if @selected_library.is_a?(SmartLibrary)
         @combo_libraries.populate_with_libraries(libraries,
                                                  @selected_library)
 
@@ -364,17 +362,13 @@ module Alexandria
           tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack('u')[0]
           tmp.chomp!("\000")
           entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
-          if entry.text.count('^ -~') > 0
-            entry.text = 'Bad scan result'
-          end
+          entry.text = 'Bad scan result' if entry.text.count('^ -~') > 0
         end
       end
 
       def on_results_button_press_event(_widget, event)
         # double left click
-        if (event.event_type == :'2button_press') && (event.button == 1)
-          on_add
-        end
+        on_add if (event.event_type == :'2button_press') && (event.button == 1)
       end
 
       def add_single_book_by_isbn(library, is_new)
@@ -454,9 +448,7 @@ module Alexandria
       end
 
       def add_book_to_library(library, book, cover_uri)
-        unless cover_uri.nil?
-          library.save_cover(book, cover_uri)
-        end
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
         library << book
         library.save(book)
       end

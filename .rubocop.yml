@@ -29,10 +29,8 @@ Metrics/BlockLength:
     - 'spec/**/*'
 
 # Require lines to fit in pull requests.
-# This config is commented out temporarily to allow .rubocop_todo.yml to
-# configure this cop.
-#Metrics/LineLength:
-  #Max: 92
+Metrics/LineLength:
+  Max: 92
 
 Naming/AccessorMethodName:
   Enabled: false

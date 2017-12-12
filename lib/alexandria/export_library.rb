@@ -174,9 +174,7 @@ module Alexandria
       FileUtils.mkdir(filename) unless File.exist?(filename)
       Dir.chdir(filename) do
         copy_covers('pixmaps')
-        if theme.has_pixmaps?
-          FileUtils.cp_r(theme.pixmaps_directory, 'pixmaps')
-        end
+        FileUtils.cp_r(theme.pixmaps_directory, 'pixmaps') if theme.has_pixmaps?
         FileUtils.cp(theme.css_file, '.')
         File.open('index.html', 'w') do |io|
           io << to_xhtml(File.basename(theme.css_file))
@@ -343,9 +341,7 @@ module Alexandria
         unless book.rating == Book::DEFAULT_RATING
           entry.add_element('rating').text = book.rating
         end
-        if book.notes && !book.notes.empty?
-          entry.add_element('comments').text = book.notes
-        end
+        entry.add_element('comments').text = book.notes if book.notes && !book.notes.empty?
         if File.exist?(cover(book))
           entry.add_element('cover').text = final_cover(book)
           image = images.add_element('image')

@@ -40,9 +40,7 @@ class GettextGenerateTask < Rake::TaskLib
     desc 'Generate gettext localization files'
     task gettext: @generated_files
 
-    if CLOBBER
-      @generated_files.each { |gen| CLOBBER << gen }
-    end
+    @generated_files.each { |gen| CLOBBER << gen } if CLOBBER
   end
 
   def generate_po_files(po_dir, file_glob, dest_dir)

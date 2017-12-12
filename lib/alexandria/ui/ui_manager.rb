@@ -499,9 +499,7 @@ module Alexandria
               @actiongroup[provider.action_name].sensitive = !has_no_url
               no_urls = false unless has_no_url
             end
-            if no_urls
-              @actiongroup['OnlineInformation'].sensitive = false
-            end
+            @actiongroup['OnlineInformation'].sensitive = false if no_urls
           end
         end
         @clicking_on_sidepane = false
@@ -571,9 +569,7 @@ module Alexandria
           @actiongroup['Undo'].sensitive = caller.can_undo?
           @actiongroup['Redo'].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
-          unless caller.updating?
-            handle_update_caller_library ary
-          end
+          handle_update_caller_library ary unless caller.updating?
         else
           raise 'unrecognized update event'
         end
@@ -688,9 +684,7 @@ module Alexandria
                   end
 
                   log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'" }
-                  unless cover_uri.nil?
-                    library.save_cover(book, cover_uri)
-                  end
+                  library.save_cover(book, cover_uri) unless cover_uri.nil?
                   library << book
                   library.save(book)
                   set_status_label(format(_("Added '%s' to library '%s'"), book.title, library.name))
@@ -767,9 +761,7 @@ module Alexandria
           new_height = [ICON_HEIGHT, icon.height].min
           icon = cache_scaled_icon(icon, new_width, new_height)
         end
-        if rating == Book::MAX_RATING_STARS
-          icon = icon.tag(Icons::FAVORITE_TAG)
-        end
+        icon = icon.tag(Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
         iter[Columns::COVER_ICON] = icon
         log.debug { 'Full iter: ' + (0..15).map { |num| iter[num].inspect }.join(', ') }
       end
@@ -800,9 +792,7 @@ module Alexandria
         model = @library_listview.model
         is_smart = library.is_a?(SmartLibrary)
         if is_smart
-          if @library_separator_iter.nil?
-            @library_separator_iter = append_library_separator
-          end
+          @library_separator_iter = append_library_separator if @library_separator_iter.nil?
           iter = model.append
         else
           iter = if @library_separator_iter.nil?

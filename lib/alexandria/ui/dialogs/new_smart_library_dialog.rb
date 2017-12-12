@@ -64,9 +64,7 @@ module Alexandria
       def smart_library_base_name(rules)
         if rules.length == 1
           value = rules.first.value
-          if value.is_a?(String) && !value.strip.empty?
-            return value
-          end
+          return value if value.is_a?(String) && !value.strip.empty?
         end
       end
     end

@@ -184,9 +184,7 @@ module Alexandria
         publish_year = nil
         edition = details['Edio']
         if edition
-          if edition =~ /([12][0-9]{3})/ # publication date
-            publish_year = Regexp.last_match[1].to_i
-          end
+          publish_year = Regexp.last_match[1].to_i if edition =~ /([12][0-9]{3})/ # publication date
         end
         # cover
         # ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";

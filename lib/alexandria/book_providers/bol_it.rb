@@ -114,9 +114,7 @@ module Alexandria
         elsif (md = / (\d+) pagine \| /.match(data))
           nr_pages = CGI.unescape(md[1].strip)
         end
-        if (nr_pages != '0') && !nr_pages.nil?
-          edition = nr_pages + ' p., ' + edition
-        end
+        edition = nr_pages + ' p., ' + edition if (nr_pages != '0') && !nr_pages.nil?
 
         publish_year = nil
         if (md = /<INPUT type =HIDDEN name ="mailAnnoPubbl" value="([^"]+)/.match(data))

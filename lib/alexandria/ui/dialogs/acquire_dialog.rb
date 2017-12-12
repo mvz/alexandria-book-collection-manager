@@ -64,9 +64,7 @@ module Alexandria
         @block = block
 
         libraries = Libraries.instance.all_regular_libraries
-        if selected_library.is_a?(SmartLibrary)
-          selected_library = libraries.first
-        end
+        selected_library = libraries.first if selected_library.is_a?(SmartLibrary)
         @combo_libraries.populate_with_libraries(libraries,
                                                  selected_library)
 
@@ -208,9 +206,7 @@ module Alexandria
             book = result[0]
             cover_uri = result[1]
 
-            unless cover_uri.nil?
-              library.save_cover(book, cover_uri)
-            end
+            library.save_cover(book, cover_uri) unless cover_uri.nil?
             books << book
             library << book
             library.save(book)
@@ -600,9 +596,7 @@ module Alexandria
         @barcodes_treeview.append_column(col)
 
         @barcodes_treeview.model.signal_connect('row-deleted') do |model, _path|
-          unless model.iter_first
-            @add_button.sensitive = false
-          end
+          @add_button.sensitive = false unless model.iter_first
         end
       end
     end

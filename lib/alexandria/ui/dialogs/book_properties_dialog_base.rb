@@ -360,9 +360,7 @@ module Alexandria
         @redd_date.sensitive = redd_yes
         if @setup_finished
           # don't do this when popping up the dialog for the first time
-          if redd_yes && @redd_date.text.strip.empty?
-            display_calendar_popup(@redd_date)
-          end
+          display_calendar_popup(@redd_date) if redd_yes && @redd_date.text.strip.empty?
         end
       end
 

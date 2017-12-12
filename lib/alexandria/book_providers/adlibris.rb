@@ -168,17 +168,13 @@ module Alexandria
           binding = nil
           if (format = doc.search('div.productTitleFormat span').first)
             binding = text_of(format)
-            if binding =~ /\(([^\)]+)\)/
-              binding = Regexp.last_match[1]
-            end
+            binding = Regexp.last_match[1] if binding =~ /\(([^\)]+)\)/
           end
 
           year = nil
           if (published = product.search('span[@id$="Published"]').first)
             publication = published.inner_text
-            if publication =~ /([12][0-9]{3})/
-              year = Regexp.last_match[1].to_i
-            end
+            year = Regexp.last_match[1].to_i if publication =~ /([12][0-9]{3})/
           end
 
           isbns = []
@@ -188,9 +184,7 @@ module Alexandria
             isbn = isbn_td.inner_text
             next unless isbn =~ /[0-9x]{10,13}/i
             isbn.gsub(/(\n|\r)/, ' ')
-            if isbn =~ /:[\s]*([0-9x]+)/i
-              isbn = Regexp.last_match[1]
-            end
+            isbn = Regexp.last_match[1] if isbn =~ /:[\s]*([0-9x]+)/i
             isbns << isbn
           end
           isbn = isbns.first

@@ -46,9 +46,7 @@ module Alexandria
         # kill old (shorter) tokens, or previously distributed Access Key Id (see #26250)
 
         if token
-          if token.value != token.value.strip
-            token.new_value = token.value.strip
-          end
+          token.new_value = token.value.strip if token.value != token.value.strip
         end
         if token && ((token.value.size != 20) || (token.value == '0J356Z09CN88KB743582'))
           token.new_value = ''
@@ -56,16 +54,12 @@ module Alexandria
 
         secret = prefs.variable_named('secret_key')
         if secret
-          if secret.value != secret.value.strip
-            secret.new_value = secret.value.strip
-          end
+          secret.new_value = secret.value.strip if secret.value != secret.value.strip
         end
 
         associate = prefs.variable_named('associate_tag')
         if associate
-          if associate.value.strip.empty?
-            associate.new_value = 'rubyalexa-20'
-          end
+          associate.new_value = 'rubyalexa-20' if associate.value.strip.empty?
           if associate.value != associate.value.strip
             associate.new_value = associate.value.strip
           end
@@ -132,9 +126,7 @@ module Alexandria
             res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
 
             res.items.each do |item|
-              if item.get('itemattributes/title') =~ /#{criterion}/i
-                products << item
-              end
+              products << item if item.get('itemattributes/title') =~ /#{criterion}/i
             end
             # #req.keyword_search(criterion) do |product|
 
@@ -156,9 +148,7 @@ module Alexandria
           else
             raise InvalidSearchTypeError
           end
-          if products.empty?
-            raise Amazon::RequestError, 'No products'
-          end
+          raise Amazon::RequestError, 'No products' if products.empty?
           # raise NoResultsError if products.empty?
         rescue Amazon::RequestError => re
           log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}" }
@@ -176,9 +166,7 @@ module Alexandria
           media = nil if media == 'Unknown Binding'
 
           isbn = normalize(atts.get('isbn'))
-          isbn = if isbn && Library.valid_isbn?(isbn)
-                   Library.canonicalise_ean(isbn)
-                 end
+          isbn = (Library.canonicalise_ean(isbn) if isbn && Library.valid_isbn?(isbn))
           # hack, extract year by regexp (not Y10K compatible :-)
           /([1-9][0-9]{3})/ =~ atts.get('publicationdate')
           publishing_year = Regexp.last_match[1] ? Regexp.last_match[1].to_i : nil
@@ -202,9 +190,7 @@ module Alexandria
             results.each do |rslt|
               book = rslt[0]
               book_isbn_canon = Library.canonicalise_ean(book.isbn)
-              if query_isbn_canon == book_isbn_canon
-                return rslt
-              end
+              return rslt if query_isbn_canon == book_isbn_canon
               log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result

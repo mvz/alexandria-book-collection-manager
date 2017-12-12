@@ -116,9 +116,7 @@ module Alexandria
       end
       old_value = @alexandria_settings[variable_name]
       @alexandria_settings[variable_name] = new_value
-      unless new_value == old_value
-        @changed_settings << variable_name
-      end
+      @changed_settings << variable_name unless new_value == old_value
     end
 
     def generic_save_setting(variable_name, new_value)
@@ -180,9 +178,7 @@ module Alexandria
     end
 
     def make_list_string(list)
-      if get_gconf_type(list.first) == 'string'
-        list.map! { |x| x.gsub(/\"/, '\\"') }
-      end
+      list.map! { |x| x.gsub(/\"/, '\\"') } if get_gconf_type(list.first) == 'string'
       contents = list.join(',')
       '[' + contents + ']'
     end

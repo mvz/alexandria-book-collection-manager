@@ -136,9 +136,7 @@ module Alexandria
         if (title_header = doc.search('div.detailBlock h3'))
           header_spans = title_header.first.search('span')
           title = text_of(header_spans.first)
-          if title =~ /(.+)-$/
-            title = Regexp.last_match[1].strip
-          end
+          title = Regexp.last_match[1].strip if title =~ /(.+)-$/
           book_data[:title] = title
         end
 
@@ -147,9 +145,7 @@ module Alexandria
         isbns = []
         unless info_headers.empty?
           info_headers.each do |th|
-            if th.inner_text =~ /(ISBN|EAN)/
-              isbns << data_for_header(th)
-            end
+            isbns << data_for_header(th) if th.inner_text =~ /(ISBN|EAN)/
           end
           book_data[:isbn] = Library.canonicalise_ean(isbns.first)
         end
