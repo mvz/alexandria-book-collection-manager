@@ -58,8 +58,8 @@ describe Alexandria::BookProviders do
         end
       end
     else
-      expect(results.first.first)
-        .to be_instance_of(Alexandria::Book), "Result item is not a Book for #{provider}"
+      expect(results.first.first).
+        to be_instance_of(Alexandria::Book), "Result item is not a Book for #{provider}"
     end
     results
   end
