@@ -97,7 +97,7 @@ module Alexandria
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
             res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images',
-                                          country: request_locale)
+                                                     country: request_locale)
             res.items.each do |item|
               products << item
             end
