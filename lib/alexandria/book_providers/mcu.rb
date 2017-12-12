@@ -72,7 +72,7 @@ module Alexandria
         transport.get(URI.parse(req)).each do |line|
           print "Reading line: #{line}" if $DEBUG # for DEBUGing
           next unless line =~ /CMD=VERDOC.*&DOCN=([^&]*)&NDOC=([^&]*)/
-          next unless !products[Regexp.last_match[1]]
+          next if products[Regexp.last_match[1]]
           next unless (book = parseBook(Regexp.last_match[1], Regexp.last_match[2]))
           products[Regexp.last_match[1]] = book
           puts Regexp.last_match[1] if $DEBUG # for DEBUGing
