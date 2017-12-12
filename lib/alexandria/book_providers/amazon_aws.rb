@@ -122,7 +122,7 @@ module Alexandria
 
             if products.length > 1
               log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results;" \
-                         " returning the first result only" }
+                         ' returning the first result only' }
             end
 
           when SEARCH_BY_TITLE

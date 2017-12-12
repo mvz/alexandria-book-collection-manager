@@ -65,8 +65,8 @@ module Alexandria
                  raise InvalidSearchTypeError
                end
         req +=
-          "&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=" \
-          "&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+          '&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=' \
+          '&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C='
         products = {}
         print "Request page is #{req}\n" if $DEBUG # for DEBUGing
         transport.get(URI.parse(req)).each do |line|
@@ -84,10 +84,10 @@ module Alexandria
 
       def url(book)
         isbn = Library.canonicalise_isbn(book.isbn)
-        "http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15" \
+        'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?CMD=VERLST&BASE=ISBN&DOCS=1-15' \
           "&CONF=AEISPA.cnf&OPDEF=AND&DOCS=1&SEPARADOR=&WGEN-C=&WISB-C=#{isbn}&WAUT-C=&WTIT-C=" \
-          "&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=" \
-          "&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C="
+          '&WMAT-C=&WEDI-C=&WFEP-C=&%40T353-GE=&%40T353-LE=&WSER-C=&WLUG-C=' \
+          '&WDIS-C=%28DISPONIBLE+or+AGOTADO%29&WLEN-C=&WCLA-C=&WSOP-C='
       rescue => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil

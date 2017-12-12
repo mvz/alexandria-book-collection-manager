@@ -640,7 +640,7 @@ module Alexandria
 
       def handle_ruined_books
         new_message = _(
-          "The data files for the following books are malformed or empty. Do you wish to" \
+          'The data files for the following books are malformed or empty. Do you wish to' \
           " attempt to download new information for them from the online book providers?\n")
 
         @libraries.ruined_books.each { |bi|
