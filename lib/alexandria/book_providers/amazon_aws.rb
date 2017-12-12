@@ -70,7 +70,8 @@ module Alexandria
         prefs.read
 
         if prefs['secret_key'].empty?
-          raise Amazon::RequestError, 'Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account'
+          raise Amazon::RequestError,
+            'Secret Access Key required for Authentication: you must sign up for your own Amazon AWS account'
         end
 
         if (config = Alexandria::Preferences.instance.http_proxy_config)
@@ -99,7 +100,8 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
+            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images',
+                                          country: request_locale)
             res.items.each do |item|
               products << item
             end
@@ -119,11 +121,14 @@ module Alexandria
             # result with different ISBNs
 
             if products.length > 1
-              log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results; returning the first result only" }
+              log.warn { "ISBN search at Amazon[#{request_locale}] got #{products.length} results;" \
+                         " returning the first result only" }
             end
 
           when SEARCH_BY_TITLE
-            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
+            res = Amazon::Ecs.item_search(criterion,
+                                          response_group: 'ItemAttributes,Images',
+                                          country: request_locale)
 
             res.items.each do |item|
               products << item if item.get('itemattributes/title') =~ /#{criterion}/i
@@ -132,14 +137,18 @@ module Alexandria
 
           when SEARCH_BY_AUTHORS
             criterion = "author:#{criterion}"
-            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale, type: 'Power')
+            res = Amazon::Ecs.item_search(criterion,
+                                          response_group: 'ItemAttributes,Images',
+                                          country: request_locale, type: 'Power')
             res.items.each do |item|
               products << item
             end
             # #req.author_search(criterion) do |product|
 
           when SEARCH_BY_KEYWORD
-            res = Amazon::Ecs.item_search(criterion, response_group: 'ItemAttributes,Images', country: request_locale)
+            res = Amazon::Ecs.item_search(criterion,
+                                          response_group: 'ItemAttributes,Images',
+                                          country: request_locale)
 
             res.items.each do |item|
               products << item

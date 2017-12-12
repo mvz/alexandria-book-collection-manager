@@ -201,46 +201,4 @@ module Alexandria
       raise 'Not Recognized' unless is_librarything || is_goodreads
     end
   end
-
-  #   def read_csv_file(csv_file)
-
-  #     reader = CSV.open(csv_file, 'r')
-  #     # goodreads & librarything now use csv header lines
-  #     header = reader.shift
-
-  #     #header.each {|h| puts h }
-  #     importer = identify_csv_type(header)
-
-  #     retries = 0
-  #     begin
-  #       reader.each do |row|
-  #         #puts row
-  #         bk = importer.row_to_book(row)
-  #         puts "\"#{bk.title}\"     by     #{bk.authors.join(', ')};     isbn : #{bk.isbn}      #{bk.publisher} | #{bk.publishing_year.inspect}   binding:#{bk.edition}"
-  #         if bk.notes.size > 0
-  #           puts "   >>> #{bk.notes}"
-  #         end
-  #       end
-  #     rescue
-  #       if retries < 1
-  #         retries += 1
-  #         puts "Retrying..."
-
-  #         # probably Goodreads' wonky ISBN fields ,,="043432432X", and such
-  #         # hack to fix up these files
-  #         data = File.read(csv_file)
-  #         data.gsub!(/\,\=\"/, ',"')
-  #         csv_fixed = Tempfile.new("#{csv_file}_fixed")
-  #         csv_fixed.write(data)
-  #         csv_fixed.close
-  #         reader = CSV.open(csv_fixed.path, 'r')
-  #         #puts csv_fixed.path
-  #         header = reader.shift
-
-  #         retry
-  #       end
-
-  #     end
-
-  #   end
 end

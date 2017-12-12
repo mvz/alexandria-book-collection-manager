@@ -219,7 +219,8 @@ module Alexandria
       end
 
       def url(book)
-        'http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+' + Library.canonicalise_isbn(book.isbn)
+        'http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+' +
+          Library.canonicalise_isbn(book.isbn)
       rescue => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
@@ -231,7 +232,10 @@ module Alexandria
       # http://en.wikipedia.org/wiki/British_Library
       # http://www.bl.uk/catalogues/z3950fullaccess.html
       # http://www.bl.uk/catalogues/z3950copacaccess.html
-      # FIXME: switch from BL to Copac, which incudes the BL itself and many more libraries: http://copac.ac.uk/libraries/
+      #
+      # FIXME: switch from BL to Copac, which incudes the BL itself and many more
+      # libraries: http://copac.ac.uk/libraries/
+      #
       # Details: http://copac.ac.uk/interfaces/z39.50/
       # The SUTRS format used by Copac is different from the one used by BL
       unabstract
@@ -306,7 +310,8 @@ module Alexandria
           }
 
           if title # and !authors.empty?
-            book = Book.new(title, authors, isbn, (publisher || nil), (publish_year || nil), (edition || nil))
+            book = Book.new(title, authors, isbn, (publisher || nil),
+                            (publish_year || nil), (edition || nil))
             results << [book]
           end
         end
@@ -346,8 +351,10 @@ module Alexandria
       end
 
       def url(book)
-        'http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=%253CB%253E%253Cfont%2520color%253D%2523000064%253E' \
-          'Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E' +
+        'http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=' \
+          '%253CB%253E%253Cfont%2520color%253D%2523000064%253E' \
+          'Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520' \
+          'contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E' +
           canonicalise_isbn_with_dashes(book.isbn) +
           '%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22' +
           canonicalise_isbn_with_dashes(book.isbn) +
@@ -390,8 +397,10 @@ module Alexandria
       #
       # Remarks about SBN
       #
-      # This provider requires that value of conn.count is 0. It's a Yaz option "Number of records to be retrieved".
-      # This provider requires to specify the value of conn.element_set_name = 'F'. It's a Yaz option "Element-Set name of records".
+      # This provider requires that value of conn.count is 0.
+      # It's a Yaz option "Number of records to be retrieved".
+      # This provider requires to specify the value of conn.element_set_name = 'F'.
+      # It's a Yaz option "Element-Set name of records".
       # See http://www.indexdata.dk/yaz/doc/zoom.resultsets.tkl
       #
       # Dashes:

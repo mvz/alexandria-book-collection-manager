@@ -24,7 +24,8 @@ require 'spec_helper'
 describe Alexandria::BookProviders do
   it 'should be less clever'
 
-  def assert_correct_search_result(provider, query, search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
+  def assert_correct_search_result(provider, query,
+                                   search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
     begin
       results = provider.instance.search(query, search_type)
     rescue SocketError
@@ -45,17 +46,20 @@ describe Alexandria::BookProviders do
 
       canonical_query = Alexandria::Library.canonicalise_ean(query)
       canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
-      expect(canonical_query).to eq(canonical_result),
-                                 "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
+      expect(canonical_query).
+        to eq(canonical_result),
+        "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
 
       if results.length == 2
         cover_url = results.last
         if cover_url
-          expect(cover_url).to be_instance_of(String), "Unexpected cover_url #{cover_url.inspect} for #{provider}"
+          expect(cover_url).
+            to be_instance_of(String), "Unexpected cover_url #{cover_url.inspect} for #{provider}"
         end
       end
     else
-      expect(results.first.first).to be_instance_of(Alexandria::Book), "Result item is not a Book for #{provider}"
+      expect(results.first.first)
+        .to be_instance_of(Alexandria::Book), "Result item is not a Book for #{provider}"
     end
     results
   end

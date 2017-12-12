@@ -247,7 +247,8 @@ module Alexandria
       header.add_element('FromCompany').text = 'Alexandria'
       header.add_element('FromPerson').text = Etc.getlogin
       now = Time.now
-      header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d', now.year, now.month, now.day, now.hour, now.min)
+      header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d',
+                                                   now.year, now.month, now.day, now.hour, now.min)
       header.add_element('MessageNote').text = name
       each_with_index do |book, idx|
         # fields that are missing: edition and rating.
@@ -307,7 +308,9 @@ module Alexandria
       # http://periapsis.org/tellico/doc/hacking.html
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
-      doc << REXML::DocType.new('tellico', 'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN" "http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
+      doc << REXML::DocType.new('tellico',
+                                'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN"' \
+                                ' "http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
       tellico = doc.add_element('tellico')
       tellico.add_attribute('syntaxVersion', '7')
       tellico.add_namespace('http://periapsis.org/tellico/')
@@ -445,7 +448,8 @@ EOS
       end
       xhtml << <<EOS
 <p class="copyright">
-  Generated on #{xhtml_escape(Date.today.to_s)} by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
+  Generated on #{xhtml_escape(Date.today.to_s)}
+  by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
 </p>
 </body>
 </html>

@@ -34,8 +34,9 @@ module Alexandria
 
       def search(criterion, type)
         criterion = criterion.encode('ISO-8859-1')
-        req = BASE_URI + 'francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri='
-        #        req = BASE_URI + "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri="
+        req = BASE_URI +
+          'francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre' \
+          '&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri='
         req += case type
                when SEARCH_BY_ISBN
                  'ISBN'
@@ -77,19 +78,26 @@ module Alexandria
       end
 
       def url(book)
-        #        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_section_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
-        'http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=' + book.isbn
+        'http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=' \
+          '&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=' + book.isbn
       end
 
       private
 
+      NO_BOOKS_FOUND_REGEXP =
+        /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/
+      HYPERLINK_SCAN_REGEXP =
+        /"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/
+
       def to_books(data)
         data = CGI.unescapeHTML(data)
         data = data.encode('UTF-8')
-        raise NoResultsError if data =~ /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/
+        if data =~ NO_BOOKS_FOUND_REGEXP
+          raise NoResultsError
+        end
 
         titles = []
-        data.scan(/"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/).each { |md|
+        data.scan(HYPERLINK_SCAN_REGEXP).each { |md|
           titles << md[1].strip
         }
         raise if titles.empty?
@@ -120,7 +128,8 @@ module Alexandria
         }
         raise if publishers.empty?
         book_covers = []
-        data.scan(/(\/ImagesEditeurs\/[\d]*\/([\dX]*-f.(jpg|gif))|\/francais\/suggestion\/images\/livre\/livre.gif)/).each { |md|
+        data.scan(/(\/ImagesEditeurs\/[\d]*\/([\dX]*-f.(jpg|gif))
+                    |\/francais\/suggestion\/images\/livre\/livre.gif)/x).each { |md|
           book_covers << BASE_URI + md[0].strip
         }
         raise if book_covers.empty?

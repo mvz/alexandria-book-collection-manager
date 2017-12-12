@@ -268,7 +268,9 @@ module Alexandria
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
         log.info {
-          format('TreeStore Model: %s columns; ref_counts: %s', @treeview_results.model.n_columns, @treeview_results.model.ref_count)
+          format('TreeStore Model: %s columns; ref_counts: %s',
+                 @treeview_results.model.n_columns,
+                 @treeview_results.model.ref_count)
         }
 
         @find_error = nil
@@ -603,7 +605,8 @@ module Alexandria
         isbn13 = Library.canonicalise_ean(isbn)
         puts isbn13
         if (book = library.find { |bk| bk.isbn == isbn13 })
-          raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."), isbn, library.name, book.title.sub('&', '&amp;'))
+          raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."),
+                                               isbn, library.name, book.title.sub('&', '&amp;'))
         end
         true
       end

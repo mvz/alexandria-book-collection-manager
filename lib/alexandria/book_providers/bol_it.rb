@@ -44,20 +44,24 @@ module Alexandria
                  'scheda/'
 
                when SEARCH_BY_TITLE
-                 'risultatoricerca?action=bolrisultatoricerca&skin=bol&filtro_ricerca=BOL&quick_type=Titolo&titolo='
+                 'risultatoricerca?action=bolrisultatoricerca&skin=bol&filtro_ricerca=BOL' \
+                   '&quick_type=Titolo&titolo='
 
                when SEARCH_BY_AUTHORS
-                 'risultatoricerca?action=bolrisultatoricerca&skin=bol&filtro_ricerca=BOL&quick_type=Autore&titolo='
+                 'risultatoricerca?action=bolrisultatoricerca&skin=bol&filtro_ricerca=BOL' \
+                   '&quick_type=Autore&titolo='
 
                when SEARCH_BY_KEYWORD
-                 'risultatoricerca?action=bolrisultatoricerca&skin=bol&filtro_ricerca=BOL&quick_type=Parola%20chiave&titolo='
+                 'risultatoricerca?action=bolrisultatoricerca&skin=bol&filtro_ricerca=BOL' \
+                   '&quick_type=Parola%20chiave&titolo='
 
                else
                  raise InvalidSearchTypeError
 
                end
 
-        ## warning: this provider uses pages like http://www.bol.it/libri/scheda/ea978888584104 with 12 numbers, without the checksum
+        ## warning: this provider uses pages like http://www.bol.it/libri/scheda/ea978888584104
+        ## with 12 numbers, without the checksum
         criterion = 'ea' + Library.canonicalise_ean(criterion)[0..-2] + '.html' if type == SEARCH_BY_ISBN
         req += CGI.escape(criterion)
         p req if $DEBUG
@@ -122,7 +126,9 @@ module Alexandria
           publish_year = nil if publish_year.zero?
         end
 
-        cover_url = BASE_URI + '/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=' + isbn[0..11] + '&tipoOggetto=PIB&cdSito=BL' # use "FRB" instead of "PIB" for smaller images
+        # use "FRB" instead of "PIB" for smaller images
+        cover_url = BASE_URI + '/bol/includes/tornaImmagine.jsp?cdSoc=BL&ean=' +
+          isbn[0..11] + '&tipoOggetto=PIB&cdSito=BL'
         cover_filename = isbn + '.tmp'
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, 'w') do |file|
@@ -131,7 +137,8 @@ module Alexandria
         end
 
         medium_cover = CACHE_DIR + '/' + cover_filename
-        if File.size(medium_cover) > 43 && (File.size(medium_cover) != 2382) # 2382 is the size of the fake image "copertina non disponibile"
+        # 2382 is the size of the fake image "copertina non disponibile"
+        if File.size(medium_cover) > 43 && (File.size(medium_cover) != 2382)
           puts medium_cover + ' has non-0 size' if $DEBUG
           return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
@@ -140,8 +147,12 @@ module Alexandria
         [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
-      def each_book_page(data)
-        raise if data.scan(/<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/) { |a| yield a }.empty?
+      def each_book_page(data, &blk)
+        result =
+          data.scan(
+            /<a href="\/#{LOCALE}\/scheda\/ea(\d+)\.html;jsessionid=[^"]+">\s*Scheda completa\s*<\/a>/,
+            &blk)
+        raise if result.empty?
       end
 
       def clean_cache

@@ -211,7 +211,9 @@ module Amazon
     end
 
     def self.camelize(s)
-      s.to_s.gsub(/\/(.?)/) { '::' + Regexp.last_match[1].upcase }.gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
+      s.to_s.
+        gsub(/\/(.?)/) { '::' + Regexp.last_match[1].upcase }.
+        gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
     end
 
     def self.hmac_sha256(message, key)

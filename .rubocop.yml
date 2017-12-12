@@ -33,9 +33,9 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-# Require lines to fit in pull requests.
+# Be lenient with line length
 Metrics/LineLength:
-  Max: 92
+  Max: 110
 
 Naming/AccessorMethodName:
   Enabled: false
