@@ -466,8 +466,10 @@ module Alexandria
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
-          log.debug { "@library_listview: #{@library_listview.has_focus?} " \
-                      "or @library_popup:#{@library_popup.has_focus?}" }
+          log.debug {
+            "@library_listview: #{@library_listview.has_focus?} " \
+            "or @library_popup:#{@library_popup.has_focus?}"
+          }
           log.debug { '@library_listview does *NOT* have focus' }
           log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup['Properties'].sensitive = \
@@ -1091,8 +1093,10 @@ module Alexandria
       # Gets the sort order of the current library, for use by export
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
-        log.debug { "library_sort_order #{@notebook.page}: " \
-                    "#{@iconview.model.inspect} #{@listview.model.inspect}" }
+        log.debug {
+          "library_sort_order #{@notebook.page}: " \
+          "#{@iconview.model.inspect} #{@listview.model.inspect}"
+        }
         result, sort_column, sort_order = current_view.model.sort_column_id
         if result
           column_ids_to_attributes = { 2 => :title,

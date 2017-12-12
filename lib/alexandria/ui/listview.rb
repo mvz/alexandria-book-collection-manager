@@ -241,8 +241,10 @@ module Alexandria
             end
           end
         end
-        log.debug { 'Columns width: ' +
-                    @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(', ') }
+        log.debug {
+          'Columns width: ' +
+            @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(', ')
+        }
       end
     end
   end
