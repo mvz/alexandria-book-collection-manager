@@ -174,7 +174,9 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
     <<EOS
 module Alexandria
   class Preferences
-    DEFAULT_VALUES = {#{generated_lines.join(",\n      ")}}
+    DEFAULT_VALUES = {
+      #{generated_lines.join(",\n      ")}
+    }
   end
 end
 EOS
