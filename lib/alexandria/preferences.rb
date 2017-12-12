@@ -241,9 +241,7 @@ module Alexandria
       hash = {}
       vals = all_vals.split(/$/)
       vals.each do |val|
-        if /([a-z_]+) = (.*)/ =~ val
-          hash[Regexp.last_match[1]] = discriminate(Regexp.last_match[2])
-        end
+        hash[Regexp.last_match[1]] = discriminate(Regexp.last_match[2]) if /([a-z_]+) = (.*)/ =~ val
       end
       hash
     end

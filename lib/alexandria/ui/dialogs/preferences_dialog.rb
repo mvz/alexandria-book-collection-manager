@@ -405,9 +405,7 @@ module Alexandria
 
       def on_provider_setup
         provider = selected_provider
-        unless prefs_empty(provider.prefs)
-          ProviderPreferencesDialog.new(@preferences_dialog, provider)
-        end
+        ProviderPreferencesDialog.new(@preferences_dialog, provider) unless prefs_empty(provider.prefs)
       end
 
       def on_provider_up

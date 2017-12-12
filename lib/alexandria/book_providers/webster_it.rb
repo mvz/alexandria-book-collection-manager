@@ -117,9 +117,7 @@ module Alexandria
         (publisher = CGI.unescape(md[1].strip)) || md
 
         md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
-        edition = if md
-                    CGI.unescape(md[1].strip) + ' p.'
-                  end
+        edition = (CGI.unescape(md[1].strip) + ' p.' if md)
 
         publish_year = nil
         md = /<li><span\ class="product_label">Data\ di\ Pubblicazione:

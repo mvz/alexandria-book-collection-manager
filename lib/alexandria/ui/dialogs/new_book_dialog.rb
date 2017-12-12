@@ -316,9 +316,7 @@ module Alexandria
                            (book.title == book2.title) &&
                              (book.authors == book2.authors)
                          }
-                         if similar_books.length > 1
-                           s += " (#{book.edition}, #{book.publisher})"
-                         end
+                         s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
                          log.info { format('Copying %s into tree view.', book.title) }
                          iter = @treeview_results.model.append
                          iter[0] = s

@@ -76,9 +76,7 @@ module Alexandria
       end
 
       def url(book)
-        if book.isbn.nil? || book.isbn.empty?
-          ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn)
-        end
+        ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn) if book.isbn.nil? || book.isbn.empty?
       end
 
       ## from Palatina
@@ -110,9 +108,7 @@ module Alexandria
           if title_link
             result[:title] = text_of(title_link)
             result[:lookup_url] = title_link['href']
-            unless result[:lookup_url] =~ /^http/
-              result[:lookup_url] = "#{SITE}#{result[:lookup_url]}"
-            end
+            result[:lookup_url] = "#{SITE}#{result[:lookup_url]}" unless result[:lookup_url] =~ /^http/
           end
           book_search_results << result
         end

@@ -244,9 +244,7 @@ module Alexandria
       dest = dest_library.path
       books.each do |book|
         FileUtils.mv(source_library.yaml(book), dest)
-        if File.exist?(source_library.cover(book))
-          FileUtils.mv(source_library.cover(book), dest)
-        end
+        FileUtils.mv(source_library.cover(book), dest) if File.exist?(source_library.cover(book))
 
         source_library.changed
         source_library.old_delete(book)
@@ -415,9 +413,7 @@ module Alexandria
 
       if book.ident != book.saved_ident
         FileUtils.rm(yaml(book.saved_ident))
-        if File.exist?(cover(book.saved_ident))
-          FileUtils.mv(cover(book.saved_ident), cover(book.ident))
-        end
+        FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exist?(cover(book.saved_ident))
 
         # Notify before updating the saved identifier, so the views
         # can still use the old one to update their models.

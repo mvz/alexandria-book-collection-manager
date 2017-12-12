@@ -48,9 +48,7 @@ module Alexandria
         if token
           token.new_value = token.value.strip if token.value != token.value.strip
         end
-        if token && ((token.value.size != 20) || (token.value == '0J356Z09CN88KB743582'))
-          token.new_value = ''
-        end
+        token.new_value = '' if token && ((token.value.size != 20) || (token.value == '0J356Z09CN88KB743582'))
 
         secret = prefs.variable_named('secret_key')
         if secret
@@ -60,9 +58,7 @@ module Alexandria
         associate = prefs.variable_named('associate_tag')
         if associate
           associate.new_value = 'rubyalexa-20' if associate.value.strip.empty?
-          if associate.value != associate.value.strip
-            associate.new_value = associate.value.strip
-          end
+          associate.new_value = associate.value.strip if associate.value != associate.value.strip
         end
       end
 

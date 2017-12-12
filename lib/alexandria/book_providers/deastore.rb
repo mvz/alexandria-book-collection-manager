@@ -153,9 +153,7 @@ module Alexandria
             result[:url] = lookup_url
 
             publishers = (content / 'p.editore')
-            unless publishers.empty?
-              result[:publisher] = normalize(publishers.first.inner_text)
-            end
+            result[:publisher] = normalize(publishers.first.inner_text) unless publishers.empty?
 
             book_search_results << result
           rescue => ex
