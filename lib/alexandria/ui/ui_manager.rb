@@ -380,12 +380,13 @@ module Alexandria
       end
 
       def determine_library_popup(widget, event)
-        # widget.grab_focus
-        widget.get_path_at_pos(event.x, event.y).nil? ?
-          @nolibrary_popup :
-          selected_library.is_a?(SmartLibrary) ?
-          @smart_library_popup :
+        if widget.get_path_at_pos(event.x, event.y).nil?
+          @nolibrary_popup
+        elsif selected_library.is_a?(SmartLibrary)
+          @smart_library_popup
+        else
           @library_popup
+        end
       end
 
       def event_is_right_click(event)
