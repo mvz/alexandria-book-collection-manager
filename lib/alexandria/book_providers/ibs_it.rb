@@ -64,7 +64,9 @@ module Alexandria
           begin
             results = []
             each_book_page(data) do |code, _title|
-              results << to_book(transport.get(URI.parse('http://www.internetbookshop.it/ser/serdsp.asp?cc=' + code)))
+              uri = URI.parse('http://www.internetbookshop.it/ser/serdsp.asp?cc=' + code)
+              book = to_book(transport.get(uri))
+              results << book
             end
             return results
           rescue
@@ -80,7 +82,9 @@ module Alexandria
       private
 
       def to_book(data)
-        raise NoResultsError if data =~ /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/
+        if data =~ /<b>Il libro che hai cercato non &egrave; presente nel nostro catalogo<\/b><br>/
+          raise NoResultsError
+        end
         data = data.encode('UTF-8')
 
         md = />Titolo<\/td><td valign="top" class="lbarrasup">([^<]+)/.match(data)
@@ -89,7 +93,9 @@ module Alexandria
 
         authors = []
         if (md = /<b>Autore<\/b><\/td>.+<b>([^<]+)/.match(data))
-          md[0].strip.gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a| authors << CGI.unescape(a.strip) }
+          md[0].strip.gsub(/<.*?>|Autore/m, ' ').split('; ').each { |a|
+            authors << CGI.unescape(a.strip)
+          }
         end
 
         md = /<input type=\"hidden\" name=\"isbn\" value=\"([^"]+)\">/i.match(data)
@@ -111,7 +117,8 @@ module Alexandria
         end
 
         md = /src="http:\/\/giotto.ibs.it\/cop\/copt13.asp\?f=(\d+)">/.match(data)
-        cover_url = 'http://giotto.ibs.it/cop/copt13.asp?f=' + md[1] # use copa13.asp, copt13.asp, copj13.asp, for small, medium, big image
+        # use copa13.asp, copt13.asp, copj13.asp, for small, medium, big image
+        cover_url = 'http://giotto.ibs.it/cop/copt13.asp?f=' + md[1]
         cover_filename = isbn + '.tmp'
         Dir.chdir(CACHE_DIR) do
           File.open(cover_filename, 'w') do |file|
@@ -120,7 +127,8 @@ module Alexandria
         end
 
         medium_cover = CACHE_DIR + '/' + cover_filename
-        if File.size(medium_cover) > 0 && (File.size(medium_cover) != 1822) # 1822 is the size of the fake image "copertina non disponibile"
+        # 1822 is the size of the fake image "copertina non disponibile"
+        if File.size(medium_cover) > 0 && (File.size(medium_cover) != 1822)
           puts medium_cover + ' has non-0 size' if $DEBUG
           return [Book.new(title, authors, isbn, publisher, publish_year, edition), medium_cover]
         end
@@ -129,8 +137,12 @@ module Alexandria
         [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
-      def each_book_page(data)
-        raise if data.scan(/<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/) { |a| yield a }.empty?
+      BOOK_PAGE_REGEXP =
+        /<a href="http:\/\/www.internetbookshop.it\/ser\/serdsp.asp\?shop=1&amp;cc=([\w\d]+)"><b>([^<]+)/
+
+      def each_book_page(data, &blk)
+        result = data.scan(BOOK_PAGE_REGEXP, &blk)
+        raise if result.empty?
       end
 
       def clean_cache

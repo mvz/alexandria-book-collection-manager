@@ -76,9 +76,7 @@ module Alexandria
       end
 
       def url(book)
-        if book.isbn.nil? || book.isbn.empty?
-          ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn)
-        end
+        ISBN_REDIRECT_BASE_URL % Library.canonicalise_ean(book.isbn) if book.isbn.nil? || book.isbn.empty?
       end
 
       ## from Palatina
@@ -110,9 +108,7 @@ module Alexandria
           if title_link
             result[:title] = text_of(title_link)
             result[:lookup_url] = title_link['href']
-            unless result[:lookup_url] =~ /^http/
-              result[:lookup_url] = "#{SITE}#{result[:lookup_url]}"
-            end
+            result[:lookup_url] = "#{SITE}#{result[:lookup_url]}" unless result[:lookup_url] =~ /^http/
           end
           book_search_results << result
         end
@@ -136,9 +132,7 @@ module Alexandria
         if (title_header = doc.search('div.detailBlock h3'))
           header_spans = title_header.first.search('span')
           title = text_of(header_spans.first)
-          if title =~ /(.+)-$/
-            title = Regexp.last_match[1].strip
-          end
+          title = Regexp.last_match[1].strip if title =~ /(.+)-$/
           book_data[:title] = title
         end
 
@@ -147,9 +141,7 @@ module Alexandria
         isbns = []
         unless info_headers.empty?
           info_headers.each do |th|
-            if th.inner_text =~ /(ISBN|EAN)/
-              isbns << data_for_header(th)
-            end
+            isbns << data_for_header(th) if th.inner_text =~ /(ISBN|EAN)/
           end
           book_data[:isbn] = Library.canonicalise_ean(isbns.first)
         end

@@ -26,13 +26,9 @@ module Alexandria
   # or Object. A LoggerWrapper can be used to simplify this procedure.
   class Logger < ::Logger
     def add(severity, message = nil, source = nil, progname = nil, &block)
-      if source.nil?
-        return super(severity, message, progname, &block)
-      end
+      return super(severity, message, progname, &block) if source.nil?
       category = self.class.category(source)
-      unless block_given?
-        return super(severity, progname, category)
-      end
+      return super(severity, progname, category) unless block_given?
       category = "#{category} #{progname}" if progname
       super(severity, message, category, &block)
     end

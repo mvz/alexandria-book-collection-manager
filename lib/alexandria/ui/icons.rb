@@ -75,9 +75,7 @@ module Alexandria
         begin
           return BOOK_ICON if library.nil?
           filename = library.cover(book)
-          if File.exist?(filename)
-            return GdkPixbuf::Pixbuf.new(file: filename)
-          end
+          return GdkPixbuf::Pixbuf.new(file: filename) if File.exist?(filename)
         rescue => err
           # report load error; FIX should go to a Logger...
           puts err.message

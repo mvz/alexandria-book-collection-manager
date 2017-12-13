@@ -40,9 +40,7 @@ class OmfGenerateTask < Rake::TaskLib
     desc 'Generate Open Metadata Framework files'
     task omf: @generated_files
 
-    if CLOBBER
-      @generated_files.each { |gen| CLOBBER << gen }
-    end
+    @generated_files.each { |gen| CLOBBER << gen } if CLOBBER
   end
 
   def locale_for(omf_file)

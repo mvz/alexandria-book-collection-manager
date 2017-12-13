@@ -61,9 +61,7 @@ module Alexandria
         end
 
         # DND support for Gtk::IconView is shipped since GTK+ 2.8.0.
-        if @iconview.respond_to?(:enable_model_drag_source)
-          setup_view_source_dnd(@iconview)
-        end
+        setup_view_source_dnd(@iconview) if @iconview.respond_to?(:enable_model_drag_source)
       end
 
       ICONS_SORTS = [

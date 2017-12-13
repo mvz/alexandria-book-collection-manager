@@ -151,9 +151,7 @@ module Alexandria
               html2 = rslt2.body
 
               book, cover_url = parse_result_data(html2, search_isbn, true)
-              if first_result.nil?
-                first_result = [book, cover_url]
-              end
+              first_result = [book, cover_url] if first_result.nil?
 
               log.debug { "got book #{book}" }
 

@@ -59,15 +59,11 @@ class IconViewTooltips
       html += "<b>#{CGI.escapeHTML(title)}</b>"
       html += "\n" unless authors.empty?
     end
-    unless authors.empty?
-      html += "<i>#{CGI.escapeHTML(authors)}</i>"
-    end
+    html += "<i>#{CGI.escapeHTML(authors)}</i>" unless authors.empty?
     html += "\n" if !title.empty? || !authors.empty?
 
     html += '<small>'
-    if publisher && !publisher.empty?
-      html += CGI.escapeHTML(publisher).to_s
-    end
+    html += CGI.escapeHTML(publisher).to_s if publisher && !publisher.empty?
 
     if year && !year.empty?
       html += ' ' if publisher && !publisher.empty?

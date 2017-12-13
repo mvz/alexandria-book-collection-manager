@@ -176,13 +176,13 @@ module Alexandria
           true
         end
 
-        @library_listview.signal_connect('drag-data-received') do |_widget, drag_context, x, y, selection_data, _info, _time|
+        @library_listview.signal_connect('drag-data-received') do |_, drag_context, x, y, data, _, _|
           log.debug { 'drag-data-received' }
 
           success = false
           # FIXME: Ruby-GNOME2 should make comparison work without needing to
           # call #name.
-          if selection_data.data_type.name == Gdk::Selection::TYPE_STRING.name
+          if data.data_type.name == Gdk::Selection::TYPE_STRING.name
             success, path =
               @library_listview.get_dest_row_at_pos(x, y)
 

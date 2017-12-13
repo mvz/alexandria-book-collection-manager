@@ -96,15 +96,9 @@ module Alexandria
               binding = nil
               for av in item['db:attribute']
                 isbn = av['$t'] if av['@name'] == 'isbn13'
-                if av['@name'] == 'publisher'
-                  publisher = av['$t']
-                end
-                if av['@name'] == 'pubdate'
-                  pubdate = av['$t']
-                end
-                if av['@name'] == 'binding'
-                  binding = av['$t']
-                end
+                publisher = av['$t'] if av['@name'] == 'publisher'
+                pubdate = av['$t'] if av['@name'] == 'pubdate'
+                binding = av['$t'] if av['@name'] == 'binding'
               end
               authors = if item['author']
                           item['author'].map { |a| a['name']['$t'] }
@@ -113,9 +107,7 @@ module Alexandria
                         end
               image_url = nil
               for av in item['link']
-                if av['@rel'] == 'image'
-                  image_url = av['@href']
-                end
+                image_url = av['@href'] if av['@rel'] == 'image'
               end
               book = Book.new(name, authors, isbn, publisher, pubdate, binding)
               book_search_results << [book, image_url]

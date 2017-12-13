@@ -115,9 +115,7 @@ class FileInstallTask < Rake::TaskLib
     end
 
     uninstall_description = 'Uninstall package files'
-    if @stage_dir
-      uninstall_description += ' from staging directory'
-    end
+    uninstall_description += ' from staging directory' if @stage_dir
     desc uninstall_description
     task tasknames[:uninstall] => [tasknames[:uninstall_files],
                                    tasknames[:uninstall_dirs]]
@@ -176,9 +174,7 @@ class FileInstallTask < Rake::TaskLib
                   else
                     RbConfig::CONFIG['sitelibdir']
                   end
-    if ENV.key?('RUBYLIBDIR')
-      ruby_libdir = ENV['RUBYLIBDIR']
-    end
+    ruby_libdir = ENV['RUBYLIBDIR'] if ENV.key?('RUBYLIBDIR')
 
     @prefix = ENV['PREFIX'] || ruby_prefix
     if @prefix == ruby_prefix
@@ -252,9 +248,7 @@ class FileInstallTask < Rake::TaskLib
       else
         dest_basedir = Pathname.new(@dest_dir)
       end
-      if source_file.file?
-        source_path = source_file.dirname.relative_path_from(source_basedir)
-      end
+      source_path = source_file.dirname.relative_path_from(source_basedir) if source_file.file?
       dest = source_path ? dest_basedir + source_path : dest_basedir
       dest.to_s
     end
@@ -268,9 +262,7 @@ class FileInstallTask < Rake::TaskLib
       files.each do |f|
         dest = dest_dir(f, base_dir)
         FileUtils.mkdir_p(dest) unless test('d', dest)
-        if test('f', f)
-          FileUtils.install(f, dest, mode: mode)
-        end
+        FileUtils.install(f, dest, mode: mode) if test('f', f)
       end
     end
 

@@ -76,9 +76,7 @@ module Alexandria
 
       def setup_dialog_gui
         libraries = Libraries.instance.all_regular_libraries
-        if @selected_library.is_a?(SmartLibrary)
-          @selected_library = libraries.first
-        end
+        @selected_library = libraries.first if @selected_library.is_a?(SmartLibrary)
         @combo_libraries.populate_with_libraries(libraries,
                                                  @selected_library)
 
@@ -270,7 +268,9 @@ module Alexandria
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
         log.info {
-          format('TreeStore Model: %s columns; ref_counts: %s', @treeview_results.model.n_columns, @treeview_results.model.ref_count)
+          format('TreeStore Model: %s columns; ref_counts: %s',
+                 @treeview_results.model.n_columns,
+                 @treeview_results.model.ref_count)
         }
 
         @find_error = nil
@@ -316,9 +316,7 @@ module Alexandria
                            (book.title == book2.title) &&
                              (book.authors == book2.authors)
                          }
-                         if similar_books.length > 1
-                           s += " (#{book.edition}, #{book.publisher})"
-                         end
+                         s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
                          log.info { format('Copying %s into tree view.', book.title) }
                          iter = @treeview_results.model.append
                          iter[0] = s
@@ -364,17 +362,13 @@ module Alexandria
           tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack('u')[0]
           tmp.chomp!("\000")
           entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
-          if entry.text.count('^ -~') > 0
-            entry.text = 'Bad scan result'
-          end
+          entry.text = 'Bad scan result' if entry.text.count('^ -~') > 0
         end
       end
 
       def on_results_button_press_event(_widget, event)
         # double left click
-        if (event.event_type == :'2button_press') && (event.button == 1)
-          on_add
-        end
+        on_add if (event.event_type == :'2button_press') && (event.button == 1)
       end
 
       def add_single_book_by_isbn(library, is_new)
@@ -454,9 +448,7 @@ module Alexandria
       end
 
       def add_book_to_library(library, book, cover_uri)
-        unless cover_uri.nil?
-          library.save_cover(book, cover_uri)
-        end
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
         library << book
         library.save(book)
       end
@@ -611,7 +603,8 @@ module Alexandria
         isbn13 = Library.canonicalise_ean(isbn)
         puts isbn13
         if (book = library.find { |bk| bk.isbn == isbn13 })
-          raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."), isbn, library.name, book.title.sub('&', '&amp;'))
+          raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."),
+                                               isbn, library.name, book.title.sub('&', '&amp;'))
         end
         true
       end

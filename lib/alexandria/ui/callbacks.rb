@@ -81,9 +81,7 @@ module Alexandria
 
       def on_window_state_event(_window, event)
         log.debug { 'window-state-event' }
-        if event.is_a?(Gdk::EventWindowState)
-          @maximized = event.new_window_state == :maximized
-        end
+        @maximized = event.new_window_state == :maximized if event.is_a?(Gdk::EventWindowState)
         log.debug { 'end window-state-event' }
       end
 
@@ -298,6 +296,7 @@ module Alexandria
       end
 
       def connect_signals
+        # rubocop:disable LineLength
         standard_actions = [
           ['LibraryMenu', nil, _('_Library')],
           ['New', Gtk::Stock::NEW, _('_New Library'), '<control>L', _('Create a new library'), method(:on_new)],
@@ -336,6 +335,7 @@ module Alexandria
           ['Help', Gtk::Stock::HELP, _('Contents'), 'F1', _("View Alexandria's manual"), method(:on_help)],
           ['About', Gtk::Stock::ABOUT, _('_About'), nil, _('Show information about Alexandria'), method(:on_about)],
         ]
+        # rubocop:enable LineLength
 
         toggle_actions = [
           ['Sidepane', nil, _('Side _Pane'), 'F9', nil, method(:on_view_sidepane), true],
@@ -370,26 +370,20 @@ module Alexandria
         standard_actions.each do |name, stock_id, label, accelerator, tooltip, callback|
           action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
           @actiongroup.add_action_with_accel(action, accelerator)
-          if callback
-            action.signal_connect('activate', &callback)
-          end
+          action.signal_connect('activate', &callback) if callback
         end
 
         providers_actions.each do |name, stock_id, label, accelerator, tooltip, callback|
           action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
           @actiongroup.add_action_with_accel(action, accelerator)
-          if callback
-            action.signal_connect('activate', &callback)
-          end
+          action.signal_connect('activate', &callback) if callback
         end
 
         toggle_actions.each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
           action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
           action.set_active is_active
           @actiongroup.add_action_with_accel(action, accelerator)
-          if callback
-            action.signal_connect('toggled', &callback)
-          end
+          action.signal_connect('toggled', &callback) if callback
         end
 
         group = nil

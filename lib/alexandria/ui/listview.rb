@@ -184,9 +184,7 @@ module Alexandria
         log.debug { format('Create listview column for %s...', title) }
 
         column.add_attribute(renderer, 'active', iterid)
-        if iterid == Columns::WANT
-          column.add_attribute(renderer, 'inconsistent', Columns::OWN)
-        end
+        column.add_attribute(renderer, 'inconsistent', Columns::OWN) if iterid == Columns::WANT
 
         log.debug { "append_column #{column}" }
         @listview.append_column(column)
@@ -243,7 +241,10 @@ module Alexandria
             end
           end
         end
-        log.debug { 'Columns width: ' + @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(', ') }
+        log.debug {
+          'Columns width: ' +
+            @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(', ')
+        }
       end
     end
   end

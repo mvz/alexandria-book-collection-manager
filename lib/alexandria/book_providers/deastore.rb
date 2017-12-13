@@ -153,9 +153,7 @@ module Alexandria
             result[:url] = lookup_url
 
             publishers = (content / 'p.editore')
-            unless publishers.empty?
-              result[:publisher] = normalize(publishers.first.inner_text)
-            end
+            result[:publisher] = normalize(publishers.first.inner_text) unless publishers.empty?
 
             book_search_results << result
           rescue => ex
@@ -176,9 +174,7 @@ module Alexandria
         # cover
         cover_link = nil
         cover_img = data / 'a/img'
-        unless cover_img.empty?
-          cover_link = cover_img.first['src']
-        end
+        cover_link = cover_img.first['src'] unless cover_img.empty?
         # author(s)
         authors = []
         author_span = data % 'span.int_scheda[text()*=Autore]'
@@ -210,9 +206,7 @@ module Alexandria
         date_par = data % 'span.int_scheda[text()*=Data di pubblicazione]/..'
         date_par.inner_text =~ /:[\s]*([12][0-9]{3})[\s]*$/
         publish_year = nil
-        if Regexp.last_match[1]
-          publish_year = Regexp.last_match[1].to_i
-        end
+        publish_year = Regexp.last_match[1].to_i if Regexp.last_match[1]
         isbn_spans = data / 'div.sotto/span.isbn'
         isbns = []
         isbn_spans.each do |span|
@@ -220,9 +214,7 @@ module Alexandria
           isbns << Regexp.last_match[1]
         end
         isbn = nil
-        unless isbns.empty?
-          isbn = Library.canonicalise_isbn(isbns.first)
-        end
+        isbn = Library.canonicalise_isbn(isbns.first) unless isbns.empty?
         # Editore & Imprint : as publisher info above...
         # pages
         # page_par = data % 'span.int_scheda[text()*=Pagine]/..'

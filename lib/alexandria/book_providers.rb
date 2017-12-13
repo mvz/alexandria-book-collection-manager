@@ -273,6 +273,7 @@ module Alexandria
         fullname <=> provider.fullname
       end
 
+      # FIXME: Clean up this complex abstract/concrete class system
       def self.unabstract
         include Singleton
         undef_method :reinitialize

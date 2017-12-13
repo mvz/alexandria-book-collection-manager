@@ -174,9 +174,7 @@ module Alexandria
       FileUtils.mkdir(filename) unless File.exist?(filename)
       Dir.chdir(filename) do
         copy_covers('pixmaps')
-        if theme.has_pixmaps?
-          FileUtils.cp_r(theme.pixmaps_directory, 'pixmaps')
-        end
+        FileUtils.cp_r(theme.pixmaps_directory, 'pixmaps') if theme.has_pixmaps?
         FileUtils.cp(theme.css_file, '.')
         File.open('index.html', 'w') do |io|
           io << to_xhtml(File.basename(theme.css_file))
@@ -249,7 +247,8 @@ module Alexandria
       header.add_element('FromCompany').text = 'Alexandria'
       header.add_element('FromPerson').text = Etc.getlogin
       now = Time.now
-      header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d', now.year, now.month, now.day, now.hour, now.min)
+      header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d',
+                                                   now.year, now.month, now.day, now.hour, now.min)
       header.add_element('MessageNote').text = name
       each_with_index do |book, idx|
         # fields that are missing: edition and rating.
@@ -309,7 +308,9 @@ module Alexandria
       # http://periapsis.org/tellico/doc/hacking.html
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
-      doc << REXML::DocType.new('tellico', 'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN" "http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
+      doc << REXML::DocType.new('tellico',
+                                'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN"' \
+                                ' "http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
       tellico = doc.add_element('tellico')
       tellico.add_attribute('syntaxVersion', '7')
       tellico.add_namespace('http://periapsis.org/tellico/')
@@ -340,12 +341,8 @@ module Alexandria
         end
         entry.add_element('read').text = book.redd.to_s if book.redd
         entry.add_element('loaned').text = book.loaned.to_s if book.loaned
-        unless book.rating == Book::DEFAULT_RATING
-          entry.add_element('rating').text = book.rating
-        end
-        if book.notes && !book.notes.empty?
-          entry.add_element('comments').text = book.notes
-        end
+        entry.add_element('rating').text = book.rating unless book.rating == Book::DEFAULT_RATING
+        entry.add_element('comments').text = book.notes if book.notes && !book.notes.empty?
         if File.exist?(cover(book))
           entry.add_element('cover').text = final_cover(book)
           image = images.add_element('image')
@@ -449,7 +446,8 @@ EOS
       end
       xhtml << <<EOS
 <p class="copyright">
-  Generated on #{xhtml_escape(Date.today.to_s)} by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
+  Generated on #{xhtml_escape(Date.today.to_s)}
+  by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
 </p>
 </body>
 </html>
@@ -483,9 +481,7 @@ EOS
         bibtex << "\",\n"
         bibtex << "title = \"#{latex_escape(book.title)}\",\n"
         bibtex << "publisher = \"#{latex_escape(book.publisher)}\",\n"
-        if book.notes && !book.notes.empty?
-          bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
-        end
+        bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n" if book.notes && !book.notes.empty?
         # year is a required field in bibtex @BOOK
         bibtex << 'year = ' + (book.publishing_year || '"n/a"').to_s + "\n"
         bibtex << "}\n\n"

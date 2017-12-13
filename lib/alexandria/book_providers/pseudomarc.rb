@@ -73,9 +73,7 @@ module Alexandria
             author = ad[m[:authors][1]]
             if author
               author = author.strip
-              if author =~ /(.*),$/
-                author = Regexp.last_match[1]
-              end
+              author = Regexp.last_match[1] if author =~ /(.*),$/
               authors << author
             end
           end
@@ -85,31 +83,23 @@ module Alexandria
         binding = nil
         isbn_data = details[m[:isbn][0]]
         if isbn_data
-          if isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/
-            isbn = Regexp.last_match[1]
-          end
+          isbn = Regexp.last_match[1] if isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/
         end
 
         binding_data = details[m[:binding][0]]
         if binding_data
-          if binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
-            binding = Regexp.last_match[1]
-          end
+          binding = Regexp.last_match[1] if binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
         end
 
         publisher = nil
         publisher_data = details[m[:publisher][0]]
-        if publisher_data
-          publisher = publisher_data.first[m[:publisher][1]]
-        end
+        publisher = publisher_data.first[m[:publisher][1]] if publisher_data
 
         year = nil
         publication_data = details[m[:year][0]]
         if publication_data
           year = publication_data.first[m[:year][1]]
-          if year =~ /(\d+)/
-            year = Regexp.last_match[1].to_i
-          end
+          year = Regexp.last_match[1].to_i if year =~ /(\d+)/
         end
 
         notes = ''

@@ -136,9 +136,7 @@ module Alexandria
       private
 
       def on_export(format, theme)
-        unless @library.respond_to?(format.message)
-          raise NotImplementedError
-        end
+        raise NotImplementedError unless @library.respond_to?(format.message)
         filename = self.filename
         if format.ext
           filename += '.' + format.ext if File.extname(filename).empty?

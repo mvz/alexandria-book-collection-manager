@@ -244,9 +244,7 @@ module Alexandria
       dest = dest_library.path
       books.each do |book|
         FileUtils.mv(source_library.yaml(book), dest)
-        if File.exist?(source_library.cover(book))
-          FileUtils.mv(source_library.cover(book), dest)
-        end
+        FileUtils.mv(source_library.cover(book), dest) if File.exist?(source_library.cover(book))
 
         source_library.changed
         source_library.old_delete(book)
@@ -363,9 +361,7 @@ module Alexandria
 
     def self.canonicalise_isbn(isbn)
       numbers = extract_numbers(isbn)
-      if valid_ean?(isbn) && (numbers[0..2] != [9, 7, 8])
-        return isbn
-      end
+      return isbn if valid_ean?(isbn) && (numbers[0..2] != [9, 7, 8])
       canonical = if valid_ean?(isbn)
                     # Looks like an EAN number -- extract the intersting part and
                     # calculate a checksum. It would be nice if we could validate
@@ -390,9 +386,7 @@ module Alexandria
       # Let's initialize the saved identifier if not already
       # (backward compatibility from 0.4.0)
       # book.saved_ident ||= book.ident
-      if book.saved_ident.nil? || book.saved_ident.empty?
-        book.saved_ident = book.ident
-      end
+      book.saved_ident = book.ident if book.saved_ident.nil? || book.saved_ident.empty?
       if book.ident != book.saved_ident
         # log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
         FileUtils.rm(yaml(book.saved_ident))
@@ -419,9 +413,7 @@ module Alexandria
 
       if book.ident != book.saved_ident
         FileUtils.rm(yaml(book.saved_ident))
-        if File.exist?(cover(book.saved_ident))
-          FileUtils.mv(cover(book.saved_ident), cover(book.ident))
-        end
+        FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exist?(cover(book.saved_ident))
 
         # Notify before updating the saved identifier, so the views
         # can still use the old one to update their models.
@@ -465,9 +457,7 @@ module Alexandria
         end
 
         # Remove the file if its blank.
-        if Alexandria::UI::Icons.blank?(cover_file)
-          File.delete(cover_file)
-        end
+        File.delete(cover_file) if Alexandria::UI::Icons.blank?(cover_file)
       end
     end
 

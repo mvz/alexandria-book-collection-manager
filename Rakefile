@@ -174,7 +174,9 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
     <<EOS
 module Alexandria
   class Preferences
-    DEFAULT_VALUES = {#{generated_lines.join(",\n      ")}}
+    DEFAULT_VALUES = {
+      #{generated_lines.join(",\n      ")}
+    }
   end
 end
 EOS
@@ -239,9 +241,7 @@ end
 task :gconf do
   return if ENV['GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL']
 
-  unless system('which gconftool-2')
-    raise 'gconftool-2 cannot be found, is GConf2 correctly installed?'
-  end
+  raise 'gconftool-2 cannot be found, is GConf2 correctly installed?' unless system('which gconftool-2')
 
   ENV['GCONF_CONFIG_SOURCE'] = `gconftool-2 --get-default-source`.chomp
   Dir['schemas/*.schemas'].each do |schema|

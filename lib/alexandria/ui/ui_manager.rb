@@ -380,8 +380,13 @@ module Alexandria
       end
 
       def determine_library_popup(widget, event)
-        # widget.grab_focus
-        widget.get_path_at_pos(event.x, event.y).nil? ? @nolibrary_popup : selected_library.is_a?(SmartLibrary) ? @smart_library_popup : @library_popup
+        if widget.get_path_at_pos(event.x, event.y).nil?
+          @nolibrary_popup
+        elsif selected_library.is_a?(SmartLibrary)
+          @smart_library_popup
+        else
+          @library_popup
+        end
       end
 
       def event_is_right_click(event)
@@ -455,7 +460,6 @@ module Alexandria
         library = selected_library
         books = selected_books
         set_status_label(get_appbar_status(library, books))
-        # selection = @library_listview.selection.selected ? @library_listview.selection.selected.has_focus? : false
 
         # Focus is the wrong idiom here.
         unless @clicking_on_sidepane || (@main_app.focus == @library_listview)
@@ -463,7 +467,10 @@ module Alexandria
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
-          log.debug { "@library_listview: #{@library_listview.has_focus?} or @library_popup:#{@library_popup.has_focus?}" } # or selection: #{selection}"}
+          log.debug {
+            "@library_listview: #{@library_listview.has_focus?} " \
+            "or @library_popup:#{@library_popup.has_focus?}"
+          }
           log.debug { '@library_listview does *NOT* have focus' }
           log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup['Properties'].sensitive = \
@@ -499,9 +506,7 @@ module Alexandria
               @actiongroup[provider.action_name].sensitive = !has_no_url
               no_urls = false unless has_no_url
             end
-            if no_urls
-              @actiongroup['OnlineInformation'].sensitive = false
-            end
+            @actiongroup['OnlineInformation'].sensitive = false if no_urls
           end
         end
         @clicking_on_sidepane = false
@@ -571,9 +576,7 @@ module Alexandria
           @actiongroup['Undo'].sensitive = caller.can_undo?
           @actiongroup['Redo'].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
-          unless caller.updating?
-            handle_update_caller_library ary
-          end
+          handle_update_caller_library ary unless caller.updating?
         else
           raise 'unrecognized update event'
         end
@@ -639,12 +642,9 @@ module Alexandria
       end
 
       def handle_ruined_books
-        new_message = _("The data files for the following books are malformed or empty. Do you wish to attempt to download new information for them from the online book providers?\n")
-
-        # message = _("These books do not conform to the ISBN-13
-        # standard. We will attempt to replace them from the book
-        # providers. Otherwise, we will turn them into manual
-        # entries.\n" )
+        new_message = _(
+          'The data files for the following books are malformed or empty. Do you wish to' \
+          " attempt to download new information for them from the online book providers?\n")
 
         @libraries.ruined_books.each { |bi|
           new_message += "\n#{bi[1] || bi[1].inspect}"
@@ -688,9 +688,7 @@ module Alexandria
                   end
 
                   log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'" }
-                  unless cover_uri.nil?
-                    library.save_cover(book, cover_uri)
-                  end
+                  library.save_cover(book, cover_uri) unless cover_uri.nil?
                   library << book
                   library.save(book)
                   set_status_label(format(_("Added '%s' to library '%s'"), book.title, library.name))
@@ -767,9 +765,7 @@ module Alexandria
           new_height = [ICON_HEIGHT, icon.height].min
           icon = cache_scaled_icon(icon, new_width, new_height)
         end
-        if rating == Book::MAX_RATING_STARS
-          icon = icon.tag(Icons::FAVORITE_TAG)
-        end
+        icon = icon.tag(Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
         iter[Columns::COVER_ICON] = icon
         log.debug { 'Full iter: ' + (0..15).map { |num| iter[num].inspect }.join(', ') }
       end
@@ -800,9 +796,7 @@ module Alexandria
         model = @library_listview.model
         is_smart = library.is_a?(SmartLibrary)
         if is_smart
-          if @library_separator_iter.nil?
-            @library_separator_iter = append_library_separator
-          end
+          @library_separator_iter = append_library_separator if @library_separator_iter.nil?
           iter = model.append
         else
           iter = if @library_separator_iter.nil?
@@ -974,7 +968,7 @@ module Alexandria
           @actiongroup['AddBookManual'].sensitive = !smart
           @actiongroup['Properties'].sensitive = smart
           can_delete = smart || (@libraries.all_regular_libraries.length > 1)
-          @actiongroup['Delete'].sensitive = can_delete ## true #(@libraries.all_regular_libraries.length > 1)
+          @actiongroup['Delete'].sensitive = can_delete
           log.debug { "sensitize_library delete: #{@actiongroup['Delete'].sensitive?}" }
           false
         end
@@ -1100,7 +1094,10 @@ module Alexandria
       # Gets the sort order of the current library, for use by export
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
-        log.debug { "library_sort_order #{@notebook.page}: #{@iconview.model.inspect} #{@listview.model.inspect}" }
+        log.debug {
+          "library_sort_order #{@notebook.page}: " \
+          "#{@iconview.model.inspect} #{@listview.model.inspect}"
+        }
         result, sort_column, sort_order = current_view.model.sort_column_id
         if result
           column_ids_to_attributes = { 2 => :title,

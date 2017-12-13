@@ -40,9 +40,7 @@ class GettextGenerateTask < Rake::TaskLib
     desc 'Generate gettext localization files'
     task gettext: @generated_files
 
-    if CLOBBER
-      @generated_files.each { |gen| CLOBBER << gen }
-    end
+    @generated_files.each { |gen| CLOBBER << gen } if CLOBBER
   end
 
   def generate_po_files(po_dir, file_glob, dest_dir)
@@ -99,60 +97,3 @@ class GettextGenerateTask < Rake::TaskLib
     po_file_for(Regexp.last_match[1])
   end
 end
-
-#   class GettextConfig < BuildConfig
-#     attr_accessor :po_dir, :po_files_glob
-#     attr_accessor :mo_dir, :mo_files_regex
-#     def initialize(build)
-#       super(build)
-#       @po_dir = 'po'
-#       @po_files_glob = "#{@po_dir}/*.po"
-#       @mo_dir = 'data/locale'
-#       @mo_files_regex = /.*\/(.+)\/LC_MESSAGES\/.+\.mo/
-#     end
-#     def po_files
-#       FileList[po_files_glob]
-#     end
-#     def po_file_for(locale)
-#       "#{po_dir}/#{locale}.po"
-#     end
-#     def locales
-#       po_files.map { |po| File.basename(po).split('.')[0] }
-#     end
-#     def mo_files
-#       locales.map { |loc| mo_file_for(loc) }
-#     end
-#     def mo_file_for(locale)
-#       "#{mo_dir}/#{locale}/LC_MESSAGES/#{build.name}.mo"
-#     end
-#     def source_file(dest_file)
-#       dest_file =~ mo_files_regex
-#       po_file_for($1)
-#     end
-#   end
-
-#   def define_gettext_tasks
-#     # extract translations from PO files into other files
-#     file files.desktop => ["#{files.desktop}.in",
-#       *@gettext.po_files] do |f|
-#       raise "Need to install intltool" unless system("intltool-merge -d #{@gettext.po_dir} #{f.name}.in #{f.name}")
-#       end
-
-#     # create MO files
-#     rule( /\.mo$/ => [ lambda { |dest| @gettext.source_file(dest) }]) do |t|
-#       dest_dir = File.dirname(t.name)
-#       FileUtils.makedirs(dest_dir) unless FileTest.exists?(dest_dir)
-#       puts "Generating #{t.name}"
-#       system("msgfmt #{t.source} -o #{t.name}")
-#       raise "msgfmt failed for #{t.source}" if $? != 0
-#     end
-
-#     desc "Generate gettext localization files"
-#     task :gettext => [files.desktop, *@gettext.mo_files]
-
-#     task :clobber_gettext do
-#       FileUtils.rm_f(files.desktop)
-#       FileUtils.rm_rf(@gettext.mo_dir)
-#     end
-#     task :clobber => [:clobber_gettext]
-#   end

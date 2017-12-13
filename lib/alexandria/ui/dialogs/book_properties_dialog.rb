@@ -106,9 +106,7 @@ module Alexandria
         end
         @checkbutton_want.active = book.want?
 
-        if (@checkbutton_own.active = book.own?)
-          @checkbutton_want.inconsistent = true
-        end
+        @checkbutton_want.inconsistent = true if (@checkbutton_own.active = book.own?)
       end
 
       private
@@ -178,9 +176,7 @@ module Alexandria
 
         FileUtils.rm_f(@cover_file) if @delete_cover_file
 
-        if @original_cover_file
-          FileUtils.rm_f(@original_cover_file)
-        end
+        FileUtils.rm_f(@original_cover_file) if @original_cover_file
 
         @library.save(@book)
         # @on_close_cb.call(@book)
@@ -188,9 +184,7 @@ module Alexandria
       end
 
       def on_cancel
-        if @original_cover_file
-          FileUtils.mv(@original_cover_file, @cover_file)
-        end
+        FileUtils.mv(@original_cover_file, @cover_file) if @original_cover_file
         @book_properties_dialog.destroy
       end
 

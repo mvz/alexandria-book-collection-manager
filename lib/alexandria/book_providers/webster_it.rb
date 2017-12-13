@@ -28,7 +28,8 @@ module Alexandria
       BASE_URI = 'http://www.libreriauniversitaria.it'.freeze # also "http://www.webster.it"
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.webster_it_cache')
       REFERER = BASE_URI
-      LOCALE = 'BIT'.freeze # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
+      # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
+      LOCALE = 'BIT'.freeze
       def initialize
         super('Webster_it', 'Webster (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)
@@ -81,6 +82,13 @@ module Alexandria
 
       private
 
+      AUTHOR_ITEM_REGEXP =
+        %r{<li>
+            <span\sclass="product_label">Autor[ei]:<\/span>
+            \s<span\sclass="product_text">
+            (<a\shref="[^>]+">([^<]+)<\/a>,?\s?)+<\/span>
+            <li>}x
+
       def to_book(data)
         raise NoResultsError if data =~ /<font color="\#ffffff"><b>Prodotto non esistente<\/b><\/font>/
         data = data.encode('UTF-8')
@@ -93,12 +101,10 @@ module Alexandria
         end
 
         authors = []
-        if (md = /<li><span class="product_label">Autor[ei]:<\/span> <span class="product_text">(<a href="[^>]+">([^<]+)<\/a>,? ?)+<\/span><li>/.match(data))
+        if (md = AUTHOR_ITEM_REGEXP.match(data))
           this = CGI.unescape(md[0].strip)
           authors = this.scan(/<a href="[^>]+">([^<]+)<\/a>,?/)
           authors = authors.map { |author| author[0] }
-          # puts this
-          #                 md[1].strip.split(', ').each { |a| authors << CGI.unescape(a.strip) }
         end
 
         md = /<li><span class="product_label">ISBN:<\/span> <span class="product_text">([^<]+)/.match(data)
@@ -106,15 +112,17 @@ module Alexandria
         isbn = Library.canonicalise_ean(md[1].strip)
 
         # raise unless
-        md = /<li><span class="product_label">Editore:<\/span> <span class="product_text"><a href="[^>]+>([^<]+)/.match(data)
+        md = /<li><span\ class="product_label">Editore:
+              <\/span>\ <span\ class="product_text"><a href="[^>]+>([^<]+)/x.match(data)
         (publisher = CGI.unescape(md[1].strip)) || md
 
-        edition = if (md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data))
-                    CGI.unescape(md[1].strip) + ' p.'
-                  end
+        md = /<li><span class="product_label">Pagine:<\/span> <span class="product_text">([^<]+)/.match(data)
+        edition = (CGI.unescape(md[1].strip) + ' p.' if md)
 
         publish_year = nil
-        if (md = /<li><span class="product_label">Data di Pubblicazione:<\/span> <span class="product_text">([^<]+)/.match(data))
+        md = /<li><span\ class="product_label">Data\ di\ Pubblicazione:
+              <\/span>\ <span\ class="product_text">([^<]+)/x.match(data)
+        if md
           publish_year = CGI.unescape(md[1].strip)[-4..-1].to_i
           publish_year = nil if publish_year.zero?
         end
@@ -149,8 +157,9 @@ module Alexandria
         [Book.new(title, authors, isbn, publisher, publish_year, edition)]
       end
 
-      def each_book_page(data)
-        raise if data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/) { |a| yield a }.empty?
+      def each_book_page(data, &blk)
+        result = data.scan(/<tr ><td width="10%" align="center"">&nbsp;<a href="#{LOCALE}\/([^\/]+)/, &blk)
+        raise if result.empty?
       end
 
       def clean_cache

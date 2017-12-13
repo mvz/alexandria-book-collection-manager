@@ -143,9 +143,7 @@ module Alexandria
         date_entry.primary_icon_name = Gtk::Stock::EDIT
         date_entry.primary_icon_activatable = true
         date_entry.signal_connect('icon-press') do |entry, primary, _icon|
-          if primary.nick == 'primary'
-            display_calendar_popup(entry)
-          end
+          display_calendar_popup(entry) if primary.nick == 'primary'
         end
 
         # Really hide the time part of the date entry, as the constructor
@@ -270,9 +268,7 @@ module Alexandria
         state = boxes.length > 1
         boxes.each do |box|
           button = box.children[-1]
-          if button.is_a?(Gtk::Button)
-            button.sensitive = state
-          end
+          button.sensitive = state if button.is_a?(Gtk::Button)
         end
       end
 

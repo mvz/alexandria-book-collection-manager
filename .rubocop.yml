@@ -1,5 +1,6 @@
 AllCops:
   Exclude:
+    - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
 
 # Dot at end of line makes it clearer that the line is not done
@@ -19,6 +20,10 @@ Layout/MultilineMethodCallBraceLayout:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
+# Make syntax for empty and filled blocks consistent
+Layout/SpaceBeforeBlockBraces:
+  EnforcedStyleForEmptyBraces: space
+
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
@@ -28,11 +33,9 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-# Require lines to fit in pull requests.
-# This config is commented out temporarily to allow .rubocop_todo.yml to
-# configure this cop.
-#Metrics/LineLength:
-  #Max: 92
+# Be lenient with line length
+Metrics/LineLength:
+  Max: 110
 
 Naming/AccessorMethodName:
   Enabled: false
@@ -45,13 +48,13 @@ Style/BlockDelimiters:
 Style/AndOr:
   Enabled: conditionals
 
+# Prefer old school format strings
+Style/FormatStringToken:
+  EnforcedStyle: unannotated
+
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
-
-# Don't use if or unless as modifier if the line gets too long
-Style/IfUnlessModifier:
-  MaxLineLength: 60
 
 # Not all objects that handle #== 0 also handle #zero?
 Style/NumericPredicate:

@@ -296,9 +296,7 @@ module Alexandria
           @checkbutton_prov_advanced.sensitive = false
         else
           view_advanced = Preferences.instance.view_advanced_settings
-          if view_advanced
-            @checkbutton_prov_advanced.active = true
-          end
+          @checkbutton_prov_advanced.active = true if view_advanced
         end
 
         setup_enable_disable_popup
@@ -332,9 +330,7 @@ module Alexandria
           iter = @scanner_device_model.append
           iter[0] = scanner.display_name
           iter[1] = scanner.name
-          if chosen_scanner_name == scanner.name
-            @scanner_device_type.active = index
-          end
+          @scanner_device_type.active = index if chosen_scanner_name == scanner.name
           index += 1
         end
 
@@ -409,9 +405,7 @@ module Alexandria
 
       def on_provider_setup
         provider = selected_provider
-        unless prefs_empty(provider.prefs)
-          ProviderPreferencesDialog.new(@preferences_dialog, provider)
-        end
+        ProviderPreferencesDialog.new(@preferences_dialog, provider) unless prefs_empty(provider.prefs)
       end
 
       def on_provider_up
@@ -449,9 +443,7 @@ module Alexandria
 
       def on_scanner_device_type(_combo)
         iter = @scanner_device_type.active_iter
-        if iter && iter[1]
-          Preferences.instance.barcode_scanner = iter[1]
-        end
+        Preferences.instance.barcode_scanner = iter[1] if iter && iter[1]
       end
 
       def on_use_scanning_sound(checkbox)
@@ -496,9 +488,7 @@ module Alexandria
 
       def on_providers_button_press_event(_widget, event)
         # double left click
-        if (event.event_type == :'2button_press') && (event.button == 1)
-          on_provider_setup
-        end
+        on_provider_setup if (event.event_type == :'2button_press') && (event.button == 1)
       end
 
       def on_close
@@ -531,9 +521,7 @@ module Alexandria
 
       def selected_provider
         iter = @treeview_providers.selection.selected
-        unless iter.nil?
-          BookProviders.find { |x| x.name == iter[1] }
-        end
+        BookProviders.find { |x| x.name == iter[1] } unless iter.nil?
       end
 
       def adjust_selected_provider(prov)
