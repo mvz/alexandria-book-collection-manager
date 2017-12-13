@@ -86,7 +86,7 @@ module Alexandria
         %r{<li>
             <span\sclass="product_label">Autor[ei]:<\/span>
             \s<span\sclass="product_text">
-            (<a\shref="[^>]+">([^<]+)<\/a>,? ?)+<\/span>
+            (<a\shref="[^>]+">([^<]+)<\/a>,?\s?)+<\/span>
             <li>}x
 
       def to_book(data)
