@@ -146,7 +146,7 @@ module Alexandria
             end
             book.notes = neaten(elements['comments'].text) if elements['comments']
             content << [book, cover]
-            on_iterate_cb.call(n + 1, total) if on_iterate_cb
+            on_iterate_cb&.call(n + 1, total)
           end
 
           library = Library.load(name)
@@ -204,7 +204,7 @@ module Alexandria
 
           books_and_covers << [book, cover]
           import_count += 1
-          on_iterate_cb.call(import_count, max_import) if on_iterate_cb
+          on_iterate_cb&.call(import_count, max_import)
         end
       rescue CSV::IllegalFormatError
         unless failed_once
@@ -274,7 +274,7 @@ module Alexandria
           #  (on_error_cb and on_error_cb.call(e.message))
         end
 
-        on_iterate_cb.call(current_iteration += 1, max_iterations) if on_iterate_cb
+        on_iterate_cb&.call(current_iteration += 1, max_iterations)
       end
       puts "Bad Isbn list: #{bad_isbns.inspect}" if bad_isbns
       library = load(name)
@@ -285,7 +285,7 @@ module Alexandria
         puts "Saving #{book.isbn}..." if $DEBUG
         library << book
         library.save(book)
-        on_iterate_cb.call(current_iteration += 1, max_iterations) if on_iterate_cb
+        on_iterate_cb&.call(current_iteration += 1, max_iterations)
       end
       [library, bad_isbns, failed_lookup_isbns]
     end

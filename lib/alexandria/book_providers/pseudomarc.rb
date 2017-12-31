@@ -70,14 +70,12 @@ module Alexandria
 
         authors = []
         author_data = details[m[:authors][0]]
-        if author_data
-          author_data.each do |ad|
-            author = ad[m[:authors][1]]
-            if author
-              author = author.strip
-              author = Regexp.last_match[1] if author =~ /(.*),$/
-              authors << author
-            end
+        author_data&.each do |ad|
+          author = ad[m[:authors][1]]
+          if author
+            author = author.strip
+            author = Regexp.last_match[1] if author =~ /(.*),$/
+            authors << author
           end
         end
 
@@ -106,11 +104,9 @@ module Alexandria
 
         notes = ''
         notes_data = details[m[:notes][0]]
-        if notes_data
-          notes_data.each do |note|
-            txt = note[m[:notes][1]]
-            notes += txt if txt
-          end
+        notes_data&.each do |note|
+          txt = note[m[:notes][1]]
+          notes += txt if txt
         end
 
         if title.nil? && isbn.nil?
