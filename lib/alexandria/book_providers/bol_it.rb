@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2007 Marco Costantini
 # Copyright (C) 2014, 2016 Matijs van Zuijlen
 # based on ibs_it.rb by Claudio Belotti

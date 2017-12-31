@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- -*- ruby -*-
 # Copyright (C) 2004-2006 Dafydd Harries
 # Copyright (C) 2007 Cathal Mc Ginley

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2005-2006-2006 Mathieu Leduc-Hamel
 #
 # Alexandria is free software; you can redistribute it and/or

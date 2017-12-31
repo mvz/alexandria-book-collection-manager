@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004 Laurent Sansonetti
 # Copyright (C) 2007 Laurent Sansonetti and Marco Costantini
 # Copyright (C) 2009 Cathal Mc Ginley

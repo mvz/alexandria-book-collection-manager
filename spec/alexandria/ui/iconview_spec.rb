@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2008 Joseph Method
 # Copyright (C) 2014 Matijs van Zuijlen
 #

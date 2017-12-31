@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007, 2008 Joseph Method

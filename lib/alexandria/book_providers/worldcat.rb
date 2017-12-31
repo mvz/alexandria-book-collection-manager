@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley

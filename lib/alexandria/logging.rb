@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2007 Cathal Mc Ginley
 # Copyright (C) 2011 Matijs van Zuijlen
 #

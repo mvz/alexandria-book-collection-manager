@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Alexandria
   module Config
     SHARE_DIR = File.expand_path('../../share', File.dirname(__FILE__))

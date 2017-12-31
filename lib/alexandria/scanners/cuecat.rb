@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2005-2006 Christopher Cyll
 # Copyright (C) 2011 Matijs van Zuijlen
 #

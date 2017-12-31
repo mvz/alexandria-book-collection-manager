@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Alexandria
   module UI
     module Columns
