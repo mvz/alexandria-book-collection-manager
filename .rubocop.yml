@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
+  TargetRubyVersion: 2.3
 
 # Dot at end of line makes it clearer that the line is not done
 Layout/DotPosition:
