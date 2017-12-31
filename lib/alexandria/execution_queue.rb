@@ -17,8 +17,6 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'thread'
-
 # Provides a way for two threads to communicate via Proc objects.
 #
 # Thread A can request calls, providing a Proc object and runtime arguments,

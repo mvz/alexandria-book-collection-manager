@@ -28,7 +28,6 @@ require 'alexandria/ui/dialogs/barcode_animation'
 
 module Alexandria
   module UI
-    require 'thread'
     require 'monitor'
 
     # assists in turning on progress bar when searching
