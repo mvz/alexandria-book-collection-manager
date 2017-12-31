@@ -27,8 +27,8 @@ module Alexandria
     class RENAUDProvider < GenericProvider
       include GetText
       # GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
-      BASE_URI = 'http://www.renaud-bray.com/'.freeze
-      ACCENTUATED_CHARS = 'áàâäçéèêëíìîïóòôöúùûü'.freeze
+      BASE_URI = 'http://www.renaud-bray.com/'
+      ACCENTUATED_CHARS = 'áàâäçéèêëíìîïóòôöúùûü'
 
       def initialize
         super('RENAUD', 'Renaud-Bray (Canada)')

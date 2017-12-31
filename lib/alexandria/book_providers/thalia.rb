@@ -33,8 +33,8 @@ module Alexandria
     class ThaliaProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.thalia.de'.freeze
-      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s".freeze # type,term
+      SITE = 'http://www.thalia.de'
+      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
 
       def initialize
         super('Thalia', 'Thalia (Germany)')

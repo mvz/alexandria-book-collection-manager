@@ -34,7 +34,7 @@ module Alexandria
     class SicilianoProvider < WebsiteBasedProvider
       include Logging
 
-      SITE = 'http://www.siciliano.com.br'.freeze
+      SITE = 'http://www.siciliano.com.br'
 
       # The string interpolations in this URL are the search term and search
       # type, respectively.
@@ -42,7 +42,7 @@ module Alexandria
         '&FIL_ID=102' \
         '&PALAVRASN1=%s' \
         '&FILTRON1=%s' \
-        '&ESTRUTN1=0301&ORDEMN2=E'.freeze
+        '&ESTRUTN1=0301&ORDEMN2=E'
 
       def initialize
         super('Siciliano', 'Livraria Siciliano (Brasil)')

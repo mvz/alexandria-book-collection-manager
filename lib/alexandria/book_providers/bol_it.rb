@@ -27,10 +27,10 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class BOL_itProvider < GenericProvider
-      BASE_URI = 'http://www.bol.it'.freeze
+      BASE_URI = 'http://www.bol.it'
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.bol_it_cache')
       REFERER = BASE_URI
-      LOCALE = 'libri'.freeze # possible locales are: "libri", "inglesi", "video", "musica", "choco"
+      LOCALE = 'libri' # possible locales are: "libri", "inglesi", "video", "musica", "choco"
       def initialize
         super('BOL_it', 'BOL (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)

@@ -28,12 +28,12 @@ module Alexandria
     include Singleton
     include Logging
 
-    APP_DIR = '/apps/alexandria'.freeze
-    HTTP_PROXY_DIR = '/system/http_proxy'.freeze
-    HTTP_PROXY_MODE = '/system/proxy/mode'.freeze
-    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'.freeze
+    APP_DIR = '/apps/alexandria'
+    HTTP_PROXY_DIR = '/system/http_proxy'
+    HTTP_PROXY_MODE = '/system/proxy/mode'
+    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'
 
-    GCONFTOOL = 'gconftool-2'.freeze
+    GCONFTOOL = 'gconftool-2'
 
     def initialize
       @alexandria_settings = {}

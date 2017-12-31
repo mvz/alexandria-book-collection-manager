@@ -41,7 +41,7 @@ require_relative 'lib/alexandria/version'
 stage_dir = ENV['DESTDIR'] || 'tmp'
 prefix_dir = ENV['PREFIX'] || '/usr'
 
-PROJECT = 'alexandria'.freeze
+PROJECT = 'alexandria'
 PREFIX = prefix_dir
 share_dir = ENV['SHARE'] || "#{PREFIX}/share"
 SHARE = share_dir
@@ -63,7 +63,7 @@ SHARE_FILE_GLOBS = ['data/alexandria/**/*', 'data/gnome/**/*.*',
 ICON_FILE_GLOBS = ['data/app-icon/**/*.png',
                    'data/app-icon/scalable/*.svg'].freeze
 
-PIXMAP_GLOBS = 'data/app-icon/32x32/*.xpm'.freeze
+PIXMAP_GLOBS = 'data/app-icon/32x32/*.xpm'
 
 def install_common(install_task)
   install_task.install_exe('bin', 'bin/*', "#{PREFIX}/bin")
@@ -135,7 +135,7 @@ def convert_with_type(value, type)
   end
 end
 
-SCHEMA_PATH = 'schemas/alexandria.schemas'.freeze
+SCHEMA_PATH = 'schemas/alexandria.schemas'
 
 # This generates default_preferences.rb by copying over values from
 # providers_priority key in alexandria.schemas (necessary?)

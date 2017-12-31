@@ -26,7 +26,7 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class IBS_itProvider < GenericProvider
-      BASE_URI = 'http://www.internetbookshop.it'.freeze
+      BASE_URI = 'http://www.internetbookshop.it'
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
       REFERER = BASE_URI
       def initialize

@@ -24,7 +24,7 @@ module Alexandria
     BOOKS_TARGET_TABLE = [Gtk::TargetEntry.new('ALEXANDRIA_BOOKS', :same_app, 0)].freeze
 
     module DragAndDropable
-      BADGE_MARKUP = '<span weight="heavy" foreground="white">%d</span>'.freeze
+      BADGE_MARKUP = '<span weight="heavy" foreground="white">%d</span>'
 
       def setup_view_source_dnd(view)
         # better be Loggable!
