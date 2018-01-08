@@ -35,7 +35,7 @@ module Alexandria
 
       # Checks if data looks like cuecat input
       def match?(data)
-        data.chomp!
+        data = data.chomp
         return false if data[-1] != '.'
         fields = data.split('.')
         return false if fields.size != 4
@@ -47,7 +47,7 @@ module Alexandria
       # The following code is adapted from Skip Rosebaugh's public
       # domain perl implementation.
       def decode(data)
-        data.chomp!
+        data = data.chomp
         fields = data.split('.')
         fields.shift # First part is gibberish
         fields.shift # Second part is cuecat serial number
