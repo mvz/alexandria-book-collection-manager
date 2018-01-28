@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2011, 2014 Matijs van Zuijlen
 #
@@ -32,7 +34,7 @@ module Alexandria
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
     DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
-    EXT = '.yaml'.freeze
+    EXT = '.yaml'
 
     def initialize(name, rules, predicate_operator_rule)
       super()

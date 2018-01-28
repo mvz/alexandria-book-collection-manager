@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2007 Joseph Method
 #
 # Alexandria is free software; you can redistribute it and/or
@@ -24,7 +26,7 @@ describe Alexandria::SmartLibrary do
   end
 
   it 'normalizes the encoding for name' do
-    bad_name = 'Prêts'.force_encoding('ascii')
+    bad_name = (+'Prêts').force_encoding('ascii')
     lib = described_class.new(bad_name, [], :all)
     expect(lib.name.encoding.name).to eq 'UTF-8'
     expect(bad_name.encoding.name).to eq 'US-ASCII'

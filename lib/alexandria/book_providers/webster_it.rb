@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2007 Marco Costantini
 # Copyright (C) 2014, 2016 Matijs van Zuijlen
 # based on ibs_it.rb by Claudio Belotti
@@ -25,11 +27,11 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class Webster_itProvider < GenericProvider
-      BASE_URI = 'http://www.libreriauniversitaria.it'.freeze # also "http://www.webster.it"
+      BASE_URI = 'http://www.libreriauniversitaria.it' # also "http://www.webster.it"
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.webster_it_cache')
       REFERER = BASE_URI
       # used only for search by title/author/keyword. possible are: "BIT", "BUS", "BUK", "BDE", "MIT"
-      LOCALE = 'BIT'.freeze
+      LOCALE = 'BIT'
       def initialize
         super('Webster_it', 'Webster (Italy)')
         FileUtils.mkdir_p(CACHE_DIR) unless File.exist?(CACHE_DIR)

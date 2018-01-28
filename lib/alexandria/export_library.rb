@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007 Cathal Mc Ginley
 # Copyright (C) 2014, 2016 Matijs van Zuijlen
@@ -236,7 +238,7 @@ module Alexandria
 
     private
 
-    ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'.freeze
+    ONIX_DTD_URL = 'http://www.editeur.org/onix/2.1/reference/onix-international.dtd'
     def to_onix_document
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new

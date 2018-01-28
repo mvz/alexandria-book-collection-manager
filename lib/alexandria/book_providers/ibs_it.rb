@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2005-2006 Claudio Belotti
 # Copyright (C) 2014, 2016 Matijs van Zuijlen
 #
@@ -24,7 +26,7 @@ require 'open-uri'
 module Alexandria
   class BookProviders
     class IBS_itProvider < GenericProvider
-      BASE_URI = 'http://www.internetbookshop.it'.freeze
+      BASE_URI = 'http://www.internetbookshop.it'
       CACHE_DIR = File.join(Alexandria::Library::DIR, '.ibs_it_cache')
       REFERER = BASE_URI
       def initialize

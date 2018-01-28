@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2011, 2016 Matijs van Zuijlen
 #
@@ -15,8 +17,6 @@
 # License along with Alexandria; see the file COPYING.  If not,
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
-
-require 'thread'
 
 class Alexandria::ImportFilter
   def to_filefilter

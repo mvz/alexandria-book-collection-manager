@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2010 Cathal Mc Ginley
 #
 # Alexandria is free software; you can redistribute it and/or

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2011, 2015, 2016 Matijs van Zuijlen
 #
@@ -276,8 +278,8 @@ module Alexandria
         @find_error = nil
         @results = nil
 
-        @find_thread.kill if @find_thread
-        @image_thread.kill if @image_thread
+        @find_thread&.kill
+        @image_thread&.kill
 
         notify_start_add_by_isbn
         GLib::Idle.add do
@@ -481,8 +483,8 @@ module Alexandria
 
       def on_add
         return unless @button_add.sensitive?
-        @find_thread.kill if @find_thread
-        @image_thread.kill if @image_thread
+        @find_thread&.kill
+        @image_thread&.kill
 
         begin
           libraries = Libraries.instance.all_libraries
@@ -507,8 +509,8 @@ module Alexandria
       end
 
       def on_cancel
-        @find_thread.kill if @find_thread
-        @image_thread.kill if @image_thread
+        @find_thread&.kill
+        @image_thread&.kill
         @new_book_dialog.destroy
       end
 

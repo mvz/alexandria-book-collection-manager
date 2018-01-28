@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2005-2006 Laurent Sansonetti
 #
 # Alexandria is free software; you can redistribute it and/or
@@ -14,8 +16,6 @@
 # License along with Alexandria; see the file COPYING.  If not,
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
-
-require 'thread'
 
 # Provides a way for two threads to communicate via Proc objects.
 #

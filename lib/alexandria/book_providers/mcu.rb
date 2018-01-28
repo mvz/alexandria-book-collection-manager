@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004 Javier Fernandez-Sanguino
 # Copyright (C) 2007 Javier Fernandez-Sanguino and Marco Costantini
 # Copyright (C) 2011, 2016 Matijs van Zuijlen
@@ -35,7 +37,7 @@ module Alexandria
       }.freeze
 
       #        BASE_URI = "http://www.mcu.es/cgi-bin/BRSCGI3701?"
-      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'.freeze
+      BASE_URI = 'http://www.mcu.es/cgi-brs/BasesHTML/isbn/BRSCGI?'
       def initialize
         super('MCU', _('Spanish Culture Ministry'))
         # No preferences

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2011 Cathal Mc Ginley
 # Copyright (C) 2011, 2016 Matijs van Zuijlen
@@ -26,12 +28,12 @@ module Alexandria
     include Singleton
     include Logging
 
-    APP_DIR = '/apps/alexandria'.freeze
-    HTTP_PROXY_DIR = '/system/http_proxy'.freeze
-    HTTP_PROXY_MODE = '/system/proxy/mode'.freeze
-    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'.freeze
+    APP_DIR = '/apps/alexandria'
+    HTTP_PROXY_DIR = '/system/http_proxy'
+    HTTP_PROXY_MODE = '/system/proxy/mode'
+    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'
 
-    GCONFTOOL = 'gconftool-2'.freeze
+    GCONFTOOL = 'gconftool-2'
 
     def initialize
       @alexandria_settings = {}

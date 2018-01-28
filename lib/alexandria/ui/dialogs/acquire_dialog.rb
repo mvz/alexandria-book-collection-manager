@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2007 Cathal Mc Ginley
 # Copyright (C) 2011, 2016 Matijs van Zuijlen
@@ -26,7 +28,6 @@ require 'alexandria/ui/dialogs/barcode_animation'
 
 module Alexandria
   module UI
-    require 'thread'
     require 'monitor'
 
     # assists in turning on progress bar when searching

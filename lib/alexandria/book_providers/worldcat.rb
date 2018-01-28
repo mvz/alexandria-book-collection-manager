@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
@@ -37,8 +39,8 @@ module Alexandria
     class WorldCatProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.worldcat.org'.freeze
-      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced".freeze # type, term
+      SITE = 'http://www.worldcat.org'
+      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
 
       def initialize
         super('WorldCat', 'WorldCat')

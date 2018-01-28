@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-- -*- ruby -*-
 # Copyright (C) 2007 Cathal Mc Ginley
 # Copyright (C) 2014 Matijs van Zuijlen

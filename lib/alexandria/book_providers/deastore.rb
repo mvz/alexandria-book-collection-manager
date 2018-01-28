@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
@@ -31,8 +33,8 @@ module Alexandria
     class DeaStoreProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.deastore.com'.freeze
-      BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s".freeze # type/term
+      SITE = 'http://www.deastore.com'
+      BASE_SEARCH_URL = "#{SITE}/search/italian_books/0/%s/%s" # type/term
 
       def initialize
         super('DeaStore', 'DeaStore (Italy)')

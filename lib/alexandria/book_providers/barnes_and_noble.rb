@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
@@ -35,12 +37,12 @@ module Alexandria
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.barnesandnoble.com'.freeze
+      SITE = 'http://www.barnesandnoble.com'
 
-      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'.freeze
+      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'
 
       BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
-        '/results.asp?%s=%s'.freeze # type, term
+        '/results.asp?%s=%s' # type, term
 
       def initialize
         super('BarnesAndNoble', 'BarnesAndNoble')

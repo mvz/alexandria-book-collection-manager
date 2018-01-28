@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2014-2016 Matijs van Zuijlen
 #
 # This file is part of Alexandria.
@@ -18,7 +20,7 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  VERSION = '0.7.1'.freeze
-  DATA_VERSION = '0.6.3'.freeze
-  DISPLAY_VERSION = '0.7.1'.freeze
+  VERSION = '0.7.1'
+  DATA_VERSION = '0.6.3'
+  DISPLAY_VERSION = '0.7.1'
 end

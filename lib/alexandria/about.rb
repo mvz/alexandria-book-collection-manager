@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
 # Copyright (C) 2015 Matijs van Zuijlen
@@ -18,13 +20,13 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 module Alexandria
-  TITLE = 'Alexandria'.freeze
-  TEXTDOMAIN = 'alexandria'.freeze
+  TITLE = 'Alexandria'
+  TEXTDOMAIN = 'alexandria'
   extend GetText
   bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
   DESCRIPTION = _('A program to help you manage your book collection.')
   COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" \
-    'Copyright (C) 2007-2010,2014,2015 Alexandria Contributors'.freeze
+    'Copyright (C) 2007-2010,2014,2015 Alexandria Contributors'
   AUTHORS = [
     'Alexander McCormmach <alexander@tunicate.org>',
     'Aymeric Nys <aymeric@nnx.com>',
@@ -76,6 +78,6 @@ module Alexandria
     'Andreas Nilsson <nisses.mail@home.se>',
     'Stefanie Dijoux <stefanie.dijoux@gmail.com>'
   ].freeze
-  BUGREPORT_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager/issues'.freeze
-  WEBSITE_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager'.freeze
+  BUGREPORT_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager/issues'
+  WEBSITE_URL = 'http://www.github.com/mvz/alexandria-book-collection-manager'
 end

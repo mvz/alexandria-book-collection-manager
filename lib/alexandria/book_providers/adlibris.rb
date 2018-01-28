@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # -*- ruby -*-
 #
 # Copyright (C) 2009 Cathal Mc Ginley
@@ -33,12 +35,12 @@ module Alexandria
     class AdLibrisProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.adlibris.com/se/'.freeze
+      SITE = 'http://www.adlibris.com/se/'
 
       BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" \
-        '&fromproduct=False'.freeze # type/term
+        '&fromproduct=False' # type/term
 
-      PRODUCT_URL = "#{SITE}product.aspx?isbn=%s".freeze
+      PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
 
       def initialize
         super('AdLibris', 'AdLibris (Sweden)')

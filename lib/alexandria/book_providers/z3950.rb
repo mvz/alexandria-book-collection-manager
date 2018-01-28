@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2005-2006 Laurent Sansonetti
 # Copyright (C) 2007 Laurent Sansonetti and Marco Costantini
 # Copyright (C) 2014, 2016 Matijs van Zuijlen
