@@ -50,10 +50,10 @@ module Alexandria
         # also no initial . since that hides the Library (hidden file)
         #      forbidding an initial dot also disallows "." and ".."
         #      which are of course pre-existing directories.
-        return match
+        match
       rescue => ex
         log.warn { "New library name not valid UTF-8: #{ex.message}" }
-        return true
+        true
         # /([^\w\s'"()&?!:;.\-])/.match(new_text) # anglocentric!
       end
 

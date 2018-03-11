@@ -249,11 +249,11 @@ module Alexandria
           log.debug { "Cover Image URL:: #{image_url}" }
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-        return [book, image_url]
+        [book, image_url]
       rescue => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing DeaStore product page #{ex.message}\n#{trace}" }
-        return nil
+        nil
       end
 
       def normalize(str)
