@@ -90,7 +90,7 @@ Style/TrivialAccessors:
   ExactNameMatch: true
 
 # Allow semantic choice of trailing comma
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
 # Alexandria uses regular arrays
