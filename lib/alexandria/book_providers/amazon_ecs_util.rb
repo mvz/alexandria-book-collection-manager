@@ -394,7 +394,7 @@ module Amazon
     end
 
     def to_s
-      elem.to_s if elem
+      elem&.to_s
     end
   end
 end
