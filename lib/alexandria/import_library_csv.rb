@@ -95,7 +95,6 @@ module Alexandria
           book.redd_when = date
           book.redd = true
         rescue
-          #
         end
       end
       if row[@mainshelf]
