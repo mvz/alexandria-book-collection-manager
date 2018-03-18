@@ -5,6 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 require 'gdk_pixbuf2'
+require 'alexandria/ui/builder_base'
 require 'alexandria/ui/dialogs/keep_bad_isbn_dialog'
 
 module Alexandria
@@ -31,14 +32,11 @@ module Alexandria
       end
 
       def widget_names
-        [:liststore1, :liststore2, :new_book_dialog, :dialog_vbox1,
-         :dialog_action_area1, :button_help, :button_cancel,
-         :button_add, :table1, :keep_open, :combo_libraries,
-         :cellrenderertext1, :eventbox_entry_isbn, :entry_isbn,
-         :label3, :hbox2, :eventbox_combo_search, :combo_search,
-         :cellrenderertext2, :eventbox_entry_search, :entry_search,
-         :button_find, :scrolledwindow, :treeview_results,
-         :title_radiobutton, :isbn_radiobutton, :progressbar]
+        [:new_book_dialog, :button_add, :button_cancel, :button_find,
+         :button_help, :combo_libraries, :combo_search, :entry_isbn,
+         :entry_search, :eventbox_combo_search, :eventbox_entry_isbn,
+         :eventbox_entry_search, :isbn_radiobutton, :keep_open, :progressbar,
+         :scrolledwindow, :title_radiobutton, :treeview_results]
       end
 
       def setup_dialog_gui

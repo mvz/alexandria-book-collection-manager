@@ -1,24 +1,10 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
-# require 'alexandria/ui/glade_base'
+require 'alexandria/ui/builder_base'
 
 module Alexandria
   module UI
@@ -197,22 +183,14 @@ module Alexandria
       end
 
       def widget_names
-        [:book_properties_dialog, :dialog_vbox1, :button_box,
-         :notebook1, :hbox1, :table1, :label1, :label7, :entry_title,
-         :entry_publisher, :label5, :entry_isbn, :hbox3,
-         :scrolledwindow2, :treeview_authors, :vbox2, :button3,
-         :image2, :button4, :image3, :label3, :label9, :entry_edition,
-         :label16, :entry_publish_date, :label17, :entry_tags,
-         :vseparator1, :vbox1, :label12, :button_cover, :image_cover,
-         :vbox4, :vbox5, :checkbutton_own, :vbox6, :checkbutton_redd,
-         :redd_date, :checkbutton_want, :eventbox8, :hbox2,
-         :eventbox6, :image5, :eventbox1, :image_rating1, :eventbox5,
-         :image_rating2, :eventbox4, :image_rating3, :eventbox3,
-         :image_rating4, :eventbox2, :image_rating5, :eventbox7,
-         :image4, :label11, :label9, :vbox3, :checkbutton_loaned,
-         :table2, :entry_loaned_to, :label_loaning_duration, :label15,
-         :label14, :date_loaned_since, :label13, :scrolledwindow1,
-         :textview_notes, :label10]
+        [:book_properties_dialog, :button_box, :button_cover,
+         :checkbutton_loaned, :checkbutton_own, :checkbutton_redd,
+         :checkbutton_want, :date_loaned_since, :entry_edition,
+         :entry_loaned_to, :entry_publish_date, :entry_publisher, :entry_isbn,
+         :entry_tags, :entry_title, :image_cover, :image_rating1,
+         :image_rating2, :image_rating3, :image_rating4, :image_rating5,
+         :label_loaning_duration, :redd_date, :textview_notes,
+         :treeview_authors]
       end
 
       def on_title_changed
