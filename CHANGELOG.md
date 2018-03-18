@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.7.2 / 2018-03-18
+
+* Update dependencies
+* Various code cleanups
+
 ## 0.7.1 / 2016-12-13
 
 * Various code cleanups
