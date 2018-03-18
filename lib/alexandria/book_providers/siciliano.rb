@@ -203,11 +203,11 @@ module Alexandria
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
         result = [book, image_urls.first]
-        return result
+        result
       rescue => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
-        return nil
+        nil
       end
 
       def first_non_empty_text_node(elem)

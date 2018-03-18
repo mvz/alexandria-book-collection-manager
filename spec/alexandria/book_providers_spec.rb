@@ -164,16 +164,6 @@ describe Alexandria::BookProviders do
                                  '0094638203520')
   end
 
-  it 'IBS_it should work' do
-    skip 'Marked in code as not working; remove implementation entirely.'
-    # this tests a book without image but with author
-    assert_correct_search_result(Alexandria::BookProviders::IBS_itProvider,
-                                 '9788886973816')
-    # this tests a book with image but without author
-    assert_correct_search_result(Alexandria::BookProviders::IBS_itProvider,
-                                 '9788807710148')
-  end
-
   it 'AdLibris should work' do
     skip 'Needs fixing: site has changed'
     assert_correct_search_result(Alexandria::BookProviders::AdLibrisProvider,
@@ -184,37 +174,6 @@ describe Alexandria::BookProviders do
     skip 'Needs fixing: no results found'
     assert_correct_search_result(Alexandria::BookProviders::SicilianoProvider,
                                  '9788599170380')
-  end
-
-  it 'BOL_it should work' do
-    skip 'Marked in code as not working; remove implementation entirely.'
-    assert_correct_search_result(Alexandria::BookProviders::BOL_itProvider,
-                                 '9788817012980')
-  end
-
-  it 'Webster should work' do
-    skip 'Marked in code as not working; remove implementation entirely.'
-    # BIT
-    assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
-                                 '9788817012980')
-    # BUK
-    assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
-                                 '9781853260803')
-    # BUS
-    assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
-                                 '9780307237699')
-    # BDE
-    assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
-                                 '9783442460878')
-  end
-
-  it 'Webster should work with multiple authors' do
-    skip 'Marked in code as not working; remove implementation entirely.'
-    this_book = assert_correct_search_result(Alexandria::BookProviders::Webster_itProvider,
-                                             '9788804559016')
-    assert_kind_of(Array, this_book.authors, 'Not an array!')
-    # puts this_book.authors
-    assert(this_book.authors.length == 3, 'Wrong number of authors for this book!')
   end
 
   it 'Renaud should work' do
