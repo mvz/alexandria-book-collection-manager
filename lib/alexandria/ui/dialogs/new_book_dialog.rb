@@ -1,52 +1,17 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2015, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 require 'gdk_pixbuf2'
+require 'alexandria/ui/dialogs/keep_bad_isbn_dialog'
 
 module Alexandria
   class DuplicateBookException < NameError
   end
 
   module UI
-    class KeepBadISBNDialog < AlertDialog
-      include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
-
-      def initialize(parent, book)
-        super(parent, _("Invalid ISBN '%s'") % book.isbn,
-              Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, :cancel],
-               [_('_Keep'), :ok]],
-              _("The book titled '%s' has an invalid ISBN, but still " \
-                'exists in the providers libraries.  Do you want to ' \
-                'keep the book but change the ISBN or cancel the addition?') % book.title)
-        self.default_response = Gtk::ResponseType::OK
-        show_all && (@response = run)
-        destroy
-      end
-
-      def keep?
-        @response == :ok
-      end
-    end
-
     class NewBookDialog < BuilderBase
       include Logging
       include GetText
@@ -256,16 +221,6 @@ module Alexandria
                when 2
                  BookProviders::SEARCH_BY_KEYWORD
                end
-
-        # @progressbar.show
-        # progress_pulsing = GLib::Timeout.add(100) do
-        #  if @destroyed
-        #    false
-        #  else
-        #    @progressbar.pulse
-        #    true
-        #  end
-        # end
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
