@@ -47,7 +47,7 @@ module Alexandria
 
         @treeview_results.model = Gtk::ListStore.new(String, String,
                                                      GdkPixbuf::Pixbuf)
-        @treeview_results.selection.mode = Gtk::SELECTION_MULTIPLE
+        @treeview_results.selection.mode = :multiple
         @treeview_results.selection.signal_connect('changed') do
           @button_add.sensitive = true
         end
@@ -175,7 +175,7 @@ module Alexandria
 
         GLib::Timeout.add(100) do
           if @image_error
-            image_error_dialog(@image_error)
+            image_error_dialog(@image_error).display
           else
             @images.each_pair do |key, value|
               begin
@@ -193,7 +193,7 @@ module Alexandria
 
                 @images.delete(key)
               rescue => e
-                image_error_dialog(e.message)
+                image_error_dialog(e.message).display
               end
             end
           end
@@ -261,7 +261,7 @@ module Alexandria
           continue = if @find_error
                        ErrorDialog.new(@parent,
                                        _('Unable to find matches for your search'),
-                                       @find_error)
+                                       @find_error).display
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
@@ -389,8 +389,7 @@ module Alexandria
               next
             rescue Alexandria::Library::InvalidISBNError
               puts "invalidisbn #{book.isbn}"
-              next unless
-              KeepBadISBNDialog.new(@parent, book).keep?
+              next unless KeepBadISBNDialog.new(@parent, book).keep?
               book.isbn = book.saved_ident = nil
             end
             books_to_add << [book, cover]
@@ -456,7 +455,7 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
         rescue => e
-          ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
+          ErrorDialog.new(@parent, _("Couldn't add the book"), e.message).display
         end
         # books_to_add
       end

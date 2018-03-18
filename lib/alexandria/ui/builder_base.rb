@@ -10,6 +10,8 @@ module Alexandria
       def initialize(filename, widget_names)
         file = File.join(Alexandria::Config::DATA_DIR, 'glade', filename)
         builder = Gtk::Builder.new
+        # TODO: This emits the warning 'GtkDialog mapped without a transient
+        # parent. This is discouraged.'
         builder.add_from_file(file)
         builder.connect_signals do |handler|
           method(handler)

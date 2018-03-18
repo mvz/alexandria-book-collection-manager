@@ -123,7 +123,7 @@ module Alexandria
             ErrorDialog.new(@parent,
                             _("Couldn't modify the book"),
                             _('The EAN/ISBN you provided is already ' \
-                              'used in this library.'))
+                              'used in this library.')).display
             return
           end
           @book.isbn = begin
@@ -133,7 +133,7 @@ module Alexandria
                                          _("Couldn't modify the book"),
                                          _("Couldn't validate the EAN/ISBN you " \
                                            'provided.  Make sure it is written ' \
-                                           'correcty, and try again.'))
+                                           'correcty, and try again.')).display
                          return
                        end
         end

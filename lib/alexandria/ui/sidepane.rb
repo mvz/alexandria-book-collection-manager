@@ -67,24 +67,24 @@ module Alexandria
               chars = match[1].gsub(/&/, '&amp;')
               ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
                               _('The name provided contains the ' \
-                                'disallowed character <b>%s</b> ') % chars)
+                                'disallowed character <b>%s</b> ') % chars).display
             else
               ErrorDialog.new(@main_app, _('Invalid library name'),
                               _('The name provided contains ' \
-                                'invalid characters.'))
+                                'invalid characters.')).display
             end
 
           elsif new_text.strip.empty?
             log.debug { 'Empty text' }
             ErrorDialog.new(@main_app, _('The library name ' \
-                                         'can not be empty'))
+                                         'can not be empty')).display
           elsif library_already_exists new_text
             log.debug { 'Already exists' }
             ErrorDialog.new(@main_app,
                             _('The library can not be renamed'),
                             _('There is already a library named ' \
                               "'%s'.  Please choose a different " \
-                              'name.') % new_text.strip)
+                              'name.') % new_text.strip).display
           else
             log.debug { "Attempting to apply #{path_string}, #{new_text}" }
             path = Gtk::TreePath.new(path_string)

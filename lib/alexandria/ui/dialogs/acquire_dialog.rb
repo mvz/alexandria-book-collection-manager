@@ -205,7 +205,7 @@ module Alexandria
           title = n_("Couldn't add this book",
                      "Couldn't add these books",
                      isbn_duplicates.size)
-          ErrorDialog.new(@parent, title, message)
+          ErrorDialog.new(@parent, title, message).display
         end
 
         @block.call(books, library, is_new_library)

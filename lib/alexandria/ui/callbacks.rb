@@ -1,23 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2008 Joseph Method
-# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module UI
@@ -34,7 +19,7 @@ module Alexandria
       end
 
       def on_new_smart(*)
-        NewSmartLibraryDialog.new(@main_app) do |smart_library|
+        NewSmartLibraryDialog.new(@main_app).acquire do |smart_library|
           smart_library.refilter
           @libraries.add_library(smart_library)
           append_library(smart_library, true)
@@ -62,7 +47,7 @@ module Alexandria
       end
 
       def on_import(*)
-        ImportDialog.new(@main_app) do |library, bad_isbns, failed_isbns|
+        ImportDialog.new(@main_app).acquire do |library, bad_isbns, failed_isbns|
           unless bad_isbns.empty?
             log.debug { 'bad_isbn' }
             message = _('The following lines are not valid ISBNs and were not imported:')
@@ -121,13 +106,13 @@ module Alexandria
       end
 
       def on_export(*)
-        ExportDialog.new(@main_app, selected_library, library_sort_order)
+        ExportDialog.new(@main_app, selected_library, library_sort_order).perform
         # FIXME: Remove this hack and fix the underlying problem.
       rescue => ex
         log.error { "problem with immediate export #{ex} try again" }
         ErrorDialog.new(@main_app, _('Export failed'),
                         _('Try letting this library load ' \
-                          'completely before exporting.'))
+                          'completely before exporting.')).display
       end
 
       def on_acquire(*)
@@ -146,7 +131,7 @@ module Alexandria
         if @library_listview.focus? || selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
-            SmartLibraryPropertiesDialog.new(@main_app, library) do
+            SmartLibraryPropertiesDialog.new(@main_app, library).acquire do
               library.refilter
               refresh_books
             end

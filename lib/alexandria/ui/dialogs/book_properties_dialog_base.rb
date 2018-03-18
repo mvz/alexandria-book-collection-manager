@@ -288,7 +288,7 @@ module Alexandria
             self.cover = cover
             @@latest_filechooser_directory = dialog.current_folder
           rescue RuntimeError => e
-            ErrorDialog.new(@book_properties_dialog, e.message)
+            ErrorDialog.new(@book_properties_dialog, e.message).display
           end
         elsif response == :reject
           ## FileUtils.rm_f(@cover_file) # fixing bug #16707

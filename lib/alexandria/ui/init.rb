@@ -81,7 +81,7 @@ module Alexandria
       ErrorDialog.new(parent, _('Unable to launch the help browser'),
                       _('Could not display help for Alexandria. ' \
                         'There was an error launching the system ' \
-                        'help browser.'))
+                        'help browser.')).display
     end
   end
 end

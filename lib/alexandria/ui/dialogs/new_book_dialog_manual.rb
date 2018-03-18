@@ -118,7 +118,7 @@ module Alexandria
         @book_properties_dialog.destroy
       rescue AddError => e
         ErrorDialog.new(@parent, _("Couldn't add the book"),
-                        e.message)
+                        e.message).display
       end
 
       # COPIED from book_properties_dialog_base

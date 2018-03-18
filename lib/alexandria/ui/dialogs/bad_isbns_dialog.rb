@@ -22,14 +22,17 @@ module Alexandria
     # Generalized Dialog for lists of bad isbns. Used for on_import. Can also
     # be used for on_load library conversions.
     class BadIsbnsDialog < Gtk::MessageDialog
-      def initialize(parent, message = nil, list = nil)
+      include GetText
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+
+      def initialize(parent, message = nil, list = [])
         message ||= _("There's a problem")
 
-        super(parent,
-              Gtk::Dialog::MODAL,
-              Gtk::MessageDialog::WARNING,
-              Gtk::MessageDialog::BUTTONS_CLOSE,
-              message)
+        super(parent: parent,
+              flags: :modal,
+              type: :warning,
+              buttons: :close,
+              message: message)
 
         isbn_container = Gtk::Box.new :horizontal
         the_vbox = children.first
