@@ -292,11 +292,8 @@ module Alexandria
     require 'alexandria/book_providers/mcu' # yep, still mostly works !
     require 'alexandria/book_providers/douban' # only requires YAML
 
-    # require 'alexandria/book_providers/ibs_it'
     # require 'alexandria/book_providers/renaud'
-    # require 'alexandria/book_providers/bol_it'
-    # require 'alexandria/book_providers/webster_it'
-    log.info { 'Not loading IBS, Renaud, BOL, Webster (providers not functional)' }
+    log.info { 'Not loading Renaud (provider not functional)' }
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     require 'alexandria/book_providers/amazon_aws'

@@ -105,13 +105,6 @@ Naming/BinaryOperatorParameterName:
     - 'lib/alexandria/smart_library.rb'
     - 'lib/alexandria/ui/multi_drag_treeview.rb'
 
-# Offense count: 3
-Naming/ClassAndModuleCamelCase:
-  Exclude:
-    - 'lib/alexandria/book_providers/bol_it.rb'
-    - 'lib/alexandria/book_providers/ibs_it.rb'
-    - 'lib/alexandria/book_providers/webster_it.rb'
-
 # Offense count: 15
 # Configuration parameters: Blacklist.
 # Blacklist: END, (?-mix:EO[A-Z]{1})
