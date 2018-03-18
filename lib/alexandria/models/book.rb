@@ -78,5 +78,9 @@ module Alexandria
     def ==(obj)
       obj.is_a?(self.class) && (ident == obj.ident)
     end
+
+    def inspect
+      "#<Alexandria::Book title: #{@title}>"
+    end
   end
 end
