@@ -102,7 +102,7 @@ module Alexandria
         end
 
         on_error = proc do |message|
-          SkipEntryDialog.new(parent, message).continue?
+          SkipEntryDialog.new(self, message).continue?
         end
 
         exec_queue = ExecutionQueue.new
@@ -165,7 +165,7 @@ module Alexandria
               break
             elsif not_cancelled
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
-              ErrorDialog.new(parent,
+              ErrorDialog.new(self,
                               _("Couldn't import the library"),
                               _('The format of the file you ' \
                                 'provided is unknown.  Please ' \

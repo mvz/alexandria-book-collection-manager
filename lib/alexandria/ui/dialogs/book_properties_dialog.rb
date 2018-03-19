@@ -120,7 +120,7 @@ module Alexandria
         else
           isbn = Library.canonicalise_ean(@entry_isbn.text)
           unless isbn
-            ErrorDialog.new(@parent,
+            ErrorDialog.new(@book_properties_dialog,
                             _("Couldn't modify the book"),
                             _("Couldn't validate the EAN/ISBN you " \
                               'provided.  Make sure it is written ' \
@@ -130,7 +130,7 @@ module Alexandria
 
           ary = @library.select { |book| book.ident == isbn }
           unless ary.empty? || ((ary.length == 1) && (ary.first == @book))
-            ErrorDialog.new(@parent,
+            ErrorDialog.new(@book_properties_dialog,
                             _("Couldn't modify the book"),
                             _('The EAN/ISBN you provided is already ' \
                               'used in this library.')).display

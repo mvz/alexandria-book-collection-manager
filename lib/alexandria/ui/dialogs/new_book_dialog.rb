@@ -259,7 +259,7 @@ module Alexandria
 
           # Err... continue == false if @find_error
           continue = if @find_error
-                       ErrorDialog.new(@parent,
+                       ErrorDialog.new(@new_book_dialog,
                                        _('Unable to find matches for your search'),
                                        @find_error).display
                        false
@@ -388,7 +388,7 @@ module Alexandria
             isbn = canonicalise_ean(isbn)
             unless isbn
               puts "invalidisbn #{book.isbn}"
-              next unless KeepBadISBNDialog.new(@parent, book).keep?
+              next unless KeepBadISBNDialog.new(@new_book_dialog, book).keep?
               book.isbn = book.saved_ident = nil
             end
 
@@ -457,7 +457,7 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
         rescue => e
-          ErrorDialog.new(@parent, _("Couldn't add the book"), e.message).display
+          ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), e.message).display
         end
         # books_to_add
       end

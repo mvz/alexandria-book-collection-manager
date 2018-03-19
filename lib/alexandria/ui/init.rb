@@ -72,7 +72,7 @@ end
 
 module Alexandria
   module UI
-    def self.display_help(parent = nil, section = nil)
+    def self.display_help(parent, section = nil)
       section_index = ''
       section_index = "##{section}" if section
       exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?

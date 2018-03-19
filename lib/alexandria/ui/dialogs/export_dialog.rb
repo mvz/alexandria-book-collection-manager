@@ -131,7 +131,7 @@ module Alexandria
         if format.ext
           filename += '.' + format.ext if File.extname(filename).empty?
           if File.exist?(filename)
-            dialog = ConfirmEraseDialog.new(@parent, filename)
+            dialog = ConfirmEraseDialog.new(@export_dialog, filename)
             return unless dialog.erase?
             FileUtils.rm(filename)
           end
@@ -143,7 +143,7 @@ module Alexandria
                       'file.  A directory is needed for this ' \
                       'operation.  Please select a directory and ' \
                       'try again.') % filename
-              ErrorDialog.new(@parent, _('Not a directory'), msg).display
+              ErrorDialog.new(@export_dialog, _('Not a directory'), msg).display
               return
             end
           else
