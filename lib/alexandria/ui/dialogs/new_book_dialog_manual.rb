@@ -69,18 +69,13 @@ module Alexandria
         end
         isbn = nil
         if @entry_isbn.text != ''
-          ary = @library.select { |book|
-            book.ident == @entry_isbn.text
-          }
+          isbn = Library.canonicalise_ean(@entry_isbn.text)
+          unless isbn
+            raise AddError, _("Couldn't validate the EAN/ISBN you provided.  Make " \
+                              'sure it is written correcty, and try again.')
+          end
+          ary = @library.select { |book| book.ident == isbn }
           raise AddError, _('The EAN/ISBN you provided is already used in this library.') unless ary.empty?
-          isbn = begin
-                   Library.canonicalise_isbn(@entry_isbn.text)
-                 rescue Alexandria::Library::InvalidISBNError
-                   raise AddError, _("Couldn't validate the " \
-                                        'EAN/ISBN you provided.  Make ' \
-                                        'sure it is written correcty, ' \
-                                        'and try again.')
-                 end
         end
         if (publisher = @entry_publisher.text.strip).empty?
           raise AddError, _('A publisher must be provided.')

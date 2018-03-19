@@ -118,7 +118,17 @@ module Alexandria
           # If set to nil .to_yaml in library.save causes crash
           @book.isbn = ''
         else
-          ary = @library.select { |book| book.ident == @entry_isbn.text }
+          isbn = Library.canonicalise_ean(@entry_isbn.text)
+          unless isbn
+            ErrorDialog.new(@parent,
+                            _("Couldn't modify the book"),
+                            _("Couldn't validate the EAN/ISBN you " \
+                              'provided.  Make sure it is written ' \
+                              'correcty, and try again.')).display
+            return
+          end
+
+          ary = @library.select { |book| book.ident == isbn }
           unless ary.empty? || ((ary.length == 1) && (ary.first == @book))
             ErrorDialog.new(@parent,
                             _("Couldn't modify the book"),
@@ -126,16 +136,8 @@ module Alexandria
                               'used in this library.')).display
             return
           end
-          @book.isbn = begin
-                         Library.canonicalise_ean(@entry_isbn.text)
-                       rescue Alexandria::Library::InvalidISBNError
-                         ErrorDialog.new(@parent,
-                                         _("Couldn't modify the book"),
-                                         _("Couldn't validate the EAN/ISBN you " \
-                                           'provided.  Make sure it is written ' \
-                                           'correcty, and try again.')).display
-                         return
-                       end
+
+          @book.isbn = isbn
         end
         @book.title = @entry_title.text
         @book.publisher = @entry_publisher.text

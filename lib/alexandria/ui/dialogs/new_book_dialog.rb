@@ -345,9 +345,6 @@ module Alexandria
               # MAJOR HACK, add this again...
               Alexandria::BookProviders.instance.add_observer(self)
               book, cover_url = Alexandria::BookProviders.isbn_search(isbn)
-              # prov = FakeBookProviders.new()
-              # prov.add_observer(self)
-              # book, cover_url = prov.isbn_search(isbn)
 
               notify_end_add_by_isbn
 
@@ -380,18 +377,23 @@ module Alexandria
         @treeview_results.selection.selected_each do |_model, _path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
-            begin
-              next unless assert_not_exist(library, book.isbn)
-            rescue Alexandria::Library::NoISBNError
+            isbn = book.isbn
+            if isbn.nil? || isbn.empty?
               puts 'noisbn'
               book.isbn = book.saved_ident = nil
               books_to_add << [book, cover]
               next
-            rescue Alexandria::Library::InvalidISBNError
+            end
+
+            isbn = canonicalise_ean(isbn)
+            unless isbn
               puts "invalidisbn #{book.isbn}"
               next unless KeepBadISBNDialog.new(@parent, book).keep?
               book.isbn = book.saved_ident = nil
             end
+
+            book.isbn = isbn
+            assert_not_exist(library, isbn)
             books_to_add << [book, cover]
           end
         end
@@ -555,12 +557,11 @@ module Alexandria
       def assert_not_exist(library, isbn)
         # Check that the book doesn't already exist in the library.
         isbn13 = Library.canonicalise_ean(isbn)
-        puts isbn13
+        return unless isbn13
         if (book = library.find { |bk| bk.isbn == isbn13 })
           raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."),
                                                isbn, library.name, book.title.sub('&', '&amp;'))
         end
-        true
       end
     end
   end
