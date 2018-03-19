@@ -252,12 +252,7 @@ module Alexandria
       end
 
       def on_about(*)
-        ad = AboutDialog.new(@main_app)
-        ad.signal_connect('response') do
-          log.debug { 'destroy about' }
-          ad.destroy
-        end
-        ad.show
+        AboutDialog.new(@main_app).show
       end
 
       def on_view_sidepane(action)
