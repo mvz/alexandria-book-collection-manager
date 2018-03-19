@@ -134,7 +134,7 @@ end
 describe Alexandria::UI::BadIsbnsDialog do
   it 'should work' do
     parent = Gtk::Window.new :toplevel
-    described_class.new parent
+    described_class.new parent, 'Careful', []
   end
 end
 
