@@ -20,7 +20,7 @@
 
 module Alexandria
   module UI
-    class SmartLibraryPropertiesDialogBase < Gtk::Dialog
+    class SmartLibraryPropertiesDialogBase < SimpleDelegator
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
@@ -28,10 +28,11 @@ module Alexandria
       attr_reader :predicate_operator_rule
 
       def initialize(parent)
-        super(title: '',
-              parent: parent,
-              flags: :modal,
-              buttons: [[Gtk::Stock::HELP, :help]])
+        @dialog = Gtk::Dialog.new(title: '',
+                                 parent: parent,
+                                 flags: :modal,
+                                 buttons: [[Gtk::Stock::HELP, :help]])
+        super(@dialog)
 
         self.window_position = :center
         self.resizable = true
@@ -82,7 +83,7 @@ module Alexandria
       def user_confirms_possible_weirdnesses_before_saving?
         return true unless has_weirdnesses?
         dialog = AlertDialog.new(
-          self,
+          @dialog,
           _('Empty or conflictive condition'),
           Gtk::Stock::DIALOG_QUESTION,
           [[Gtk::Stock::CANCEL, :cancel],
@@ -307,7 +308,7 @@ module Alexandria
         @calendar_popup.skip_pager_hint = true
         @calendar_popup.events = [:focus_change_mask]
 
-        @calendar_popup.set_transient_for(self)
+        @calendar_popup.set_transient_for(@dialog)
         @calendar_popup.set_type_hint(:dialog)
         @calendar_popup.name = 'calendar-popup'
         @calendar_popup.resizable = false

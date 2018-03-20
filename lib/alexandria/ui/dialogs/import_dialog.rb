@@ -36,7 +36,7 @@ module Alexandria
       end
     end
 
-    class ImportDialog < Gtk::FileChooserDialog
+    class ImportDialog < SimpleDelegator
       include GetText
       include Logging
 
@@ -45,13 +45,11 @@ module Alexandria
       FILTERS = Alexandria::ImportFilter.all
 
       def initialize(parent)
-        super()
+        title = _('Import a Library')
+        dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
+        super(dialog)
         puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
-        self.title = _('Import a Library')
-        self.action = :open
-        self.transient_for = parent
-        #            self.deletable = false
         @running = false
         add_button(Gtk::Stock::HELP, :help)
         add_button(Gtk::Stock::CANCEL, :cancel)

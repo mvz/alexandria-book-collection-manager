@@ -28,7 +28,7 @@ module Alexandria
       end
     end
 
-    class ExportDialog < Gtk::FileChooserDialog
+    class ExportDialog < SimpleDelegator
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
@@ -37,13 +37,14 @@ module Alexandria
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        super(title: _("Export '%s'") % library.name,
-              action: :save,
-              buttons: [[Gtk::Stock::HELP, :help],
-                        [Gtk::Stock::CANCEL, :cancel],
-                        [_('_Export'), :accept]])
+        dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
+                                            parent: parent,
+                                            action: :save,
+                                            buttons: [[Gtk::Stock::HELP, :help],
+                                                      [Gtk::Stock::CANCEL, :cancel],
+                                                      [_('_Export'), :accept]])
+        super(dialog)
 
-        self.transient_for = parent
         self.current_name = library.name
         signal_connect('destroy') { hide }
 

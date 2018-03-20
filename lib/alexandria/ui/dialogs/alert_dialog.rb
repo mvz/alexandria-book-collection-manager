@@ -7,9 +7,10 @@
 # HIG compliant error dialog boxes
 module Alexandria
   module UI
-    class AlertDialog < Gtk::Dialog
+    class AlertDialog < SimpleDelegator
       def initialize(parent, title, stock_icon, buttons, message = nil)
-        super(title: '', parent: parent, flags: :destroy_with_parent, buttons: buttons)
+        dialog = Gtk::Dialog.new(title: '', parent: parent, flags: :destroy_with_parent, buttons: buttons)
+        super(dialog)
 
         self.border_width = 6
         self.resizable = false

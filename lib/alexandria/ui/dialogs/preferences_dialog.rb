@@ -17,9 +17,10 @@ end
 
 module Alexandria
   module UI
-    class ProviderPreferencesBaseDialog < Gtk::Dialog
+    class ProviderPreferencesBaseDialog < SimpleDelegator
       def initialize(*args)
-        super(*args)
+        dialog = Gtk::Dialog.new(*args)
+        super(dialog)
 
         self.resizable = false
         child.border_width = 12
