@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.0 -->
 <interface>
-  <requires lib="gtk+" version="2.22"/>
-  <!-- interface-naming-policy toplevel-contextual -->
+  <requires lib="gtk+" version="3.0"/>
   <object class="GtkDialog" id="preferences_dialog">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Preferences</property>
     <property name="type_hint">dialog</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog_vbox1">
+      <object class="GtkBox" id="dialog_vbox1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog_action_area1">
+          <object class="GtkButtonBox" id="dialog_action_area1">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button1">
                 <property name="label">gtk-help</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
                 <signal name="clicked" handler="on_help" swapped="no"/>
               </object>
@@ -36,11 +37,11 @@
             <child>
               <object class="GtkButton" id="button2">
                 <property name="label">gtk-close</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="receives_default">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
                 <signal name="clicked" handler="on_close" swapped="no"/>
               </object>
@@ -73,9 +74,9 @@
                   <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Book Data Providers&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -93,8 +94,6 @@
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
-                        <property name="vscrollbar_policy">automatic</property>
                         <property name="shadow_type">in</property>
                         <child>
                           <object class="GtkTreeView" id="treeview_providers">
@@ -104,6 +103,9 @@
                             <property name="reorderable">True</property>
                             <property name="rules_hint">True</property>
                             <signal name="button-press-event" handler="on_providers_button_press_event" swapped="no"/>
+                            <child internal-child="selection">
+                              <object class="GtkTreeSelection"/>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -121,11 +123,11 @@
                         <property name="layout_style">start</property>
                         <child>
                           <object class="GtkButton" id="button_prov_setup">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <signal name="clicked" handler="on_provider_setup" swapped="no"/>
                             <child>
                               <object class="GtkAlignment" id="alignment1">
@@ -177,11 +179,11 @@
                         <child>
                           <object class="GtkButton" id="button_prov_up">
                             <property name="label">gtk-go-up</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_provider_up" swapped="no"/>
                           </object>
@@ -194,11 +196,11 @@
                         <child>
                           <object class="GtkButton" id="button_prov_down">
                             <property name="label">gtk-go-down</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_provider_down" swapped="no"/>
                           </object>
@@ -211,10 +213,10 @@
                         <child>
                           <object class="GtkButton" id="button_prov_add">
                             <property name="label">gtk-add</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_provider_add" swapped="no"/>
                           </object>
@@ -227,10 +229,10 @@
                         <child>
                           <object class="GtkButton" id="button_prov_remove">
                             <property name="label">gtk-remove</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="can_focus">True</property>
                             <property name="can_default">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="use_stock">True</property>
                             <signal name="clicked" handler="on_provider_remove" swapped="no"/>
                           </object>
@@ -258,10 +260,10 @@
                   <object class="GtkLabel" id="label5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="xpad">6</property>
                     <property name="label" translatable="yes">Providers are libraries that supply information about books.  Some of them can be configured to get better results.  You can also customize the order in which they are queried.</property>
                     <property name="wrap">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -272,12 +274,12 @@
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_prov_advanced">
                     <property name="label" translatable="yes">Custom _Z39.50 Providers</property>
+                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="tooltip_text" translatable="yes">Add and remove your own Z39.50 providers.
 Requires the Ruby/ZOOM software library.</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="use_underline">True</property>
                     <property name="yalign">0.51999998092651367</property>
                     <property name="draw_indicator">True</property>
@@ -317,9 +319,9 @@ Requires the Ruby/ZOOM software library.</property>
                   <object class="GtkLabel" id="label7">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">&lt;b&gt;Visible Columns&lt;/b&gt;</property>
                     <property name="use_markup">True</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -338,26 +340,26 @@ Requires the Ruby/ZOOM software library.</property>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_authors">
                         <property name="label" translatable="yes">_Authors</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
                       </object>
                       <packing>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_isbn">
                         <property name="label" translatable="yes">_ISBN</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -366,16 +368,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">1</property>
                         <property name="bottom_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_publisher">
                         <property name="label" translatable="yes">_Publisher</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -384,16 +386,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">2</property>
                         <property name="bottom_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_rating">
                         <property name="label" translatable="yes">_Rating</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -402,16 +404,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">8</property>
                         <property name="bottom_attach">9</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_edition">
                         <property name="label" translatable="yes">_Binding</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -420,16 +422,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">4</property>
                         <property name="bottom_attach">5</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_publish_date">
                         <property name="label" translatable="yes">Publish _year</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -438,16 +440,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">3</property>
                         <property name="bottom_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_redd">
                         <property name="label" translatable="yes">Read?</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -456,16 +458,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">5</property>
                         <property name="bottom_attach">6</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_own">
                         <property name="label" translatable="yes">Own?</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -474,16 +476,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">6</property>
                         <property name="bottom_attach">7</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_want">
                         <property name="label" translatable="yes">Want?</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -492,16 +494,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">7</property>
                         <property name="bottom_attach">8</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_tags">
                         <property name="label" translatable="yes">Tags</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -510,16 +512,16 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">9</property>
                         <property name="bottom_attach">10</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_loaned_to">
                         <property name="label" translatable="yes">Loaned to</property>
+                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="use_underline">True</property>
                         <property name="draw_indicator">True</property>
                         <signal name="toggled" handler="on_column_toggled" swapped="no"/>
@@ -528,7 +530,7 @@ Requires the Ruby/ZOOM software library.</property>
                         <property name="top_attach">10</property>
                         <property name="bottom_attach">11</property>
                         <property name="x_options">GTK_FILL</property>
-                        <property name="y_options"></property>
+                        <property name="y_options"/>
                       </packing>
                     </child>
                   </object>
@@ -571,9 +573,9 @@ Requires the Ruby/ZOOM software library.</property>
                       <object class="GtkLabel" id="label2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Barcode Scanner Device&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -635,9 +637,9 @@ Requires the Ruby/ZOOM software library.</property>
                       <object class="GtkLabel" id="label9">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="xalign">0</property>
                         <property name="label" translatable="yes">&lt;b&gt;Sound Effects&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
+                        <property name="xalign">0</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -653,26 +655,26 @@ Requires the Ruby/ZOOM software library.</property>
                         <child>
                           <object class="GtkCheckButton" id="use_scanning_sound">
                             <property name="label" translatable="yes">Scanning</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_use_scanning_sound" swapped="no"/>
                           </object>
                           <packing>
                             <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"></property>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="use_scan_sound">
                             <property name="label" translatable="yes">Good Scan / Bad Scan</property>
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                             <signal name="toggled" handler="on_use_scan_sound" swapped="no"/>
@@ -681,7 +683,7 @@ Requires the Ruby/ZOOM software library.</property>
                             <property name="top_attach">1</property>
                             <property name="bottom_attach">2</property>
                             <property name="x_options">GTK_FILL</property>
-                            <property name="y_options"></property>
+                            <property name="y_options"/>
                           </packing>
                         </child>
                       </object>
@@ -729,5 +731,8 @@ Requires the Ruby/ZOOM software library.</property>
       <action-widget response="-11">button1</action-widget>
       <action-widget response="-7">button2</action-widget>
     </action-widgets>
+    <child>
+      <placeholder/>
+    </child>
   </object>
 </interface>
