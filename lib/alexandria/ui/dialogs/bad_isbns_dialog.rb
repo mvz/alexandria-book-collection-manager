@@ -8,13 +8,14 @@ module Alexandria
   module UI
     # Generalized Dialog for lists of bad isbns. Used for on_import. Can also
     # be used for on_load library conversions.
-    class BadIsbnsDialog < Gtk::MessageDialog
+    class BadIsbnsDialog < SimpleDelegator
       def initialize(parent, message, list)
-        super(parent: parent,
+        dialog = Gtk::MessageDialog.new(parent: parent,
               flags: :modal,
               type: :warning,
               buttons: :close,
               message: message)
+        super(dialog)
 
         isbn_container = Gtk::Box.new :horizontal
         the_vbox = children.first
