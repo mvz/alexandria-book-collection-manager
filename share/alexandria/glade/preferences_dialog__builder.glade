@@ -20,7 +20,6 @@
             <child>
               <object class="GtkButton" id="button1">
                 <property name="label">gtk-help</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -37,7 +36,6 @@
             <child>
               <object class="GtkButton" id="button2">
                 <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -261,7 +259,8 @@
                   <object class="GtkLabel" id="label5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xpad">6</property>
+                    <property name="margin_left">6</property>
+                    <property name="margin_right">6</property>
                     <property name="label" translatable="yes">Providers are libraries that supply information about books.  Some of them can be configured to get better results.  You can also customize the order in which they are queried.</property>
                     <property name="wrap">True</property>
                     <property name="xalign">0</property>
@@ -275,14 +274,13 @@
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_prov_advanced">
                     <property name="label" translatable="yes">Custom _Z39.50 Providers</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
                     <property name="tooltip_text" translatable="yes">Add and remove your own Z39.50 providers.
 Requires the Ruby/ZOOM software library.</property>
                     <property name="use_underline">True</property>
-                    <property name="yalign">0.51999998092651367</property>
+                    <property name="xalign">0</property>
                     <property name="draw_indicator">True</property>
                     <signal name="toggled" handler="on_provider_advanced_toggled" swapped="no"/>
                   </object>
@@ -342,7 +340,6 @@ Requires the Ruby/ZOOM software library.</property>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_authors">
                         <property name="label" translatable="yes">_Authors</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -358,7 +355,6 @@ Requires the Ruby/ZOOM software library.</property>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_isbn">
                         <property name="label" translatable="yes">_ISBN</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -376,7 +372,6 @@ Requires the Ruby/ZOOM software library.</property>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_publisher">
                         <property name="label" translatable="yes">_Publisher</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
@@ -394,7 +389,6 @@ Requires the Ruby/ZOOM software library.</property>
                     <child>
                       <object class="GtkCheckButton" id="checkbutton_col_rating">
                         <property name="label" translatable="yes">_Rating</property>
-                        <property name="use_action_appearance">False</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>

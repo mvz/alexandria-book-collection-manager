@@ -705,7 +705,6 @@
                 <child>
                   <object class="GtkCheckButton" id="checkbutton_loaned">
                     <property name="label" translatable="yes">This book is _loaned</property>
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
