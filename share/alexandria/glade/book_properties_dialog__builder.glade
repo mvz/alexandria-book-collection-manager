@@ -346,9 +346,10 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVSeparator" id="vseparator1">
+                  <object class="GtkSeparator" id="vseparator1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
