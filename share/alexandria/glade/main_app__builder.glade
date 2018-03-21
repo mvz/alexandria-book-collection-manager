@@ -16,7 +16,7 @@
           <placeholder/>
         </child>
         <child>
-          <object class="GtkHPaned" id="paned">
+          <object class="GtkPaned" id="paned">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="position">2</property>
