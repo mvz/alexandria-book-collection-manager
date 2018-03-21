@@ -291,20 +291,16 @@ Requires the Ruby/ZOOM software library.</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label1">
+              <object class="GtkLabel" id="label6">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_Providers</property>
+                <property name="label" translatable="yes">_List View</property>
                 <property name="use_underline">True</property>
-                <property name="mnemonic_widget">treeview_providers</property>
+                <property name="mnemonic_widget">listview_table</property>
               </object>
               <packing>
-                <property name="position">1</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -537,20 +533,16 @@ Requires the Ruby/ZOOM software library.</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="label6">
+              <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">_List View</property>
+                <property name="label" translatable="yes">_Providers</property>
                 <property name="use_underline">True</property>
-                <property name="mnemonic_widget">listview_table</property>
+                <property name="mnemonic_widget">treeview_providers</property>
               </object>
               <packing>
-                <property name="position">1</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -700,9 +692,6 @@ Requires the Ruby/ZOOM software library.</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
             </child>
             <child type="tab">
               <object class="GtkLabel" id="barcode_scanner_label">
@@ -713,7 +702,6 @@ Requires the Ruby/ZOOM software library.</property>
                 <property name="mnemonic_widget">barcode_scanner_panel</property>
               </object>
               <packing>
-                <property name="position">1</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
