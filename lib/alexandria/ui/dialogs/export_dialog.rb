@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2014, 2016 Matijs van Zuijlen
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module UI
@@ -33,16 +19,16 @@ module Alexandria
                 'to replace it with the one you are generating?') % filename)
         # FIXME: Should accept just :cancel
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all && (@response = run)
-        destroy
       end
 
       def erase?
+        show_all && (@response = run)
+        destroy
         @response == :ok
       end
     end
 
-    class ExportDialog < Gtk::FileChooserDialog
+    class ExportDialog < SimpleDelegator
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
@@ -51,13 +37,14 @@ module Alexandria
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        super(title: _("Export '%s'") % library.name,
-              action: :save,
-              buttons: [[Gtk::Stock::HELP, :help],
-                        [Gtk::Stock::CANCEL, :cancel],
-                        [_('_Export'), :accept]])
+        dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
+                                            parent: parent,
+                                            action: :save,
+                                            buttons: [[Gtk::Stock::HELP, :help],
+                                                      [Gtk::Stock::CANCEL, :cancel],
+                                                      [_('_Export'), :accept]])
+        super(dialog)
 
-        self.transient_for = parent
         self.current_name = library.name
         signal_connect('destroy') { hide }
 
@@ -116,7 +103,9 @@ module Alexandria
         grid.attach theme_combo, 1, 1, 1, 1
         grid.attach preview_image, 2, 0, 1, 3
         set_extra_widget grid
+      end
 
+      def perform
         while ((response = run) != :cancel) &&
             (response != :delete_event)
 
@@ -128,7 +117,7 @@ module Alexandria
                                  THEMES[theme_combo.active])
             rescue => e
               raise
-              ErrorDialog.new(self, _('Export failed'), e.message)
+              ErrorDialog.new(self, _('Export failed'), e.message).display
             end
           end
         end
@@ -143,7 +132,7 @@ module Alexandria
         if format.ext
           filename += '.' + format.ext if File.extname(filename).empty?
           if File.exist?(filename)
-            dialog = ConfirmEraseDialog.new(@parent, filename)
+            dialog = ConfirmEraseDialog.new(@export_dialog, filename)
             return unless dialog.erase?
             FileUtils.rm(filename)
           end
@@ -155,7 +144,7 @@ module Alexandria
                       'file.  A directory is needed for this ' \
                       'operation.  Please select a directory and ' \
                       'try again.') % filename
-              ErrorDialog.new(@parent, _('Not a directory'), msg)
+              ErrorDialog.new(@export_dialog, _('Not a directory'), msg).display
               return
             end
           else

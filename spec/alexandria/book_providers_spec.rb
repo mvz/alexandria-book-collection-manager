@@ -115,6 +115,7 @@ describe Alexandria::BookProviders do
   end
 
   it 'BL should work' do
+    skip 'Not working: connect failed'
     assert_correct_search_result(Alexandria::BookProviders::BLProvider,
                                  '9781853260803')
   end

@@ -1,23 +1,10 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
+require 'alexandria/ui/builder_base'
 require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
 
@@ -30,9 +17,10 @@ end
 
 module Alexandria
   module UI
-    class ProviderPreferencesBaseDialog < Gtk::Dialog
+    class ProviderPreferencesBaseDialog < SimpleDelegator
       def initialize(*args)
-        super(*args)
+        dialog = Gtk::Dialog.new(*args)
+        super(dialog)
 
         self.resizable = false
         child.border_width = 12
@@ -118,7 +106,9 @@ module Alexandria
         child.pack_start(table)
 
         signal_connect('destroy') { sync_variables }
+      end
 
+      def acquire
         show_all
         run
         destroy
@@ -130,10 +120,10 @@ module Alexandria
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
 
       def initialize(parent)
-        super(_('New Provider'),
-              parent,
-              Gtk::Dialog::MODAL,
-              [Gtk::Stock::CANCEL, :cancel])
+        super(title: _('New Provider'),
+              parent: parent,
+              flags: :modal,
+              buttons: [[Gtk::Stock::CANCEL, :cancel]])
         @add_button = add_button(Gtk::Stock::ADD,
                                  :accept)
 
@@ -141,7 +131,7 @@ module Alexandria
         @selected_instance = nil
 
         @table = Gtk::Table.new(2, 2)
-        vbox.pack_start(@table)
+        child.pack_start(@table)
 
         # Name.
 
@@ -162,7 +152,7 @@ module Alexandria
         label_type.xalign = 0
         @table.attach_defaults(label_type, 0, 1, 1, 2)
 
-        combo_type = Gtk::ComboBox.new
+        combo_type = Gtk::ComboBoxText.new
         instances.each do |instance|
           combo_type.append_text(instance.name)
         end
@@ -176,7 +166,9 @@ module Alexandria
         combo_type.active = 0
         label_type.mnemonic_widget = combo_type
         @table.attach_defaults(combo_type, 1, 2, 1, 2)
+      end
 
+      def acquire
         show_all
         if run == :accept
           @selected_instance.reinitialize(entry_name.text)
@@ -407,7 +399,9 @@ module Alexandria
 
       def on_provider_setup
         provider = selected_provider
-        ProviderPreferencesDialog.new(@preferences_dialog, provider) unless prefs_empty(provider.prefs)
+        unless prefs_empty(provider.prefs)
+          ProviderPreferencesDialog.new(@preferences_dialog, provider).acquire
+        end
       end
 
       def on_provider_up
@@ -436,7 +430,7 @@ module Alexandria
       end
 
       def on_provider_add
-        dialog = NewProviderDialog.new(@preferences_dialog)
+        dialog = NewProviderDialog.new(@preferences_dialog).acquire
         if dialog.instance
           BookProviders.update_priority
           reload_providers

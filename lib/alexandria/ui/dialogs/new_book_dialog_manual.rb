@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module UI
@@ -33,17 +19,17 @@ module Alexandria
         @on_add_cb = on_add_cb
         FileUtils.rm_f(TMP_COVER_FILE)
 
-        cancel_button = Gtk::Button.new(Gtk::Stock::CANCEL)
+        cancel_button = Gtk::Button.new(stock_id: Gtk::Stock::CANCEL)
         cancel_button.signal_connect('clicked') { on_cancel }
         cancel_button.show
         @button_box << cancel_button
 
-        add_button = Gtk::Button.new(Gtk::Stock::ADD)
+        add_button = Gtk::Button.new(stock_id: Gtk::Stock::ADD)
         add_button.signal_connect('clicked') { on_add }
         add_button.show
         @button_box << add_button
 
-        help_button = Gtk::Button.new(Gtk::Stock::HELP)
+        help_button = Gtk::Button.new(stock_id: Gtk::Stock::HELP)
         help_button.signal_connect('clicked') { on_help }
         help_button.show
         @button_box << help_button
@@ -57,15 +43,11 @@ module Alexandria
 
       def on_title_changed
         title = @entry_title.text.strip
-        begin
-          @book_properties_dialog.title = if title.empty?
-                                            _('Adding a Book')
-                                          else
-                                            _("Adding '%s'") % title
-                                          end
-        rescue
-          raise "There's a problem with a book somewhere"
-        end
+        @book_properties_dialog.title = if title.empty?
+                                          _('Adding a Book')
+                                        else
+                                          _("Adding '%s'") % title
+                                        end
       end
 
       private
@@ -83,18 +65,13 @@ module Alexandria
         end
         isbn = nil
         if @entry_isbn.text != ''
-          ary = @library.select { |book|
-            book.ident == @entry_isbn.text
-          }
+          isbn = Library.canonicalise_ean(@entry_isbn.text)
+          unless isbn
+            raise AddError, _("Couldn't validate the EAN/ISBN you provided.  Make " \
+                              'sure it is written correcty, and try again.')
+          end
+          ary = @library.select { |book| book.ident == isbn }
           raise AddError, _('The EAN/ISBN you provided is already used in this library.') unless ary.empty?
-          isbn = begin
-                   Library.canonicalise_isbn(@entry_isbn.text)
-                 rescue Alexandria::Library::InvalidISBNError
-                   raise AddError, _("Couldn't validate the " \
-                                        'EAN/ISBN you provided.  Make ' \
-                                        'sure it is written correcty, ' \
-                                        'and try again.')
-                 end
         end
         if (publisher = @entry_publisher.text.strip).empty?
           raise AddError, _('A publisher must be provided.')
@@ -131,8 +108,8 @@ module Alexandria
         @on_add_cb.call(book)
         @book_properties_dialog.destroy
       rescue AddError => e
-        ErrorDialog.new(@parent, _("Couldn't add the book"),
-                        e.message)
+        ErrorDialog.new(@book_properties_dialog, _("Couldn't add the book"),
+                        e.message).display
       end
 
       # COPIED from book_properties_dialog_base

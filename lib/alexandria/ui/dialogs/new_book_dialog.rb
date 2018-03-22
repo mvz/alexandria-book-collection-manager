@@ -1,52 +1,18 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2015, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 require 'gdk_pixbuf2'
+require 'alexandria/ui/builder_base'
+require 'alexandria/ui/dialogs/keep_bad_isbn_dialog'
 
 module Alexandria
   class DuplicateBookException < NameError
   end
 
   module UI
-    class KeepBadISBNDialog < AlertDialog
-      include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
-
-      def initialize(parent, book)
-        super(parent, _("Invalid ISBN '%s'") % book.isbn,
-              Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, :cancel],
-               [_('_Keep'), :ok]],
-              _("The book titled '%s' has an invalid ISBN, but still " \
-                'exists in the providers libraries.  Do you want to ' \
-                'keep the book but change the ISBN or cancel the addition?') % book.title)
-        self.default_response = Gtk::ResponseType::OK
-        show_all && (@response = run)
-        destroy
-      end
-
-      def keep?
-        @response == :ok
-      end
-    end
-
     class NewBookDialog < BuilderBase
       include Logging
       include GetText
@@ -66,14 +32,11 @@ module Alexandria
       end
 
       def widget_names
-        [:liststore1, :liststore2, :new_book_dialog, :dialog_vbox1,
-         :dialog_action_area1, :button_help, :button_cancel,
-         :button_add, :table1, :keep_open, :combo_libraries,
-         :cellrenderertext1, :eventbox_entry_isbn, :entry_isbn,
-         :label3, :hbox2, :eventbox_combo_search, :combo_search,
-         :cellrenderertext2, :eventbox_entry_search, :entry_search,
-         :button_find, :scrolledwindow, :treeview_results,
-         :title_radiobutton, :isbn_radiobutton, :progressbar]
+        [:new_book_dialog, :button_add, :button_cancel, :button_find,
+         :button_help, :combo_libraries, :combo_search, :entry_isbn,
+         :entry_search, :eventbox_combo_search, :eventbox_entry_isbn,
+         :eventbox_entry_search, :isbn_radiobutton, :keep_open, :progressbar,
+         :scrolledwindow, :title_radiobutton, :treeview_results]
       end
 
       def setup_dialog_gui
@@ -84,7 +47,7 @@ module Alexandria
 
         @treeview_results.model = Gtk::ListStore.new(String, String,
                                                      GdkPixbuf::Pixbuf)
-        @treeview_results.selection.mode = Gtk::SELECTION_MULTIPLE
+        @treeview_results.selection.mode = :multiple
         @treeview_results.selection.signal_connect('changed') do
           @button_add.sensitive = true
         end
@@ -212,7 +175,7 @@ module Alexandria
 
         GLib::Timeout.add(100) do
           if @image_error
-            image_error_dialog(@image_error)
+            image_error_dialog(@image_error).display
           else
             @images.each_pair do |key, value|
               begin
@@ -230,7 +193,7 @@ module Alexandria
 
                 @images.delete(key)
               rescue => e
-                image_error_dialog(e.message)
+                image_error_dialog(e.message).display
               end
             end
           end
@@ -256,16 +219,6 @@ module Alexandria
                when 2
                  BookProviders::SEARCH_BY_KEYWORD
                end
-
-        # @progressbar.show
-        # progress_pulsing = GLib::Timeout.add(100) do
-        #  if @destroyed
-        #    false
-        #  else
-        #    @progressbar.pulse
-        #    true
-        #  end
-        # end
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
@@ -306,9 +259,9 @@ module Alexandria
 
           # Err... continue == false if @find_error
           continue = if @find_error
-                       ErrorDialog.new(@parent,
+                       ErrorDialog.new(@new_book_dialog,
                                        _('Unable to find matches for your search'),
-                                       @find_error)
+                                       @find_error).display
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
@@ -392,9 +345,6 @@ module Alexandria
               # MAJOR HACK, add this again...
               Alexandria::BookProviders.instance.add_observer(self)
               book, cover_url = Alexandria::BookProviders.isbn_search(isbn)
-              # prov = FakeBookProviders.new()
-              # prov.add_observer(self)
-              # book, cover_url = prov.isbn_search(isbn)
 
               notify_end_add_by_isbn
 
@@ -427,19 +377,23 @@ module Alexandria
         @treeview_results.selection.selected_each do |_model, _path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
-            begin
-              next unless assert_not_exist(library, book.isbn)
-            rescue Alexandria::Library::NoISBNError
+            isbn = book.isbn
+            if isbn.nil? || isbn.empty?
               puts 'noisbn'
               book.isbn = book.saved_ident = nil
               books_to_add << [book, cover]
               next
-            rescue Alexandria::Library::InvalidISBNError
+            end
+
+            isbn = canonicalise_ean(isbn)
+            unless isbn
               puts "invalidisbn #{book.isbn}"
-              next unless
-              KeepBadISBNDialog.new(@parent, book).keep?
+              next unless KeepBadISBNDialog.new(@new_book_dialog, book).keep?
               book.isbn = book.saved_ident = nil
             end
+
+            book.isbn = isbn
+            assert_not_exist(library, isbn)
             books_to_add << [book, cover]
           end
         end
@@ -503,7 +457,7 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
         rescue => e
-          ErrorDialog.new(@parent, _("Couldn't add the book"), e.message)
+          ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), e.message).display
         end
         # books_to_add
       end
@@ -603,12 +557,11 @@ module Alexandria
       def assert_not_exist(library, isbn)
         # Check that the book doesn't already exist in the library.
         isbn13 = Library.canonicalise_ean(isbn)
-        puts isbn13
+        return unless isbn13
         if (book = library.find { |bk| bk.isbn == isbn13 })
           raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."),
                                                isbn, library.name, book.title.sub('&', '&amp;'))
         end
-        true
       end
     end
   end

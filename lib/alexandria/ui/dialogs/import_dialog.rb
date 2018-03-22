@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 class Alexandria::ImportFilter
   def to_filefilter
@@ -41,16 +27,16 @@ module Alexandria
               message)
         puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
         self.default_response = Gtk::ResponseType::CANCEL
-        show_all && (@response = run)
-        destroy
       end
 
       def continue?
+        show_all && (@response = run)
+        destroy
         @response == :ok
       end
     end
 
-    class ImportDialog < Gtk::FileChooserDialog
+    class ImportDialog < SimpleDelegator
       include GetText
       include Logging
 
@@ -59,29 +45,25 @@ module Alexandria
       FILTERS = Alexandria::ImportFilter.all
 
       def initialize(parent)
-        super()
+        title = _('Import a Library')
+        dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
+        super(dialog)
         puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
-        self.title = _('Import a Library')
-        self.action = :open
-        self.transient_for = parent
-        #            self.deletable = false
-        running = false
+        @running = false
         add_button(Gtk::Stock::HELP, :help)
         add_button(Gtk::Stock::CANCEL, :cancel)
         import_button = add_button(_('_Import'),
                                    :accept)
         import_button.sensitive = false
 
-        signal_connect('destroy') {
-          if running
+        signal_connect('destroy') do
+          if @running
             @destroyed = true
-
           else
             destroy
           end
-          # self.destroy unless running
-        }
+        end
 
         filters = {}
         FILTERS.each do |filter|
@@ -105,7 +87,9 @@ module Alexandria
         pbar = Gtk::ProgressBar.new
         pbar.show_text = true
         child.pack_start(pbar, expand: false)
+      end
 
+      def acquire
         on_progress = proc do |fraction|
           begin
             pbar.show unless pbar.visible?
@@ -116,7 +100,7 @@ module Alexandria
         end
 
         on_error = proc do |message|
-          SkipEntryDialog.new(parent, message).continue?
+          SkipEntryDialog.new(self, message).continue?
         end
 
         exec_queue = ExecutionQueue.new
@@ -168,7 +152,7 @@ module Alexandria
 
           while thread.alive? && !@destroyed
             # puts "Thread #{thread} still alive."
-            running = true
+            @running = true
             exec_queue.iterate
             Gtk.main_iteration_do(false)
           end
@@ -179,11 +163,11 @@ module Alexandria
               break
             elsif not_cancelled
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
-              ErrorDialog.new(parent,
+              ErrorDialog.new(self,
                               _("Couldn't import the library"),
                               _('The format of the file you ' \
                                 'provided is unknown.  Please ' \
-                                'retry with another file.'))
+                                'retry with another file.')).display
             end
             pbar.hide
             self.sensitive = true

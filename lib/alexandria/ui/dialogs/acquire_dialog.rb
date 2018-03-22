@@ -1,35 +1,19 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2007 Cathal Mc Ginley
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
-# require 'monitor'
+require 'monitor'
 require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
 
-require 'alexandria/ui/sound'
+require 'alexandria/ui/builder_base'
 require 'alexandria/ui/dialogs/barcode_animation'
+require 'alexandria/ui/sound'
 
 module Alexandria
   module UI
-    require 'monitor'
-
     # assists in turning on progress bar when searching
     # and turning it off when all search threads have completed...
     class SearchThreadCounter < Monitor
@@ -80,10 +64,8 @@ module Alexandria
       end
 
       def widget_names
-        [:acquire_dialog, :dialog_vbox1, :dialog_action_area1,
-         :help_button, :cancel_button, :add_button, :vbox1,
-         :barcode_label, :scan_area, :scan_frame, :scrolledwindow1,
-         :barcodes_treeview, :hbox1, :label1, :combo_libraries]
+        [:acquire_dialog, :add_button, :barcodes_treeview, :barcode_label,
+         :scan_area, :scan_frame, :combo_libraries]
       end
 
       def book_in_library(isbn10, library)
@@ -223,7 +205,7 @@ module Alexandria
           title = n_("Couldn't add this book",
                      "Couldn't add these books",
                      isbn_duplicates.size)
-          ErrorDialog.new(@parent, title, message)
+          ErrorDialog.new(@acquire_dialog, title, message).display
         end
 
         @block.call(books, library, is_new_library)

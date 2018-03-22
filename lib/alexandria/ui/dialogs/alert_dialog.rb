@@ -1,28 +1,16 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 # HIG compliant error dialog boxes
 module Alexandria
   module UI
-    class AlertDialog < Gtk::Dialog
+    class AlertDialog < SimpleDelegator
       def initialize(parent, title, stock_icon, buttons, message = nil)
-        super(title: '', parent: parent, flags: :destroy_with_parent, buttons: buttons)
+        dialog = Gtk::Dialog.new(title: '', parent: parent, flags: :destroy_with_parent, buttons: buttons)
+        super(dialog)
 
         self.border_width = 6
         self.resizable = false
@@ -64,6 +52,9 @@ module Alexandria
               [[Gtk::Stock::OK, :ok]], message)
         # FIXME: Should accept just :ok
         self.default_response = Gtk::ResponseType::OK
+      end
+
+      def display
         show_all && run
         destroy
       end

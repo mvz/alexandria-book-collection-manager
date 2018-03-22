@@ -1,35 +1,21 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2007 Joseph Method
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module UI
     # Generalized Dialog for lists of bad isbns. Used for on_import. Can also
     # be used for on_load library conversions.
-    class BadIsbnsDialog < Gtk::MessageDialog
-      def initialize(parent, message = nil, list = nil)
-        message ||= _("There's a problem")
-
-        super(parent,
-              Gtk::Dialog::MODAL,
-              Gtk::MessageDialog::WARNING,
-              Gtk::MessageDialog::BUTTONS_CLOSE,
-              message)
+    class BadIsbnsDialog < SimpleDelegator
+      def initialize(parent, message, list)
+        dialog = Gtk::MessageDialog.new(parent: parent,
+                                        flags: :modal,
+                                        type: :warning,
+                                        buttons: :close,
+                                        message: message)
+        super(dialog)
 
         isbn_container = Gtk::Box.new :horizontal
         the_vbox = children.first

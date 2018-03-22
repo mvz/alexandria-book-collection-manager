@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2014 Matijs van Zuijlen
+# This file is part of the Alexandria build system.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 require 'yaml'
 require 'fileutils'
@@ -92,12 +78,9 @@ module Alexandria
           old_isbn = book.isbn
           old_pub_year = book.publishing_year
           begin
-            begin
-              book.isbn = canonicalise_ean(book.isbn).to_s unless book.isbn.nil?
-              raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
-            rescue InvalidISBNError
-              book.isbn = old_isbn
-            end
+            raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
+            ean = canonicalise_ean(book.isbn)
+            book.isbn = ean if ean
 
             book.publishing_year = book.publishing_year.to_i unless book.publishing_year.nil?
 
@@ -153,11 +136,7 @@ module Alexandria
         Dir['*' + EXT[:cover]].each do |cover|
           next if cover[0] == 'g'
           md = /(.+)\.cover/.match(cover)
-          begin
-            ean = canonicalise_ean(md[1])
-          rescue
-            ean = md[1]
-          end
+          ean = canonicalise_ean(md[1]) || md[1]
           begin
             FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
           rescue
@@ -261,23 +240,13 @@ module Alexandria
       end
     end
 
-    class NoISBNError < StandardError
-    end
+    def self.extract_numbers(entry)
+      return [] if entry.nil? || entry.empty?
+      normalized = entry.delete('- ').upcase
+      return [] unless normalized =~ /\A[\dX]*\Z/
 
-    class InvalidISBNError < StandardError
-      attr_reader :isbn
-      def initialize(isbn = nil)
-        super()
-        @isbn = isbn
-      end
-    end
-
-    def self.extract_numbers(isbn)
-      raise NoISBNError, 'Nil ISBN' if isbn.nil? || isbn.empty?
-
-      isbn.delete('- ').upcase.split('').map do |x|
-        raise InvalidISBNError, isbn unless x =~ /[\dX]/
-        x == 'X' ? 10 : x.to_i
+      normalized.split('').map do |char|
+        char == 'X' ? 10 : char.to_i
       end
     end
 
@@ -292,8 +261,6 @@ module Alexandria
     def self.valid_isbn?(isbn)
       numbers = extract_numbers(isbn)
       (numbers.length == 10) && isbn_checksum(numbers).zero?
-    rescue InvalidISBNError
-      false
     end
 
     def self.ean_checksum(numbers)
@@ -307,8 +274,6 @@ module Alexandria
        (ean_checksum(numbers[0..11]) == numbers[12])) ||
         ((numbers.length == 18) &&
          (ean_checksum(numbers[0..11]) == numbers[12]))
-    rescue InvalidISBNError
-      false
     end
 
     def self.upc_checksum(numbers)
@@ -320,8 +285,6 @@ module Alexandria
       numbers = extract_numbers(upc)
       ((numbers.length == 17) &&
        (upc_checksum(numbers[0..10]) == numbers[11]))
-    rescue InvalidISBNError
-      false
     end
 
     AMERICAN_UPC_LOOKUP = {
@@ -347,17 +310,14 @@ module Alexandria
     def self.canonicalise_ean(code)
       code = code.to_s.delete('- ')
       if valid_ean?(code)
-        return code
+        code
       elsif valid_isbn?(code)
         code = '978' + code[0..8]
-        return code + String(ean_checksum(extract_numbers(code)))
+        code + String(ean_checksum(extract_numbers(code)))
       elsif valid_upc?(code)
         isbn10 = canonicalise_isbn
         code = '978' + isbn10[0..8]
-        return code + String(ean_checksum(extract_numbers(code)))
-        ## raise "fix function Alexandria::Library.canonicalise_ean"
-      else
-        raise InvalidISBNError, code
+        code + String(ean_checksum(extract_numbers(code)))
       end
     end
 
@@ -377,10 +337,9 @@ module Alexandria
                   elsif valid_isbn?(isbn)
                     # Seems to be a valid ISBN number.
                     numbers[0..-2] + [isbn_checksum(numbers[0..-2])]
-                  else
-                    raise InvalidISBNError, isbn
                   end
 
+      return unless canonical
       canonical.map(&:to_s).join
     end
 

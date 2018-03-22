@@ -33,7 +33,9 @@ module Alexandria
         self.title = _('New Smart Library')
         # FIXME: Should accept just :cancel
         self.default_response = Gtk::ResponseType::CANCEL
+      end
 
+      def acquire
         show_all
         insert_new_rule
 
