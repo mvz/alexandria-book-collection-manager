@@ -43,15 +43,11 @@ module Alexandria
 
       def on_title_changed
         title = @entry_title.text.strip
-        begin
-          @book_properties_dialog.title = if title.empty?
-                                            _('Adding a Book')
-                                          else
-                                            _("Adding '%s'") % title
-                                          end
-        rescue
-          raise "There's a problem with a book somewhere"
-        end
+        @book_properties_dialog.title = if title.empty?
+                                          _('Adding a Book')
+                                        else
+                                          _("Adding '%s'") % title
+                                        end
       end
 
       private
