@@ -11,10 +11,10 @@ module Alexandria
     class BadIsbnsDialog < SimpleDelegator
       def initialize(parent, message, list)
         dialog = Gtk::MessageDialog.new(parent: parent,
-              flags: :modal,
-              type: :warning,
-              buttons: :close,
-              message: message)
+                                        flags: :modal,
+                                        type: :warning,
+                                        buttons: :close,
+                                        message: message)
         super(dialog)
 
         isbn_container = Gtk::Box.new :horizontal

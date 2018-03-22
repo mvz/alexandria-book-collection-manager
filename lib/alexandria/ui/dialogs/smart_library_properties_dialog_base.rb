@@ -29,9 +29,9 @@ module Alexandria
 
       def initialize(parent)
         @dialog = Gtk::Dialog.new(title: '',
-                                 parent: parent,
-                                 flags: :modal,
-                                 buttons: [[Gtk::Stock::HELP, :help]])
+                                  parent: parent,
+                                  flags: :modal,
+                                  buttons: [[Gtk::Stock::HELP, :help]])
         super(@dialog)
 
         self.window_position = :center
