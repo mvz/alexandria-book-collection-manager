@@ -49,10 +49,6 @@ Style/BlockDelimiters:
 Style/AndOr:
   Enabled: conditionals
 
-# Prefer old school format strings
-Style/FormatStringToken:
-  EnforcedStyle: unannotated
-
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
