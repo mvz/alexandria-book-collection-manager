@@ -323,7 +323,7 @@ module Alexandria
           ['Sidepane', nil, _('Side _Pane'), 'F9', nil, method(:on_view_sidepane), true],
           ['Toolbar', nil, _('_Toolbar'), nil, nil, method(:on_view_toolbar), true],
           ['Statusbar', nil, _('_Statusbar'), nil, nil, method(:on_view_statusbar), true],
-          ['ReversedOrder', nil, _('Re_versed Order'), nil, nil, method(:on_reverse_order)],
+          ['ReversedOrder', nil, _('Re_versed Order'), nil, nil, method(:on_reverse_order), false],
         ]
 
         view_as_actions = [
