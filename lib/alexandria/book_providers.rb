@@ -301,7 +301,6 @@ module Alexandria
     # Website based providers
     require 'alexandria/book_providers/adlibris'
     require 'alexandria/book_providers/barnes_and_noble'
-    require 'alexandria/book_providers/deastore'
     require 'alexandria/book_providers/proxis'
     require 'alexandria/book_providers/siciliano'
     require 'alexandria/book_providers/thalia'
@@ -386,10 +385,6 @@ module Alexandria
         if (ecs_index = priority.index('AmazonECS'))
           priority[ecs_index] = 'Amazon' # replace legacy "AmazonECS" name
           priority.uniq! # remove any other "Amazon" from the list
-          changed = true
-        end
-        if (deastore_index = priority.index('DeaStore_it'))
-          priority[deastore_index] = 'DeaStore'
           changed = true
         end
         if (worldcat_index = priority.index('Worldcat'))

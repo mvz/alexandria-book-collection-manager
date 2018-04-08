@@ -43,7 +43,6 @@ keep track of books which are on loan.
       pictures) from several online libraries and bookshops, such as
           o Amazon
           o Proxis
-          o DeaStore
           o AdLibris
           o Spanish Ministry of Culture
           o Livraria Siciliano

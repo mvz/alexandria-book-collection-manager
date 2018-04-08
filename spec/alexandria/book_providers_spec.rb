@@ -96,16 +96,6 @@ describe Alexandria::BookProviders do
                                  'Confederacy Dunces', Alexandria::BookProviders::SEARCH_BY_KEYWORD)
   end
 
-  it 'dea should work' do
-    skip 'DEAStore is not operational at the moment'
-    assert_correct_search_result(Alexandria::BookProviders::DeaStoreProvider,
-                                 '9788817012980')
-    assert_correct_search_result(Alexandria::BookProviders::DeaStoreProvider,
-                                 '9788806134747')
-  end
-
-  # Right? Don't test if dependency isn't present.
-
   it 'LOC should work' do
     assert_correct_search_result(Alexandria::BookProviders::LOCProvider,
                                  '9780805335583')
