@@ -944,10 +944,6 @@ msgstr "Identyfikator klucza dostępu"
 msgid "Secret access key"
 msgstr "Tajny klucz dostępu"
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Hiszpańskie Ministerstwo Kultury"
-
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Nazwa komputera"

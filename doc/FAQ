@@ -290,7 +290,7 @@ Question: I prefer to have the field "Author" as "Surname, Name" instead
 of "Name Surname".
 
 Answer: Alexandria relies on what the providers say: 
-some providers report "Surname, Name": Renaud, Mcu,
+some providers report "Surname, Name": Renaud,
 some "Surname Name": Webster.it, Ibs.it,
 some "Name Surname": Bn, Thalia, Bol.it, Adlibris, L Siciliano, Worldcat,
 and some without any rule: Amazon, Proxis.

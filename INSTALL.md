@@ -32,7 +32,7 @@ service.
 
 ## HTMLEntities
 
-This is used by all website-based providers except MCU.
+This is used by all website-based providers.
 [htmlentities](https://github.com/threedaymonk/htmlentities) is used to
 provide more flexible HTML parsing.
 

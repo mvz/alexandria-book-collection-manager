@@ -937,10 +937,6 @@ msgstr "ID του κλειδιού πρόσβασης"
 msgid "Secret access key"
 msgstr "Κρυφό κλειδί πρόσαβασης"
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Spanish Culture Ministry"
-
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Όνομα Host"

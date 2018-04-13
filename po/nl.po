@@ -931,10 +931,6 @@ msgstr "Toegangssleutel ID"
 msgid "Secret access key"
 msgstr "Geheime toegangssleutel"
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Spaans Ministerie van Cultuur"
-
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Servernaam"

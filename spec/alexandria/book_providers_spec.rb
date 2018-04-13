@@ -121,16 +121,6 @@ describe Alexandria::BookProviders do
                                  '9780961328917') # see #1433
   end
 
-  it 'MCU should work' do
-    skip 'Needs fixing'
-    # this book is without binding information, see bug [#2533]
-    assert_correct_search_result(Alexandria::BookProviders::MCUProvider,
-                                 '9788487982033')
-    # this book is "agotado" (out of print), see bug [#2518]
-    assert_correct_search_result(Alexandria::BookProviders::MCUProvider,
-                                 '9788496075856')
-  end
-
   it 'Proxis should work' do
     skip 'Needs fixing'
     assert_correct_search_result(Alexandria::BookProviders::ProxisProvider,

@@ -944,10 +944,6 @@ msgstr "Zugriffs-Schlüssel-ID"
 msgid "Secret access key"
 msgstr "Privater Zugriffsschlüssel"
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Spanisches Kulturministerium"
-
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Servername"

@@ -934,10 +934,6 @@ msgstr "ID de la clave de acceso"
 msgid "Secret access key"
 msgstr "Clave de acceso secreta"
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Ministerio de Cultura Español"
-
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Nombre del equipo"

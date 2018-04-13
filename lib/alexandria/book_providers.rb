@@ -289,7 +289,6 @@ module Alexandria
       unabstract
     end
 
-    require 'alexandria/book_providers/mcu' # yep, still mostly works !
     require 'alexandria/book_providers/douban' # only requires YAML
 
     # require 'alexandria/book_providers/renaud'

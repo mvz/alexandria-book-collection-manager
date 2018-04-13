@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Remove DeaStore provider since the site is no longer online
+* Remove MCU provider since the site is no longer online
 
 ## 0.7.2 / 2018-03-18
 

@@ -120,13 +120,6 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'lib/alexandria/logging.rb'
 
-# Offense count: 1
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: snake_case, camelCase
-Naming/MethodName:
-  Exclude:
-    - 'lib/alexandria/book_providers/mcu.rb'
-
 # Offense count: 4
 # Configuration parameters: NamePrefix, NamePrefixBlacklist, NameWhitelist, MethodDefinitionMacros.
 # NamePrefix: is_, has_, have_

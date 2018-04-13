@@ -933,10 +933,6 @@ msgstr ""
 msgid "Secret access key"
 msgstr ""
 
-#: ../lib/alexandria/book_providers/mcu.rb:39
-msgid "Spanish Culture Ministry"
-msgstr "Det spanske kulturministeriet"
-
 #: ../lib/alexandria/book_providers/z3950.rb:34
 msgid "Hostname"
 msgstr "Vertsnavn"
