@@ -265,19 +265,7 @@ module Alexandria
                        false
                      elsif @results
                        log.info { "Got results: #{@results[0]}..." }
-                       @results.each_key do |book|
-                         s = format(_('%s, by %s'), book.title, book.authors.join(', '))
-                         similar_books = @results.find { |book2, _cover2|
-                           (book.title == book2.title) &&
-                             (book.authors == book2.authors)
-                         }
-                         s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
-                         log.info { format('Copying %s into tree view.', book.title) }
-                         iter = @treeview_results.model.append
-                         iter[0] = s
-                         iter[1] = book.ident
-                         iter[2] = Icons::BOOK
-                       end
+                       copy_results_to_treeview_model(@results, @treeview_results.model)
 
                        # Kick off the image download thread.
                        if @find_thread.alive?
@@ -308,6 +296,22 @@ module Alexandria
           end
 
           continue # timeout loop condition
+        end
+      end
+
+      def copy_results_to_treeview_model(results, model)
+        results.each do |book, _cover_url|
+          s = format(_('%s, by %s'), book.title, book.authors.join(', '))
+          similar_books = results.find { |book2, _cover2|
+            (book.title == book2.title) &&
+              (book.authors == book2.authors)
+          }
+          s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
+          log.info { format('Copying %s into tree view.', book.title) }
+          iter = model.append
+          iter[0] = s
+          iter[1] = book.ident
+          iter[2] = Icons::BOOK
         end
       end
 

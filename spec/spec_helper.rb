@@ -32,7 +32,7 @@ TESTDIR = File.join(LIBDIR, 'test')
 
 def an_artist_of_the_floating_world
   Alexandria::Book.new('An Artist of the Floating World',
-                       'Kazuo Ishiguro',
+                       ['Kazuo Ishiguro'],
                        '9780571147168',
                        'Faber and Faber', 1999,
                        'Paperback')

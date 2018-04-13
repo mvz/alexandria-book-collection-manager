@@ -68,13 +68,6 @@ describe Alexandria::UI::KeepBadISBNDialog do
   end
 end
 
-describe Alexandria::UI::NewBookDialog do
-  it 'should work' do
-    parent = Gtk::Window.new :toplevel
-    described_class.new parent
-  end
-end
-
 describe Alexandria::UI::ConflictWhileCopyingDialog do
   it 'should work' do
     parent = Gtk::Window.new :toplevel
