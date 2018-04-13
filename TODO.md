@@ -1,7 +1,15 @@
 Alexandria's TODO list
 ======================
 
-This is an old list of TODO's.
+## New TODOs
+
+* [ ] Clean up broken providers
+* [ ] Add openlibrary provider
+* [ ] Allow searching for cover image for existing books
+
+## Old TODOs
+
+This is an old list of TODO's that should be cleaned up.
 
 For the next release:
 
