@@ -159,8 +159,6 @@ for public libraries, and very unlikely for commercial booksellers.
 It is useful if you choose a provider that allows to specify the ISBN in 
 the address, such as 
 http://www.internetbookshop.it/ame/ser/serdsp.asp?e=0060748222&shop=1
-or
-http://www.deastore.com/product.asp?isbn=9780060748227
 
 It is necessary that the HTML page of each provider is easily parsable, 
 that is, that the computer can easily find title, author(s), ISBN, 
@@ -184,8 +182,7 @@ information: title, author(s), ISBN, publisher, year of publication,
 binding. In case that one of these is missing, Alexandria will not get 
 it.
 
-It is easier, if the provider doesn't use cookies (however, provider
-Deastore uses cookies and has been implemented).
+It is easier, if the provider doesn't use cookies.
 
 After the choice of the provider, try by yourself to modify the file for 
 an already implemented provider. Probably it may be only required that 
@@ -293,7 +290,7 @@ Question: I prefer to have the field "Author" as "Surname, Name" instead
 of "Name Surname".
 
 Answer: Alexandria relies on what the providers say: 
-some providers report "Surname, Name": Deastore, Renaud, Mcu,
+some providers report "Surname, Name": Renaud, Mcu,
 some "Surname Name": Webster.it, Ibs.it,
 some "Name Surname": Bn, Thalia, Bol.it, Adlibris, L Siciliano, Worldcat,
 and some without any rule: Amazon, Proxis.

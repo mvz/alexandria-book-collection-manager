@@ -26,8 +26,8 @@ Requires version `~> 3.1`.
 ### Hpricot
 
 Alexandria uses [hpricot](https://github.com/hpricot/hpricot) to
-parse the HTML from web pages for providers such as DeaStore and
-Siciliano. It is also used to parse the XML for the Amazon web
+parse the HTML from web pages for providers such as Siciliano.
+It is also used to parse the XML for the Amazon web
 service.
 
 ## HTMLEntities
