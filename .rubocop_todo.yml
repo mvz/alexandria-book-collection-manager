@@ -263,9 +263,3 @@ Style/RegexpLiteral:
     - 'lib/alexandria/ui/sidepane.rb'
     - 'util/rake/fileinstall.rb'
     - 'util/rake/gettextgenerate.rb'
-
-# Offense count: 3
-Style/StructInheritance:
-  Exclude:
-    - 'lib/alexandria/smart_library.rb'
-    - 'lib/alexandria/ui/multi_drag_treeview.rb'

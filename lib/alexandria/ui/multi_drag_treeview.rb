@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module EventOverrides
@@ -28,22 +14,23 @@ module Alexandria
   module TreeViewOverrides
     # include Alexandria::Logging
 
-    class Context < Struct.new(:pressed_button,
-                               :x,
-                               :y,
-                               :cell_x,
-                               :cell_y,
-                               :button_press_handler,
-                               :motion_notify_handler,
-                               :button_release_handler,
-                               :drag_data_get_handler,
-                               :events,
-                               :source_start_button_mask,
-                               :source_targets,
-                               :source_actions,
-                               :pending_event,
-                               :drag_context)
+    Context = Struct.new(:pressed_button,
+                         :x,
+                         :y,
+                         :cell_x,
+                         :cell_y,
+                         :button_press_handler,
+                         :motion_notify_handler,
+                         :button_release_handler,
+                         :drag_data_get_handler,
+                         :events,
+                         :source_start_button_mask,
+                         :source_targets,
+                         :source_actions,
+                         :pending_event,
+                         :drag_context)
 
+    class Context
       def initialize(*ary)
         super
         self.events ||= []
