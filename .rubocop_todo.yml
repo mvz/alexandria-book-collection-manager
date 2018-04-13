@@ -225,14 +225,6 @@ Style/IdenticalConditionalBranches:
     - 'lib/alexandria/book_providers/amazon_aws.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
 
-# Offense count: 4
-Style/IfInsideElse:
-  Exclude:
-    - 'lib/alexandria/book_providers/proxis.rb'
-    - 'lib/alexandria/book_providers/web.rb'
-    - 'lib/alexandria/preferences.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
 # Offense count: 2
 Style/MethodMissing:
   Exclude:

@@ -353,16 +353,12 @@ module Alexandria
             end
           end
 
-        else
           # not a right click
-          if (path = widget.get_path_at_pos(event.x, event.y))
-            @clicking_on_sidepane = true
-            obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
-            obj.select_path(path)
-            sensitize_library selected_library
-
-          end
-
+        elsif (path = widget.get_path_at_pos(event.x, event.y))
+          @clicking_on_sidepane = true
+          obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+          obj.select_path(path)
+          sensitize_library selected_library
         end
       end
 
