@@ -378,7 +378,7 @@ module Alexandria
 
       def add_selected_books(library, _is_new)
         books_to_add = []
-        @treeview_results.selection.selected_each do |_model, _path, iter|
+        @treeview_results.selection.each do |_model, _path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
             isbn = book.isbn
@@ -389,7 +389,7 @@ module Alexandria
               next
             end
 
-            isbn = canonicalise_ean(isbn)
+            isbn = Library.canonicalise_ean(isbn)
             unless isbn
               puts "invalidisbn #{book.isbn}"
               next unless KeepBadISBNDialog.new(@new_book_dialog, book).keep?
@@ -461,6 +461,7 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
         rescue => e
+          # FIXME: Message containing <> should be displayed correctly.
           ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), e.message).display
         end
         # books_to_add
