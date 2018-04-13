@@ -1,24 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2008 Joseph Method
-# Copyright (C) 2010 Cathal Mc Ginley
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License aso
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 require 'alexandria/ui/columns'
 
@@ -132,8 +116,7 @@ module Alexandria
           column.pack_start(renderer, false)
           column.set_cell_data_func(renderer) do |_tree_column, cell, _tree_model, iter|
             rating = (iter[Columns::RATING] - Book::MAX_RATING_STARS).abs
-            cell.pixbuf = rating >= i.succ ?
-              Icons::STAR_SET : Icons::STAR_UNSET
+            cell.pixbuf = rating >= i.succ ? Icons::STAR_SET : Icons::STAR_UNSET
           end
         end
         column.sort_column_id = Columns::RATING

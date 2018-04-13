@@ -239,11 +239,6 @@ Style/MethodMissing:
     - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/preferences.rb'
 
-# Offense count: 1
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'lib/alexandria/ui/listview.rb'
-
 # Offense count: 21
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, AllowInnerSlashes.
