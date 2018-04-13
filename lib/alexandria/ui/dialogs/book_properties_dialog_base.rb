@@ -391,7 +391,7 @@ module Alexandria
         begin
           d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
-        rescue
+        rescue StandardError
           nil
         end
       end

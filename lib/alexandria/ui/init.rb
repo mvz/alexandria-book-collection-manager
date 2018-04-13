@@ -76,7 +76,7 @@ module Alexandria
       section_index = ''
       section_index = "##{section}" if section
       exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
-    rescue
+    rescue StandardError
       log.error(self) { 'Unable to load help browser' }
       ErrorDialog.new(parent, _('Unable to launch the help browser'),
                       _('Could not display help for Alexandria. ' \

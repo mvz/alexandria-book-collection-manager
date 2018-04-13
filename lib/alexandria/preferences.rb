@@ -140,7 +140,7 @@ module Alexandria
           exec_gconf_set(var_path, new_value)
         end
       end
-    rescue => ex
+    rescue StandardError => ex
       log.debug { new_value.inspect }
       log.error { "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}" }
       log << ex.message
@@ -264,7 +264,7 @@ module Alexandria
         begin
           pair = Regexp.last_match[1].split(',')
           return [discriminate(pair.first), discriminate(pair.last)]
-        rescue
+        rescue StandardError
           return [0, 0]
         end
       else

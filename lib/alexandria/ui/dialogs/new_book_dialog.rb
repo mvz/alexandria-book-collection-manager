@@ -168,7 +168,7 @@ module Alexandria
                 end
               end
             end
-          rescue => e
+          rescue StandardError => e
             @image_error = e.message
           end
         end
@@ -192,7 +192,7 @@ module Alexandria
                 end
 
                 @images.delete(key)
-              rescue => e
+              rescue StandardError => e
                 image_error_dialog(e.message).display
               end
             end
@@ -243,7 +243,7 @@ module Alexandria
               @results = Alexandria::BookProviders.search(criterion, mode)
 
               log.info { "got #{@results.length} results" }
-            rescue => e
+            rescue StandardError => e
               @find_error = e.message
             ensure
               Alexandria::BookProviders.instance.delete_observer(self)
@@ -334,7 +334,7 @@ module Alexandria
         # Perform the ISBN search via the providers.
         isbn = begin
                  Library.canonicalise_isbn(@entry_isbn.text)
-               rescue
+               rescue StandardError
                  raise _("Couldn't validate the EAN/ISBN you " \
                          'provided.  Make sure it is written ' \
                          'correctly, and try again.')
@@ -460,7 +460,7 @@ module Alexandria
 
           # Do not destroy if there is no addition.
           #          return unless book_was_added
-        rescue => e
+        rescue StandardError => e
           # FIXME: Message containing <> should be displayed correctly.
           ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), e.message).display
         end

@@ -264,13 +264,6 @@ Style/RegexpLiteral:
     - 'util/rake/fileinstall.rb'
     - 'util/rake/gettextgenerate.rb'
 
-# Offense count: 70
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, explicit
-Style/RescueStandardError:
-  Enabled: false
-
 # Offense count: 3
 Style/StructInheritance:
   Exclude:

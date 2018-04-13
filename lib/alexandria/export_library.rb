@@ -42,7 +42,7 @@ module Alexandria
       end
       sorted.reverse! unless @ascending
       sorted
-    rescue => ex
+    rescue StandardError => ex
       log.warn { "Could not sort library by #{@book_attribute.inspect}: #{ex.message}" }
       library
     end
@@ -149,7 +149,7 @@ module Alexandria
       File.open(File.join(Dir.tmpdir, 'tellico.xml'), 'w') do |io|
         begin
           to_tellico_document.write(io, 0)
-        rescue => ex
+        rescue StandardError => ex
           puts ex.message
           puts ex.backtrace
           raise ex

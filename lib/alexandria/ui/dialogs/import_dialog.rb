@@ -94,7 +94,7 @@ module Alexandria
           begin
             pbar.show unless pbar.visible?
             pbar.fraction = fraction
-          rescue
+          rescue StandardError
             # TODO: check if destroyed instead...
           end
         end
@@ -144,7 +144,7 @@ module Alexandria
             begin
               library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
                                                                  filename)
-            rescue => ex
+            rescue StandardError => ex
               trace = ex.backtrace.join("\n> ")
               log.error { "Import failed: #{ex.message} #{trace}" }
             end

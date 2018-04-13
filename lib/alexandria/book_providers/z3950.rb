@@ -75,12 +75,12 @@ module Alexandria
       def marc_to_book(marc_txt)
         begin
           marc = MARC::Record.new_from_marc(marc_txt, forgiving: true)
-        rescue => ex
+        rescue StandardError => ex
           log.error { ex.message }
           log.error { ex.backtrace.join("> \n") }
           begin
             marc = MARC::Record.new(marc_txt)
-          rescue => ex2
+          rescue StandardError => ex2
             log.error { ex2.message }
             log.error { ex2.backtrace.join("> \n") }
             raise ex2
@@ -132,7 +132,7 @@ module Alexandria
               # failing that, try the genuine MARC parser
               book = marc_to_book(marc_txt)
             end
-          rescue => ex
+          rescue StandardError => ex
             log.warn { ex }
             log.warn { ex.backtrace }
           end
@@ -183,7 +183,7 @@ module Alexandria
             end
           end
           conn.search(pqf)
-        rescue => ex
+        rescue StandardError => ex
           if /1005/ =~ ex.message
             if prefs.variable_named('piggyback') && prefs['piggyback']
               log.error { "Z39.50 search failed:: #{ex.message}" }
@@ -221,7 +221,7 @@ module Alexandria
       def url(book)
         'http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+' +
           Library.canonicalise_isbn(book.isbn)
-      rescue => ex
+      rescue StandardError => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
       end
@@ -268,7 +268,7 @@ module Alexandria
 
       def url(book)
         'http://copac.ac.uk/openurl?isbn=' + Library.canonicalise_isbn(book.isbn)
-      rescue => ex
+      rescue StandardError => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
       end
@@ -359,7 +359,7 @@ module Alexandria
           '%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22' +
           canonicalise_isbn_with_dashes(book.isbn) +
           '%22%29&language=it&maxentries=10&target=0&position=1'
-      rescue => ex
+      rescue StandardError => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
       end

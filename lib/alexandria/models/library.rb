@@ -106,7 +106,7 @@ module Alexandria
             end
 
             library << book
-          rescue
+          rescue StandardError
             book.version = Alexandria::DATA_VERSION
             savedfilename = library.simple_save(book)
             test[0] = test[0] + 1
@@ -129,7 +129,7 @@ module Alexandria
             FileUtils.mv(medium_cover,
                          medium_cover.sub(/_medium\.jpg$/,
                                           EXT[:cover]))
-          rescue
+          rescue StandardError
           end
         end
 
@@ -139,7 +139,7 @@ module Alexandria
           ean = canonicalise_ean(md[1]) || md[1]
           begin
             FileUtils.mv(cover, ean + EXT[:cover]) unless cover == ean + EXT[:cover]
-          rescue
+          rescue StandardError
           end
         end
 
@@ -355,7 +355,7 @@ module Alexandria
       if File.exist?(cover(book.saved_ident))
         begin
           FileUtils.mv(cover(book.saved_ident), cover(book.ident))
-        rescue
+        rescue StandardError
         end
       end
       book.saved_ident = book.ident

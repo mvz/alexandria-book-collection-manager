@@ -51,7 +51,7 @@ module Alexandria
         #      forbidding an initial dot also disallows "." and ".."
         #      which are of course pre-existing directories.
         match
-      rescue => ex
+      rescue StandardError => ex
         log.warn { "New library name not valid UTF-8: #{ex.message}" }
         true
         # /([^\w\s'"()&?!:;.\-])/.match(new_text) # anglocentric!
@@ -199,7 +199,7 @@ module Alexandria
           end
           begin
             drag_context.finish(success: success, delete: false)
-          rescue => ex
+          rescue StandardError => ex
             log.error { "drag_context.finish failed: #{ex}" }
             raise
           end

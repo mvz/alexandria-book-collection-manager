@@ -176,7 +176,7 @@ module Alexandria
               end
 
             end
-          rescue => e
+          rescue StandardError => e
             log.error { "toggle failed for path #{path} #{e}\n" + e.backtrace.join("\n") }
           end
         end

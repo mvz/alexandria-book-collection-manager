@@ -229,7 +229,7 @@ module Alexandria
                 'http://www.amazon.com/exec/obidos/ASIN/%s'
               end
         url % isbn
-      rescue => ex
+      rescue StandardError => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
       end

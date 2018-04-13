@@ -64,7 +64,7 @@ module Alexandria
             begin
               smart_library = from_hash(hash)
               a << smart_library
-            rescue => e
+            rescue StandardError => e
               puts "Cannot load serialized smart library: #{e}"
               puts e.backtrace
             end
@@ -407,7 +407,7 @@ module Alexandria
 
                                         Time.now - given_date <= days
                                       end
-                                    rescue => ex
+                                    rescue StandardError => ex
                                       trace = ex.backtrace.join("\n >")
                                       log.warn { "Date matching failed #{ex} #{trace}" }
                                       false
@@ -426,7 +426,7 @@ module Alexandria
 
                                             Time.now - given_date > days
                                           end
-                                        rescue => ex
+                                        rescue StandardError => ex
                                           trace = ex.backtrace.join("\n >")
                                           log.warn { "Date matching failed #{ex} #{trace}" }
                                           false
@@ -503,7 +503,7 @@ module Alexandria
         proc do |book|
           begin
             left_value = book.send(@operand.book_selector)
-          rescue => e
+          rescue StandardError => e
             puts e.message
           end
           right_value = @value

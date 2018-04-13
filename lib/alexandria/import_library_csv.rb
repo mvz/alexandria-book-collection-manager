@@ -94,7 +94,7 @@ module Alexandria
           date = Date.strptime(str, '%d/%m/%y') # e.g. "14/01/10" => 2010-01-14
           book.redd_when = date
           book.redd = true
-        rescue
+        rescue StandardError
         end
       end
       if row[@mainshelf]

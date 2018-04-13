@@ -158,7 +158,7 @@ module Alexandria
           begin
             t = parse_date(loaned_since)
             @book.loaned_since = t
-          rescue
+          rescue StandardError
           end
         end
 

@@ -63,7 +63,7 @@ module Alexandria
             else
               false
             end
-          rescue
+          rescue StandardError
             false
           end
         else
