@@ -74,7 +74,7 @@ module Alexandria
             end
             return results
           end
-        rescue
+        rescue StandardError
           raise NoResultsError
         end
       end

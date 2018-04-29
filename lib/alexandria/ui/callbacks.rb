@@ -108,7 +108,7 @@ module Alexandria
       def on_export(*)
         ExportDialog.new(@main_app, selected_library, library_sort_order).perform
         # FIXME: Remove this hack and fix the underlying problem.
-      rescue => ex
+      rescue StandardError => ex
         log.error { "problem with immediate export #{ex} try again" }
         ErrorDialog.new(@main_app, _('Export failed'),
                         _('Try letting this library load ' \

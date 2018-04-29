@@ -225,24 +225,11 @@ Style/IdenticalConditionalBranches:
     - 'lib/alexandria/book_providers/amazon_aws.rb'
     - 'lib/alexandria/ui/ui_manager.rb'
 
-# Offense count: 4
-Style/IfInsideElse:
-  Exclude:
-    - 'lib/alexandria/book_providers/proxis.rb'
-    - 'lib/alexandria/book_providers/web.rb'
-    - 'lib/alexandria/preferences.rb'
-    - 'lib/alexandria/ui/ui_manager.rb'
-
 # Offense count: 2
 Style/MethodMissing:
   Exclude:
     - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/preferences.rb'
-
-# Offense count: 1
-Style/MultilineTernaryOperator:
-  Exclude:
-    - 'lib/alexandria/ui/listview.rb'
 
 # Offense count: 21
 # Cop supports --auto-correct.
@@ -263,16 +250,3 @@ Style/RegexpLiteral:
     - 'lib/alexandria/ui/sidepane.rb'
     - 'util/rake/fileinstall.rb'
     - 'util/rake/gettextgenerate.rb'
-
-# Offense count: 70
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: implicit, explicit
-Style/RescueStandardError:
-  Enabled: false
-
-# Offense count: 3
-Style/StructInheritance:
-  Exclude:
-    - 'lib/alexandria/smart_library.rb'
-    - 'lib/alexandria/ui/multi_drag_treeview.rb'

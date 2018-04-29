@@ -182,7 +182,7 @@ module Alexandria
             return [book, image_url]
 
           end
-        rescue => ex
+        rescue StandardError => ex
           trace = ex.backtrace.join("\n> ")
           log.warn {
             'Failed parsing search results for Thalia ' \

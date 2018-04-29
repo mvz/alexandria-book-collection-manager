@@ -64,7 +64,7 @@ module Alexandria
             code = isbn13
             type = 'IBN'
           end
-        rescue
+        rescue StandardError
           log.debug { "Cannot translate UPC (#{type}) code #{code} to ISBN" }
         end
 

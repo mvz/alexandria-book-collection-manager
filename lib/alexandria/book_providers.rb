@@ -69,7 +69,7 @@ module Alexandria
           instance.notify_observers(:found, factory.fullname) # new
           return results
         end
-      rescue => boom
+      rescue StandardError => boom
         if boom.is_a? NoResultsError
           unless boom.instance_of? ProviderSkippedError
             instance.changed

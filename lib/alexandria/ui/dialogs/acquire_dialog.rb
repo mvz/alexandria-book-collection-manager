@@ -79,7 +79,7 @@ module Alexandria
         end
         # puts "book_in_library match #{match.inspect}"
         !match.nil?
-      rescue
+      rescue StandardError
         log.warn { "Failed to check for book #{isbn10} in library #{library}" }
         true
       end

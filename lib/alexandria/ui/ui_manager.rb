@@ -353,16 +353,12 @@ module Alexandria
             end
           end
 
-        else
           # not a right click
-          if (path = widget.get_path_at_pos(event.x, event.y))
-            @clicking_on_sidepane = true
-            obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
-            obj.select_path(path)
-            sensitize_library selected_library
-
-          end
-
+        elsif (path = widget.get_path_at_pos(event.x, event.y))
+          @clicking_on_sidepane = true
+          obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+          obj.select_path(path)
+          sensitize_library selected_library
         end
       end
 
@@ -487,7 +483,7 @@ module Alexandria
               has_no_url = true
               begin
                 has_no_url = (b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?)
-              rescue => ex
+              rescue StandardError => ex
                 log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
               end
               @actiongroup[provider.action_name].sensitive = !has_no_url
@@ -549,7 +545,7 @@ module Alexandria
           select_this_book.call(book, @listview)
           log.debug { 'select_a_book: listview' }
           select_this_book.call(book, @iconview)
-        rescue => ex
+        rescue StandardError => ex
           trace = ex.backtrace.join("\n> ")
           log.warn { "Failed to automatically select book: #{ex.message} #{trace}" }
         end
@@ -669,7 +665,7 @@ module Alexandria
                     log.debug { "removing old file #{filename}" }
                     begin
                       File.delete(filename)
-                    rescue => ex
+                    rescue StandardError => ex
                       log.error { "Could not delete empty file #{filename}" }
                     end
                   end
@@ -679,7 +675,7 @@ module Alexandria
                   library << book
                   library.save(book)
                   set_status_label(format(_("Added '%s' to library '%s'"), book.title, library.name))
-                rescue => ex
+                rescue StandardError => ex
                   log.error { "Couldn't add book #{isbn}: #{ex}" }
                   log.error { ex.backtrace.join("\n") }
                 end
@@ -836,7 +832,7 @@ module Alexandria
           if book
             begin
               append_book(book)
-            rescue => ex
+            rescue StandardError => ex
               trace = ex.backtrace.join("\n > ")
               log.error { "append_books failed #{ex.message} #{trace}" }
             end

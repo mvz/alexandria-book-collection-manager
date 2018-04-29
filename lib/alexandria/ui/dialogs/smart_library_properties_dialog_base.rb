@@ -284,7 +284,7 @@ module Alexandria
           elsif date.visible?
             begin
               value = parse_date(date.text)
-            rescue => ex
+            rescue StandardError => ex
               trace = ex.backtrace.join("\n > ")
               log.warn { "Possibly invalid date entered #{ex.message}" }
               log.warn { "Date widget returned #{date.text} / #{trace}" }
@@ -408,7 +408,7 @@ module Alexandria
         begin
           d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
-        rescue
+        rescue StandardError
           nil
         end
       end

@@ -115,7 +115,7 @@ module Alexandria
             begin
               break if on_export(FORMATS[types_combo.active],
                                  THEMES[theme_combo.active])
-            rescue => e
+            rescue StandardError => e
               raise
               ErrorDialog.new(self, _('Export failed'), e.message).display
             end

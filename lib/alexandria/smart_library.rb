@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 # require 'date'
 require 'time'
@@ -64,7 +50,7 @@ module Alexandria
             begin
               smart_library = from_hash(hash)
               a << smart_library
-            rescue => e
+            rescue StandardError => e
               puts "Cannot load serialized smart library: #{e}"
               puts e.backtrace
             end
@@ -300,7 +286,8 @@ module Alexandria
         }
       end
 
-      class Operand < Struct.new(:name, :klass)
+      Operand = Struct.new(:name, :klass)
+      class Operand
         def <=>(x)
           name <=> x.name
         end
@@ -315,7 +302,8 @@ module Alexandria
         end
       end
 
-      class Operator < Struct.new(:sym, :name, :proc)
+      Operator = Struct.new(:sym, :name, :proc)
+      class Operator
         def <=>(x)
           name <=> x.name
         end
@@ -407,7 +395,7 @@ module Alexandria
 
                                         Time.now - given_date <= days
                                       end
-                                    rescue => ex
+                                    rescue StandardError => ex
                                       trace = ex.backtrace.join("\n >")
                                       log.warn { "Date matching failed #{ex} #{trace}" }
                                       false
@@ -426,7 +414,7 @@ module Alexandria
 
                                             Time.now - given_date > days
                                           end
-                                        rescue => ex
+                                        rescue StandardError => ex
                                           trace = ex.backtrace.join("\n >")
                                           log.warn { "Date matching failed #{ex} #{trace}" }
                                           false
@@ -503,7 +491,7 @@ module Alexandria
         proc do |book|
           begin
             left_value = book.send(@operand.book_selector)
-          rescue => e
+          rescue StandardError => e
             puts e.message
           end
           right_value = @value

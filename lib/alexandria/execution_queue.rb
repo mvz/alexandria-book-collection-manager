@@ -41,7 +41,7 @@ module Alexandria
 
     def self.current
       @@current_queue
-    rescue
+    rescue StandardError
       nil
     end
 

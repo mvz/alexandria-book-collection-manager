@@ -72,7 +72,7 @@ module Alexandria
       elsif ['.tc', '.bc'].include? filename[-3..-1]
         begin
           import_as_tellico_xml_archive(*args)
-        rescue => e
+        rescue StandardError => e
           puts e.message
           puts e.backtrace.join("\n>> ")
         end
@@ -129,7 +129,7 @@ module Alexandria
               begin
                 book_elements[2] = book_elements[2].strip
                 book_elements[2] = Library.canonicalise_ean(book_elements[2])
-              rescue => ex
+              rescue StandardError => ex
                 puts book_elements[2]
                 puts ex.message
                 puts ex.backtrace.join("\n> ")
@@ -160,7 +160,7 @@ module Alexandria
             library.save(book)
           end
           return [library, []]
-        rescue => e
+        rescue StandardError => e
           puts e.message
           return nil
         end
@@ -196,7 +196,7 @@ module Alexandria
               end
               book.edition = dl_book.edition unless book.edition
               cover = dl_cover
-            rescue
+            rescue StandardError
               puts "failed to get cover for #{book.title} #{book.isbn}" if $DEBUG
               # note failure
             end
@@ -246,7 +246,7 @@ module Alexandria
         # Let's preserve the failing isbns so we can report them later.
         begin
           [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
-        rescue => e
+        rescue StandardError => e
           puts e.message
           [line.chomp, nil]
         end
@@ -266,7 +266,7 @@ module Alexandria
           else
             bad_isbns << isbn[0]
           end
-        rescue => e
+        rescue StandardError => e
           puts e.message
           failed_lookup_isbns << isbn[1]
           puts "NOTE : ignoring on_error_cb #{on_error_cb}"
