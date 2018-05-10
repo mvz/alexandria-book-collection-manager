@@ -8,14 +8,10 @@ require 'csv'
 require 'image_size'
 
 module Alexandria
-  class SortedLibrary < Library
+  class SortedLibrary
     def initialize(library, sort_order)
-      super(library.name)
       @library = library
-      sorted = sort_order.sort(library)
-      sorted.each do |book|
-        self << book
-      end
+      @sorted = sort_order.sort(library)
     end
 
     def cover(book)
@@ -29,9 +25,11 @@ module Alexandria
     def copy_covers(dest)
       @library.copy_covers(dest)
     end
-  end
 
-  module Exportable
+    def each(&block)
+      @sorted.each &block
+    end
+
     def export_as_onix_xml_archive(filename)
       File.open(File.join(Dir.tmpdir, 'onix.xml'), 'w') do |io|
         to_onix_document.write(io, 0)
@@ -405,13 +403,5 @@ EOS
       my_str.gsub!(/\"(.+)\"/, "``\1''")
       my_str
     end
-  end
-
-  class Library
-    include Exportable
-  end
-
-  class SmartLibrary
-    include Exportable
   end
 end

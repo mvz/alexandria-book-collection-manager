@@ -227,7 +227,6 @@ describe Alexandria::Library do
   context 'when exporting' do
     before(:all) do
       require 'tmpdir'
-      require 'csv'
     end
 
     before(:each) do

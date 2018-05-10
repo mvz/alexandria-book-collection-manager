@@ -26,13 +26,9 @@ module Alexandria
     end
 
     def invoke(library, sort_order, filename, *args)
-      if sort_order
-        sorted = SortedLibrary.new(library, sort_order)
-        log.debug { "Exporting library sorted by #{sort_order}" }
-        sorted.send(@message, filename, *args)
-      else
-        library.send(@message, filename, *args)
-      end
+      sorted = SortedLibrary.new(library, sort_order)
+      log.debug { "Exporting library sorted by #{sort_order}" }
+      sorted.send(@message, filename, *args)
     end
 
     def needs_preview?
