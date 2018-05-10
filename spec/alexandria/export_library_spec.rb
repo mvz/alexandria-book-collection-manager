@@ -1,23 +1,32 @@
+# frozen_string_literal: true
+
+# This file is part of Alexandria.
+#
+# See the file README.md for authorship and licensing information.
+
 require 'spec_helper'
 
 RSpec.describe Alexandria::ExportLibrary do
-  describe 'when exporting' do
-    before(:each) do
-      lib_version = File.join(LIBDIR, '0.6.2')
+  let(:lib_version) { File.join(LIBDIR, '0.6.2') }
+
+  describe '#export_as_csv_list' do
+    let(:format) { Alexandria::ExportFormat.new('CSV list', 'csv', :export_as_csv_list) }
+    let(:outfile) { File.join(Dir.tmpdir, 'my_library-0.6.2.csv') }
+
+    before do
       FileUtils.cp_r(lib_version, TESTDIR)
-      @format = Alexandria::ExportFormat.new('CSV list', 'csv', :export_as_csv_list)
-      @outfile = File.join(Dir.tmpdir, 'my_library-0.6.2.csv')
       @my_library = Alexandria::Library.loadall[0]
+      expect(@my_library.size).to eq 5
     end
 
     def load_rows_from_csv
-      CSV.read(@outfile, col_sep: ';')
+      CSV.read(outfile, col_sep: ';')
     end
 
     it 'can sort by title' do
       sort_by_title = Alexandria::LibrarySortOrder.new(:title)
-      @format.invoke(@my_library, sort_by_title, @outfile)
-      expect(File.exist?(@outfile)).to be_truthy
+      format.invoke(@my_library, sort_by_title, outfile)
+      expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
       expect(rows.size).to eq(@my_library.size)
@@ -30,8 +39,8 @@ RSpec.describe Alexandria::ExportLibrary do
 
     it 'can sort in descending order' do
       sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
-      @format.invoke(@my_library, sort_by_date_desc, @outfile)
-      expect(File.exist?(@outfile)).to be_truthy
+      format.invoke(@my_library, sort_by_date_desc, outfile)
+      expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
       expect(rows.size).to eq(@my_library.size)
@@ -44,7 +53,7 @@ RSpec.describe Alexandria::ExportLibrary do
 
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
-      File.unlink @outfile if File.exist? @outfile
+      File.unlink outfile if File.exist? outfile
     end
   end
 end
