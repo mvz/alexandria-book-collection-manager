@@ -37,13 +37,13 @@ module Alexandria
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
-                                            parent: parent,
-                                            action: :save,
-                                            buttons: [[Gtk::Stock::HELP, :help],
-                                                      [Gtk::Stock::CANCEL, :cancel],
-                                                      [_('_Export'), :accept]])
-        super(dialog)
+        @export_dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
+                                                    parent: parent,
+                                                    action: :save,
+                                                    buttons: [[Gtk::Stock::HELP, :help],
+                                                              [Gtk::Stock::CANCEL, :cancel],
+                                                              [_('_Export'), :accept]])
+        super(@export_dialog)
 
         self.current_name = library.name
         signal_connect('destroy') { hide }
@@ -54,24 +54,24 @@ module Alexandria
 
         preview_image = Gtk::Image.new
 
-        theme_combo = Gtk::ComboBoxText.new
-        theme_combo.valign = :center
-        theme_combo.vexpand = false
+        @theme_combo = Gtk::ComboBoxText.new
+        @theme_combo.valign = :center
+        @theme_combo.vexpand = false
         THEMES.each do |theme|
-          theme_combo.append_text(theme.name)
+          @theme_combo.append_text(theme.name)
         end
-        theme_combo.signal_connect('changed') do
-          file = THEMES[theme_combo.active].preview_file
+        @theme_combo.signal_connect('changed') do
+          file = THEMES[@theme_combo.active].preview_file
           preview_image.pixbuf = GdkPixbuf::Pixbuf.new(file: file)
         end
-        theme_combo.active = 0
+        @theme_combo.active = 0
         theme_label = Gtk::Label.new(_('_Theme:'), use_underline: true)
         theme_label.xalign = 0
-        theme_label.mnemonic_widget = theme_combo
+        theme_label.mnemonic_widget = @theme_combo
 
-        types_combo = Gtk::ComboBoxText.new
-        types_combo.vexpand = false
-        types_combo.valign = :center
+        @types_combo = Gtk::ComboBoxText.new
+        @types_combo.vexpand = false
+        @types_combo.valign = :center
         FORMATS.each do |format|
           text = format.name + ' ('
           text += if format.ext
@@ -80,27 +80,27 @@ module Alexandria
                     _('directory')
                   end
           text += ')'
-          types_combo.append_text(text)
+          @types_combo.append_text(text)
         end
-        types_combo.active = 0
-        types_combo.signal_connect('changed') do
-          visible = FORMATS[types_combo.active].needs_preview?
-          theme_label.visible = theme_combo.visible = preview_image.visible = visible
+        @types_combo.active = 0
+        @types_combo.signal_connect('changed') do
+          visible = FORMATS[@types_combo.active].needs_preview?
+          theme_label.visible = @theme_combo.visible = preview_image.visible = visible
         end
-        types_combo.show
+        @types_combo.show
 
         types_label = Gtk::Label.new(_('Export for_mat:'), use_underline: true)
         types_label.xalign = 0
-        types_label.mnemonic_widget = types_combo
+        types_label.mnemonic_widget = @types_combo
         types_label.show
 
         # TODO: Re-design extra widget layout
         grid = Gtk::Grid.new
         grid.column_spacing = 6
         grid.attach types_label, 0, 0, 1, 1
-        grid.attach types_combo, 1, 0, 1, 1
+        grid.attach @types_combo, 1, 0, 1, 1
         grid.attach theme_label, 0, 1, 1, 1
-        grid.attach theme_combo, 1, 1, 1, 1
+        grid.attach @theme_combo, 1, 1, 1, 1
         grid.attach preview_image, 2, 0, 1, 3
         set_extra_widget grid
       end
@@ -113,11 +113,10 @@ module Alexandria
             Alexandria::UI.display_help(self, 'exporting')
           else
             begin
-              break if on_export(FORMATS[types_combo.active],
-                                 THEMES[theme_combo.active])
+              break if on_export(FORMATS[@types_combo.active],
+                                 THEMES[@theme_combo.active])
             rescue StandardError => e
-              raise
-              ErrorDialog.new(self, _('Export failed'), e.message).display
+              ErrorDialog.new(@export_dialog, _('Export failed'), e.message).display
             end
           end
         end
