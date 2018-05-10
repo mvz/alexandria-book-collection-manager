@@ -8,7 +8,7 @@ require 'csv'
 require 'image_size'
 
 module Alexandria
-  class SortedLibrary
+  class ExportLibrary
     def initialize(library, sort_order)
       @library = library
       @sorted = sort_order.sort(library)
