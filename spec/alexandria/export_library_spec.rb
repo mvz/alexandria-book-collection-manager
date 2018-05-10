@@ -1,11 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Alexandria::ExportLibrary do
-  context 'when exporting' do
-    before(:all) do
-      require 'tmpdir'
-    end
-
+  describe 'when exporting' do
     before(:each) do
       lib_version = File.join(LIBDIR, '0.6.2')
       FileUtils.cp_r(lib_version, TESTDIR)
