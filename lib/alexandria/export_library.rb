@@ -1,69 +1,13 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2007 Cathal Mc Ginley
-# Copyright (C) 2014, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
-
-# Export sorting added 23 Oct 2007 by Cathal Mc Ginley
-# Classes LibrarySortOrder and SortedLibrary, and changed ExportFormat#invoke
-# iPod Notes support added 20 January 2008 by Tim Malone
-# require 'cgi'
+# See the file README.md for authorship and licensing information.
 
 require 'csv'
 require 'image_size'
 
 module Alexandria
-  class LibrarySortOrder
-    include Logging
-
-    def initialize(book_attribute, ascending = true)
-      @book_attribute = book_attribute
-      @ascending = ascending
-    end
-
-    def sort(library)
-      sorted = library.sort_by do |book|
-        book.send(@book_attribute)
-      end
-      sorted.reverse! unless @ascending
-      sorted
-    rescue StandardError => ex
-      log.warn { "Could not sort library by #{@book_attribute.inspect}: #{ex.message}" }
-      library
-    end
-
-    def to_s
-      "#{@book_attribute} #{@ascending ? '(ascending)' : '(descending)'}"
-    end
-
-    class Unsorted < LibrarySortOrder
-      def initialize; end
-
-      def sort(library)
-        library
-      end
-
-      def to_s
-        'default order'
-      end
-    end
-  end
-
   class SortedLibrary < Library
     def initialize(library, sort_order)
       super(library.name)
