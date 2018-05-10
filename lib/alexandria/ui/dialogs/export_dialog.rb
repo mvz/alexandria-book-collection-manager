@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+require 'alexandria/export_format'
+
 module Alexandria
   module UI
     class ConfirmEraseDialog < AlertDialog
