@@ -121,6 +121,21 @@ RSpec.describe Alexandria::ExportLibrary do
     end
   end
 
+  describe '#export_as_ipod_notes' do
+    let(:message) { :export_as_ipod_notes }
+    let(:outfile_base) { format.ext ?  "my-library.#{format.ext}" : 'my-library' }
+    let(:outfile) { File.join(Dir.tmpdir, outfile_base) }
+    let(:index) { File.join(outfile, 'index.linx') }
+
+    it 'can export unsorted' do
+      format.invoke(@my_library, unsorted, outfile, nil)
+      aggregate_failures do
+        expect(File.exist?(outfile)).to be_truthy
+        expect(File.size(index)).to be_nonzero
+      end
+    end
+  end
+
   after(:each) do
     FileUtils.rm_rf(TESTDIR)
     FileUtils.rm_rf(outfile) if File.exist? outfile
