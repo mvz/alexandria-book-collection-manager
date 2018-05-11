@@ -6,6 +6,7 @@
 
 require 'csv'
 require 'image_size'
+require 'tmpdir'
 
 module Alexandria
   class ExportLibrary
