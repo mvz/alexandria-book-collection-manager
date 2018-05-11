@@ -9,6 +9,7 @@ require 'spec_helper'
 RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, '0.6.2') }
   let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
+  let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
 
   before do
     FileUtils.cp_r(lib_version, TESTDIR)
@@ -17,7 +18,7 @@ RSpec.describe Alexandria::ExportLibrary do
   end
 
   describe '#export_as_csv_list' do
-    let(:format) { Alexandria::ExportFormat.new('CSV list', 'csv', :export_as_csv_list) }
+    let(:message) { :export_as_csv_list }
     let(:outfile) { File.join(Dir.tmpdir, 'my_library-0.6.2.csv') }
 
     def load_rows_from_csv
@@ -54,7 +55,7 @@ RSpec.describe Alexandria::ExportLibrary do
   end
 
   describe '#export_as_html' do
-    let(:format) { Alexandria::ExportFormat.new('HTML Web Page', nil, :export_as_html, true) }
+    let(:message) { :export_as_html }
     let(:outfile) { File.join(Dir.tmpdir, 'my-library') }
     let(:index) { File.join(outfile, 'index.html') }
 
@@ -69,7 +70,7 @@ RSpec.describe Alexandria::ExportLibrary do
   end
 
   describe '#export_as_onix_xml_archive' do
-    let(:format) { Alexandria::ExportFormat.new('Archived ONIX XML', 'onix.tbz2', :export_as_onix_xml_archive) }
+    let(:message) { :export_as_onix_xml_archive }
     let(:outfile) { File.join(Dir.tmpdir, 'my-library.oniz.tbz2') }
 
     it 'can export unsorted' do
@@ -82,7 +83,7 @@ RSpec.describe Alexandria::ExportLibrary do
   end
 
   describe '#export_as_tellico_xml_archive' do
-    let(:format) { Alexandria::ExportFormat.new('Archived Tellico XML', 'tc', :export_as_tellico_xml_archive) }
+    let(:message) { :export_as_tellico_xml_archive }
     let(:outfile) { File.join(Dir.tmpdir, 'my-library.tc') }
 
     it 'can export unsorted' do
@@ -96,7 +97,19 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_bibtex' do
     let(:message) { :export_as_bibtex }
-    let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
+    let(:outfile) { File.join(Dir.tmpdir, "my-library.#{format.ext}") }
+
+    it 'can export unsorted' do
+      format.invoke(@my_library, unsorted, outfile)
+      aggregate_failures do
+        expect(File.exist?(outfile)).to be_truthy
+        expect(File.size(outfile)).to be_nonzero
+      end
+    end
+  end
+
+  describe '#export_as_isbn_list' do
+    let(:message) { :export_as_isbn_list }
     let(:outfile) { File.join(Dir.tmpdir, "my-library.#{format.ext}") }
 
     it 'can export unsorted' do
