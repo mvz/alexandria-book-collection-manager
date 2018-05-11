@@ -6,9 +6,9 @@
 
 module Alexandria
   def self.list_books_on_console(_title = true, authors = true)
-    libraries_simpleton = Alexandria::LibraryCollection.instance
-    libraries_simpleton.reload
-    libraries = Alexandria::Library.loadall
+    collection = Alexandria::LibraryCollection.instance
+    collection.reload
+    libraries = collection.all_regular_libraries
     output_string = ''
     @books = libraries.flatten
     @books.each do |book|
