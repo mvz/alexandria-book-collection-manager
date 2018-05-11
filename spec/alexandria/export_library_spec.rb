@@ -10,6 +10,8 @@ RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, '0.6.2') }
   let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
   let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
+  let(:outfile_base) { format.ext ?  "my-library.#{format.ext}" : 'my-library' }
+  let(:outfile) { File.join(Dir.tmpdir, outfile_base) }
 
   before do
     FileUtils.cp_r(lib_version, TESTDIR)
@@ -19,7 +21,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_csv_list' do
     let(:message) { :export_as_csv_list }
-    let(:outfile) { File.join(Dir.tmpdir, 'my_library-0.6.2.csv') }
 
     def load_rows_from_csv
       CSV.read(outfile, col_sep: ';')
@@ -56,7 +57,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_html' do
     let(:message) { :export_as_html }
-    let(:outfile) { File.join(Dir.tmpdir, 'my-library') }
     let(:index) { File.join(outfile, 'index.html') }
 
     it 'can export unsorted' do
@@ -71,7 +71,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_onix_xml_archive' do
     let(:message) { :export_as_onix_xml_archive }
-    let(:outfile) { File.join(Dir.tmpdir, 'my-library.oniz.tbz2') }
 
     it 'can export unsorted' do
       format.invoke(@my_library, unsorted, outfile)
@@ -84,7 +83,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_tellico_xml_archive' do
     let(:message) { :export_as_tellico_xml_archive }
-    let(:outfile) { File.join(Dir.tmpdir, 'my-library.tc') }
 
     it 'can export unsorted' do
       format.invoke(@my_library, unsorted, outfile)
@@ -97,7 +95,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_bibtex' do
     let(:message) { :export_as_bibtex }
-    let(:outfile) { File.join(Dir.tmpdir, "my-library.#{format.ext}") }
 
     it 'can export unsorted' do
       format.invoke(@my_library, unsorted, outfile)
@@ -110,7 +107,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_isbn_list' do
     let(:message) { :export_as_isbn_list }
-    let(:outfile) { File.join(Dir.tmpdir, "my-library.#{format.ext}") }
 
     it 'can export unsorted' do
       format.invoke(@my_library, unsorted, outfile)
@@ -123,8 +119,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe '#export_as_ipod_notes' do
     let(:message) { :export_as_ipod_notes }
-    let(:outfile_base) { format.ext ?  "my-library.#{format.ext}" : 'my-library' }
-    let(:outfile) { File.join(Dir.tmpdir, outfile_base) }
     let(:index) { File.join(outfile, 'index.linx') }
 
     it 'can export unsorted' do
