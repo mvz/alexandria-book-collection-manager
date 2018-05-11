@@ -32,7 +32,7 @@ module Alexandria
     end
 
     def each(&block)
-      @sorted.each &block
+      @sorted.each(&block)
     end
 
     def export_as_onix_xml_archive(filename)

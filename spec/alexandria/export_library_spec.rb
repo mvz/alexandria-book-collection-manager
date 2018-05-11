@@ -10,7 +10,7 @@ RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, '0.6.2') }
   let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
   let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
-  let(:outfile_base) { format.ext ?  "my-library.#{format.ext}" : 'my-library' }
+  let(:outfile_base) { format.ext ? "my-library.#{format.ext}" : 'my-library' }
   let(:outfile) { File.join(Dir.tmpdir, outfile_base) }
 
   before do
