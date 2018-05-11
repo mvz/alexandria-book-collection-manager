@@ -361,7 +361,7 @@ EOS
 
     def to_bibtex
       generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
-      bibtex = ''
+      bibtex = +''
       bibtex << "\%Generated on #{Date.today} by: #{generator}\n"
       bibtex << "\%\n"
       bibtex << "\n"
