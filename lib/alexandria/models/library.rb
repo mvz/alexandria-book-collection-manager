@@ -60,25 +60,10 @@ module Alexandria
     end
 
     def self.loadall
+      puts "Library.loadall is deprecated. Please use LibraryStore#load_all"
+      puts "Called from #{caller.first}"
       store = LibraryStore.new(dir)
-      a = []
-      begin
-        Dir.entries(dir).each do |file|
-          # Skip hidden files.
-          next if file =~ /^\./
-          # Skip non-directory files.
-          next unless File.stat(File.join(dir, file)).directory?
-
-          a << store.load_library(file)
-        end
-      rescue Errno::ENOENT
-        FileUtils.mkdir_p(dir)
-      end
-      # Create the default library if there is no library yet.
-
-      a << store.load_library(_('My Library')) if a.empty?
-
-      a
+      store.load_all
     end
 
     def self.move(source_library, dest_library, *books)

@@ -11,8 +11,32 @@ module Alexandria
     FIX_BIGNUM_REGEX =
       /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/
 
+    include GetText
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+
     def initialize(dir)
       @dir = dir
+    end
+
+    def load_all
+      a = []
+      begin
+        Dir.entries(@dir).each do |file|
+          # Skip hidden files.
+          next if file =~ /^\./
+          # Skip non-directory files.
+          next unless File.stat(File.join(@dir, file)).directory?
+
+          a << load_library(file)
+        end
+      rescue Errno::ENOENT
+        FileUtils.mkdir_p(@dir)
+      end
+      # Create the default library if there is no library yet.
+
+      a << load_library(_('My Library')) if a.empty?
+
+      a
     end
 
     def load_library(name)
