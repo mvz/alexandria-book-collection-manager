@@ -6,6 +6,7 @@
 
 require 'alexandria/ui/callbacks'
 require 'alexandria/ui/columns'
+require 'alexandria/library_sort_order'
 
 module Alexandria
   module UI

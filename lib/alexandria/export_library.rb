@@ -1,77 +1,18 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2007 Cathal Mc Ginley
-# Copyright (C) 2014, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
-
-# Export sorting added 23 Oct 2007 by Cathal Mc Ginley
-# Classes LibrarySortOrder and SortedLibrary, and changed ExportFormat#invoke
-# iPod Notes support added 20 January 2008 by Tim Malone
-# require 'cgi'
+# See the file README.md for authorship and licensing information.
 
 require 'csv'
 require 'image_size'
+require 'tmpdir'
 
 module Alexandria
-  class LibrarySortOrder
-    include Logging
-
-    def initialize(book_attribute, ascending = true)
-      @book_attribute = book_attribute
-      @ascending = ascending
-    end
-
-    def sort(library)
-      sorted = library.sort_by do |book|
-        book.send(@book_attribute)
-      end
-      sorted.reverse! unless @ascending
-      sorted
-    rescue StandardError => ex
-      log.warn { "Could not sort library by #{@book_attribute.inspect}: #{ex.message}" }
-      library
-    end
-
-    def to_s
-      "#{@book_attribute} #{@ascending ? '(ascending)' : '(descending)'}"
-    end
-
-    class Unsorted < LibrarySortOrder
-      def initialize; end
-
-      def sort(library)
-        library
-      end
-
-      def to_s
-        'default order'
-      end
-    end
-  end
-
-  class SortedLibrary < Library
+  class ExportLibrary
     def initialize(library, sort_order)
-      super(library.name)
       @library = library
-      sorted = sort_order.sort(library)
-      sorted.each do |book|
-        self << book
-      end
+      @sorted = sort_order.sort(library)
     end
 
     def cover(book)
@@ -85,53 +26,15 @@ module Alexandria
     def copy_covers(dest)
       @library.copy_covers(dest)
     end
-  end
 
-  class ExportFormat
-    attr_reader :name, :ext, :message
-
-    include GetText
-    include Logging
-    extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
-
-    def self.all
-      [
-        new(_('Archived ONIX XML'), 'onix.tbz2', :export_as_onix_xml_archive),
-        new(_('Archived Tellico XML'), 'tc', :export_as_tellico_xml_archive),
-        new(_('BibTeX'), 'bib', :export_as_bibtex),
-        new(_('CSV list'), 'csv', :export_as_csv_list),
-        new(_('ISBN List'), 'txt', :export_as_isbn_list),
-        new(_('iPod Notes'), nil, :export_as_ipod_notes),
-        new(_('HTML Web Page'), nil, :export_as_html, true)
-      ]
+    def name
+      @library.name
     end
 
-    def invoke(library, sort_order, filename, *args)
-      if sort_order
-        sorted = SortedLibrary.new(library, sort_order)
-        log.debug { "Exporting library sorted by #{sort_order}" }
-        sorted.send(@message, filename, *args)
-      else
-        library.send(@message, filename, *args)
-      end
+    def each(&block)
+      @sorted.each(&block)
     end
 
-    def needs_preview?
-      @needs_preview
-    end
-
-    private
-
-    def initialize(name, ext, message, needs_preview = false)
-      @name = name
-      @ext = ext
-      @message = message
-      @needs_preview = needs_preview
-    end
-  end
-
-  module Exportable
     def export_as_onix_xml_archive(filename)
       File.open(File.join(Dir.tmpdir, 'onix.xml'), 'w') do |io|
         to_onix_document.write(io, 0)
@@ -252,7 +155,7 @@ module Alexandria
       header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d',
                                                    now.year, now.month, now.day, now.hour, now.min)
       header.add_element('MessageNote').text = name
-      each_with_index do |book, idx|
+      @sorted.each_with_index do |book, idx|
         # fields that are missing: edition and rating.
         prod = msg.add_element('Product')
         prod.add_element('RecordReference').text = idx
@@ -325,7 +228,7 @@ module Alexandria
       # collection fields
       field1.add_attribute('name', '_default')
       images = collection.add_element('images')
-      each_with_index do |book, idx|
+      @sorted.each_with_index do |book, idx|
         entry = collection.add_element('entry')
         new_index = (idx + 1).to_s
         entry.add_attribute('id', new_index)
@@ -350,9 +253,9 @@ module Alexandria
           image = images.add_element('image')
           image.add_attribute('id', final_cover(book))
           image_s = ImageSize.new(IO.read(cover(book)))
-          image.add_attribute('height', image_s.get_height.to_s)
-          image.add_attribute('width', image_s.get_width.to_s)
-          image.add_attribute('format', image_s.get_type)
+          image.add_attribute('height', image_s.height.to_s)
+          image.add_attribute('width', image_s.width.to_s)
+          image.add_attribute('format', image_s.format)
         end
       end
       doc
@@ -370,7 +273,7 @@ module Alexandria
 
     def to_xhtml(css)
       generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
-      xhtml = ''
+      xhtml = +''
       xhtml << <<EOS
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -403,7 +306,7 @@ EOS
 EOS
           image_s = ImageSize.new(IO.read(cover(book)))
           xhtml << <<EOS
-       height="#{image_s.get_height}" width="#{image_s.get_width}"
+       height="#{image_s.height}" width="#{image_s.width}"
 EOS
           xhtml << <<EOS
   />
@@ -458,7 +361,7 @@ EOS
 
     def to_bibtex
       generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
-      bibtex = ''
+      bibtex = +''
       bibtex << "\%Generated on #{Date.today} by: #{generator}\n"
       bibtex << "\%\n"
       bibtex << "\n"
@@ -505,13 +408,5 @@ EOS
       my_str.gsub!(/\"(.+)\"/, "``\1''")
       my_str
     end
-  end
-
-  class Library
-    include Exportable
-  end
-
-  class SmartLibrary
-    include Exportable
   end
 end

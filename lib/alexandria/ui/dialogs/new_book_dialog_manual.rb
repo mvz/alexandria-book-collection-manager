@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+require 'tmpdir'
+
 module Alexandria
   module UI
     class NewBookDialogManual < BookPropertiesDialogBase
