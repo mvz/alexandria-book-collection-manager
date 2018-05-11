@@ -35,8 +35,6 @@ module Alexandria
     end
 
     def self.dir
-      puts "Library.dir is deprecated. Please pass base dir to Library"
-      puts "Called from #{caller.first}"
       @dir or raise 'Boom!'
     end
 
@@ -61,13 +59,8 @@ module Alexandria
       name
     end
 
-    def self.load(name, base_dir = nil)
-      puts "Library.load is deprecated. Please use LibraryStore#load_library"
-      puts "Called from #{caller.first}"
-      LibraryStore.new(base_dir || dir).load_library(name)
-    end
-
     def self.loadall
+      store = LibraryStore.new(dir)
       a = []
       begin
         Dir.entries(dir).each do |file|
@@ -76,14 +69,14 @@ module Alexandria
           # Skip non-directory files.
           next unless File.stat(File.join(dir, file)).directory?
 
-          a << load(file)
+          a << store.load_library(file)
         end
       rescue Errno::ENOENT
         FileUtils.mkdir_p(dir)
       end
       # Create the default library if there is no library yet.
 
-      a << load(_('My Library')) if a.empty?
+      a << store.load_library(_('My Library')) if a.empty?
 
       a
     end
