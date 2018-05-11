@@ -19,7 +19,7 @@ module Alexandria
 
     attr_reader :name
     attr_accessor :ruined_books, :updating, :deleted_books
-    DIR = File.join(ENV['HOME'], '.alexandria')
+    DEFAULT_DIR = File.join(ENV['HOME'], '.alexandria')
     EXT = { book: '.yaml', cover: '.cover' }.freeze
 
     include GetText
@@ -29,8 +29,16 @@ module Alexandria
     BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
     include Observable
 
+    def self.dir=(dir)
+      @dir = dir
+    end
+
+    def self.dir
+      @dir or raise 'Boom!'
+    end
+
     def path
-      File.join(DIR, @name)
+      File.join(self.class.dir, @name)
     end
 
     def updating?
@@ -203,16 +211,16 @@ module Alexandria
     def self.loadall
       a = []
       begin
-        Dir.entries(DIR).each do |file|
+        Dir.entries(dir).each do |file|
           # Skip hidden files.
           next if file =~ /^\./
           # Skip non-directory files.
-          next unless File.stat(File.join(DIR, file)).directory?
+          next unless File.stat(File.join(dir, file)).directory?
 
           a << load(file)
         end
       rescue Errno::ENOENT
-        FileUtils.mkdir_p(DIR)
+        FileUtils.mkdir_p(dir)
       end
       # Create the default library if there is no library yet.
 
@@ -532,7 +540,7 @@ module Alexandria
     end
 
     def name=(name)
-      File.rename(path, File.join(DIR, name))
+      File.rename(path, File.join(dir, name))
       @name = name
     end
 
