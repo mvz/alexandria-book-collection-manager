@@ -28,7 +28,7 @@ module Alexandria
       @name = name.dup.force_encoding('UTF-8')
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
-      libraries = Libraries.instance
+      libraries = LibraryCollection.instance
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
       # carry deleted books over from libraries that are part of the smart library

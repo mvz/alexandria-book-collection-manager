@@ -116,7 +116,7 @@ module Alexandria
           file = File.basename(filename, '.*')
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
-            Libraries.instance.all_libraries,
+            LibraryCollection.instance.all_libraries,
             base)
 
           filter = filters[self.filter]

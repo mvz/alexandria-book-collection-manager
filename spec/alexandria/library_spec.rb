@@ -105,7 +105,7 @@ describe Alexandria::Library do
 
   describe '.import_as_isbn_list' do
     def __test_fake_import_isbns
-      libraries = Alexandria::Libraries.instance
+      libraries = Alexandria::LibraryCollection.instance
       library = Alexandria::Library.new('Test Library')
       libraries.add_library(library)
       [library, libraries]

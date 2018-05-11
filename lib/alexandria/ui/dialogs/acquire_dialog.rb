@@ -48,7 +48,7 @@ module Alexandria
         @acquire_dialog.transient_for = @parent = parent
         @block = block
 
-        libraries = Libraries.instance.all_regular_libraries
+        libraries = LibraryCollection.instance.all_regular_libraries
         selected_library = libraries.first if selected_library.is_a?(SmartLibrary)
         @combo_libraries.populate_with_libraries(libraries,
                                                  selected_library)
@@ -87,7 +87,7 @@ module Alexandria
       def on_add
         model = @barcodes_treeview.model
 
-        libraries = Libraries.instance.all_libraries
+        libraries = LibraryCollection.instance.all_libraries
         library, is_new_library =
           @combo_libraries.selection_from_libraries(libraries)
 

@@ -609,13 +609,13 @@ module Alexandria
       end
 
       def load_libraries
-        log.info { 'Loading Libraries...' }
+        log.info { 'Loading libraries...' }
         @completion_models = CompletionModels.instance
         if @libraries
           detach_old_libraries
           @libraries.reload
         else
-          @libraries = Libraries.instance
+          @libraries = LibraryCollection.instance
           @libraries.reload
           handle_ruined_books unless @libraries.ruined_books.empty?
         end
