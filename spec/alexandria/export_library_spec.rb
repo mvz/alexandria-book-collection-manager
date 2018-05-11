@@ -8,14 +8,18 @@ require 'spec_helper'
 
 RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, '0.6.2') }
-  let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
+
+  let(:loader) { Alexandria::LibraryStore.new(TESTDIR) }
+
   let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
   let(:outfile_base) { format.ext ? "my-library.#{format.ext}" : 'my-library' }
   let(:outfile) { File.join(Dir.tmpdir, outfile_base) }
 
+  let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
+
   before do
     FileUtils.cp_r(lib_version, TESTDIR)
-    @my_library = Alexandria::Library.loadall[0]
+    @my_library = loader.load_library('My Library')
     expect(@my_library.size).to eq 5
   end
 
