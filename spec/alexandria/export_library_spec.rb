@@ -8,6 +8,7 @@ require 'spec_helper'
 
 RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, '0.6.2') }
+  let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
 
   before do
     FileUtils.cp_r(lib_version, TESTDIR)
@@ -60,7 +61,6 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:format) { Alexandria::ExportFormat.new('HTML Web Page', nil, :export_as_html, true) }
     let(:outfile) { File.join(Dir.tmpdir, 'my-library') }
     let(:index) { File.join(outfile, 'index.html') }
-    let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
 
     it 'can export unsorted' do
       format.invoke(@my_library, unsorted, outfile, Alexandria::WebTheme.all.first)
@@ -68,6 +68,24 @@ RSpec.describe Alexandria::ExportLibrary do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.exist?(index)).to be_truthy
         expect(File.size(index)).to be_nonzero
+      end
+    end
+
+    after(:each) do
+      FileUtils.rm_rf(outfile) if File.exist? outfile
+    end
+  end
+
+  describe '#export_as_onix_xml_archive' do
+    let(:format) { Alexandria::ExportFormat.new('Archived ONIX XML', 'onix.tbz2', :export_as_onix_xml_archive) }
+    let(:outfile) { File.join(Dir.tmpdir, 'my-library.oniz.tbz2') }
+    let(:index) { File.join(outfile, 'index.html') }
+
+    it 'can export unsorted' do
+      format.invoke(@my_library, unsorted, outfile)
+      aggregate_failures do
+        expect(File.exist?(outfile)).to be_truthy
+        expect(File.size(outfile)).to be_nonzero
       end
     end
 

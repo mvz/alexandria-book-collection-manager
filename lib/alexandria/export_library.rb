@@ -155,7 +155,7 @@ module Alexandria
       header.add_element('SentDate').text = format('%.4d%.2d%.2d%.2d%.2d',
                                                    now.year, now.month, now.day, now.hour, now.min)
       header.add_element('MessageNote').text = name
-      each_with_index do |book, idx|
+      @sorted.each_with_index do |book, idx|
         # fields that are missing: edition and rating.
         prod = msg.add_element('Product')
         prod.add_element('RecordReference').text = idx
