@@ -27,6 +27,10 @@ module Alexandria
       @library.copy_covers(dest)
     end
 
+    def name
+      @library.name
+    end
+
     def each(&block)
       @sorted.each &block
     end
@@ -269,7 +273,7 @@ module Alexandria
 
     def to_xhtml(css)
       generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
-      xhtml = ''
+      xhtml = +''
       xhtml << <<EOS
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -302,7 +306,7 @@ EOS
 EOS
           image_s = ImageSize.new(IO.read(cover(book)))
           xhtml << <<EOS
-       height="#{image_s.get_height}" width="#{image_s.get_width}"
+       height="#{image_s.height}" width="#{image_s.width}"
 EOS
           xhtml << <<EOS
   />

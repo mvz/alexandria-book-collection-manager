@@ -9,15 +9,15 @@ require 'spec_helper'
 RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, '0.6.2') }
 
+  before do
+    FileUtils.cp_r(lib_version, TESTDIR)
+    @my_library = Alexandria::Library.loadall[0]
+    expect(@my_library.size).to eq 5
+  end
+
   describe '#export_as_csv_list' do
     let(:format) { Alexandria::ExportFormat.new('CSV list', 'csv', :export_as_csv_list) }
     let(:outfile) { File.join(Dir.tmpdir, 'my_library-0.6.2.csv') }
-
-    before do
-      FileUtils.cp_r(lib_version, TESTDIR)
-      @my_library = Alexandria::Library.loadall[0]
-      expect(@my_library.size).to eq 5
-    end
 
     def load_rows_from_csv
       CSV.read(outfile, col_sep: ';')
@@ -52,9 +52,31 @@ RSpec.describe Alexandria::ExportLibrary do
     end
 
     after(:each) do
-      FileUtils.rm_rf(TESTDIR)
       File.unlink outfile if File.exist? outfile
     end
   end
-end
 
+  describe '#export_as_html' do
+    let(:format) { Alexandria::ExportFormat.new('HTML Web Page', nil, :export_as_html, true) }
+    let(:outfile) { File.join(Dir.tmpdir, 'my-library') }
+    let(:index) { File.join(outfile, 'index.html') }
+    let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
+
+    it 'can export unsorted' do
+      format.invoke(@my_library, unsorted, outfile, Alexandria::WebTheme.all.first)
+      aggregate_failures do
+        expect(File.exist?(outfile)).to be_truthy
+        expect(File.exist?(index)).to be_truthy
+        expect(File.size(index)).to be_nonzero
+      end
+    end
+
+    after(:each) do
+      FileUtils.rm_rf(outfile) if File.exist? outfile
+    end
+  end
+
+  after(:each) do
+    FileUtils.rm_rf(TESTDIR)
+  end
+end
