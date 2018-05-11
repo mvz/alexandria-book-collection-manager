@@ -57,13 +57,6 @@ module Alexandria
       name
     end
 
-    def self.loadall
-      puts "Library.loadall is deprecated. Please use LibraryStore#load_all"
-      puts "Called from #{caller.first}"
-      store = LibraryStore.new(dir)
-      store.load_all
-    end
-
     def self.move(source_library, dest_library, *books)
       dest = dest_library.path
       books.each do |book|
