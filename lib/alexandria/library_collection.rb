@@ -10,13 +10,14 @@ require 'singleton'
 module Alexandria
   class LibraryCollection
     attr_reader :all_libraries, :ruined_books, :deleted_books
+    attr_accessor :library_store
 
     include Observable
     include Singleton
 
     def reload
       @all_libraries.clear
-      @all_libraries.concat(Library.loadall)
+      @all_libraries.concat(library_store.load_all)
       @all_libraries.concat(SmartLibrary.loadall)
 
       ruined = []

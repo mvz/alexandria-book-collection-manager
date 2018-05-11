@@ -11,6 +11,8 @@ require 'optparse'
 require 'ostruct'
 
 Alexandria::Library.dir = Alexandria::Library::DEFAULT_DIR
+store = Alexandria::LibraryStore.new(Alexandria::Library::DEFAULT_DIR)
+Alexandria::LibraryCollection.instance.library_store = store
 
 # options = OpenStruct.new
 OptionParser.new do |opts|
