@@ -228,7 +228,7 @@ module Alexandria
       # collection fields
       field1.add_attribute('name', '_default')
       images = collection.add_element('images')
-      each_with_index do |book, idx|
+      @sorted.each_with_index do |book, idx|
         entry = collection.add_element('entry')
         new_index = (idx + 1).to_s
         entry.add_attribute('id', new_index)
@@ -253,9 +253,9 @@ module Alexandria
           image = images.add_element('image')
           image.add_attribute('id', final_cover(book))
           image_s = ImageSize.new(IO.read(cover(book)))
-          image.add_attribute('height', image_s.get_height.to_s)
-          image.add_attribute('width', image_s.get_width.to_s)
-          image.add_attribute('format', image_s.get_type)
+          image.add_attribute('height', image_s.height.to_s)
+          image.add_attribute('width', image_s.width.to_s)
+          image.add_attribute('format', image_s.format)
         end
       end
       doc

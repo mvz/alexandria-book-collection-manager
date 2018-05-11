@@ -51,10 +51,6 @@ RSpec.describe Alexandria::ExportLibrary do
         expect(rows[index][DATE]).to be >= rows[index + 1][DATE]
       end
     end
-
-    after(:each) do
-      File.unlink outfile if File.exist? outfile
-    end
   end
 
   describe '#export_as_html' do
@@ -70,16 +66,11 @@ RSpec.describe Alexandria::ExportLibrary do
         expect(File.size(index)).to be_nonzero
       end
     end
-
-    after(:each) do
-      FileUtils.rm_rf(outfile) if File.exist? outfile
-    end
   end
 
   describe '#export_as_onix_xml_archive' do
     let(:format) { Alexandria::ExportFormat.new('Archived ONIX XML', 'onix.tbz2', :export_as_onix_xml_archive) }
     let(:outfile) { File.join(Dir.tmpdir, 'my-library.oniz.tbz2') }
-    let(:index) { File.join(outfile, 'index.html') }
 
     it 'can export unsorted' do
       format.invoke(@my_library, unsorted, outfile)
@@ -88,13 +79,23 @@ RSpec.describe Alexandria::ExportLibrary do
         expect(File.size(outfile)).to be_nonzero
       end
     end
+  end
 
-    after(:each) do
-      FileUtils.rm_rf(outfile) if File.exist? outfile
+  describe '#export_as_tellico_xml_archive' do
+    let(:format) { Alexandria::ExportFormat.new('Archived Tellico XML', 'tc', :export_as_tellico_xml_archive) }
+    let(:outfile) { File.join(Dir.tmpdir, 'my-library.tc') }
+
+    it 'can export unsorted' do
+      format.invoke(@my_library, unsorted, outfile)
+      aggregate_failures do
+        expect(File.exist?(outfile)).to be_truthy
+        expect(File.size(outfile)).to be_nonzero
+      end
     end
   end
 
   after(:each) do
     FileUtils.rm_rf(TESTDIR)
+    FileUtils.rm_rf(outfile) if File.exist? outfile
   end
 end
