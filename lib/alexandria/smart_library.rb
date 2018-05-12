@@ -45,35 +45,9 @@ module Alexandria
     end
 
     def self.loadall
-      a = []
-      begin
-        # Deserialize smart libraries.
-        Dir.chdir(dir) do
-          Dir['*' + EXT].each do |filename|
-            # Skip non-regular files.
-            next unless File.stat(filename).file?
-
-            text = IO.read(filename)
-            hash = YAML.safe_load(text, whitelist_classes = [Symbol])
-            begin
-              smart_library = from_hash(hash)
-              a << smart_library
-            rescue StandardError => e
-              puts "Cannot load serialized smart library: #{e}"
-              puts e.backtrace
-            end
-          end
-        end
-      rescue Errno::ENOENT
-        # First run and no smart libraries yet? Provide some default
-        # ones.
-        sample_smart_libraries.each do |smart_library|
-          smart_library.save
-          a << smart_library
-        end
-      end
-      a.each(&:refilter)
-      a
+      puts "Library.loadall is deprecated. Please use LibraryStore#load_all_smart_libraries"
+      puts "Called from #{caller.first}"
+      LibraryStore.new(dir).load_all_smart_libraries
     end
 
     def self.sample_smart_libraries

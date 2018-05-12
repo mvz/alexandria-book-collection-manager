@@ -17,7 +17,7 @@ module Alexandria
 
     def reload
       @all_libraries.clear
-      @all_libraries.concat(library_store.load_all)
+      @all_libraries.concat(library_store.load_all_libraries)
       @all_libraries.concat(SmartLibrary.loadall)
 
       ruined = []

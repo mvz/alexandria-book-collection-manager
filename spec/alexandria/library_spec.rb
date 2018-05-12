@@ -129,7 +129,7 @@ describe Alexandria::Library do
     end
 
     it 'imports cleanly from version 0.6.1 data format' do
-      libs = loader.load_all
+      libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
       my_library = libs[0]
       expect(my_library.size).to eq(3)
@@ -157,7 +157,7 @@ describe Alexandria::Library do
     end
 
     it 'allows books to have no ISBN' do
-      libs = loader.load_all
+      libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
       my_library = libs[0]
       expect(my_library.size).to eq(2)
@@ -176,7 +176,7 @@ describe Alexandria::Library do
         my_library.save(book, true)
       end
 
-      libraries_reloaded = loader.load_all
+      libraries_reloaded = loader.load_all_libraries
       my_library_reloaded = libraries_reloaded[0]
 
       expect(my_library_reloaded.size).to eq(2)

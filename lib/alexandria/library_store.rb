@@ -18,7 +18,7 @@ module Alexandria
       @dir = dir
     end
 
-    def load_all
+    def load_all_libraries
       a = []
       begin
         Dir.entries(@dir).each do |file|
@@ -135,6 +135,35 @@ module Alexandria
 
       library
     end
+
+    def load_all_smart_libraries
+      a = []
+      begin
+        # Deserialize smart libraries.
+        Dir.chdir(@dir) do
+          Dir['*' + SmartLibrary::EXT].each do |filename|
+            # Skip non-regular files.
+            next unless File.stat(filename).file?
+
+            text = IO.read(filename)
+            hash = YAML.safe_load(text, whitelist_classes = [Symbol])
+            smart_library = SmartLibrary.from_hash(hash)
+            a << smart_library
+          end
+        end
+      rescue Errno::ENOENT
+        # First run and no smart libraries yet? Provide some default
+        # ones.
+        sample_smart_libraries.each do |smart_library|
+          smart_library.save
+          a << smart_library
+        end
+      end
+      a.each(&:refilter)
+      a
+    end
+
+    private
 
     def regularize_book_from_yaml(name)
       text = IO.read(name)
