@@ -28,8 +28,7 @@ module Alexandria
     include Observable
 
     def path
-      raise 'No base dir' unless @base_dir
-      File.join(@base_dir, @name)
+      File.join(@store.library_dir, @name)
     end
 
     def updating?
@@ -397,9 +396,9 @@ module Alexandria
 
     protected
 
-    def initialize(name, base_dir = nil)
+    def initialize(name, store = nil)
       @name = name
-      @base_dir = base_dir
+      @store = store
       @deleted_books = []
     end
   end
