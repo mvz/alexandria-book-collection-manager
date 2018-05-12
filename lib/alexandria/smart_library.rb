@@ -44,12 +44,6 @@ module Alexandria
       @cache = {}
     end
 
-    def self.loadall
-      puts "Library.loadall is deprecated. Please use LibraryStore#load_all_smart_libraries"
-      puts "Called from #{caller.first}"
-      LibraryStore.new(dir).load_all_smart_libraries
-    end
-
     def self.sample_smart_libraries
       a = []
 
