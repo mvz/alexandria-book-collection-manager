@@ -24,7 +24,7 @@ RSpec.describe Alexandria::LibraryStore do
 
     context 'when one exists' do
       it 'returns the existing smart library' do
-        existing = Alexandria::SmartLibrary.new('Hi', [], :all)
+        existing = Alexandria::SmartLibrary.new('Hi', [], :all, loader)
         existing.save
         smart_libs = loader.load_all_smart_libraries
         aggregate_failures do

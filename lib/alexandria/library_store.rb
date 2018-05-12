@@ -147,14 +147,14 @@ module Alexandria
 
             text = IO.read(filename)
             hash = YAML.safe_load(text, whitelist_classes = [Symbol])
-            smart_library = SmartLibrary.from_hash(hash)
+            smart_library = SmartLibrary.from_hash(hash, self)
             a << smart_library
           end
         end
       rescue Errno::ENOENT
         # First run and no smart libraries yet? Provide some default
         # ones.
-        SmartLibrary.sample_smart_libraries.each do |smart_library|
+        SmartLibrary.sample_smart_libraries(self).each do |smart_library|
           smart_library.save
           a << smart_library
         end
@@ -163,8 +163,6 @@ module Alexandria
       a
     end
 
-    private
-
     def library_dir
       @dir
     end
@@ -172,6 +170,8 @@ module Alexandria
     def smart_library_dir
       File.join(@dir, '.smart_libraries')
     end
+
+    private
 
     def regularize_book_from_yaml(name)
       text = IO.read(name)
