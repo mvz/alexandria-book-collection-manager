@@ -222,6 +222,5 @@ module Alexandria
       end
       book
     end
-
   end
 end

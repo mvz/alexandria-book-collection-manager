@@ -201,7 +201,6 @@ describe Alexandria::Library do
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
-
     it 'moves the given book from source to target' do
       source = loader.load_library('My Library')
       count = source.count
