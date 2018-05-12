@@ -21,16 +21,16 @@ module Alexandria
     def load_all_libraries
       a = []
       begin
-        Dir.entries(@dir).each do |file|
+        Dir.entries(library_dir).each do |file|
           # Skip hidden files.
           next if file =~ /^\./
           # Skip non-directory files.
-          next unless File.stat(File.join(@dir, file)).directory?
+          next unless File.stat(File.join(library_dir, file)).directory?
 
           a << load_library(file)
         end
       rescue Errno::ENOENT
-        FileUtils.mkdir_p(@dir)
+        FileUtils.mkdir_p(library_dir)
       end
       # Create the default library if there is no library yet.
 
@@ -42,7 +42,7 @@ module Alexandria
     def load_library(name)
       test = [0, nil]
       ruined_books = []
-      library = Library.new(name, @dir)
+      library = Library.new(name, library_dir)
       FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
         Dir['*' + Library::EXT[:book]].each do |filename|
@@ -140,7 +140,7 @@ module Alexandria
       a = []
       begin
         # Deserialize smart libraries.
-        Dir.chdir(@dir) do
+        Dir.chdir(smart_library_dir) do
           Dir['*' + SmartLibrary::EXT].each do |filename|
             # Skip non-regular files.
             next unless File.stat(filename).file?
@@ -154,7 +154,7 @@ module Alexandria
       rescue Errno::ENOENT
         # First run and no smart libraries yet? Provide some default
         # ones.
-        sample_smart_libraries.each do |smart_library|
+        SmartLibrary.sample_smart_libraries.each do |smart_library|
           smart_library.save
           a << smart_library
         end
@@ -164,6 +164,14 @@ module Alexandria
     end
 
     private
+
+    def library_dir
+      @dir
+    end
+
+    def smart_library_dir
+      File.join(@dir, '.smart_libraries')
+    end
 
     def regularize_book_from_yaml(name)
       text = IO.read(name)
