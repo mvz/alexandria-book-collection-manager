@@ -19,16 +19,7 @@ module Alexandria
     attr_reader :name
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
-    DEFAULT_DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
     EXT = '.yaml'
-
-    def self.dir=(dir)
-      @dir = dir
-    end
-
-    def self.dir
-      @dir or raise 'No dir set'
-    end
 
     def initialize(name, rules, predicate_operator_rule, store = nil)
       super()

@@ -21,7 +21,6 @@ end
 
 Alexandria::UI::Icons.init
 
-Alexandria::SmartLibrary.dir = File.join(TESTDIR, '.smart_libraries')
 test_store = Alexandria::LibraryStore.new(TESTDIR)
 Alexandria::LibraryCollection.instance.library_store = test_store
 

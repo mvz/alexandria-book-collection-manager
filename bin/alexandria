@@ -10,7 +10,6 @@ require 'alexandria'
 require 'optparse'
 require 'ostruct'
 
-Alexandria::SmartLibrary.dir = Alexandria::SmartLibrary::DEFAULT_DIR
 store = Alexandria::LibraryStore.new(Alexandria::Library::DEFAULT_DIR)
 Alexandria::LibraryCollection.instance.library_store = store
 
