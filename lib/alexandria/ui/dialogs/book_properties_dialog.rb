@@ -155,11 +155,8 @@ module Alexandria
         if loaned_since.strip.empty?
           @book.loaned_since = nil
         else
-          begin
-            t = parse_date(loaned_since)
-            @book.loaned_since = t
-          rescue StandardError
-          end
+          t = parse_date(loaned_since)
+          @book.loaned_since = t
         end
 
         @book.redd = @checkbutton_redd.active?

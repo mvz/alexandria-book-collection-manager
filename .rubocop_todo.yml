@@ -6,15 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 6
-Lint/HandleExceptions:
-  Exclude:
-    - 'lib/alexandria/import_library_csv.rb'
-    - 'lib/alexandria/library_store.rb'
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/ui/dialogs/book_properties_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/import_dialog.rb'
-
 # Offense count: 2
 Lint/IneffectiveAccessModifier:
   Exclude:

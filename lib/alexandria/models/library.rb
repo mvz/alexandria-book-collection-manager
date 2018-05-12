@@ -175,16 +175,8 @@ module Alexandria
       # (backward compatibility from 0.4.0)
       # book.saved_ident ||= book.ident
       book.saved_ident = book.ident if book.saved_ident.nil? || book.saved_ident.empty?
-      if book.ident != book.saved_ident
-        # log.debug { "Backwards compatibility step: #{book.saved_ident.inspect}, #{book.ident.inspect}" }
-        FileUtils.rm(yaml(book.saved_ident))
-      end
-      if File.exist?(cover(book.saved_ident))
-        begin
-          FileUtils.mv(cover(book.saved_ident), cover(book.ident))
-        rescue StandardError
-        end
-      end
+      FileUtils.rm(yaml(book.saved_ident)) if book.ident != book.saved_ident
+      FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exist?(cover(book.saved_ident))
       book.saved_ident = book.ident
 
       filename = book.saved_ident.to_s + '.yaml'
