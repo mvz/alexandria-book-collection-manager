@@ -28,15 +28,8 @@ module Alexandria
     BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
     include Observable
 
-    def self.dir=(dir)
-      @dir = dir
-    end
-
-    def self.dir
-      @dir or raise 'Boom!'
-    end
-
     def path
+      raise 'No base dir' unless @base_dir
       File.join(@base_dir, @name)
     end
 
@@ -407,7 +400,7 @@ module Alexandria
 
     def initialize(name, base_dir = nil)
       @name = name
-      @base_dir = base_dir || self.class.dir
+      @base_dir = base_dir
       @deleted_books = []
     end
   end

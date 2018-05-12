@@ -21,6 +21,5 @@ end
 
 Alexandria::UI::Icons.init
 
-Alexandria::Library.dir = TESTDIR
 test_store = Alexandria::LibraryStore.new(TESTDIR)
 Alexandria::LibraryCollection.instance.library_store = test_store
