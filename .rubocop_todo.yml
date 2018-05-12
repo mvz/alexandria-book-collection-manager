@@ -6,18 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 13
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: auto_detection, squiggly, active_support, powerpack, unindent
-Layout/IndentHeredoc:
-  Exclude:
-    - 'Rakefile'
-    - 'bin/alexandria'
-    - 'lib/alexandria/export_library.rb'
-    - 'lib/alexandria/ui/dialogs/about_dialog.rb'
-    - 'spec/alexandria/console_spec.rb'
-
 # Offense count: 6
 Lint/HandleExceptions:
   Exclude:

@@ -46,20 +46,20 @@ end.parse!
 begin
   Alexandria.main
 rescue StandardError => e
-  warn <<EOS
------------------------
-Alexandria just crashed
------------------------
-Timestamp: #{Time.now}
-Message: #{e.message}
-Backtrace:
-#{e.backtrace.join("\n")}
-Release: #{Alexandria::VERSION}(#{Alexandria::DISPLAY_VERSION})
-Uname -a: #{`uname -a`.chomp}
---
-Please report this dump to '#{Alexandria::BUGREPORT_URL}' with some additional
-information, such as the description of the crash and the steps to reproduce it
-(if it's possible).
+  warn <<~EOS
+    -----------------------
+    Alexandria just crashed
+    -----------------------
+    Timestamp: #{Time.now}
+    Message: #{e.message}
+    Backtrace:
+    #{e.backtrace.join("\n")}
+    Release: #{Alexandria::VERSION}(#{Alexandria::DISPLAY_VERSION})
+    Uname -a: #{`uname -a`.chomp}
+    --
+    Please report this dump to '#{Alexandria::BUGREPORT_URL}' with some additional
+    information, such as the description of the crash and the steps to reproduce it
+    (if it's possible).
 EOS
   exit 1
 end
