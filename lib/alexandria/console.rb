@@ -1,27 +1,14 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2008 Joseph Method
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   def self.list_books_on_console(_title = true, authors = true)
-    libraries_simpleton = Alexandria::Libraries.instance
-    libraries_simpleton.reload
-    libraries = Alexandria::Library.loadall
+    collection = Alexandria::LibraryCollection.instance
+    collection.reload
+    libraries = collection.all_regular_libraries
     output_string = ''
     @books = libraries.flatten
     @books.each do |book|

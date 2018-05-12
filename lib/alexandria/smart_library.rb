@@ -19,16 +19,16 @@ module Alexandria
     attr_reader :name
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
-    DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
     EXT = '.yaml'
 
-    def initialize(name, rules, predicate_operator_rule)
+    def initialize(name, rules, predicate_operator_rule, store = nil)
       super()
       raise if name.nil? || rules.nil? || predicate_operator_rule.nil?
       @name = name.dup.force_encoding('UTF-8')
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
-      libraries = Libraries.instance
+      @store = store
+      libraries = LibraryCollection.instance
       libraries.add_observer(self)
       self.libraries = libraries.all_regular_libraries
       # carry deleted books over from libraries that are part of the smart library
@@ -36,39 +36,7 @@ module Alexandria
       @cache = {}
     end
 
-    def self.loadall
-      a = []
-      begin
-        # Deserialize smart libraries.
-        Dir.chdir(DIR) do
-          Dir['*' + EXT].each do |filename|
-            # Skip non-regular files.
-            next unless File.stat(filename).file?
-
-            text = IO.read(filename)
-            hash = YAML.safe_load(text, whitelist_classes = [Symbol])
-            begin
-              smart_library = from_hash(hash)
-              a << smart_library
-            rescue StandardError => e
-              puts "Cannot load serialized smart library: #{e}"
-              puts e.backtrace
-            end
-          end
-        end
-      rescue Errno::ENOENT
-        # First run and no smart libraries yet? Provide some default
-        # ones.
-        sample_smart_libraries.each do |smart_library|
-          smart_library.save
-          a << smart_library
-        end
-      end
-      a.each(&:refilter)
-      a
-    end
-
-    def self.sample_smart_libraries
+    def self.sample_smart_libraries(store)
       a = []
 
       operands = Rule::Operands::LEFT
@@ -77,25 +45,25 @@ module Alexandria
       rule = Rule.new(operands.find { |x| x.book_selector == :rating },
                       Rule::Operators::IS,
                       Book::MAX_RATING_STARS.to_s)
-      a << new(_('Favorite'), [rule], ALL_RULES)
+      a << new(_('Favorite'), [rule], ALL_RULES, store)
 
       # Loaned books.
       rule = Rule.new(operands.find { |x| x.book_selector == :loaned },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << new(_('Loaned'), [rule], ALL_RULES)
+      a << new(_('Loaned'), [rule], ALL_RULES, store)
 
       # Redd books.
       rule = Rule.new(operands.find { |x| x.book_selector == :redd },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << new(_('Read'), [rule], ALL_RULES)
+      a << new(_('Read'), [rule], ALL_RULES, store)
 
       # Own books.
       rule = Rule.new(operands.find { |x| x.book_selector == :own },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << new(_('Owned'), [rule], ALL_RULES)
+      a << new(_('Owned'), [rule], ALL_RULES, store)
 
       # Want books.
       rule = Rule.new(operands.find { |x| x.book_selector == :want },
@@ -104,15 +72,16 @@ module Alexandria
       rule2 = Rule.new(operands.find { |x| x.book_selector == :own },
                        Rule::Operators::IS_NOT_TRUE,
                        nil)
-      a << new(_('Wishlist'), [rule, rule2], ALL_RULES)
+      a << new(_('Wishlist'), [rule, rule2], ALL_RULES, store)
 
       a
     end
 
-    def self.from_hash(hash)
+    def self.from_hash(hash, store)
       SmartLibrary.new(hash[:name],
                        hash[:rules].map { |x| Rule.from_hash(x) },
-                       hash[:predicate_operator_rule] == :all ? ALL_RULES : ANY_RULE)
+                       hash[:predicate_operator_rule] == :all ? ALL_RULES : ANY_RULE,
+                       store)
     end
 
     def to_hash
@@ -169,7 +138,7 @@ module Alexandria
       if book
         @cache[book].yaml(book)
       else
-        File.join(DIR, @name + EXT)
+        File.join(base_dir, @name + EXT)
       end
     end
 
@@ -177,7 +146,7 @@ module Alexandria
       if book
         @cache[book].save(book)
       else
-        FileUtils.mkdir_p(DIR) unless File.exist? DIR
+        FileUtils.mkdir_p(base_dir) unless File.exist? base_dir
         File.open(yaml, 'w') { |io| io.puts to_hash.to_yaml }
       end
     end
@@ -252,6 +221,10 @@ module Alexandria
       @libraries.each { |x| x.delete_observer(self) }
       @libraries = ary.select { |x| x.is_a?(Library) }
       @libraries.each { |x| x.add_observer(self) }
+    end
+
+    def base_dir
+      @store.smart_library_dir
     end
 
     class Rule

@@ -1,28 +1,14 @@
 # frozen_string_literal: true
 
-#-- -*- ruby -*-
-# Copyright (C) 2004-2006 Dafydd Harries
-# Copyright (C) 2007 Cathal Mc Ginley
-# Copyright (C) 2011, 2014-2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 require 'spec_helper'
 
 describe Alexandria::Library do
+  let(:loader) { Alexandria::LibraryStore.new(TESTDIR) }
+
   describe '::EXT' do
     it 'has symbolic references to file extensions' do
       extensions = Alexandria::Library::EXT
@@ -86,12 +72,13 @@ describe Alexandria::Library do
   end
 
   context 'with an empty library' do
+    let(:my_library) { loader.load_library('Empty') }
+
     before(:each) do
       FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
     end
 
     it 'disallows multiple deletion of the same copy of a book' do
-      my_library = Alexandria::Library.loadall[0]
       first_copy = an_artist_of_the_floating_world
       my_library << first_copy
       my_library.delete(first_copy)
@@ -99,9 +86,7 @@ describe Alexandria::Library do
     end
 
     it 'allows multiple copies of a book to be added and deleted in turn' do
-      my_library = Alexandria::Library.loadall[0]
       first_copy = an_artist_of_the_floating_world
-      # puts "first_copy #{first_copy.object_id}"
       my_library << first_copy
       my_library.delete(first_copy)
 
@@ -110,13 +95,7 @@ describe Alexandria::Library do
       third_copy = an_artist_of_the_floating_world
       my_library << third_copy
 
-      # puts "AAA my_library.size #{my_library.size}"
-
-      # puts "second_copy #{second_copy.object_id}"
       expect { my_library.delete(second_copy) }.not_to raise_error
-
-      # puts "BBB my_library.size #{my_library.size}"
-      # my_library.size.should == 1 # not yet an established feature...
     end
 
     after(:each) do
@@ -126,7 +105,7 @@ describe Alexandria::Library do
 
   describe '.import_as_isbn_list' do
     def __test_fake_import_isbns
-      libraries = Alexandria::Libraries.instance
+      libraries = Alexandria::LibraryCollection.instance
       library = Alexandria::Library.new('Test Library')
       libraries.add_library(library)
       [library, libraries]
@@ -150,7 +129,7 @@ describe Alexandria::Library do
     end
 
     it 'imports cleanly from version 0.6.1 data format' do
-      libs = Alexandria::Library.loadall
+      libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
       my_library = libs[0]
       expect(my_library.size).to eq(3)
@@ -178,7 +157,7 @@ describe Alexandria::Library do
     end
 
     it 'allows books to have no ISBN' do
-      libs = Alexandria::Library.loadall
+      libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
       my_library = libs[0]
       expect(my_library.size).to eq(2)
@@ -193,13 +172,11 @@ describe Alexandria::Library do
       lex_and_yacc_book = my_library.select { |b| b.title.include? 'Lex' }[0]
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
 
-      # puts "ident -> " + lex_and_yacc_book.ident
-
       my_library.each do |book|
         my_library.save(book, true)
       end
 
-      libraries_reloaded = Alexandria::Library.loadall
+      libraries_reloaded = loader.load_all_libraries
       my_library_reloaded = libraries_reloaded[0]
 
       expect(my_library_reloaded.size).to eq(2)
@@ -207,16 +184,39 @@ describe Alexandria::Library do
       latex_book = my_library_reloaded.select { |b| b.title.include? 'Latex' }[0]
       expect(latex_book).not_to be_nil
       expect(latex_book.publisher).to eq('Addison Wesley')
-      # puts latex_book.title
 
       lex_and_yacc_book = my_library_reloaded.select { |b| b.title.include? 'Lex' }[0]
       expect(lex_and_yacc_book).not_to be_nil
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
-      # puts lex_and_yacc_book.title
     end
 
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
+    end
+  end
+
+  describe '.move' do
+    before(:each) do
+      lib_version = File.join(LIBDIR, '0.6.2')
+      FileUtils.cp_r(lib_version, TESTDIR)
+    end
+
+    it 'moves the given book from source to target' do
+      source = loader.load_library('My Library')
+      count = source.count
+      book = source.first
+      target = loader.load_library('Target')
+
+      described_class.move(source, target, source.first)
+
+      aggregate_failures do
+        expect(source.count).to eq count - 1
+        expect(target.count).to eq 1
+        expect(File.exist? source.yaml(book)).to be_falsey
+        expect(File.exist? source.cover(book)).to be_falsey
+        expect(File.exist? target.yaml(book)).to be_truthy
+        expect(File.exist? target.cover(book)).to be_truthy
+      end
     end
   end
 end
