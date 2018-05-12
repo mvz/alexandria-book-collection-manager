@@ -91,12 +91,8 @@ module Alexandria
 
       def acquire
         on_progress = proc do |fraction|
-          begin
-            pbar.show unless pbar.visible?
-            pbar.fraction = fraction
-          rescue StandardError
-            # TODO: check if destroyed instead...
-          end
+          pbar.show unless pbar.visible?
+          pbar.fraction = fraction
         end
 
         on_error = proc do |message|

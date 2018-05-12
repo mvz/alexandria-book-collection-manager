@@ -90,12 +90,9 @@ module Alexandria
         book.redd = true if count > 0
       end
       if row[@date_read]
-        begin
-          date = Date.strptime(str, '%d/%m/%y') # e.g. "14/01/10" => 2010-01-14
-          book.redd_when = date
-          book.redd = true
-        rescue StandardError
-        end
+        date = Date.strptime(str, '%d/%m/%y') # e.g. "14/01/10" => 2010-01-14
+        book.redd_when = date
+        book.redd = true
       end
       if row[@mainshelf]
         if row[@mainshelf] == 'read'

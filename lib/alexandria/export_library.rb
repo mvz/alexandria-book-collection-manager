@@ -274,89 +274,85 @@ module Alexandria
     def to_xhtml(css)
       generator = 'Alexandria ' + Alexandria::DISPLAY_VERSION
       xhtml = +''
-      xhtml << <<EOS
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="Author" content="#{Etc.getlogin}"/>
-  <meta name="Description" content="List of books"/>
-  <meta name="Keywords" content="books"/>
-  <meta name="Generator" content="#{xhtml_escape(generator)}"/>
-  <title>#{xhtml_escape(name)}</title>
-  <link rel="stylesheet" href="#{xhtml_escape(css)}" type="text/css"/>
-</head>
-<body>
-<h1 class="library_name">#{xhtml_escape(name)}</h1>
-EOS
+      xhtml << <<~EOS
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                              "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html>
+        <head>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+          <meta name="Author" content="#{Etc.getlogin}"/>
+          <meta name="Description" content="List of books"/>
+          <meta name="Keywords" content="books"/>
+          <meta name="Generator" content="#{xhtml_escape(generator)}"/>
+          <title>#{xhtml_escape(name)}</title>
+          <link rel="stylesheet" href="#{xhtml_escape(css)}" type="text/css"/>
+        </head>
+        <body>
+        <h1 class="library_name">#{xhtml_escape(name)}</h1>
+      EOS
 
       each do |book|
-        xhtml << <<EOS
-<div class="book">
-  <p class="book_isbn">#{book.isbn}</p>
-EOS
+        xhtml << <<~EOS
+          <div class="book">
+            <p class="book_isbn">#{book.isbn}</p>
+        EOS
 
         if File.exist?(cover(book))
-          xhtml << <<EOS
-  <img class="book_cover"
-       src="#{File.join('pixmaps', final_cover(book))}"
-       alt="Cover file for '#{xhtml_escape(book.title)}'"
-EOS
           image_s = ImageSize.new(IO.read(cover(book)))
-          xhtml << <<EOS
-       height="#{image_s.height}" width="#{image_s.width}"
-EOS
-          xhtml << <<EOS
-  />
-EOS
+          xhtml << <<~EOS
+            <img class="book_cover"
+                 src="#{File.join('pixmaps', final_cover(book))}"
+                 alt="Cover file for '#{xhtml_escape(book.title)}'"
+                 height="#{image_s.height}" width="#{image_s.width}"
+            />
+          EOS
         else
-          xhtml << <<EOS
-<div class="no_book_cover"></div>
-EOS
+          xhtml << <<~EOS
+            <div class="no_book_cover"></div>
+          EOS
         end
 
         unless book.title.nil?
-          xhtml << <<EOS
-<p class="book_title">#{xhtml_escape(book.title)}</p>
-EOS
+          xhtml << <<~EOS
+            <p class="book_title">#{xhtml_escape(book.title)}</p>
+          EOS
         end
 
         unless book.authors.empty?
           xhtml << '<ul class="book_authors">'
           book.authors.each do |author|
-            xhtml << <<EOS
-<li class="book_author">#{xhtml_escape(author)}</li>
-EOS
+            xhtml << <<~EOS
+              <li class="book_author">#{xhtml_escape(author)}</li>
+            EOS
           end
           xhtml << '</ul>'
         end
 
         unless book.edition.nil?
-          xhtml << <<EOS
-<p class="book_binding">#{xhtml_escape(book.edition)}</p>
-EOS
+          xhtml << <<~EOS
+            <p class="book_binding">#{xhtml_escape(book.edition)}</p>
+          EOS
         end
 
         unless book.publisher.nil?
-          xhtml << <<EOS
-<p class="book_publisher">#{xhtml_escape(book.publisher)}</p>
-EOS
+          xhtml << <<~EOS
+            <p class="book_publisher">#{xhtml_escape(book.publisher)}</p>
+          EOS
         end
 
-        xhtml << <<EOS
-</div>
-EOS
+        xhtml << <<~EOS
+          </div>
+        EOS
       end
-      xhtml << <<EOS
-<p class="copyright">
-  Generated on #{xhtml_escape(Date.today.to_s)}
-  by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
-</p>
-</body>
-</html>
-EOS
+      xhtml << <<~EOS
+        <p class="copyright">
+          Generated on #{xhtml_escape(Date.today.to_s)}
+          by <a href="#{xhtml_escape(Alexandria::WEBSITE_URL)}">#{xhtml_escape(generator)}</a>.
+        </p>
+        </body>
+        </html>
+      EOS
     end
 
     def to_bibtex

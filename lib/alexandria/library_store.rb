@@ -111,22 +111,16 @@ module Alexandria
         # cover file named '.cover'.
 
         Dir['*' + '_medium.jpg'].each do |medium_cover|
-          begin
-            FileUtils.mv(medium_cover,
-                         medium_cover.sub(/_medium\.jpg$/,
-                                          Library::EXT[:cover]))
-          rescue StandardError
-          end
+          FileUtils.mv(medium_cover,
+                       medium_cover.sub(/_medium\.jpg$/,
+                                        Library::EXT[:cover]))
         end
 
         Dir['*' + Library::EXT[:cover]].each do |cover|
           next if cover[0] == 'g'
           md = /(.+)\.cover/.match(cover)
           ean = Library.canonicalise_ean(md[1]) || md[1]
-          begin
-            FileUtils.mv(cover, ean + Library::EXT[:cover]) unless cover == ean + Library::EXT[:cover]
-          rescue StandardError
-          end
+          FileUtils.mv(cover, ean + Library::EXT[:cover]) unless cover == ean + Library::EXT[:cover]
         end
 
         FileUtils.rm_f(Dir['*_small.jpg'])
