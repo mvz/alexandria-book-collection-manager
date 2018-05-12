@@ -19,8 +19,16 @@ module Alexandria
     attr_reader :name
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
-    DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
+    DEFAULT_DIR = File.join(ENV['HOME'], '.alexandria', '.smart_libraries')
     EXT = '.yaml'
+
+    def self.dir=(dir)
+      @dir = dir
+    end
+
+    def self.dir
+      @dir or raise 'No dir set'
+    end
 
     def initialize(name, rules, predicate_operator_rule)
       super()
@@ -40,7 +48,7 @@ module Alexandria
       a = []
       begin
         # Deserialize smart libraries.
-        Dir.chdir(DIR) do
+        Dir.chdir(dir) do
           Dir['*' + EXT].each do |filename|
             # Skip non-regular files.
             next unless File.stat(filename).file?
@@ -169,7 +177,7 @@ module Alexandria
       if book
         @cache[book].yaml(book)
       else
-        File.join(DIR, @name + EXT)
+        File.join(self.class.dir, @name + EXT)
       end
     end
 
@@ -177,7 +185,7 @@ module Alexandria
       if book
         @cache[book].save(book)
       else
-        FileUtils.mkdir_p(DIR) unless File.exist? DIR
+        FileUtils.mkdir_p(self.class.dir) unless File.exist? self.class.dir
         File.open(yaml, 'w') { |io| io.puts to_hash.to_yaml }
       end
     end
