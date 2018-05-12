@@ -194,4 +194,30 @@ describe Alexandria::Library do
       FileUtils.rm_rf(TESTDIR)
     end
   end
+
+  describe '.move' do
+    before(:each) do
+      lib_version = File.join(LIBDIR, '0.6.2')
+      FileUtils.cp_r(lib_version, TESTDIR)
+    end
+
+
+    it 'moves the given book from source to target' do
+      source = loader.load_library('My Library')
+      count = source.count
+      book = source.first
+      target = loader.load_library('Target')
+
+      described_class.move(source, target, source.first)
+
+      aggregate_failures do
+        expect(source.count).to eq count - 1
+        expect(target.count).to eq 1
+        expect(File.exist? source.yaml(book)).to be_falsey
+        expect(File.exist? source.cover(book)).to be_falsey
+        expect(File.exist? target.yaml(book)).to be_truthy
+        expect(File.exist? target.cover(book)).to be_truthy
+      end
+    end
+  end
 end
