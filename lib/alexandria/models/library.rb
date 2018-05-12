@@ -9,7 +9,6 @@ require 'fileutils'
 require 'rexml/document'
 require 'tempfile'
 require 'etc'
-require 'open-uri'
 require 'alexandria/library_store'
 
 module Alexandria
