@@ -189,7 +189,7 @@ module Alexandria
          :entry_loaned_to, :entry_publish_date, :entry_publisher, :entry_isbn,
          :entry_tags, :entry_title, :image_cover, :image_rating1,
          :image_rating2, :image_rating3, :image_rating4, :image_rating5,
-         :label_loaning_duration, :redd_date, :textview_notes,
+         :label_loaning_duration, :notebook, :redd_date, :textview_notes,
          :treeview_authors]
       end
 
@@ -299,7 +299,11 @@ module Alexandria
         dialog.destroy
       end
 
-      def on_destroy; end # no action by default
+      def on_destroy
+        @book_properties_dialog.hide
+        # Stop notebook trying to set tab labels at this time
+        @notebook.show_tabs = false
+      end
 
       def on_loaned
         loaned = @checkbutton_loaned.active?
