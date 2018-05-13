@@ -1,9 +1,14 @@
 # Changelog
 
-## Unreleased
+## 0.7.3 / Unreleased
 
 * Remove DeaStore provider since the site is no longer online
 * Remove MCU provider since the site is no longer online
+* Various code cleanups
+* Update dependencies
+* Spec and fix export functionality
+* Do not hard-code storage location
+* Silence some Gtk+ warnings
 
 ## 0.7.2 / 2018-03-18
 
