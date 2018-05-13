@@ -102,7 +102,7 @@ module Alexandria
     end
 
     def update(*params)
-      if params.first.is_a?(Libraries)
+      if params.first.is_a?(LibraryCollection)
         libraries, _, library = params
         unless library.is_a?(self.class)
           self.libraries = libraries.all_libraries

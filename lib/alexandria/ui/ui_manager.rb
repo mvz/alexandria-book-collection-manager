@@ -817,9 +817,9 @@ module Alexandria
         log.debug { 'refresh_books' }
         @library_listview.set_sensitive(false)
         library = selected_library
-        @model.clear
         @iconview.freeze
-        @listview.freeze # NEW / bdewey
+        @listview.freeze
+        @model.clear
         @progressbar.fraction = 0
         @appbar.children.first.visible = true # show the progress bar
         set_status_label(_("Loading '%s'...") % library.name)
@@ -862,7 +862,8 @@ module Alexandria
       def selected_library
         log.debug { 'selected_library' }
         if (iter = @library_listview.selection.selected)
-          @libraries.all_libraries.find { |x| x.name == iter[1] }
+          target_name = iter[1]
+          @libraries.all_libraries.find { |it| it.name == target_name }
         else
           @libraries.all_libraries.first
         end
