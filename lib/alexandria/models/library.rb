@@ -175,8 +175,10 @@ module Alexandria
       # (backward compatibility from 0.4.0)
       # book.saved_ident ||= book.ident
       book.saved_ident = book.ident if book.saved_ident.nil? || book.saved_ident.empty?
-      FileUtils.rm(yaml(book.saved_ident)) if book.ident != book.saved_ident
-      FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exist?(cover(book.saved_ident))
+      if book.ident != book.saved_ident
+        FileUtils.rm(yaml(book.saved_ident))
+        FileUtils.mv(cover(book.saved_ident), cover(book.ident)) if File.exist?(cover(book.saved_ident))
+      end
       book.saved_ident = book.ident
 
       filename = book.saved_ident.to_s + '.yaml'
