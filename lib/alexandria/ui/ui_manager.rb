@@ -817,9 +817,9 @@ module Alexandria
         log.debug { 'refresh_books' }
         @library_listview.set_sensitive(false)
         library = selected_library
-        @model.clear
         @iconview.freeze
-        @listview.freeze # NEW / bdewey
+        @listview.freeze
+        @model.clear
         @progressbar.fraction = 0
         @appbar.children.first.visible = true # show the progress bar
         set_status_label(_("Loading '%s'...") % library.name)
