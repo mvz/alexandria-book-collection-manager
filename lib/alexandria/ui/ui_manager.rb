@@ -862,7 +862,8 @@ module Alexandria
       def selected_library
         log.debug { 'selected_library' }
         if (iter = @library_listview.selection.selected)
-          @libraries.all_libraries.find { |x| x.name == iter[1] }
+          target_name = iter[1]
+          @libraries.all_libraries.find { |it| it.name == target_name }
         else
           @libraries.all_libraries.first
         end
