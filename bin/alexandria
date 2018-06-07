@@ -60,6 +60,6 @@ rescue StandardError => e
     Please report this dump to '#{Alexandria::BUGREPORT_URL}' with some additional
     information, such as the description of the crash and the steps to reproduce it
     (if it's possible).
-EOS
+  EOS
   exit 1
 end
