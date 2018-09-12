@@ -43,6 +43,7 @@ module Alexandria
 
     def rating=(rating)
       raise ArgumentError unless VALID_RATINGS.include? rating
+
       @rating = rating
     end
 

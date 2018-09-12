@@ -185,6 +185,7 @@ module Alexandria
           isbn_tds.each do |isbn_td|
             isbn = isbn_td.inner_text
             next unless isbn =~ /[0-9x]{10,13}/i
+
             isbn.gsub(/(\n|\r)/, ' ')
             isbn = Regexp.last_match[1] if isbn =~ /:[\s]*([0-9x]+)/i
             isbns << isbn
@@ -213,6 +214,7 @@ module Alexandria
           return [book, image_url]
         rescue StandardError => ex
           raise ex if ex.instance_of? NoResultsError
+
           trace = ex.backtrace.join("\n> ")
           log.warn {
             'Failed parsing search results for AdLibris ' \

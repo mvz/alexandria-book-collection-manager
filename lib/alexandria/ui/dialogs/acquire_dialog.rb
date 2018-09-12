@@ -513,10 +513,12 @@ module Alexandria
         if effect == 'scanning'
           puts "Effect: #{effect}, playing: #{@prefs.play_scanning_sound}" if $DEBUG
           return unless @prefs.play_scanning_sound
+
           @sound_players['scanning'].play('scanning')
         else
           puts "Effect: #{effect}, playing: #{@prefs.play_scan_sound}" if $DEBUG
           return unless @prefs.play_scan_sound
+
           # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
           @sound_players[effect].play(effect)
         end

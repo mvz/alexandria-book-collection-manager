@@ -321,6 +321,7 @@ module Alexandria
           break if matches_regex
         end
         return unless matches_regex
+
         t = parse_date(@date_loaned_since.text)
         if t.nil?
           @label_loaning_duration.label = ''
@@ -359,6 +360,7 @@ module Alexandria
           @image_rating5
         ]
         raise 'out of range' if rating < 0 || rating > images.length
+
         images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
         images[rating..-1].each { |x| x.pixbuf = Icons::STAR_UNSET }
         @current_rating = rating

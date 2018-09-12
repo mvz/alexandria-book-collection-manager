@@ -24,6 +24,7 @@ module Alexandria
     def initialize(name, rules, predicate_operator_rule, store = nil)
       super()
       raise if name.nil? || rules.nil? || predicate_operator_rule.nil?
+
       @name = name.dup.force_encoding('UTF-8')
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
@@ -165,6 +166,7 @@ module Alexandria
       each do |book|
         library = @cache[book]
         next unless File.exist?(library.cover(book))
+
         FileUtils.cp(File.join(library.path, book.ident + Library::EXT[:cover]),
                      File.join(somewhere, library.final_cover(book)))
       end
@@ -211,6 +213,7 @@ module Alexandria
 
     def undelete
       raise unless @@deleted_libraries.include?(self)
+
       @@deleted_libraries.delete(self)
     end
 
@@ -236,6 +239,7 @@ module Alexandria
 
       def initialize(operand, operation, value)
         raise if operand.nil? || operation.nil? # value can be nil
+
         @operand = operand
         @operation = operation
         @value = value

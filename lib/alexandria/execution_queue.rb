@@ -60,6 +60,7 @@ module Alexandria
         break @pending_calls.pop
       end
       return if ary.nil?
+
       id, procedure, args, need_retval = ary
       retval = procedure.call(*args)
       if need_retval

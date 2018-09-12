@@ -200,6 +200,7 @@ module Alexandria
         iter = nil
         values.uniq.each do |value|
           next if value.nil?
+
           iter = iter ? model.insert_after(iter) : model.append
           iter[0] = value
         end

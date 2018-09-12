@@ -37,9 +37,11 @@ module Alexandria
       def match?(data)
         data = data.chomp
         return false if data[-1] != '.'
+
         fields = data.split('.')
         return false if fields.size != 4
         return false if fields[2].size != 4
+
         true
       end
 

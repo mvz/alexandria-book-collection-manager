@@ -63,6 +63,7 @@ module Alexandria
 
     def stop_drag_check
       raise if @context.nil?
+
       @context.events.clear
       @context.pending_event = false
       signal_handler_disconnect(@context.motion_notify_handler)

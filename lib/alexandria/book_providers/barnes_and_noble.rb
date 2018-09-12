@@ -57,6 +57,7 @@ module Alexandria
 
       def fetch_redirectly(uri_str, limit = 5)
         raise NoResultsError, 'HTTP redirect too deep' if limit.zero?
+
         if limit < 10
           sleep 0.1
           log.debug { "Redirectly :: #{uri_str}" }
@@ -170,6 +171,7 @@ module Alexandria
             attrs = it.attributes
             property = attrs['property']
             next unless property
+
             case property
             when 'og:title'
               book_data[:title] = attrs['content']
@@ -193,6 +195,7 @@ module Alexandria
           return [book, book_data[:image_url]]
         rescue StandardError => ex
           raise ex if ex.instance_of? NoResultsError
+
           trace = ex.backtrace.join("\n> ")
           log.warn {
             'Failed parsing search results for BarnesAndNoble ' \

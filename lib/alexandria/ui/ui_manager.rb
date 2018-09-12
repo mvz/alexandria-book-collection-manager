@@ -533,8 +533,10 @@ module Alexandria
           @filtered_model.refilter
           iter = iter_from_book bk
           next unless iter
+
           path = iter.path
           next unless view.model
+
           path = view_path_to_model_path(view, path)
           log.debug { "Path for #{bk.ident} is #{path}" }
           selection = view.respond_to?(:selection) ? @listview.selection : @iconview
@@ -893,6 +895,7 @@ module Alexandria
         ok = true
         while ok
           return iter if iter[Columns::IDENT] == ident
+
           ok = iter.next!
         end
         nil
@@ -1044,6 +1047,7 @@ module Alexandria
       def setup_move_actions
         @actiongroup.actions.each do |action|
           next unless /^MoveIn/ =~ action.name
+
           @actiongroup.remove_action(action)
         end
         actions = []

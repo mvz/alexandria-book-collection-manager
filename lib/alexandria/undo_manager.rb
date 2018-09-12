@@ -66,6 +66,7 @@ module Alexandria
     def action(array)
       action = array.pop
       raise if action.nil?
+
       action.call
       notify
     end

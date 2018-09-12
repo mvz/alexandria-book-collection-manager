@@ -101,6 +101,7 @@ module Alexandria
           titles << md[1].strip
         }
         raise if titles.empty?
+
         authors = []
         data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each { |md|
           authors2 = []
@@ -110,11 +111,13 @@ module Alexandria
           authors << authors2
         }
         raise if authors.empty?
+
         isbns = []
         data.scan(/ISBN : ?<\/td><td>(\d+)/).each { |md|
           isbns << md[0].strip
         }
         raise if isbns.empty?
+
         editions = []
         publish_years = []
         data.scan(/Parution : <br>(\d{4,}-\d{2,}-\d{2,})/).each { |md|
@@ -122,11 +125,13 @@ module Alexandria
           publish_years << md[0].strip.split(/-/)[0].to_i
         }
         raise if editions.empty? || publish_years.empty?
+
         publishers = []
         data.scan(/diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each { |md|
           publishers << md[0].strip
         }
         raise if publishers.empty?
+
         book_covers = []
         data.scan(/(\/ImagesEditeurs\/[\d]*\/([\dX]*-f.(jpg|gif))
                     |\/francais\/suggestion\/images\/livre\/livre.gif)/x).each { |md|

@@ -326,6 +326,7 @@ module Alexandria
       self.class.constants.each do |constant|
         md = /(.+)Provider$/.match(constant)
         next unless md
+
         klass = self.class.module_eval(constant.to_s)
         if klass.ancestors.include?(AbstractProvider) &&
             (klass != GenericProvider) &&
@@ -343,11 +344,14 @@ module Alexandria
         ary.each do |name|
           md = /^(.+)_/.match(name)
           next unless md
+
           klass_name = md[1] + 'Provider'
           klass = @abstract_classes.find { |x| x.name.include?(klass_name) }
           next unless klass
+
           fullname = @prefs.send(name.downcase + '_name')
           next unless fullname
+
           instance = klass.new
           instance.name = name
           instance.fullname = fullname

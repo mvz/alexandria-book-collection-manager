@@ -476,6 +476,7 @@ module Alexandria
 
       def on_column_toggled(checkbutton)
         raise if @cols[checkbutton].nil?
+
         Preferences.instance.send("#{@cols[checkbutton]}=",
                                   checkbutton.active?)
 

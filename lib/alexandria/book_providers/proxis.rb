@@ -42,6 +42,7 @@ module Alexandria
 
         results = parse_search_result_data(html_data.body)
         raise NoResultsError if results.empty?
+
         if type == SEARCH_BY_ISBN
           get_book_from_search_result(results.first)
         else

@@ -45,6 +45,7 @@ module Alexandria
         Dir.entries(themes_dir).each do |file|
           # ignore hidden files
           next if file =~ /^\./
+
           # ignore non-directories
           path = File.join(themes_dir, file)
           next unless File.directory?(path)

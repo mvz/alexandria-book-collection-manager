@@ -392,6 +392,7 @@ module Alexandria
 
     def latex_escape(str)
       return '' if str.nil?
+
       my_str = str.dup
       my_str.gsub!(/%/, '\\%')
       my_str.gsub!(/~/, '\\textasciitilde')

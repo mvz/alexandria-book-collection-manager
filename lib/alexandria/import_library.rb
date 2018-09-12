@@ -75,6 +75,7 @@ module Alexandria
                                            on_iterate_cb, _on_error_cb)
       puts 'Starting import_as_tellico_xml_archive... '
       return nil unless system("unzip -qqt \"#{filename}\"")
+
       tmpdir = File.join(Dir.tmpdir, 'tellico_export')
       FileUtils.rm_rf(tmpdir) if File.exist?(tmpdir)
       Dir.mkdir(tmpdir)
@@ -86,8 +87,10 @@ module Alexandria
           raise unless ['bookcase', 'tellico'].include? xml.root.name
           # FIXME: handle multiple collections
           raise unless xml.root.elements.size == 1
+
           collection = xml.root.elements[1]
           raise unless collection.name == 'collection'
+
           type = collection.attribute('type').value.to_i
           raise unless (type == 2) || (type == 5)
 
@@ -241,6 +244,7 @@ module Alexandria
       puts "Isbn list: #{isbn_list.inspect}"
       isbn_list.compact!
       return nil if isbn_list.empty?
+
       max_iterations = isbn_list.length * 2
       current_iteration = 1
       books = []

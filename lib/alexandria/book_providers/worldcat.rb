@@ -106,6 +106,7 @@ module Alexandria
           result_cells.each do |td|
             type_icon = (td % 'div.type/img.icn')
             next unless type_icon && type_icon['src'] =~ /icon-bks/
+
             name_div = td % 'div.name'
             title = name_div.inner_text
             anchor = name_div % :a
@@ -237,6 +238,7 @@ module Alexandria
           return [book, image_url]
         rescue StandardError => ex
           raise ex if ex.instance_of? NoResultsError
+
           trace = ex.backtrace.join("\n> ")
           log.warn {
             'Failed parsing search results for WorldCat ' \

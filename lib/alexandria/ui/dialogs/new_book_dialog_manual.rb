@@ -65,6 +65,7 @@ module Alexandria
         if (title = @entry_title.text.strip).empty?
           raise AddError, _('A title must be provided.')
         end
+
         isbn = nil
         if @entry_isbn.text != ''
           isbn = Library.canonicalise_ean(@entry_isbn.text)
@@ -78,11 +79,13 @@ module Alexandria
         if (publisher = @entry_publisher.text.strip).empty?
           raise AddError, _('A publisher must be provided.')
         end
+
         publishing_year = @entry_publish_date.text.to_i
         # TODO: Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?
           raise AddError, _('A binding must be provided.')
         end
+
         authors = []
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?

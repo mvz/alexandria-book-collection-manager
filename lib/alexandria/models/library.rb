@@ -43,6 +43,7 @@ module Alexandria
       loop do
         name = i == 1 ? from_base : from_base + " #{i}"
         break unless all_libraries.find { |x| x.name == name }
+
         i += 1
       end
       name
@@ -69,6 +70,7 @@ module Alexandria
 
     def self.extract_numbers(entry)
       return [] if entry.nil? || entry.empty?
+
       normalized = entry.delete('- ').upcase
       return [] unless normalized =~ /\A[\dX]*\Z/
 
@@ -151,6 +153,7 @@ module Alexandria
     def self.canonicalise_isbn(isbn)
       numbers = extract_numbers(isbn)
       return isbn if valid_ean?(isbn) && (numbers[0..2] != [9, 7, 8])
+
       canonical = if valid_ean?(isbn)
                     # Looks like an EAN number -- extract the intersting part and
                     # calculate a checksum. It would be nice if we could validate
@@ -167,6 +170,7 @@ module Alexandria
                   end
 
       return unless canonical
+
       canonical.map(&:to_s).join
     end
 
@@ -268,6 +272,7 @@ module Alexandria
       if book.nil?
         # Delete the whole library.
         raise if @@deleted_libraries.include?(self)
+
         @@deleted_libraries << self
       else
         if @deleted_books.include?(book)
@@ -295,9 +300,11 @@ module Alexandria
       if book.nil?
         # Undelete the whole library.
         raise unless @@deleted_libraries.include?(self)
+
         @@deleted_libraries.delete(self)
       else
         raise unless @deleted_books.include?(book)
+
         @deleted_books.delete(book)
         unless include?(book)
           changed
@@ -374,6 +381,7 @@ module Alexandria
       FileUtils.mkdir(somewhere)
       each do |book|
         next unless File.exist?(cover(book))
+
         FileUtils.cp(cover(book),
                      File.join(somewhere, final_cover(book)))
       end

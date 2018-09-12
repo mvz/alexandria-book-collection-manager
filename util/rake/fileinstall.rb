@@ -214,6 +214,7 @@ class FileInstallTask < Rake::TaskLib
   # can be similarly deleted, and if it is then empty.
   def delete_if_empty(p)
     return false unless p.directory?
+
     p.children.each do |c|
       delete_if_empty(c)
     end

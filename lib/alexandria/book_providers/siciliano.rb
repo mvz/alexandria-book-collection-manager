@@ -163,6 +163,7 @@ module Alexandria
         # title
         title_div = doc % 'div#conteudo//div.titulo'
         raise NoResultsError unless title_div
+
         title_h = title_div % 'h2'
         title = title_h.inner_text if title_h
         # title = first_non_empty_text_node(title_div)
@@ -193,6 +194,7 @@ module Alexandria
         image_urls = []
         (doc / 'script').each do |script|
           next if script.children.nil?
+
           script.children.each do |ch|
             ch_text = ch.to_s
             if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
@@ -214,6 +216,7 @@ module Alexandria
         text = ''
         elem.children.each do |node|
           next unless node.text?
+
           text = node.to_s.strip
           break unless text.empty?
         end

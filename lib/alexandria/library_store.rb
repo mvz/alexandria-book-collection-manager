@@ -65,6 +65,7 @@ module Alexandria
           old_pub_year = book.publishing_year
           begin
             raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
+
             ean = Library.canonicalise_ean(book.isbn)
             book.isbn = ean if ean
 
@@ -118,6 +119,7 @@ module Alexandria
 
         Dir['*' + Library::EXT[:cover]].each do |cover|
           next if cover[0] == 'g'
+
           md = /(.+)\.cover/.match(cover)
           ean = Library.canonicalise_ean(md[1]) || md[1]
           FileUtils.mv(cover, ean + Library::EXT[:cover]) unless cover == ean + Library::EXT[:cover]

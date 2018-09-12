@@ -82,6 +82,7 @@ module Alexandria
 
       def user_confirms_possible_weirdnesses_before_saving?
         return true unless has_weirdnesses?
+
         dialog = AlertDialog.new(
           @dialog,
           _('Empty or conflictive condition'),
@@ -170,6 +171,7 @@ module Alexandria
         remove_button.signal_connect('clicked') do |_button|
           idx = @rules_box.children.index(rule_box)
           raise if idx.nil?
+
           @smart_library_rules.delete_at(idx)
           @rules_box.remove(rule_box)
           sensitize_remove_rule_buttons

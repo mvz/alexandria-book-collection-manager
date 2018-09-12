@@ -80,6 +80,7 @@ module Amazon
 
     def self.configure(&_proc)
       raise ArgumentError, 'Block is required.' unless block_given?
+
       yield @@options
     end
 
@@ -123,6 +124,7 @@ module Amazon
       unless res.is_a? Net::HTTPSuccess
         raise Amazon::RequestError, "HTTP Response: #{res.code} #{res.message}"
       end
+
       Response.new(res.body)
     end
 
@@ -202,6 +204,7 @@ module Amazon
       qs = ''
       opts.each { |k, v|
         next unless v
+
         v = v.join(',') if v.is_a? Array
         qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
       }
@@ -255,6 +258,7 @@ module Amazon
 
     def self.sign_request(request)
       raise AmazonNotConfiguredError unless @@secret_access_key
+
       # Step 0 : Split apart request string
       url_pattern = /http:\/\/([^\/]+)(\/[^\?]+)\?(.*$)/
       url_pattern =~ request
@@ -313,6 +317,7 @@ module Amazon
     def /(path)
       elements = @element / path
       return nil if elements.empty?
+
       elements
     end
 
@@ -321,8 +326,10 @@ module Amazon
     def search_and_convert(path)
       elements = self./(path)
       return unless elements
+
       elements = elements.map { |element| Element.new(element) }
       return elements.first if elements.size == 1
+
       elements
     end
 
@@ -349,6 +356,7 @@ module Amazon
     # Similar to #get, except an element object must be passed-in.
     def self.get(element, path = '')
       return unless element
+
       result = element.at(path)
       ## inner_html doesn't decode entities, hence bug #21659
       # result = result.inner_html if result

@@ -55,6 +55,7 @@ module Alexandria
         else
           results = parse_search_result_data(html_data.body)
           raise NoResultsError if results.empty?
+
           results.map { |result| get_book_from_search_result(result) }
         end
       end
@@ -120,6 +121,7 @@ module Alexandria
             # list
             return
           end
+
           # ISBN-lookup results in multiple results (trying to be
           # useful, such as for new editions e.g. 9780974514055
           # "Programming Ruby" )

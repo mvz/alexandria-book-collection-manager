@@ -76,6 +76,7 @@ module Alexandria
         end
       end
       raise unless library
+
       [library, is_new]
     end
   end

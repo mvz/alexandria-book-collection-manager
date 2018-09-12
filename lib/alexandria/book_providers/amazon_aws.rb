@@ -169,6 +169,7 @@ module Alexandria
         results = []
         products.each do |item|
           next unless item.get('itemattributes/productgroup') == 'Book'
+
           atts = item.search_and_convert('itemattributes')
           title = normalize(atts.get('title'))
 
@@ -201,6 +202,7 @@ module Alexandria
               book = rslt[0]
               book_isbn_canon = Library.canonicalise_ean(book.isbn)
               return rslt if query_isbn_canon == book_isbn_canon
+
               log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result

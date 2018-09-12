@@ -188,6 +188,7 @@ module Alexandria
                   unless @treeview_results.model.iter_is_valid?(iter)
                     raise format('Iter is invalid! %s', iter)
                   end
+
                   iter[2] = pixbuf # I bet you this is it!
                 end
 
@@ -381,6 +382,7 @@ module Alexandria
         @treeview_results.selection.each do |_model, _path, iter|
           @results.each do |book, cover|
             next unless book.ident == iter[1]
+
             isbn = book.isbn
             if isbn.nil? || isbn.empty?
               puts 'noisbn'
@@ -393,6 +395,7 @@ module Alexandria
             unless isbn
               puts "invalidisbn #{book.isbn}"
               next unless KeepBadISBNDialog.new(@new_book_dialog, book).keep?
+
               book.isbn = book.saved_ident = nil
             end
 
@@ -441,6 +444,7 @@ module Alexandria
 
       def on_add
         return unless @button_add.sensitive?
+
         @find_thread&.kill
         @image_thread&.kill
 
@@ -563,6 +567,7 @@ module Alexandria
         # Check that the book doesn't already exist in the library.
         isbn13 = Library.canonicalise_ean(isbn)
         return unless isbn13
+
         if (book = library.find { |bk| bk.isbn == isbn13 })
           raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."),
                                                isbn, library.name, book.title.sub('&', '&amp;'))

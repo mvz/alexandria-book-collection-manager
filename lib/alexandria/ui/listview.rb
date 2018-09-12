@@ -221,6 +221,7 @@ module Alexandria
               log.debug { "#{c.title} : #{cols_width[c.title]}" }
               width = cols_width[c.title]
               next if width.zero?
+
               c.sizing = :fixed
               c.fixed_width = width
             end

@@ -129,12 +129,14 @@ module Alexandria
 
       def on_export(format, theme)
         raise NotImplementedError unless @library.respond_to?(format.message)
+
         filename = self.filename
         if format.ext
           filename += '.' + format.ext if File.extname(filename).empty?
           if File.exist?(filename)
             dialog = ConfirmEraseDialog.new(@export_dialog, filename)
             return unless dialog.erase?
+
             FileUtils.rm(filename)
           end
           args = []

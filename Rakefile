@@ -125,17 +125,20 @@ file 'lib/alexandria/default_preferences.rb' => [SCHEMA_PATH] do |f|
   doc.elements.each('gconfschemafile/schemalist/schema') do |element|
     default = element.elements['default'].text
     next unless default
+
     varname = File.basename(element.elements['key'].text)
     type = element.elements['type'].text
 
     if (type == 'list') || (type == 'pair')
       ary = default[1..-2].split(',')
       next if ary.empty?
+
       if type == 'list'
         list_type = element.elements['list_type'].text
         ary.map! { |x| convert_with_type(x, list_type) }
       elsif type == 'pair'
         next if ary.length != 2
+
         ary[0] = convert_with_type(ary[0],
                                    element.elements['car_type'].text)
         ary[1] = convert_with_type(ary[1],
@@ -214,6 +217,7 @@ task :scrollkeeper do
   unless system('which scrollkeeper-update')
     raise 'scrollkeeper-update cannot be found, is Scrollkeeper correctly installed?'
   end
+
   system('scrollkeeper-update -q') || raise('Scrollkeeper update failed')
 end
 

@@ -62,6 +62,7 @@ module Alexandria
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
         raise NoResultsError if resultset.length == 0
+
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -262,6 +263,7 @@ module Alexandria
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
         raise NoResultsError if resultset.length == 0
+
         results = books_from_sutrs(resultset)
         type == SEARCH_BY_ISBN ? results.first : results
       end
@@ -346,6 +348,7 @@ module Alexandria
         resultset = search_records(criterion, type, 0)
         log.debug { "total #{resultset.length}" }
         raise NoResultsError if resultset.length == 0
+
         results = books_from_marc(resultset, isbn)
         type == SEARCH_BY_ISBN ? results.first : results
       end
