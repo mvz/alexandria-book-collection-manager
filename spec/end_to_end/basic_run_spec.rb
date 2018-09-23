@@ -4,11 +4,11 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require "gnome_app_driver"
+require "atspi_app_driver"
 require "tmpdir"
 
 describe "The Alexandria application" do
-  let(:driver) { GnomeAppDriver.new "alexandria" }
+  let(:driver) { AtspiAppDriver.new "alexandria" }
 
   before do
     ENV["HOME"] = Dir.mktmpdir
@@ -21,7 +21,7 @@ describe "The Alexandria application" do
 
   it "starts and can be quit with the menu" do
     frame = driver.frame
-    menu = frame.find_role :menu_item, /Quit/
+    menu = frame.find_role :menu_item, /uit/
     menu.do_action 0
 
     status = driver.cleanup
