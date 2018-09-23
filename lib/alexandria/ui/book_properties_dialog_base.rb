@@ -154,8 +154,8 @@ module Alexandria
                                             parent: @book_properties_dialog,
                                             action: :open,
                                             buttons: [[_("No Cover"), :reject],
-                                                      [Gtk::Stock::CANCEL, :cancel],
-                                                      [Gtk::Stock::OPEN, :accept]])
+                                                      [Gtk::STOCK_CANCEL, :cancel],
+                                                      [Gtk::STOCK_OPEN, :accept]])
         dialog.current_folder = @@latest_filechooser_directory
         response = dialog.run
         case response

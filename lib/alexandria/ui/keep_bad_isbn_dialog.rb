@@ -20,8 +20,8 @@ module Alexandria
             "exists in the providers libraries. Do you want to " \
             "keep the book but change the ISBN or cancel the addition?") % book.title
         super(parent, title,
-              Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
+              Gtk::STOCK_DIALOG_QUESTION,
+              [[Gtk::STOCK_CANCEL, Gtk::ResponseType::CANCEL],
                [_("_Keep"), Gtk::ResponseType::OK]], message)
         dialog.default_response = Gtk::ResponseType::OK
       end

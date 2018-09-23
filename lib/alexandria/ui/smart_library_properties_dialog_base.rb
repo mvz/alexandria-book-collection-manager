@@ -22,7 +22,7 @@ module Alexandria
         @dialog = Gtk::Dialog.new(title: "",
                                   parent: parent,
                                   flags: :modal,
-                                  buttons: [[Gtk::Stock::HELP, :help]])
+                                  buttons: [[Gtk::STOCK_HELP, :help]])
 
         @dialog.window_position = :center
         @dialog.resizable = true
@@ -96,8 +96,8 @@ module Alexandria
         dialog = AlertDialog.new(
           @dialog,
           _("Empty or conflictive condition"),
-          Gtk::Stock::DIALOG_QUESTION,
-          [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
+          Gtk::STOCK_DIALOG_QUESTION,
+          [[Gtk::STOCK_CANCEL, Gtk::ResponseType::CANCEL],
            [_("_Save However"), Gtk::ResponseType::YES]],
           _("This smart library contains one or more conditions " \
             "which are empty or conflict with each other. This is " \

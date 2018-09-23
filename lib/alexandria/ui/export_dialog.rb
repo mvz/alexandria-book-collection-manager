@@ -25,8 +25,8 @@ module Alexandria
         @dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
                                              parent: parent,
                                              action: :save,
-                                             buttons: [[Gtk::Stock::HELP, :help],
-                                                       [Gtk::Stock::CANCEL, :cancel],
+                                             buttons: [[Gtk::STOCK_HELP, :help],
+                                                       [Gtk::STOCK_CANCEL, :cancel],
                                                        [_("_Export"), :accept]])
         @dialog.current_name = library.name
         @dialog.signal_connect("destroy") { @dialog.hide }
