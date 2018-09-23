@@ -16,7 +16,7 @@ module Alexandria
         super(title: _("Preferences for %s") % provider.fullname,
               parent: parent,
               flags: :modal,
-              buttons: [[Gtk::Stock::CLOSE, :close]])
+              buttons: [[Gtk::STOCK_CLOSE, :close]])
 
         table = Gtk::Table.new(0, 0)
         fill_table(table, provider)

@@ -207,10 +207,10 @@ module Alexandria
                                  _("Are you sure you want to " \
                                    "permanently delete the provider " \
                                    "'%s'?") % provider.fullname,
-                                 Gtk::Stock::DIALOG_QUESTION,
-                                 [[Gtk::Stock::CANCEL,
+                                 Gtk::STOCK_DIALOG_QUESTION,
+                                 [[Gtk::STOCK_CANCEL,
                                    Gtk::ResponseType::CANCEL],
-                                  [Gtk::Stock::DELETE,
+                                  [Gtk::STOCK_DELETE,
                                    Gtk::ResponseType::OK]],
                                  _("If you continue, the provider and " \
                                    "all of its preferences will be " \

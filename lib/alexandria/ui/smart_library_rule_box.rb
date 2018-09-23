@@ -24,7 +24,7 @@ module Alexandria
         self.value_entry = Gtk::Entry.new
 
         self.date_entry = Gtk::Entry.new.tap do |entry|
-          entry.primary_icon_name = Gtk::Stock::EDIT
+          entry.primary_icon_name = Gtk::STOCK_EDIT
 
           entry.primary_icon_activatable = true
           entry.signal_connect("icon-press") do |widget, primary, icon|
@@ -36,7 +36,7 @@ module Alexandria
 
         self.add_button = Gtk::Button.new(label: "").tap do |widget|
           widget.remove(widget.children.first)
-          widget << Gtk::Image.new(stock: Gtk::Stock::ADD,
+          widget << Gtk::Image.new(stock: Gtk::STOCK_ADD,
                                    size: Gtk::IconSize::BUTTON)
 
           widget.signal_connect("clicked") { @parent.handle_add_rule_clicked }
@@ -44,7 +44,7 @@ module Alexandria
 
         self.remove_button = Gtk::Button.new(label: "")
         remove_button.remove(remove_button.children.first)
-        remove_button << Gtk::Image.new(stock: Gtk::Stock::REMOVE,
+        remove_button << Gtk::Image.new(stock: Gtk::STOCK_REMOVE,
                                         size: Gtk::IconSize::BUTTON)
 
         remove_button.signal_connect("clicked") do |_button|

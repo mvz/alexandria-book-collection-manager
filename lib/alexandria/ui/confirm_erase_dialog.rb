@@ -14,8 +14,8 @@ module Alexandria
 
       def initialize(parent, filename)
         super(parent, _("File already exists"),
-              Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, :cancel],
+              Gtk::STOCK_DIALOG_QUESTION,
+              [[Gtk::STOCK_CANCEL, :cancel],
                [_("_Replace"), :ok]],
               _("A file named '%s' already exists.  Do you want " \
                 "to replace it with the one you are generating?") % filename)
