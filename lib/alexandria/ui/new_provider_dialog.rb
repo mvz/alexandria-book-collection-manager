@@ -17,8 +17,8 @@ module Alexandria
         super(title: _("New Provider"),
               parent: parent,
               flags: :modal,
-              buttons: [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL]])
-        @add_button = dialog.add_button(Gtk::Stock::ADD,
+              buttons: [[Gtk::STOCK_CANCEL, Gtk::ResponseType::CANCEL]])
+        @add_button = dialog.add_button(Gtk::STOCK_ADD,
                                         Gtk::ResponseType::ACCEPT)
 
         instances = BookProviders.abstract_classes.map(&:new)

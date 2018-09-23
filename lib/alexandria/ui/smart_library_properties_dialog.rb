@@ -16,8 +16,8 @@ module Alexandria
 
         @smart_library = smart_library
 
-        dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
-                           [Gtk::Stock::SAVE, :ok])
+        dialog.add_buttons([Gtk::STOCK_CANCEL, :cancel],
+                           [Gtk::STOCK_SAVE, :ok])
 
         dialog.title = _("Properties for '%s'") % @smart_library.name
         # FIXME: Should accept just :cancel
