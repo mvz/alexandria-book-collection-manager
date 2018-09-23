@@ -45,8 +45,9 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--main", "README.md"]
 
   s.add_runtime_dependency("gettext", ["~> 3.1"])
-  s.add_runtime_dependency("gstreamer", ["~> 3.4.3"])
-  s.add_runtime_dependency("gtk3", ["~> 3.4.3"])
+  s.add_runtime_dependency("gir_ffi", ["~> 0.15.4"])
+  s.add_runtime_dependency("gir_ffi-gst", ["0.0.12"])
+  s.add_runtime_dependency("gir_ffi-gtk", ["~> 0.15.0"])
   s.add_runtime_dependency("htmlentities", ["~> 4.3"])
   s.add_runtime_dependency("image_size", ["~> 2.0"])
   s.add_runtime_dependency("marc", ["~> 1.0.0"])
@@ -54,7 +55,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("psych", ">= 3.2", "< 3.4")
   s.add_runtime_dependency("zoom", ["~> 0.5.0"])
 
-  s.add_development_dependency("atspi_app_driver", ["0.4.0"])
+  s.add_development_dependency("atspi_app_driver", ["0.6.0"])
   s.add_development_dependency("minitest", ["~> 5.0"])
   s.add_development_dependency("rake", ["~> 13.0"])
   s.add_development_dependency("rspec", ["~> 3.0"])
