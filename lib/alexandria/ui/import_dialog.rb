@@ -25,8 +25,8 @@ module Alexandria
         log.debug { "ImportDialog opened" }
         @destroyed = false
         @running = false
-        dialog.add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)
-        dialog.add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
+        dialog.add_button(Gtk::STOCK_HELP, Gtk::ResponseType::HELP)
+        dialog.add_button(Gtk::STOCK_CANCEL, Gtk::ResponseType::CANCEL)
         import_button = dialog.add_button(_("_Import"),
                                           Gtk::ResponseType::ACCEPT)
         import_button.sensitive = false
