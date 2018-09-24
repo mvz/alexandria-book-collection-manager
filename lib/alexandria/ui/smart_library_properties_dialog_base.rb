@@ -19,28 +19,28 @@ module Alexandria
       attr_reader :predicate_operator_rule, :dialog
 
       def initialize(parent)
-        @dialog = Gtk::Dialog.new(title: "",
-                                  parent: parent,
-                                  flags: :modal,
-                                  buttons: [[Gtk::STOCK_HELP, :help]])
+        @dialog = Gtk::Dialog.new_with_buttons("",
+                                               parent,
+                                               :modal,
+                                               [[Gtk::STOCK_HELP, :help]])
 
         @dialog.window_position = :center
         @dialog.resizable = true
         @dialog.border_width = 4
-        @dialog.child.border_width = 12
+        @dialog.content_area.border_width = 12
 
-        main_box = Gtk::Box.new :vertical
+        main_box = Gtk::Box.new :vertical, 0
         main_box.border_width = 4
         main_box.spacing = 8
 
-        @dialog.child << main_box
+        @dialog.content_area.add main_box
 
         @smart_library_rules = []
 
-        @rules_header_box = Gtk::Box.new :horizontal
+        @rules_header_box = Gtk::Box.new :horizontal, 0
         @rules_header_box.spacing = 2
 
-        @rules_box = Gtk::Box.new :vertical
+        @rules_box = Gtk::Box.new :vertical, 0
         @rules_box.spacing = 8
         @rules_box.border_width = 8
 
@@ -50,8 +50,8 @@ module Alexandria
         scrollview.set_size_request(-1, 125)
         scrollview.add_with_viewport(@rules_box)
 
-        main_box.pack_start(@rules_header_box, expand: false, fill: false)
-        main_box << scrollview
+        main_box.pack_start(@rules_header_box, false, false, 0)
+        main_box.add scrollview
       end
 
       def handle_date_icon_press(widget, primary, _icon)
@@ -103,7 +103,7 @@ module Alexandria
             "which are empty or conflict with each other. This is " \
             "likely to result in never matching a book. Are you " \
             "sure you want to save this library?"))
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.set_default_response :cancel
         dialog.show_all
         confirmed = dialog.run == Gtk::ResponseType::YES
         dialog.destroy
@@ -111,9 +111,10 @@ module Alexandria
       end
 
       def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)
-        @rules_header_box.children.each { |x| @rules_header_box.remove(x) }
+        @rules_header_box.children&.each { |x| @rules_header_box.remove(x) }
 
-        if @rules_box.children.length > 1
+        # FIXME: Length should just work!?
+        if @rules_box.children.to_a.length > 1
           label1 = Gtk::Label.new
           label1.set_alignment(0.0, 0.5)
           label1.text = _("Match")
@@ -131,9 +132,9 @@ module Alexandria
           label2.set_alignment(0.0, 0.5)
           label2.text = _("of the following rules:")
 
-          @rules_header_box.pack_start(label1, expand: false, fill: false)
-          @rules_header_box.pack_start(cb, expand: false, fill: false)
-          @rules_header_box.pack_start(label2, expand: false, fill: false)
+          @rules_header_box.pack_start(label1, false, false, 0)
+          @rules_header_box.pack_start(cb, false, false, 0)
+          @rules_header_box.pack_start(label2, false, false, 0)
         else
           label = Gtk::Label.new
           label.set_alignment(0.0, 0.5)
@@ -149,7 +150,7 @@ module Alexandria
         box_controller = SmartLibraryRuleBox.new self
         rule_box = box_controller.rule_box
         rule_box.show_all
-        @rules_box.pack_start(rule_box, expand: false, fill: true)
+        @rules_box.pack_start(rule_box, false, true, 0)
 
         if rule
           operands = SmartLibrary::Rule::Operands::LEFT

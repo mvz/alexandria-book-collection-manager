@@ -21,7 +21,7 @@ module Alexandria
 
       def initialize(parent)
         title = _("Import a Library")
-        @dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
+        @dialog = Gtk::FileChooserDialog.new title, parent, :open, []
         log.debug { "ImportDialog opened" }
         @destroyed = false
         @running = false
@@ -44,28 +44,30 @@ module Alexandria
           filefilter = make_filefilter filter
           dialog.add_filter(filefilter)
           log.debug { "Added ImportFilter #{filefilter} -- #{filefilter.name}" }
-          @filters[filefilter] = filter
+          @filters[filefilter.name] = filter
         end
 
-        dialog.signal_connect("selection_changed") do
+        dialog.signal_connect("selection-changed") do
           import_button.sensitive = dialog.filename && File.file?(dialog.filename)
         end
 
         # before adding the (hidden) progress bar, we must re-set the
         # packing of the button box (currently packed at the end),
         # because the progressbar will be *after* the button box.
-        buttonbox = dialog.child.children.last
-        dialog.child.set_child_packing(buttonbox, pack_type: :start)
-        dialog.child.reorder_child(buttonbox, 1)
+        box = dialog.content_area
+        buttonbox = box.children.to_a.last
+        expand, fill, padding, _pack_type = box.query_child_packing buttonbox
+        box.set_child_packing(buttonbox, expand, fill, padding, :start)
+        box.reorder_child(buttonbox, 1)
 
         @pbar = Gtk::ProgressBar.new
         @pbar.show_text = true
-        dialog.child.pack_start(@pbar, expand: false)
+        box.pack_start(@pbar, false, false, 0)
       end
 
       def acquire
         on_progress = proc do |fraction|
-          @pbar.show unless @pbar.visible?
+          @pbar.show unless @pbar.visible
           @pbar.fraction = fraction
         end
 
@@ -84,12 +86,13 @@ module Alexandria
             next
           end
           file = File.basename(dialog.filename, ".*")
-          base = GLib.locale_to_utf8(file)
+          # FIXME: Should just return a string
+          base, = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             LibraryCollection.instance.all_libraries,
             base)
 
-          filter = @filters[dialog.filter]
+          filter = @filters[dialog.filter.name]
           log.debug { "Going forward with filter: #{filter.name}" }
           dialog.sensitive = false
 

@@ -23,6 +23,21 @@ Gtk.init
 
 GirFFI.setup "GdkPixbuf", "2.0"
 
+GdkPixbuf.load_class :Pixbuf
+
+# TODO: This override should be provided by a gir_ffi-gdk_pixbuf gem
+class GdkPixbuf::Pixbuf
+  setup_instance_method :savev
+
+  def save(filename, type, **options)
+    option_keys = options.keys.map(&:to_s)
+    option_values = options.values.map(&:to_s)
+    savev(filename, type, option_keys, option_values)
+  end
+
+  private :savev
+end
+
 require "alexandria/ui/icons"
 require "alexandria/ui/builder_base"
 require "alexandria/ui/completion_models"

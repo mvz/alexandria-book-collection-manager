@@ -125,11 +125,11 @@ module Alexandria
         @context.cell_x = cell_x
         @context.cell_y = cell_y
         @context.motion_notify_handler =
-          signal_connect("motion_notify_event") do |_widget, evnt, _data|
+          signal_connect("motion-notify-event") do |_widget, evnt, _data|
             motion_notify_event(evnt)
           end
         @context.button_release_handler =
-          signal_connect("button_release_event") do |_widget, evnt, _data|
+          signal_connect("button-release-event") do |_widget, evnt, _data|
             button_release_event(evnt)
           end
         @context.events << event unless call_parent

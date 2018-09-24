@@ -12,8 +12,7 @@ module Alexandria
       def initialize(parent, title, message = nil)
         super(parent, title, Gtk::STOCK_DIALOG_ERROR,
               [[Gtk::STOCK_OK, :ok]], message)
-        # FIXME: Should accept just :ok
-        dialog.default_response = Gtk::ResponseType::OK
+        dialog.set_default_response :ok
       end
 
       def display

@@ -87,8 +87,8 @@ module Alexandria
       end
 
       def setup_dependents
-        @listview_model = @filtered_model.sort_new_with_model
-        @iconview_model = @filtered_model.sort_new_with_model
+        @listview_model = Gtk::TreeModelSort.new_with_model(@filtered_model)
+        @iconview_model = Gtk::TreeModelSort.new_with_model(@filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
         @sidepane_manager = SidepaneManager.new @library_listview, self
@@ -866,7 +866,7 @@ module Alexandria
         model.set_value(iter, 3, false)     # separator?
 
         if autoselect
-          @library_listview.set_cursor(iter.path,
+          @library_listview.set_cursor(model.get_path(iter),
                                        @library_listview.get_column(0),
                                        true)
           @actiongroup["Sidepane"].active = true
@@ -959,12 +959,11 @@ module Alexandria
       end
 
       def iter_from_ident(ident)
-        iter = @model.iter_first
-        ok = true if iter
+        ok, iter = @model.iter_first
         while ok
-          return iter if iter[Columns::IDENT] == ident
+          return iter if @model.get_value(iter, Columns::IDENT) == ident
 
-          ok = iter.next!
+          ok = @model.iter_next(iter)
         end
         nil
       end
@@ -1068,8 +1067,8 @@ module Alexandria
           select_library(library)
         else
           # Select the first item by default.
-          iter = @library_listview.model.iter_first
-          @library_listview.selection.select_iter(iter)
+          success, iter = *@library_listview.model.iter_first
+          @library_listview.selection.select_iter(iter) if success
         end
       end
 
@@ -1272,7 +1271,7 @@ module Alexandria
 
         @filtered_model.refilter
         iter = iter_from_book(book) or return
-        path = iter.path
+        path = @model.get_path(iter)
         path = view_path_to_model_path(view, path)
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all

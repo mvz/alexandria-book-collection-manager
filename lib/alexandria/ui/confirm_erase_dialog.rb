@@ -20,8 +20,7 @@ module Alexandria
                [_("_Replace"), :ok]],
               _("A file named '%s' already exists.  Do you want " \
                 "to replace it with the one you are generating?") % filename)
-        # FIXME: Should accept just :cancel
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        @dialog.set_default_response :cancel
       end
 
       def erase?
