@@ -18,20 +18,20 @@ module Alexandria
         super(parent, library.cover(book))
         log.debug { "Initializing Book Properties Dialog" }
 
-        cancel_button = Gtk::Button.new(stock_id: Gtk::STOCK_CANCEL)
+        cancel_button = Gtk::Button.new_from_stock(Gtk::STOCK_CANCEL)
         cancel_button.signal_connect("clicked") { on_cancel }
         cancel_button.show
-        @button_box << cancel_button
+        @button_box.add cancel_button
 
-        close_button = Gtk::Button.new(stock_id: Gtk::STOCK_SAVE)
+        close_button = Gtk::Button.new_from_stock(Gtk::STOCK_SAVE)
         close_button.signal_connect("clicked") { on_close }
         close_button.show
-        @button_box << close_button
+        @button_box.add close_button
 
-        help_button = Gtk::Button.new(stock_id: Gtk::STOCK_HELP)
+        help_button = Gtk::Button.new_from_stock(Gtk::STOCK_HELP)
         help_button.signal_connect("clicked") { on_help }
         help_button.show
-        @button_box << help_button
+        @button_box.add help_button
         @button_box.set_child_secondary(help_button, true)
 
         @entry_title.text = @book_properties_dialog.title = book.title
@@ -60,13 +60,14 @@ module Alexandria
         end
 
         book.authors.each do |author|
-          iter = @treeview_authors.model.append
-          iter[0] = author
-          iter[1] = true
+          model = @treeview_authors.model
+          iter = model.append
+          model.set_value iter, 0, author
+          model.set_value iter, 1, true
         end
 
         buffer = Gtk::TextBuffer.new
-        buffer.text = (book.notes || "")
+        buffer.set_text (book.notes || ""), -1
         @textview_notes.buffer = buffer
 
         @library = library

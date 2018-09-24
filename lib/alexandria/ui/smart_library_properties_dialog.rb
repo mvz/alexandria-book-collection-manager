@@ -16,12 +16,11 @@ module Alexandria
 
         @smart_library = smart_library
 
-        dialog.add_buttons([Gtk::STOCK_CANCEL, :cancel],
-                           [Gtk::STOCK_SAVE, :ok])
+        dialog.add_button Gtk::STOCK_CANCEL, :cancel
+        dialog.add_button Gtk::STOCK_SAVE, :ok
 
-        dialog.title = _("Properties for '%s'") % @smart_library.name
-        # FIXME: Should accept just :cancel
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.set_title _("Properties for '%s'") % smart_library.name
+        dialog.set_default_response :cancel
         @smart_library.rules.each { |x| insert_new_rule(x) }
         update_rules_header_box(@smart_library.predicate_operator_rule)
       end

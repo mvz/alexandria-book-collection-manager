@@ -53,15 +53,16 @@ module Alexandria
         @combo_libraries.populate_with_libraries(libraries,
                                                  @selected_library)
 
-        @treeview_results.model = Gtk::ListStore.new(String, String,
-                                                     GdkPixbuf::Pixbuf)
+        @treeview_results.model = Gtk::ListStore.new([GObject::TYPE_STRING,
+                                                      GObject::TYPE_STRING,
+                                                      GdkPixbuf::Pixbuf.gtype])
         @treeview_results.selection.mode = :multiple
         @treeview_results.selection.signal_connect("changed") do
           @button_add.sensitive = true
         end
 
         renderer = Gtk::CellRendererPixbuf.new
-        col = Gtk::TreeViewColumn.new("", renderer)
+        col = Gtk::TreeViewColumn.new_with_attributes("", renderer)
         col.set_cell_data_func(renderer) do |_column, cell, _model, iter|
           pixbuf = iter[2]
           max_height = 25
@@ -75,8 +76,8 @@ module Alexandria
         end
         @treeview_results.append_column(col)
 
-        col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new,
-                                      text: 0)
+        col = Gtk::TreeViewColumn.new_with_attributes("", Gtk::CellRendererText.new,
+                                                      text: 0)
         @treeview_results.append_column(col)
 
         @combo_search.active = 0
@@ -308,9 +309,9 @@ module Alexandria
           s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
           log.info { format(_("Copying %s into tree view."), book.title) }
           iter = model.append
-          iter[0] = s
-          iter[1] = book.ident
-          iter[2] = Icons::BOOK
+          model.set_value(iter, 0, s)
+          model.set_value(iter, 1, book.ident)
+          model.set_value(iter, 2, Icons::BOOK)
         end
       end
 
