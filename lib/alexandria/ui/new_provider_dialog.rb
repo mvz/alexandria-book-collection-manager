@@ -24,7 +24,7 @@ module Alexandria
         @selected_instance = nil
 
         @table = Gtk::Table.new(2, 2)
-        dialog.child.pack_start(@table)
+        dialog.child.pack_start(@table, false, false, 0)
 
         # Name.
 

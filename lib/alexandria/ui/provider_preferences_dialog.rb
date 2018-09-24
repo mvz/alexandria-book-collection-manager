@@ -20,7 +20,7 @@ module Alexandria
 
         table = Gtk::Table.new(0, 0)
         fill_table(table, provider)
-        dialog.child.pack_start(table)
+        dialog.child.pack_start(table, false, false, 0)
 
         dialog.signal_connect("destroy") { sync_variables }
       end

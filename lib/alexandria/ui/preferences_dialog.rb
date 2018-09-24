@@ -46,7 +46,7 @@ module Alexandria
           end
         end
 
-        model = Gtk::ListStore.new(String, String, TrueClass, Integer)
+        model = Gtk::ListStore.new([GObject::TYPE_STRING, GObject::TYPE_STRING, GObject::TYPE_BOOLEAN, GObject::TYPE_INT])
         @treeview_providers.model = model
         reload_providers
         model.signal_connect_after("row-changed") { update_priority }
@@ -65,7 +65,7 @@ module Alexandria
         end
 
         # renderer.active = true
-        column = Gtk::TreeViewColumn.new("Enabled", renderer)
+        column = Gtk::TreeViewColumn.new_with_attributes("Enabled", renderer)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           value = iter[2]
           rndr.active = value
@@ -74,8 +74,7 @@ module Alexandria
         @treeview_providers.append_column(column)
 
         renderer = Gtk::CellRendererText.new
-        column = Gtk::TreeViewColumn.new("Providers",
-                                         renderer)
+        column = Gtk::TreeViewColumn.new_with_attributes("Providers", renderer)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           rndr.markup = iter[0]
         end
@@ -120,7 +119,8 @@ module Alexandria
       end
 
       def setup_barcode_scanner_tab
-        @scanner_device_model = Gtk::ListStore.new(String, String)
+        @scanner_device_model = Gtk::ListStore.new([GObject::TYPE_STRING,
+                                                    GObject::TYPE_STRING])
         chosen_scanner_name = Preferences.instance.barcode_scanner
         index = 0
         @scanner_device_type.model = @scanner_device_model
@@ -130,8 +130,8 @@ module Alexandria
 
         Alexandria::Scanners.each_scanner do |scanner|
           iter = @scanner_device_model.append
-          iter[0] = scanner.display_name
-          iter[1] = scanner.name
+          @scanner_device_model.set_value iter, 0, scanner.display_name
+          @scanner_device_model.set_value iter, 1, scanner.name
           @scanner_device_type.active = index if chosen_scanner_name == scanner.name
           index += 1
         end
@@ -188,13 +188,18 @@ module Alexandria
         reload_providers
       end
 
-      def on_scanner_device_type(_combo)
-        iter = @scanner_device_type.active_iter
-        Preferences.instance.barcode_scanner = iter[1] if iter && iter[1]
+      def on_scanner_device_type(_combo, _user_data)
+        success, iter = @scanner_device_type.active_iter
+        success or return
+
+        value = @scanner_device_type.model.get_value iter, 1
+        value or return
+
+        Preferences.instance.barcode_scanner = value
       end
 
-      def on_use_scanning_sound(checkbox)
-        Preferences.instance.play_scanning_sound = checkbox.active?
+      def on_use_scanning_sound(checkbox, _user_data)
+        Preferences.instance.play_scanning_sound = checkbox.active
       end
 
       def on_use_scan_sound(checkbox)
@@ -215,7 +220,7 @@ module Alexandria
                                  _("If you continue, the provider and " \
                                    "all of its preferences will be " \
                                    "permanently deleted."))
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.set_default_response :cancel
         dialog.show_all
         if dialog.run == Gtk::ResponseType::OK
           provider.remove
@@ -225,10 +230,11 @@ module Alexandria
         dialog.destroy
       end
 
-      def on_column_toggled(checkbutton)
-        raise if @cols[checkbutton].nil?
+      def on_column_toggled(checkbutton, _user_data)
+        _, value = @cols.find { |k, _v| k.label = checkbutton.label }
+        raise if value.nil?
 
-        Preferences.instance.set_variable(@cols[checkbutton], checkbutton.active?)
+        Preferences.instance.set_variable(value, checkbutton.active)
 
         @changed_block.call
       end
@@ -255,14 +261,10 @@ module Alexandria
         model.clear
         BookProviders.list.each_with_index do |x, index|
           iter = model.append
-          iter[0] = if x.enabled
-                      x.fullname
-                    else
-                      "<i>#{x.fullname}</i>"
-                    end
-          iter[1] = x.name
-          iter[2] = x.enabled
-          iter[3] = index
+          model.set_value iter, 0, x.enabled ? x.fullname : "<i>#{x.fullname}</i>"
+          model.set_value iter, 1, x.name
+          model.set_value iter, 2, x.enabled
+          model.set_value iter, 3, index
         end
       end
 
@@ -283,15 +285,15 @@ module Alexandria
 
       def sensitize_providers
         model = @treeview_providers.model
-        sel_iter = @treeview_providers.selection.selected
-        if sel_iter.nil?
+        result, _model, sel_iter = @treeview_providers.selection.selected
+        if !result
           # No selection, we are probably called by ListStore#clear
           @button_prov_up.sensitive = false
           @button_prov_down.sensitive = false
           @button_prov_setup.sensitive = false
           @button_prov_remove.sensitive = false
         else
-          last_iter = model.get_iter((BookProviders.list.length - 1).to_s)
+          _, last_iter = model.get_iter_from_string (BookProviders.list.length - 1).to_s
           @button_prov_up.sensitive = sel_iter != model.iter_first
           @button_prov_down.sensitive = sel_iter != last_iter
           provider = BookProviders.list.find { |x| x.name == sel_iter[1] }

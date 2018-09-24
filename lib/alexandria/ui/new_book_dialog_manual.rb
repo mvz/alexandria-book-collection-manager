@@ -22,20 +22,20 @@ module Alexandria
         @on_add_cb = on_add_cb
         FileUtils.rm_f(TMP_COVER_FILE)
 
-        cancel_button = Gtk::Button.new(stock_id: Gtk::STOCK_CANCEL)
+        cancel_button = Gtk::Button.new_from_stock(Gtk::STOCK_CANCEL)
         cancel_button.signal_connect("clicked") { on_cancel }
         cancel_button.show
-        @button_box << cancel_button
+        @button_box.add cancel_button
 
-        add_button = Gtk::Button.new(stock_id: Gtk::STOCK_ADD)
+        add_button = Gtk::Button.new_from_stock(Gtk::STOCK_ADD)
         add_button.signal_connect("clicked") { on_add }
         add_button.show
-        @button_box << add_button
+        @button_box.add add_button
 
-        help_button = Gtk::Button.new(stock_id: Gtk::STOCK_HELP)
+        help_button = Gtk::Button.new_from_stock(Gtk::STOCK_HELP)
         help_button.signal_connect("clicked") { on_help }
         help_button.show
-        @button_box << help_button
+        @button_box.add help_button
         @button_box.set_child_secondary(help_button, true)
 
         self.rating = Book::DEFAULT_RATING
