@@ -19,8 +19,7 @@ module Alexandria
                            [Gtk::STOCK_SAVE, :ok])
 
         dialog.title = _("Properties for '%s'") % @smart_library.name
-        # FIXME: Should accept just :cancel
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.set_default_response :cancel
         @smart_library.rules.each { |x| insert_new_rule(x) }
         update_rules_header_box(@smart_library.predicate_operator_rule)
       end

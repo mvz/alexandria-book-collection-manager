@@ -28,7 +28,7 @@ module Alexandria
         @dialog.border_width = 4
         @dialog.child.border_width = 12
 
-        main_box = Gtk::Box.new :vertical
+        main_box = Gtk::Box.new :vertical, 0
         main_box.border_width = 4
         main_box.spacing = 8
 
@@ -36,10 +36,10 @@ module Alexandria
 
         @smart_library_rules = []
 
-        @rules_header_box = Gtk::Box.new :horizontal
+        @rules_header_box = Gtk::Box.new :horizontal, 0
         @rules_header_box.spacing = 2
 
-        @rules_box = Gtk::Box.new :vertical
+        @rules_box = Gtk::Box.new :vertical, 0
         @rules_box.spacing = 8
         @rules_box.border_width = 8
 
@@ -102,7 +102,7 @@ module Alexandria
             "which are empty or conflict with each other. This is " \
             "likely to result in never matching a book. Are you " \
             "sure you want to save this library?"))
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.set_default_response :cancel
         dialog.show_all
         confirmed = dialog.run == Gtk::ResponseType::YES
         dialog.destroy

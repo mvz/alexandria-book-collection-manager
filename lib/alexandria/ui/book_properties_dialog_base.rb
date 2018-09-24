@@ -38,7 +38,8 @@ module Alexandria
 
         @entry_tags.complete_tags
 
-        @treeview_authors.model = Gtk::ListStore.new(String, TrueClass)
+        @treeview_authors.model = Gtk::ListStore.new([GObject::TYPE_STRING,
+                                                      GObject::TYPE_BOOLEAN])
         @treeview_authors.selection.mode = :single
         renderer = Gtk::CellRendererText.new
         renderer.signal_connect("edited") do |_cell, path_string, new_text|
@@ -46,12 +47,12 @@ module Alexandria
           iter = @treeview_authors.model.get_iter(path)
           iter[0] = new_text
         end
-        renderer.signal_connect("editing_started") do |_cell, entry, _path_string|
+        renderer.signal_connect("editing-started") do |_cell, entry, _path_string|
           entry.complete_authors
         end
-        col = Gtk::TreeViewColumn.new("", renderer,
-                                      text: 0,
-                                      editable: 1)
+        col = Gtk::TreeViewColumn.new_with_attributes("", renderer,
+                                                      text: 0,
+                                                      editable: 1)
         @treeview_authors.append_column(col)
 
         setup_date_widgets
@@ -94,7 +95,7 @@ module Alexandria
          :treeview_authors]
       end
 
-      def on_title_changed
+      def on_title_changed(_entry, _user_data)
         title = @entry_title.text.strip
         @book_properties_dialog.title = if title.empty?
                                           _("Properties")
@@ -141,11 +142,11 @@ module Alexandria
         self.rating = 0
       end
 
-      def own_toggled
-        @checkbutton_want.inconsistent = @checkbutton_own.active?
+      def own_toggled(_check_button, _user_data)
+        @checkbutton_want.inconsistent = @checkbutton_own.active
       end
 
-      def want_toggled; end
+      def want_toggled(_check_button, _user_data); end
 
       @@latest_filechooser_directory = Dir.home
       def on_change_cover
@@ -261,8 +262,8 @@ module Alexandria
         ]
         raise _("out of range") if rating < 0 || rating > images.length
 
-        images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
-        images[rating..].each { |x| x.pixbuf = Icons::STAR_UNSET }
+        images[0..rating - 1].each { |x| x.set_from_pixbuf Icons::STAR_SET }
+        images[rating..].each { |x| x.set_from_pixbuf Icons::STAR_UNSET }
         @current_rating = rating
       end
 
@@ -273,7 +274,7 @@ module Alexandria
           # that's why we make a copy.
           pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
         end
-        @image_cover.pixbuf = pixbuf
+        @image_cover.set_from_pixbuf pixbuf
       end
 
       def loaned_since=(time)

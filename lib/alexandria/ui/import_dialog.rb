@@ -47,7 +47,7 @@ module Alexandria
           @filters[filefilter] = filter
         end
 
-        dialog.signal_connect("selection_changed") do
+        dialog.signal_connect("selection-changed") do
           import_button.sensitive = dialog.filename && File.file?(dialog.filename)
         end
 
@@ -60,7 +60,7 @@ module Alexandria
 
         @pbar = Gtk::ProgressBar.new
         @pbar.show_text = true
-        dialog.child.pack_start(@pbar, expand: false)
+        dialog.child.pack_start(@pbar, false, false, 0)
       end
 
       def acquire

@@ -17,8 +17,7 @@ module Alexandria
                            [Gtk::STOCK_NEW, :ok])
 
         dialog.title = _("New Smart Library")
-        # FIXME: Should accept just :cancel
-        dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.set_default_response :cancel
         insert_new_rule
       end
 
