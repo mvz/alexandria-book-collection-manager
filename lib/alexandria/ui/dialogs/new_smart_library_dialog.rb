@@ -25,12 +25,12 @@ module Alexandria
         show_all
         insert_new_rule
 
-        while ((response = run) != :cancel) &&
-            (response != :delete_event)
+        while ((response = run) != Gtk::ResponseType::CANCEL) &&
+            (response != Gtk::ResponseType::DELETE_EVENT)
 
-          if response == :help
+          if response == Gtk::ResponseType::HELP
             Alexandria::UI.display_help(self, 'new-smart-library')
-          elsif response == :ok
+          elsif response == Gtk::ResponseType::OK
             if user_confirms_possible_weirdnesses_before_saving?
               rules = smart_library_rules
               basename = smart_library_base_name(rules) || _('Smart Library')

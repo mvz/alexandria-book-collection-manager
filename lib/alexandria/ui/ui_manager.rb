@@ -641,7 +641,7 @@ module Alexandria
                                                  new_message).show
         recovery_dialog.signal_connect('response') do |_dialog, response_type|
           recovery_dialog.destroy
-          if response_type == :ok
+          if response_type == Gtk::ResponseType::OK
             # progress indicator...
             @progressbar.fraction = 0
             @appbar.children.first.visible = true # show the progress bar

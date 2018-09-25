@@ -123,9 +123,9 @@ module Alexandria
         super(title: _('New Provider'),
               parent: parent,
               flags: :modal,
-              buttons: [[Gtk::Stock::CANCEL, :cancel]])
+              buttons: [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL]])
         @add_button = add_button(Gtk::Stock::ADD,
-                                 :accept)
+                                 Gtk::ResponseType::ACCEPT)
 
         instances = BookProviders.abstract_classes.map(&:new)
         @selected_instance = nil
@@ -170,7 +170,7 @@ module Alexandria
 
       def acquire
         show_all
-        if run == :accept
+        if run == Gtk::ResponseType::ACCEPT
           @selected_instance.reinitialize(entry_name.text)
           sync_variables
         else
@@ -458,15 +458,15 @@ module Alexandria
                                    "'%s'?") % provider.fullname,
                                  Gtk::Stock::DIALOG_QUESTION,
                                  [[Gtk::Stock::CANCEL,
-                                   :cancel],
+                                   Gtk::ResponseType::CANCEL],
                                   [Gtk::Stock::DELETE,
-                                   :ok]],
+                                   Gtk::ResponseType::OK]],
                                  _('If you continue, the provider and ' \
                                    'all of its preferences will be ' \
                                    'permanently deleted.'))
         dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
-        if dialog.run == :ok
+        if dialog.run == Gtk::ResponseType::OK
           provider.remove
           BookProviders.update_priority
           reload_providers

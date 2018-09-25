@@ -17,8 +17,8 @@ module Alexandria
                     'keep the book but change the ISBN or cancel the addition?') % book.title
         super(parent, title,
               Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, :cancel],
-               [_('_Keep'), :ok]], message)
+              [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
+               [_('_Keep'), Gtk::ResponseType::OK]], message)
         self.default_response = Gtk::ResponseType::OK
       end
 
@@ -26,7 +26,7 @@ module Alexandria
         show_all
         @response = run
         destroy
-        @response == :ok
+        @response == Gtk::ResponseType::OK
       end
     end
   end

@@ -39,10 +39,10 @@ module Alexandria
         smart_library.rules.each { |x| insert_new_rule(x) }
         update_rules_header_box(smart_library.predicate_operator_rule)
 
-        while (response = run) != :cancel
-          if response == :help
+        while (response = run) != Gtk::ResponseType::CANCEL
+          if response == Gtk::ResponseType::HELP
             Alexandria::UI.display_help(self, 'edit-smart-library')
-          elsif response == :ok
+          elsif response == Gtk::ResponseType::OK
             if user_confirms_possible_weirdnesses_before_saving?
               smart_library.rules = smart_library_rules
               smart_library.predicate_operator_rule =

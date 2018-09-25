@@ -22,8 +22,8 @@ module Alexandria
       def initialize(parent, message)
         super(parent, _('Error while importing'),
               Gtk::Stock::DIALOG_QUESTION,
-              [[Gtk::Stock::CANCEL, :cancel],
-               [_('_Continue'), :ok]],
+              [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
+               [_('_Continue'), Gtk::ResponseType::OK]],
               message)
         puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
         self.default_response = Gtk::ResponseType::CANCEL
@@ -32,7 +32,7 @@ module Alexandria
       def continue?
         show_all && (@response = run)
         destroy
-        @response == :ok
+        @response == Gtk::ResponseType::OK
       end
     end
 
@@ -51,10 +51,10 @@ module Alexandria
         puts 'ImportDialog opened.' if $DEBUG
         @destroyed = false
         @running = false
-        add_button(Gtk::Stock::HELP, :help)
-        add_button(Gtk::Stock::CANCEL, :cancel)
+        add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)
+        add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
         import_button = add_button(_('_Import'),
-                                   :accept)
+                                   Gtk::ResponseType::ACCEPT)
         import_button.sensitive = false
 
         signal_connect('destroy') do
@@ -102,10 +102,10 @@ module Alexandria
         exec_queue = ExecutionQueue.new
 
         while !@destroyed &&
-            ((response = run) != :cancel) &&
-            (response != :delete_event)
+            ((response = run) != Gtk::ResponseType::CANCEL) &&
+            response != Gtk::ResponseType::DELETE_EVENT
 
-          if response == :help
+          if response == Gtk::ResponseType::HELP
             Alexandria::UI.display_help(self, 'import-library')
             next
           end

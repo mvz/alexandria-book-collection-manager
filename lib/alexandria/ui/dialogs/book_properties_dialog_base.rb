@@ -257,12 +257,12 @@ module Alexandria
                                             @book_properties_dialog,
                                             Gtk::FileChooser::ACTION_OPEN,
                                             backend,
-                                            [_('No Cover'), :reject],
-                                            [Gtk::Stock::CANCEL, :cancel],
-                                            [Gtk::Stock::OPEN, :accept])
+                                            [_('No Cover'), Gtk::ResponseType::REJECT],
+                                            [Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
+                                            [Gtk::Stock::OPEN, Gtk::ResponseType::ACCEPT])
         dialog.current_folder = @@latest_filechooser_directory
         response = dialog.run
-        if response == :accept
+        if response == Gtk::ResponseType::ACCEPT
           begin
             @delete_cover_file = false
             cover = GdkPixbuf::Pixbuf.new(file: dialog.filename)
@@ -290,7 +290,7 @@ module Alexandria
           rescue RuntimeError => e
             ErrorDialog.new(@book_properties_dialog, e.message).display
           end
-        elsif response == :reject
+        elsif response == Gtk::ResponseType::REJECT
           ## FileUtils.rm_f(@cover_file) # fixing bug #16707
           @delete_cover_file = true
 

@@ -26,7 +26,7 @@ module Alexandria
       def erase?
         show_all && (@response = run)
         destroy
-        @response == :ok
+        @response == Gtk::ResponseType::OK
       end
     end
 
@@ -108,10 +108,10 @@ module Alexandria
       end
 
       def perform
-        while ((response = run) != :cancel) &&
-            (response != :delete_event)
+        while ((response = run) != Gtk::ResponseType::CANCEL) &&
+            (response != Gtk::ResponseType::DELETE_EVENT)
 
-          if response == :help
+          if response == Gtk::ResponseType::HELP
             Alexandria::UI.display_help(self, 'exporting')
           else
             begin
