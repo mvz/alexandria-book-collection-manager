@@ -403,7 +403,7 @@ module Alexandria
         @scanner_buffer = ''
         scanner_name = @prefs.barcode_scanner
 
-        @scanner = Alexandria::Scanners.find_scanner scanner_name ||
+        @scanner = Alexandria::Scanners.find_scanner(scanner_name) ||
           Alexandria::Scanners.default_scanner # CueCat is default
 
         log.debug { "Using #{@scanner.name} scanner" }
