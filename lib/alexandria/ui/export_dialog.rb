@@ -47,7 +47,7 @@ module Alexandria
           preview_image.set_from_file file
         end
         @theme_combo.active = 0
-        theme_label = Gtk::Label.new(_("_Theme:"), use_underline: true)
+        theme_label = Gtk::Label.new_with_mnemonic _("_Theme:")
         theme_label.xalign = 0
         theme_label.mnemonic_widget = @theme_combo
 
@@ -71,7 +71,7 @@ module Alexandria
         end
         @types_combo.show
 
-        types_label = Gtk::Label.new(_("Export for_mat:"), use_underline: true)
+        types_label = Gtk::Label.new_with_mnemonic _("Export for_mat:")
         types_label.xalign = 0
         types_label.mnemonic_widget = @types_combo
         types_label.show

@@ -54,13 +54,15 @@ module Alexandria
         # before adding the (hidden) progress bar, we must re-set the
         # packing of the button box (currently packed at the end),
         # because the progressbar will be *after* the button box.
-        buttonbox = dialog.child.children.last
-        dialog.child.set_child_packing(buttonbox, pack_type: :start)
-        dialog.child.reorder_child(buttonbox, 1)
+        box = dialog.content_area
+        buttonbox = box.children.to_a.last
+        expand, fill, padding, _pack_type = box.query_child_packing buttonbox
+        box.set_child_packing(buttonbox, expand, fill, padding, :start)
+        box.reorder_child(buttonbox, 1)
 
         @pbar = Gtk::ProgressBar.new
         @pbar.show_text = true
-        dialog.child.pack_start(@pbar, false, false, 0)
+        box.pack_start(@pbar, false, false, 0)
       end
 
       def acquire

@@ -46,7 +46,10 @@ module Alexandria
           end
         end
 
-        model = Gtk::ListStore.new([GObject::TYPE_STRING, GObject::TYPE_STRING, GObject::TYPE_BOOLEAN, GObject::TYPE_INT])
+        model = Gtk::ListStore.new([GObject::TYPE_STRING,
+                                    GObject::TYPE_STRING,
+                                    GObject::TYPE_BOOLEAN,
+                                    GObject::TYPE_INT])
         @treeview_providers.model = model
         reload_providers
         model.signal_connect_after("row-changed") { update_priority }
