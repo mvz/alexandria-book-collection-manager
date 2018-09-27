@@ -21,12 +21,12 @@ module Alexandria
       attr_reader :dialog
 
       def initialize(parent, library, sort_order)
-        @dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
-                                             parent: parent,
-                                             action: :save,
-                                             buttons: [[Gtk::STOCK_HELP, :help],
-                                                       [Gtk::STOCK_CANCEL, :cancel],
-                                                       [_("_Export"), :accept]])
+        @dialog = Gtk::FileChooserDialog.new(_("Export '%s'") % library.name,
+                                             parent,
+                                             :save,
+                                             [[Gtk::STOCK_HELP, :help],
+                                              [Gtk::STOCK_CANCEL, :cancel],
+                                              [_("_Export"), :accept]])
         @dialog.current_name = library.name
         @dialog.signal_connect("destroy") { @dialog.hide }
 
@@ -44,7 +44,7 @@ module Alexandria
         end
         @theme_combo.signal_connect("changed") do
           file = THEMES[@theme_combo.active].preview_file
-          preview_image.pixbuf = GdkPixbuf::Pixbuf.new(file: file)
+          preview_image.set_from_file file
         end
         @theme_combo.active = 0
         theme_label = Gtk::Label.new(_("_Theme:"), use_underline: true)
