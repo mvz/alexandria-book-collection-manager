@@ -53,10 +53,10 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('marc', ['~> 1.0.0'])
   s.add_runtime_dependency('zoom', ['~> 0.5.0'])
 
+  s.add_development_dependency('gnome_app_driver', ['~> 0.2.0'])
   s.add_development_dependency('minitest', ['~> 5.0'])
   s.add_development_dependency('rake', ['~> 12.0'])
   s.add_development_dependency('rspec', ['~> 3.0'])
-  s.add_development_dependency('gnome_app_driver', ['~> 0.2.0'])
 
   s.require_paths = ['lib']
 end

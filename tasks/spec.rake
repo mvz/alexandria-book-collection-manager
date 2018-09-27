@@ -43,5 +43,4 @@ namespace 'spec' do
   task 'all' => ['spec:unit', 'spec:end_to_end']
 end
 
-
 task default: 'spec:all'

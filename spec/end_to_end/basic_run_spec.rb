@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2018 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
