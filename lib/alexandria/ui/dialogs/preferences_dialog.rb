@@ -18,8 +18,8 @@ end
 module Alexandria
   module UI
     class ProviderPreferencesBaseDialog < SimpleDelegator
-      def initialize(*args)
-        dialog = Gtk::Dialog.new(*args)
+      def initialize(title:, parent:, flags:, buttons:)
+        dialog = Gtk::Dialog.new(title: title, parent: parent, flags: flags, buttons: buttons)
         super(dialog)
 
         self.resizable = false
