@@ -54,13 +54,8 @@ describe 'The Alexandria application' do
     
     table_cell.n_actions.times do |idx|
       name = table_cell.get_action_name idx
-      puts name
-      if name == 'activate'
-        table_cell.do_action idx
-      end
+      table_cell.do_action idx if name == 'activate'
     end
-
-    #frame.find_role(:push_button, /Cancel/).do_action 0
 
     @driver.press_ctrl_q
 
