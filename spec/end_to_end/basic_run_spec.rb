@@ -43,6 +43,31 @@ describe 'The Alexandria application' do
     expect(status.exitstatus).to eq 0
   end
 
+  it 'can be interacted with' do
+    frame = @driver.frame
+    frame.find_role(:menu_item, /Title contains/).do_action 0
+    frame.find_role(:menu_item, /View as Icons/).do_action 0
+    frame.find_role(:menu_item, /View as List/).do_action 0
+    frame.find_role(:table_column_header, /Title/).do_action 0
+
+    table_cell = frame.find_role(:table_cell)
+    
+    table_cell.n_actions.times do |idx|
+      name = table_cell.get_action_name idx
+      puts name
+      if name == 'activate'
+        table_cell.do_action idx
+      end
+    end
+
+    #frame.find_role(:push_button, /Cancel/).do_action 0
+
+    @driver.press_ctrl_q
+
+    status = @driver.cleanup
+    expect(status.exitstatus).to eq 0
+  end
+
   after do
     @driver.cleanup
   end
