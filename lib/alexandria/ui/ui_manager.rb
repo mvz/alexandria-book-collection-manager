@@ -336,22 +336,11 @@ module Alexandria
           # seem to suffice).
           #
           # Then we wait a while and only *then* pop up the menu.
+          sensitize_library selected_library if library_already_selected
 
-          if library_already_selected
-            sensitize_library selected_library
-
-            GLib::Idle.add do
-              menu.popup(nil, nil, event.button, event.time)
-              # @clicking_on_sidepane = false
-              false
-            end
-          else
-            GLib::Idle.add do
-              menu.popup(nil, nil, event.button, event.time)
-              # @clicking_on_sidepane = false
-
-              false
-            end
+          GLib::Idle.add do
+            menu.popup(nil, nil, event.button, event.time)
+            false
           end
 
           # not a right click
