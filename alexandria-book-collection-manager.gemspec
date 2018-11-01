@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ['--main', 'README.md']
 
   s.add_runtime_dependency('gettext', ['~> 3.1'])
-  s.add_runtime_dependency('gstreamer', ['~> 3.2.4'])
+  s.add_runtime_dependency('gstreamer', ['~> 3.3.0'])
   s.add_runtime_dependency('gtk3', ['~> 3.2.4'])
   s.add_runtime_dependency('hpricot', ['~> 0.8.5'])
   s.add_runtime_dependency('htmlentities', ['~> 4.3'])
