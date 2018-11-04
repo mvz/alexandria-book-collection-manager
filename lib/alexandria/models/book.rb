@@ -14,7 +14,7 @@ module Alexandria
 
     DEFAULT_RATING = 0
     MAX_RATING_STARS = 5
-    VALID_RATINGS = (DEFAULT_RATING..MAX_RATING_STARS)
+    VALID_RATINGS = (DEFAULT_RATING..MAX_RATING_STARS).freeze
 
     def initialize(title, authors, isbn, publisher, publishing_year,
                    edition)

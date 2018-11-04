@@ -87,9 +87,10 @@ module Alexandria
       private
 
       NO_BOOKS_FOUND_REGEXP =
-        /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/
+        /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.freeze
       HYPERLINK_SCAN_REGEXP =
-        /"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/
+        /"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/.
+          freeze
 
       def to_books(data)
         data = CGI.unescapeHTML(data)
