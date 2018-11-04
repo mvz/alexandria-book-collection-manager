@@ -45,15 +45,15 @@ Gem::Specification.new do |s|
   s.rdoc_options = ['--main', 'README.md']
 
   s.add_runtime_dependency('gettext', ['~> 3.1'])
-  s.add_runtime_dependency('gstreamer', ['~> 3.2.4'])
-  s.add_runtime_dependency('gtk3', ['~> 3.2.4'])
+  s.add_runtime_dependency('gstreamer', ['~> 3.3.0'])
+  s.add_runtime_dependency('gtk3', ['~> 3.3.0'])
   s.add_runtime_dependency('hpricot', ['~> 0.8.5'])
   s.add_runtime_dependency('htmlentities', ['~> 4.3'])
   s.add_runtime_dependency('image_size', ['~> 2.0'])
   s.add_runtime_dependency('marc', ['~> 1.0.0'])
   s.add_runtime_dependency('zoom', ['~> 0.5.0'])
 
-  s.add_development_dependency('gnome_app_driver', ['~> 0.2.0'])
+  s.add_development_dependency('gnome_app_driver', ['~> 0.2.1'])
   s.add_development_dependency('minitest', ['~> 5.0'])
   s.add_development_dependency('rake', ['~> 12.0'])
   s.add_development_dependency('rspec', ['~> 3.0'])
