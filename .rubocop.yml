@@ -25,6 +25,10 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
 
+Layout/AlignHash:
+  EnforcedColonStyle: key
+  EnforcedHashRocketStyle: table
+
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
