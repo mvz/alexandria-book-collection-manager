@@ -51,7 +51,7 @@ describe 'The Alexandria application' do
     frame.find_role(:table_column_header, /Title/).do_action 0
 
     table_cell = frame.find_role(:table_cell)
-    
+
     table_cell.n_actions.times do |idx|
       name = table_cell.get_action_name idx
       table_cell.do_action idx if name == 'activate'
