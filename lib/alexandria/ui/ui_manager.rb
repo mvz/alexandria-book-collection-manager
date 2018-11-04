@@ -1078,16 +1078,16 @@ module Alexandria
         }
         result, sort_column, sort_order = current_view.model.sort_column_id
         if result
-          column_ids_to_attributes = { 2 => :title,
-                                       4 => :authors,
-                                       5 => :isbn,
-                                       6 => :publisher,
-                                       7 => :publishing_year,
-                                       8 => :edition, # binding
+          column_ids_to_attributes = { 2  => :title,
+                                       4  => :authors,
+                                       5  => :isbn,
+                                       6  => :publisher,
+                                       7  => :publishing_year,
+                                       8  => :edition, # binding
                                        12 => :redd,
                                        13 => :own,
                                        14 => :want,
-                                       9 => :rating }
+                                       9  => :rating }
 
           sort_attribute = column_ids_to_attributes.fetch sort_column
           ascending = (sort_order == :ascending)

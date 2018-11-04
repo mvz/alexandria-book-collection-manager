@@ -102,7 +102,7 @@ module Alexandria
       def create_search_uri(search_type, search_term)
         (search_type_code = {
           SEARCH_BY_AUTHORS => 'ATH',
-          SEARCH_BY_TITLE => 'TTL',
+          SEARCH_BY_TITLE   => 'TTL',
           SEARCH_BY_KEYWORD => 'WRD' # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
         }[search_type]) || ''
         if search_type == SEARCH_BY_ISBN

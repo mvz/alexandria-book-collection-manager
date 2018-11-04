@@ -78,9 +78,9 @@ module Alexandria
       private
 
       def create_search_uri(search_type, search_term)
-        (search_type_code = { SEARCH_BY_ISBN => 'isbn:',
+        (search_type_code = { SEARCH_BY_ISBN    => 'isbn:',
                               SEARCH_BY_AUTHORS => 'au:',
-                              SEARCH_BY_TITLE => 'ti:',
+                              SEARCH_BY_TITLE   => 'ti:',
                               SEARCH_BY_KEYWORD => '' }[search_type]) || ''
         search_type_code = CGI.escape(search_type_code)
         search_term_encoded = if search_type == SEARCH_BY_ISBN

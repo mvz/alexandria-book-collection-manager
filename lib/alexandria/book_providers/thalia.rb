@@ -62,9 +62,9 @@ module Alexandria
 
       def create_search_uri(search_type, search_term)
         (search_type_code = {
-          SEARCH_BY_ISBN => 'sq',
+          SEARCH_BY_ISBN    => 'sq',
           SEARCH_BY_AUTHORS => 'sa', # Autor
-          SEARCH_BY_TITLE => 'st', # Titel
+          SEARCH_BY_TITLE   => 'st', # Titel
           SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
         }[search_type]) || ''
         search_type_code = CGI.escape(search_type_code)

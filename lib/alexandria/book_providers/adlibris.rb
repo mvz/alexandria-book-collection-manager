@@ -80,7 +80,7 @@ module Alexandria
         else
           (search_type_code = {
             SEARCH_BY_AUTHORS => 'author',
-            SEARCH_BY_TITLE => 'title',
+            SEARCH_BY_TITLE   => 'title',
             SEARCH_BY_KEYWORD => 'keyword'
           }[search_type]) || 'keyword'
           search_term_encoded = CGI.escape(search_term)
