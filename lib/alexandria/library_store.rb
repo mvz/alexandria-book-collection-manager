@@ -142,7 +142,7 @@ module Alexandria
             next unless File.stat(filename).file?
 
             text = IO.read(filename)
-            hash = YAML.safe_load(text, whitelist_classes = [Symbol])
+            hash = YAML.safe_load(text, permitted_classes: [Symbol])
             smart_library = SmartLibrary.from_hash(hash, self)
             a << smart_library
           end
@@ -192,7 +192,7 @@ module Alexandria
       end
 
       # TODO: Ensure book loading passes through Book#initialize
-      book = YAML.safe_load(text, whitelist_classes = [Book, Time])
+      book = YAML.safe_load(text, permitted_classes: [Book, Time])
 
       unless book.isbn.class == String
         # HACK
