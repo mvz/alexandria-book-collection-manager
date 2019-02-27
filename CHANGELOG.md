@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.3 / Unreleased
+## 0.7.3 / 2019-02-27
 
 * Remove DeaStore provider since the site is no longer online
 * Remove MCU provider since the site is no longer online
