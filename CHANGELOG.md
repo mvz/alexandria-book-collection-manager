@@ -5,10 +5,13 @@
 * Remove DeaStore provider since the site is no longer online
 * Remove MCU provider since the site is no longer online
 * Various code cleanups
-* Update dependencies
+* Update dependencies on `gstreamer`, `gtk3` and `image_size`
+* Call `#set_active` with `false` instead of `nil` (Fixes [#19])
 * Spec and fix export functionality
 * Do not hard-code storage location
 * Silence some Gtk+ warnings
+* Fix setup of default scanner when no scanner is configured
+* Update `YAML.safe_load` calls to new API, silencing deprecation warnings
 
 ## 0.7.2 / 2018-03-18
 
@@ -60,3 +63,7 @@
 * Amazon queries now use a Associate Tag, a new requirement of
   Amazon's Product Advertising API. Thanks to Stephen McCamant for
   providing the patch.
+
+<!-- references -->
+
+[#19]: https://github.com/mvz/alexandria-book-collection-manager/issues/19
