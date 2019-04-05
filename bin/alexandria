@@ -45,15 +45,15 @@ end.parse!
 
 begin
   Alexandria.main
-rescue StandardError => e
+rescue StandardError => ex
   warn <<~EOS
     -----------------------
     Alexandria just crashed
     -----------------------
     Timestamp: #{Time.now}
-    Message: #{e.message}
+    Message: #{ex.message}
     Backtrace:
-    #{e.backtrace.join("\n")}
+    #{ex.backtrace.join("\n")}
     Release: #{Alexandria::VERSION}(#{Alexandria::DISPLAY_VERSION})
     Uname -a: #{`uname -a`.chomp}
     --

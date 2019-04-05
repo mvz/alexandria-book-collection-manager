@@ -69,9 +69,9 @@ module Alexandria
           instance.notify_observers(:found, factory.fullname) # new
           return results
         end
-      rescue StandardError => boom
-        if boom.is_a? NoResultsError
-          unless boom.instance_of? ProviderSkippedError
+      rescue StandardError => ex
+        if ex.is_a? NoResultsError
+          unless ex.instance_of? ProviderSkippedError
             instance.changed
             instance.notify_observers(:not_found, factory.fullname) # new
             Thread.new { sleep(0.5) }.join
@@ -80,19 +80,19 @@ module Alexandria
           instance.changed
           instance.notify_observers(:error, factory.fullname) # new
           Thread.new { sleep(0.5) }.join # hrmmmm, to make readable...
-          trace = boom.backtrace.join("\n >")
-          log.warn { "Provider #{factory.name} encountered error: #{boom.message} #{trace}" }
+          trace = ex.backtrace.join("\n >")
+          log.warn { "Provider #{factory.name} encountered error: #{ex.message} #{trace}" }
         end
         if last == factory
           log.warn { "Error while searching #{criterion}" }
-          message = case boom
+          message = case ex
                     when Timeout::Error
                       _("Couldn't reach the provider '%s': timeout " \
                         'expired.') % factory.name
 
                     when SocketError
                       format(_("Couldn't reach the provider '%s': socket " \
-                        'error (%s).'), factory.name, boom.message)
+                        'error (%s).'), factory.name, ex.message)
 
                     when NoResultsError
                       _('No results were found.  Make sure your ' \
@@ -111,7 +111,7 @@ module Alexandria
                       _('Invalid search type.')
 
                     else
-                      boom.message
+                      ex.message
                     end
           puts "raising empty error #{message}"
           raise SearchEmptyError, message

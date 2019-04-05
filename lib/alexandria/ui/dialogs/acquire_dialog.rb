@@ -229,8 +229,8 @@ module Alexandria
           isbn = Library.canonicalise_isbn(barcode_text)
           # TODO: : use an AppFacade
           # isbn =  LookupBook.get_isbn(barcode_text)
-        rescue StandardError => err
-          log.error { "Bad scan:  #{@scanner_buffer} #{err}" }
+        rescue StandardError => ex
+          log.error { "Bad scan:  #{@scanner_buffer} #{ex}" }
         ensure
           @scanner_buffer = ''
         end

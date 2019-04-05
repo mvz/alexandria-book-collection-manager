@@ -287,8 +287,8 @@ module Alexandria
 
             self.cover = cover
             @@latest_filechooser_directory = dialog.current_folder
-          rescue RuntimeError => e
-            ErrorDialog.new(@book_properties_dialog, e.message).display
+          rescue RuntimeError => ex
+            ErrorDialog.new(@book_properties_dialog, ex.message).display
           end
         elsif response == Gtk::ResponseType::REJECT
           ## FileUtils.rm_f(@cover_file) # fixing bug #16707

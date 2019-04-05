@@ -71,12 +71,12 @@ module Alexandria
           else
             results.map { |result| get_book_from_search_result(result) }
           end
-        rescue NoResultsError => err
+        rescue NoResultsError => ex
           if (type == SEARCH_BY_ISBN) && (trying_again == false)
             trying_again = true
             retry
           else
-            raise err
+            raise ex
           end
         end
       end

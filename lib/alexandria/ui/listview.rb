@@ -159,8 +159,8 @@ module Alexandria
               end
 
             end
-          rescue StandardError => e
-            log.error { "toggle failed for path #{path} #{e}\n" + e.backtrace.join("\n") }
+          rescue StandardError => ex
+            log.error { "toggle failed for path #{path} #{ex}\n" + e.backtrace.join("\n") }
           end
         end
         column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)

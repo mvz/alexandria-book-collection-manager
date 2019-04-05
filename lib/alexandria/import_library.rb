@@ -59,9 +59,9 @@ module Alexandria
       elsif ['.tc', '.bc'].include? filename[-3..-1]
         begin
           import_as_tellico_xml_archive(*args)
-        rescue StandardError => e
-          puts e.message
-          puts e.backtrace.join("\n>> ")
+        rescue StandardError => ex
+          puts ex.message
+          puts ex.backtrace.join("\n>> ")
         end
       elsif ['.csv'].include? filename[-4..-1]
         import_as_csv_file(*args)

@@ -45,6 +45,10 @@ Metrics/LineLength:
 Naming/AccessorMethodName:
   Enabled: false
 
+# Avoid one-letter exception variable name
+Naming/RescuedExceptionsVariableName:
+  PreferredName: ex
+
 # Allow multi-line blocks of all sorts
 Style/BlockDelimiters:
   Enabled: false

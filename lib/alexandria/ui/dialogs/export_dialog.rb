@@ -117,8 +117,8 @@ module Alexandria
             begin
               break if on_export(FORMATS[@types_combo.active],
                                  THEMES[@theme_combo.active])
-            rescue StandardError => e
-              ErrorDialog.new(@export_dialog, _('Export failed'), e.message).display
+            rescue StandardError => ex
+              ErrorDialog.new(@export_dialog, _('Export failed'), ex.message).display
             end
           end
         end

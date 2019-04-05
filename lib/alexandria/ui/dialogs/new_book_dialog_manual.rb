@@ -112,9 +112,9 @@ module Alexandria
         end
         @on_add_cb.call(book)
         @book_properties_dialog.destroy
-      rescue AddError => e
+      rescue AddError => ex
         ErrorDialog.new(@book_properties_dialog, _("Couldn't add the book"),
-                        e.message).display
+                        ex.message).display
       end
 
       # COPIED from book_properties_dialog_base

@@ -168,8 +168,8 @@ module Alexandria
                 end
               end
             end
-          rescue StandardError => e
-            @image_error = e.message
+          rescue StandardError => ex
+            @image_error = ex.message
           end
         end
 

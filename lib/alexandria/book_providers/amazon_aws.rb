@@ -160,8 +160,8 @@ module Alexandria
           end
           raise Amazon::RequestError, 'No products' if products.empty?
           # raise NoResultsError if products.empty?
-        rescue Amazon::RequestError => re
-          log.debug { "Got Amazon::RequestError at #{request_locale}: #{re}" }
+        rescue Amazon::RequestError => ex
+          log.debug { "Got Amazon::RequestError at #{request_locale}: #{ex}" }
           retry unless locales.empty?
           raise NoResultsError
         end
