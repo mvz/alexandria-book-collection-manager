@@ -106,7 +106,7 @@ module Alexandria
         authors = []
         data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each { |md|
           authors2 = []
-          for author in md[0].split('  ')
+          md[0].split('  ').each do |author|
             authors2 << author.strip
           end
           authors << authors2

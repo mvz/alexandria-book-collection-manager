@@ -19,7 +19,7 @@ describe Alexandria::Library do
 
   describe '#valid_isbn?' do
     it 'returns a true value for valid isbns' do
-      for x in ['014143984X', '0-345-43192-8']
+      ['014143984X', '0-345-43192-8'].each do |x|
         expect(Alexandria::Library.valid_isbn?(x)).to be_truthy
       end
     end

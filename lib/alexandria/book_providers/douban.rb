@@ -90,13 +90,13 @@ module Alexandria
           dbresult = YAML.safe_load(json2yaml(response))
           # File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
           if dbresult['opensearch:totalResults']['$t'].to_i > 0
-            for item in dbresult['entry']
+            dbresult['entry'].each do |item|
               name = item['title']['$t']
               isbn = nil
               publisher = nil
               pubdate = nil
               binding = nil
-              for av in item['db:attribute']
+              item['db:attribute'].each do |av|
                 isbn = av['$t'] if av['@name'] == 'isbn13'
                 publisher = av['$t'] if av['@name'] == 'publisher'
                 pubdate = av['$t'] if av['@name'] == 'pubdate'
@@ -108,7 +108,7 @@ module Alexandria
                           []
                         end
               image_url = nil
-              for av in item['link']
+              item['link'].each do |av|
                 image_url = av['@href'] if av['@rel'] == 'image'
               end
               book = Book.new(name, authors, isbn, publisher, pubdate, binding)

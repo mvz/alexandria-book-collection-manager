@@ -155,17 +155,6 @@ Style/CommentedKeyword:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: each, for
-Style/For:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/book_providers/douban.rb'
-    - 'lib/alexandria/book_providers/renaud.rb'
-    - 'spec/alexandria/library_spec.rb'
-
 # Offense count: 65
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: annotated, template, unannotated
