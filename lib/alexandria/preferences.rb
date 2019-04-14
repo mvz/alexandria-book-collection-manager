@@ -239,7 +239,7 @@ module Alexandria
         true
       elsif value == 'false'    # bool
         false
-      elsif /^[0-9]+$/.match?(value)   # int
+      elsif /^[0-9]+$/.match?(value) # int
         value.to_i
       elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
         Regexp.last_match[1].split(',')
