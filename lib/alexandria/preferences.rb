@@ -169,7 +169,7 @@ module Alexandria
     end
 
     def exec_gconf_set(var_path, new_value)
-      if /cols_width/ =~ var_path
+      if /cols_width/.match?(var_path)
         puts new_value
 
         # new_value = {}
@@ -239,7 +239,7 @@ module Alexandria
         true
       elsif value == 'false'    # bool
         false
-      elsif value =~ /^[0-9]+$/   # int
+      elsif /^[0-9]+$/.match?(value)   # int
         value.to_i
       elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
         Regexp.last_match[1].split(',')
