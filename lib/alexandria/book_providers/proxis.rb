@@ -137,15 +137,15 @@ module Alexandria
         unless info_headers.empty?
           info_headers.each do |th|
             header_text = th.inner_text
-            if header_text =~ /Type/
+            if /Type/.match?(header_text)
               book_data[:binding] = data_for_header(th)
-            elsif header_text =~ /Verschijningsdatum/
+            elsif /Verschijningsdatum/.match?(header_text)
               date = data_for_header(th)
               date =~ /\/([\d]{4})/
               book_data[:publish_year] = Regexp.last_match[1].to_i
-            elsif header_text =~ /Auteur/
+            elsif /Auteur/.match?(header_text)
               book_data[:authors] << data_for_header(th)
-            elsif header_text =~ /Uitgever/
+            elsif /Uitgever/.match?(header_text)
               book_data[:publisher] = data_for_header(th)
             end
           end
@@ -153,7 +153,7 @@ module Alexandria
 
         image_url = nil
         if (cover_img = doc.at("img[@id$='imgProduct']"))
-          image_url = if cover_img['src'] =~ /^http/
+          image_url = if /^http/.match?(cover_img['src'])
                         cover_img['src']
                       else
                         "#{SITE}/#{cover_img['src']}" # TODO: use html <base>

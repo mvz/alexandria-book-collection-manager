@@ -58,7 +58,7 @@ module Alexandria
         cur_tag = key.split(',').last.strip
         if cur_tag.size >= min
           begin
-            if iter[0] =~ /^#{cur_tag}/
+            if /^#{cur_tag}/.match?(iter[0])
               true
             else
               false
