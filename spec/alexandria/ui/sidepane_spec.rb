@@ -24,6 +24,6 @@ describe Alexandria::UI::SidePaneManager do
   it 'should work' do
     library_listview = double(Gtk::TreeView).as_null_object
     parent = double(Object, main_app: nil, append_library: nil)
-    Alexandria::UI::SidePaneManager.new library_listview, parent
+    described_class.new library_listview, parent
   end
 end

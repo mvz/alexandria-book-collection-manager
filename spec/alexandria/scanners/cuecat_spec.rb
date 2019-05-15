@@ -25,7 +25,7 @@ require 'alexandria/scanners/cuecat'
 
 describe Alexandria::Scanners::CueCat do
   before :all do
-    @cuecat = Alexandria::Scanners::CueCat.new
+    @cuecat = described_class.new
     @partials = ['.',
                  '.C3nZC3nZC3n2ChnWENz7DxnY',
                  '.C3nZC3nZC3n2ChnWENz7DxnY.',

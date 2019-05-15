@@ -20,54 +20,54 @@ describe Alexandria::Library do
   describe '#valid_isbn?' do
     it 'returns a true value for valid isbns' do
       ['014143984X', '0-345-43192-8'].each do |x|
-        expect(Alexandria::Library.valid_isbn?(x)).to be_truthy
+        expect(described_class.valid_isbn?(x)).to be_truthy
       end
     end
   end
 
   describe '#valid_ean?' do
     it 'returns a true value for valid EANs' do
-      expect(Alexandria::Library.valid_ean?('9780345431929')).to be_truthy
-      expect(Alexandria::Library.valid_ean?('978034543192912345')).to be_truthy
+      expect(described_class.valid_ean?('9780345431929')).to be_truthy
+      expect(described_class.valid_ean?('978034543192912345')).to be_truthy
 
       # Regression test: this EAN has a checksum of 10, which should be
       # treated like a checksum of 0.
-      expect(Alexandria::Library.valid_ean?('9784047041790')).to be_truthy
+      expect(described_class.valid_ean?('9784047041790')).to be_truthy
     end
 
     it 'returns a false value for invalid EANs' do
-      expect(Alexandria::Library.valid_ean?('780345431929')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('97803454319290')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('97803454319291234')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('9780345431929123456')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('9780345431928')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('9780345431929A')).to be_falsey
+      expect(described_class.valid_ean?('780345431929')).to be_falsey
+      expect(described_class.valid_ean?('97803454319290')).to be_falsey
+      expect(described_class.valid_ean?('97803454319291234')).to be_falsey
+      expect(described_class.valid_ean?('9780345431929123456')).to be_falsey
+      expect(described_class.valid_ean?('9780345431928')).to be_falsey
+      expect(described_class.valid_ean?('9780345431929A')).to be_falsey
 
-      expect(Alexandria::Library.valid_ean?('9784047041791')).to be_falsey
+      expect(described_class.valid_ean?('9784047041791')).to be_falsey
     end
   end
 
   describe '#valid_upc?' do
     it 'returns a true value for valid UPCs' do
-      expect(Alexandria::Library.valid_upc?('97803454319312356')).to be_truthy
+      expect(described_class.valid_upc?('97803454319312356')).to be_truthy
     end
 
     it 'returns a false value for invalid UPCs' do
-      expect(Alexandria::Library.valid_upc?('978034543193123567')).to be_falsey
-      expect(Alexandria::Library.valid_upc?('9780345431931235')).to be_falsey
+      expect(described_class.valid_upc?('978034543193123567')).to be_falsey
+      expect(described_class.valid_upc?('9780345431931235')).to be_falsey
 
-      expect(Alexandria::Library.valid_upc?('97803454319412356')).to be_falsey
-      expect(Alexandria::Library.valid_upc?('97803454319212356')).to be_falsey
+      expect(described_class.valid_upc?('97803454319412356')).to be_falsey
+      expect(described_class.valid_upc?('97803454319212356')).to be_falsey
     end
   end
 
   describe '#canonicalise_isbn' do
     it 'returns the correct value for several examples' do
-      expect(Alexandria::Library.canonicalise_isbn('014143984X')).to eq '014143984X'
-      expect(Alexandria::Library.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
-      expect(Alexandria::Library.canonicalise_isbn('3522105907')).to eq '3522105907'
+      expect(described_class.canonicalise_isbn('014143984X')).to eq '014143984X'
+      expect(described_class.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
+      expect(described_class.canonicalise_isbn('3522105907')).to eq '3522105907'
       # EAN number
-      expect(Alexandria::Library.canonicalise_isbn('9780345431929')).to eq '0345431928'
+      expect(described_class.canonicalise_isbn('9780345431929')).to eq '0345431928'
     end
   end
 

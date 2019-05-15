@@ -24,6 +24,6 @@ describe Alexandria::UI::IconViewManager do
   it 'should work' do
     iconview = double(Gtk::IconView).as_null_object
     parent = double(Object, iconview: iconview).as_null_object
-    Alexandria::UI::IconViewManager.new iconview, parent
+    described_class.new iconview, parent
   end
 end
