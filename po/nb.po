@@ -817,40 +817,40 @@ msgstr "Er du sikker på at du ønsker å slette \"%s\" fra \"%s\"?"
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "Er du sikker på at du vil slette de valgte bøkene fra  \"%s\"?"
 
-#: ../lib/alexandria/ui/sidepane.rb:49
+#: ../lib/alexandria/ui/sidepane_manager.rb:49
 msgid "Invalid library name '%s'"
 msgstr "Ugyldig biblioteksnavn \"%s\""
 
-#: ../lib/alexandria/ui/sidepane.rb:50
+#: ../lib/alexandria/ui/sidepane_manager.rb:50
 #, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b> "
 msgstr "Navnet inneholder det ugyldige tegnet  \"<i>%s</i>\"."
 
-#: ../lib/alexandria/ui/sidepane.rb:53
+#: ../lib/alexandria/ui/sidepane_manager.rb:53
 #, fuzzy
 msgid "Invalid library name"
 msgstr "Ugyldig biblioteksnavn \"%s\""
 
-#: ../lib/alexandria/ui/sidepane.rb:54
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
 #, fuzzy
 msgid "The name provided contains invalid characters."
 msgstr "Navnet inneholder det ugyldige tegnet  \"<i>%s</i>\"."
 
-#: ../lib/alexandria/ui/sidepane.rb:60
+#: ../lib/alexandria/ui/sidepane_manager.rb:60
 msgid "The library name can not be empty"
 msgstr "Navnet på biblioteket kan ikke være tomt"
 
-#: ../lib/alexandria/ui/sidepane.rb:65
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library can not be renamed"
 msgstr "Biblioteket kan ikke gis nytt navn"
 
-#: ../lib/alexandria/ui/sidepane.rb:66
+#: ../lib/alexandria/ui/sidepane_manager.rb:66
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr ""
 "Det finnes allerede et bibliotek med navnetg \"%s\". Vennligst velg et annet "
 "navn."
 
-#: ../lib/alexandria/ui/sidepane.rb:92
+#: ../lib/alexandria/ui/sidepane_manager.rb:92
 msgid "Library"
 msgstr "Bibliotek"
 

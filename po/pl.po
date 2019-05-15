@@ -833,35 +833,35 @@ msgstr "Na pewno usunąć \"%s\"' z \"%s\"?"
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "Na pewno usunąć wybrane książki z \"%s\"?"
 
-#: ../lib/alexandria/ui/sidepane.rb:49
+#: ../lib/alexandria/ui/sidepane_manager.rb:49
 msgid "Invalid library name '%s'"
 msgstr "Nieprawidłowa nazwa biblioteki \"%s\""
 
-#: ../lib/alexandria/ui/sidepane.rb:50
+#: ../lib/alexandria/ui/sidepane_manager.rb:50
 msgid "The name provided contains the disallowed character <b>%s</b> "
 msgstr "Podana nazwa zawiera niedozwolony znak <b>%s</b> "
 
-#: ../lib/alexandria/ui/sidepane.rb:53
+#: ../lib/alexandria/ui/sidepane_manager.rb:53
 msgid "Invalid library name"
 msgstr "Nieprawidłowa nazwa biblioteki"
 
-#: ../lib/alexandria/ui/sidepane.rb:54
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
 msgid "The name provided contains invalid characters."
 msgstr "Podana nazwa zawiera nieprawidłowe znaki."
 
-#: ../lib/alexandria/ui/sidepane.rb:60
+#: ../lib/alexandria/ui/sidepane_manager.rb:60
 msgid "The library name can not be empty"
 msgstr "Nazwa biblioteki nie może być pusta"
 
-#: ../lib/alexandria/ui/sidepane.rb:65
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library can not be renamed"
 msgstr "Nazwa biblioteki nie może zostać zmieniona"
 
-#: ../lib/alexandria/ui/sidepane.rb:66
+#: ../lib/alexandria/ui/sidepane_manager.rb:66
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr "Istnieje już biblioteka o nazwie \"%s\". Proszę wybrać inną nazwę."
 
-#: ../lib/alexandria/ui/sidepane.rb:92
+#: ../lib/alexandria/ui/sidepane_manager.rb:92
 msgid "Library"
 msgstr "Biblioteka"
 

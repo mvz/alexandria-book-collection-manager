@@ -820,35 +820,35 @@ msgstr "Дали сте сигурни дека сакате да ја избр�
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "Дали сте сигурни дека сакате да ги избришете избраните книги од '%s'?"
 
-#: ../lib/alexandria/ui/sidepane.rb:49
+#: ../lib/alexandria/ui/sidepane_manager.rb:49
 msgid "Invalid library name '%s'"
 msgstr "Неправилно име '%s' за библиотека"
 
-#: ../lib/alexandria/ui/sidepane.rb:50
+#: ../lib/alexandria/ui/sidepane_manager.rb:50
 msgid "The name provided contains the disallowed character <b>%s</b> "
 msgstr "Името кое ни го даде го содржи недозволениот знак '<b>%s</b>' "
 
-#: ../lib/alexandria/ui/sidepane.rb:53
+#: ../lib/alexandria/ui/sidepane_manager.rb:53
 msgid "Invalid library name"
 msgstr "Неправилно име за библиотека"
 
-#: ../lib/alexandria/ui/sidepane.rb:54
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
 msgid "The name provided contains invalid characters."
 msgstr "Името кое ни го даде содржи недозволени знаци ."
 
-#: ../lib/alexandria/ui/sidepane.rb:60
+#: ../lib/alexandria/ui/sidepane_manager.rb:60
 msgid "The library name can not be empty"
 msgstr "Името на библиотеката не смее да биде празно"
 
-#: ../lib/alexandria/ui/sidepane.rb:65
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library can not be renamed"
 msgstr "Библиотеката неможе да се преимени"
 
-#: ../lib/alexandria/ui/sidepane.rb:66
+#: ../lib/alexandria/ui/sidepane_manager.rb:66
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr "Веќе постои библиотека со името  '%s'. Ве молам изберете ново име."
 
-#: ../lib/alexandria/ui/sidepane.rb:92
+#: ../lib/alexandria/ui/sidepane_manager.rb:92
 msgid "Library"
 msgstr "Библиотека"
 

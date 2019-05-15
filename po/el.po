@@ -825,36 +825,36 @@ msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr ""
 "Είστε σίγουροι ότι θέλετε να διαγράψετε τα επιλεγμένα βιβλία από το '%s';"
 
-#: ../lib/alexandria/ui/sidepane.rb:49
+#: ../lib/alexandria/ui/sidepane_manager.rb:49
 msgid "Invalid library name '%s'"
 msgstr "Μη έγκυρο όνομα βιβλιοθήκης '%s'"
 
-#: ../lib/alexandria/ui/sidepane.rb:50
+#: ../lib/alexandria/ui/sidepane_manager.rb:50
 msgid "The name provided contains the disallowed character <b>%s</b> "
 msgstr "Το όνομα που δόθηκε περιέχει τον μη επιτρεπτό χαρακτήρα <b>%s</b>"
 
-#: ../lib/alexandria/ui/sidepane.rb:53
+#: ../lib/alexandria/ui/sidepane_manager.rb:53
 msgid "Invalid library name"
 msgstr "Μη έγκυρο όνομα βιβλιοθήκης"
 
-#: ../lib/alexandria/ui/sidepane.rb:54
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
 msgid "The name provided contains invalid characters."
 msgstr "Το όνομα που δόθηκε περιέχει μη επιτρεπτoύς χαρακτήρες."
 
-#: ../lib/alexandria/ui/sidepane.rb:60
+#: ../lib/alexandria/ui/sidepane_manager.rb:60
 msgid "The library name can not be empty"
 msgstr "Το όνομα της βιβλιοθήκης δεν μπορεί να είναι κενό"
 
-#: ../lib/alexandria/ui/sidepane.rb:65
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library can not be renamed"
 msgstr "Η βιβλιοθήκη δεν είναι δυνατό να μετονομασθεί"
 
-#: ../lib/alexandria/ui/sidepane.rb:66
+#: ../lib/alexandria/ui/sidepane_manager.rb:66
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr ""
 "Υπάρχει ήδη βιβλιοθήκη με όνομα '%s'. Παρακαλώ επιλέξτε διαφορετικό όνομα."
 
-#: ../lib/alexandria/ui/sidepane.rb:92
+#: ../lib/alexandria/ui/sidepane_manager.rb:92
 msgid "Library"
 msgstr "Βιβλιοθήκη"
 

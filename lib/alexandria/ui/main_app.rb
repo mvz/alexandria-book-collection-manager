@@ -40,7 +40,7 @@ require 'alexandria/ui/init'
 require 'alexandria/ui/ui_manager'
 require 'alexandria/ui/listview'
 require 'alexandria/ui/iconview'
-require 'alexandria/ui/sidepane'
+require 'alexandria/ui/sidepane_manager'
 
 module Alexandria
   module UI
