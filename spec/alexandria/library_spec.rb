@@ -20,62 +20,66 @@ describe Alexandria::Library do
   describe '#valid_isbn?' do
     it 'returns a true value for valid isbns' do
       ['014143984X', '0-345-43192-8'].each do |x|
-        expect(Alexandria::Library.valid_isbn?(x)).to be_truthy
+        expect(described_class.valid_isbn?(x)).to be_truthy
       end
     end
   end
 
   describe '#valid_ean?' do
     it 'returns a true value for valid EANs' do
-      expect(Alexandria::Library.valid_ean?('9780345431929')).to be_truthy
-      expect(Alexandria::Library.valid_ean?('978034543192912345')).to be_truthy
+      expect(described_class.valid_ean?('9780345431929')).to be_truthy
+      expect(described_class.valid_ean?('978034543192912345')).to be_truthy
 
       # Regression test: this EAN has a checksum of 10, which should be
       # treated like a checksum of 0.
-      expect(Alexandria::Library.valid_ean?('9784047041790')).to be_truthy
+      expect(described_class.valid_ean?('9784047041790')).to be_truthy
     end
 
     it 'returns a false value for invalid EANs' do
-      expect(Alexandria::Library.valid_ean?('780345431929')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('97803454319290')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('97803454319291234')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('9780345431929123456')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('9780345431928')).to be_falsey
-      expect(Alexandria::Library.valid_ean?('9780345431929A')).to be_falsey
+      expect(described_class.valid_ean?('780345431929')).to be_falsey
+      expect(described_class.valid_ean?('97803454319290')).to be_falsey
+      expect(described_class.valid_ean?('97803454319291234')).to be_falsey
+      expect(described_class.valid_ean?('9780345431929123456')).to be_falsey
+      expect(described_class.valid_ean?('9780345431928')).to be_falsey
+      expect(described_class.valid_ean?('9780345431929A')).to be_falsey
 
-      expect(Alexandria::Library.valid_ean?('9784047041791')).to be_falsey
+      expect(described_class.valid_ean?('9784047041791')).to be_falsey
     end
   end
 
   describe '#valid_upc?' do
     it 'returns a true value for valid UPCs' do
-      expect(Alexandria::Library.valid_upc?('97803454319312356')).to be_truthy
+      expect(described_class.valid_upc?('97803454319312356')).to be_truthy
     end
 
     it 'returns a false value for invalid UPCs' do
-      expect(Alexandria::Library.valid_upc?('978034543193123567')).to be_falsey
-      expect(Alexandria::Library.valid_upc?('9780345431931235')).to be_falsey
+      expect(described_class.valid_upc?('978034543193123567')).to be_falsey
+      expect(described_class.valid_upc?('9780345431931235')).to be_falsey
 
-      expect(Alexandria::Library.valid_upc?('97803454319412356')).to be_falsey
-      expect(Alexandria::Library.valid_upc?('97803454319212356')).to be_falsey
+      expect(described_class.valid_upc?('97803454319412356')).to be_falsey
+      expect(described_class.valid_upc?('97803454319212356')).to be_falsey
     end
   end
 
   describe '#canonicalise_isbn' do
     it 'returns the correct value for several examples' do
-      expect(Alexandria::Library.canonicalise_isbn('014143984X')).to eq '014143984X'
-      expect(Alexandria::Library.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
-      expect(Alexandria::Library.canonicalise_isbn('3522105907')).to eq '3522105907'
+      expect(described_class.canonicalise_isbn('014143984X')).to eq '014143984X'
+      expect(described_class.canonicalise_isbn('0-345-43192-8')).to eq '0345431928'
+      expect(described_class.canonicalise_isbn('3522105907')).to eq '3522105907'
       # EAN number
-      expect(Alexandria::Library.canonicalise_isbn('9780345431929')).to eq '0345431928'
+      expect(described_class.canonicalise_isbn('9780345431929')).to eq '0345431928'
     end
   end
 
   context 'with an empty library' do
     let(:my_library) { loader.load_library('Empty') }
 
-    before(:each) do
+    before do
       FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
+    end
+
+    after do
+      FileUtils.rm_rf(TESTDIR)
     end
 
     it 'disallows multiple deletion of the same copy of a book' do
@@ -96,10 +100,6 @@ describe Alexandria::Library do
       my_library << third_copy
 
       expect { my_library.delete(second_copy) }.not_to raise_error
-    end
-
-    after(:each) do
-      FileUtils.rm_rf(TESTDIR)
     end
   end
 
@@ -122,10 +122,14 @@ describe Alexandria::Library do
     end
   end
 
-  context 'imported from 0.6.1 data files' do
-    before(:each) do
+  context 'when importing from 0.6.1 data files' do
+    before do
       lib_version = File.join(LIBDIR, '0.6.1')
       FileUtils.cp_r(lib_version, TESTDIR)
+    end
+
+    after do
+      FileUtils.rm_rf(TESTDIR)
     end
 
     it 'imports cleanly from version 0.6.1 data format' do
@@ -144,16 +148,16 @@ describe Alexandria::Library do
       expect(latex_book.isbn).to eq('9780201398250')
       expect(latex_book.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
     end
-
-    after(:each) do
-      FileUtils.rm_rf(TESTDIR)
-    end
   end
 
-  context 'imported from 0.6.1 with books without an ISBN' do
-    before(:each) do
+  context 'when importing from 0.6.1 with books without an ISBN' do
+    before do
       lib_version = File.join(LIBDIR, '0.6.1-noisbn')
       FileUtils.cp_r(lib_version, TESTDIR)
+    end
+
+    after do
+      FileUtils.rm_rf(TESTDIR)
     end
 
     it 'allows books to have no ISBN' do
@@ -189,14 +193,10 @@ describe Alexandria::Library do
       expect(lex_and_yacc_book).not_to be_nil
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
     end
-
-    after(:each) do
-      FileUtils.rm_rf(TESTDIR)
-    end
   end
 
   describe '.move' do
-    before(:each) do
+    before do
       lib_version = File.join(LIBDIR, '0.6.2')
       FileUtils.cp_r(lib_version, TESTDIR)
     end

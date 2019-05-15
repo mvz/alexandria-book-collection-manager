@@ -21,11 +21,11 @@
 require 'spec_helper'
 
 describe Alexandria::Book do
-  it 'should be a thing' do
+  it 'is a thing' do
     an_artist_of_the_floating_world
   end
 
-  it 'should establish equality only with books with the same identity' do
+  it 'establishes equality only with books with the same identity' do
     book = an_artist_of_the_floating_world
     same_book = an_artist_of_the_floating_world
     expect(same_book).to eq book
@@ -36,6 +36,7 @@ describe Alexandria::Book do
 
   describe '#rating' do
     let(:book) { an_artist_of_the_floating_world }
+
     it 'returns 0 by default' do
       expect(book.rating).to eq 0
     end
@@ -43,6 +44,7 @@ describe Alexandria::Book do
 
   describe '#rating=' do
     let(:book) { an_artist_of_the_floating_world }
+
     it 'assigns rating' do
       book.rating = 5
       expect(book.rating).to eq 5

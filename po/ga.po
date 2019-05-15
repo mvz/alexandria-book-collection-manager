@@ -173,7 +173,7 @@ msgstr ""
 "allmhairiaghadh iad:"
 
 #: ../lib/alexandria/ui/callbacks.rb:122
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:128
+#: ../lib/alexandria/ui/export_dialog.rb:128
 msgid "Export failed"
 msgstr "Theip ar onnmhaireadh"
 
@@ -453,99 +453,99 @@ msgstr "De réir _Barúil"
 msgid "At _%s"
 msgstr "Ag _%s"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:395
+#: ../lib/alexandria/ui/acquire_dialog.rb:395
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:398
+#: ../lib/alexandria/ui/acquire_dialog.rb:398
 #, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "Níorbh fhéidir an leabhar a chur leis"
 msgstr[1] "Níorbh fhéidir an leabhar a chur leis"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:555
+#: ../lib/alexandria/ui/acquire_dialog.rb:477
+#: ../lib/alexandria/ui/new_book_dialog.rb:555
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:556
+#: ../lib/alexandria/ui/acquire_dialog.rb:478
+#: ../lib/alexandria/ui/new_book_dialog.rb:556
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:557
+#: ../lib/alexandria/ui/acquire_dialog.rb:479
+#: ../lib/alexandria/ui/new_book_dialog.rb:557
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:558
+#: ../lib/alexandria/ui/acquire_dialog.rb:480
+#: ../lib/alexandria/ui/new_book_dialog.rb:558
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../lib/alexandria/ui/acquire_dialog.rb:610
 msgid "Ready to use %s barcode scanner"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
+#: ../lib/alexandria/ui/acquire_dialog.rb:625
 #: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr "Léigtheoir _Stríoc-chód Reidh"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:640
+#: ../lib/alexandria/ui/acquire_dialog.rb:640
 msgid "Click below to scan _barcodes"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
+#: ../lib/alexandria/ui/bad_isbns_dialog.rb:24
 msgid "There's a problem"
 msgstr "Tá fadhb anseo"
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:30
 msgid "New Smart Library"
 msgstr "Bailiúchán Cliste Úr"
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:49
 msgid "Smart Library"
 msgstr "Bailiúchán Cliste"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:106
+#: ../lib/alexandria/ui/preferences_dialog.rb:106
 msgid "Preferences for %s"
 msgstr "Rogha Suímh dó '%s'"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:131
+#: ../lib/alexandria/ui/preferences_dialog.rb:131
 msgid "New Provider"
 msgstr "Foinse Úr"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:146
+#: ../lib/alexandria/ui/preferences_dialog.rb:146
 msgid "_Name:"
 msgstr "_Ainm"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:158
+#: ../lib/alexandria/ui/preferences_dialog.rb:158
 msgid "_Type:"
 msgstr "_Seort"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:316
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:339
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:359
+#: ../lib/alexandria/ui/preferences_dialog.rb:316
+#: ../lib/alexandria/ui/preferences_dialog.rb:339
+#: ../lib/alexandria/ui/preferences_dialog.rb:359
 #, fuzzy
 msgid "Disable Provider"
 msgstr "Foinse Úr"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:339
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:359
+#: ../lib/alexandria/ui/preferences_dialog.rb:339
+#: ../lib/alexandria/ui/preferences_dialog.rb:359
 #, fuzzy
 msgid "Enable Provider"
 msgstr "Foinse Úr"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:423
+#: ../lib/alexandria/ui/preferences_dialog.rb:423
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr ""
 "An bhfuil tú cinnte gur mhaith leat an t-eolas ar an fhoinse '%s' a scrios?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:431
+#: ../lib/alexandria/ui/preferences_dialog.rb:431
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
@@ -553,84 +553,84 @@ msgstr ""
 "Má leanann tú ort, deánfar an t-eolas ar an fhoinse agus ar a rogha suímh a "
 "scrios go hiomhlán."
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
+#: ../lib/alexandria/ui/import_dialog.rb:36
 msgid "Error while importing"
 msgstr "Meangcóg ar allmhairiú"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:39
+#: ../lib/alexandria/ui/import_dialog.rb:39
 msgid "_Continue"
 msgstr "_Lean ort"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:64
+#: ../lib/alexandria/ui/import_dialog.rb:64
 msgid "Import a Library"
 msgstr "Allmhuirigh Bailiúchán"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:71
+#: ../lib/alexandria/ui/import_dialog.rb:71
 msgid "_Import"
 msgstr "Allmhuirigh"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:188
+#: ../lib/alexandria/ui/import_dialog.rb:188
 msgid "Couldn't import the library"
 msgstr "Theip ar allmhuirí an bhailúicháin"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:189
+#: ../lib/alexandria/ui/import_dialog.rb:189
 msgid ""
 "The format of the file you provided is unknown.  Please retry with another "
 "file."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
+#: ../lib/alexandria/ui/smart_library_properties_dialog.rb:30
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:63
 msgid "Properties for '%s'"
 msgstr "Gnéithe do '%s'"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:83
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:83
 msgid "Empty or conflictive condition"
 msgstr "Coinníoll lochtach"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:86
 msgid "_Save However"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:87
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:87
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
 "Are you sure you want to save this library?"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:106
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:106
 msgid "Match"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:109
 msgid "all"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:109
 msgid "any"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:119
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:119
 msgid "of the following rules:"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:127
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:127
 msgid "Match the following rule:"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
+#: ../lib/alexandria/ui/book_properties_dialog.rb:114
+#: ../lib/alexandria/ui/book_properties_dialog.rb:123
 msgid "Couldn't modify the book"
 msgstr "Níorbh fhéidir an leabhar a mhionathrú"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:115
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
+#: ../lib/alexandria/ui/book_properties_dialog.rb:115
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:88
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr "Tá an EAN/ISBN a tugeadh, sa bailiúchán seo cheana féin."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
+#: ../lib/alexandria/ui/book_properties_dialog.rb:124
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:94
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correcty, and try again."
@@ -638,68 +638,68 @@ msgstr ""
 "Níl an EAN/ISBN a thug tú ceart. Bí cinnte go bhfuil sé scríobtha i\n"
 "gceart, agus deán ath-iarracht."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:65
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:65
 msgid "Properties"
 msgstr "Tréithe"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:71
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:71
 msgid "Author"
 msgstr "_Údair"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:123
 msgid "Select a cover image"
 msgstr "Togh samhail clúdaigh"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:127
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:127
 msgid "No Cover"
 msgstr "Gan Samhail Clúdaigh"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:186
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:186
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d lá"
 msgstr[1] "%d lá"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:58
 msgid "Adding '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:60
 #: ../data/alexandria/glade/new_book_dialog.glade:8
 msgid "Adding a Book"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:81
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:81
 msgid "A title must be provided."
 msgstr "Caithfear teideal a chuir ar fáil."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:102
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:102
 msgid "A publisher must be provided."
 msgstr "Caithfear foilsitheoir a chuir ar fáil."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:109
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:109
 msgid "A binding must be provided."
 msgstr "Caithfear clúdach a chuir ar fáil."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:115
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:115
 msgid "At least one author must be provided."
 msgstr "Caithfear údar amhain ar a laighead a chuir ar fáil."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:523
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:142
+#: ../lib/alexandria/ui/new_book_dialog.rb:523
 msgid "Couldn't add the book"
 msgstr "Níorbh fhéidir an leabhar a chur leis"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
+#: ../lib/alexandria/ui/export_dialog.rb:25
 msgid "File already exists"
 msgstr "Tá an comhad anseo cheana féin"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:28
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:30
+#: ../lib/alexandria/ui/export_dialog.rb:28
+#: ../lib/alexandria/ui/misc_dialogs.rb:30
 msgid "_Replace"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:29
+#: ../lib/alexandria/ui/export_dialog.rb:29
 msgid ""
 "A file named '%s' already exists.  Do you want to replace it with the one "
 "you are generating?"
@@ -707,27 +707,27 @@ msgstr ""
 "Tá comhad den ainm '%s' ann cheana féin. Ar mhaith leat an ceann atáthar a "
 "tháirgeadh a chur ina áit?"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
+#: ../lib/alexandria/ui/export_dialog.rb:52
 msgid "Export '%s'"
 msgstr "Onnmhairigh '%s'"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:58
+#: ../lib/alexandria/ui/export_dialog.rb:58
 msgid "_Export"
 msgstr "_Onnmhairigh"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:77
+#: ../lib/alexandria/ui/export_dialog.rb:77
 msgid "_Theme:"
 msgstr "_Téama:"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:87
+#: ../lib/alexandria/ui/export_dialog.rb:87
 msgid "directory"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:100
+#: ../lib/alexandria/ui/export_dialog.rb:100
 msgid "Export for_mat:"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
+#: ../lib/alexandria/ui/export_dialog.rb:155
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
@@ -735,19 +735,19 @@ msgstr ""
 "Is comhad coitchianta an sprioc ainmnithe '%s'. Tá comhadlann riachtanach "
 "don obair seo. Toigh ceann agus deán athiarracht."
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
+#: ../lib/alexandria/ui/export_dialog.rb:159
 msgid "Not a directory"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
+#: ../lib/alexandria/ui/new_book_dialog.rb:32
 msgid "Invalid ISBN '%s'"
 msgstr "ISBN contráilte"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:35
+#: ../lib/alexandria/ui/new_book_dialog.rb:35
 msgid "_Keep"
 msgstr "Coinnigh"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
+#: ../lib/alexandria/ui/new_book_dialog.rb:36
 msgid ""
 "The book titled '%s' has an invalid ISBN, but still exists in the providers "
 "libraries.  Do you want to keep the book but change the ISBN or cancel the "
@@ -757,19 +757,19 @@ msgstr ""
 "foinsí. Ar mhaith leat an leabhar a choinneail ach an ISBN a athrú, nó é "
 "chealadh?"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:182
+#: ../lib/alexandria/ui/new_book_dialog.rb:182
 msgid "A problem occurred while downloading images"
 msgstr "Tharla fadhb le linn aimsithe na h-íomhá"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:304
+#: ../lib/alexandria/ui/new_book_dialog.rb:304
 msgid "Unable to find matches for your search"
 msgstr "Níl macsamhail ar fáil ar do chuardach"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:310
+#: ../lib/alexandria/ui/new_book_dialog.rb:310
 msgid "%s, by %s"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:383
+#: ../lib/alexandria/ui/new_book_dialog.rb:383
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correctly, and try again."
@@ -777,76 +777,76 @@ msgstr ""
 "Níl an EAN/ISBN a thug tú ceart. Bí cinnte go bhfuil sé scríobtha i gceart, "
 "agus deán ath-iarracht."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:630
+#: ../lib/alexandria/ui/new_book_dialog.rb:630
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "Tá '%s' ar fáil cheana féin i '%s' (le teideal '%s')"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:26
+#: ../lib/alexandria/ui/misc_dialogs.rb:26
 msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
 msgstr ""
 "Tá an leabhar '%s' i '%s' cheana féin. Ar mhaith leat an leabhar úr a chuir "
 "ina áit?"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:29
+#: ../lib/alexandria/ui/misc_dialogs.rb:29
 msgid "_Skip"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:31
+#: ../lib/alexandria/ui/misc_dialogs.rb:31
 msgid "If you replace the existing book, its contents will be overwritten."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:50
+#: ../lib/alexandria/ui/misc_dialogs.rb:50
 msgid "Are you sure you want to delete '%s'?"
 msgstr "An bhfuil tú cinnte gur mhaith leat '%s' a scrios?"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:58
+#: ../lib/alexandria/ui/misc_dialogs.rb:58
 msgid "If you continue, %d book will be deleted."
 msgid_plural "If you continue, %d books will be deleted."
 msgstr[0] "Má leanann tú ort, scriosfar %d leabhar."
 msgstr[1] "Ma leanann tú ort, scriosfar %d leabhar."
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:63
+#: ../lib/alexandria/ui/misc_dialogs.rb:63
 msgid "Are you sure you want to delete '%s' from '%s'?"
 msgstr ""
 "An bhfuil tú cinnte gur mhaith leat an leabhar '%s' a scrios ón bailiúchán '%"
 "s'"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
+#: ../lib/alexandria/ui/misc_dialogs.rb:66
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr ""
 
-#: ../lib/alexandria/ui/sidepane.rb:49
+#: ../lib/alexandria/ui/sidepane_manager.rb:49
 msgid "Invalid library name '%s'"
 msgstr "Ainm an bhailiúcháin '%s' neamhéifeachtach"
 
-#: ../lib/alexandria/ui/sidepane.rb:50
+#: ../lib/alexandria/ui/sidepane_manager.rb:50
 #, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b> "
 msgstr "Tá cosc ar an chomharta '<i>%s</i>' a tugtar anseo."
 
-#: ../lib/alexandria/ui/sidepane.rb:53
+#: ../lib/alexandria/ui/sidepane_manager.rb:53
 #, fuzzy
 msgid "Invalid library name"
 msgstr "Ainm an bhailiúcháin '%s' neamhéifeachtach"
 
-#: ../lib/alexandria/ui/sidepane.rb:54
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
 #, fuzzy
 msgid "The name provided contains invalid characters."
 msgstr "Tá cosc ar an chomharta '<i>%s</i>' a tugtar anseo."
 
-#: ../lib/alexandria/ui/sidepane.rb:60
+#: ../lib/alexandria/ui/sidepane_manager.rb:60
 msgid "The library name can not be empty"
 msgstr "Ní féidir le ainm an bhailiúchan a bheith folamh"
 
-#: ../lib/alexandria/ui/sidepane.rb:65
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library can not be renamed"
 msgstr "Ní féidir an bailiúchán a athainmní"
 
-#: ../lib/alexandria/ui/sidepane.rb:66
+#: ../lib/alexandria/ui/sidepane_manager.rb:66
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr "Tá bailiúchán den ainm '%s' ann cheana féin. Togh ainm eile."
 
-#: ../lib/alexandria/ui/sidepane.rb:92
+#: ../lib/alexandria/ui/sidepane_manager.rb:92
 msgid "Library"
 msgstr "Bailiúchán"
 

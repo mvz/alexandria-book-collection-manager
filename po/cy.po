@@ -181,7 +181,7 @@ msgid "The following lines are not valid ISBNs and were not imported:"
 msgstr ""
 
 #: ../lib/alexandria/ui/callbacks.rb:122
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:128
+#: ../lib/alexandria/ui/export_dialog.rb:128
 msgid "Export failed"
 msgstr "Methwyd allforio"
 
@@ -469,192 +469,192 @@ msgstr "Yn Ôl _Barn"
 msgid "At _%s"
 msgstr "At _%s"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:395
+#: ../lib/alexandria/ui/acquire_dialog.rb:395
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:398
+#: ../lib/alexandria/ui/acquire_dialog.rb:398
 #, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "Methwyd ychwanegu'r llyfr"
 msgstr[1] "Methwyd ychwanegu'r llyfr"
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:477
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:555
+#: ../lib/alexandria/ui/acquire_dialog.rb:477
+#: ../lib/alexandria/ui/new_book_dialog.rb:555
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:478
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:556
+#: ../lib/alexandria/ui/acquire_dialog.rb:478
+#: ../lib/alexandria/ui/new_book_dialog.rb:556
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:479
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:557
+#: ../lib/alexandria/ui/acquire_dialog.rb:479
+#: ../lib/alexandria/ui/new_book_dialog.rb:557
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:480
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:558
+#: ../lib/alexandria/ui/acquire_dialog.rb:480
+#: ../lib/alexandria/ui/new_book_dialog.rb:558
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:610
+#: ../lib/alexandria/ui/acquire_dialog.rb:610
 msgid "Ready to use %s barcode scanner"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:625
+#: ../lib/alexandria/ui/acquire_dialog.rb:625
 #: ../data/alexandria/glade/acquire_dialog.glade:26
 msgid "_Barcode Scanner Ready"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/acquire_dialog.rb:640
+#: ../lib/alexandria/ui/acquire_dialog.rb:640
 msgid "Click below to scan _barcodes"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/bad_isbns_dialog.rb:24
+#: ../lib/alexandria/ui/bad_isbns_dialog.rb:24
 msgid "There's a problem"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:30
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:30
 #, fuzzy
 msgid "New Smart Library"
 msgstr "Mewnforio Llyfrgell"
 
-#: ../lib/alexandria/ui/dialogs/new_smart_library_dialog.rb:49
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:49
 #, fuzzy
 msgid "Smart Library"
 msgstr "Mewnforio Llyfrgell"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:106
+#: ../lib/alexandria/ui/preferences_dialog.rb:106
 msgid "Preferences for %s"
 msgstr "Hoffteray ar gyfer %s"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:131
+#: ../lib/alexandria/ui/preferences_dialog.rb:131
 #, fuzzy
 msgid "New Provider"
 msgstr "Darparwyr"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:146
+#: ../lib/alexandria/ui/preferences_dialog.rb:146
 #, fuzzy
 msgid "_Name:"
 msgstr "_Thema:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:158
+#: ../lib/alexandria/ui/preferences_dialog.rb:158
 #, fuzzy
 msgid "_Type:"
 msgstr "_Thema:"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:316
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:339
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:359
+#: ../lib/alexandria/ui/preferences_dialog.rb:316
+#: ../lib/alexandria/ui/preferences_dialog.rb:339
+#: ../lib/alexandria/ui/preferences_dialog.rb:359
 #, fuzzy
 msgid "Disable Provider"
 msgstr "Darparwyr"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:339
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:359
+#: ../lib/alexandria/ui/preferences_dialog.rb:339
+#: ../lib/alexandria/ui/preferences_dialog.rb:359
 #, fuzzy
 msgid "Enable Provider"
 msgstr "Darparwyr"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:423
+#: ../lib/alexandria/ui/preferences_dialog.rb:423
 #, fuzzy
 msgid "Are you sure you want to permanently delete the provider '%s'?"
 msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%s'?"
 
-#: ../lib/alexandria/ui/dialogs/preferences_dialog.rb:431
+#: ../lib/alexandria/ui/preferences_dialog.rb:431
 #, fuzzy
 msgid ""
 "If you continue, the provider and all of its preferences will be permanently "
 "deleted."
 msgstr "Os ydych chi'n mynd ymlaen, caiff y dewis ei ddileu."
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:36
+#: ../lib/alexandria/ui/import_dialog.rb:36
 msgid "Error while importing"
 msgstr "Gwall wrth fewnforio"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:39
+#: ../lib/alexandria/ui/import_dialog.rb:39
 msgid "_Continue"
 msgstr "_Mynd Ymlaen"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:64
+#: ../lib/alexandria/ui/import_dialog.rb:64
 msgid "Import a Library"
 msgstr "Mewnforio Llyfrgell"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:71
+#: ../lib/alexandria/ui/import_dialog.rb:71
 #, fuzzy
 msgid "_Import"
 msgstr "Mewnforio"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:188
+#: ../lib/alexandria/ui/import_dialog.rb:188
 msgid "Couldn't import the library"
 msgstr "Methwyd mewnforio'r llyfrgell"
 
-#: ../lib/alexandria/ui/dialogs/import_dialog.rb:189
+#: ../lib/alexandria/ui/import_dialog.rb:189
 msgid ""
 "The format of the file you provided is unknown.  Please retry with another "
 "file."
 msgstr ""
 "Mae fformat y ffeil fe rhoddoch yn anhysbys. Ceisiwch eto gyda ffeil arall."
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb:30
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:63
+#: ../lib/alexandria/ui/smart_library_properties_dialog.rb:30
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:63
 #, fuzzy
 msgid "Properties for '%s'"
 msgstr "Hoffteray ar gyfer %s"
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:83
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:83
 msgid "Empty or conflictive condition"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:86
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:86
 msgid "_Save However"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:87
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:87
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
 "Are you sure you want to save this library?"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:106
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:106
 msgid "Match"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:109
 msgid "all"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:109
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:109
 msgid "any"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:119
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:119
 msgid "of the following rules:"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb:127
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:127
 msgid "Match the following rule:"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:114
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:123
+#: ../lib/alexandria/ui/book_properties_dialog.rb:114
+#: ../lib/alexandria/ui/book_properties_dialog.rb:123
 msgid "Couldn't modify the book"
 msgstr "Methwyd newid y llyfr"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:115
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:88
+#: ../lib/alexandria/ui/book_properties_dialog.rb:115
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:88
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr ""
 "Mae llyfr a'r EAN/ISBN a rhoddoch yn bodoli yn y llyfrgell hwn eisioes."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog.rb:124
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:94
+#: ../lib/alexandria/ui/book_properties_dialog.rb:124
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:94
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correcty, and try again."
@@ -662,71 +662,71 @@ msgstr ""
 "Methwyd dilysu yr EAN/ISBN a rhoddwyd. Sicrhewch ei fod wedi ei ysgrifennu'n "
 "gywir, a ceisiwch eto."
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:65
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:65
 #, fuzzy
 msgid "Properties"
 msgstr "_Priodweddau"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:71
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:71
 msgid "Author"
 msgstr "Awdur"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:123
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:123
 msgid "Select a cover image"
 msgstr "Dewis delwedd gorchydd"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:127
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:127
 #, fuzzy
 msgid "No Cover"
 msgstr "_Gorchydd:"
 
-#: ../lib/alexandria/ui/dialogs/book_properties_dialog_base.rb:186
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:186
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d diwrnod"
 msgstr[1] "%d ddiwrnod"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:58
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:58
 #, fuzzy
 msgid "Adding '%s'"
 msgstr "Yn '_%s'"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:60
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:60
 #: ../data/alexandria/glade/new_book_dialog.glade:8
 msgid "Adding a Book"
 msgstr "Ychwanegu Llyfr"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:81
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:81
 msgid "A title must be provided."
 msgstr "Rhaid penodi teitl."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:102
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:102
 msgid "A publisher must be provided."
 msgstr "Rhaid penodi cyhoeddwr."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:109
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:109
 msgid "A binding must be provided."
 msgstr "Rhaid penodi rhwymiad."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:115
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:115
 msgid "At least one author must be provided."
 msgstr "Rhaid penodi o leiaf un awdur."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog_manual.rb:142
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:523
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:142
+#: ../lib/alexandria/ui/new_book_dialog.rb:523
 msgid "Couldn't add the book"
 msgstr "Methwyd ychwanegu'r llyfr"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:25
+#: ../lib/alexandria/ui/export_dialog.rb:25
 msgid "File already exists"
 msgstr "Mae'r ffeil yn bodoli eisioes"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:28
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:30
+#: ../lib/alexandria/ui/export_dialog.rb:28
+#: ../lib/alexandria/ui/misc_dialogs.rb:30
 msgid "_Replace"
 msgstr "_Amnewid"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:29
+#: ../lib/alexandria/ui/export_dialog.rb:29
 msgid ""
 "A file named '%s' already exists.  Do you want to replace it with the one "
 "you are generating?"
@@ -734,27 +734,27 @@ msgstr ""
 "Mae ffeil o'r enw '%s' yn bodoli eisioes. A hoffech ei amnewid â'r un rydych "
 "chi'n ei gynhyrchu?"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:52
+#: ../lib/alexandria/ui/export_dialog.rb:52
 msgid "Export '%s'"
 msgstr "Allforio '%s'"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:58
+#: ../lib/alexandria/ui/export_dialog.rb:58
 msgid "_Export"
 msgstr "_Allforio"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:77
+#: ../lib/alexandria/ui/export_dialog.rb:77
 msgid "_Theme:"
 msgstr "_Thema:"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:87
+#: ../lib/alexandria/ui/export_dialog.rb:87
 msgid "directory"
 msgstr "cyfeiriadur"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:100
+#: ../lib/alexandria/ui/export_dialog.rb:100
 msgid "Export for_mat:"
 msgstr "_Fformat allforio:"
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:155
+#: ../lib/alexandria/ui/export_dialog.rb:155
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
@@ -762,19 +762,19 @@ msgstr ""
 "Mae'r targed, a enwir '%s', yn ffeil. Mynnir cyfeiriadur ar gyfer y weithred "
 "hon. Dewiswch gyfeiriadur a cheisiwch eto."
 
-#: ../lib/alexandria/ui/dialogs/export_dialog.rb:159
+#: ../lib/alexandria/ui/export_dialog.rb:159
 msgid "Not a directory"
 msgstr "Nid yw'n gyfeiriadur"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:32
+#: ../lib/alexandria/ui/new_book_dialog.rb:32
 msgid "Invalid ISBN '%s'"
 msgstr "ISBN annilys '%s'"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:35
+#: ../lib/alexandria/ui/new_book_dialog.rb:35
 msgid "_Keep"
 msgstr "_Cadw"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:36
+#: ../lib/alexandria/ui/new_book_dialog.rb:36
 msgid ""
 "The book titled '%s' has an invalid ISBN, but still exists in the providers "
 "libraries.  Do you want to keep the book but change the ISBN or cancel the "
@@ -784,19 +784,19 @@ msgstr ""
 "llyfrgellau'r darparwyr. A ydyh chi am gadw'r llyfr ond newid yr ISBN neu "
 "ddiddymu ychwanegu'r llyfr?"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:182
+#: ../lib/alexandria/ui/new_book_dialog.rb:182
 msgid "A problem occurred while downloading images"
 msgstr ""
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:304
+#: ../lib/alexandria/ui/new_book_dialog.rb:304
 msgid "Unable to find matches for your search"
 msgstr "Methwyd canfod canlyniadau ar gyfer eich ymchwil"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:310
+#: ../lib/alexandria/ui/new_book_dialog.rb:310
 msgid "%s, by %s"
 msgstr "%s, gan %s"
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:383
+#: ../lib/alexandria/ui/new_book_dialog.rb:383
 #, fuzzy
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
@@ -805,77 +805,77 @@ msgstr ""
 "Methwyd dilysu yr EAN/ISBN a rhoddwyd. Sicrhewch ei fod wedi ei ysgrifennu'n "
 "gywir, a ceisiwch eto."
 
-#: ../lib/alexandria/ui/dialogs/new_book_dialog.rb:630
+#: ../lib/alexandria/ui/new_book_dialog.rb:630
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "Mae '%s' yn bodoli yn '%s' eisioes (gyda'r teitl '%s')."
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:26
+#: ../lib/alexandria/ui/misc_dialogs.rb:26
 msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
 msgstr "Mae '%s' yn bodoli yn '%s' eisioes. A hoffech ei amnewid?"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:29
+#: ../lib/alexandria/ui/misc_dialogs.rb:29
 msgid "_Skip"
 msgstr "_Hepgor"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:31
+#: ../lib/alexandria/ui/misc_dialogs.rb:31
 msgid "If you replace the existing book, its contents will be overwritten."
 msgstr ""
 "Os ydych chi'n amnewid y llyfr sy'n bodoli, caiff ei gynnwys eu trosysgrifo."
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:50
+#: ../lib/alexandria/ui/misc_dialogs.rb:50
 #, fuzzy
 msgid "Are you sure you want to delete '%s'?"
 msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%s'?"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:58
+#: ../lib/alexandria/ui/misc_dialogs.rb:58
 #, fuzzy
 msgid "If you continue, %d book will be deleted."
 msgid_plural "If you continue, %d books will be deleted."
 msgstr[0] "Os ydych chi'n mynd ymlaen, caiff y dewis ei ddileu."
 msgstr[1] "Os ydych chi'n mynd ymlaen, caiff y dewis ei ddileu."
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:63
+#: ../lib/alexandria/ui/misc_dialogs.rb:63
 #, fuzzy
 msgid "Are you sure you want to delete '%s' from '%s'?"
 msgstr "Ydych chi'n siŵr eich bod chi am ddileu '%s' o '%s'?"
 
-#: ../lib/alexandria/ui/dialogs/misc_dialogs.rb:66
+#: ../lib/alexandria/ui/misc_dialogs.rb:66
 #, fuzzy
 msgid "Are you sure you want to delete the selected books from '%s'?"
 msgstr "Ydych chi'n siŵr eich bod chi am ddileu'r llyfrau dewisiedug o '%s'?"
 
-#: ../lib/alexandria/ui/sidepane.rb:49
+#: ../lib/alexandria/ui/sidepane_manager.rb:49
 msgid "Invalid library name '%s'"
 msgstr "Enw llyfrgell annilys '%s'"
 
-#: ../lib/alexandria/ui/sidepane.rb:50
+#: ../lib/alexandria/ui/sidepane_manager.rb:50
 #, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b> "
 msgstr "Mae'r enw a rhoddwyd yn cynnwys y nod annilys '<i>%s</i>'."
 
-#: ../lib/alexandria/ui/sidepane.rb:53
+#: ../lib/alexandria/ui/sidepane_manager.rb:53
 #, fuzzy
 msgid "Invalid library name"
 msgstr "Enw llyfrgell annilys '%s'"
 
-#: ../lib/alexandria/ui/sidepane.rb:54
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
 #, fuzzy
 msgid "The name provided contains invalid characters."
 msgstr "Mae'r enw a rhoddwyd yn cynnwys y nod annilys '<i>%s</i>'."
 
-#: ../lib/alexandria/ui/sidepane.rb:60
+#: ../lib/alexandria/ui/sidepane_manager.rb:60
 msgid "The library name can not be empty"
 msgstr "Ni chaiff new'r llyfrgell fod yn wag"
 
-#: ../lib/alexandria/ui/sidepane.rb:65
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library can not be renamed"
 msgstr "Ni ellir ailenwi'r llyfrgell"
 
-#: ../lib/alexandria/ui/sidepane.rb:66
+#: ../lib/alexandria/ui/sidepane_manager.rb:66
 msgid "There is already a library named '%s'.  Please choose a different name."
 msgstr "Mae llyfrgell o'r enw '%s' eisioes. Dewiswch enw gwahanol."
 
-#: ../lib/alexandria/ui/sidepane.rb:92
+#: ../lib/alexandria/ui/sidepane_manager.rb:92
 msgid "Library"
 msgstr "Llyfrgell"
 

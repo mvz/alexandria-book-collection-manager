@@ -66,7 +66,7 @@ describe Alexandria::BookProviders do
     results
   end
 
-  it 'should not piss off Rich Burridge' do
+  it 'does not piss off Rich Burridge' do
     skip 'Amazon requires an API key. Remove it altogether as a provider?'
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
                                  '033025068X')

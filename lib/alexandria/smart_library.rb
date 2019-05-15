@@ -468,8 +468,8 @@ module Alexandria
         proc do |book|
           begin
             left_value = book.send(@operand.book_selector)
-          rescue StandardError => e
-            puts e.message
+          rescue StandardError => ex
+            puts ex.message
           end
           right_value = @value
           if right_value.is_a?(String)

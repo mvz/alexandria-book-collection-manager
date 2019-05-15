@@ -5,11 +5,11 @@
 # See the file README.md for authorship and licensing information.
 
 require 'monitor'
-require 'alexandria/scanners/cuecat'
+require 'alexandria/scanners/cue_cat'
 require 'alexandria/scanners/keyboard'
 
 require 'alexandria/ui/builder_base'
-require 'alexandria/ui/dialogs/barcode_animation'
+require 'alexandria/ui/barcode_animation'
 require 'alexandria/ui/sound'
 
 module Alexandria
@@ -346,9 +346,9 @@ module Alexandria
             end
 
             @add_button.sensitive = true
-          rescue StandardError => err
-            log.error { "Book Search failed: #{err.message}" }
-            log << err if log.error?
+          rescue StandardError => ex
+            log.error { "Book Search failed: #{ex.message}" }
+            log << ex if log.error?
           ensure
             stop_search
           end
@@ -383,11 +383,11 @@ module Alexandria
                 end
               end
             end
-          rescue StandardError => err
+          rescue StandardError => ex
             log.error {
-              "Failed to load cover image icon: #{err.message}"
+              "Failed to load cover image icon: #{ex.message}"
             }
-            log << err if log.error?
+            log << ex if log.error?
           end
         end
       end
@@ -425,8 +425,8 @@ module Alexandria
           @scanner_buffer = ''
           begin
             @animation.set_active
-          rescue StandardError => err
-            log << err if log.error?
+          rescue StandardError => ex
+            log << ex if log.error?
           end
         end
         @scan_area.signal_connect('focus-out-event') do |_widget, _event|
