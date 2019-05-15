@@ -78,6 +78,9 @@ describe Alexandria::Library do
       FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
     end
 
+    after(:each) do
+      FileUtils.rm_rf(TESTDIR)
+    end
     it 'disallows multiple deletion of the same copy of a book' do
       first_copy = an_artist_of_the_floating_world
       my_library << first_copy
@@ -98,9 +101,6 @@ describe Alexandria::Library do
       expect { my_library.delete(second_copy) }.not_to raise_error
     end
 
-    after(:each) do
-      FileUtils.rm_rf(TESTDIR)
-    end
   end
 
   describe '.import_as_isbn_list' do
@@ -128,6 +128,9 @@ describe Alexandria::Library do
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
+    after(:each) do
+      FileUtils.rm_rf(TESTDIR)
+    end
     it 'imports cleanly from version 0.6.1 data format' do
       libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
@@ -145,9 +148,6 @@ describe Alexandria::Library do
       expect(latex_book.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
     end
 
-    after(:each) do
-      FileUtils.rm_rf(TESTDIR)
-    end
   end
 
   context 'imported from 0.6.1 with books without an ISBN' do
@@ -156,6 +156,9 @@ describe Alexandria::Library do
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
+    after(:each) do
+      FileUtils.rm_rf(TESTDIR)
+    end
     it 'allows books to have no ISBN' do
       libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
@@ -190,9 +193,6 @@ describe Alexandria::Library do
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
     end
 
-    after(:each) do
-      FileUtils.rm_rf(TESTDIR)
-    end
   end
 
   describe '.move' do

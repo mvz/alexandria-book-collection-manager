@@ -27,6 +27,9 @@ describe 'The Alexandria application' do
     @driver.boot
   end
 
+  after do
+    @driver.cleanup
+  end
   it 'starts and can be quit with Ctrl-q' do
     @driver.press_ctrl_q
 
@@ -63,7 +66,4 @@ describe 'The Alexandria application' do
     expect(status.exitstatus).to eq 0
   end
 
-  after do
-    @driver.cleanup
-  end
 end
