@@ -1,3 +1,5 @@
+require: rubocop-performance
+
 AllCops:
   Exclude:
     - 'lib/alexandria/default_preferences.rb'
