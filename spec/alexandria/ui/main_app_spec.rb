@@ -36,7 +36,7 @@ describe Gtk::IconView do
 end
 
 describe Alexandria::UI::MainApp do
-  it 'should be a singleton' do
+  it 'is a singleton' do
     expect do
       described_class.new
     end.to raise_error NoMethodError

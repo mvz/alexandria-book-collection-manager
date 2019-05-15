@@ -21,7 +21,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Alexandria::UI::IconViewManager do
-  it 'should work' do
+  it 'works' do
     iconview = double(Gtk::IconView).as_null_object
     parent = double(Object, iconview: iconview).as_null_object
     described_class.new iconview, parent

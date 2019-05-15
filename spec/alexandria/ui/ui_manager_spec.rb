@@ -21,7 +21,7 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Alexandria::UI::UIManager do
-  it 'should work' do
+  it 'works' do
     main_app = double(Object)
     described_class.new main_app
   end

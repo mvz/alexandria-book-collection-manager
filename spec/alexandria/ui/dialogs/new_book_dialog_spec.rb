@@ -10,7 +10,7 @@ describe Alexandria::UI::NewBookDialog do
   let(:parent) { Gtk::Window.new :toplevel }
   let(:model) { Gtk::ListStore.new(String, String, GdkPixbuf::Pixbuf) }
 
-  it 'should work' do
+  it 'works' do
     described_class.new parent
   end
 
