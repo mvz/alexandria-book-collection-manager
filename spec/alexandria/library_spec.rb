@@ -122,7 +122,7 @@ describe Alexandria::Library do
     end
   end
 
-  context 'imported from 0.6.1 data files' do
+  context 'when importing from 0.6.1 data files' do
     before do
       lib_version = File.join(LIBDIR, '0.6.1')
       FileUtils.cp_r(lib_version, TESTDIR)
@@ -150,7 +150,7 @@ describe Alexandria::Library do
     end
   end
 
-  context 'imported from 0.6.1 with books without an ISBN' do
+  context 'when importing from 0.6.1 with books without an ISBN' do
     before do
       lib_version = File.join(LIBDIR, '0.6.1-noisbn')
       FileUtils.cp_r(lib_version, TESTDIR)
