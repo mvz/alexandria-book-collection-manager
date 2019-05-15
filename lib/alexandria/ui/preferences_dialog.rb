@@ -5,7 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 require 'alexandria/ui/builder_base'
-require 'alexandria/scanners/cuecat'
+require 'alexandria/scanners/cue_cat'
 require 'alexandria/scanners/keyboard'
 
 class Gtk::Entry
