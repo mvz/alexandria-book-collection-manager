@@ -81,6 +81,7 @@ describe Alexandria::Library do
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
     end
+
     it 'disallows multiple deletion of the same copy of a book' do
       first_copy = an_artist_of_the_floating_world
       my_library << first_copy
@@ -130,6 +131,7 @@ describe Alexandria::Library do
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
     end
+
     it 'imports cleanly from version 0.6.1 data format' do
       libs = loader.load_all_libraries
       expect(libs.size).to eq(1)
@@ -157,6 +159,7 @@ describe Alexandria::Library do
     after(:each) do
       FileUtils.rm_rf(TESTDIR)
     end
+
     it 'allows books to have no ISBN' do
       libs = loader.load_all_libraries
       expect(libs.size).to eq(1)

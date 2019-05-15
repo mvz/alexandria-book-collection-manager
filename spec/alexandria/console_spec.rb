@@ -17,6 +17,7 @@ RSpec.describe Alexandria do
   after do
     FileUtils.rm_rf(TESTDIR)
   end
+
   describe '.list_books_on_console' do
     it 'returns a string containing a list of all books' do
       expect(described_class.list_books_on_console).to eq <<~LIST

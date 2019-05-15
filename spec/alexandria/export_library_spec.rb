@@ -27,6 +27,7 @@ RSpec.describe Alexandria::ExportLibrary do
     FileUtils.rm_rf(TESTDIR)
     FileUtils.rm_rf(outfile) if File.exist? outfile
   end
+
   describe '#export_as_csv_list' do
     let(:message) { :export_as_csv_list }
 

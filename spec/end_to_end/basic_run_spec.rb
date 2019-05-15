@@ -30,6 +30,7 @@ describe 'The Alexandria application' do
   after do
     @driver.cleanup
   end
+
   it 'starts and can be quit with Ctrl-q' do
     @driver.press_ctrl_q
 
