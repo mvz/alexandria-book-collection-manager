@@ -65,5 +65,4 @@ describe 'The Alexandria application' do
     status = @driver.cleanup
     expect(status.exitstatus).to eq 0
   end
-
 end

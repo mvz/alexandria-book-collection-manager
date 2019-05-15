@@ -28,5 +28,4 @@ RSpec.describe Alexandria do
       LIST
     end
   end
-
 end

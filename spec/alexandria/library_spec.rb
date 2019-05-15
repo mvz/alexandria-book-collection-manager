@@ -100,7 +100,6 @@ describe Alexandria::Library do
 
       expect { my_library.delete(second_copy) }.not_to raise_error
     end
-
   end
 
   describe '.import_as_isbn_list' do
@@ -147,7 +146,6 @@ describe Alexandria::Library do
       expect(latex_book.isbn).to eq('9780201398250')
       expect(latex_book.publisher).to eq('Addison Wesley') # note, no Ruby-Amazon cruft
     end
-
   end
 
   context 'imported from 0.6.1 with books without an ISBN' do
@@ -192,7 +190,6 @@ describe Alexandria::Library do
       expect(lex_and_yacc_book).not_to be_nil
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
     end
-
   end
 
   describe '.move' do
