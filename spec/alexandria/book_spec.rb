@@ -36,6 +36,7 @@ describe Alexandria::Book do
 
   describe '#rating' do
     let(:book) { an_artist_of_the_floating_world }
+
     it 'returns 0 by default' do
       expect(book.rating).to eq 0
     end
@@ -43,6 +44,7 @@ describe Alexandria::Book do
 
   describe '#rating=' do
     let(:book) { an_artist_of_the_floating_world }
+
     it 'assigns rating' do
       book.rating = 5
       expect(book.rating).to eq 5
