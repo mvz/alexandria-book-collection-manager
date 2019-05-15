@@ -9,7 +9,7 @@ require 'alexandria/scanners/cuecat'
 require 'alexandria/scanners/keyboard'
 
 require 'alexandria/ui/builder_base'
-require 'alexandria/ui/dialogs/barcode_animation'
+require 'alexandria/ui/barcode_animation'
 require 'alexandria/ui/sound'
 
 module Alexandria

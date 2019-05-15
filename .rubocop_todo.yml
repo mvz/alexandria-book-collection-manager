@@ -84,7 +84,7 @@ Naming/HeredocDelimiterNaming:
     - 'Rakefile'
     - 'bin/alexandria'
     - 'lib/alexandria/export_library.rb'
-    - 'lib/alexandria/ui/dialogs/about_dialog.rb'
+    - 'lib/alexandria/ui/about_dialog.rb'
 
 # Offense count: 2
 # Configuration parameters: EnforcedStyleForLeadingUnderscores.
@@ -103,7 +103,7 @@ Naming/PredicateName:
   Exclude:
     - 'spec/**/*'
     - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog_base.rb'
+    - 'lib/alexandria/ui/smart_library_properties_dialog_base.rb'
     - 'lib/alexandria/web_themes.rb'
 
 # Offense count: 10
@@ -125,8 +125,8 @@ Naming/UncommunicativeMethodParamName:
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'lib/alexandria/ui/dialogs/import_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/preferences_dialog.rb'
+    - 'lib/alexandria/ui/import_dialog.rb'
+    - 'lib/alexandria/ui/preferences_dialog.rb'
     - 'lib/alexandria/ui/icons.rb'
     - 'lib/alexandria/ui/init.rb'
 
@@ -138,9 +138,9 @@ Style/ClassVars:
     - 'lib/alexandria/logging.rb'
     - 'lib/alexandria/models/library.rb'
     - 'lib/alexandria/smart_library.rb'
-    - 'lib/alexandria/ui/dialogs/acquire_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/book_properties_dialog_base.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
+    - 'lib/alexandria/ui/acquire_dialog.rb'
+    - 'lib/alexandria/ui/book_properties_dialog_base.rb'
+    - 'lib/alexandria/ui/new_book_dialog.rb'
 
 # Offense count: 11
 Style/CommentedKeyword:
@@ -148,7 +148,7 @@ Style/CommentedKeyword:
     - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/book_providers/barnes_and_noble.rb'
     - 'lib/alexandria/book_providers/worldcat.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
+    - 'lib/alexandria/ui/new_book_dialog.rb'
     - 'util/rake/fileinstall.rb'
 
 # Offense count: 112
@@ -162,15 +162,15 @@ Style/FormatStringToken:
   Exclude:
     - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/ui/callbacks.rb'
-    - 'lib/alexandria/ui/dialogs/acquire_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/book_properties_dialog_base.rb'
-    - 'lib/alexandria/ui/dialogs/export_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/keep_bad_isbn_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/misc_dialogs.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/new_book_dialog_manual.rb'
-    - 'lib/alexandria/ui/dialogs/preferences_dialog.rb'
-    - 'lib/alexandria/ui/dialogs/smart_library_properties_dialog.rb'
+    - 'lib/alexandria/ui/acquire_dialog.rb'
+    - 'lib/alexandria/ui/book_properties_dialog_base.rb'
+    - 'lib/alexandria/ui/export_dialog.rb'
+    - 'lib/alexandria/ui/keep_bad_isbn_dialog.rb'
+    - 'lib/alexandria/ui/misc_dialogs.rb'
+    - 'lib/alexandria/ui/new_book_dialog.rb'
+    - 'lib/alexandria/ui/new_book_dialog_manual.rb'
+    - 'lib/alexandria/ui/preferences_dialog.rb'
+    - 'lib/alexandria/ui/smart_library_properties_dialog.rb'
     - 'lib/alexandria/ui/dndable.rb'
     - 'lib/alexandria/ui/listview.rb'
     - 'lib/alexandria/ui/sidepane.rb'
@@ -221,7 +221,7 @@ Style/RegexpLiteral:
     - 'lib/alexandria/book_providers/siciliano.rb'
     - 'lib/alexandria/book_providers/thalia.rb'
     - 'lib/alexandria/library_store.rb'
-    - 'lib/alexandria/ui/dialogs/book_properties_dialog_base.rb'
+    - 'lib/alexandria/ui/book_properties_dialog_base.rb'
     - 'lib/alexandria/ui/sidepane.rb'
     - 'util/rake/fileinstall.rb'
     - 'util/rake/gettextgenerate.rb'
