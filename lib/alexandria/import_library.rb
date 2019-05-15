@@ -150,8 +150,8 @@ module Alexandria
             library.save(book)
           end
           return [library, []]
-        rescue StandardError => e
-          puts e.message
+        rescue StandardError => ex
+          puts ex.message
           return nil
         end
       end
@@ -236,8 +236,8 @@ module Alexandria
         # Let's preserve the failing isbns so we can report them later.
         begin
           [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
-        rescue StandardError => e
-          puts e.message
+        rescue StandardError => ex
+          puts ex.message
           [line.chomp, nil]
         end
       end
@@ -257,8 +257,8 @@ module Alexandria
           else
             bad_isbns << isbn[0]
           end
-        rescue StandardError => e
-          puts e.message
+        rescue StandardError => ex
+          puts ex.message
           failed_lookup_isbns << isbn[1]
           puts "NOTE : ignoring on_error_cb #{on_error_cb}"
           # return nil unless

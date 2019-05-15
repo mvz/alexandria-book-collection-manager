@@ -66,10 +66,10 @@ module Alexandria
           log.error { ex.backtrace.join("> \n") }
           begin
             marc = MARC::Record.new(marc_txt)
-          rescue StandardError => ex2
-            log.error { ex2.message }
-            log.error { ex2.backtrace.join("> \n") }
-            raise ex2
+          rescue StandardError => ex
+            log.error { ex.message }
+            log.error { ex.backtrace.join("> \n") }
+            raise ex
           end
         end
 

@@ -193,8 +193,8 @@ module Alexandria
                 end
 
                 @images.delete(key)
-              rescue StandardError => e
-                image_error_dialog(e.message).display
+              rescue StandardError => ex
+                image_error_dialog(ex.message).display
               end
             end
           end
@@ -244,8 +244,8 @@ module Alexandria
               @results = Alexandria::BookProviders.search(criterion, mode)
 
               log.info { "got #{@results.length} results" }
-            rescue StandardError => e
-              @find_error = e.message
+            rescue StandardError => ex
+              @find_error = ex.message
             ensure
               Alexandria::BookProviders.instance.delete_observer(self)
               # notify_end_add_by_isbn
@@ -363,8 +363,8 @@ module Alexandria
               else
                 post_addition([], library, is_new)
               end
-            rescue Alexandria::BookProviders::NoResultsError => e
-              @find_error = e.message
+            rescue Alexandria::BookProviders::NoResultsError => ex
+              @find_error = ex.message
               @button_add.sensitive = true
               notify_end_add_by_isbn
             ensure
@@ -464,9 +464,9 @@ module Alexandria
 
           # Do not destroy if there is no addition.
           #          return unless book_was_added
-        rescue StandardError => e
+        rescue StandardError => ex
           # FIXME: Message containing <> should be displayed correctly.
-          ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), e.message).display
+          ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), ex.message).display
         end
         # books_to_add
       end
