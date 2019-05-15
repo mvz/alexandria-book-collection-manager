@@ -74,11 +74,11 @@ describe Alexandria::Library do
   context 'with an empty library' do
     let(:my_library) { loader.load_library('Empty') }
 
-    before(:each) do
+    before do
       FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
     end
 
-    after(:each) do
+    after do
       FileUtils.rm_rf(TESTDIR)
     end
 
@@ -123,12 +123,12 @@ describe Alexandria::Library do
   end
 
   context 'imported from 0.6.1 data files' do
-    before(:each) do
+    before do
       lib_version = File.join(LIBDIR, '0.6.1')
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
-    after(:each) do
+    after do
       FileUtils.rm_rf(TESTDIR)
     end
 
@@ -151,12 +151,12 @@ describe Alexandria::Library do
   end
 
   context 'imported from 0.6.1 with books without an ISBN' do
-    before(:each) do
+    before do
       lib_version = File.join(LIBDIR, '0.6.1-noisbn')
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
-    after(:each) do
+    after do
       FileUtils.rm_rf(TESTDIR)
     end
 
@@ -196,7 +196,7 @@ describe Alexandria::Library do
   end
 
   describe '.move' do
-    before(:each) do
+    before do
       lib_version = File.join(LIBDIR, '0.6.2')
       FileUtils.cp_r(lib_version, TESTDIR)
     end

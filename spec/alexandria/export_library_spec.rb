@@ -23,7 +23,7 @@ RSpec.describe Alexandria::ExportLibrary do
     expect(@my_library.size).to eq 5
   end
 
-  after(:each) do
+  after do
     FileUtils.rm_rf(TESTDIR)
     FileUtils.rm_rf(outfile) if File.exist? outfile
   end
