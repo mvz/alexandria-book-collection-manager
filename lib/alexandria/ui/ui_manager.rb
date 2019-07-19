@@ -263,7 +263,7 @@ module Alexandria
             true
           else
             data = case @filter_books_mode
-                   when 0 then
+                   when 0
                      (iter[Columns::TITLE] || '') +
                        (iter[Columns::AUTHORS] || '') +
                        (iter[Columns::ISBN] || '') +
