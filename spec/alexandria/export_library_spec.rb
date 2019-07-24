@@ -42,10 +42,10 @@ RSpec.describe Alexandria::ExportLibrary do
       rows = load_rows_from_csv
       rows.shift
       expect(rows.size).to eq(@my_library.size)
-      TITLE = 0
+      title_index = 0
       comparisons = rows.size - 1
       comparisons.times do |index|
-        expect(rows[index][TITLE]).to be <= rows[index + 1][TITLE]
+        expect(rows[index][title_index]).to be <= rows[index + 1][title_index]
       end
     end
 
@@ -56,10 +56,10 @@ RSpec.describe Alexandria::ExportLibrary do
       rows = load_rows_from_csv
       rows.shift
       expect(rows.size).to eq(@my_library.size)
-      DATE = 5
+      date_index = 5
       comparisons = rows.size - 1
       comparisons.times do |index|
-        expect(rows[index][DATE]).to be >= rows[index + 1][DATE]
+        expect(rows[index][date_index]).to be >= rows[index + 1][date_index]
       end
     end
   end
