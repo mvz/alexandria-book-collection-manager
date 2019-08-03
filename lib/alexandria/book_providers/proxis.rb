@@ -94,7 +94,7 @@ module Alexandria
           if title_link
             result[:title] = text_of(title_link)
             result[:lookup_url] = title_link['href']
-            result[:lookup_url] = "#{SITE}#{result[:lookup_url]}" unless result[:lookup_url] =~ /^http/
+            result[:lookup_url] = "#{SITE}#{result[:lookup_url]}" unless /^http/.match?(result[:lookup_url])
           end
           book_search_results << result
         end
@@ -127,7 +127,7 @@ module Alexandria
         isbns = []
         unless info_headers.empty?
           info_headers.each do |th|
-            isbns << data_for_header(th) if th.inner_text =~ /(ISBN|EAN)/
+            isbns << data_for_header(th) if /(ISBN|EAN)/.match?(th.inner_text)
           end
           book_data[:isbn] = Library.canonicalise_ean(isbns.first)
         end
@@ -158,7 +158,7 @@ module Alexandria
                       else
                         "#{SITE}/#{cover_img['src']}" # TODO: use html <base>
                       end
-          image_url = nil if image_url =~ /ProductNoCover/
+          image_url = nil if /ProductNoCover/.match?(image_url)
         end
 
         book = Book.new(book_data[:title], book_data[:authors],

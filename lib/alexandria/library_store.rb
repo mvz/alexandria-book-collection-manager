@@ -23,7 +23,7 @@ module Alexandria
       begin
         Dir.entries(library_dir).each do |file|
           # Skip hidden files.
-          next if file =~ /^\./
+          next if /^\./.match?(file)
           # Skip non-directory files.
           next unless File.stat(File.join(library_dir, file)).directory?
 

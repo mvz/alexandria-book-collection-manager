@@ -72,7 +72,7 @@ module Alexandria
       return [] if entry.nil? || entry.empty?
 
       normalized = entry.delete('- ').upcase
-      return [] unless normalized =~ /\A[\dX]*\Z/
+      return [] unless /\A[\dX]*\Z/.match?(normalized)
 
       normalized.split('').map do |char|
         char == 'X' ? 10 : char.to_i

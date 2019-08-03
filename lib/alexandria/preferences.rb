@@ -180,7 +180,7 @@ module Alexandria
         new_value.gsub!(/\"/, '\\"')
         value_str = "\"#{new_value}\""
       end
-      puts value_str if /cols_width/ =~ var_path
+      puts value_str if /cols_width/.match?(var_path)
       `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 

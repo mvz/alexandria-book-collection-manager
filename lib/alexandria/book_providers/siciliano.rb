@@ -144,7 +144,7 @@ module Alexandria
             result[:title] = link.inner_text.strip
             link_to_description = link['href']
             slash = ''
-            slash = '/' unless link_to_description =~ /^\//
+            slash = '/' unless /^\//.match?(link_to_description)
             result[:url] = "#{SITE}#{slash}#{link_to_description}"
 
             book_search_results << result

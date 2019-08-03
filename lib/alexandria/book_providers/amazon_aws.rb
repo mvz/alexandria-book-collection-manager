@@ -132,7 +132,7 @@ module Alexandria
                                           country: request_locale)
 
             res.items.each do |item|
-              products << item if item.get('itemattributes/title') =~ /#{criterion}/i
+              products << item if /#{criterion}/i.match?(item.get('itemattributes/title'))
             end
             # #req.keyword_search(criterion) do |product|
 

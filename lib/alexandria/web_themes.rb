@@ -44,7 +44,7 @@ module Alexandria
       if File.exist?(themes_dir)
         Dir.entries(themes_dir).each do |file|
           # ignore hidden files
-          next if file =~ /^\./
+          next if /^\./.match?(file)
 
           # ignore non-directories
           path = File.join(themes_dir, file)

@@ -190,7 +190,7 @@ class FileInstallTask < Rake::TaskLib
   end
 
   def glob2regex(pathglob)
-    pathglob += '/' if pathglob =~ /\*\*$/
+    pathglob += '/' if /\*\*$/.match?(pathglob)
     real_parts = pathglob.split('**/')
     real_parts.each do |part|
       part.gsub!('.', '\\.')

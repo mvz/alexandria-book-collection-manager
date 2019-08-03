@@ -82,7 +82,7 @@ module Alexandria
       def to_books(data)
         data = CGI.unescapeHTML(data)
         data = data.encode('UTF-8')
-        raise NoResultsError if data =~ NO_BOOKS_FOUND_REGEXP
+        raise NoResultsError if NO_BOOKS_FOUND_REGEXP.match?(data)
 
         titles = []
         data.scan(HYPERLINK_SCAN_REGEXP).each { |md|
