@@ -59,7 +59,7 @@ Style/BlockDelimiters:
 
 # Allow and/or for control flow only
 Style/AndOr:
-  Enabled: conditionals
+  EnforcedStyle: conditionals
 
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
