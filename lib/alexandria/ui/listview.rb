@@ -204,7 +204,7 @@ module Alexandria
         ]
         cols = @listview.columns[1..-1] # skip "Title"
         cols.each_index do |i|
-          cols[i].visible = !cols_visibility[i].nil?
+          cols[i].visible = !!cols_visibility[i]
         end
         log.debug { 'Columns visibility: ' + cols.map { |col| "#{col.title} #{col.visible?}" }.join(', ') }
       end
