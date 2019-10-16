@@ -33,10 +33,6 @@ module Alexandria
         libraries_names.unshift selected_library.name
       end
       clear
-      set_row_separator_func do |model, iter|
-        # TODO: Replace with iter[1] if possible
-        model.get_value(iter, 1) == '-'
-      end
       self.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf, String, TrueClass)
       libraries_names.each do |library_name|
         iter = model.append
@@ -55,6 +51,10 @@ module Alexandria
       renderer = Gtk::CellRendererText.new
       pack_start(renderer, true)
       set_attributes(renderer, text: 1)
+      set_row_separator_func do |model, iter|
+        # TODO: Replace with iter[1] if possible
+        model.get_value(iter, 1) == '-'
+      end
       self.active = 0
       # self.sensitive = libraries.length > 1
       # This prohibits us from adding a "New Library" from this combo

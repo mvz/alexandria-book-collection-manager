@@ -6,6 +6,7 @@
 
 require 'alexandria/ui/callbacks'
 require 'alexandria/ui/columns'
+require 'alexandria/ui/conflict_while_copying_dialog'
 require 'alexandria/library_sort_order'
 
 module Alexandria
@@ -69,8 +70,8 @@ module Alexandria
       end
 
       def setup_dependents
-        @listview_model = Gtk::TreeModelSort.new(model: @filtered_model)
-        @iconview_model = Gtk::TreeModelSort.new(model: @filtered_model)
+        @listview_model = Gtk::TreeModelSort.new(@filtered_model)
+        @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
         @sidepane_manager = SidePaneManager.new @library_listview, self

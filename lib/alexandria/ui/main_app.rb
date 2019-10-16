@@ -20,8 +20,6 @@
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
 require 'alexandria/ui/alert_dialog'
-# misc_dialogs depends on alert_dialog
-require 'alexandria/ui/misc_dialogs'
 require 'alexandria/ui/about_dialog'
 require 'alexandria/ui/book_properties_dialog_base'
 require 'alexandria/ui/book_properties_dialog'

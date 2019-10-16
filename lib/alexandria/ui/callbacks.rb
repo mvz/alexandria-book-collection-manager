@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+require 'alexandria/ui/really_delete_dialog'
+
 module Alexandria
   module UI
     module Callbacks
@@ -362,13 +364,14 @@ module Alexandria
           action.signal_connect('toggled', &callback) if callback
         end
 
-        group = nil
         first_action = nil
         view_as_actions.each do |name, stock_id, label, accelerator, tooltip, value|
           action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
-          first_action = action unless group
-          action.set_group group
-          group = action.group
+          if first_action
+            action.join_group first_action
+          else
+            first_action = action
+          end
           @actiongroup.add_action_with_accel(action, accelerator)
         end
 
@@ -380,13 +383,14 @@ module Alexandria
           end
         end
 
-        group = nil
         first_action = nil
         arrange_icons_actions.each do |name, stock_id, label, accelerator, tooltip, value|
           action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
-          first_action = action unless group
-          action.set_group group
-          group = action.group
+          if first_action
+            action.join_group first_action
+          else
+            first_action = action
+          end
           @actiongroup.add_action_with_accel(action, accelerator)
         end
 
