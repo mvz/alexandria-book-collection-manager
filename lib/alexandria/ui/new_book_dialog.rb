@@ -6,6 +6,7 @@
 
 require 'gdk_pixbuf2'
 require 'alexandria/ui/builder_base'
+require 'alexandria/ui/error_dialog'
 require 'alexandria/ui/keep_bad_isbn_dialog'
 
 module Alexandria

@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+require 'alexandria/ui/really_delete_dialog'
+
 module Alexandria
   module UI
     module Callbacks

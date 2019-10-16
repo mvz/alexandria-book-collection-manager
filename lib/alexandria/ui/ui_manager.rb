@@ -6,6 +6,7 @@
 
 require 'alexandria/ui/callbacks'
 require 'alexandria/ui/columns'
+require 'alexandria/ui/conflict_while_copying_dialog'
 require 'alexandria/library_sort_order'
 
 module Alexandria

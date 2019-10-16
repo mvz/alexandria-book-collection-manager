@@ -10,6 +10,7 @@ require 'alexandria/scanners/keyboard'
 
 require 'alexandria/ui/builder_base'
 require 'alexandria/ui/barcode_animation'
+require 'alexandria/ui/error_dialog'
 require 'alexandria/ui/sound'
 
 module Alexandria

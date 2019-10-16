@@ -5,6 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 require 'alexandria/ui/builder_base'
+require 'alexandria/ui/error_dialog'
 
 module Alexandria
   module UI
