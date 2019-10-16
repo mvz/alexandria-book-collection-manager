@@ -203,7 +203,7 @@
         <long>Whether the publisher column should be visible in the list view.</long>
       </locale>
     </schema>
-    <schema>        
+    <schema>
       <key>/schemas/apps/alexandria/col_publish_date_visible</key>
       <applyto>/apps/alexandria/col_publish_date_visible</applyto>
       <owner>alexandria</owner>
@@ -212,6 +212,17 @@
       <locale name="C">
         <short>Publish date visibility</short>
         <long>Whether the publish date column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/col_loaned_to_visible</key>
+      <applyto>/apps/alexandria/col_loaned_to_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Loaned to visibility</short>
+        <long>Whether the loaned to column should be visible in the list view.</long>
       </locale>
     </schema>
     <schema>        
@@ -247,7 +258,7 @@
         <long>Whether the own column should be visible in the list view.</long>
       </locale>
     </schema>
-    <schema>        
+    <schema>
       <key>/schemas/apps/alexandria/col_want_visible</key>
       <applyto>/apps/alexandria/col_want_visible</applyto>
       <owner>alexandria</owner>
@@ -256,6 +267,17 @@
       <locale name="C">
         <short>Want column visibility</short>
         <long>Whether the want column should be visible in the list view.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/alexandria/col_tags_visible</key>
+      <applyto>/apps/alexandria/col_tags_visible</applyto>
+      <owner>alexandria</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Tags column visibility</short>
+        <long>Whether the tags column should be visible in the list view.</long>
       </locale>
     </schema>
     <schema>
