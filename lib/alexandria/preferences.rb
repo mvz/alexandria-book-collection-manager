@@ -93,7 +93,7 @@ module Alexandria
           @changed_settings << variable_name
         end
       end
-      value || false
+      value
     end
 
     def generic_setter(variable_name, new_value)

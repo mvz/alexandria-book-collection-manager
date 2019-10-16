@@ -9,8 +9,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Alexandria::Preferences do
   let(:instance) { described_class.instance }
 
-  it 'returns false fetching unknown setting' do
-    expect(instance.does_not_exist).to eq false
+  it 'returns nil fetching unknown setting' do
+    expect(instance.does_not_exist).to eq nil
   end
 
   it 'allows setting known setting to false' do
