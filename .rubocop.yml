@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 require:
   - rubocop-performance
   - rubocop-rspec
@@ -8,15 +10,11 @@ AllCops:
     - 'pkg/**/*'
   TargetRubyVersion: 2.4
 
-# Dot at end of line makes it clearer that the line is not done
-Layout/DotPosition:
-  EnforcedStyle: trailing
+Layout/AlignHash:
+  EnforcedColonStyle: key
+  EnforcedHashRocketStyle: table
 
-# Multi-line assignment should be simply indented. Aligning them makes it even
-# harder to keep a sane line length.
-Layout/MultilineOperationIndentation:
-  EnforcedStyle: indented
-
+# Don't force lonely closing parentheses
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line
 
@@ -25,13 +23,14 @@ Layout/MultilineMethodCallBraceLayout:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
-# Make syntax for empty and filled blocks consistent
+# Multi-line assignment should be simply indented. Aligning them makes it even
+# harder to keep a sane line length.
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+# Force consistent spacing independent of block contents
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
-
-Layout/AlignHash:
-  EnforcedColonStyle: key
-  EnforcedHashRocketStyle: table
 
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
@@ -52,10 +51,6 @@ Naming/AccessorMethodName:
 # Avoid one-letter exception variable name
 Naming/RescuedExceptionsVariableName:
   PreferredName: ex
-
-# Allow multi-line blocks of all sorts
-Style/BlockDelimiters:
-  Enabled: false
 
 # Allow and/or for control flow only
 Style/AndOr:
@@ -82,16 +77,18 @@ Style/PercentLiteralDelimiters:
 Style/RedundantReturn:
   AllowMultipleReturnValues: true
 
-# Always use raise to raise exceptions
-Style/SignalException:
-  EnforcedStyle: only_raise
-
 Style/SingleLineBlockParams:
   Enabled: false
 
-# I like to have symbols always look like symbols
+# Do not commit to use of interpolation
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Prefer symbols to look like symbols
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+# Project-specific configuration goes here.
 
 # Accessors are only trivial if they match the ivar name.
 Style/TrivialAccessors:
@@ -108,5 +105,3 @@ Style/WordArray:
 # Not all objects that handle #length also handle #empty?
 Style/ZeroLengthPredicate:
   Enabled: false
-
-inherit_from: .rubocop_todo.yml
