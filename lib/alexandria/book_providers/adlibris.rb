@@ -180,7 +180,7 @@ module Alexandria
           # cover
           image_url = nil
           if (cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first)
-            image_url = if /^http\:\/\//.match?(cover_img["src"])
+            image_url = if %r{^http\://}.match?(cover_img["src"])
                           cover_img["src"]
                         else
                           "#{SITE}/#{cover_img['src']}" # HACK: use html base

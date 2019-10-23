@@ -52,7 +52,7 @@ module Alexandria
               results << book
             end
             while /Suivant/ =~ data
-              md = /Enteterouge\">([\d]*)<\/b>/.match(data)
+              md = %r{Enteterouge\">([\d]*)</b>}.match(data)
               num = md[1].to_i + 1
               data = transport.get(URI.parse(req + "&PageActuelle=" + num.to_s))
               to_books(data).each do |book|
@@ -74,9 +74,9 @@ module Alexandria
       private
 
       NO_BOOKS_FOUND_REGEXP =
-        /<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s<\/strong>/.freeze
+        %r{<strong class="Promotion">Aucun article trouv. selon les crit.res demand.s</strong>}.freeze
       HYPERLINK_SCAN_REGEXP =
-        /"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/strong><\/a><br>/
+        %r{"(Jeune|Lire)Hyperlien" href.*><strong>([-,'\(\)&\#;\w\s#{ACCENTUATED_CHARS}]*)</strong></a><br>}
           .freeze
 
       def to_books(data)
@@ -91,7 +91,7 @@ module Alexandria
         raise if titles.empty?
 
         authors = []
-        data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each do |md|
+        data.scan(%r{Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)</i>}).each do |md|
           authors2 = []
           md[0].split("  ").each do |author|
             authors2 << author.strip
@@ -101,7 +101,7 @@ module Alexandria
         raise if authors.empty?
 
         isbns = []
-        data.scan(/ISBN : ?<\/td><td>(\d+)/).each do |md|
+        data.scan(%r{ISBN : ?</td><td>(\d+)}).each do |md|
           isbns << md[0].strip
         end
         raise if isbns.empty?
@@ -115,14 +115,14 @@ module Alexandria
         raise if editions.empty? || publish_years.empty?
 
         publishers = []
-        data.scan(/diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/span><br>/).each do |md|
+        data.scan(%r{diteur : ([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)</span><br>}).each do |md|
           publishers << md[0].strip
         end
         raise if publishers.empty?
 
         book_covers = []
-        data.scan(/(\/ImagesEditeurs\/[\d]*\/([\dX]*-f.(jpg|gif))
-                    |\/francais\/suggestion\/images\/livre\/livre.gif)/x).each do |md|
+        data.scan(%r{(/ImagesEditeurs/[\d]*/([\dX]*-f.(jpg|gif))
+                    |/francais/suggestion/images/livre/livre.gif)}x).each do |md|
           book_covers << BASE_URI + md[0].strip
         end
         raise if book_covers.empty?

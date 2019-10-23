@@ -61,7 +61,7 @@ module Alexandria
         yaml = json.gsub(/(\:|\,)([0-9'"{\[])/) do |_match|
           "#{Regexp.last_match[1]} #{Regexp.last_match[2]}"
         end
-        yaml.gsub!(/\\\//, "/") # unescape forward slashes
+        yaml.gsub!(%r{\\/}, "/") # unescape forward slashes
         yaml
       end
 

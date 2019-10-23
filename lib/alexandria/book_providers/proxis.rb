@@ -141,7 +141,7 @@ module Alexandria
               book_data[:binding] = data_for_header(th)
             elsif /Verschijningsdatum/.match?(header_text)
               date = data_for_header(th)
-              date =~ /\/([\d]{4})/
+              date =~ %r{/([\d]{4})}
               book_data[:publish_year] = Regexp.last_match[1].to_i
             elsif /Auteur/.match?(header_text)
               book_data[:authors] << data_for_header(th)

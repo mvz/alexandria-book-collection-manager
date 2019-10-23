@@ -105,7 +105,7 @@ class FileInstallTask < Rake::TaskLib
       @dirs_to_remove_globs.each do |glob|
         regex = glob2regex(glob)
         all_dirs.each do |dir|
-          dir += "/" unless dir =~ /\/$/
+          dir += "/" unless dir =~ %r{/$}
           to_delete << Regexp.last_match[1] if regex =~ dir
         end
       end

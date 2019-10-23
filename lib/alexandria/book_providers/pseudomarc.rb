@@ -64,7 +64,7 @@ module Alexandria
         title = nil
         title_data = details[m[:title][0]]
         if title_data
-          title_data_all = get_fields(title_data, :title, /(.*)[\/:]$/, m)
+          title_data_all = get_fields(title_data, :title, %r{(.*)[/:]$}, m)
           title = title_data_all if title_data_all
         end
 

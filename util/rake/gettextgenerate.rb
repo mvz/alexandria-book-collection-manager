@@ -49,7 +49,7 @@ class GettextGenerateTask < Rake::TaskLib
     @po_dir = po_dir
     @po_files_glob = file_glob
     @mo_dir = dest_dir
-    @mo_files_regex = /.*\/(.+)\/LC_MESSAGES\/.+\.mo/
+    @mo_files_regex = %r{.*/(.+)/LC_MESSAGES/.+\.mo}
 
     # create MO files
     rule(/\.mo$/ => [->(dest) { source_file(dest) }]) do |t|

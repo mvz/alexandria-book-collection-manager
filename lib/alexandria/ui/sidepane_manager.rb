@@ -32,7 +32,7 @@ module Alexandria
       # otherwise returns nil
       def contains_illegal_character(new_text)
         new_text.unpack("U*") # attempt to unpack as UTF-8 characters
-        match = /(^\.|\/)/.match(new_text)
+        match = %r{(^\.|/)}.match(new_text)
         # forbid / character (since Library names become dir names)
         # also no initial . since that hides the Library (hidden file)
         #      forbidding an initial dot also disallows "." and ".."

@@ -191,7 +191,7 @@ module Amazon
 
     def self.camelize(s)
       s.to_s
-        .gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }
+        .gsub(%r{/(.?)}) { "::" + Regexp.last_match[1].upcase }
         .gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
     end
 
@@ -234,7 +234,7 @@ module Amazon
       raise AmazonNotConfiguredError unless @@secret_access_key
 
       # Step 0 : Split apart request string
-      url_pattern = /http:\/\/([^\/]+)(\/[^\?]+)\?(.*$)/
+      url_pattern = %r{http://([^/]+)(/[^\?]+)\?(.*$)}
       url_pattern =~ request
       host = Regexp.last_match[1]
       path = Regexp.last_match[2]

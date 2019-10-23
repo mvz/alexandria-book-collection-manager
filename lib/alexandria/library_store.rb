@@ -9,7 +9,7 @@ module Alexandria
     include Logging
 
     FIX_BIGNUM_REGEX =
-      /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/.freeze
+      %r{loaned_since:\s*(\!ruby/object\:Bignum\s*)?(\d+)\n}.freeze
 
     include GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")

@@ -130,7 +130,7 @@ module Alexandria
           # e.g. .../dave_thomas/ISBN0-9745140-5-5/ID6017044.html
           chosen = results.first # fallback!
           results.each do |rslt|
-            if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
+            if rslt[:lookup_url] =~ %r{/ISBN(\d+[\d-]*)/}
               if Regexp.last_match[1].delete("-") == isbn10
                 chosen = rslt
                 break
@@ -152,7 +152,7 @@ module Alexandria
               authors = []
               author_links = author_h.parent / :a
               author_links.each do |a|
-                if a["href"] =~ /BUCH\/sa/
+                if a["href"] =~ %r{BUCH/sa}
                   # 'sa' means search author, there may also be 'ssw' (search keyword) links
                   authors << a.inner_text[0..-2].strip
                   # NOTE stripping the little >> character here...
