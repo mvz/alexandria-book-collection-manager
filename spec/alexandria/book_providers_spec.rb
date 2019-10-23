@@ -50,7 +50,7 @@ describe Alexandria::BookProviders do
       canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
       expect(canonical_query)
         .to eq(canonical_result),
-           "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
+            "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
 
       if results.length == 2
         cover_url = results.last
