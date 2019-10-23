@@ -212,10 +212,10 @@ describe Alexandria::Library do
       aggregate_failures do
         expect(source.count).to eq count - 1
         expect(target.count).to eq 1
-        expect(File.exist? source.yaml(book)).to be_falsey
-        expect(File.exist? source.cover(book)).to be_falsey
-        expect(File.exist? target.yaml(book)).to be_truthy
-        expect(File.exist? target.cover(book)).to be_truthy
+        expect(File.exist?(source.yaml(book))).to be_falsey
+        expect(File.exist?(source.cover(book))).to be_falsey
+        expect(File.exist?(target.yaml(book))).to be_truthy
+        expect(File.exist?(target.cover(book))).to be_truthy
       end
     end
   end
