@@ -4,11 +4,11 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + "/../../spec_helper"
 
 describe Alexandria::UI::ConfirmEraseDialog do
-  it 'works' do
+  it "works" do
     parent = Gtk::Window.new :toplevel
-    described_class.new parent, 'foo-file'
+    described_class.new parent, "foo-file"
   end
 end

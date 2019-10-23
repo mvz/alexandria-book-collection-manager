@@ -4,17 +4,17 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'tmpdir'
-require 'alexandria/ui/error_dialog'
+require "tmpdir"
+require "alexandria/ui/error_dialog"
 
 module Alexandria
   module UI
     class NewBookDialogManual < BookPropertiesDialogBase
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      TMP_COVER_FILE = File.join(Dir.tmpdir, 'tmp_cover')
+      TMP_COVER_FILE = File.join(Dir.tmpdir, "tmp_cover")
       def initialize(parent, library, &on_add_cb)
         super(parent, TMP_COVER_FILE)
 
@@ -23,17 +23,17 @@ module Alexandria
         FileUtils.rm_f(TMP_COVER_FILE)
 
         cancel_button = Gtk::Button.new(stock_id: Gtk::Stock::CANCEL)
-        cancel_button.signal_connect('clicked') { on_cancel }
+        cancel_button.signal_connect("clicked") { on_cancel }
         cancel_button.show
         @button_box << cancel_button
 
         add_button = Gtk::Button.new(stock_id: Gtk::Stock::ADD)
-        add_button.signal_connect('clicked') { on_add }
+        add_button.signal_connect("clicked") { on_add }
         add_button.show
         @button_box << add_button
 
         help_button = Gtk::Button.new(stock_id: Gtk::Stock::HELP)
-        help_button.signal_connect('clicked') { on_help }
+        help_button.signal_connect("clicked") { on_help }
         help_button.show
         @button_box << help_button
         @button_box.set_child_secondary(help_button, true)
@@ -47,7 +47,7 @@ module Alexandria
       def on_title_changed
         title = @entry_title.text.strip
         @book_properties_dialog.title = if title.empty?
-                                          _('Adding a Book')
+                                          _("Adding a Book")
                                         else
                                           _("Adding '%s'") % title
                                         end
@@ -64,34 +64,34 @@ module Alexandria
 
       def on_add
         if (title = @entry_title.text.strip).empty?
-          raise AddError, _('A title must be provided.')
+          raise AddError, _("A title must be provided.")
         end
 
         isbn = nil
-        if @entry_isbn.text != ''
+        if @entry_isbn.text != ""
           isbn = Library.canonicalise_ean(@entry_isbn.text)
           unless isbn
             raise AddError, _("Couldn't validate the EAN/ISBN you provided.  Make " \
-                              'sure it is written correcty, and try again.')
+                              "sure it is written correcty, and try again.")
           end
           ary = @library.select { |book| book.ident == isbn }
-          raise AddError, _('The EAN/ISBN you provided is already used in this library.') unless ary.empty?
+          raise AddError, _("The EAN/ISBN you provided is already used in this library.") unless ary.empty?
         end
         if (publisher = @entry_publisher.text.strip).empty?
-          raise AddError, _('A publisher must be provided.')
+          raise AddError, _("A publisher must be provided.")
         end
 
         publishing_year = @entry_publish_date.text.to_i
         # TODO: Get rid of this silly requirement
         if (edition = @entry_edition.text.strip).empty?
-          raise AddError, _('A binding must be provided.')
+          raise AddError, _("A binding must be provided.")
         end
 
         authors = []
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
-          raise AddError, _('At least one author must be ' \
-                               'provided.')
+          raise AddError, _("At least one author must be " \
+                               "provided.")
         end
         book = Book.new(title, authors, isbn, publisher,
                         publishing_year.zero? ? nil : publishing_year,
@@ -120,7 +120,7 @@ module Alexandria
 
       # COPIED from book_properties_dialog_base
       def parse_date(datestring)
-        date_format = '%d/%m/%Y'
+        date_format = "%d/%m/%Y"
         begin
           d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)
@@ -130,7 +130,7 @@ module Alexandria
       end
 
       def on_help
-        Alexandria::UI.display_help(@preferences_dialog, 'add-book-manually')
+        Alexandria::UI.display_help(@preferences_dialog, "add-book-manually")
       end
     end
   end

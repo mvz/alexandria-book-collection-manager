@@ -4,13 +4,13 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/alert_dialog'
+require "alexandria/ui/alert_dialog"
 
 module Alexandria
   module UI
     class ReallyDeleteDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, library, books = nil)
         # Deleting a library.
@@ -19,8 +19,8 @@ module Alexandria
           description = if library.is_a?(SmartLibrary) || library.empty?
                           nil
                         else
-                          n_('If you continue, %d book will be deleted.',
-                             'If you continue, %d books will be deleted.',
+                          n_("If you continue, %d book will be deleted.",
+                             "If you continue, %d books will be deleted.",
                              library.size) % library.size
                         end
           # Deleting books.
@@ -29,7 +29,7 @@ module Alexandria
                       format(_("Are you sure you want to delete '%s' " \
                         "from '%s'?"), books.first.title, library.name)
                     else
-                      _('Are you sure you want to delete the ' \
+                      _("Are you sure you want to delete the " \
                         "selected books from '%s'?") % library.name
                     end
           description = nil

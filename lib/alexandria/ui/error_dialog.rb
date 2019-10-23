@@ -4,7 +4,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/alert_dialog'
+require "alexandria/ui/alert_dialog"
 
 module Alexandria
   module UI

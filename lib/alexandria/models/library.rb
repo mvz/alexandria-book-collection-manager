@@ -4,12 +4,12 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'yaml'
-require 'fileutils'
-require 'rexml/document'
-require 'tempfile'
-require 'etc'
-require 'alexandria/library_store'
+require "yaml"
+require "fileutils"
+require "rexml/document"
+require "tempfile"
+require "etc"
+require "alexandria/library_store"
 
 module Alexandria
   class Library < Array
@@ -17,12 +17,12 @@ module Alexandria
 
     attr_reader :name
     attr_accessor :ruined_books, :updating, :deleted_books
-    DEFAULT_DIR = File.join(ENV['HOME'], '.alexandria')
-    EXT = { book: '.yaml', cover: '.cover' }.freeze
+    DEFAULT_DIR = File.join(ENV["HOME"], ".alexandria")
+    EXT = { book: ".yaml", cover: ".cover" }.freeze
 
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     BOOK_ADDED, BOOK_UPDATED, BOOK_REMOVED = (0..3).to_a
     include Observable
@@ -36,7 +36,7 @@ module Alexandria
     end
 
     def self.generate_new_name(existing_libraries,
-                               from_base = _('Untitled'))
+                               from_base = _("Untitled"))
       i = 1
       name = nil
       all_libraries = existing_libraries + @@deleted_libraries
@@ -71,11 +71,11 @@ module Alexandria
     def self.extract_numbers(entry)
       return [] if entry.nil? || entry.empty?
 
-      normalized = entry.delete('- ').upcase
+      normalized = entry.delete("- ").upcase
       return [] unless /\A[\dX]*\Z/.match?(normalized)
 
-      normalized.split('').map do |char|
-        char == 'X' ? 10 : char.to_i
+      normalized.split("").map do |char|
+        char == "X" ? 10 : char.to_i
       end
     end
 
@@ -84,7 +84,7 @@ module Alexandria
         accumulator + numbers[i] * (i + 1)
       end % 11
 
-      sum == 10 ? 'X' : sum
+      sum == 10 ? "X" : sum
     end
 
     def self.valid_isbn?(isbn)
@@ -117,18 +117,18 @@ module Alexandria
     end
 
     AMERICAN_UPC_LOOKUP = {
-      '014794' => '08041', '018926' => '0445', '02778' => '0449',
-      '037145' => '0812', '042799' => '0785',  '043144' => '0688',
-      '044903' => '0312', '045863' => '0517', '046594' => '0064',
-      '047132' => '0152', '051487' => '08167', '051488' => '0140',
-      '060771' => '0002', '065373' => '0373', '070992' => '0523',
-      '070993' => '0446', '070999' => '0345', '071001' => '0380',
-      '071009' => '0440', '071125' => '088677', '071136' => '0451',
-      '071149' => '0451', '071152' => '0515', '071162' => '0451',
-      '071268' => '08217', '071831' => '0425', '071842' => '08439',
-      '072742' => '0441', '076714' => '0671', '076783' => '0553',
-      '076814' => '0449', '078021' => '0872', '079808' => '0394',
-      '090129' => '0679', '099455' => '0061', '099769' => '0451'
+      "014794" => "08041", "018926" => "0445", "02778" => "0449",
+      "037145" => "0812", "042799" => "0785",  "043144" => "0688",
+      "044903" => "0312", "045863" => "0517", "046594" => "0064",
+      "047132" => "0152", "051487" => "08167", "051488" => "0140",
+      "060771" => "0002", "065373" => "0373", "070992" => "0523",
+      "070993" => "0446", "070999" => "0345", "071001" => "0380",
+      "071009" => "0440", "071125" => "088677", "071136" => "0451",
+      "071149" => "0451", "071152" => "0515", "071162" => "0451",
+      "071268" => "08217", "071831" => "0425", "071842" => "08439",
+      "072742" => "0441", "076714" => "0671", "076783" => "0553",
+      "076814" => "0449", "078021" => "0872", "079808" => "0394",
+      "090129" => "0679", "099455" => "0061", "099769" => "0451"
     }.freeze
 
     def self.upc_convert(upc)
@@ -137,15 +137,15 @@ module Alexandria
     end
 
     def self.canonicalise_ean(code)
-      code = code.to_s.delete('- ')
+      code = code.to_s.delete("- ")
       if valid_ean?(code)
         code
       elsif valid_isbn?(code)
-        code = '978' + code[0..8]
+        code = "978" + code[0..8]
         code + String(ean_checksum(extract_numbers(code)))
       elsif valid_upc?(code)
         isbn10 = canonicalise_isbn
-        code = '978' + isbn10[0..8]
+        code = "978" + isbn10[0..8]
         code + String(ean_checksum(extract_numbers(code)))
       end
     end
@@ -185,8 +185,8 @@ module Alexandria
       end
       book.saved_ident = book.ident
 
-      filename = book.saved_ident.to_s + '.yaml'
-      File.open(filename, 'w') { |io| io.puts book.to_yaml }
+      filename = book.saved_ident.to_s + ".yaml"
+      File.open(filename, "w") { |io| io.puts book.to_yaml }
       filename
     end
 
@@ -212,7 +212,7 @@ module Alexandria
 
       temp_book = book.dup
       temp_book.library = nil
-      File.open(yaml(temp_book), 'w') { |io| io.puts temp_book.to_yaml }
+      File.open(yaml(temp_book), "w") { |io| io.puts temp_book.to_yaml }
 
       # Do not notify twice.
       if changed?
@@ -231,7 +231,7 @@ module Alexandria
       Dir.chdir(path) do
         # Fetch the cover picture.
         cover_file = cover(book)
-        File.open(cover_file, 'w') do |io|
+        File.open(cover_file, "w") do |io|
           uri = URI.parse(cover_uri)
           if uri.scheme.nil?
             # Regular filename.
@@ -388,12 +388,12 @@ module Alexandria
     end
 
     def self.jpeg?(file)
-      IO.read(file, 10)[6..9] == 'JFIF'
+      IO.read(file, 10)[6..9] == "JFIF"
     end
 
     def final_cover(book)
       # TODO: what about PNG?
-      book.ident + (Library.jpeg?(cover(book)) ? '.jpg' : '.gif')
+      book.ident + (Library.jpeg?(cover(book)) ? ".jpg" : ".gif")
     end
 
     protected

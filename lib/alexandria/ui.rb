@@ -17,35 +17,35 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'gdk_pixbuf2'
-require 'gtk3'
+require "gdk_pixbuf2"
+require "gtk3"
 
-require 'alexandria/ui/icons'
-require 'alexandria/ui/builder_base'
-require 'alexandria/ui/completion_models'
-require 'alexandria/ui/libraries_combo'
-require 'alexandria/ui/multi_drag_treeview'
-require 'alexandria/ui/main_app'
+require "alexandria/ui/icons"
+require "alexandria/ui/builder_base"
+require "alexandria/ui/completion_models"
+require "alexandria/ui/libraries_combo"
+require "alexandria/ui/multi_drag_treeview"
+require "alexandria/ui/main_app"
 
 module Alexandria
   module UI
     include Logging
     def self.init_icons
-      log.info { 'Initializing Icons...' }
+      log.info { "Initializing Icons..." }
       Icons.init
     end
 
     def self.start_main_app
-      puts '==========================' if $DEBUG
-      log.info { 'Starting MainApp...' }
-      puts '==========================' if $DEBUG
+      puts "==========================" if $DEBUG
+      log.info { "Starting MainApp..." }
+      puts "==========================" if $DEBUG
       MainApp.instance
     end
 
     def self.start_gtk
-      puts '====================================' if $DEBUG
-      log.info { 'Starting Gtk...' }
-      puts '====================================' if $DEBUG
+      puts "====================================" if $DEBUG
+      log.info { "Starting Gtk..." }
+      puts "====================================" if $DEBUG
       Gtk.main
     end
 

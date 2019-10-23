@@ -4,56 +4,56 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/scanners/cue_cat'
-require 'alexandria/scanners/keyboard'
-require 'alexandria/ui/builder_base'
-require 'alexandria/ui/provider_preferences_dialog'
-require 'alexandria/ui/new_provider_dialog'
+require "alexandria/scanners/cue_cat"
+require "alexandria/scanners/keyboard"
+require "alexandria/ui/builder_base"
+require "alexandria/ui/provider_preferences_dialog"
+require "alexandria/ui/new_provider_dialog"
 
 module Alexandria
   module UI
     class PreferencesDialog < BuilderBase
       include Alexandria::Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, &changed_block)
-        super('preferences_dialog__builder.glade', widget_names)
+        super("preferences_dialog__builder.glade", widget_names)
         @preferences_dialog.transient_for = parent
         @changed_block = changed_block
 
         @cols = {
-          @checkbutton_col_authors      => 'col_authors_visible',
-          @checkbutton_col_isbn         => 'col_isbn_visible',
-          @checkbutton_col_publisher    => 'col_publisher_visible',
-          @checkbutton_col_publish_date => 'col_publish_date_visible',
-          @checkbutton_col_edition      => 'col_edition_visible',
-          @checkbutton_col_redd         => 'col_redd_visible',
-          @checkbutton_col_own          => 'col_own_visible',
-          @checkbutton_col_want         => 'col_want_visible',
-          @checkbutton_col_rating       => 'col_rating_visible',
-          @checkbutton_col_tags         => 'col_tags_visible',
-          @checkbutton_col_loaned_to    => 'col_loaned_to_visible'
+          @checkbutton_col_authors      => "col_authors_visible",
+          @checkbutton_col_isbn         => "col_isbn_visible",
+          @checkbutton_col_publisher    => "col_publisher_visible",
+          @checkbutton_col_publish_date => "col_publish_date_visible",
+          @checkbutton_col_edition      => "col_edition_visible",
+          @checkbutton_col_redd         => "col_redd_visible",
+          @checkbutton_col_own          => "col_own_visible",
+          @checkbutton_col_want         => "col_want_visible",
+          @checkbutton_col_rating       => "col_rating_visible",
+          @checkbutton_col_tags         => "col_tags_visible",
+          @checkbutton_col_loaned_to    => "col_loaned_to_visible"
         }
         @cols.each_pair do |checkbutton, pref_name|
           if checkbutton
             checkbutton.active = Preferences.instance.send(pref_name)
           else
-            log.warn {
+            log.warn do
               "no CheckButton for property #{pref_name} " \
-              '(probably conflicting versions of GUI and lib code)'
-            }
+              "(probably conflicting versions of GUI and lib code)"
+            end
           end
         end
 
         model = Gtk::ListStore.new(String, String, TrueClass, Integer)
         @treeview_providers.model = model
         reload_providers
-        model.signal_connect_after('row-changed') { update_priority }
+        model.signal_connect_after("row-changed") { update_priority }
 
         renderer = Gtk::CellRendererToggle.new
         renderer.activatable = true
-        renderer.signal_connect('toggled') do |_rndrr, path|
+        renderer.signal_connect("toggled") do |_rndrr, path|
           tree_path = Gtk::TreePath.new(path)
           @treeview_providers.selection.select_path(tree_path)
           prov = selected_provider
@@ -65,7 +65,7 @@ module Alexandria
         end
 
         # renderer.active = true
-        column = Gtk::TreeViewColumn.new('Enabled', renderer)
+        column = Gtk::TreeViewColumn.new("Enabled", renderer)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           value = iter[2]
           rndr.active = value
@@ -74,7 +74,7 @@ module Alexandria
         @treeview_providers.append_column(column)
 
         renderer = Gtk::CellRendererText.new
-        column = Gtk::TreeViewColumn.new('Providers',
+        column = Gtk::TreeViewColumn.new("Providers",
                                          renderer)
         # :text => 0)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
@@ -86,7 +86,7 @@ module Alexandria
           # rndr.active = value
         end
         @treeview_providers.append_column(column)
-        @treeview_providers.selection.signal_connect('changed') \
+        @treeview_providers.selection.signal_connect("changed") \
         { sensitize_providers }
 
         @button_prov_setup.sensitive = false
@@ -127,7 +127,7 @@ module Alexandria
         @scanner_device_type.model = @scanner_device_model
         renderer = Gtk::CellRendererText.new
         @scanner_device_type.pack_start(renderer, true)
-        @scanner_device_type.add_attribute(renderer, 'text', 0)
+        @scanner_device_type.add_attribute(renderer, "text", 0)
 
         Alexandria::Scanners.each_scanner do |scanner|
           iter = @scanner_device_model.append
@@ -144,16 +144,16 @@ module Alexandria
       def setup_enable_disable_popup
         # New Enable/Disable pop-up menu...
         @enable_disable_providers_menu = Gtk::Menu.new
-        @enable_item = Gtk::MenuItem.new(label: _('Disable Provider'))
-        @enable_item.signal_connect('activate') {
+        @enable_item = Gtk::MenuItem.new(label: _("Disable Provider"))
+        @enable_item.signal_connect("activate") do
           prov = selected_provider
           prov.toggle_enabled
           adjust_selected_provider(prov)
-        }
+        end
         @enable_disable_providers_menu.append(@enable_item)
         @enable_disable_providers_menu.show_all
 
-        @treeview_providers.signal_connect('button_press_event') do |widget, event|
+        @treeview_providers.signal_connect("button_press_event") do |widget, event|
           if event_is_right_click(event)
             if (path = widget.get_path_at_pos(event.x, event.y))
               widget.grab_focus
@@ -166,7 +166,7 @@ module Alexandria
               sel = widget.selection.selected
               if sel
                 already_enabled = sel[2]
-                message = already_enabled ? _('Disable Provider') : _('Enable Provider')
+                message = already_enabled ? _("Disable Provider") : _("Enable Provider")
                 @enable_item.label = message
                 GLib::Idle.add do
                   @enable_disable_providers_menu.popup(nil, nil, event.button, event.time)
@@ -174,28 +174,28 @@ module Alexandria
                 end
               end
             else
-              puts 'not on a path'
+              puts "not on a path"
             end
           end
         end
 
         # Popup the menu on Shift-F10
-        @treeview_providers.signal_connect('popup_menu') {
+        @treeview_providers.signal_connect("popup_menu") do
           selected_prov = @treeview_providers.selection.selected
           puts selected_prov.inspect
           if selected_prov
             GLib::Idle.add do
               already_enabled = selected_prov[2]
-              message = already_enabled ? _('Disable Provider') : _('Enable Provider')
+              message = already_enabled ? _("Disable Provider") : _("Enable Provider")
               @enable_item.label = message
 
               @enable_disable_providers_menu.popup(nil, nil, 0, :current_time)
               false
             end
           else
-            puts 'no action'
+            puts "no action"
           end
-        }
+        end
       end
 
       def event_is_right_click(event)
@@ -203,7 +203,7 @@ module Alexandria
       end
 
       def prefs_empty(prefs)
-        prefs.empty? || ((prefs.size == 1) && (prefs.first.name == 'enabled'))
+        prefs.empty? || ((prefs.size == 1) && (prefs.first.name == "enabled"))
       end
 
       def on_provider_setup
@@ -262,17 +262,17 @@ module Alexandria
       def on_provider_remove
         provider = selected_provider
         dialog = AlertDialog.new(@main_app,
-                                 _('Are you sure you want to ' \
-                                   'permanently delete the provider ' \
+                                 _("Are you sure you want to " \
+                                   "permanently delete the provider " \
                                    "'%s'?") % provider.fullname,
                                  Gtk::Stock::DIALOG_QUESTION,
                                  [[Gtk::Stock::CANCEL,
                                    Gtk::ResponseType::CANCEL],
                                   [Gtk::Stock::DELETE,
                                    Gtk::ResponseType::OK]],
-                                 _('If you continue, the provider and ' \
-                                   'all of its preferences will be ' \
-                                   'permanently deleted.'))
+                                 _("If you continue, the provider and " \
+                                   "all of its preferences will be " \
+                                   "permanently deleted."))
         dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
         if dialog.run == Gtk::ResponseType::OK
@@ -304,7 +304,7 @@ module Alexandria
 
       def on_help
         Alexandria::UI.display_help(@preferences_dialog,
-                                    'alexandria-preferences')
+                                    "alexandria-preferences")
       end
 
       private

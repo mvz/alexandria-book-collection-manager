@@ -4,23 +4,23 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/alert_dialog'
+require "alexandria/ui/alert_dialog"
 
 module Alexandria
   module UI
     class ConflictWhileCopyingDialog < AlertDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, library, book)
         super(parent,
               format(_("The book '%s' already exists in '%s'. Would you like " \
-                'to replace it?'), book.title, library.name),
+                "to replace it?"), book.title, library.name),
               Gtk::Stock::DIALOG_QUESTION,
-              [[_('_Skip'), Gtk::ResponseType::CANCEL],
-               [_('_Replace'), Gtk::ResponseType::OK]],
-              _('If you replace the existing book, its contents will ' \
-                'be overwritten.'))
+              [[_("_Skip"), Gtk::ResponseType::CANCEL],
+               [_("_Replace"), Gtk::ResponseType::OK]],
+              _("If you replace the existing book, its contents will " \
+                "be overwritten."))
         self.default_response = Gtk::ResponseType::CANCEL
       end
 

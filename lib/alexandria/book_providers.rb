@@ -19,8 +19,8 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'singleton'
-require 'observer'
+require "singleton"
+require "observer"
 
 module Alexandria
   # FIXME: Use delegation instead of inheritance.
@@ -29,7 +29,7 @@ module Alexandria
     include Singleton
     include Observable
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS,
     SEARCH_BY_KEYWORD = (0..3).to_a
@@ -47,9 +47,9 @@ module Alexandria
 
       begin
         factory = instance[factory_n]
-        puts factory.fullname + ' lookup' if $DEBUG
+        puts factory.fullname + " lookup" if $DEBUG
         unless factory.enabled
-          puts factory.fullname + ' disabled!, skipping...' if $DEBUG
+          puts factory.fullname + " disabled!, skipping..." if $DEBUG
           raise ProviderSkippedError
         end
         instance.changed
@@ -64,7 +64,7 @@ module Alexandria
           instance.notify_observers(:not_found, factory.fullname) # new
           raise NoResultsError
         else
-          log.info { 'found at ' + factory.fullname }
+          log.info { "found at " + factory.fullname }
           instance.changed
           instance.notify_observers(:found, factory.fullname) # new
           return results
@@ -88,27 +88,27 @@ module Alexandria
           message = case ex
                     when Timeout::Error
                       _("Couldn't reach the provider '%s': timeout " \
-                        'expired.') % factory.name
+                        "expired.") % factory.name
 
                     when SocketError
                       format(_("Couldn't reach the provider '%s': socket " \
-                        'error (%s).'), factory.name, ex.message)
+                        "error (%s)."), factory.name, ex.message)
 
                     when NoResultsError
-                      _('No results were found.  Make sure your ' \
-                        'search criterion is spelled correctly, and ' \
-                        'try again.')
+                      _("No results were found.  Make sure your " \
+                        "search criterion is spelled correctly, and " \
+                        "try again.")
 
                     when ProviderSkippedError
-                      _('No results were found.  Make sure your ' \
-                        'search criterion is spelled correctly, and ' \
-                        'try again.')
+                      _("No results were found.  Make sure your " \
+                        "search criterion is spelled correctly, and " \
+                        "try again.")
 
                     when TooManyResultsError
-                      _('Too many results for that search.')
+                      _("Too many results for that search.")
 
                     when InvalidSearchTypeError
-                      _('Invalid search type.')
+                      _("Invalid search type.")
 
                     else
                       ex.message
@@ -152,7 +152,7 @@ module Alexandria
         end
 
         def new_value=(new_value)
-          message = @provider.variable_name(self) + '='
+          message = @provider.variable_name(self) + "="
           Alexandria::Preferences.instance.send(message,
                                                 new_value)
           self.value = new_value
@@ -189,7 +189,7 @@ module Alexandria
         each do |var|
           message = @provider.variable_name(var)
           val = Alexandria::Preferences.instance.send(message)
-          var.value = val unless val.nil? || ((val == '') && var.mandatory?)
+          var.value = val unless val.nil? || ((val == "") && var.mandatory?)
         end
       end
     end
@@ -203,27 +203,27 @@ module Alexandria
         @name = name
         @fullname = (fullname || name)
         @prefs = Preferences.new(self)
-        @prefs.add('enabled', _('Enabled'), true, [true, false])
+        @prefs.add("enabled", _("Enabled"), true, [true, false])
       end
 
       def enabled
-        @prefs['enabled']
+        @prefs["enabled"]
       end
 
       def toggle_enabled
         old_value = enabled
-        @prefs.variable_named('enabled').new_value = !old_value
+        @prefs.variable_named("enabled").new_value = !old_value
       end
 
       def reinitialize(fullname)
-        @name << '_' << fullname.hash.to_s
+        @name << "_" << fullname.hash.to_s
         @fullname = fullname
         prefs = Alexandria::Preferences.instance
         ary = prefs.abstract_providers
         ary ||= []
         ary << @name
         prefs.abstract_providers = ary
-        message = variable_name('name') + '='
+        message = variable_name("name") + "="
         prefs.send(message, @fullname)
       end
 
@@ -241,7 +241,7 @@ module Alexandria
           name = variable_name(variable)
           prefs.remove_preference(name)
         end
-        name = variable_name('name')
+        name = variable_name("name")
         prefs.remove_preference(name)
         prefs.save!
       end
@@ -255,7 +255,7 @@ module Alexandria
             else
               raise
             end
-        @name.downcase + '_' + s
+        @name.downcase + "_" + s
       end
 
       def transport
@@ -289,24 +289,24 @@ module Alexandria
       unabstract
     end
 
-    require 'alexandria/book_providers/douban' # only requires YAML
+    require "alexandria/book_providers/douban" # only requires YAML
 
     # require 'alexandria/book_providers/renaud'
-    log.info { 'Not loading Renaud (provider not functional)' }
+    log.info { "Not loading Renaud (provider not functional)" }
 
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
-    require 'alexandria/book_providers/amazon_aws'
+    require "alexandria/book_providers/amazon_aws"
 
     # Website based providers
-    require 'alexandria/book_providers/adlibris'
-    require 'alexandria/book_providers/barnes_and_noble'
-    require 'alexandria/book_providers/proxis'
-    require 'alexandria/book_providers/siciliano'
-    require 'alexandria/book_providers/thalia'
-    require 'alexandria/book_providers/worldcat'
+    require "alexandria/book_providers/adlibris"
+    require "alexandria/book_providers/barnes_and_noble"
+    require "alexandria/book_providers/proxis"
+    require "alexandria/book_providers/siciliano"
+    require "alexandria/book_providers/thalia"
+    require "alexandria/book_providers/worldcat"
 
     # Z39.50 based providers
-    require 'alexandria/book_providers/z3950'
+    require "alexandria/book_providers/z3950"
 
     attr_reader :abstract_classes
 
@@ -345,11 +345,11 @@ module Alexandria
           md = /^(.+)_/.match(name)
           next unless md
 
-          klass_name = md[1] + 'Provider'
+          klass_name = md[1] + "Provider"
           klass = @abstract_classes.find { |x| x.name.include?(klass_name) }
           next unless klass
 
-          fullname = @prefs.send(name.downcase + '_name')
+          fullname = @prefs.send(name.downcase + "_name")
           next unless fullname
 
           instance = klass.new
@@ -385,17 +385,17 @@ module Alexandria
       unless priority.empty?
         changed = false
 
-        if (ecs_index = priority.index('AmazonECS'))
-          priority[ecs_index] = 'Amazon' # replace legacy "AmazonECS" name
+        if (ecs_index = priority.index("AmazonECS"))
+          priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
           priority.uniq! # remove any other "Amazon" from the list
           changed = true
         end
-        if (worldcat_index = priority.index('Worldcat'))
-          priority[worldcat_index] = 'WorldCat'
+        if (worldcat_index = priority.index("Worldcat"))
+          priority[worldcat_index] = "WorldCat"
           changed = true
         end
-        if (adlibris_index = priority.index('Adlibris'))
-          priority[adlibris_index] = 'AdLibris'
+        if (adlibris_index = priority.index("Adlibris"))
+          priority[adlibris_index] = "AdLibris"
           changed = true
         end
         @prefs.providers_priority = priority if changed

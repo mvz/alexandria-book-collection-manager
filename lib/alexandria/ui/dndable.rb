@@ -21,15 +21,15 @@
 
 module Alexandria
   module UI
-    BOOKS_TARGET_TABLE = [Gtk::TargetEntry.new('ALEXANDRIA_BOOKS', :same_app, 0)].freeze
+    BOOKS_TARGET_TABLE = [Gtk::TargetEntry.new("ALEXANDRIA_BOOKS", :same_app, 0)].freeze
 
     module DragAndDropable
       BADGE_MARKUP = '<span weight="heavy" foreground="white">%d</span>'
 
       def setup_view_source_dnd(view)
         # better be Loggable!
-        log.info { format('setup_view_source_dnd for %s', view) }
-        view.signal_connect_after('drag-begin') do |_widget, drag_context|
+        log.info { format("setup_view_source_dnd for %s", view) }
+        view.signal_connect_after("drag-begin") do |_widget, drag_context|
           n_books = @parent.selected_books.length
           if n_books > 1
             # Render generic book icon.
@@ -45,8 +45,8 @@ module Alexandria
 
             # Draw a red ellipse where the badge number should be.
             red_gc = Gdk::GC.new(pixmap)
-            red_gc.rgb_fg_color = Gdk::Color.parse('red')
-            red_gc.rgb_bg_color = Gdk::Color.parse('red')
+            red_gc.rgb_fg_color = Gdk::Color.parse("red")
+            red_gc.rgb_bg_color = Gdk::Color.parse("red")
             pixmap.draw_arc(red_gc,
                             true,
                             x - 5, y - 2,
@@ -66,11 +66,11 @@ module Alexandria
           end
         end
 
-        view.signal_connect('drag-data-get') do |_widget, _drag_context, selection_data, _info, _time|
+        view.signal_connect("drag-data-get") do |_widget, _drag_context, selection_data, _info, _time|
           idents = @parent.selected_books.map(&:ident)
           unless idents.empty?
             selection_data.set(Gdk::Selection::TYPE_STRING,
-                               idents.join(','))
+                               idents.join(","))
           end
         end
 

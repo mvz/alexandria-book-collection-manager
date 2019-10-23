@@ -9,20 +9,20 @@
 
 # Author: Sun Ning <classicning@gmail.com>, http://sunng.info/
 
-require 'cgi'
-require 'alexandria/net'
-require 'yaml'
+require "cgi"
+require "alexandria/net"
+require "yaml"
 
 module Alexandria
   class BookProviders
     class DoubanProvider < GenericProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.douban.com'
-      BASE_URL = 'http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json'
+      SITE = "http://www.douban.com"
+      BASE_URL = "http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json"
 
       def initialize
-        super('Douban', 'Douban (China)')
+        super("Douban", "Douban (China)")
         prefs.read
       end
 
@@ -61,7 +61,7 @@ module Alexandria
         yaml = json.gsub(/(\:|\,)([0-9'"{\[])/) do |_match|
           "#{Regexp.last_match[1]} #{Regexp.last_match[2]}"
         end
-        yaml.gsub!(/\\\//, '/') # unescape forward slashes
+        yaml.gsub!(%r{\\/}, "/") # unescape forward slashes
         yaml
       end
 
@@ -73,27 +73,27 @@ module Alexandria
           # dbresult = JSON.parse(response)
           dbresult = YAML.safe_load(json2yaml(response))
           # File.open(",douban.yaml", "wb") {|f| f.write(json2yaml(response)) }
-          if dbresult['opensearch:totalResults']['$t'].to_i > 0
-            dbresult['entry'].each do |item|
-              name = item['title']['$t']
+          if dbresult["opensearch:totalResults"]["$t"].to_i > 0
+            dbresult["entry"].each do |item|
+              name = item["title"]["$t"]
               isbn = nil
               publisher = nil
               pubdate = nil
               binding = nil
-              item['db:attribute'].each do |av|
-                isbn = av['$t'] if av['@name'] == 'isbn13'
-                publisher = av['$t'] if av['@name'] == 'publisher'
-                pubdate = av['$t'] if av['@name'] == 'pubdate'
-                binding = av['$t'] if av['@name'] == 'binding'
+              item["db:attribute"].each do |av|
+                isbn = av["$t"] if av["@name"] == "isbn13"
+                publisher = av["$t"] if av["@name"] == "publisher"
+                pubdate = av["$t"] if av["@name"] == "pubdate"
+                binding = av["$t"] if av["@name"] == "binding"
               end
-              authors = if item['author']
-                          item['author'].map { |a| a['name']['$t'] }
+              authors = if item["author"]
+                          item["author"].map { |a| a["name"]["$t"] }
                         else
                           []
                         end
               image_url = nil
-              item['link'].each do |av|
-                image_url = av['@href'] if av['@rel'] == 'image'
+              item["link"].each do |av|
+                image_url = av["@href"] if av["@rel"] == "image"
               end
               book = Book.new(name, authors, isbn, publisher, pubdate, binding)
               book_search_results << [book, image_url]

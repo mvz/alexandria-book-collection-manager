@@ -4,16 +4,16 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/export_format'
-require 'alexandria/ui/confirm_erase_dialog'
-require 'alexandria/ui/error_dialog'
+require "alexandria/export_format"
+require "alexandria/ui/confirm_erase_dialog"
+require "alexandria/ui/error_dialog"
 
 module Alexandria
   module UI
     class ExportDialog < SimpleDelegator
       include GetText
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       FORMATS = Alexandria::ExportFormat.all
       THEMES = Alexandria::WebTheme.all
@@ -24,11 +24,11 @@ module Alexandria
                                                     action: :save,
                                                     buttons: [[Gtk::Stock::HELP, :help],
                                                               [Gtk::Stock::CANCEL, :cancel],
-                                                              [_('_Export'), :accept]])
+                                                              [_("_Export"), :accept]])
         super(@export_dialog)
 
         self.current_name = library.name
-        signal_connect('destroy') { hide }
+        signal_connect("destroy") { hide }
 
         @parent = parent
         @library = library
@@ -42,12 +42,12 @@ module Alexandria
         THEMES.each do |theme|
           @theme_combo.append_text(theme.name)
         end
-        @theme_combo.signal_connect('changed') do
+        @theme_combo.signal_connect("changed") do
           file = THEMES[@theme_combo.active].preview_file
           preview_image.pixbuf = GdkPixbuf::Pixbuf.new(file: file)
         end
         @theme_combo.active = 0
-        theme_label = Gtk::Label.new(_('_Theme:'), use_underline: true)
+        theme_label = Gtk::Label.new(_("_Theme:"), use_underline: true)
         theme_label.xalign = 0
         theme_label.mnemonic_widget = @theme_combo
 
@@ -55,23 +55,23 @@ module Alexandria
         @types_combo.vexpand = false
         @types_combo.valign = :center
         FORMATS.each do |format|
-          text = format.name + ' ('
+          text = format.name + " ("
           text += if format.ext
-                    '*.' + format.ext
+                    "*." + format.ext
                   else
-                    _('directory')
+                    _("directory")
                   end
-          text += ')'
+          text += ")"
           @types_combo.append_text(text)
         end
         @types_combo.active = 0
-        @types_combo.signal_connect('changed') do
+        @types_combo.signal_connect("changed") do
           visible = FORMATS[@types_combo.active].needs_preview?
           theme_label.visible = @theme_combo.visible = preview_image.visible = visible
         end
         @types_combo.show
 
-        types_label = Gtk::Label.new(_('Export for_mat:'), use_underline: true)
+        types_label = Gtk::Label.new(_("Export for_mat:"), use_underline: true)
         types_label.xalign = 0
         types_label.mnemonic_widget = @types_combo
         types_label.show
@@ -92,13 +92,13 @@ module Alexandria
             (response != Gtk::ResponseType::DELETE_EVENT)
 
           if response == Gtk::ResponseType::HELP
-            Alexandria::UI.display_help(self, 'exporting')
+            Alexandria::UI.display_help(self, "exporting")
           else
             begin
               break if on_export(FORMATS[@types_combo.active],
                                  THEMES[@theme_combo.active])
             rescue StandardError => ex
-              ErrorDialog.new(@export_dialog, _('Export failed'), ex.message).display
+              ErrorDialog.new(@export_dialog, _("Export failed"), ex.message).display
             end
           end
         end
@@ -112,7 +112,7 @@ module Alexandria
 
         filename = self.filename
         if format.ext
-          filename += '.' + format.ext if File.extname(filename).empty?
+          filename += "." + format.ext if File.extname(filename).empty?
           if File.exist?(filename)
             dialog = ConfirmEraseDialog.new(@export_dialog, filename)
             return unless dialog.erase?
@@ -124,10 +124,10 @@ module Alexandria
           if File.exist?(filename)
             unless File.directory?(filename)
               msg = _("The target, named '%s', is a regular " \
-                      'file.  A directory is needed for this ' \
-                      'operation.  Please select a directory and ' \
-                      'try again.') % filename
-              ErrorDialog.new(@export_dialog, _('Not a directory'), msg).display
+                      "file.  A directory is needed for this " \
+                      "operation.  Please select a directory and " \
+                      "try again.") % filename
+              ErrorDialog.new(@export_dialog, _("Not a directory"), msg).display
               return
             end
           else

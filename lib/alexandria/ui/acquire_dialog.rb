@@ -4,14 +4,14 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'monitor'
-require 'alexandria/scanners/cue_cat'
-require 'alexandria/scanners/keyboard'
+require "monitor"
+require "alexandria/scanners/cue_cat"
+require "alexandria/scanners/keyboard"
 
-require 'alexandria/ui/builder_base'
-require 'alexandria/ui/barcode_animation'
-require 'alexandria/ui/error_dialog'
-require 'alexandria/ui/sound'
+require "alexandria/ui/builder_base"
+require "alexandria/ui/barcode_animation"
+require "alexandria/ui/error_dialog"
+require "alexandria/ui/sound"
 
 module Alexandria
   module UI
@@ -42,10 +42,10 @@ module Alexandria
       include GetText
       include Logging
       extend GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, selected_library = nil, &block)
-        super('acquire_dialog__builder.glade', widget_names)
+        super("acquire_dialog__builder.glade", widget_names)
         @acquire_dialog.transient_for = @parent = parent
         @block = block
 
@@ -200,8 +200,8 @@ module Alexandria
         if isbn_duplicates.empty?
           @acquire_dialog.destroy unless adding_a_selection
         else
-          message = n_('There was %d duplicate',
-                       'There were %d duplicates',
+          message = n_("There was %d duplicate",
+                       "There were %d duplicates",
                        isbn_duplicates.size) % isbn_duplicates.size
           title = n_("Couldn't add this book",
                      "Couldn't add these books",
@@ -220,7 +220,7 @@ module Alexandria
 
       def read_barcode_scan
         @animation.start
-        play_sound('scanning') if @test_scan
+        play_sound("scanning") if @test_scan
         log.debug { "reading scanner data #{@scanner_buffer}" }
         barcode_text = nil
         isbn = nil
@@ -233,22 +233,22 @@ module Alexandria
         rescue StandardError => ex
           log.error { "Bad scan:  #{@scanner_buffer} #{ex}" }
         ensure
-          @scanner_buffer = ''
+          @scanner_buffer = ""
         end
         if isbn
           log.debug { "Got ISBN #{isbn}" }
-          play_sound('good_scan')
+          play_sound("good_scan")
 
           @barcodes_treeview.model.freeze_notify do
             iter = @barcodes_treeview.model.append
             iter[0] = isbn
             iter[1] = Icons::BOOK
-            iter[2] = ''
+            iter[2] = ""
           end
           lookup_book(isbn)
         else
-          log.debug { 'was not an ISBN barcode' }
-          play_sound('bad_scan')
+          log.debug { "was not an ISBN barcode" }
+          play_sound("bad_scan")
         end
       end
 
@@ -363,7 +363,7 @@ module Alexandria
             if cover_uri
               image_data = nil
               if URI.parse(cover_uri).scheme.nil?
-                File.open(cover_uri, 'r') do |io|
+                File.open(cover_uri, "r") do |io|
                   image_data = io.read
                 end
               else
@@ -385,30 +385,30 @@ module Alexandria
               end
             end
           rescue StandardError => ex
-            log.error {
+            log.error do
               "Failed to load cover image icon: #{ex.message}"
-            }
+            end
             log << ex if log.error?
           end
         end
       end
 
       def on_destroy
-        MainApp.instance.ui_manager.set_status_label('')
+        MainApp.instance.ui_manager.set_status_label("")
         notify_end_add_by_isbn
         # TODO: possibly make sure all threads have stopped running
         @animation.destroy
       end
 
       def setup_scanner_area
-        @scanner_buffer = ''
+        @scanner_buffer = ""
         scanner_name = @prefs.barcode_scanner
 
         @scanner = Alexandria::Scanners.find_scanner(scanner_name) ||
           Alexandria::Scanners.default_scanner # CueCat is default
 
         log.debug { "Using #{@scanner.name} scanner" }
-        message = _('Ready to use %s barcode scanner') % @scanner.name
+        message = _("Ready to use %s barcode scanner") % @scanner.name
         MainApp.instance.ui_manager.set_status_label(message)
 
         @prev_time = 0
@@ -418,40 +418,40 @@ module Alexandria
         @scan_frame.add(@animation.canvas)
 
         # attach signals
-        @scan_area.signal_connect('button-press-event') do |_widget, _event|
+        @scan_area.signal_connect("button-press-event") do |_widget, _event|
           @scan_area.grab_focus
         end
-        @scan_area.signal_connect('focus-in-event') do |_widget, _event|
-          @barcode_label.label = _(format('%s _Barcode Scanner Ready', _(@scanner.display_name)))
-          @scanner_buffer = ''
+        @scan_area.signal_connect("focus-in-event") do |_widget, _event|
+          @barcode_label.label = _(format("%s _Barcode Scanner Ready", _(@scanner.display_name)))
+          @scanner_buffer = ""
           begin
             @animation.set_active
           rescue StandardError => ex
             log << ex if log.error?
           end
         end
-        @scan_area.signal_connect('focus-out-event') do |_widget, _event|
-          @barcode_label.label = _('Click below to scan _barcodes')
-          @scanner_buffer = ''
+        @scan_area.signal_connect("focus-out-event") do |_widget, _event|
+          @barcode_label.label = _("Click below to scan _barcodes")
+          @scanner_buffer = ""
           @animation.set_passive
           # @scanner_background.destroy
         end
 
         @@debug_index = 0
-        @scan_area.signal_connect('key-press-event') do |_button, event|
+        @scan_area.signal_connect("key-press-event") do |_button, event|
           # log.debug { event.keyval }
           # event.keyval == 65293 means Enter key
           # HACK, this disallows numeric keypad entry of data...
           if event.keyval < 255
             if @scanner_buffer.empty?
-              if event.keyval.chr == '`' # backtick key for devs
+              if event.keyval.chr == "`" # backtick key for devs
                 developer_test_scan
                 next
               else
                 # this is our first character, notify user
-                log.debug { 'Scanning! Received first character.' }
+                log.debug { "Scanning! Received first character." }
               end
-              play_sound('scanning')
+              play_sound("scanning")
             end
             @scanner_buffer << event.keyval.chr
 
@@ -475,7 +475,7 @@ module Alexandria
             if @scanner.match? @scanner_buffer
 
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
-                log.debug { 'Waiting for more scanner input...' }
+                log.debug { "Waiting for more scanner input..." }
                 GLib::Idle.add do
                   @animation.manual_input
                   false
@@ -483,7 +483,7 @@ module Alexandria
                 time_to_wait = [3, interval * 4].min
                 sleep(time_to_wait)
                 if buffer == @scanner_buffer
-                  log.debug { 'Buffer unchanged; scanning complete' }
+                  log.debug { "Buffer unchanged; scanning complete" }
                   GLib::Idle.add do
                     @animation.scanner_input
                     false
@@ -494,7 +494,7 @@ module Alexandria
                   @interval = 0
 
                 else
-                  log.debug { 'Buffer has changed while waiting, reading more characters...' }
+                  log.debug { "Buffer has changed while waiting, reading more characters..." }
                 end
               end
 
@@ -504,18 +504,18 @@ module Alexandria
 
         # @sound_player = SoundEffectsPlayer.new
         @sound_players = {}
-        @sound_players['scanning'] = SoundEffectsPlayer.new
-        @sound_players['good_scan'] = SoundEffectsPlayer.new
-        @sound_players['bad_scan'] = SoundEffectsPlayer.new
+        @sound_players["scanning"] = SoundEffectsPlayer.new
+        @sound_players["good_scan"] = SoundEffectsPlayer.new
+        @sound_players["bad_scan"] = SoundEffectsPlayer.new
         @test_scan = false
       end
 
       def play_sound(effect)
-        if effect == 'scanning'
+        if effect == "scanning"
           puts "Effect: #{effect}, playing: #{@prefs.play_scanning_sound}" if $DEBUG
           return unless @prefs.play_scanning_sound
 
-          @sound_players['scanning'].play('scanning')
+          @sound_players["scanning"].play("scanning")
         else
           puts "Effect: #{effect}, playing: #{@prefs.play_scan_sound}" if $DEBUG
           return unless @prefs.play_scan_sound
@@ -526,16 +526,16 @@ module Alexandria
       end
 
       def developer_test_scan
-        log.info { 'Developer test scan.' }
-        scans = ['.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3j3C3f1Dxj3Dq.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3r2DNbXCxTZCW.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGf2.ENr7C3z0DNn0ENnWE3nZDhP6.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7CNT2CxT2ChP0Dq.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7CNT6E3f7CNbWDa.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3b3ENjYDxv3EW.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3b2DxjZE3b3Dq.',
-                 '.C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3n6CNr6DxvYDa.']
+        log.info { "Developer test scan." }
+        scans = [".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3j3C3f1Dxj3Dq.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3r2DNbXCxTZCW.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGf2.ENr7C3z0DNn0ENnWE3nZDhP6.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7CNT2CxT2ChP0Dq.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7CNT6E3f7CNbWDa.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3b3ENjYDxv3EW.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3b2DxjZE3b3Dq.",
+                 ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3n6CNr6DxvYDa."]
         @scanner_buffer = scans[@@debug_index % scans.size]
         @@debug_index += 1
         @test_scan = true
@@ -554,12 +554,12 @@ module Alexandria
         text_renderer.editable = false
 
         # Add column using our renderer
-        col = Gtk::TreeViewColumn.new('ISBN', text_renderer, text: 0)
+        col = Gtk::TreeViewColumn.new("ISBN", text_renderer, text: 0)
         @barcodes_treeview.append_column(col)
 
         # Middle colulmn is cover-image renderer
         pixbuf_renderer = Gtk::CellRendererPixbuf.new
-        col = Gtk::TreeViewColumn.new('Cover', pixbuf_renderer)
+        col = Gtk::TreeViewColumn.new("Cover", pixbuf_renderer)
 
         col.set_cell_data_func(pixbuf_renderer) do |_column, cell, _model, iter|
           pixbuf = iter[1]
@@ -578,10 +578,10 @@ module Alexandria
         @barcodes_treeview.append_column(col)
 
         # Add column using the second renderer
-        col = Gtk::TreeViewColumn.new('Title', text_renderer, text: 2)
+        col = Gtk::TreeViewColumn.new("Title", text_renderer, text: 2)
         @barcodes_treeview.append_column(col)
 
-        @barcodes_treeview.model.signal_connect('row-deleted') do |model, _path|
+        @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|
           @add_button.sensitive = false unless model.iter_first
         end
       end

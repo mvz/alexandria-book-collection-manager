@@ -4,18 +4,18 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/columns'
+require "alexandria/ui/columns"
 
 module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
     class ListViewManager
       include Logging
       include GetText
       include DragAndDropable
-      BOOKS_TARGET_TABLE = [['ALEXANDRIA_BOOKS', :same_app, 0]].freeze
+      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", :same_app, 0]].freeze
 
       def initialize(_listview, parent)
         @parent = parent
@@ -29,18 +29,18 @@ module Alexandria
       end
 
       def setup_title_column
-        title = _('Title')
-        log.debug { format('Create listview column for %s', title) }
+        title = _("Title")
+        log.debug { format("Create listview column for %s", title) }
         column = Gtk::TreeViewColumn.new(title)
 
         renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
-        column.add_attribute(renderer, 'pixbuf', Columns::COVER_LIST)
+        column.add_attribute(renderer, "pixbuf", Columns::COVER_LIST)
 
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
         column.pack_start(renderer, true)
-        column.add_attribute(renderer, 'text', Columns::TITLE)
+        column.add_attribute(renderer, "text", Columns::TITLE)
 
         column.sort_column_id = Columns::TITLE
         column.resizable = true
@@ -48,21 +48,21 @@ module Alexandria
       end
 
       TEXT_COLUMNS = [
-        [_('Authors'), Columns::AUTHORS],
-        [_('ISBN'), Columns::ISBN],
-        [_('Publisher'), Columns::PUBLISHER],
-        [_('Publish Year'), Columns::PUBLISH_DATE],
-        [_('Binding'), Columns::EDITION],
-        [_('Loaned To'), Columns::LOANED_TO]
+        [_("Authors"), Columns::AUTHORS],
+        [_("ISBN"), Columns::ISBN],
+        [_("Publisher"), Columns::PUBLISHER],
+        [_("Publish Year"), Columns::PUBLISH_DATE],
+        [_("Binding"), Columns::EDITION],
+        [_("Loaned To"), Columns::LOANED_TO]
       ].freeze
       CHECK_COLUMNS = [
-        [_('Read'), Columns::REDD],
-        [_('Own'), Columns::OWN],
-        [_('Want'), Columns::WANT]
+        [_("Read"), Columns::REDD],
+        [_("Own"), Columns::OWN],
+        [_("Want"), Columns::WANT]
       ].freeze
 
       def setup_books_listview
-        log.debug { 'setup_books_listview' }
+        log.debug { "setup_books_listview" }
         @listview.model = @listview_model
         setup_title_column
         TEXT_COLUMNS.each do |title, iterid|
@@ -73,8 +73,8 @@ module Alexandria
         end
         setup_rating_column
         @listview.selection.mode = :multiple
-        @listview.selection.signal_connect('changed') do
-          log.debug { 'changed' }
+        @listview.selection.signal_connect("changed") do
+          log.debug { "changed" }
           @parent.on_books_selection_changed
         end
         setup_tags_column
@@ -84,8 +84,8 @@ module Alexandria
 
       def setup_tags_column
         # adding tags column...
-        title = _('Tags')
-        log.debug { 'Create listview column for tags...' }
+        title = _("Tags")
+        log.debug { "Create listview column for tags..." }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
         column = Gtk::TreeViewColumn.new(title, renderer,
@@ -96,16 +96,16 @@ module Alexandria
       end
 
       def setup_row_activation
-        @listview.signal_connect('row-activated') do
-          log.debug { 'row-activated' }
-          @actiongroup['Properties'].activate
+        @listview.signal_connect("row-activated") do
+          log.debug { "row-activated" }
+          @actiongroup["Properties"].activate
           false
         end
       end
 
       def setup_rating_column
-        title = _('Rating')
-        log.debug { format('Create listview column for %s...', title) }
+        title = _("Rating")
+        log.debug { format("Create listview column for %s...", title) }
         column = Gtk::TreeViewColumn.new(title)
         column.sizing = :fixed
         width = (Icons::STAR_SET.width + 1) * Book::MAX_RATING_STARS
@@ -127,7 +127,7 @@ module Alexandria
       def setup_check_column(title, iterid)
         renderer = CellRendererToggle.new
         renderer.activatable = true
-        renderer.signal_connect('toggled') do |_rndrr, path|
+        renderer.signal_connect("toggled") do |_rndrr, path|
           begin
             tree_path = Gtk::TreePath.new(path)
             child_path = @listview_model.convert_path_to_child_path(tree_path)
@@ -166,17 +166,17 @@ module Alexandria
         column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)
         column.sort_column_id = iterid
         column.resizable = true
-        log.debug { format('Create listview column for %s...', title) }
+        log.debug { format("Create listview column for %s...", title) }
 
-        column.add_attribute(renderer, 'active', iterid)
-        column.add_attribute(renderer, 'inconsistent', Columns::OWN) if iterid == Columns::WANT
+        column.add_attribute(renderer, "active", iterid)
+        column.add_attribute(renderer, "inconsistent", Columns::OWN) if iterid == Columns::WANT
 
         log.debug { "append_column #{column}" }
         @listview.append_column(column)
       end
 
       def setup_text_column(title, iterid)
-        log.debug { format('Create listview column for %s...', title) }
+        log.debug { format("Create listview column for %s...", title) }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
         column = Gtk::TreeViewColumn.new(title, renderer,
@@ -187,7 +187,7 @@ module Alexandria
       end
 
       def setup_listview_columns_visibility
-        log.debug { 'setup_listview_columns_visibility' }
+        log.debug { "setup_listview_columns_visibility" }
         # Show or hide list view columns according to the preferences.
         cols_visibility = [
           @prefs.col_authors_visible,
@@ -206,7 +206,7 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = !!cols_visibility[i]
         end
-        log.debug { 'Columns visibility: ' + cols.map { |col| "#{col.title} #{col.visible?}" }.join(', ') }
+        log.debug { "Columns visibility: " + cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ") }
       end
 
       # Sets the width of each column based on any respective
@@ -227,10 +227,10 @@ module Alexandria
             end
           end
         end
-        log.debug {
-          'Columns width: ' +
-            @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(', ')
-        }
+        log.debug do
+          "Columns width: " +
+            @listview.columns.map { |col| "#{col.title} #{col.width}" }.join(", ")
+        end
       end
     end
   end

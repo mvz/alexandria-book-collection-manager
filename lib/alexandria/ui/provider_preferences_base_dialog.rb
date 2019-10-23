@@ -35,7 +35,7 @@ module Alexandria
         @controls.clear
 
         provider.prefs.read.each do |variable|
-          if variable.name == 'piggyback'
+          if variable.name == "piggyback"
             next
             # ULTRA-HACK!! for bug #13302
             # not displaying the visual choice, as its usually unnecessary
@@ -43,12 +43,12 @@ module Alexandria
             #    -   Cathal Mc Ginley 2008-02-18
           end
 
-          if variable.name == 'enabled'
+          if variable.name == "enabled"
             # also don't display Enabled/Disabled
             next
           end
 
-          label = Gtk::Label.new('_' + variable.description + ':')
+          label = Gtk::Label.new("_" + variable.description + ":")
           label.use_underline = true
           label.xalign = 0
           table.attach_defaults(label, 0, 1, i, i + 1)

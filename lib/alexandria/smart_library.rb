@@ -5,27 +5,27 @@
 # See the file README.md for authorship and licensing information.
 
 # require 'date'
-require 'time'
+require "time"
 
 module Alexandria
   class SmartLibrary < Array
     include Logging
     include GetText
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     ALL_RULES = 1
     ANY_RULE = 2
     attr_reader :name
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
-    EXT = '.yaml'
+    EXT = ".yaml"
 
     def initialize(name, rules, predicate_operator_rule, store = nil)
       super()
       raise if name.nil? || rules.nil? || predicate_operator_rule.nil?
 
-      @name = name.dup.force_encoding('UTF-8')
+      @name = name.dup.force_encoding("UTF-8")
       @rules = rules
       @predicate_operator_rule = predicate_operator_rule
       @store = store
@@ -46,25 +46,25 @@ module Alexandria
       rule = Rule.new(operands.find { |x| x.book_selector == :rating },
                       Rule::Operators::IS,
                       Book::MAX_RATING_STARS.to_s)
-      a << new(_('Favorite'), [rule], ALL_RULES, store)
+      a << new(_("Favorite"), [rule], ALL_RULES, store)
 
       # Loaned books.
       rule = Rule.new(operands.find { |x| x.book_selector == :loaned },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << new(_('Loaned'), [rule], ALL_RULES, store)
+      a << new(_("Loaned"), [rule], ALL_RULES, store)
 
       # Redd books.
       rule = Rule.new(operands.find { |x| x.book_selector == :redd },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << new(_('Read'), [rule], ALL_RULES, store)
+      a << new(_("Read"), [rule], ALL_RULES, store)
 
       # Own books.
       rule = Rule.new(operands.find { |x| x.book_selector == :own },
                       Rule::Operators::IS_TRUE,
                       nil)
-      a << new(_('Owned'), [rule], ALL_RULES, store)
+      a << new(_("Owned"), [rule], ALL_RULES, store)
 
       # Want books.
       rule = Rule.new(operands.find { |x| x.book_selector == :want },
@@ -73,7 +73,7 @@ module Alexandria
       rule2 = Rule.new(operands.find { |x| x.book_selector == :own },
                        Rule::Operators::IS_NOT_TRUE,
                        nil)
-      a << new(_('Wishlist'), [rule, rule2], ALL_RULES, store)
+      a << new(_("Wishlist"), [rule, rule2], ALL_RULES, store)
 
       a
     end
@@ -148,7 +148,7 @@ module Alexandria
         @cache[book].save(book)
       else
         FileUtils.mkdir_p(base_dir) unless File.exist? base_dir
-        File.open(yaml, 'w') { |io| io.puts to_hash.to_yaml }
+        File.open(yaml, "w") { |io| io.puts to_hash.to_yaml }
       end
     end
 
@@ -197,8 +197,8 @@ module Alexandria
 
     def delete
       if @@deleted_libraries.include?(self)
-        puts 'Already deleted a SmartLibrary with this name'
-        puts '(this might mess up undeletes...)'
+        puts "Already deleted a SmartLibrary with this name"
+        puts "(this might mess up undeletes...)"
         FileUtils.rm_rf(yaml)
         # so we just delete the old smart library, and
         # 'pending' delete the new one of the same name...
@@ -233,7 +233,7 @@ module Alexandria
     class Rule
       include GetText
       extend GetText
-      bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_accessor :operand, :operation, :value
 
@@ -289,78 +289,78 @@ module Alexandria
       module Operands
         include GetText
         extend GetText
-        bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+        bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
         LEFT = [
-          LeftOperand.new(:title, _('Title'), String),
-          LeftOperand.new(:isbn, _('ISBN'), String),
-          LeftOperand.new(:authors, _('Authors'), String),
-          LeftOperand.new(:publisher, _('Publisher'), String),
-          LeftOperand.new(:publishing_year, _('Publish Year'), Integer),
-          LeftOperand.new(:edition, _('Binding'), String),
-          LeftOperand.new(:rating, _('Rating'), Integer),
-          LeftOperand.new(:notes, _('Notes'), String),
-          LeftOperand.new(:tags, _('Tags'), Array),
-          LeftOperand.new(:loaned, _('Loaning State'), TrueClass),
-          LeftOperand.new(:loaned_since, _('Loaning Date'), Time),
-          LeftOperand.new(:loaned_to, _('Loaning Person'), String),
-          LeftOperand.new(:redd, _('Read'), TrueClass),
-          LeftOperand.new(:redd_when, _('Date Read'), Time),
-          LeftOperand.new(:own, _('Own'), TrueClass),
-          LeftOperand.new(:want, _('Want'), TrueClass),
+          LeftOperand.new(:title, _("Title"), String),
+          LeftOperand.new(:isbn, _("ISBN"), String),
+          LeftOperand.new(:authors, _("Authors"), String),
+          LeftOperand.new(:publisher, _("Publisher"), String),
+          LeftOperand.new(:publishing_year, _("Publish Year"), Integer),
+          LeftOperand.new(:edition, _("Binding"), String),
+          LeftOperand.new(:rating, _("Rating"), Integer),
+          LeftOperand.new(:notes, _("Notes"), String),
+          LeftOperand.new(:tags, _("Tags"), Array),
+          LeftOperand.new(:loaned, _("Loaning State"), TrueClass),
+          LeftOperand.new(:loaned_since, _("Loaning Date"), Time),
+          LeftOperand.new(:loaned_to, _("Loaning Person"), String),
+          LeftOperand.new(:redd, _("Read"), TrueClass),
+          LeftOperand.new(:redd_when, _("Date Read"), Time),
+          LeftOperand.new(:own, _("Own"), TrueClass),
+          LeftOperand.new(:want, _("Want"), TrueClass),
         ].sort
 
         STRING = Operand.new(nil, String)
         STRING_ARRAY = Operand.new(nil, String)
         INTEGER = Operand.new(nil, Integer)
         TIME = Operand.new(nil, Time)
-        DAYS = Operand.new(_('days'), Integer)
+        DAYS = Operand.new(_("days"), Integer)
       end
 
       module Operators
         include Logging
         include GetText
         extend GetText
-        bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+        bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
         IS_TRUE = Operator.new(:is_true,
-                               _('is set'),
+                               _("is set"),
                                proc { |x| x })
         IS_NOT_TRUE = Operator.new(:is_not_true,
-                                   _('is not set'),
+                                   _("is not set"),
                                    proc { |x| !x })
         IS = Operator.new(:is,
-                          _('is'),
+                          _("is"),
                           proc { |x, y| x == y })
         IS_NOT = Operator.new(:is_not,
-                              _('is not'),
+                              _("is not"),
                               proc { |x, y| x != y })
         CONTAINS = Operator.new(:contains,
-                                _('contains'),
+                                _("contains"),
                                 proc { |x, y| x.include?(y) })
         DOES_NOT_CONTAIN = Operator.new(:does_not_contain,
-                                        _('does not contain'),
+                                        _("does not contain"),
                                         proc { |x, y| !x.include?(y) })
         STARTS_WITH = Operator.new(:starts_with,
-                                   _('starts with'),
+                                   _("starts with"),
                                    proc { |x, y| /^#{y}/.match(x) })
         ENDS_WITH = Operator.new(:ends_with,
-                                 _('ends with'),
+                                 _("ends with"),
                                  proc { |x, y| /#{y}$/.match(x) })
         IS_GREATER_THAN = Operator.new(:is_greater_than,
-                                       _('is greater than'),
+                                       _("is greater than"),
                                        proc { |x, y| x > y })
         IS_LESS_THAN = Operator.new(:is_less_than,
-                                    _('is less than'),
+                                    _("is less than"),
                                     proc { |x, y| x < y })
         IS_AFTER = Operator.new(:is_after,
-                                _('is after'),
+                                _("is after"),
                                 proc { |x, y| x.to_i > y.to_i && !x.nil? })
         IS_BEFORE = Operator.new(:is_before,
-                                 _('is before'),
+                                 _("is before"),
                                  proc { |x, y| x.to_i < y.to_i && !x.nil? })
         IS_IN_LAST = Operator.new(:is_in_last_days,
-                                  _('is in last'),
+                                  _("is in last"),
                                   proc { |x, y|
                                     begin
                                       if x.nil? || x.empty?
@@ -379,7 +379,7 @@ module Alexandria
                                     end
                                   })
         IS_NOT_IN_LAST = Operator.new(:is_not_in_last_days,
-                                      _('is not in last'),
+                                      _("is not in last"),
                                       proc { |x, y|
                                         begin
                                           if x.nil? || x.empty?
@@ -441,15 +441,15 @@ module Alexandria
 
       def self.operations_for_operand(operand)
         case operand.klass.name
-        when 'String'
+        when "String"
           STRING_OPERATORS.map { |x| [x, Operands::STRING] }
-        when 'Array'
+        when "Array"
           STRING_ARRAY_OPERATORS.map { |x| [x, Operands::STRING] }
-        when 'Integer'
+        when "Integer"
           INTEGER_OPERATORS.map { |x| [x, Operands::INTEGER] }
-        when 'TrueClass'
+        when "TrueClass"
           BOOLEAN_OPERATORS.map { |x| [x, nil] }
-        when 'Time'
+        when "Time"
           TIME_OPERATORS.map do |x|
             if (x == Operators::IS_IN_LAST) ||
                 (x == Operators::IS_NOT_IN_LAST)

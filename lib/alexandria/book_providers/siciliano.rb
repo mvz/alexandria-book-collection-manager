@@ -25,27 +25,27 @@
 # Almost completely rewritten by Cathal Mc Ginley (21 Feb 2009)
 # based on the new code for Palatina
 
-require 'net/http'
-require 'cgi'
-require 'alexandria/book_providers/web'
+require "net/http"
+require "cgi"
+require "alexandria/book_providers/web"
 
 module Alexandria
   class BookProviders
     class SicilianoProvider < WebsiteBasedProvider
       include Logging
 
-      SITE = 'http://www.siciliano.com.br'
+      SITE = "http://www.siciliano.com.br"
 
       # The string interpolations in this URL are the search term and search
       # type, respectively.
       BASE_SEARCH_URL = "#{SITE}/pesquisaweb/pesquisaweb.dll/pesquisa?" \
-        '&FIL_ID=102' \
-        '&PALAVRASN1=%s' \
-        '&FILTRON1=%s' \
-        '&ESTRUTN1=0301&ORDEMN2=E'
+        "&FIL_ID=102" \
+        "&PALAVRASN1=%s" \
+        "&FILTRON1=%s" \
+        "&ESTRUTN1=0301&ORDEMN2=E"
 
       def initialize
-        super('Siciliano', 'Livraria Siciliano (Brasil)')
+        super("Siciliano", "Livraria Siciliano (Brasil)")
         # no preferences for the moment
         prefs.read
       end
@@ -57,7 +57,7 @@ module Alexandria
       end
 
       def search(criterion, type)
-        criterion = criterion.encode('ISO-8859-1') # still needed??
+        criterion = criterion.encode("ISO-8859-1") # still needed??
         trying_again = false
         begin
           req = create_search_uri(type, criterion, trying_again)
@@ -90,10 +90,10 @@ module Alexandria
       private
 
       def create_search_uri(search_type, search_term, trying_again = false)
-        (search_type_code = { SEARCH_BY_ISBN    => 'G',
-                              SEARCH_BY_TITLE   => 'A',
-                              SEARCH_BY_AUTHORS => 'B',
-                              SEARCH_BY_KEYWORD => 'X' }[search_type]) || 'X'
+        (search_type_code = { SEARCH_BY_ISBN    => "G",
+                              SEARCH_BY_TITLE   => "A",
+                              SEARCH_BY_AUTHORS => "B",
+                              SEARCH_BY_KEYWORD => "X" }[search_type]) || "X"
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 if trying_again
                                   # on second attempt, try ISBN-10...
@@ -123,28 +123,28 @@ module Alexandria
         book_search_results = []
         # each result will be a dict with keys :title, :author, :publisher, :url
 
-        list_items = doc.search('div.pesquisa-item-lista-conteudo')
+        list_items = doc.search("div.pesquisa-item-lista-conteudo")
         list_items.each do |item|
           begin
             result = {}
 
             # author & publisher
-            author_publisher = ''
+            author_publisher = ""
             item.children.each do |node|
               author_publisher += node.to_s if node.text?
               author_publisher.strip!
               break unless author_publisher.empty?
             end
-            author, publisher = author_publisher.split('/')
+            author, publisher = author_publisher.split("/")
             result[:author] = author.strip if author
             result[:publisher] = publisher.strip if publisher
 
             # title & url
-            link = item % 'a'
+            link = item % "a"
             result[:title] = link.inner_text.strip
-            link_to_description = link['href']
-            slash = ''
-            slash = '/' unless /^\//.match?(link_to_description)
+            link_to_description = link["href"]
+            slash = ""
+            slash = "/" unless %r{^/}.match?(link_to_description)
             result[:url] = "#{SITE}#{slash}#{link_to_description}"
 
             book_search_results << result
@@ -161,38 +161,38 @@ module Alexandria
         # checked against Siciliano website 21 Feb 2009
         doc = html_to_doc(html)
         # title
-        title_div = doc % 'div#conteudo//div.titulo'
+        title_div = doc % "div#conteudo//div.titulo"
         raise NoResultsError unless title_div
 
-        title_h = title_div % 'h2'
+        title_h = title_div % "h2"
         title = title_h.inner_text if title_h
         # title = first_non_empty_text_node(title_div)
         # author_spans = doc/'span.rotulo'
-        author_hs = title_div / 'h3.autor'
+        author_hs = title_div / "h3.autor"
         authors = []
         author_hs.each do |h|
           authors << h.inner_text.strip
         end
         ## synopsis_div = doc % 'div#sinopse'
-        details_div = doc % 'div#tab-caracteristica'
+        details_div = doc % "div#tab-caracteristica"
         details = string_array_to_map(lines_of_text_as_array(details_div))
         # ISBN
-        isbn =  details['ISBN']
+        isbn =  details["ISBN"]
         ## ean = details["CdBarras"]
-        translator = details['Tradutor']
+        translator = details["Tradutor"]
         authors << translator if translator
-        binding = details['Acabamento']
+        binding = details["Acabamento"]
         publisher = search_result[:publisher]
         # publish year
         publish_year = nil
-        edition = details['Edio']
+        edition = details["Edio"]
         if edition
           publish_year = Regexp.last_match[1].to_i if edition =~ /([12][0-9]{3})/ # publication date
         end
         # cover
         # ImgSrc[1]="/imagem/imagem.dll?pro_id=1386929&PIM_Id=658849";
         image_urls = []
-        (doc / 'script').each do |script|
+        (doc / "script").each do |script|
           next if script.children.nil?
 
           script.children.each do |ch|
@@ -213,7 +213,7 @@ module Alexandria
       end
 
       def first_non_empty_text_node(elem)
-        text = ''
+        text = ""
         elem.children.each do |node|
           next unless node.text?
 
@@ -225,28 +225,28 @@ module Alexandria
 
       def lines_of_text_as_array(elem)
         lines = []
-        current_text = ''
+        current_text = ""
         elem.children.each do |e|
           if e.text?
             current_text += e.to_s
-          elsif e.name == 'br'
+          elsif e.name == "br"
             lines << current_text.strip
-            current_text = ''
+            current_text = ""
           else
             current_text += e.inner_text
           end
         end
         lines << current_text.strip
-        lines.delete('')
+        lines.delete("")
         lines
       end
 
       def string_array_to_map(arr)
         map = {}
         arr.each do |str|
-          key, val = str.split(':')
+          key, val = str.split(":")
           # a real hack for not handling encoding properly :^)
-          map[key.gsub(/[^a-zA-Z]/, '')] = val.strip if val
+          map[key.gsub(/[^a-zA-Z]/, "")] = val.strip if val
         end
         map
       end

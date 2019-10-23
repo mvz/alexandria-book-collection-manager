@@ -4,7 +4,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'gettext'
+require "gettext"
 
 # XXX: Gettext hotfix
 module Gem
@@ -16,18 +16,18 @@ module Gem
   end
 end
 
-require 'logger'
-require 'alexandria/logging'
-require 'alexandria/about'
+require "logger"
+require "alexandria/logging"
+require "alexandria/about"
 
 module Alexandria
   def self.set_proxy
-    ENV['http_proxy'] = nil if !ENV['http_proxy'].nil? && URI.parse(ENV['http_proxy']).userinfo.nil?
+    ENV["http_proxy"] = nil if !ENV["http_proxy"].nil? && URI.parse(ENV["http_proxy"]).userinfo.nil?
   end
 
   def self.set_log_level
     Alexandria.log.level = Logger::DEBUG if $DEBUG
-    Alexandria.log.debug { 'Initializing Alexandria...' }
+    Alexandria.log.debug { "Initializing Alexandria..." }
   end
 
   def self.main
@@ -39,8 +39,8 @@ end
 
 # lrz says 'macui' is obsolete (may be supported again some day)
 # unless $MACOSX
-require 'alexandria/config'
-require 'alexandria/version'
+require "alexandria/config"
+require "alexandria/version"
 
 # else
 #  module Alexandria
@@ -51,22 +51,22 @@ require 'alexandria/version'
 #  end
 # end
 
-require 'alexandria/models/book'
-require 'alexandria/library_store'
-require 'alexandria/library_collection'
-require 'alexandria/models/library'
+require "alexandria/models/book"
+require "alexandria/library_store"
+require "alexandria/library_collection"
+require "alexandria/models/library"
 
-require 'alexandria/smart_library'
-require 'alexandria/execution_queue'
-require 'alexandria/import_library'
-require 'alexandria/export_library'
-require 'alexandria/book_providers'
-require 'alexandria/preferences'
-require 'alexandria/undo_manager'
-require 'alexandria/web_themes'
+require "alexandria/smart_library"
+require "alexandria/execution_queue"
+require "alexandria/import_library"
+require "alexandria/export_library"
+require "alexandria/book_providers"
+require "alexandria/preferences"
+require "alexandria/undo_manager"
+require "alexandria/web_themes"
 
 # lrz says 'macui' is obsolete (may be supported again some day)
 # require $MACOSX ? 'alexandria/macui' : 'alexandria/ui'
 
-require 'alexandria/ui'
-require 'alexandria/console'
+require "alexandria/ui"
+require "alexandria/console"

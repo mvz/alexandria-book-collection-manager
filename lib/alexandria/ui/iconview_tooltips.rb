@@ -29,7 +29,7 @@
 #
 # Ported to ruby-gtk2 (and modified for IconView) by Cathal Mc Ginley
 
-require 'cgi'
+require "cgi"
 
 class IconViewTooltips
   include Alexandria::Logging
@@ -40,7 +40,7 @@ class IconViewTooltips
 
   def set_view(view)
     view.has_tooltip = true
-    view.signal_connect('query-tooltip') do |_widget, x, y, _keyboard_mode, tooltip|
+    view.signal_connect("query-tooltip") do |_widget, x, y, _keyboard_mode, tooltip|
       tree_path = view.get_path_at_pos(x, y)
       if tree_path
         iter = view.model.get_iter(tree_path)
@@ -56,7 +56,7 @@ class IconViewTooltips
 
   def label_for_book(title, authors, publisher, year)
     # This is much too complex... but it works for now!
-    html = ''
+    html = ""
     unless title.empty?
       html += "<b>#{CGI.escapeHTML(title)}</b>"
       html += "\n" unless authors.empty?
@@ -64,14 +64,14 @@ class IconViewTooltips
     html += "<i>#{CGI.escapeHTML(authors)}</i>" unless authors.empty?
     html += "\n" if !title.empty? || !authors.empty?
 
-    html += '<small>'
+    html += "<small>"
     html += CGI.escapeHTML(publisher).to_s if publisher && !publisher.empty?
 
     if year && !year.empty?
-      html += ' ' if publisher && !publisher.empty?
+      html += " " if publisher && !publisher.empty?
       html += "(#{year})"
     end
 
-    html + '</small>'
+    html + "</small>"
   end
 end

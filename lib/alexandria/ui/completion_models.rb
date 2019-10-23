@@ -30,18 +30,18 @@ module Alexandria
       complete(Alexandria::UI::CompletionModels::TAG)
       # min = self.completion.minimum_key_length
       min = 2
-      completion.signal_connect('match-selected') do |c, model, iter|
+      completion.signal_connect("match-selected") do |c, model, iter|
         cur_text = c.entry.text
         # TODO: Replace with iter[0] if possible
         new_tag = model.get_value(iter, 0)
-        cur_text_split = cur_text.split(',')
+        cur_text_split = cur_text.split(",")
         cur_text_split.delete_at(-1)
         cur_text_split << new_tag
-        c.entry.text = cur_text_split.join(',')
+        c.entry.text = cur_text_split.join(",")
         true
       end
       completion.set_match_func do |_comp, key, iter|
-        cur_tag = key.split(',').last.strip
+        cur_tag = key.split(",").last.strip
         if cur_tag.size >= min
           begin
             if /^#{cur_tag}/.match?(iter[0])

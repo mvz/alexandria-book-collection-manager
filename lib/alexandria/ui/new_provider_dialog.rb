@@ -4,16 +4,16 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/provider_preferences_base_dialog'
+require "alexandria/ui/provider_preferences_base_dialog"
 
 module Alexandria
   module UI
     class NewProviderDialog < ProviderPreferencesBaseDialog
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent)
-        super(title: _('New Provider'),
+        super(title: _("New Provider"),
               parent: parent,
               flags: :modal,
               buttons: [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL]])
@@ -28,7 +28,7 @@ module Alexandria
 
         # Name.
 
-        label_name = Gtk::Label.new(_('_Name:'))
+        label_name = Gtk::Label.new(_("_Name:"))
         label_name.use_underline = true
         label_name.xalign = 0
         @table.attach_defaults(label_name, 0, 1, 0, 1)
@@ -40,7 +40,7 @@ module Alexandria
 
         # Type.
 
-        label_type = Gtk::Label.new(_('_Type:'))
+        label_type = Gtk::Label.new(_("_Type:"))
         label_type.use_underline = true
         label_type.xalign = 0
         @table.attach_defaults(label_type, 0, 1, 1, 2)
@@ -49,7 +49,7 @@ module Alexandria
         instances.each do |instance|
           combo_type.append_text(instance.name)
         end
-        combo_type.signal_connect('changed') do |cb|
+        combo_type.signal_connect("changed") do |cb|
           @selected_instance = instances[cb.active]
           fill_table(@table, @selected_instance)
           sensitize
@@ -81,7 +81,7 @@ module Alexandria
       def sensitize
         entries = @table.children.select { |x| x.is_a?(Gtk::Entry) }
         entries.each do |entry|
-          entry.signal_connect('changed') do
+          entry.signal_connect("changed") do
             sensitive = true
             entries.each do |entry2|
               if entry2.mandatory?

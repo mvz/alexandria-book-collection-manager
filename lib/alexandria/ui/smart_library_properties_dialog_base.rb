@@ -23,12 +23,12 @@ module Alexandria
     class SmartLibraryPropertiesDialogBase < SimpleDelegator
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_reader :predicate_operator_rule
 
       def initialize(parent)
-        @dialog = Gtk::Dialog.new(title: '',
+        @dialog = Gtk::Dialog.new(title: "",
                                   parent: parent,
                                   flags: :modal,
                                   buttons: [[Gtk::Stock::HELP, :help]])
@@ -75,7 +75,7 @@ module Alexandria
       def has_weirdnesses?
         fill_smart_library_rules_values
         smart_library_rules.each do |rule|
-          return true if rule.value == ''
+          return true if rule.value == ""
         end
         false
       end
@@ -85,14 +85,14 @@ module Alexandria
 
         dialog = AlertDialog.new(
           @dialog,
-          _('Empty or conflictive condition'),
+          _("Empty or conflictive condition"),
           Gtk::Stock::DIALOG_QUESTION,
           [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
-           [_('_Save However'), Gtk::ResponseType::YES]],
-          _('This smart library contains one or more conditions ' \
-            'which are empty or conflict with each other. This is ' \
-            'likely to result in never matching a book. Are you ' \
-            'sure you want to save this library?'))
+           [_("_Save However"), Gtk::ResponseType::YES]],
+          _("This smart library contains one or more conditions " \
+            "which are empty or conflict with each other. This is " \
+            "likely to result in never matching a book. Are you " \
+            "sure you want to save this library?"))
         dialog.default_response = Gtk::ResponseType::CANCEL
         dialog.show_all
         confirmed = dialog.run == Gtk::ResponseType::YES
@@ -106,11 +106,11 @@ module Alexandria
         if @rules_box.children.length > 1
           label1 = Gtk::Label.new
           label1.set_alignment(0.0, 0.5)
-          label1.text = _('Match')
+          label1.text = _("Match")
 
           cb = Gtk::ComboBoxText.new
-          [_('all'), _('any')].each { |x| cb.append_text(x) }
-          cb.signal_connect('changed') do
+          [_("all"), _("any")].each { |x| cb.append_text(x) }
+          cb.signal_connect("changed") do
             @predicate_operator_rule = cb.active.zero? ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
           end
           cb.active =
@@ -118,7 +118,7 @@ module Alexandria
 
           label2 = Gtk::Label.new
           label2.set_alignment(0.0, 0.5)
-          label2.text = _('of the following rules:')
+          label2.text = _("of the following rules:")
 
           @rules_header_box.pack_start(label1, expand: false, fill: false)
           @rules_header_box.pack_start(cb, expand: false, fill: false)
@@ -126,7 +126,7 @@ module Alexandria
         else
           label = Gtk::Label.new
           label.set_alignment(0.0, 0.5)
-          label.text = _('Match the following rule:')
+          label.text = _("Match the following rule:")
           @rules_header_box << label
           @predicate_operator_rule = SmartLibrary::ALL_RULES
         end
@@ -146,29 +146,29 @@ module Alexandria
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
         date_entry.primary_icon_activatable = true
-        date_entry.signal_connect('icon-press') do |entry, primary, _icon|
-          display_calendar_popup(entry) if primary.nick == 'primary'
+        date_entry.signal_connect("icon-press") do |entry, primary, _icon|
+          display_calendar_popup(entry) if primary.nick == "primary"
         end
 
         # Really hide the time part of the date entry, as the constructor
         # does not seem to do it...
         # ##date_entry.children[2..3].each { |x| date_entry.remove(x) }
         # ##date_entry.spacing = 8
-        entry_label = Gtk::Label.new('')
+        entry_label = Gtk::Label.new("")
 
-        add_button = Gtk::Button.new(label: '')
+        add_button = Gtk::Button.new(label: "")
         add_button.remove(add_button.children.first)
         add_button << Gtk::Image.new(stock: Gtk::Stock::ADD,
                                      size: Gtk::IconSize::BUTTON)
 
-        add_button.signal_connect('clicked') { insert_new_rule }
+        add_button.signal_connect("clicked") { insert_new_rule }
 
-        remove_button = Gtk::Button.new(label: '')
+        remove_button = Gtk::Button.new(label: "")
         remove_button.remove(remove_button.children.first)
         remove_button << Gtk::Image.new(stock: Gtk::Stock::REMOVE,
                                         size: Gtk::IconSize::BUTTON)
 
-        remove_button.signal_connect('clicked') do |_button|
+        remove_button.signal_connect("clicked") do |_button|
           idx = @rules_box.children.index(rule_box)
           raise if idx.nil?
 
@@ -182,7 +182,7 @@ module Alexandria
         operands.each do |operand|
           left_operand_combo.append_text(operand.name)
         end
-        operator_combo.signal_connect('changed') do
+        operator_combo.signal_connect("changed") do
           operand = operands[left_operand_combo.active]
           operations = SmartLibrary::Rule.operations_for_operand(operand)
           operation = operations[operator_combo.active]
@@ -191,7 +191,7 @@ module Alexandria
           right_operand = operation.last
           unless right_operand.nil?
             entry = case right_operand.klass.name
-                    when 'Time'
+                    when "Time"
                       date_entry
                     else
                       value_entry
@@ -215,7 +215,7 @@ module Alexandria
           new_rule.operation = operation.first
           new_rule.value = nil
         end
-        left_operand_combo.signal_connect('changed') do
+        left_operand_combo.signal_connect("changed") do
           operand = operands[left_operand_combo.active]
           operator_combo.freeze_notify do
             operator_combo.remove_all
@@ -312,12 +312,12 @@ module Alexandria
 
         @calendar_popup.set_transient_for(@dialog)
         @calendar_popup.set_type_hint(:dialog)
-        @calendar_popup.name = 'calendar-popup'
+        @calendar_popup.name = "calendar-popup"
         @calendar_popup.resizable = false
         # @calendar_popup.border_width = 4
         # @calendar_popup.app_paintable = true
 
-        @calendar_popup.signal_connect('focus-out-event') do |_popup, _event|
+        @calendar_popup.signal_connect("focus-out-event") do |_popup, _event|
           hide_calendar_popup
           false
         end
@@ -325,7 +325,7 @@ module Alexandria
         @calendar = Gtk::Calendar.new
         @calendar_popup.add(@calendar)
 
-        @calendar.signal_connect('day-selected') do
+        @calendar.signal_connect("day-selected") do
           date_arr = @calendar.date
           year = date_arr[0]
           month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
@@ -336,7 +336,7 @@ module Alexandria
           end
         end
 
-        @calendar.signal_connect('day-selected-double-click') do
+        @calendar.signal_connect("day-selected-double-click") do
           date_arr = @calendar.date
           year = date_arr[0]
           month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
@@ -405,7 +405,7 @@ module Alexandria
       end
 
       def parse_date(datestring)
-        date_format = '%d/%m/%Y' # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
+        date_format = "%d/%m/%Y" # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
         ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
         begin
           d = Date.strptime(datestring, date_format)
@@ -416,7 +416,7 @@ module Alexandria
       end
 
       def format_date(datetime)
-        datetime.strftime('%d/%m/%Y')
+        datetime.strftime("%d/%m/%Y")
       end
     end
   end

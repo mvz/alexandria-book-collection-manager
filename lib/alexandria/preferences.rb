@@ -4,21 +4,21 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'singleton'
-require 'set'
-require 'alexandria/default_preferences'
+require "singleton"
+require "set"
+require "alexandria/default_preferences"
 
 module Alexandria
   class Preferences
     include Singleton
     include Logging
 
-    APP_DIR = '/apps/alexandria'
-    HTTP_PROXY_DIR = '/system/http_proxy'
-    HTTP_PROXY_MODE = '/system/proxy/mode'
-    URL_HANDLERS_DIR = '/desktop/gnome/url-handlers'
+    APP_DIR = "/apps/alexandria"
+    HTTP_PROXY_DIR = "/system/http_proxy"
+    HTTP_PROXY_MODE = "/system/proxy/mode"
+    URL_HANDLERS_DIR = "/desktop/gnome/url-handlers"
 
-    GCONFTOOL = 'gconftool-2'
+    GCONFTOOL = "gconftool-2"
 
     def initialize
       @alexandria_settings = {}
@@ -46,7 +46,7 @@ module Alexandria
     end
 
     def save!
-      log.debug { 'preferences save!' }
+      log.debug { "preferences save!" }
       @changed_settings.each do |variable_name|
         log.debug { "saving preference #{variable_name} / #{@alexandria_settings[variable_name].class}" }
         generic_save_setting(variable_name, @alexandria_settings[variable_name])
@@ -107,7 +107,7 @@ module Alexandria
     end
 
     def generic_save_setting(variable_name, new_value)
-      var_path = APP_DIR + '/' + variable_name
+      var_path = APP_DIR + "/" + variable_name
       if new_value.is_a?(Array)
         # when setting array, first remove nil elements (fixing #9007)
         new_value.compact!
@@ -136,13 +136,13 @@ module Alexandria
 
     def get_gconf_type(value)
       if value.is_a?(String)
-        'string'
+        "string"
       elsif value.is_a?(Integer)
-        'int'
+        "int"
       elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
-        'bool'
+        "bool"
       else
-        'string'
+        "string"
       end
     end
 
@@ -150,7 +150,7 @@ module Alexandria
       # NOTE we must check between list and pair...
 
       list_type = get_gconf_type(new_list.first)
-      if list_type == 'int' && new_list.size == 2
+      if list_type == "int" && new_list.size == 2
         # treat this as a pair of int
         a = new_list[0]
         b = new_list[1]
@@ -163,9 +163,9 @@ module Alexandria
     end
 
     def make_list_string(list)
-      list.map! { |x| x.gsub(/\"/, '\\"') } if get_gconf_type(list.first) == 'string'
-      contents = list.join(',')
-      '[' + contents + ']'
+      list.map! { |x| x.gsub(/\"/, '\\"') } if get_gconf_type(list.first) == "string"
+      contents = list.join(",")
+      "[" + contents + "]"
     end
 
     def exec_gconf_set(var_path, new_value)
@@ -185,7 +185,7 @@ module Alexandria
     end
 
     def exec_gconf_unset(variable_name)
-      `#{GCONFTOOL} --unset #{APP_DIR + '/' + variable_name}`
+      `#{GCONFTOOL} --unset #{APP_DIR + "/" + variable_name}`
     end
 
     ##
@@ -205,14 +205,14 @@ module Alexandria
     def load_http_proxy_settings
       http_proxy_vars = `#{GCONFTOOL} --recursive-list #{HTTP_PROXY_DIR}`
       http_proxy = gconftool_values_to_hash(http_proxy_vars)
-      if http_proxy['use_http_proxy']
+      if http_proxy["use_http_proxy"]
         proxy_mode = `#{GCONFTOOL} --get #{HTTP_PROXY_MODE}`.chomp
-        if proxy_mode == 'manual'
+        if proxy_mode == "manual"
           @use_http_proxy = true
-          @proxy_host = http_proxy['host']
-          @proxy_port = http_proxy['port']
-          @proxy_user = http_proxy['authentication_user']
-          @proxy_password = http_proxy['authentication_n_password']
+          @proxy_host = http_proxy["host"]
+          @proxy_port = http_proxy["port"]
+          @proxy_user = http_proxy["authentication_user"]
+          @proxy_password = http_proxy["authentication_n_password"]
         end
       end
       @http_proxy_loaded = true
@@ -235,17 +235,17 @@ module Alexandria
     # gconftool. This is not fool-proof, but it *does* work for the
     # range of values used by Alexandria.
     def discriminate(value)
-      if value == 'true'        # bool
+      if value == "true"        # bool
         true
-      elsif value == 'false'    # bool
+      elsif value == "false"    # bool
         false
       elsif /^[0-9]+$/.match?(value) # int
         value.to_i
       elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
-        Regexp.last_match[1].split(',')
+        Regexp.last_match[1].split(",")
       elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
         begin
-          pair = Regexp.last_match[1].split(',')
+          pair = Regexp.last_match[1].split(",")
           return [discriminate(pair.first), discriminate(pair.last)]
         rescue StandardError
           return [0, 0]

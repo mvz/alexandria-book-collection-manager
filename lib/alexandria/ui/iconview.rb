@@ -19,8 +19,8 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'alexandria/ui/columns'
-require 'alexandria/ui/iconview_tooltips'
+require "alexandria/ui/columns"
+require "alexandria/ui/iconview_tooltips"
 
 module Alexandria
   module UI
@@ -51,14 +51,14 @@ module Alexandria
         @iconview.column_spacing = 16
         @iconview.item_width = ICON_WIDTH + 16
 
-        @iconview.signal_connect('selection-changed') do
-          log.debug { 'selection-changed' }
+        @iconview.signal_connect("selection-changed") do
+          log.debug { "selection-changed" }
           @parent.on_books_selection_changed
         end
 
-        @iconview.signal_connect('item-activated') do
-          log.debug { 'item-activated' }
-          @actiongroup['Properties'].activate
+        @iconview.signal_connect("item-activated") do
+          log.debug { "item-activated" }
+          @actiongroup["Properties"].activate
           false
         end
 

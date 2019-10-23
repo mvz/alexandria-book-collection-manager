@@ -18,43 +18,43 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Alexandria::Book do
-  it 'is a thing' do
+  it "is a thing" do
     an_artist_of_the_floating_world
   end
 
-  it 'establishes equality only with books with the same identity' do
+  it "establishes equality only with books with the same identity" do
     book = an_artist_of_the_floating_world
     same_book = an_artist_of_the_floating_world
     expect(same_book).to eq book
     different_book = an_artist_of_the_floating_world
-    different_book.isbn = '9780571147999'
+    different_book.isbn = "9780571147999"
     expect(different_book).not_to eq book
   end
 
-  describe '#rating' do
+  describe "#rating" do
     let(:book) { an_artist_of_the_floating_world }
 
-    it 'returns 0 by default' do
+    it "returns 0 by default" do
       expect(book.rating).to eq 0
     end
   end
 
-  describe '#rating=' do
+  describe "#rating=" do
     let(:book) { an_artist_of_the_floating_world }
 
-    it 'assigns rating' do
+    it "assigns rating" do
       book.rating = 5
       expect(book.rating).to eq 5
     end
 
-    it 'does not allow higher rating than 5 to be assigned' do
+    it "does not allow higher rating than 5 to be assigned" do
       expect { book.rating = 6 }.to raise_error ArgumentError
     end
 
-    it 'does not allow lower rating than 0 to be assigned' do
+    it "does not allow lower rating than 0 to be assigned" do
       expect { book.rating = -1 }.to raise_error ArgumentError
     end
   end

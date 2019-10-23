@@ -26,9 +26,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-require 'fileutils'
-require 'pathname'
-require 'rake/tasklib'
+require "fileutils"
+require "pathname"
+require "rake/tasklib"
 
 class GettextGenerateTask < Rake::TaskLib
   def initialize(projectname)
@@ -39,7 +39,7 @@ class GettextGenerateTask < Rake::TaskLib
   end
 
   def make_task
-    desc 'Generate gettext localization files'
+    desc "Generate gettext localization files"
     task gettext: @generated_files
 
     @generated_files.each { |gen| CLOBBER << gen } if CLOBBER
@@ -49,7 +49,7 @@ class GettextGenerateTask < Rake::TaskLib
     @po_dir = po_dir
     @po_files_glob = file_glob
     @mo_dir = dest_dir
-    @mo_files_regex = /.*\/(.+)\/LC_MESSAGES\/.+\.mo/
+    @mo_files_regex = %r{.*/(.+)/LC_MESSAGES/.+\.mo}
 
     # create MO files
     rule(/\.mo$/ => [->(dest) { source_file(dest) }]) do |t|
@@ -72,14 +72,14 @@ class GettextGenerateTask < Rake::TaskLib
       begin
         `intltool-merge --version`
       rescue Errno::ENOENT
-        raise 'Need to install intltool'
+        raise "Need to install intltool"
       end
       system("intltool-merge -d #{@po_dir} #{infile} #{outfile}")
     end
   end
 
   def locales
-    po_files.map { |po| File.basename(po).split('.')[0] }
+    po_files.map { |po| File.basename(po).split(".")[0] }
   end
 
   def mo_files

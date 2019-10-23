@@ -27,10 +27,10 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-require 'fileutils'
-require 'pathname'
-require 'set'
-require 'rake/tasklib'
+require "fileutils"
+require "pathname"
+require "set"
+require "rake/tasklib"
 
 # A file installer task, capable of installing into the system
 # directories, or doing a staged install to a given directory
@@ -84,8 +84,8 @@ class FileInstallTask < Rake::TaskLib
 
     # INSTALL TASK
 
-    description = 'Install package files'
-    description += ' to staging directory' if @stage_dir
+    description = "Install package files"
+    description += " to staging directory" if @stage_dir
     desc description
     task tasknames[:install] do
       @file_groups.each { |g| g.install(@stage_dir) }
@@ -105,7 +105,7 @@ class FileInstallTask < Rake::TaskLib
       @dirs_to_remove_globs.each do |glob|
         regex = glob2regex(glob)
         all_dirs.each do |dir|
-          dir += '/' unless dir =~ /\/$/
+          dir += "/" unless dir =~ %r{/$}
           to_delete << Regexp.last_match[1] if regex =~ dir
         end
       end
@@ -116,8 +116,8 @@ class FileInstallTask < Rake::TaskLib
       end
     end
 
-    uninstall_description = 'Uninstall package files'
-    uninstall_description += ' from staging directory' if @stage_dir
+    uninstall_description = "Uninstall package files"
+    uninstall_description += " from staging directory" if @stage_dir
     desc uninstall_description
     task tasknames[:uninstall] => [tasknames[:uninstall_files],
                                    tasknames[:uninstall_dirs]]
@@ -145,7 +145,7 @@ class FileInstallTask < Rake::TaskLib
 
   # Install icon files. This method splits up the source file name and
   # determines where they should be put in the destination hierarchy.
-  def install_icons(file_globs, dest_dir, theme = 'hicolor', icon_type = 'apps')
+  def install_icons(file_globs, dest_dir, theme = "hicolor", icon_type = "apps")
     file_globs.each do |fg|
       files = FileList.new(fg)
       files.each do |f|
@@ -154,7 +154,7 @@ class FileInstallTask < Rake::TaskLib
         icon_size = Pathname.new(icon_dir).basename
         icon_dest_dir = "#{dest_dir}/#{theme}/#{icon_size}/#{icon_type}"
         group = FileGroup.new(icon_dir, f, icon_dest_dir)
-        group.description = 'icons'
+        group.description = "icons"
         @file_groups << group
       end
     end
@@ -169,16 +169,16 @@ class FileInstallTask < Rake::TaskLib
   private
 
   def calculate_ruby_dir
-    ruby_prefix = RbConfig::CONFIG['prefix']
+    ruby_prefix = RbConfig::CONFIG["prefix"]
 
     ruby_libdir = if @install_to_rubylibdir
-                    RbConfig::CONFIG['rubylibdir']
+                    RbConfig::CONFIG["rubylibdir"]
                   else
-                    RbConfig::CONFIG['sitelibdir']
+                    RbConfig::CONFIG["sitelibdir"]
                   end
-    ruby_libdir = ENV['RUBYLIBDIR'] if ENV.key?('RUBYLIBDIR')
+    ruby_libdir = ENV["RUBYLIBDIR"] if ENV.key?("RUBYLIBDIR")
 
-    @prefix = ENV['PREFIX'] || ruby_prefix
+    @prefix = ENV["PREFIX"] || ruby_prefix
     if @prefix == ruby_prefix
       @rubylib = ruby_libdir
     elsif ruby_libdir.index(ruby_prefix).zero?
@@ -190,12 +190,12 @@ class FileInstallTask < Rake::TaskLib
   end
 
   def glob2regex(pathglob)
-    pathglob += '/' if /\*\*$/.match?(pathglob)
-    real_parts = pathglob.split('**/')
+    pathglob += "/" if /\*\*$/.match?(pathglob)
+    real_parts = pathglob.split("**/")
     real_parts.each do |part|
-      part.gsub!('.', '\\.')
-      part.gsub!('*', '[^\\/]*')
-      part.gsub!('?', '[^\\/]')
+      part.gsub!(".", '\\.')
+      part.gsub!("*", '[^\\/]*')
+      part.gsub!("?", '[^\\/]')
     end
     pattern = real_parts.join("([^\/]+\/)*")
     /(#{pattern})/
@@ -234,7 +234,7 @@ class FileInstallTask < Rake::TaskLib
       @file_glob = file_glob
       @dest_dir = dest_dir
       @mode = mode
-      @description = 'files'
+      @description = "files"
     end
 
     def to_s
@@ -264,8 +264,8 @@ class FileInstallTask < Rake::TaskLib
       puts "Installing #{@description} to #{base_dir}#{@dest_dir}"
       files.each do |f|
         dest = dest_dir(f, base_dir)
-        FileUtils.mkdir_p(dest) unless test('d', dest)
-        FileUtils.install(f, dest, mode: mode) if test('f', f)
+        FileUtils.mkdir_p(dest) unless test("d", dest)
+        FileUtils.install(f, dest, mode: mode) if test("f", f)
       end
     end
 
@@ -274,7 +274,7 @@ class FileInstallTask < Rake::TaskLib
         dest = dest_dir(f, base_dir)
         filename = File.basename(f)
         file = File.join(dest, filename)
-        if test('f', file)
+        if test("f", file)
           FileUtils::Verbose.rm_f(file) # , :noop => true)
         end
       end
