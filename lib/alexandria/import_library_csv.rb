@@ -20,10 +20,10 @@
 # New CSV import code taken from Palatina and modified for
 # Alexandria. (29 Apr 2010)
 
-require 'csv'
-require 'date'
-require 'htmlentities'
-require 'tempfile'
+require "csv"
+require "date"
+require "htmlentities"
+require "tempfile"
 
 module Alexandria
   class CSVImport
@@ -47,21 +47,21 @@ module Alexandria
   class GoodreadsCSVImport < CSVImport
     def initialize(header)
       super(header)
-      @title = index_of('Title')
-      @author = index_of('Author')
-      @additional_authors = index_of('Additional Authors')
-      @isbn = index_of('ISBN')
-      @publisher = index_of('Publisher')
-      @publishing_year = index_of('Year Published')
-      @edition = index_of('Binding')
+      @title = index_of("Title")
+      @author = index_of("Author")
+      @additional_authors = index_of("Additional Authors")
+      @isbn = index_of("ISBN")
+      @publisher = index_of("Publisher")
+      @publishing_year = index_of("Year Published")
+      @edition = index_of("Binding")
 
       # optional extras
-      @notes = index_of('Private Notes')
-      @rating = index_of('My Rating')
-      @read_count = index_of('Read Count')
-      @date_read = index_of('Date Read')
-      @bookshelves = index_of('Bookshelves') # save names as tags
-      @mainshelf = index_of('Exclusive Shelf')
+      @notes = index_of("Private Notes")
+      @rating = index_of("My Rating")
+      @read_count = index_of("Read Count")
+      @date_read = index_of("Date Read")
+      @bookshelves = index_of("Bookshelves") # save names as tags
+      @mainshelf = index_of("Exclusive Shelf")
     end
 
     def row_to_book(row)
@@ -69,7 +69,7 @@ module Alexandria
       authors = []
       authors << normalize(row[@author])
       additional = row[@additional_authors]
-      additional.split(',').each do |add|
+      additional.split(",").each do |add|
         authors << normalize(add)
       end
       isbn = row[@isbn] # TODO: canonicalize_ean...
@@ -90,25 +90,25 @@ module Alexandria
         book.redd = true if count > 0
       end
       if row[@date_read]
-        date = Date.strptime(str, '%d/%m/%y') # e.g. "14/01/10" => 2010-01-14
+        date = Date.strptime(str, "%d/%m/%y") # e.g. "14/01/10" => 2010-01-14
         book.redd_when = date
         book.redd = true
       end
       if row[@mainshelf]
-        if row[@mainshelf] == 'read'
+        if row[@mainshelf] == "read"
           book.redd = true
-        elsif row[@mainshelf] == 'to-read'
+        elsif row[@mainshelf] == "to-read"
           book.redd = false
-          book.tags = ['to read']
-        elsif row[@mainshelf] == 'currently-reading'
+          book.tags = ["to read"]
+        elsif row[@mainshelf] == "currently-reading"
           book.redd = false
-          book.tags = ['currently reading']
+          book.tags = ["currently reading"]
         end
       end
       if row[@bookshelves]
         shelves = normalize(row[@bookshelves]).split
         shelves.each do |shelf|
-          tag = shelf.tr('-', ' ')
+          tag = shelf.tr("-", " ")
           book.tags << tag unless book.tags.include? tag
         end
       end
@@ -148,8 +148,8 @@ module Alexandria
       publisher = publisher_info
       publisher = Regexp.last_match[1] if publisher_info =~ /([^\(]+)\(/
       edition = publisher_info # binding
-      edition_info = publisher_info.split(',')
-      edition = publisher_info.split(',')[-2] if edition_info.size >= 3
+      edition_info = publisher_info.split(",")
+      edition = publisher_info.split(",")[-2] if edition_info.size >= 3
 
       year = row[@publishing_year].to_i
 
@@ -163,7 +163,7 @@ module Alexandria
 
       book.rating = row[@rating].to_i if row[@rating]
       if row[@tags]
-        tags = normalize(row[@tags]).split(',')
+        tags = normalize(row[@tags]).split(",")
         tags.each do |tag|
           book.tags << tag unless book.tags.include? tag
         end
@@ -186,7 +186,7 @@ module Alexandria
         if head == "'PUBLICATION INFO'"
           is_librarything = true
           break
-        elsif head == 'Year Published'
+        elsif head == "Year Published"
           is_goodreads = true
           break
         end
@@ -196,7 +196,7 @@ module Alexandria
       elsif is_goodreads
         return GoodreadsCSVImport.new(header)
       end
-      raise 'Not Recognized' unless is_librarything || is_goodreads
+      raise "Not Recognized" unless is_librarything || is_goodreads
     end
   end
 end

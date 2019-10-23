@@ -44,7 +44,7 @@ module Alexandria
     module Icons
       include Logging
 
-      ICONS_DIR = File.join(Alexandria::Config::DATA_DIR, 'icons')
+      ICONS_DIR = File.join(Alexandria::Config::DATA_DIR, "icons")
       def self.init
         load_icon_images
       end
@@ -57,7 +57,7 @@ module Alexandria
 
           # Don't use upcase and use tr instead
           # For example in Turkish the upper case of 'i' is still 'i'.
-          name = File.basename(file, '.png').tr('a-z', 'A-Z')
+          name = File.basename(file, ".png").tr("a-z", "A-Z")
           const_set(name, GdkPixbuf::Pixbuf.new(file: File.join(ICONS_DIR, file)))
         end
       end

@@ -36,7 +36,7 @@ module Alexandria
       end
 
       def to_s
-        'default order'
+        "default order"
       end
     end
   end

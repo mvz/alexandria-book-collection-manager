@@ -11,23 +11,23 @@
 # modified to fit the structure of Alexandria book providers.
 # (26 Feb 2009)
 
-require 'cgi'
-require 'alexandria/book_providers/web'
+require "cgi"
+require "alexandria/book_providers/web"
 
 module Alexandria
   class BookProviders
     class AdLibrisProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.adlibris.com/se/'
+      SITE = "http://www.adlibris.com/se/"
 
       BASE_SEARCH_URL = "#{SITE}searchresult.aspx?search=advanced&%s=%s" \
-        '&fromproduct=False' # type/term
+        "&fromproduct=False" # type/term
 
       PRODUCT_URL = "#{SITE}product.aspx?isbn=%s"
 
       def initialize
-        super('AdLibris', 'AdLibris (Sweden)')
+        super("AdLibris", "AdLibris (Sweden)")
         prefs.read
         # @ent = HTMLEntities.new
       end
@@ -63,10 +63,10 @@ module Alexandria
           PRODUCT_URL % Library.canonicalise_isbn(search_term)
         else
           (search_type_code = {
-            SEARCH_BY_AUTHORS => 'author',
-            SEARCH_BY_TITLE   => 'title',
-            SEARCH_BY_KEYWORD => 'keyword'
-          }[search_type]) || 'keyword'
+            SEARCH_BY_AUTHORS => "author",
+            SEARCH_BY_TITLE   => "title",
+            SEARCH_BY_KEYWORD => "keyword"
+          }[search_type]) || "keyword"
           search_term_encoded = CGI.escape(search_term)
           format(BASE_SEARCH_URL, search_type_code, search_term_encoded)
         end
@@ -90,11 +90,11 @@ module Alexandria
         search_hit = doc.search("div'searchResult")[0]
         return [] unless search_hit
 
-        (search_hit / 'ul.ulSearch table').each do |t|
+        (search_hit / "ul.ulSearch table").each do |t|
           result = {}
-          if (title_data = (t % 'div.divTitle'))
+          if (title_data = (t % "div.divTitle"))
             result[:title] = (title_data % :a).inner_text
-            lookup_url = (title_data % :a)['href']
+            lookup_url = (title_data % :a)["href"]
           end
           result[:lookup_url] = "#{SITE}#{lookup_url}"
 
@@ -129,19 +129,19 @@ module Alexandria
         doc = html_to_doc(html)
         begin
           title = nil
-          if (h1 = doc.at('div.productTitleFormat h1'))
+          if (h1 = doc.at("div.productTitleFormat h1"))
             title = text_of(h1)
           else
-            raise NoResultsError, 'title not found on page'
+            raise NoResultsError, "title not found on page"
           end
 
-          product = doc.at('div.product')
-          ul_info = doc.at('ul.info') # NOTE, two of these
+          product = doc.at("div.product")
+          ul_info = doc.at("ul.info") # NOTE, two of these
 
-          author_cells = ul_info.search('li.liAuthor') # css-like search
+          author_cells = ul_info.search("li.liAuthor") # css-like search
           authors = []
           author_cells.each do |li|
-            author_name = text_of(li.search('h2 > a')[0])
+            author_name = text_of(li.search("h2 > a")[0])
 
             authors << author_name
           end
@@ -152,7 +152,7 @@ module Alexandria
           end
 
           binding = nil
-          if (format = doc.search('div.productTitleFormat span').first)
+          if (format = doc.search("div.productTitleFormat span").first)
             binding = text_of(format)
             binding = Regexp.last_match[1] if binding =~ /\(([^\)]+)\)/
           end
@@ -170,7 +170,7 @@ module Alexandria
             isbn = isbn_td.inner_text
             next unless isbn =~ /[0-9x]{10,13}/i
 
-            isbn.gsub(/(\n|\r)/, ' ')
+            isbn.gsub(/(\n|\r)/, " ")
             isbn = Regexp.last_match[1] if isbn =~ /:[\s]*([0-9x]+)/i
             isbns << isbn
           end
@@ -180,8 +180,8 @@ module Alexandria
           # cover
           image_url = nil
           if (cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first)
-            image_url = if /^http\:\/\//.match?(cover_img['src'])
-                          cover_img['src']
+            image_url = if /^http\:\/\//.match?(cover_img["src"])
+                          cover_img["src"]
                         else
                           "#{SITE}/#{cover_img['src']}" # HACK: use html base
                         end
@@ -201,7 +201,7 @@ module Alexandria
 
           trace = ex.backtrace.join("\n> ")
           log.warn {
-            'Failed parsing search results for AdLibris ' \
+            "Failed parsing search results for AdLibris " \
             "#{ex.message} #{trace}"
           }
           raise NoResultsError

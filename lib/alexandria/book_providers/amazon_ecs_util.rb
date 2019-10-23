@@ -4,11 +4,11 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'net/http'
-require 'hpricot'
-require 'cgi'
+require "net/http"
+require "hpricot"
+require "cgi"
 
-require 'digest/sha2'
+require "digest/sha2"
 
 module Amazon
   class RequestError < StandardError; end
@@ -16,17 +16,17 @@ module Amazon
   class Ecs
     include Alexandria::Logging
 
-    SERVICE_URLS = { us: 'http://webservices.amazon.com/onca/xml?Service=AWSECommerceService',
-                     uk: 'http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService',
-                     ca: 'http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService',
-                     de: 'http://webservices.amazon.de/onca/xml?Service=AWSECommerceService',
-                     jp: 'http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService',
-                     fr: 'http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService' }.freeze
+    SERVICE_URLS = { us: "http://webservices.amazon.com/onca/xml?Service=AWSECommerceService",
+                     uk: "http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService",
+                     ca: "http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService",
+                     de: "http://webservices.amazon.de/onca/xml?Service=AWSECommerceService",
+                     jp: "http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService",
+                     fr: "http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService" }.freeze
 
     @@options = {}
     @@debug = false
 
-    @@secret_access_key = ''
+    @@secret_access_key = ""
 
     # Default search options
     def self.options
@@ -53,7 +53,7 @@ module Amazon
     end
 
     def self.configure(&_proc)
-      raise ArgumentError, 'Block is required.' unless block_given?
+      raise ArgumentError, "Block is required." unless block_given?
 
       yield @@options
     end
@@ -61,8 +61,8 @@ module Amazon
     # Search amazon items with search terms. Default search index option is 'Books'.
     # For other search type other than keywords, please specify :type => [search type param name].
     def self.item_search(terms, opts = {})
-      opts[:operation] = 'ItemSearch'
-      opts[:search_index] = opts[:search_index] || 'Books'
+      opts[:operation] = "ItemSearch"
+      opts[:search_index] = opts[:search_index] || "Books"
 
       type = opts.delete(:type)
       if type
@@ -76,7 +76,7 @@ module Amazon
 
     # Search an item by ASIN no.
     def self.item_lookup(item_id, opts = {})
-      opts[:operation] = 'ItemLookup'
+      opts[:operation] = "ItemLookup"
       opts[:item_id] = item_id
 
       send_request(opts)
@@ -114,7 +114,7 @@ module Amazon
 
       # Return true if request is valid.
       def is_valid_request?
-        (@doc / 'isvalid').inner_html == 'True'
+        (@doc / "isvalid").inner_html == "True"
       end
 
       # Return true if response has an error.
@@ -124,12 +124,12 @@ module Amazon
 
       # Return error message.
       def error
-        Element.get(@doc, 'error/message')
+        Element.get(@doc, "error/message")
       end
 
       # Return an array of Amazon::Element item objects.
       def items
-        @items ||= (@doc / 'item').map { |item| Element.new(item) }
+        @items ||= (@doc / "item").map { |item| Element.new(item) }
         @items
       end
 
@@ -140,19 +140,19 @@ module Amazon
 
       # Return current page no if :item_page option is when initiating the request.
       def item_page
-        @item_page ||= (@doc / 'itemsearchrequest/itempage').inner_html.to_i
+        @item_page ||= (@doc / "itemsearchrequest/itempage").inner_html.to_i
         @item_page
       end
 
       # Return total results.
       def total_results
-        @total_results ||= (@doc / 'totalresults').inner_html.to_i
+        @total_results ||= (@doc / "totalresults").inner_html.to_i
         @total_results
       end
 
       # Return total pages.
       def total_pages
-        @total_pages ||= (@doc / 'totalpages').inner_html.to_i
+        @total_pages ||= (@doc / "totalpages").inner_html.to_i
         @total_pages
       end
     end
@@ -171,15 +171,15 @@ module Amazon
 
     def self.prepare_url(opts)
       country = opts.delete(:country)
-      country = country.nil? ? 'us' : country
+      country = country.nil? ? "us" : country
       request_url = SERVICE_URLS[country.to_sym]
       raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
 
-      qs = ''
+      qs = ""
       opts.each { |k, v|
         next unless v
 
-        v = v.join(',') if v.is_a? Array
+        v = v.join(",") if v.is_a? Array
         qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
       }
       url = "#{request_url}#{qs}"
@@ -191,7 +191,7 @@ module Amazon
 
     def self.camelize(s)
       s.to_s.
-        gsub(/\/(.?)/) { '::' + Regexp.last_match[1].upcase }.
+        gsub(/\/(.?)/) { "::" + Regexp.last_match[1].upcase }.
         gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
     end
 
@@ -207,8 +207,8 @@ module Amazon
       ipad_bytes = ipad.bytes.map { |b| b }
       opad_bytes = opad.bytes.map { |b| b }
       key_bytes = key.bytes.map { |b| b }
-      ipad_xor = ''
-      opad_xor = ''
+      ipad_xor = ""
+      opad_xor = ""
       (0..key.size - 1).each do |i|
         ipad_xor << (ipad_bytes[i] ^ key_bytes[i])
         opad_xor << (opad_bytes[i] ^ key_bytes[i])
@@ -242,21 +242,21 @@ module Amazon
 
       # Step 1: enter the timestamp
       t = Time.now.getutc # MUST be in UTC
-      stamp = t.strftime('%Y-%m-%dT%H:%M:%SZ')
+      stamp = t.strftime("%Y-%m-%dT%H:%M:%SZ")
       param_string += "&Timestamp=#{stamp}"
 
       # Step 2 : URL-encode
-      param_string = param_string.gsub(',', '%2C').gsub(':', '%3A')
+      param_string = param_string.gsub(",", "%2C").gsub(":", "%3A")
       #   NOTE : take care not to double-encode
 
       # Step 3 : Split the parameter/value pairs
-      params = param_string.split('&')
+      params = param_string.split("&")
 
       # Step 4 : Sort params
       params.sort!
 
       # Step 5 : Rejoin the param string
-      canonical_param_string = params.join('&')
+      canonical_param_string = params.join("&")
 
       # Steps 6 & 7: Prepend HTTP request info
       string_to_sign = "GET\n#{host}\n#{path}\n#{canonical_param_string}"
@@ -265,7 +265,7 @@ module Amazon
 
       # Step 8 : Calculate RFC 2104-compliant HMAC with SHA256 hash algorithm
       sig = hmac_sha256(string_to_sign, @@secret_access_key)
-      base64_sig = [sig].pack('m').strip
+      base64_sig = [sig].pack("m").strip
 
       # Step 9 : URL-encode + and = in sig
       base64_sig = CGI.escape(base64_sig)
@@ -308,27 +308,27 @@ module Amazon
     end
 
     # Get the text value of the given path, leave empty to retrieve current element value.
-    def get(path = '')
+    def get(path = "")
       Element.get(@element, path)
     end
 
     # Get the unescaped HTML text of the given path.
-    def get_unescaped(path = '')
+    def get_unescaped(path = "")
       Element.get_unescaped(@element, path)
     end
 
     # Get the array values of the given path.
-    def get_array(path = '')
+    def get_array(path = "")
       Element.get_array(@element, path)
     end
 
     # Get the children element text values in hash format with the element names as the hash keys.
-    def get_hash(path = '')
+    def get_hash(path = "")
       Element.get_hash(@element, path)
     end
 
     # Similar to #get, except an element object must be passed-in.
-    def self.get(element, path = '')
+    def self.get(element, path = "")
       return unless element
 
       result = element.at(path)
@@ -339,13 +339,13 @@ module Amazon
     end
 
     # Similar to #get_unescaped, except an element object must be passed-in.
-    def self.get_unescaped(element, path = '')
+    def self.get_unescaped(element, path = "")
       result = get(element, path)
       CGI.unescapeHTML(result) if result
     end
 
     # Similar to #get_array, except an element object must be passed-in.
-    def self.get_array(element, path = '')
+    def self.get_array(element, path = "")
       return unless element
 
       result = element / path
@@ -361,7 +361,7 @@ module Amazon
     end
 
     # Similar to #get_hash, except an element object must be passed-in.
-    def self.get_hash(element, path = '')
+    def self.get_hash(element, path = "")
       return unless element
 
       result = element.at(path)

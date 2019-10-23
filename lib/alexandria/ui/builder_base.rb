@@ -8,7 +8,7 @@ module Alexandria
   module UI
     class BuilderBase
       def initialize(filename, widget_names)
-        file = File.join(Alexandria::Config::DATA_DIR, 'glade', filename)
+        file = File.join(Alexandria::Config::DATA_DIR, "glade", filename)
         builder = Gtk::Builder.new
         # TODO: This emits the warning 'GtkDialog mapped without a transient
         # parent. This is discouraged.'

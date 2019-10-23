@@ -21,17 +21,17 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Alexandria::BookProviders do
-  it 'should be less clever'
+  it "should be less clever"
 
   def assert_correct_search_result(provider, query,
                                    search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
     begin
       results = provider.instance.search(query, search_type)
     rescue SocketError
-      skip 'Service is offline'
+      skip "Service is offline"
     end
 
     puts results.inspect if $DEBUG
@@ -66,121 +66,121 @@ describe Alexandria::BookProviders do
     results
   end
 
-  it 'does not piss off Rich Burridge' do
-    skip 'Amazon requires an API key. Remove it altogether as a provider?'
+  it "does not piss off Rich Burridge" do
+    skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 '033025068X')
+                                 "033025068X")
   end
 
-  it 'amazon should work' do
-    skip 'Amazon requires an API key. Remove it altogether as a provider?'
+  it "amazon should work" do
+    skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 '9780385504201')
+                                 "9780385504201")
   end
 
-  it 'amazon title should work' do
-    skip 'Amazon requires an API key. Remove it altogether as a provider?'
+  it "amazon title should work" do
+    skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 'A Confederacy of Dunces', Alexandria::BookProviders::SEARCH_BY_TITLE)
+                                 "A Confederacy of Dunces", Alexandria::BookProviders::SEARCH_BY_TITLE)
   end
 
-  it 'amazon authors should work' do
-    skip 'Amazon requires an API key. Remove it altogether as a provider?'
+  it "amazon authors should work" do
+    skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 'John Kennedy Toole', Alexandria::BookProviders::SEARCH_BY_AUTHORS)
+                                 "John Kennedy Toole", Alexandria::BookProviders::SEARCH_BY_AUTHORS)
   end
 
-  it 'amazon keyword should work' do
-    skip 'Amazon requires an API key. Remove it altogether as a provider?'
+  it "amazon keyword should work" do
+    skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 'Confederacy Dunces', Alexandria::BookProviders::SEARCH_BY_KEYWORD)
+                                 "Confederacy Dunces", Alexandria::BookProviders::SEARCH_BY_KEYWORD)
   end
 
-  it 'LOC should work' do
+  it "LOC should work" do
     assert_correct_search_result(Alexandria::BookProviders::LOCProvider,
-                                 '9780805335583')
+                                 "9780805335583")
     # this book has non-ASCII letters
     assert_correct_search_result(Alexandria::BookProviders::LOCProvider,
-                                 '9782070379248')
+                                 "9782070379248")
   end
 
-  it 'BL should work' do
-    skip 'Not working: connect failed'
+  it "BL should work" do
+    skip "Not working: connect failed"
     assert_correct_search_result(Alexandria::BookProviders::BLProvider,
-                                 '9781853260803')
+                                 "9781853260803")
   end
 
-  it 'SBN should work' do
+  it "SBN should work" do
     assert_correct_search_result(Alexandria::BookProviders::SBNProvider,
-                                 '9788835926436')
+                                 "9788835926436")
   end
 
-  it 'Barnes and Noble should work' do
-    skip 'Barnes and Noble is not operational at the moment'
+  it "Barnes and Noble should work" do
+    skip "Barnes and Noble is not operational at the moment"
     assert_correct_search_result(Alexandria::BookProviders::BarnesAndNobleProvider,
-                                 '9780961328917') # see #1433
+                                 "9780961328917") # see #1433
   end
 
-  it 'Proxis should work' do
-    skip 'Needs fixing'
+  it "Proxis should work" do
+    skip "Needs fixing"
     assert_correct_search_result(Alexandria::BookProviders::ProxisProvider,
-                                 '9789026965746')
+                                 "9789026965746")
     assert_correct_search_result(Alexandria::BookProviders::ProxisProvider,
-                                 '9780586071403')
+                                 "9780586071403")
   end
 
-  it 'Thalia should work' do
-    skip 'Needs fixing'
+  it "Thalia should work" do
+    skip "Needs fixing"
     # german book
     assert_correct_search_result(Alexandria::BookProviders::ThaliaProvider,
-                                 '9783896673305')
+                                 "9783896673305")
     # international book
     assert_correct_search_result(Alexandria::BookProviders::ThaliaProvider,
-                                 '9780440241904')
+                                 "9780440241904")
     # movie dvd
     assert_correct_search_result(Alexandria::BookProviders::ThaliaProvider,
-                                 '4010232037824')
+                                 "4010232037824")
     # music cd
     assert_correct_search_result(Alexandria::BookProviders::ThaliaProvider,
-                                 '0094638203520')
+                                 "0094638203520")
   end
 
-  it 'AdLibris should work' do
-    skip 'Needs fixing: site has changed'
+  it "AdLibris should work" do
+    skip "Needs fixing: site has changed"
     assert_correct_search_result(Alexandria::BookProviders::AdLibrisProvider,
-                                 '9789100109332')
+                                 "9789100109332")
   end
 
-  it 'Siciliano should work' do
-    skip 'Needs fixing: no results found'
+  it "Siciliano should work" do
+    skip "Needs fixing: no results found"
     assert_correct_search_result(Alexandria::BookProviders::SicilianoProvider,
-                                 '9788599170380')
+                                 "9788599170380")
   end
 
-  it 'Renaud should work' do
-    skip 'Marked in code as not working; remove implementation entirely.'
+  it "Renaud should work" do
+    skip "Marked in code as not working; remove implementation entirely."
     # adultes
     assert_correct_search_result(Alexandria::BookProviders::RENAUDProvider,
-                                 '9782894723388')
+                                 "9782894723388")
     # jeunesse
     assert_correct_search_result(Alexandria::BookProviders::RENAUDProvider,
-                                 '9782764605059')
+                                 "9782764605059")
   end
 
-  it 'Worldcat should work' do
+  it "Worldcat should work" do
     assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
-                                 '9780521247108')
+                                 "9780521247108")
     # this one is with <div class=vernacular lang="[^"]+">)
     assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
-                                 '9785941454136')
+                                 "9785941454136")
   end
 
-  it 'Worldcat should work with multiple authors' do
+  it "Worldcat should work with multiple authors" do
     results = assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
-                                           '9785941454136')
+                                           "9785941454136")
     this_book = results.first
-    expect(this_book.authors).to be_instance_of(Array), 'Not an array!'
+    expect(this_book.authors).to be_instance_of(Array), "Not an array!"
     # puts this_book.authors
-    expect(this_book.authors.length).to eq(2), 'Wrong number of authors for this book!'
+    expect(this_book.authors.length).to eq(2), "Wrong number of authors for this book!"
   end
 end

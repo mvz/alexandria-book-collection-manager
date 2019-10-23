@@ -7,8 +7,8 @@
 # New Proxis provider, taken from Palatina MetaDataSource and modified
 # for Alexandria. (20 Dec 2009)
 
-require 'cgi'
-require 'alexandria/book_providers/web'
+require "cgi"
+require "alexandria/book_providers/web"
 
 module Alexandria
   class BookProviders
@@ -22,14 +22,14 @@ module Alexandria
       # it adds most to Alexandria (Amazon already has French and
       # English titles).
 
-      SITE = 'http://www.proxis.nl'
+      SITE = "http://www.proxis.nl"
       BASE_SEARCH_URL = "#{SITE}/NLNL/Search/IndexGSA.aspx?search=%s" \
-        '&shop=100001NL&SelRubricLevel1Id=100001NL'
+        "&shop=100001NL&SelRubricLevel1Id=100001NL"
       ISBN_REDIRECT_BASE_URL = "#{SITE}/NLNL/Search/Index.aspx?search=%s" \
-        '&shop=100001NL&SelRubricLevel1Id=100001NL'
+        "&shop=100001NL&SelRubricLevel1Id=100001NL"
 
       def initialize
-        super('Proxis', 'Proxis (Belgium)')
+        super("Proxis", "Proxis (Belgium)")
         # prefs.add("lang", _("Language"), "fr",
         #          LANGUAGES.keys)
         prefs.read
@@ -79,7 +79,7 @@ module Alexandria
             nil
           else
             node_text = node.children.map { |n| text_of(n) }.join
-            node_text.strip.squeeze(' ')
+            node_text.strip.squeeze(" ")
           end
         end
       end
@@ -87,13 +87,13 @@ module Alexandria
       def parse_search_result_data(html)
         doc = html_to_doc(html)
         book_search_results = []
-        items = doc.search('table.searchResult tr')
+        items = doc.search("table.searchResult tr")
         items.each do |item|
           result = {}
-          title_link = item % 'h5 a'
+          title_link = item % "h5 a"
           if title_link
             result[:title] = text_of(title_link)
-            result[:lookup_url] = title_link['href']
+            result[:lookup_url] = title_link["href"]
             result[:lookup_url] = "#{SITE}#{result[:lookup_url]}" unless /^http/.match?(result[:lookup_url])
           end
           book_search_results << result
@@ -106,7 +106,7 @@ module Alexandria
 
       def data_for_header(th)
         tr = th.parent
-        td = tr.at('td')
+        td = tr.at("td")
         text_of(td) if td
       end
 
@@ -115,14 +115,14 @@ module Alexandria
         book_data = {}
         book_data[:authors] = []
         # TITLE
-        if (title_header = doc.search('div.detailBlock h3'))
-          header_spans = title_header.first.search('span')
+        if (title_header = doc.search("div.detailBlock h3"))
+          header_spans = title_header.first.search("span")
           title = text_of(header_spans.first)
           title = Regexp.last_match[1].strip if title =~ /(.+)-$/
           book_data[:title] = title
         end
 
-        info_headers = doc.search('table.productInfoTable th')
+        info_headers = doc.search("table.productInfoTable th")
 
         isbns = []
         unless info_headers.empty?
@@ -153,8 +153,8 @@ module Alexandria
 
         image_url = nil
         if (cover_img = doc.at("img[@id$='imgProduct']"))
-          image_url = if /^http/.match?(cover_img['src'])
-                        cover_img['src']
+          image_url = if /^http/.match?(cover_img["src"])
+                        cover_img["src"]
                       else
                         "#{SITE}/#{cover_img['src']}" # TODO: use html <base>
                       end

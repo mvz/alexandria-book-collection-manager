@@ -12,7 +12,7 @@ module Alexandria
       /loaned_since:\s*(\!ruby\/object\:Bignum\s*)?(\d+)\n/.freeze
 
     include GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def initialize(dir)
       @dir = dir
@@ -34,7 +34,7 @@ module Alexandria
       end
       # Create the default library if there is no library yet.
 
-      a << load_library(_('My Library')) if a.empty?
+      a << load_library(_("My Library")) if a.empty?
 
       a
     end
@@ -45,7 +45,7 @@ module Alexandria
       library = Library.new(name, self)
       FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
       Dir.chdir(library.path) do
-        Dir['*' + Library::EXT[:book]].each do |filename|
+        Dir["*" + Library::EXT[:book]].each do |filename|
           test[1] = filename if (test[0]).zero?
 
           unless File.size? test[1]
@@ -111,21 +111,21 @@ module Alexandria
         # '_medium.jpg' have been deprecated for a single medium
         # cover file named '.cover'.
 
-        Dir['*' + '_medium.jpg'].each do |medium_cover|
+        Dir["*" + "_medium.jpg"].each do |medium_cover|
           FileUtils.mv(medium_cover,
                        medium_cover.sub(/_medium\.jpg$/,
                                         Library::EXT[:cover]))
         end
 
-        Dir['*' + Library::EXT[:cover]].each do |cover|
-          next if cover[0] == 'g'
+        Dir["*" + Library::EXT[:cover]].each do |cover|
+          next if cover[0] == "g"
 
           md = /(.+)\.cover/.match(cover)
           ean = Library.canonicalise_ean(md[1]) || md[1]
           FileUtils.mv(cover, ean + Library::EXT[:cover]) unless cover == ean + Library::EXT[:cover]
         end
 
-        FileUtils.rm_f(Dir['*_small.jpg'])
+        FileUtils.rm_f(Dir["*_small.jpg"])
       end
       library.ruined_books = ruined_books
 
@@ -137,7 +137,7 @@ module Alexandria
       begin
         # Deserialize smart libraries.
         Dir.chdir(smart_library_dir) do
-          Dir['*' + SmartLibrary::EXT].each do |filename|
+          Dir["*" + SmartLibrary::EXT].each do |filename|
             # Skip non-regular files.
             next unless File.stat(filename).file?
 
@@ -164,7 +164,7 @@ module Alexandria
     end
 
     def smart_library_dir
-      File.join(@dir, '.smart_libraries')
+      File.join(@dir, ".smart_libraries")
     end
 
     private
@@ -179,7 +179,7 @@ module Alexandria
 
       if /!str:Amazon::Search::Response/.match?(text)
         log.debug { "Removing Ruby/Amazon strings from #{name}" }
-        text.gsub!('!str:Amazon::Search::Response', '')
+        text.gsub!("!str:Amazon::Search::Response", "")
       end
 
       # Backward compatibility with versions <= 0.6.0, where the
@@ -187,7 +187,7 @@ module Alexandria
       if (md = FIX_BIGNUM_REGEX.match(text))
         new_yaml = Time.at(md[2].to_i).to_yaml
         # Remove the "---" prefix.
-        new_yaml.sub!(/^\s*\-+\s*/, '')
+        new_yaml.sub!(/^\s*\-+\s*/, "")
         text.sub!(md[0], "loaned_since: #{new_yaml}\n")
       end
 

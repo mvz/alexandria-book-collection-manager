@@ -4,10 +4,10 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/callbacks'
-require 'alexandria/ui/columns'
-require 'alexandria/ui/conflict_while_copying_dialog'
-require 'alexandria/library_sort_order'
+require "alexandria/ui/callbacks"
+require "alexandria/ui/columns"
+require "alexandria/ui/conflict_while_copying_dialog"
+require "alexandria/library_sort_order"
 
 module Alexandria
   module UI
@@ -17,10 +17,10 @@ module Alexandria
       attr_reader :model
       include Logging
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent)
-        super('main_app__builder.glade', widget_names)
+        super("main_app__builder.glade", widget_names)
         @parent = parent
 
         @library_separator_iter = nil
@@ -48,7 +48,7 @@ module Alexandria
         log.debug { "UI Manager initialized: #{@iconview.model.inspect}" }
         @clicking_on_sidepane = true
 
-        @library_listview.signal_connect('cursor-changed') do
+        @library_listview.signal_connect("cursor-changed") do
           @clicking_on_sidepane = true
         end
       end
@@ -64,7 +64,7 @@ module Alexandria
       end
 
       def create_uimanager
-        log.debug { 'Adding actiongroup to uimanager' }
+        log.debug { "Adding actiongroup to uimanager" }
         @uimanager = Gtk::UIManager.new
         @uimanager.insert_action_group(@actiongroup, 0)
       end
@@ -90,10 +90,10 @@ module Alexandria
       end
 
       def setup_toolbar
-        log.debug { 'setup_toolbar' }
+        log.debug { "setup_toolbar" }
         setup_book_providers
         add_main_toolbar_items
-        @toolbar = @uimanager.get_widget('/MainToolbar')
+        @toolbar = @uimanager.get_widget("/MainToolbar")
         @toolbar.show_arrow = true
         @toolbar.insert(Gtk::SeparatorToolItem.new, -1)
         setup_toolbar_combobox
@@ -101,18 +101,18 @@ module Alexandria
         @toolbar.insert(Gtk::SeparatorToolItem.new, -1)
         setup_toolbar_viewas
         @toolbar.show_all
-        @actiongroup['Undo'].sensitive = @actiongroup['Redo'].sensitive = false
+        @actiongroup["Undo"].sensitive = @actiongroup["Redo"].sensitive = false
         UndoManager.instance.add_observer(self)
         @vbox1.add(@toolbar, position: 1, expand: false, fill: false)
       end
 
       def add_main_toolbar_items
         mid = @uimanager.new_merge_id
-        @uimanager.add_ui(mid, 'ui/', 'MainToolbar', 'MainToolbar',
+        @uimanager.add_ui(mid, "ui/", "MainToolbar", "MainToolbar",
                           :toolbar, false)
-        @uimanager.add_ui(mid, 'ui/MainToolbar/', 'New', 'New',
+        @uimanager.add_ui(mid, "ui/MainToolbar/", "New", "New",
                           :toolitem, false)
-        @uimanager.add_ui(mid, 'ui/MainToolbar/', 'AddBook', 'AddBook',
+        @uimanager.add_ui(mid, "ui/MainToolbar/", "AddBook", "AddBook",
                           :toolitem, false)
         # @uimanager.add_ui(mid, "ui/MainToolbar/", "sep", "sep",
         #                  :separator, false)
@@ -122,11 +122,11 @@ module Alexandria
 
       def setup_toolbar_filter_entry
         @filter_entry = Gtk::Entry.new
-        @filter_entry.signal_connect('changed', &method(:on_toolbar_filter_entry_changed))
+        @filter_entry.signal_connect("changed", &method(:on_toolbar_filter_entry_changed))
         @toolitem = Gtk::ToolItem.new
         @toolitem.expand = true
         @toolitem.border_width = 5
-        @filter_entry.set_tooltip_text _('Type here the search criterion')
+        @filter_entry.set_tooltip_text _("Type here the search criterion")
         @toolitem << @filter_entry
         @toolbar.insert(@toolitem, -1)
       end
@@ -135,20 +135,20 @@ module Alexandria
         cb = Gtk::ComboBoxText.new
         cb.set_row_separator_func do |model, iter|
           # TODO: Replace with iter[0] if possible
-          model.get_value(iter, 0) == '-'
+          model.get_value(iter, 0) == "-"
         end
-        [_('Match everything'),
-         '-',
-         _('Title contains'),
-         _('Authors contain'),
-         _('ISBN contains'),
-         _('Publisher contains'),
-         _('Notes contain'),
-         _('Tags contain')].each do |item|
+        [_("Match everything"),
+         "-",
+         _("Title contains"),
+         _("Authors contain"),
+         _("ISBN contains"),
+         _("Publisher contains"),
+         _("Notes contain"),
+         _("Tags contain")].each do |item|
           cb.append_text(item)
         end
         cb.active = 0
-        cb.signal_connect('changed', &method(:on_criterion_combobox_changed))
+        cb.signal_connect("changed", &method(:on_criterion_combobox_changed))
 
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
@@ -158,16 +158,16 @@ module Alexandria
         @toolitem.border_width = 5
         @toolitem << eb
         @toolbar.insert(@toolitem, -1)
-        eb.set_tooltip_text _('Change the search type')
+        eb.set_tooltip_text _("Change the search type")
       end
 
       def setup_toolbar_viewas
         @toolbar_view_as = Gtk::ComboBoxText.new
-        @toolbar_view_as.append_text(_('View as Icons'))
-        @toolbar_view_as.append_text(_('View as List'))
+        @toolbar_view_as.append_text(_("View as Icons"))
+        @toolbar_view_as.append_text(_("View as List"))
         @toolbar_view_as.active = 0
         @toolbar_view_as_signal_hid = \
-          @toolbar_view_as.signal_connect('changed', &method(:on_toolbar_view_as_changed))
+          @toolbar_view_as.signal_connect("changed", &method(:on_toolbar_view_as_changed))
 
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
@@ -177,17 +177,17 @@ module Alexandria
         @toolitem.border_width = 5
         @toolitem << eb
         @toolbar.insert(@toolitem, -1)
-        eb.set_tooltip_text _('Choose how to show books')
+        eb.set_tooltip_text _("Choose how to show books")
       end
 
       def setup_book_providers
-        log.debug { 'setup_book_providers' }
+        log.debug { "setup_book_providers" }
         mid = @uimanager.new_merge_id
         BookProviders.each do |provider|
           name = provider.action_name
-          ['ui/MainMenubar/ViewMenu/OnlineInformation/',
-           'ui/BookPopup/OnlineInformation/',
-           'ui/NoBookPopup/OnlineInformation/'].each do |path|
+          ["ui/MainMenubar/ViewMenu/OnlineInformation/",
+           "ui/BookPopup/OnlineInformation/",
+           "ui/NoBookPopup/OnlineInformation/"].each do |path|
              log.debug { "Adding #{name} to #{path}" }
              @uimanager.add_ui(mid, path, name, name,
                                :menuitem, false)
@@ -196,40 +196,40 @@ module Alexandria
       end
 
       def add_menus_and_popups_from_xml
-        log.debug { 'add_menus_and_popups_from_xml' }
-        ['menus.xml', 'popups.xml'].each do |ui_file|
+        log.debug { "add_menus_and_popups_from_xml" }
+        ["menus.xml", "popups.xml"].each do |ui_file|
           @uimanager.add_ui(File.join(Alexandria::Config::DATA_DIR,
-                                      'ui', ui_file))
+                                      "ui", ui_file))
         end
       end
 
       def setup_accel_group
-        log.debug { 'setup_accel_group' }
+        log.debug { "setup_accel_group" }
         @main_app.add_accel_group(@uimanager.accel_group)
       end
 
       def setup_menus
-        @menubar = @uimanager.get_widget('/MainMenubar')
+        @menubar = @uimanager.get_widget("/MainMenubar")
         @vbox1.add(@menubar, position: 0, expand: false, fill: false)
       end
 
       def setup_popups
-        log.debug { 'setup_popups' }
-        @library_popup = @uimanager.get_widget('/LibraryPopup')
-        @smart_library_popup = @uimanager.get_widget('/SmartLibraryPopup')
-        @nolibrary_popup = @uimanager.get_widget('/NoLibraryPopup')
-        @book_popup = @uimanager.get_widget('/BookPopup')
-        @nobook_popup = @uimanager.get_widget('/NoBookPopup')
+        log.debug { "setup_popups" }
+        @library_popup = @uimanager.get_widget("/LibraryPopup")
+        @smart_library_popup = @uimanager.get_widget("/SmartLibraryPopup")
+        @nolibrary_popup = @uimanager.get_widget("/NoLibraryPopup")
+        @book_popup = @uimanager.get_widget("/BookPopup")
+        @nobook_popup = @uimanager.get_widget("/NoBookPopup")
       end
 
       def setup_window_events
-        log.debug { 'setup_window_events' }
-        @main_app.signal_connect('window-state-event', &method(:on_window_state_event))
-        @main_app.signal_connect('destroy', &method(:on_window_destroy))
+        log.debug { "setup_window_events" }
+        @main_app.signal_connect("window-state-event", &method(:on_window_state_event))
+        @main_app.signal_connect("destroy", &method(:on_window_destroy))
       end
 
       def setup_active_model
-        log.debug { 'setting up active model' }
+        log.debug { "setting up active model" }
         # The active model.
 
         list = [
@@ -265,12 +265,12 @@ module Alexandria
           else
             data = case @filter_books_mode
                    when 0
-                     (iter[Columns::TITLE] || '') +
-                       (iter[Columns::AUTHORS] || '') +
-                       (iter[Columns::ISBN] || '') +
-                       (iter[Columns::PUBLISHER] || '') +
-                       (iter[Columns::NOTES] || '') +
-                       (iter[Columns::TAGS] || '')
+                     (iter[Columns::TITLE] || "") +
+                       (iter[Columns::AUTHORS] || "") +
+                       (iter[Columns::ISBN] || "") +
+                       (iter[Columns::PUBLISHER] || "") +
+                       (iter[Columns::NOTES] || "") +
+                       (iter[Columns::TAGS] || "")
                    when 2 then iter[Columns::TITLE]
                    when 3 then iter[Columns::AUTHORS]
                    when 4 then iter[Columns::ISBN]
@@ -284,15 +284,15 @@ module Alexandria
 
         # Give filter entry the initial keyboard focus.
         @filter_entry.grab_focus
-        log.debug { 'done setting up active model' }
+        log.debug { "done setting up active model" }
       end
 
       def on_library_button_press_event(widget, event)
-        log.debug { 'library_button_press_event' }
+        log.debug { "library_button_press_event" }
 
         # right click
         if event_is_right_click event
-          log.debug { 'library right click!' }
+          log.debug { "library right click!" }
           library_already_selected = true
           if (path = widget.get_path_at_pos(event.x, event.y))
             @clicking_on_sidepane = true
@@ -368,7 +368,7 @@ module Alexandria
       end
 
       def on_books_button_press_event(widget, event)
-        log.debug { 'books_button_press_event' }
+        log.debug { "books_button_press_event" }
         if event_is_right_click event
           widget.grab_focus
 
@@ -406,9 +406,9 @@ module Alexandria
                       library.length), library.name, library.length)
           else
             format(n_("Library '%s' selected, %d book, " \
-               '%d unrated',
+               "%d unrated",
                       "Library '%s' selected, %d books, " \
-                      '%d unrated',
+                      "%d unrated",
                       library.length), library.name, library.length, n_unrated)
           end
         end
@@ -421,7 +421,7 @@ module Alexandria
         when 1
           _("'%s' selected") % books.first.title
         else
-          n_('%d book selected', '%d books selected',
+          n_("%d book selected", "%d books selected",
              books.length) % books.length
         end
       end
@@ -445,24 +445,24 @@ module Alexandria
             "@library_listview: #{@library_listview.has_focus?} " \
             "or @library_popup:#{@library_popup.has_focus?}"
           }
-          log.debug { '@library_listview does *NOT* have focus' }
+          log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
-          @actiongroup['Properties'].sensitive = \
-            @actiongroup['OnlineInformation'].sensitive = \
+          @actiongroup["Properties"].sensitive = \
+            @actiongroup["OnlineInformation"].sensitive = \
               books.length == 1
-          @actiongroup['SelectAll'].sensitive = \
+          @actiongroup["SelectAll"].sensitive = \
             books.length < library.length
 
-          @actiongroup['Delete'].sensitive = \
-            @actiongroup['DeselectAll'].sensitive = \
-              @actiongroup['Move'].sensitive =
-                @actiongroup['SetRating'].sensitive = !books.empty?
+          @actiongroup["Delete"].sensitive = \
+            @actiongroup["DeselectAll"].sensitive = \
+              @actiongroup["Move"].sensitive =
+                @actiongroup["SetRating"].sensitive = !books.empty?
 
           log.debug { "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}" }
 
           if library.is_a?(SmartLibrary)
-            @actiongroup['Delete'].sensitive =
-              @actiongroup['Move'].sensitive = false
+            @actiongroup["Delete"].sensitive =
+              @actiongroup["Move"].sensitive = false
           end
 
           # Sensitize providers URL
@@ -480,27 +480,27 @@ module Alexandria
               @actiongroup[provider.action_name].sensitive = !has_no_url
               no_urls = false unless has_no_url
             end
-            @actiongroup['OnlineInformation'].sensitive = false if no_urls
+            @actiongroup["OnlineInformation"].sensitive = false if no_urls
           end
         end
         @clicking_on_sidepane = false
       end
 
       def on_switch_page(_notebook, _page, page_num)
-        log.debug { 'on_switch_page' }
-        @actiongroup['ArrangeIcons'].sensitive = page_num.zero?
+        log.debug { "on_switch_page" }
+        @actiongroup["ArrangeIcons"].sensitive = page_num.zero?
         on_books_selection_changed
       end
 
       def on_focus(widget, _event_focus)
         if @clicking_on_sidepane || (widget == @library_listview)
-          log.debug { 'on_focus: @library_listview' }
+          log.debug { "on_focus: @library_listview" }
           GLib::Idle.add do
             %w(OnlineInformation SelectAll DeselectAll).each do |action|
               @actiongroup[action].sensitive = false
             end
-            @actiongroup['Properties'].sensitive = selected_library.is_a?(SmartLibrary)
-            @actiongroup['Delete'].sensitive = determine_delete_option
+            @actiongroup["Properties"].sensitive = selected_library.is_a?(SmartLibrary)
+            @actiongroup["Delete"].sensitive = determine_delete_option
             false
           end
         else
@@ -514,8 +514,8 @@ module Alexandria
       end
 
       def on_close_sidepane
-        log.debug { 'on_close_sidepane' }
-        @actiongroup['Sidepane'].active = false
+        log.debug { "on_close_sidepane" }
+        @actiongroup["Sidepane"].active = false
       end
 
       def select_a_book(book)
@@ -534,9 +534,9 @@ module Alexandria
           selection.select_path(path)
         end
         begin
-          log.debug { 'select_a_book: listview' }
+          log.debug { "select_a_book: listview" }
           select_this_book.call(book, @listview)
-          log.debug { 'select_a_book: listview' }
+          log.debug { "select_a_book: listview" }
           select_this_book.call(book, @iconview)
         rescue StandardError => ex
           trace = ex.backtrace.join("\n> ")
@@ -549,12 +549,12 @@ module Alexandria
         log.debug { "on_update #{ary}" }
         caller = ary.first
         if caller.is_a?(UndoManager)
-          @actiongroup['Undo'].sensitive = caller.can_undo?
-          @actiongroup['Redo'].sensitive = caller.can_redo?
+          @actiongroup["Undo"].sensitive = caller.can_undo?
+          @actiongroup["Redo"].sensitive = caller.can_redo?
         elsif caller.is_a?(Library)
           handle_update_caller_library ary unless caller.updating?
         else
-          raise 'unrecognized update event'
+          raise "unrecognized update event"
         end
       end
 
@@ -584,14 +584,14 @@ module Alexandria
 
       def open_web_browser(url)
         if url.nil?
-          log.warn('Attempt to open browser with nil url')
+          log.warn("Attempt to open browser with nil url")
           return
         end
         Gtk.show_uri url
       end
 
       def detach_old_libraries
-        log.debug { 'Un-observing old libraries' }
+        log.debug { "Un-observing old libraries" }
         @libraries.all_regular_libraries.each do |library|
           if library.is_a?(Library)
             library.delete_observer(self)
@@ -601,7 +601,7 @@ module Alexandria
       end
 
       def load_libraries
-        log.info { 'Loading libraries...' }
+        log.info { "Loading libraries..." }
         @completion_models = CompletionModels.instance
         if @libraries
           detach_old_libraries
@@ -619,7 +619,7 @@ module Alexandria
 
       def handle_ruined_books
         new_message = _(
-          'The data files for the following books are malformed or empty. Do you wish to' \
+          "The data files for the following books are malformed or empty. Do you wish to" \
           " attempt to download new information for them from the online book providers?\n")
 
         @libraries.ruined_books.each { |bi|
@@ -629,7 +629,7 @@ module Alexandria
                                                  Gtk::MessageDialog::WARNING,
                                                  Gtk::MessageDialog::BUTTONS_OK_CANCEL,
                                                  new_message).show
-        recovery_dialog.signal_connect('response') do |_dialog, response_type|
+        recovery_dialog.signal_connect("response") do |_dialog, response_type|
           recovery_dialog.destroy
           if response_type == Gtk::ResponseType::OK
             # progress indicator...
@@ -689,7 +689,7 @@ module Alexandria
                 ## Hide the progress bar.
                 @appbar.children.first.visible = false
                 ## Refresh the status bar.
-                set_status_label('')
+                set_status_label("")
                 # on_books_selection_changed
                 false
               end
@@ -714,22 +714,22 @@ module Alexandria
         iter[Columns::TITLE] = book.title
         title = book.title.sub(REDUCE_TITLE_REGEX, '\1...')
         iter[Columns::TITLE_REDUCED] = title
-        iter[Columns::AUTHORS] = book.authors.join(', ')
+        iter[Columns::AUTHORS] = book.authors.join(", ")
         iter[Columns::ISBN] = book.isbn.to_s
         iter[Columns::PUBLISHER] = book.publisher
         iter[Columns::PUBLISH_DATE] = book.publishing_year.to_s
         iter[Columns::EDITION] = book.edition
-        iter[Columns::NOTES] = (book.notes || '')
-        iter[Columns::LOANED_TO] = (book.loaned_to || '')
+        iter[Columns::NOTES] = (book.notes || "")
+        iter[Columns::LOANED_TO] = (book.loaned_to || "")
         rating = (book.rating || Book::DEFAULT_RATING)
         iter[Columns::RATING] = Book::MAX_RATING_STARS - rating # ascending order is the default
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
         iter[Columns::WANT] = book.want?
         iter[Columns::TAGS] = if book.tags
-                                book.tags.join(',')
+                                book.tags.join(",")
                               else
-                                ''
+                                ""
                               end
 
         icon = Icons.cover(selected_library, book)
@@ -743,7 +743,7 @@ module Alexandria
         end
         icon = icon.tag(Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
         iter[Columns::COVER_ICON] = icon
-        log.debug { 'Full iter: ' + (0..15).map { |num| iter[num].inspect }.join(', ') }
+        log.debug { "Full iter: " + (0..15).map { |num| iter[num].inspect }.join(", ") }
       end
 
       def append_book(book, _tail = nil)
@@ -753,7 +753,7 @@ module Alexandria
         if iter
           fill_iter_with_book(iter, book)
         else
-          log.debug { '@model.append' }
+          log.debug { "@model.append" }
           iter = @model.append
           fill_iter_with_book(iter, book)
           log.debug { "no iter for book #{book}" }
@@ -790,13 +790,13 @@ module Alexandria
           @library_listview.set_cursor(iter.path,
                                        @library_listview.get_column(0),
                                        true)
-          @actiongroup['Sidepane'].active = true
+          @actiongroup["Sidepane"].active = true
         end
         iter
       end
 
       def append_library_separator
-        log.debug { 'append_library_separator' }
+        log.debug { "append_library_separator" }
         iter = @library_listview.model.append
         iter[0] = nil
         iter[1] = nil
@@ -806,7 +806,7 @@ module Alexandria
       end
 
       def refresh_books
-        log.debug { 'refresh_books' }
+        log.debug { "refresh_books" }
         @library_listview.set_sensitive(false)
         library = selected_library
         @iconview.freeze
@@ -852,7 +852,7 @@ module Alexandria
       end
 
       def selected_library
-        log.debug { 'selected_library' }
+        log.debug { "selected_library" }
         if (iter = @library_listview.selection.selected)
           target_name = iter[1]
           @libraries.all_libraries.find { |it| it.name == target_name }
@@ -924,11 +924,11 @@ module Alexandria
       end
 
       def refresh_libraries
-        log.debug { 'refresh_libraries' }
+        log.debug { "refresh_libraries" }
         library = selected_library
 
         # Change the application's title.
-        @main_app.title = library.name + ' - ' + TITLE
+        @main_app.title = library.name + " - " + TITLE
 
         # Disable the selected library in the move libraries actions.
         @libraries.all_regular_libraries.each do |i_library|
@@ -942,11 +942,11 @@ module Alexandria
         smart = library.is_a?(SmartLibrary)
         log.debug { "sensitize_library: smartlibrary = #{smart}" }
         GLib::Idle.add do
-          @actiongroup['AddBook'].sensitive = !smart
-          @actiongroup['AddBookManual'].sensitive = !smart
-          @actiongroup['Properties'].sensitive = smart
+          @actiongroup["AddBook"].sensitive = !smart
+          @actiongroup["AddBookManual"].sensitive = !smart
+          @actiongroup["Properties"].sensitive = smart
           can_delete = smart || (@libraries.all_regular_libraries.length > 1)
-          @actiongroup['Delete'].sensitive = can_delete
+          @actiongroup["Delete"].sensitive = can_delete
           log.debug { "sensitize_library delete: #{@actiongroup['Delete'].sensitive?}" }
           false
         end
@@ -955,14 +955,14 @@ module Alexandria
       def get_view_actiongroup
         case @prefs.view_as
         when 0
-          @actiongroup['AsIcons']
+          @actiongroup["AsIcons"]
         when 1
-          @actiongroup['AsList']
+          @actiongroup["AsList"]
         end
       end
 
       def restore_preferences
-        log.debug { 'Restoring preferences...' }
+        log.debug { "Restoring preferences..." }
         if @prefs.maximized
           @main_app.maximize
         else
@@ -971,9 +971,9 @@ module Alexandria
           @maximized = false
         end
         @paned.position = @prefs.sidepane_position
-        @actiongroup['Sidepane'].active = @prefs.sidepane_visible
-        @actiongroup['Toolbar'].active = @prefs.toolbar_visible
-        @actiongroup['Statusbar'].active = @prefs.statusbar_visible
+        @actiongroup["Sidepane"].active = @prefs.sidepane_visible
+        @actiongroup["Toolbar"].active = @prefs.toolbar_visible
+        @actiongroup["Statusbar"].active = @prefs.statusbar_visible
         @appbar.visible = @prefs.statusbar_visible
         action = get_view_actiongroup
         action.activate
@@ -997,29 +997,29 @@ module Alexandria
       end
 
       def save_preferences
-        log.debug { 'save_preferences' }
+        log.debug { "save_preferences" }
         @prefs.position = @main_app.position
         @prefs.size = @main_app.allocation.to_a[2..3]
         @prefs.maximized = @maximized
         @prefs.sidepane_position = @paned.position
-        @prefs.sidepane_visible = @actiongroup['Sidepane'].active?
-        @prefs.toolbar_visible = @actiongroup['Toolbar'].active?
-        @prefs.statusbar_visible = @actiongroup['Statusbar'].active?
+        @prefs.sidepane_visible = @actiongroup["Sidepane"].active?
+        @prefs.toolbar_visible = @actiongroup["Toolbar"].active?
+        @prefs.statusbar_visible = @actiongroup["Statusbar"].active?
         @prefs.view_as = @notebook.page
         @prefs.selected_library = selected_library.name
         cols_width = {}
         @listview.columns.each do |c|
           cols_width[c.title] = c.width
         end
-        @prefs.cols_width = '{' + cols_width.to_a.map do |t, v|
+        @prefs.cols_width = "{" + cols_width.to_a.map do |t, v|
           '"' + t + '": ' + v.to_s
-        end.join(', ') + '}'
+        end.join(", ") + "}"
         log.debug { "cols_width: #{@prefs.cols_width} " }
         @prefs.save!
       end
 
       def undoable_move(source, dest, books)
-        log.debug { 'undoable_move' }
+        log.debug { "undoable_move" }
         Library.move(source, dest, *books)
         UndoManager.instance.push { undoable_move(dest, source, books) }
       end
@@ -1053,8 +1053,8 @@ module Alexandria
         @move_mid = @uimanager.new_merge_id
         @libraries.all_regular_libraries.each do |library|
           name = library.action_name
-          ['ui/MainMenubar/EditMenu/Move/',
-           'ui/BookPopup/Move/'].each do |path|
+          ["ui/MainMenubar/EditMenu/Move/",
+           "ui/BookPopup/Move/"].each do |path|
             @uimanager.add_ui(@move_mid, path, name, name,
                               :menuitem, false)
           end
@@ -1162,8 +1162,8 @@ module Alexandria
 
       def setup_window_icons
         @main_app.icon = Icons::ALEXANDRIA_SMALL
-        Gtk::Window.set_default_icon_name('alexandria')
-        @main_app.icon_name = 'alexandria'
+        Gtk::Window.set_default_icon_name("alexandria")
+        @main_app.icon_name = "alexandria"
       end
 
       ICONS_SORTS = [

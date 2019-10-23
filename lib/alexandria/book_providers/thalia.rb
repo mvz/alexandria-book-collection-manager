@@ -24,20 +24,20 @@
 # New Tlalia provider, taken from Palatina MetaDataSource and modified
 # for Alexandria. (21 Dec 2009)
 
-require 'net/http'
-require 'cgi'
-require 'alexandria/book_providers/web'
+require "net/http"
+require "cgi"
+require "alexandria/book_providers/web"
 
 module Alexandria
   class BookProviders
     class ThaliaProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.thalia.de'
+      SITE = "http://www.thalia.de"
       BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
 
       def initialize
-        super('Thalia', 'Thalia (Germany)')
+        super("Thalia", "Thalia (Germany)")
         # no preferences for the moment
         prefs.read
       end
@@ -62,11 +62,11 @@ module Alexandria
 
       def create_search_uri(search_type, search_term)
         (search_type_code = {
-          SEARCH_BY_ISBN    => 'sq',
-          SEARCH_BY_AUTHORS => 'sa', # Autor
-          SEARCH_BY_TITLE   => 'st', # Titel
-          SEARCH_BY_KEYWORD => 'ssw' # Schlagwort
-        }[search_type]) || ''
+          SEARCH_BY_ISBN    => "sq",
+          SEARCH_BY_AUTHORS => "sa", # Autor
+          SEARCH_BY_TITLE   => "st", # Titel
+          SEARCH_BY_KEYWORD => "ssw" # Schlagwort
+        }[search_type]) || ""
         search_type_code = CGI.escape(search_type_code)
         search_term_encoded = if search_type == SEARCH_BY_ISBN
                                 # search_term_encoded = search_term.as_isbn_13
@@ -80,12 +80,12 @@ module Alexandria
       def parse_search_result_data(html)
         doc = html_to_doc(html)
         book_search_results = []
-        results_divs = doc / 'div.articlePresentationSearchCH'
+        results_divs = doc / "div.articlePresentationSearchCH"
         results_divs.each do |div|
           result = {}
-          title_link = div % 'div.articleText/h2/a'
+          title_link = div % "div.articleText/h2/a"
           result[:title] = title_link.inner_html
-          result[:lookup_url] = title_link['href']
+          result[:lookup_url] = title_link["href"]
           book_search_results << result
         end
         book_search_results
@@ -94,26 +94,26 @@ module Alexandria
       def data_from_label(node, label_text)
         label_node = node % "strong[text()*='#{label_text}']"
         if (item_node = label_node.parent)
-          data = ''
+          data = ""
           item_node.children.each do |n|
             data += n.to_html if n.text?
           end
           data.strip
         else
-          ''
+          ""
         end
       end
 
       def get_book_from_search_result(result)
         log.debug { "Fetching book from #{result[:lookup_url]}" }
         html_data = transport.get_response(URI.parse(result[:lookup_url]))
-        parse_result_data(html_data.body, 'noisbn', true)
+        parse_result_data(html_data.body, "noisbn", true)
       end
 
       def parse_result_data(html, isbn, recursing = false)
         doc = html_to_doc(html)
 
-        results_divs = doc / 'div.articlePresentationSearchCH'
+        results_divs = doc / "div.articlePresentationSearchCH"
         unless results_divs.empty?
           if recursing
             # already recursing, avoid doing so endlessly second time
@@ -131,7 +131,7 @@ module Alexandria
           chosen = results.first # fallback!
           results.each do |rslt|
             if rslt[:lookup_url] =~ /\/ISBN(\d+[\d-]*)\//
-              if Regexp.last_match[1].delete('-') == isbn10
+              if Regexp.last_match[1].delete("-") == isbn10
                 chosen = rslt
                 break
               end
@@ -142,9 +142,9 @@ module Alexandria
         end
 
         begin
-          if (div = doc % 'div#contentFull')
+          if (div = doc % "div#contentFull")
             title_img = ((div % :h2) / :img).first
-            title = title_img['alt']
+            title = title_img["alt"]
 
             # note, the following img also has alt="von Author, Author..."
 
@@ -152,7 +152,7 @@ module Alexandria
               authors = []
               author_links = author_h.parent / :a
               author_links.each do |a|
-                if a['href'] =~ /BUCH\/sa/
+                if a["href"] =~ /BUCH\/sa/
                   # 'sa' means search author, there may also be 'ssw' (search keyword) links
                   authors << a.inner_text[0..-2].strip
                   # NOTE stripping the little >> character here...
@@ -160,25 +160,25 @@ module Alexandria
               end
             end
 
-            item_details = doc % 'ul.itemDataList'
+            item_details = doc % "ul.itemDataList"
             isbns = []
-            isbns << data_from_label(item_details, 'EAN')
-            isbns << data_from_label(item_details, 'ISBN')
+            isbns << data_from_label(item_details, "EAN")
+            isbns << data_from_label(item_details, "ISBN")
 
             year = nil
-            date = data_from_label(item_details, 'Erschienen:')
+            date = data_from_label(item_details, "Erschienen:")
             year = Regexp.last_match[1].to_i if date =~ /([\d]{4})/
 
-            binding = data_from_label(item_details, 'Einband')
+            binding = data_from_label(item_details, "Einband")
 
-            publisher = data_from_label(item_details, 'Erschienen bei:')
+            publisher = data_from_label(item_details, "Erschienen bei:")
 
             book = Book.new(title, authors, isbns.first,
                             publisher, year, binding)
 
             image_url = nil
-            if (image_link = doc % 'a[@id=itemPicStart]')
-              image_url = image_link['href']
+            if (image_link = doc % "a[@id=itemPicStart]")
+              image_url = image_link["href"]
             end
 
             return [book, image_url]
@@ -187,7 +187,7 @@ module Alexandria
         rescue StandardError => ex
           trace = ex.backtrace.join("\n> ")
           log.warn {
-            'Failed parsing search results for Thalia ' \
+            "Failed parsing search results for Thalia " \
             "#{ex.message} #{trace}"
           }
           raise NoResultsError

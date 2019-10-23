@@ -24,9 +24,9 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
-require 'rake/clean'
+require "rake/clean"
 
 # Load the other rake files in the tasks folder
 tasks_dir = __dir__
-rakefiles = Dir.glob(File.join(tasks_dir, '*.rake')).sort
+rakefiles = Dir.glob(File.join(tasks_dir, "*.rake")).sort
 import(*rakefiles)

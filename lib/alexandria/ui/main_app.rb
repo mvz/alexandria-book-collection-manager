@@ -19,32 +19,32 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'alexandria/ui/alert_dialog'
-require 'alexandria/ui/about_dialog'
-require 'alexandria/ui/book_properties_dialog_base'
-require 'alexandria/ui/book_properties_dialog'
-require 'alexandria/ui/new_book_dialog_manual'
-require 'alexandria/ui/new_book_dialog'
-require 'alexandria/ui/preferences_dialog'
-require 'alexandria/ui/export_dialog'
-require 'alexandria/ui/import_dialog'
-require 'alexandria/ui/acquire_dialog'
-require 'alexandria/ui/smart_library_properties_dialog_base'
-require 'alexandria/ui/smart_library_properties_dialog'
-require 'alexandria/ui/new_smart_library_dialog'
-require 'alexandria/ui/bad_isbns_dialog'
-require 'alexandria/ui/dndable'
-require 'alexandria/ui/init'
-require 'alexandria/ui/ui_manager'
-require 'alexandria/ui/listview'
-require 'alexandria/ui/iconview'
-require 'alexandria/ui/sidepane_manager'
+require "alexandria/ui/alert_dialog"
+require "alexandria/ui/about_dialog"
+require "alexandria/ui/book_properties_dialog_base"
+require "alexandria/ui/book_properties_dialog"
+require "alexandria/ui/new_book_dialog_manual"
+require "alexandria/ui/new_book_dialog"
+require "alexandria/ui/preferences_dialog"
+require "alexandria/ui/export_dialog"
+require "alexandria/ui/import_dialog"
+require "alexandria/ui/acquire_dialog"
+require "alexandria/ui/smart_library_properties_dialog_base"
+require "alexandria/ui/smart_library_properties_dialog"
+require "alexandria/ui/new_smart_library_dialog"
+require "alexandria/ui/bad_isbns_dialog"
+require "alexandria/ui/dndable"
+require "alexandria/ui/init"
+require "alexandria/ui/ui_manager"
+require "alexandria/ui/listview"
+require "alexandria/ui/iconview"
+require "alexandria/ui/sidepane_manager"
 
 module Alexandria
   module UI
     include Logging
     include GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     class MainApp
       include Logging
@@ -53,7 +53,7 @@ module Alexandria
       attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs
       attr_accessor :ui_manager
       def initialize
-        log.info { 'Starting MainApp' }
+        log.info { "Starting MainApp" }
         @ui_manager = UIManager.new self
         @actiongroup = @ui_manager.actiongroup
         @appbar = @ui_manager.appbar

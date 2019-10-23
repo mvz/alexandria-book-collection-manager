@@ -9,11 +9,11 @@ module Alexandria
     collection = Alexandria::LibraryCollection.instance
     collection.reload
     libraries = collection.all_regular_libraries
-    output_string = ''
+    output_string = ""
     @books = libraries.flatten
     @books.each do |book|
-      book_authors = book.authors.join(' & ') if authors
-      output_string += [book.title, book_authors].join(', ') + "\n"
+      book_authors = book.authors.join(" & ") if authors
+      output_string += [book.title, book_authors].join(", ") + "\n"
     end
     output_string
   end

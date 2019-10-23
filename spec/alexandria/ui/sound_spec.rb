@@ -17,10 +17,10 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'spec_helper'
+require "spec_helper"
 
 describe Alexandria::UI::SoundEffectsPlayer do
-  it 'can be instantiated' do
+  it "can be instantiated" do
     player = described_class.new
     expect(player).to be_instance_of described_class
   end

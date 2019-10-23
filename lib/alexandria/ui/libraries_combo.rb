@@ -24,7 +24,7 @@ module Alexandria
   module ComboBoxOverrides
     include GetText
     extend GetText
-    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def populate_with_libraries(libraries, selected_library)
       libraries_names = libraries.map(&:name)
@@ -40,10 +40,10 @@ module Alexandria
         iter[1] = library_name
         iter[2] = false
       end
-      model.append[1] = '-'
+      model.append[1] = "-"
       iter = model.append
       iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
-      iter[1] = _('New Library')
+      iter[1] = _("New Library")
       iter[2] = true
       renderer = Gtk::CellRendererPixbuf.new
       pack_start(renderer, false)
@@ -53,7 +53,7 @@ module Alexandria
       set_attributes(renderer, text: 1)
       set_row_separator_func do |model, iter|
         # TODO: Replace with iter[1] if possible
-        model.get_value(iter, 1) == '-'
+        model.get_value(iter, 1) == "-"
       end
       self.active = 0
       # self.sensitive = libraries.length > 1

@@ -6,39 +6,39 @@
 
 # http://en.wikipedia.org/wiki/Renaud-Bray
 
-require 'net/http'
-require 'cgi'
+require "net/http"
+require "cgi"
 
 module Alexandria
   class BookProviders
     class RENAUDProvider < GenericProvider
       include GetText
       # GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
-      BASE_URI = 'http://www.renaud-bray.com/'
-      ACCENTUATED_CHARS = 'áàâäçéèêëíìîïóòôöúùûü'
+      BASE_URI = "http://www.renaud-bray.com/"
+      ACCENTUATED_CHARS = "áàâäçéèêëíìîïóòôöúùûü"
 
       def initialize
-        super('RENAUD', 'Renaud-Bray (Canada)')
+        super("RENAUD", "Renaud-Bray (Canada)")
       end
 
       def search(criterion, type)
-        criterion = criterion.encode('ISO-8859-1')
+        criterion = criterion.encode("ISO-8859-1")
         req = BASE_URI +
-          'francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre' \
-          '&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri='
+          "francais/menu/gabarit.asp?Rubrique=&Recherche=&Entete=Livre" \
+          "&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri="
         req += case type
                when SEARCH_BY_ISBN
-                 'ISBN'
+                 "ISBN"
                when SEARCH_BY_TITLE
-                 'Titre'
+                 "Titre"
                when SEARCH_BY_AUTHORS
-                 'Auteur'
+                 "Auteur"
                when SEARCH_BY_KEYWORD
-                 ''
+                 ""
                else
                  raise InvalidSearchTypeError
                end
-        req += '&Phrase='
+        req += "&Phrase="
 
         req += CGI.escape(criterion)
         p req if $DEBUG
@@ -54,7 +54,7 @@ module Alexandria
             while /Suivant/ =~ data
               md = /Enteterouge\">([\d]*)<\/b>/.match(data)
               num = md[1].to_i + 1
-              data = transport.get(URI.parse(req + '&PageActuelle=' + num.to_s))
+              data = transport.get(URI.parse(req + "&PageActuelle=" + num.to_s))
               to_books(data).each { |book|
                 results << book
               }
@@ -67,8 +67,8 @@ module Alexandria
       end
 
       def url(book)
-        'http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=' \
-          '&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=' + book.isbn
+        "http://www.renaud-bray.com/francais/menu/gabarit.asp?Rubrique=&Recherche=" \
+          "&Entete=Livre&Page=Recherche_wsc.asp&OnlyAvailable=false&Tri=ISBN&Phrase=" + book.isbn
       end
 
       private
@@ -81,7 +81,7 @@ module Alexandria
 
       def to_books(data)
         data = CGI.unescapeHTML(data)
-        data = data.encode('UTF-8')
+        data = data.encode("UTF-8")
         raise NoResultsError if NO_BOOKS_FOUND_REGEXP.match?(data)
 
         titles = []
@@ -93,7 +93,7 @@ module Alexandria
         authors = []
         data.scan(/Nom_Auteur.*><i>([,'.&\#;\w\s#{ACCENTUATED_CHARS}]*)<\/i>/).each { |md|
           authors2 = []
-          md[0].split('  ').each do |author|
+          md[0].split("  ").each do |author|
             authors2 << author.strip
           end
           authors << authors2

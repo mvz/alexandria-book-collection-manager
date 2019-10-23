@@ -18,8 +18,8 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'logger'
-require 'forwardable'
+require "logger"
+require "forwardable"
 
 module Alexandria
   # A Logger subclass which accepts a source for log messages
@@ -137,7 +137,7 @@ module Alexandria
   def self.create_logger
     logger = Alexandria::Logger.new(STDERR)
 
-    level = ENV['LOGLEVEL'] ? ENV['LOGLEVEL'].intern : nil
+    level = ENV["LOGLEVEL"] ? ENV["LOGLEVEL"].intern : nil
     if [:FATAL, :ERROR, :WARN, :INFO, :DEBUG].include? level
       logger.level = Logger.const_get(level)
     else

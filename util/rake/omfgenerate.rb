@@ -26,9 +26,9 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-require 'fileutils'
-require 'pathname'
-require 'rake/tasklib'
+require "fileutils"
+require "pathname"
+require "rake/tasklib"
 
 class OmfGenerateTask < Rake::TaskLib
   def initialize(projectname)
@@ -39,7 +39,7 @@ class OmfGenerateTask < Rake::TaskLib
   end
 
   def make_task
-    desc 'Generate Open Metadata Framework files'
+    desc "Generate Open Metadata Framework files"
     task omf: @generated_files
 
     @generated_files.each { |gen| CLOBBER << gen } if CLOBBER
@@ -55,7 +55,7 @@ class OmfGenerateTask < Rake::TaskLib
   end
 
   def omf_files
-    in_files.map { |f| f.sub(/.omf.in/, '.omf') }
+    in_files.map { |f| f.sub(/.omf.in/, ".omf") }
   end
 
   attr_writer :gnome_helpfiles_dir
@@ -64,13 +64,13 @@ class OmfGenerateTask < Rake::TaskLib
     @source_dir = src_dir
     @source_files_glob = file_glob
 
-    rule '.omf' => ['.omf.in'] do |t|
+    rule ".omf" => [".omf.in"] do |t|
       path = File.join(@gnome_helpfiles_dir, @projectname,
                        locale_for(t.name), "#{@projectname}.xml")
       data = IO.read(t.source)
       data.sub!(/PATH_TO_DOC_FILE/, path)
       puts "Generating #{t.name}..."
-      File.open(t.name, 'w') { |io| io.puts data }
+      File.open(t.name, "w") { |io| io.puts data }
     end
     omf_files.each { |o| @generated_files << o }
   end

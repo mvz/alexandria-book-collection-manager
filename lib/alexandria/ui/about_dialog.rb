@@ -38,7 +38,7 @@ module Alexandria
         @dialog.website = Alexandria::WEBSITE_URL
         @dialog.license = GPL
         @dialog.transient_for = parent
-        @dialog.signal_connect('response') { @dialog.destroy }
+        @dialog.signal_connect("response") { @dialog.destroy }
       end
 
       def show

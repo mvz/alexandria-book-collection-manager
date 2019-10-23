@@ -11,17 +11,17 @@ module Alexandria
     include GetText
     include Logging
     extend GetText
-    bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+    bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def self.all
       [
-        new(_('Archived ONIX XML'), 'onix.tbz2', :export_as_onix_xml_archive),
-        new(_('Archived Tellico XML'), 'tc', :export_as_tellico_xml_archive),
-        new(_('BibTeX'), 'bib', :export_as_bibtex),
-        new(_('CSV list'), 'csv', :export_as_csv_list),
-        new(_('ISBN List'), 'txt', :export_as_isbn_list),
-        new(_('iPod Notes'), nil, :export_as_ipod_notes),
-        new(_('HTML Web Page'), nil, :export_as_html, true)
+        new(_("Archived ONIX XML"), "onix.tbz2", :export_as_onix_xml_archive),
+        new(_("Archived Tellico XML"), "tc", :export_as_tellico_xml_archive),
+        new(_("BibTeX"), "bib", :export_as_bibtex),
+        new(_("CSV list"), "csv", :export_as_csv_list),
+        new(_("ISBN List"), "txt", :export_as_isbn_list),
+        new(_("iPod Notes"), nil, :export_as_ipod_notes),
+        new(_("HTML Web Page"), nil, :export_as_html, true)
       ]
     end
 

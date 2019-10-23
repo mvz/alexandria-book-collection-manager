@@ -4,8 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'observer'
-require 'singleton'
+require "observer"
+require "singleton"
 
 module Alexandria
   class LibraryCollection

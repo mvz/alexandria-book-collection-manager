@@ -19,24 +19,24 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + "/../../spec_helper"
 
 # break this up!
 
 describe CellRendererToggle do
-  it 'should work'
+  it "should work"
 end
 
 describe Gtk::ActionGroup do
-  it 'should work'
+  it "should work"
 end
 
 describe Gtk::IconView do
-  it 'should work'
+  it "should work"
 end
 
 describe Alexandria::UI::MainApp do
-  it 'is a singleton' do
+  it "is a singleton" do
     expect do
       described_class.new
     end.to raise_error NoMethodError

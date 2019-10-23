@@ -22,27 +22,27 @@ module Alexandria
   # A really simple regex-based parser to grab data out of marc text records.
   class PseudoMarcParser
     BNF_FR_MAPPINGS = {
-      title: ['200', 'a'],
-      authors: ['700', 'a'],
-      isbn: ['010', 'a'],
-      publisher: ['210', 'g'],
-      year: ['210', 'd'],
-      binding: ['225', 'a'],
-      notes: ['520', 'a']
+      title: ["200", "a"],
+      authors: ["700", "a"],
+      isbn: ["010", "a"],
+      publisher: ["210", "g"],
+      year: ["210", "d"],
+      binding: ["225", "a"],
+      notes: ["520", "a"]
     }.freeze
 
     USMARC_MAPPINGS = {
-      title: ['245', 'a', 'b'],
-      authors: ['100', 'a'],
-      isbn: ['020', 'a'],
-      publisher: ['490', 'a'],
-      year: ['260', 'c'],
-      binding: ['020', 'a'], # listed with isbn here
-      notes: ['520', 'a']
+      title: ["245", "a", "b"],
+      authors: ["100", "a"],
+      isbn: ["020", "a"],
+      publisher: ["490", "a"],
+      year: ["260", "c"],
+      binding: ["020", "a"], # listed with isbn here
+      notes: ["520", "a"]
     }.freeze
 
     def self.get_fields(data, type, stripping, m = USMARC_MAPPINGS)
-      field = ''
+      field = ""
       m[type][1..m[type].length - 1].each do |part|
         if data.first[part]
           part_data = data.first[part].strip
@@ -50,11 +50,11 @@ module Alexandria
             part_data = Regexp.last_match[1]
             part_data = part_data.strip
           end
-          field += ': ' if field != ''
+          field += ": " if field != ""
           field += part_data
         end
       end
-      field = nil if field == ''
+      field = nil if field == ""
       field
     end
 
@@ -102,7 +102,7 @@ module Alexandria
           year = Regexp.last_match[1].to_i if year =~ /(\d+)/
         end
 
-        notes = ''
+        notes = ""
         notes_data = details[m[:notes][0]]
         notes_data&.each do |note|
           txt = note[m[:notes][1]]

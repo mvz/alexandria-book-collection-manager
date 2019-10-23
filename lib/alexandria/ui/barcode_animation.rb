@@ -23,7 +23,7 @@
 # Boston, MA 02110-1301 USA.
 #++
 
-require 'gobject-introspection'
+require "gobject-introspection"
 
 module GooCanvas
   class << self
@@ -42,7 +42,7 @@ module GooCanvas
         remove_method(:const_missing)
       end
       loader = GObjectIntrospection::Loader.new(self)
-      loader.load('GooCanvas')
+      loader.load("GooCanvas")
     end
   end
 end
@@ -91,13 +91,13 @@ module Alexandria
       end
 
       def set_active
-        @canvas.set_property(:background_color, 'white')
-        @barcode_bars.each { |rect| rect.set_property(:fill_color, 'white') }
+        @canvas.set_property(:background_color, "white")
+        @barcode_bars.each { |rect| rect.set_property(:fill_color, "white") }
       end
 
       def set_passive
         if @canvas
-          passive_bg = '#F4F4F4'
+          passive_bg = "#F4F4F4"
           @canvas.set_property(:background_color, passive_bg)
           @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
         end
@@ -116,7 +116,7 @@ module Alexandria
       private
 
       def create_ean_barcode_data
-        d = '211113123121112331122131113211111123122211132321112311231111'
+        d = "211113123121112331122131113211111123122211132321112311231111"
         # ####911113... but that's too much padding on the left...
         until d.empty?
           space_width = d[0].chr.to_i
@@ -133,7 +133,7 @@ module Alexandria
                                                 x: @bar_left_edge + @scale * @hpos, y: @bar_top,
                                                 width: @scale * bar_width, height: @bar_height,
                                                 line_width: 0,
-                                                fill_color: 'white')
+                                                fill_color: "white")
           @hpos += bar_width
           @barcode_bars << rect_item
         end

@@ -18,7 +18,7 @@
 # write to the Free Software Foundation, Inc., 51 Franklin Street,
 # Fifth Floor, Boston, MA 02110-1301 USA.
 
-require 'alexandria/scanners'
+require "alexandria/scanners"
 
 module Alexandria
   module Scanners
@@ -26,19 +26,19 @@ module Alexandria
       include Alexandria::Logging
 
       def name
-        'CueCat'
+        "CueCat"
       end
 
       def display_name
-        'CueCat'
+        "CueCat"
       end
 
       # Checks if data looks like cuecat input
       def match?(data)
         data = data.chomp
-        return false if data[-1] != '.'
+        return false if data[-1] != "."
 
-        fields = data.split('.')
+        fields = data.split(".")
         return false if fields.size != 4
         return false if fields[2].size != 4
 
@@ -50,13 +50,13 @@ module Alexandria
       # domain perl implementation.
       def decode(data)
         data = data.chomp
-        fields = data.split('.')
+        fields = data.split(".")
         fields.shift # First part is gibberish
         fields.shift # Second part is cuecat serial number
         type, code = fields.map { |field| decode_field(field) }
 
-        if type == 'IB5'
-          type = 'IBN'
+        if type == "IB5"
+          type = "IBN"
           code = code[0, 13]
         end
 
@@ -64,13 +64,13 @@ module Alexandria
           if Library.valid_upc? code
             isbn13 = Library.canonicalise_ean(code)
             code = isbn13
-            type = 'IBN'
+            type = "IBN"
           end
         rescue StandardError
           log.debug { "Cannot translate UPC (#{type}) code #{code} to ISBN" }
         end
 
-        return code if type == 'IBN'
+        return code if type == "IBN"
 
         raise "Don't know how to handle type #{type} (barcode: #{code})"
       end
@@ -78,7 +78,7 @@ module Alexandria
       private
 
       def decode_field(encoded)
-        seq = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-'
+        seq = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-"
 
         chars   = encoded.split(//)
         values  = chars.map { |c| seq.index(c) }
@@ -90,7 +90,7 @@ module Alexandria
       end
 
       def calc(values)
-        result = ''
+        result = ""
         until values.empty?
           num = ((values[0] << 6 | values[1]) << 6 | values[2]) << 6 | values[3]
           result += ((num >> 16) ^ 67).chr
@@ -106,7 +106,7 @@ module Alexandria
         length = array.length % 4
 
         if length.nonzero?
-          raise 'Error parsing CueCat input' if length == 1
+          raise "Error parsing CueCat input" if length == 1
 
           length = 4 - length
           length.times { array.push(0) }

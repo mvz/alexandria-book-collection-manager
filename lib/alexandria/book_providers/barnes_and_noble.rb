@@ -28,24 +28,24 @@
 
 # NOTE: this modified version is based on the Alexandria WorldCat provider.
 
-require 'cgi'
-require 'alexandria/net'
-require 'alexandria/book_providers/web'
+require "cgi"
+require "alexandria/net"
+require "alexandria/book_providers/web"
 
 module Alexandria
   class BookProviders
     class BarnesAndNobleProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = 'http://www.barnesandnoble.com'
+      SITE = "http://www.barnesandnoble.com"
 
-      BASE_ISBN_SEARCH_URL = 'http://www.barnesandnoble.com/s/%s'
+      BASE_ISBN_SEARCH_URL = "http://www.barnesandnoble.com/s/%s"
 
-      BASE_SEARCH_URL = 'http://search.barnesandnoble.com/booksearch' \
-        '/results.asp?%s=%s' # type, term
+      BASE_SEARCH_URL = "http://search.barnesandnoble.com/booksearch" \
+        "/results.asp?%s=%s" # type, term
 
       def initialize
-        super('BarnesAndNoble', 'BarnesAndNoble')
+        super("BarnesAndNoble", "BarnesAndNoble")
         @agent = nil
         prefs.read
       end
@@ -56,7 +56,7 @@ module Alexandria
       end
 
       def fetch_redirectly(uri_str, limit = 5)
-        raise NoResultsError, 'HTTP redirect too deep' if limit.zero?
+        raise NoResultsError, "HTTP redirect too deep" if limit.zero?
 
         if limit < 10
           sleep 0.1
@@ -69,7 +69,7 @@ module Alexandria
         case response
         when Net::HTTPSuccess     then response
         when Net::HTTPRedirection then
-          redirect = URI.parse response['Location']
+          redirect = URI.parse response["Location"]
           redirect = URI.parse(uri_str) + redirect if redirect.relative?
           fetch_redirectly(redirect.to_s, (limit - 1))
         else
@@ -101,10 +101,10 @@ module Alexandria
 
       def create_search_uri(search_type, search_term)
         (search_type_code = {
-          SEARCH_BY_AUTHORS => 'ATH',
-          SEARCH_BY_TITLE   => 'TTL',
-          SEARCH_BY_KEYWORD => 'WRD' # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
-        }[search_type]) || ''
+          SEARCH_BY_AUTHORS => "ATH",
+          SEARCH_BY_TITLE   => "TTL",
+          SEARCH_BY_KEYWORD => "WRD" # SEARCH_BY_PUBLISHER => 'PBL' # not implemented
+        }[search_type]) || ""
         if search_type == SEARCH_BY_ISBN
           BASE_ISBN_SEARCH_URL % Library.canonicalise_ean(search_term) # isbn-13
         else
@@ -128,17 +128,17 @@ module Alexandria
             result = {}
             # img = div % 'div.book-image/a/img'
             # result[:image_url] = img['src'] if img
-            title_header = div % 'h2'
-            title_links = title_header / 'a'
+            title_header = div % "h2"
+            title_links = title_header / "a"
             result[:title] = title_links.first.inner_text
-            result[:url] = title_links.first['href']
+            result[:url] = title_links.first["href"]
 
             book_search_results << result
           end
         rescue StandardError => ex
           trace = ex.backtrace.join("\n> ")
           log.warn {
-            'Failed parsing search results for Barnes & Noble ' \
+            "Failed parsing search results for Barnes & Noble " \
             "#{ex.message} #{trace}"
           }
         end
@@ -150,8 +150,8 @@ module Alexandria
         begin
           book_data = {}
 
-          dl = (doc / 'dl').first
-          dts = dl.children_of_type('dt')
+          dl = (doc / "dl").first
+          dts = dl.children_of_type("dt")
           dts.each do |dt|
             value = dt.next_sibling.inner_text
             case dt.inner_text
@@ -166,26 +166,26 @@ module Alexandria
             end
           end
 
-          meta = doc / 'meta'
+          meta = doc / "meta"
           meta.each do |it|
             attrs = it.attributes
-            property = attrs['property']
+            property = attrs["property"]
             next unless property
 
             case property
-            when 'og:title'
-              book_data[:title] = attrs['content']
-            when 'og:image'
-              book_data[:image_url] = attrs['content']
+            when "og:title"
+              book_data[:title] = attrs["content"]
+            when "og:image"
+              book_data[:image_url] = attrs["content"]
             end
           end
 
-          author_links = doc / 'span.contributors a'
+          author_links = doc / "span.contributors a"
           authors = author_links.map(&:inner_text)
           book_data[:authors] = authors
 
-          book_data[:binding] = ''
-          selected_format = (doc / '#availableFormats li.selected a.tabTitle').first
+          book_data[:binding] = ""
+          selected_format = (doc / "#availableFormats li.selected a.tabTitle").first
           book_data[:binding] = selected_format.inner_text if selected_format
 
           book = Book.new(book_data[:title], book_data[:authors],
@@ -198,7 +198,7 @@ module Alexandria
 
           trace = ex.backtrace.join("\n> ")
           log.warn {
-            'Failed parsing search results for BarnesAndNoble ' \
+            "Failed parsing search results for BarnesAndNoble " \
             "#{ex.message} #{trace}"
           }
           raise NoResultsError

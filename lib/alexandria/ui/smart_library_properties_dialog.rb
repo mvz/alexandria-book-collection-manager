@@ -21,7 +21,7 @@ module Alexandria
   module UI
     class SmartLibraryPropertiesDialog < SmartLibraryPropertiesDialogBase
       include GetText
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, smart_library)
         super(parent)
@@ -41,7 +41,7 @@ module Alexandria
 
         while (response = run) != Gtk::ResponseType::CANCEL
           if response == Gtk::ResponseType::HELP
-            Alexandria::UI.display_help(self, 'edit-smart-library')
+            Alexandria::UI.display_help(self, "edit-smart-library")
           elsif response == Gtk::ResponseType::OK
             if user_confirms_possible_weirdnesses_before_saving?
               smart_library.rules = smart_library_rules

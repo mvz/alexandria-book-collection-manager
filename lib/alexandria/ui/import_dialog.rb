@@ -4,8 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require 'alexandria/ui/error_dialog'
-require 'alexandria/ui/skip_entry_dialog'
+require "alexandria/ui/error_dialog"
+require "alexandria/ui/skip_entry_dialog"
 
 class Alexandria::ImportFilter
   def to_filefilter
@@ -22,24 +22,24 @@ module Alexandria
       include GetText
       include Logging
 
-      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: 'UTF-8')
+      GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       FILTERS = Alexandria::ImportFilter.all
 
       def initialize(parent)
-        title = _('Import a Library')
+        title = _("Import a Library")
         dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
         super(dialog)
-        puts 'ImportDialog opened.' if $DEBUG
+        puts "ImportDialog opened." if $DEBUG
         @destroyed = false
         @running = false
         add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)
         add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
-        import_button = add_button(_('_Import'),
+        import_button = add_button(_("_Import"),
                                    Gtk::ResponseType::ACCEPT)
         import_button.sensitive = false
 
-        signal_connect('destroy') do
+        signal_connect("destroy") do
           if @running
             @destroyed = true
           else
@@ -55,7 +55,7 @@ module Alexandria
           filters[filefilter] = filter
         end
 
-        signal_connect('selection_changed') do
+        signal_connect("selection_changed") do
           import_button.sensitive = filename && File.file?(filename)
         end
 
@@ -88,10 +88,10 @@ module Alexandria
             response != Gtk::ResponseType::DELETE_EVENT
 
           if response == Gtk::ResponseType::HELP
-            Alexandria::UI.display_help(self, 'import-library')
+            Alexandria::UI.display_help(self, "import-library")
             next
           end
-          file = File.basename(filename, '.*')
+          file = File.basename(filename, ".*")
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             LibraryCollection.instance.all_libraries,
@@ -143,9 +143,9 @@ module Alexandria
               puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
               ErrorDialog.new(self,
                               _("Couldn't import the library"),
-                              _('The format of the file you ' \
-                                'provided is unknown.  Please ' \
-                                'retry with another file.')).display
+                              _("The format of the file you " \
+                                "provided is unknown.  Please " \
+                                "retry with another file.")).display
             end
             pbar.hide
             self.sensitive = true
