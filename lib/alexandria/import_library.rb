@@ -109,9 +109,9 @@ module Alexandria
                              else
                                [[]]
                              end
-            book_elements += keys.map { |key|
+            book_elements += keys.map do |key|
               neaten(elements[key].text) if elements[key]
-            }
+            end
             # isbn
             if book_elements[2].nil? || book_elements[2].strip.empty?
               book_elements[2] = nil

@@ -441,10 +441,10 @@ module Alexandria
 
           log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
-          log.debug {
+          log.debug do
             "@library_listview: #{@library_listview.has_focus?} " \
             "or @library_popup:#{@library_popup.has_focus?}"
-          }
+          end
           log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
           @actiongroup["Properties"].sensitive = \
@@ -622,9 +622,9 @@ module Alexandria
           "The data files for the following books are malformed or empty. Do you wish to" \
           " attempt to download new information for them from the online book providers?\n")
 
-        @libraries.ruined_books.each { |bi|
+        @libraries.ruined_books.each do |bi|
           new_message += "\n#{bi[1] || bi[1].inspect}"
-        }
+        end
         recovery_dialog = Gtk::MessageDialog.new(@main_app, Gtk::Dialog::MODAL,
                                                  Gtk::MessageDialog::WARNING,
                                                  Gtk::MessageDialog::BUTTONS_OK_CANCEL,
@@ -1073,10 +1073,10 @@ module Alexandria
       # Gets the sort order of the current library, for use by export
       def library_sort_order
         # added by Cathal Mc Ginley, 23 Oct 2007
-        log.debug {
+        log.debug do
           "library_sort_order #{@notebook.page}: " \
           "#{@iconview.model.inspect} #{@listview.model.inspect}"
-        }
+        end
         result, sort_column, sort_order = current_view.model.sort_column_id
         if result
           column_ids_to_attributes = { 2  => :title,

@@ -43,9 +43,9 @@ module Alexandria
 
       def on_add_book_manual(*)
         library = selected_library
-        NewBookDialogManual.new(@main_app, library) { |_book|
+        NewBookDialogManual.new(@main_app, library) do |_book|
           refresh_books
-        }
+        end
       end
 
       def on_import(*)

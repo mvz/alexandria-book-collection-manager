@@ -385,9 +385,9 @@ module Alexandria
               end
             end
           rescue StandardError => ex
-            log.error {
+            log.error do
               "Failed to load cover image icon: #{ex.message}"
-            }
+            end
             log << ex if log.error?
           end
         end

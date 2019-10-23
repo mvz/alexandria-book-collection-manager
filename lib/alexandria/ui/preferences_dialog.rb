@@ -39,10 +39,10 @@ module Alexandria
           if checkbutton
             checkbutton.active = Preferences.instance.send(pref_name)
           else
-            log.warn {
+            log.warn do
               "no CheckButton for property #{pref_name} " \
               "(probably conflicting versions of GUI and lib code)"
-            }
+            end
           end
         end
 
@@ -145,11 +145,11 @@ module Alexandria
         # New Enable/Disable pop-up menu...
         @enable_disable_providers_menu = Gtk::Menu.new
         @enable_item = Gtk::MenuItem.new(label: _("Disable Provider"))
-        @enable_item.signal_connect("activate") {
+        @enable_item.signal_connect("activate") do
           prov = selected_provider
           prov.toggle_enabled
           adjust_selected_provider(prov)
-        }
+        end
         @enable_disable_providers_menu.append(@enable_item)
         @enable_disable_providers_menu.show_all
 
@@ -180,7 +180,7 @@ module Alexandria
         end
 
         # Popup the menu on Shift-F10
-        @treeview_providers.signal_connect("popup_menu") {
+        @treeview_providers.signal_connect("popup_menu") do
           selected_prov = @treeview_providers.selection.selected
           puts selected_prov.inspect
           if selected_prov
@@ -195,7 +195,7 @@ module Alexandria
           else
             puts "no action"
           end
-        }
+        end
       end
 
       def event_is_right_click(event)

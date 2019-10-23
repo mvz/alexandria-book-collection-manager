@@ -82,9 +82,9 @@ module Alexandria
 
     def <<(msg)
       if msg.respond_to? :backtrace
-        msg.backtrace.each { |line|
+        msg.backtrace.each do |line|
           @logger << "  #{line} \n"
-        }
+        end
       else
         @logger << msg + "\n"
       end

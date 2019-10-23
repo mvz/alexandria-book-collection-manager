@@ -176,12 +176,12 @@ module Amazon
       raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
 
       qs = ""
-      opts.each { |k, v|
+      opts.each do |k, v|
         next unless v
 
         v = v.join(",") if v.is_a? Array
         qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
-      }
+      end
       url = "#{request_url}#{qs}"
       # puts ">>> base url >> #{url}"
       signed_url = sign_request(url)
@@ -351,9 +351,9 @@ module Amazon
       result = element / path
       if (result.is_a? Hpricot::Elements) || (result.is_a? Array)
         parsed_result = []
-        result.each { |item|
+        result.each do |item|
           parsed_result << Element.get(item)
-        }
+        end
         parsed_result
       else
         [Element.get(result)]

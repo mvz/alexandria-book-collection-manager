@@ -87,10 +87,10 @@ module Alexandria
         @find_thread = nil
         @image_thread = nil
 
-        @new_book_dialog.signal_connect("destroy") {
+        @new_book_dialog.signal_connect("destroy") do
           @new_book_dialog.destroy
           @destroyed = true
-        }
+        end
       end
 
       def on_criterion_toggled(item)
@@ -224,11 +224,11 @@ module Alexandria
 
         criterion = @entry_search.text.strip
         @treeview_results.model.clear
-        log.info {
+        log.info do
           format("TreeStore Model: %s columns; ref_counts: %s",
                  @treeview_results.model.n_columns,
                  @treeview_results.model.ref_count)
-        }
+        end
 
         @find_error = nil
         @results = nil
@@ -304,10 +304,10 @@ module Alexandria
       def copy_results_to_treeview_model(results, model)
         results.each do |book, _cover_url|
           s = format(_("%s, by %s"), book.title, book.authors.join(", "))
-          similar_books = results.find { |book2, _cover2|
+          similar_books = results.find do |book2, _cover2|
             (book.title == book2.title) &&
               (book.authors == book2.authors)
-          }
+          end
           s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
           log.info { format("Copying %s into tree view.", book.title) }
           iter = model.append

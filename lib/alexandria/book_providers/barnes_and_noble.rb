@@ -137,10 +137,10 @@ module Alexandria
           end
         rescue StandardError => ex
           trace = ex.backtrace.join("\n> ")
-          log.warn {
+          log.warn do
             "Failed parsing search results for Barnes & Noble " \
             "#{ex.message} #{trace}"
-          }
+          end
         end
         book_search_results
       end
@@ -197,10 +197,10 @@ module Alexandria
           raise ex if ex.instance_of? NoResultsError
 
           trace = ex.backtrace.join("\n> ")
-          log.warn {
+          log.warn do
             "Failed parsing search results for BarnesAndNoble " \
             "#{ex.message} #{trace}"
-          }
+          end
           raise NoResultsError
         end
       end

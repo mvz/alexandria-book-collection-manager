@@ -73,7 +73,7 @@ module Alexandria
           end
         end
 
-        log.debug {
+        log.debug do
           msg = "Parsing MARC"
           msg += "\n title: #{marc.title}"
           msg += "\n authors: #{marc.authors.join(', ')}"
@@ -82,7 +82,7 @@ module Alexandria
           msg += "\n publish year: #{marc.publish_year}" if marc.respond_to?(:publish_year)
           msg += "\n edition: #{marc.edition}"
           msg
-        }
+        end
 
         return if marc.title.nil? # or marc.authors.empty?
 
@@ -286,7 +286,7 @@ module Alexandria
             end
           end
 
-          log.debug {
+          log.debug do
             msg = "Parsing SUTRS"
             msg += "\n title: #{title}"
             msg += "\n authors: #{authors.join(' and ')}"
@@ -294,7 +294,7 @@ module Alexandria
             msg += "\n publisher: #{publisher}"
             msg += "\n edition: #{edition}"
             msg
-          }
+          end
 
           if title # and !authors.empty?
             book = Book.new(title, authors, isbn, (publisher || nil),
