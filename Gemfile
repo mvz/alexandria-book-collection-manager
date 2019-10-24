@@ -6,6 +6,7 @@ source "https://rubygems.org"
 gemspec
 
 group :development, :test do
+  gem "pry"
   gem "simplecov"
   gem "yard", "~> 0.9.5"
 end

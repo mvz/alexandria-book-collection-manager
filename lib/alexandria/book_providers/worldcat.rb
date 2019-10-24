@@ -1,24 +1,9 @@
 # frozen_string_literal: true
 
-# -*- ruby -*-
+# This file is part of Alexandria.
 #
-# Copyright (C) 2009 Cathal Mc Ginley
-# Copyright (C) 2011, 2014 Matijs van Zuijlen
-#
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
+# frozen_string_literal: true
 
 # http://en.wikipedia.org/wiki/WorldCat
 # See http://www.oclc.org/worldcat/policies/terms/
@@ -39,25 +24,18 @@ module Alexandria
     class WorldCatProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.worldcat.org"
+      SITE = "https://www.worldcat.org"
       BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
 
       def initialize
         super("WorldCat", "WorldCat")
-        # prefs.add("enabled", _("Enabled"), true, [true,false])
         prefs.read
       end
 
       def search(criterion, type)
-        # puts create_search_uri(type, criterion)
         req = create_search_uri(type, criterion)
-        puts req if $DEBUG
         html_data = transport.get_response(URI.parse(req))
-        # Note: I tried to use Alexandria::WWWAgent,
-        #       but this caused failures here (empty pages...)
-        #       find out how the requests differ
 
-        # puts html_data.class
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)
         else
@@ -70,9 +48,6 @@ module Alexandria
 
       def url(book)
         create_search_uri(SEARCH_BY_ISBN, book.isbn)
-      rescue StandardError => ex
-        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
-        nil
       end
 
       private
