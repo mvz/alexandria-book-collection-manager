@@ -23,7 +23,7 @@ module Alexandria
         instances = BookProviders.abstract_classes.map(&:new)
         @selected_instance = nil
 
-        @table = Gtk::Table.new(2, 2)
+        @table = Gtk::Table.new(2, 2, false)
         dialog.child.pack_start(@table, false, false, 0)
 
         # Name.
