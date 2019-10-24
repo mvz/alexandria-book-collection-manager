@@ -39,7 +39,7 @@ module Alexandria
     class WorldCatProvider < WebsiteBasedProvider
       include Alexandria::Logging
 
-      SITE = "http://www.worldcat.org"
+      SITE = "https://www.worldcat.org"
       BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
 
       def initialize
