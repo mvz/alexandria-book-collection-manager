@@ -1,10 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.7.4 / 2019-10-24
 
 * Drop support for Ruby 2.3
 * Avoid passing nil to Gtk method #visible=, which expects a boolean
   ([#22], by [Joseph Haig][jrmhaig])
+* Update dependencies on gtk3 and gstreamer to 3.4.1
+* Fix WorldCat provider to use https
 
 ## 0.7.3 / 2019-02-27
 
