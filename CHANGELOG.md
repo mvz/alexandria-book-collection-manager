@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+* Drop support for Ruby 2.3
+* Avoid passing nil to Gtk method #visible=, which expects a boolean
+  ([#22], by [Joseph Haig][jrmhaig])
+
 ## 0.7.3 / 2019-02-27
 
 * Remove DeaStore provider since the site is no longer online
@@ -64,6 +70,9 @@
   Amazon's Product Advertising API. Thanks to Stephen McCamant for
   providing the patch.
 
-<!-- references -->
+<!-- contributors -->
+[jrmhaig]: https://github.com/jrmhaig
 
+<!-- issues and pull requests -->
+[#23]: https://github.com/mvz/alexandria-book-collection-manager/pull/23
 [#19]: https://github.com/mvz/alexandria-book-collection-manager/issues/19

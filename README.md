@@ -99,6 +99,7 @@ The following people have contributed to Alexandria over the years:
 * Constantine Evans <cevans@costinet.org>
 * Dafydd Harries <daf@muse.19inch.net>
 * Javier Fernandez-Sanguino Pena <jfs@debian.org>
+* Joseph Haig <josephhaig@gmail.com>
 * Joseph Method <tristil@gmail.com>
 * Kevin Schultz <schultkl@ieee.org>
 * Laurent Sansonetti <lrz@gnome.org>
@@ -118,6 +119,11 @@ The following people have contributed to Alexandria over the years:
 
 * Cathal Mc Ginley <cathal.alexandria@gnostai.org>
 * Liam Davison <registrations@liamjdavison.info>
+
+### Artists
+
+* Andreas Nilsson <nisses.mail@home.se>
+* Stefanie Dijoux <stefanie.dijoux@gmail.com>
 
 ### Translators
 
@@ -140,10 +146,14 @@ The following people have contributed to Alexandria over the years:
 * Piotr Drąg <piotrdrag@gmail.com> (pl)
 * Serhij Dubyk <dubyk@library.lviv.ua> (uk)
 
-### Artists
-
-* Andreas Nilsson <nisses.mail@home.se>
-* Stefanie Dijoux <stefanie.dijoux@gmail.com>
+### Former translators
+* David Weinehall <tao@debian.org> (sv)
+* Jiří Pejchal <jiri.pejchal@gmail.com> (cs)
+* Laurent Sansonetti <lrz@gnome.org> (fr)
+* Lucas Rocha <lucasr@im.ufba.br> (pt_BR)
+* Marco Costantini <costanti@science.unitn.it> (it)
+* Masao Mutoh <mutoh@highway.ne.jp> (ja)
+* Mirko Maischberger <mirko@lilik.it> (it)
 
 ## License
 
