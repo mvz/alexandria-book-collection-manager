@@ -6,7 +6,7 @@ before_install:
   - sudo apt-get install libgstreamer1.0-dev
   - sudo apt-get install libyaz-dev
 
-script: "xvfb-run bundle exec rake test"
+script: "xvfb-run bundle exec rake"
 
 rvm:
   - 2.6
