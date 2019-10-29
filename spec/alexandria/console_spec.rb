@@ -21,10 +21,10 @@ RSpec.describe Alexandria do
   describe ".list_books_on_console" do
     it "returns a string containing a list of all books" do
       expect(described_class.list_books_on_console).to eq <<~LIST
-        The Dispossessed, Ursula Le Guin
         Pattern Recognition, William Gibson
         Bonjour Tristesse, Francoise Sagan & Irene Ash
         An Artist of the Floating World, Kazuo Ishiguro
+        The Dispossessed, Ursula Le Guin
         Neverwhere, Neil Gaiman
       LIST
     end
