@@ -8,6 +8,7 @@ before_install:
   - sudo apt-get install libyaz-dev
   - sudo apt-get install intltool
   - sudo apt-get install gconf2
+  - sudo apt-get install at-spi2-core
 
 script: "xvfb-run bundle exec rake"
 
