@@ -9,6 +9,8 @@ before_install:
   - sudo apt-get install intltool
   - sudo apt-get install gconf2
   - sudo apt-get install at-spi2-core
+  - sudo apt-get install gstreamer1.0-plugins-good
+  - sudo apt-get install pulseaudio
 
 script: "xvfb-run bundle exec rake"
 
