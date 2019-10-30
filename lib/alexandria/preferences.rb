@@ -120,13 +120,6 @@ module Alexandria
         # set non-list value
         exec_gconf_set(var_path, new_value)
       end
-    rescue StandardError => ex
-      log.debug { new_value.inspect }
-      log.error do
-        "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}"
-      end
-      log << ex.message
-      log << ex
     end
 
     ##
@@ -245,12 +238,8 @@ module Alexandria
       when /^\[(.*)\]$/ # list (assume of type String)
         Regexp.last_match[1].split(",")
       when /^\((.*)\)$/ # pair (assume of type int)
-        begin
-          pair = Regexp.last_match[1].split(",")
-          [discriminate(pair.first), discriminate(pair.last)]
-        rescue StandardError
-          [0, 0]
-        end
+        pair = Regexp.last_match[1].split(",")
+        [discriminate(pair.first), discriminate(pair.last)]
       else
         value # string
       end
