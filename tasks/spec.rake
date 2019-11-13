@@ -2,7 +2,7 @@
 
 # -*- ruby -*-
 #--
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011-2019 Matijs van Zuijlen
 #
 # This file is part of the Alexandria build system.
 #
@@ -39,8 +39,10 @@ namespace "spec" do
     t.ruby_opts = ["-rbundler/setup -rsimplecov -Ilib -w"]
   end
 
-  desc "Runs all unit and end-to-end specs"
-  task "all" => ["spec:unit", "spec:end_to_end"]
+  RSpec::Core::RakeTask.new("all") do |t|
+    t.pattern = "spec/**/*_spec.rb"
+    t.ruby_opts = ["-rbundler/setup -rsimplecov -Ilib -w"]
+  end
 end
 
 task spec: "spec:all"
