@@ -1,5 +1,10 @@
 language: ruby
 
+dist: xenial
+
+services:
+  - xvfb
+
 before_install:
   - sudo apt-get update
   # Needed for gtk3 gem
@@ -21,7 +26,8 @@ before_install:
   # Needed to play sound
   - sudo apt-get install pulseaudio
 
-script: "xvfb-run bundle exec rake"
+cache:
+  bundler: true
 
 rvm:
   - 2.6
