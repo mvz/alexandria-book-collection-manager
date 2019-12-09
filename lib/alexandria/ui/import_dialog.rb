@@ -56,7 +56,7 @@ module Alexandria
         end
 
         signal_connect("selection_changed") do
-          import_button.sensitive = filename && File.file?(filename)
+          import_button.sensitive = !!(filename && File.file?(filename))
         end
 
         # before adding the (hidden) progress bar, we must re-set the
