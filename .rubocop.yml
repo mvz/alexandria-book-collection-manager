@@ -10,7 +10,7 @@ AllCops:
     - 'pkg/**/*'
   TargetRubyVersion: 2.4
 
-Layout/AlignHash:
+Layout/HashAlignment:
   EnforcedColonStyle: key
   EnforcedHashRocketStyle: table
 
