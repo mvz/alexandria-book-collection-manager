@@ -67,7 +67,7 @@ module Alexandria
           log.info { "found at " + factory.fullname }
           instance.changed
           instance.notify_observers(:found, factory.fullname) # new
-          return results
+          results
         end
       rescue StandardError => ex
         if ex.is_a? NoResultsError

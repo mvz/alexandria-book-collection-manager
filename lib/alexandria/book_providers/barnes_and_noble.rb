@@ -192,7 +192,7 @@ module Alexandria
                           book_data[:isbn], book_data[:publisher],
                           book_data[:publication_year],
                           book_data[:binding])
-          return [book, book_data[:image_url]]
+          [book, book_data[:image_url]]
         rescue StandardError => ex
           raise ex if ex.instance_of? NoResultsError
 

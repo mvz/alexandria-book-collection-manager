@@ -194,7 +194,7 @@ module Alexandria
         end
         if type == SEARCH_BY_ISBN
           if results.size == 1
-            return results.first
+            results.first
           else
             log.info { "Found multiple results for lookup: checking each" }
             query_isbn_canon = Library.canonicalise_ean(criterion)
@@ -207,10 +207,10 @@ module Alexandria
             end
             # gone through all and no ISBN match, so just return first result
             log.info { "no more results to check. Returning first result, just an approximation" }
-            return results.first
+            results.first
           end
         else
-          return results
+          results
         end
       end
 

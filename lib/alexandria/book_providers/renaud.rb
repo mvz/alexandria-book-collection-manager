@@ -45,7 +45,7 @@ module Alexandria
         data = transport.get(URI.parse(req))
         begin
           if type == SEARCH_BY_ISBN
-            return to_books(data).pop
+            to_books(data).pop
           else
             results = []
             to_books(data).each do |book|
@@ -59,7 +59,7 @@ module Alexandria
                 results << book
               end
             end
-            return results
+            results
           end
         rescue StandardError
           raise NoResultsError

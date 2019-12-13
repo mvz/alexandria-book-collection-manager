@@ -40,9 +40,9 @@ module Alexandria
         raise NoResultsError if results.empty?
 
         if type == SEARCH_BY_ISBN
-          return results.first
+          results.first
         else
-          return results
+          results
         end
       end
 

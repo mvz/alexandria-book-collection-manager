@@ -181,7 +181,7 @@ module Alexandria
               image_url = image_link["href"]
             end
 
-            return [book, image_url]
+            [book, image_url]
 
           end
         rescue StandardError => ex
