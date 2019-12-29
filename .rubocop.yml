@@ -14,6 +14,10 @@ Layout/HashAlignment:
   EnforcedColonStyle: key
   EnforcedHashRocketStyle: table
 
+# Be lenient with line length
+Layout/LineLength:
+  Max: 110
+
 # Don't force lonely closing parentheses
 Layout/MultilineMethodCallBraceLayout:
   EnforcedStyle: same_line
@@ -40,10 +44,6 @@ Lint/AssignmentInCondition:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
-
-# Be lenient with line length
-Metrics/LineLength:
-  Max: 110
 
 Naming/AccessorMethodName:
   Enabled: false

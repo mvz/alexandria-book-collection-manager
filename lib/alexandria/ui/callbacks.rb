@@ -274,7 +274,7 @@ module Alexandria
       end
 
       def connect_signals
-        # rubocop:disable Metrics/LineLength
+        # rubocop:disable Layout/LineLength
         standard_actions = [
           ["LibraryMenu", nil, _("_Library")],
           ["New", Gtk::Stock::NEW, _("_New Library"), "<control>L", _("Create a new library"), method(:on_new)],
@@ -313,7 +313,7 @@ module Alexandria
           ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
           ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)],
         ]
-        # rubocop:enable Metrics/LineLength
+        # rubocop:enable Layout/LineLength
 
         toggle_actions = [
           ["Sidepane", nil, _("Side _Pane"), "F9", nil, method(:on_view_sidepane), true],
