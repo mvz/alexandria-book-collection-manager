@@ -44,9 +44,9 @@ module Alexandria
       def decode(data)
         data.gsub!(/\s/, "")
         if data.length == 10
-          return data
+          data
         elsif data.length >= 13
-          return data[0, 13]
+          data[0, 13]
         else
           raise "Unknown scan data #{data}"
         end

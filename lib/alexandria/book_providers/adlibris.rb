@@ -195,7 +195,7 @@ module Alexandria
 
           book = Book.new(title, authors, isbn, publisher, year, binding)
 
-          return [book, image_url]
+          [book, image_url]
         rescue StandardError => ex
           raise ex if ex.instance_of? NoResultsError
 

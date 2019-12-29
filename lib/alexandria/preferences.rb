@@ -246,9 +246,9 @@ module Alexandria
       elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
         begin
           pair = Regexp.last_match[1].split(",")
-          return [discriminate(pair.first), discriminate(pair.last)]
+          [discriminate(pair.first), discriminate(pair.last)]
         rescue StandardError
-          return [0, 0]
+          [0, 0]
         end
       else
         value # string
