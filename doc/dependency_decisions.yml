@@ -1,29 +1,29 @@
 ---
-- - :whitelist
+- - :permit
   - LGPL-3+
   - :who: 
     :why: 
     :versions: []
     :when: 2017-07-23 05:51:53.629753437 Z
-- - :whitelist
+- - :permit
   - LGPL-2.1+
   - :who: 
     :why: 
     :versions: []
     :when: 2017-07-23 05:52:02.088395832 Z
-- - :whitelist
+- - :permit
   - MIT
   - :who: 
     :why: 
     :versions: []
     :when: 2017-07-23 05:52:06.806192042 Z
-- - :whitelist
+- - :permit
   - LGPLv2+
   - :who: 
     :why: 
     :versions: []
     :when: 2017-07-23 05:52:24.618189811 Z
-- - :whitelist
+- - :permit
   - ruby
   - :who: 
     :why: 
