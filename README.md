@@ -161,7 +161,7 @@ Unless otherwise noted, the following license applies to all files that are
 part of Alexandria:
 
 Copyright (C) 2004 Laurent Sansonetti
-Copyright (C) 2005-2010,2014-2019 Alexandria Contributors
+Copyright (C) 2005-2010,2014-2020 Alexandria Contributors
 
 Alexandria is free software; you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
