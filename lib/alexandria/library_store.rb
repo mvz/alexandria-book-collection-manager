@@ -69,16 +69,22 @@ module Alexandria
             ean = Library.canonicalise_ean(book.isbn)
             book.isbn = ean if ean
 
-            book.publishing_year = book.publishing_year.to_i unless book.publishing_year.nil?
+            unless book.publishing_year.nil?
+              book.publishing_year = book.publishing_year.to_i
+            end
 
             # Or if isbn has changed
             raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
 
             # Re-save book if Alexandria::DATA_VERSION changes
-            raise "#{test[1]} version is not okay" unless book.version == Alexandria::DATA_VERSION
+            unless book.version == Alexandria::DATA_VERSION
+              raise "#{test[1]} version is not okay"
+            end
 
             # Or if publishing year has changed
-            raise "#{test[1]} pub year is not okay" unless book.publishing_year == old_pub_year
+            unless book.publishing_year == old_pub_year
+              raise "#{test[1]} pub year is not okay"
+            end
 
             # ruined_books << [book, book.isbn, library]
             book.library = library.name
@@ -122,7 +128,9 @@ module Alexandria
 
           md = /(.+)\.cover/.match(cover)
           ean = Library.canonicalise_ean(md[1]) || md[1]
-          FileUtils.mv(cover, ean + Library::EXT[:cover]) unless cover == ean + Library::EXT[:cover]
+          unless cover == ean + Library::EXT[:cover]
+            FileUtils.mv(cover, ean + Library::EXT[:cover])
+          end
         end
 
         FileUtils.rm_f(Dir["*_small.jpg"])

@@ -251,7 +251,9 @@ class FileInstallTask < Rake::TaskLib
       else
         dest_basedir = Pathname.new(@dest_dir)
       end
-      source_path = source_file.dirname.relative_path_from(source_basedir) if source_file.file?
+      if source_file.file?
+        source_path = source_file.dirname.relative_path_from(source_basedir)
+      end
       dest = source_path ? dest_basedir + source_path : dest_basedir
       dest.to_s
     end

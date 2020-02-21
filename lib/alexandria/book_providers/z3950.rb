@@ -110,7 +110,9 @@ module Alexandria
           book = nil
           begin
             mappings = Alexandria::PseudoMarcParser::USMARC_MAPPINGS
-            mappings = Alexandria::PseudoMarcParser::BNF_FR_MAPPINGS if prefs["hostname"] == "z3950.bnf.fr"
+            if prefs["hostname"] == "z3950.bnf.fr"
+              mappings = Alexandria::PseudoMarcParser::BNF_FR_MAPPINGS
+            end
             # try pseudo-marc parser first (it seems to have more luck)
             book = Alexandria::PseudoMarcParser.marc_text_to_book(marc_txt,
                                                                   mappings)

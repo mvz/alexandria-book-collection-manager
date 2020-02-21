@@ -223,7 +223,9 @@ end
 task :gconf do
   return if ENV["GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL"]
 
-  raise "gconftool-2 cannot be found, is GConf2 correctly installed?" unless system("which gconftool-2")
+  unless system("which gconftool-2")
+    raise "gconftool-2 cannot be found, is GConf2 correctly installed?"
+  end
 
   ENV["GCONF_CONFIG_SOURCE"] = `gconftool-2 --get-default-source`.chomp
   Dir["schemas/*.schemas"].each do |schema|

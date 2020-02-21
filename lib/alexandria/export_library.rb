@@ -245,7 +245,9 @@ module Alexandria
         end
         entry.add_element("read").text = book.redd.to_s if book.redd
         entry.add_element("loaned").text = book.loaned.to_s if book.loaned
-        entry.add_element("rating").text = book.rating unless book.rating == Book::DEFAULT_RATING
+        unless book.rating == Book::DEFAULT_RATING
+          entry.add_element("rating").text = book.rating
+        end
         entry.add_element("comments").text = book.notes if book.notes && !book.notes.empty?
         if File.exist?(cover(book))
           entry.add_element("cover").text = final_cover(book)
@@ -381,7 +383,9 @@ module Alexandria
         bibtex << "\",\n"
         bibtex << "title = \"#{latex_escape(book.title)}\",\n"
         bibtex << "publisher = \"#{latex_escape(book.publisher)}\",\n"
-        bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n" if book.notes && !book.notes.empty?
+        if book.notes && !book.notes.empty?
+          bibtex << "OPTnote = \"#{latex_escape(book.notes)}\",\n"
+        end
         # year is a required field in bibtex @BOOK
         bibtex << "year = " + (book.publishing_year || '"n/a"').to_s + "\n"
         bibtex << "}\n\n"
