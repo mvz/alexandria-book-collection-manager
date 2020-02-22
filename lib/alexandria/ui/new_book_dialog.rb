@@ -538,19 +538,18 @@ module Alexandria
         if (event.event_type == :button_press) &&
             (event.button == 1)
 
-          radio, target_widget, box2, box3 = case widget
-                                             when @eventbox_entry_search
-                                               [@title_radiobutton, @entry_search,
-                                                @eventbox_combo_search, @eventbox_entry_isbn]
-
-                                             when @eventbox_combo_search
-                                               [@title_radiobutton, @combo_search,
-                                                @eventbox_entry_search, @eventbox_entry_isbn]
-
-                                             when @eventbox_entry_isbn
-                                               [@isbn_radiobutton, @entry_isbn,
-                                                @eventbox_entry_search, @eventbox_combo_search]
-                                             end
+          radio, target_widget, box2, box3 =
+            case widget
+            when @eventbox_entry_search
+              [@title_radiobutton, @entry_search,
+               @eventbox_combo_search, @eventbox_entry_isbn]
+            when @eventbox_combo_search
+              [@title_radiobutton, @combo_search,
+               @eventbox_entry_search, @eventbox_entry_isbn]
+            when @eventbox_entry_isbn
+              [@isbn_radiobutton, @entry_isbn,
+               @eventbox_entry_search, @eventbox_combo_search]
+            end
           radio.active = true
           target_widget.grab_focus
           widget.above_child = false
@@ -570,8 +569,9 @@ module Alexandria
         return unless isbn13
 
         if (book = library.find { |bk| bk.isbn == isbn13 })
-          raise DuplicateBookException, format(_("'%s' already exists in '%s' (titled '%s')."),
-                                               isbn, library.name, book.title.sub("&", "&amp;"))
+          raise DuplicateBookException,
+                format(_("'%s' already exists in '%s' (titled '%s')."),
+                       isbn, library.name, book.title.sub("&", "&amp;"))
         end
       end
     end

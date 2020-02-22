@@ -315,7 +315,6 @@ module Alexandria
           ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
           ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)],
         ]
-        # rubocop:enable Layout/LineLength
 
         toggle_actions = [
           ["Sidepane", nil, _("Side _Pane"), "F9", nil, method(:on_view_sidepane), true],
@@ -337,6 +336,8 @@ module Alexandria
           ["ByEdition", nil, _("By _Binding"), nil, nil, 4],
           ["ByRating", nil, _("By _Rating"), nil, nil, 5]
         ]
+        # rubocop:enable Layout/LineLength
+
         providers_actions = BookProviders.map do |provider|
           [provider.action_name, Gtk::Stock::JUMP_TO,
            _("At _%s") % provider.fullname, nil, nil,
@@ -359,8 +360,10 @@ module Alexandria
           action.signal_connect("activate", &callback) if callback
         end
 
-        toggle_actions.each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
-          action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+        toggle_actions
+          .each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
+          action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip,
+                                         stock_id: stock_id)
           action.set_active is_active
           @actiongroup.add_action_with_accel(action, accelerator)
           action.signal_connect("toggled", &callback) if callback
@@ -368,7 +371,8 @@ module Alexandria
 
         first_action = nil
         view_as_actions.each do |name, stock_id, label, accelerator, tooltip, value|
-          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
+          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip,
+                                        stock_id: stock_id)
           if first_action
             action.join_group first_action
           else
@@ -387,7 +391,8 @@ module Alexandria
 
         first_action = nil
         arrange_icons_actions.each do |name, stock_id, label, accelerator, tooltip, value|
-          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip, stock_id: stock_id)
+          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip,
+                                        stock_id: stock_id)
           if first_action
             action.join_group first_action
           else

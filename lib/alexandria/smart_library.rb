@@ -359,45 +359,47 @@ module Alexandria
         IS_BEFORE = Operator.new(:is_before,
                                  _("is before"),
                                  proc { |x, y| x.to_i < y.to_i && !x.nil? })
-        IS_IN_LAST = Operator.new(:is_in_last_days,
-                                  _("is in last"),
-                                  proc { |x, y|
-                                    begin
-                                      if x.nil? || x.empty?
-                                        false
-                                      else
-                                        log.debug { "Given Date: #{x.inspect} #{x.class}" }
-                                        given_date = Time.parse(x)
-                                        days = y.to_i * (24 * 60 * 60)
+        IS_IN_LAST =
+          Operator.new(:is_in_last_days,
+                       _("is in last"),
+                       proc { |x, y|
+                         begin
+                           if x.nil? || x.empty?
+                             false
+                           else
+                             log.debug { "Given Date: #{x.inspect} #{x.class}" }
+                             given_date = Time.parse(x)
+                             days = y.to_i * (24 * 60 * 60)
 
-                                        Time.now - given_date <= days
-                                      end
-                                    rescue StandardError => ex
-                                      trace = ex.backtrace.join("\n >")
-                                      log.warn { "Date matching failed #{ex} #{trace}" }
-                                      false
-                                    end
-                                  })
-        IS_NOT_IN_LAST = Operator.new(:is_not_in_last_days,
-                                      _("is not in last"),
-                                      proc { |x, y|
-                                        begin
-                                          if x.nil? || x.empty?
-                                            false
-                                          else
-                                            log.debug { "Given Date: #{x.inspect} #{x.class}" }
-                                            given_date = Time.parse(x)
-                                            days = y.to_i * (24 * 60 * 60)
+                             Time.now - given_date <= days
+                           end
+                         rescue StandardError => ex
+                           trace = ex.backtrace.join("\n >")
+                           log.warn { "Date matching failed #{ex} #{trace}" }
+                           false
+                         end
+                       })
+        IS_NOT_IN_LAST =
+          Operator.new(:is_not_in_last_days,
+                       _("is not in last"),
+                       proc { |x, y|
+                         begin
+                           if x.nil? || x.empty?
+                             false
+                           else
+                             log.debug { "Given Date: #{x.inspect} #{x.class}" }
+                             given_date = Time.parse(x)
+                             days = y.to_i * (24 * 60 * 60)
 
-                                            Time.now - given_date > days
-                                          end
-                                        rescue StandardError => ex
-                                          trace = ex.backtrace.join("\n >")
-                                          log.warn { "Date matching failed #{ex} #{trace}" }
-                                          false
-                                        end
-                                        # Time.now - x > 3600*24*y
-                                      })
+                             Time.now - given_date > days
+                           end
+                         rescue StandardError => ex
+                           trace = ex.backtrace.join("\n >")
+                           log.warn { "Date matching failed #{ex} #{trace}" }
+                           false
+                         end
+                         # Time.now - x > 3600*24*y
+                       })
 
         ALL = constants.map \
           { |x| module_eval(x.to_s) }.select \

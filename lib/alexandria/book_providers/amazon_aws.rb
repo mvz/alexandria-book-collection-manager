@@ -103,8 +103,9 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion, response_group: "ItemAttributes,Images",
-                                                     country: request_locale)
+            res = Amazon::Ecs.item_search(criterion,
+                                          response_group: "ItemAttributes,Images",
+                                          country: request_locale)
             res.items.each do |item|
               products << item
             end
@@ -210,7 +211,9 @@ module Alexandria
               log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result
-            log.info { "no more results to check. Returning first result, just an approximation" }
+            log.info do
+              "no more results to check. Returning first result, just an approximation"
+            end
             results.first
           end
         else

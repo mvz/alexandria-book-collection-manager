@@ -111,7 +111,8 @@ module Alexandria
           cb = Gtk::ComboBoxText.new
           [_("all"), _("any")].each { |x| cb.append_text(x) }
           cb.signal_connect("changed") do
-            @predicate_operator_rule = cb.active.zero? ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
+            @predicate_operator_rule =
+              cb.active.zero? ? SmartLibrary::ALL_RULES : SmartLibrary::ANY_RULE
           end
           cb.active =
             predicate_operator_rule == SmartLibrary::ALL_RULES ? 0 : 1
@@ -405,8 +406,9 @@ module Alexandria
       end
 
       def parse_date(datestring)
-        date_format = "%d/%m/%Y" # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
-        ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
+        # '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
+        # http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
+        date_format = "%d/%m/%Y"
         begin
           d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)

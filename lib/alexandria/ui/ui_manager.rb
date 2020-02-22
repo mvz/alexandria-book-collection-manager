@@ -12,8 +12,8 @@ require "alexandria/library_sort_order"
 module Alexandria
   module UI
     class UIManager < BuilderBase
-      attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview, :listview_model,
-                    :iconview_model, :filtered_model
+      attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview,
+                    :listview_model, :iconview_model, :filtered_model
       attr_reader :model
       include Logging
       include GetText
@@ -296,7 +296,8 @@ module Alexandria
           library_already_selected = true
           if (path = widget.get_path_at_pos(event.x, event.y))
             @clicking_on_sidepane = true
-            obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+            obj, path =
+              widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
             widget.has_focus = true
 
             unless obj.path_is_selected?(path)
@@ -347,7 +348,8 @@ module Alexandria
           # not a right click
         elsif (path = widget.get_path_at_pos(event.x, event.y))
           @clicking_on_sidepane = true
-          obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+          obj, path =
+            widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
           obj.select_path(path)
           sensitize_library selected_library
         end
@@ -373,7 +375,8 @@ module Alexandria
           widget.grab_focus
 
           if (path = widget.get_path_at_pos(event.x.to_i, event.y.to_i))
-            obj, path = widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+            obj, path =
+              widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
 
             unless obj.path_is_selected?(path)
               log.debug { "Select #{path}" }
@@ -458,7 +461,9 @@ module Alexandria
               @actiongroup["Move"].sensitive =
                 @actiongroup["SetRating"].sensitive = !books.empty?
 
-          log.debug { "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}" }
+          log.debug do
+            "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}"
+          end
 
           if library.is_a?(SmartLibrary)
             @actiongroup["Delete"].sensitive =
@@ -509,8 +514,7 @@ module Alexandria
       end
 
       def determine_delete_option
-        sensitive = (@libraries.all_regular_libraries.length > 1 || selected_library.is_a?(SmartLibrary))
-        sensitive
+        @libraries.all_regular_libraries.length > 1 || selected_library.is_a?(SmartLibrary)
       end
 
       def on_close_sidepane
@@ -663,11 +667,15 @@ module Alexandria
                     end
                   end
 
-                  log.debug { "Trying to add #{book.title}, #{cover_uri} in library ''#{library.name}'" }
+                  log.debug do
+                    "Trying to add #{book.title}, #{cover_uri}" \
+                    " in library ''#{library.name}'"
+                  end
                   library.save_cover(book, cover_uri) unless cover_uri.nil?
                   library << book
                   library.save(book)
-                  set_status_label(format(_("Added '%s' to library '%s'"), book.title, library.name))
+                  set_status_label(format(_("Added '%s' to library '%s'"),
+                                          book.title, library.name))
                 rescue StandardError => ex
                   log.error { "Couldn't add book #{isbn}: #{ex}" }
                   log.error { ex.backtrace.join("\n") }
@@ -722,7 +730,8 @@ module Alexandria
         iter[Columns::NOTES] = (book.notes || "")
         iter[Columns::LOANED_TO] = (book.loaned_to || "")
         rating = (book.rating || Book::DEFAULT_RATING)
-        iter[Columns::RATING] = Book::MAX_RATING_STARS - rating # ascending order is the default
+        # ascending order is the default
+        iter[Columns::RATING] = Book::MAX_RATING_STARS - rating
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
         iter[Columns::WANT] = book.want?
@@ -1168,7 +1177,8 @@ module Alexandria
 
       ICONS_SORTS = [
         Columns::TITLE, Columns::AUTHORS, Columns::ISBN,
-        Columns::PUBLISHER, Columns::EDITION, Columns::RATING, Columns::REDD, Columns::OWN, Columns::WANT
+        Columns::PUBLISHER, Columns::EDITION, Columns::RATING,
+        Columns::REDD, Columns::OWN, Columns::WANT
       ].freeze
 
       def setup_books_iconview_sorting

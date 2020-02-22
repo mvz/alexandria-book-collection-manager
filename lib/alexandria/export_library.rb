@@ -117,7 +117,8 @@ module Alexandria
           io.puts book.authors.join(", ")
           io.puts book.edition
           io.puts((book.isbn || ""))
-          # we need to close the files so the iPod can be ejected/unmounted without us closing Alexandria
+          # we need to close the files so the iPod can be ejected/unmounted
+          # without us closing Alexandria
           io.close
         end
       end
@@ -131,8 +132,8 @@ module Alexandria
                 "Rating(#{Book::DEFAULT_RATING} to #{Book::MAX_RATING_STARS})", "Notes",
                 "Want?", "Read?", "Own?", "Tags"]
         each do |book|
-          csv << [book.title, book.authors.join(", "), book.publisher, book.edition, book.isbn,
-                  book.publishing_year, book.rating, book.notes,
+          csv << [book.title, book.authors.join(", "), book.publisher, book.edition,
+                  book.isbn, book.publishing_year, book.rating, book.notes,
                   (book.want ? "1" : "0"), (book.redd ? "1" : "0"), (book.own ? "1" : "0"),
                   (book.tags ? book.tags.join(", ") : "")]
         end

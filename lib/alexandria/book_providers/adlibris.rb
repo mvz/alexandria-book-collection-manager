@@ -103,29 +103,11 @@ module Alexandria
         book_search_results
       end
 
-      # def binding_type(binding) # swedish string
-      #  # hrm, this is a HACK and not currently working
-      #  # perhaps use regexes instead...
-      #  {"inbunden" => :hardback,
-      #    "pocket" => :paperback,
-      #    "storpocket" => :paperback,
-      #    "kartonnage" => :hardback,
-      #    "kassettbok" => :audiobook}[binding.downcase] or :paperback
-      #  # H&#228;ftad == Paperback
-      # end
-
       def normalize(text)
-        # unless text.nil?
-        #  text = @ent.decode(text).strip
-        # end
         text
       end
 
       def parse_result_data(html)
-        # adlibris site presents data in ISO-8859-1, so change it to UTF-8
-        # html = Iconv.conv("UTF-8", "ISO-8859-1", html)
-        ## File.open(',log.html', 'wb') {|f| f.write('<?xml encoding="utf-8"?>'); f.write(html) } # DEBUG
-        # doc = Hpricot(html)
         doc = html_to_doc(html)
         begin
           title = nil
@@ -179,7 +161,9 @@ module Alexandria
 
           # cover
           image_url = nil
-          if (cover_img = doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first)
+          cover_img =
+            doc.search('span.imageWithShadow img[@id$="ProductImageNotLinked"]').first
+          if cover_img
             image_url = if %r{^http\://}.match?(cover_img["src"])
                           cover_img["src"]
                         else

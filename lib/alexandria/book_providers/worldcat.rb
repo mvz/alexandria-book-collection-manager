@@ -148,7 +148,9 @@ module Alexandria
             end
 
             # gone through all and no ISBN match, so just return first result
-            log.info { "no more results to check. Returning first result, just an approximation" }
+            log.info do
+              "no more results to check. Returning first result, just an approximation"
+            end
             return first_result
 
           end
@@ -195,7 +197,7 @@ module Alexandria
 
           isbn = search_isbn
           unless isbn
-            isbn_row = doc % "tr#details-standardno" # #bibdata_table % 'th[text()*=ISBN]/..'
+            isbn_row = doc % "tr#details-standardno"
             if isbn_row
               isbns = (isbn_row / "td").last.inner_text.split
               isbn = Library.canonicalise_isbn(isbns.first)

@@ -48,7 +48,10 @@ module Alexandria
     def save!
       log.debug { "preferences save!" }
       @changed_settings.each do |variable_name|
-        log.debug { "saving preference #{variable_name} / #{@alexandria_settings[variable_name].class}" }
+        log.debug do
+          klass = @alexandria_settings[variable_name].class
+          "saving preference #{variable_name} / #{klass}"
+        end
         generic_save_setting(variable_name, @alexandria_settings[variable_name])
       end
       @changed_settings.clear
@@ -125,7 +128,9 @@ module Alexandria
       end
     rescue StandardError => ex
       log.debug { new_value.inspect }
-      log.error { "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}" }
+      log.error do
+        "Could not set GConf setting #{variable_name} to value: #{new_value.inspect}"
+      end
       log << ex.message
       log << ex
     end

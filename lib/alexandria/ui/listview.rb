@@ -208,7 +208,10 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = !!cols_visibility[i]
         end
-        log.debug { "Columns visibility: " + cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ") }
+        log.debug do
+          "Columns visibility: " +
+            cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ")
+        end
       end
 
       # Sets the width of each column based on any respective

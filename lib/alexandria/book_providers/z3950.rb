@@ -22,7 +22,8 @@ module Alexandria
         prefs.add("hostname", _("Hostname"), "")
         prefs.add("port", _("Port"), 7090)
         prefs.add("database", _("Database"), "")
-        prefs.add("record_syntax", _("Record syntax"), "USMARC", ["USMARC", "UNIMARC", "SUTRS"])
+        prefs.add("record_syntax", _("Record syntax"), "USMARC",
+                  ["USMARC", "UNIMARC", "SUTRS"])
         prefs.add("username", _("Username"), "", nil, false)
         prefs.add("password", _("Password"), "", nil, false)
         prefs.add("charset", _("Charset encoding"), "ISO-8859-1")
@@ -100,7 +101,7 @@ module Alexandria
       def books_from_marc(resultset, _isbn)
         results = []
         resultset[0..9].each do |record|
-          marc_txt = record.render(prefs["charset"], "UTF-8") # (prefs['record_syntax'], 'USMARC')
+          marc_txt = record.render(prefs["charset"], "UTF-8")
           log.debug { marc_txt }
           if $DEBUG
             File.open(",marc.txt", "wb") do |f| # DEBUG
@@ -207,8 +208,9 @@ module Alexandria
       end
 
       def url(book)
-        "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?DB=local&CNT=25+records+per+page&CMD=isbn+" +
-          Library.canonicalise_isbn(book.isbn)
+        isbn = Library.canonicalise_isbn(book.isbn)
+        "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?" \
+          "DB=local&CNT=25+records+per+page&CMD=isbn+#{isbn}"
       rescue StandardError => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
         nil
@@ -346,7 +348,8 @@ module Alexandria
           "Codice%2520ISBN%253C%2FB%253E%253C%2Ffont%253E%2520" \
           "contiene%2520%2522%2520%253CFONT%2520COLOR%253Dred%253E" +
           canonicalise_isbn_with_dashes(book.isbn) +
-          "%253C%2FFONT%253E%2522&session=&zurl=opac&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22" +
+          "%253C%2FFONT%253E%2522&session=&zurl=opac" \
+          "&zquery=%281%3D7+4%3D2+2%3D3+5%3D100+6%3D1+3%3D3+%22" +
           canonicalise_isbn_with_dashes(book.isbn) +
           "%22%29&language=it&maxentries=10&target=0&position=1"
       rescue StandardError => ex
@@ -395,7 +398,8 @@ module Alexandria
       #
       # Dashes:
       # this database requires that Italian books are searched with dashes :(
-      # However, they have also books with dashes in wrong positions, for instance 88-061-4934-2
+      # However, they have also books with dashes in wrong positions, for
+      # instance 88-061-4934-2
       #
       # References:
       # http://opac.internetculturale.it/cgi-bin/main.cgi?type=field
