@@ -291,9 +291,6 @@ module Alexandria
 
     require "alexandria/book_providers/douban" # only requires YAML
 
-    # require 'alexandria/book_providers/renaud'
-    log.info { "Not loading Renaud (provider not functional)" }
-
     # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
     require "alexandria/book_providers/amazon_aws"
 

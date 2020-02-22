@@ -140,16 +140,6 @@ describe Alexandria::BookProviders do
                                  "9788599170380")
   end
 
-  it "Renaud should work" do
-    skip "Marked in code as not working; remove implementation entirely."
-    # adultes
-    assert_correct_search_result(Alexandria::BookProviders::RENAUDProvider,
-                                 "9782894723388")
-    # jeunesse
-    assert_correct_search_result(Alexandria::BookProviders::RENAUDProvider,
-                                 "9782764605059")
-  end
-
   it "Worldcat should work" do
     assert_correct_search_result(Alexandria::BookProviders::WorldCatProvider,
                                  "9780521247108")
