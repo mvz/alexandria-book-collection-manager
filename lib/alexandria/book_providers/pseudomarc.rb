@@ -88,7 +88,9 @@ module Alexandria
 
         binding_data = details[m[:binding][0]]
         if binding_data
-          binding = Regexp.last_match[1] if binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
+          if binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
+            binding = Regexp.last_match[1]
+          end
         end
 
         publisher = nil

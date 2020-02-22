@@ -169,7 +169,9 @@ module Alexandria
         log.debug { format("Create listview column for %s...", title) }
 
         column.add_attribute(renderer, "active", iterid)
-        column.add_attribute(renderer, "inconsistent", Columns::OWN) if iterid == Columns::WANT
+        if iterid == Columns::WANT
+          column.add_attribute(renderer, "inconsistent", Columns::OWN)
+        end
 
         log.debug { "append_column #{column}" }
         @listview.append_column(column)
@@ -206,7 +208,10 @@ module Alexandria
         cols.each_index do |i|
           cols[i].visible = !!cols_visibility[i]
         end
-        log.debug { "Columns visibility: " + cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ") }
+        log.debug do
+          "Columns visibility: " +
+            cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ")
+        end
       end
 
       # Sets the width of each column based on any respective

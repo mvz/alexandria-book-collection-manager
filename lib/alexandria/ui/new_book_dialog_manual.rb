@@ -75,7 +75,9 @@ module Alexandria
                               "sure it is written correcty, and try again.")
           end
           ary = @library.select { |book| book.ident == isbn }
-          raise AddError, _("The EAN/ISBN you provided is already used in this library.") unless ary.empty?
+          unless ary.empty?
+            raise AddError, _("The EAN/ISBN you provided is already used in this library.")
+          end
         end
         if (publisher = @entry_publisher.text.strip).empty?
           raise AddError, _("A publisher must be provided.")

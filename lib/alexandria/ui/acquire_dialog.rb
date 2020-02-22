@@ -422,7 +422,8 @@ module Alexandria
           @scan_area.grab_focus
         end
         @scan_area.signal_connect("focus-in-event") do |_widget, _event|
-          @barcode_label.label = _(format("%s _Barcode Scanner Ready", _(@scanner.display_name)))
+          @barcode_label.label =
+            _(format("%s _Barcode Scanner Ready", _(@scanner.display_name)))
           @scanner_buffer = ""
           begin
             @animation.set_active
@@ -494,7 +495,9 @@ module Alexandria
                   @interval = 0
 
                 else
-                  log.debug { "Buffer has changed while waiting, reading more characters..." }
+                  log.debug do
+                    "Buffer has changed while waiting, reading more characters..."
+                  end
                 end
               end
 

@@ -14,9 +14,10 @@ module Alexandria
 
       def initialize(parent, book)
         title = _("Invalid ISBN '%s'") % book.isbn
-        message = _("The book titled '%s' has an invalid ISBN, but still " \
-                    "exists in the providers libraries.  Do you want to " \
-                    "keep the book but change the ISBN or cancel the addition?") % book.title
+        message =
+          _("The book titled '%s' has an invalid ISBN, but still " \
+            "exists in the providers libraries.  Do you want to " \
+            "keep the book but change the ISBN or cancel the addition?") % book.title
         super(parent, title,
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],

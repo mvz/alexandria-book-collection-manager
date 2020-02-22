@@ -126,7 +126,8 @@ module Alexandria
 
         @library_listview.enable_model_drag_dest(BOOKS_TARGET_TABLE, :move)
 
-        @library_listview.signal_connect("drag-motion") do |_widget, drag_context, x, y, time, _data|
+        @library_listview
+          .signal_connect("drag-motion") do |_widget, drag_context, x, y, time, _data|
           log.debug { "drag-motion" }
 
           path, column, =
@@ -156,7 +157,8 @@ module Alexandria
                           time)
         end
 
-        @library_listview.signal_connect("drag-drop") do |widget, drag_context, _x, _y, time, _data|
+        @library_listview
+          .signal_connect("drag-drop") do |widget, drag_context, _x, _y, time, _data|
           log.debug { "drag-drop" }
 
           widget.drag_get_data(drag_context,
@@ -165,7 +167,8 @@ module Alexandria
           true
         end
 
-        @library_listview.signal_connect("drag-data-received") do |_, drag_context, x, y, data, _, _|
+        @library_listview
+          .signal_connect("drag-data-received") do |_, drag_context, x, y, data, _, _|
           log.debug { "drag-data-received" }
 
           success = false

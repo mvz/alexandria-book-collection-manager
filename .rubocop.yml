@@ -16,7 +16,7 @@ Layout/HashAlignment:
 
 # Be lenient with line length
 Layout/LineLength:
-  Max: 110
+  Max: 92
 
 # Don't force lonely closing parentheses
 Layout/MultilineMethodCallBraceLayout:
@@ -35,6 +35,10 @@ Layout/MultilineOperationIndentation:
 # Force consistent spacing independent of block contents
 Layout/SpaceBeforeBlockBraces:
   EnforcedStyleForEmptyBraces: space
+
+# Assume the programmer knows how bracketed block syntax works
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
 
 # Allow if (foo = get_foo) style
 Lint/AssignmentInCondition:
@@ -60,6 +64,15 @@ Style/AndOr:
 Style/GuardClause:
   MinBodyLength: 2
 
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
 # Not all objects that handle #== 0 also handle #zero?
 Style/NumericPredicate:
   Enabled: false
@@ -71,6 +84,7 @@ Style/Next:
 # Use older RuboCop default
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
+    '%W': ()
     '%w': ()
 
 # Allow explicit return with multiple return values

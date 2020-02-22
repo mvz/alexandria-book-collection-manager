@@ -16,12 +16,14 @@ module Amazon
   class Ecs
     include Alexandria::Logging
 
-    SERVICE_URLS = { us: "http://webservices.amazon.com/onca/xml?Service=AWSECommerceService",
-                     uk: "http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService",
-                     ca: "http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService",
-                     de: "http://webservices.amazon.de/onca/xml?Service=AWSECommerceService",
-                     jp: "http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService",
-                     fr: "http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService" }.freeze
+    SERVICE_URLS = {
+      us: "http://webservices.amazon.com/onca/xml?Service=AWSECommerceService",
+      uk: "http://webservices.amazon.co.uk/onca/xml?Service=AWSECommerceService",
+      ca: "http://webservices.amazon.ca/onca/xml?Service=AWSECommerceService",
+      de: "http://webservices.amazon.de/onca/xml?Service=AWSECommerceService",
+      jp: "http://webservices.amazon.co.jp/onca/xml?Service=AWSECommerceService",
+      fr: "http://webservices.amazon.fr/onca/xml?Service=AWSECommerceService"
+    }.freeze
 
     @@options = {}
     @@debug = false
@@ -59,7 +61,8 @@ module Amazon
     end
 
     # Search amazon items with search terms. Default search index option is 'Books'.
-    # For other search type other than keywords, please specify :type => [search type param name].
+    # For other search type other than keywords, please specify
+    # :type => [search type param name].
     def self.item_search(terms, opts = {})
       opts[:operation] = "ItemSearch"
       opts[:search_index] = opts[:search_index] || "Books"
@@ -88,7 +91,8 @@ module Amazon
       config ? Net::HTTP.Proxy(*config) : Net::HTTP
     end
 
-    # Generic send request to ECS REST service. You have to specify the :operation parameter.
+    # Generic send request to ECS REST service. You have to specify the
+    # :operation parameter.
     def self.send_request(opts)
       opts = options.merge(opts) if options
       request_url = prepare_url(opts)
@@ -296,7 +300,8 @@ module Amazon
     end
 
     # Find Hpricot::Elements matching the given path, and convert to Amazon::Element.
-    # Returns an array Amazon::Elements if more than Hpricot::Elements size is greater than 1.
+    # Returns an array Amazon::Elements if more than Hpricot::Elements size is
+    # greater than 1.
     def search_and_convert(path)
       elements = self./(path)
       return unless elements
@@ -322,7 +327,8 @@ module Amazon
       Element.get_array(@element, path)
     end
 
-    # Get the children element text values in hash format with the element names as the hash keys.
+    # Get the children element text values in hash format with the element
+    # names as the hash keys.
     def get_hash(path = "")
       Element.get_hash(@element, path)
     end

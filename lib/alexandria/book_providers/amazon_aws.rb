@@ -50,7 +50,9 @@ module Alexandria
         if token
           token.new_value = token.value.strip if token.value != token.value.strip
         end
-        token.new_value = "" if token && ((token.value.size != 20) || (token.value == "0J356Z09CN88KB743582"))
+        if token && ((token.value.size != 20) || (token.value == "0J356Z09CN88KB743582"))
+          token.new_value = ""
+        end
 
         secret = prefs.variable_named("secret_key")
         if secret
@@ -60,7 +62,9 @@ module Alexandria
         associate = prefs.variable_named("associate_tag")
         if associate
           associate.new_value = "rubyalexa-20" if associate.value.strip.empty?
-          associate.new_value = associate.value.strip if associate.value != associate.value.strip
+          if associate.value != associate.value.strip
+            associate.new_value = associate.value.strip
+          end
         end
       end
 
@@ -99,8 +103,9 @@ module Alexandria
           when SEARCH_BY_ISBN
             criterion = Library.canonicalise_isbn(criterion)
             # This isn't ideal : I'd like to do an ISBN/EAN-specific search
-            res = Amazon::Ecs.item_search(criterion, response_group: "ItemAttributes,Images",
-                                                     country: request_locale)
+            res = Amazon::Ecs.item_search(criterion,
+                                          response_group: "ItemAttributes,Images",
+                                          country: request_locale)
             res.items.each do |item|
               products << item
             end
@@ -206,7 +211,9 @@ module Alexandria
               log.debug { "rejected possible result #{book}" }
             end
             # gone through all and no ISBN match, so just return first result
-            log.info { "no more results to check. Returning first result, just an approximation" }
+            log.info do
+              "no more results to check. Returning first result, just an approximation"
+            end
             results.first
           end
         else

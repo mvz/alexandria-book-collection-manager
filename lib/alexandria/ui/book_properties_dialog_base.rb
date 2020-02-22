@@ -279,7 +279,10 @@ module Alexandria
             if cover.height > COVER_ABSOLUTE_MAXHEIGHT
               FileUtils.cp(dialog.filename, "#{@cover_file}.orig")
               new_width = cover.width / (cover.height / COVER_ABSOLUTE_MAXHEIGHT.to_f)
-              puts "Scaling large cover image to #{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
+              log.info do
+                "Scaling large cover image to" \
+                  " #{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
+              end
               cover = cover.scale(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT)
               cover.save(@cover_file, "jpeg")
             else
@@ -393,8 +396,9 @@ module Alexandria
       end
 
       def parse_date(datestring)
-        date_format = "%d/%m/%Y" # or '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
-        ## http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
+        # '%m/%d/%Y' for USA and Canada ; or '%Y-%m-%d' for most of Asia
+        # http://en.wikipedia.org/wiki/Calendar_date#Middle_endian_forms.2C_starting_with_the_month
+        date_format = "%d/%m/%Y"
         begin
           d = Date.strptime(datestring, date_format)
           Time.gm(d.year, d.month, d.day)

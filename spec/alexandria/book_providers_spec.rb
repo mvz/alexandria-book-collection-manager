@@ -27,19 +27,22 @@ describe Alexandria::BookProviders do
 
       book = results.first
 
-      expect(book).to be_instance_of(Alexandria::Book), "Result is not a Book for #{provider}"
+      expect(book).to be_instance_of(Alexandria::Book),
+                      "Result is not a Book for #{provider}"
 
       canonical_query = Alexandria::Library.canonicalise_ean(query)
       canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
       expect(canonical_query)
         .to eq(canonical_result),
-            "Result's isbn #{book.isbn} is not equivalent to the requested isbn #{query} for #{provider}"
+            "Result's isbn #{book.isbn} is not equivalent" \
+            " to the requested isbn #{query} for #{provider}"
 
       if results.length == 2
         cover_url = results.last
         if cover_url
           expect(cover_url)
-            .to be_instance_of(String), "Unexpected cover_url #{cover_url.inspect} for #{provider}"
+            .to be_instance_of(String),
+                "Unexpected cover_url #{cover_url.inspect} for #{provider}"
         end
       end
     else
@@ -64,19 +67,22 @@ describe Alexandria::BookProviders do
   it "amazon title should work" do
     skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 "A Confederacy of Dunces", Alexandria::BookProviders::SEARCH_BY_TITLE)
+                                 "A Confederacy of Dunces",
+                                 Alexandria::BookProviders::SEARCH_BY_TITLE)
   end
 
   it "amazon authors should work" do
     skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 "John Kennedy Toole", Alexandria::BookProviders::SEARCH_BY_AUTHORS)
+                                 "John Kennedy Toole",
+                                 Alexandria::BookProviders::SEARCH_BY_AUTHORS)
   end
 
   it "amazon keyword should work" do
     skip "Amazon requires an API key. Remove it altogether as a provider?"
     assert_correct_search_result(Alexandria::BookProviders::AmazonProvider,
-                                 "Confederacy Dunces", Alexandria::BookProviders::SEARCH_BY_KEYWORD)
+                                 "Confederacy Dunces",
+                                 Alexandria::BookProviders::SEARCH_BY_KEYWORD)
   end
 
   it "LOC should work" do

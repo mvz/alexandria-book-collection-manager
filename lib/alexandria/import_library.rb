@@ -126,13 +126,15 @@ module Alexandria
                 raise ex
               end
             end
-            book_elements[4] = book_elements[4].to_i unless book_elements[4].nil? # publishing_year
+            # publishing_year
+            book_elements[4] = book_elements[4].to_i unless book_elements[4].nil?
             puts book_elements.inspect
             cover = (neaten(elements["cover"].text) if elements["cover"])
             puts cover
             book = Book.new(*book_elements)
-            if elements["rating"] && Book::VALID_RATINGS.member?(elements["rating"].text.to_i)
-              book.rating = elements["rating"].text.to_i
+            if elements["rating"]
+              rating = elements["rating"].text.to_i
+              book.rating = rating if Book::VALID_RATINGS.member? rating
             end
             book.notes = neaten(elements["comments"].text) if elements["comments"]
             content << [book, cover]
