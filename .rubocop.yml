@@ -44,6 +44,12 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# Activate new cops from RuboCop 0.81
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+
 # Blocks in specs can be any size
 Metrics/BlockLength:
   Exclude:
@@ -64,12 +70,11 @@ Style/AndOr:
 Style/GuardClause:
   MinBodyLength: 2
 
+# Activate new cops from RuboCop 0.80
 Style/HashEachMethods:
   Enabled: true
-
 Style/HashTransformKeys:
   Enabled: true
-
 Style/HashTransformValues:
   Enabled: true
 
