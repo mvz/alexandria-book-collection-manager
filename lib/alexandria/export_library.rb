@@ -50,13 +50,11 @@ module Alexandria
 
     def export_as_tellico_xml_archive(filename)
       File.open(File.join(Dir.tmpdir, "tellico.xml"), "w") do |io|
-        begin
-          to_tellico_document.write(io, 0)
-        rescue StandardError => ex
-          puts ex.message
-          puts ex.backtrace
-          raise ex
-        end
+        to_tellico_document.write(io, 0)
+      rescue StandardError => ex
+        puts ex.message
+        puts ex.backtrace
+        raise ex
       end
       copy_covers(File.join(Dir.tmpdir, "images"))
       Dir.chdir(Dir.tmpdir) do

@@ -329,67 +329,63 @@ module Alexandria
 
       def lookup_book(isbn)
         Thread.new do
-          begin
-            start_search
-            results = Alexandria::BookProviders.isbn_search(isbn)
-            book = results[0]
-            cover_uri = results[1]
-            @book_results[isbn] = results
-            set_cover_image_async(isbn, cover_uri)
+          start_search
+          results = Alexandria::BookProviders.isbn_search(isbn)
+          book = results[0]
+          cover_uri = results[1]
+          @book_results[isbn] = results
+          set_cover_image_async(isbn, cover_uri)
 
-            @barcodes_treeview.model.freeze_notify do
-              @barcodes_treeview.model.each do |model, path, iter|
-                if iter[0] == isbn
-                  iter[2] = book.title
-                  model.row_changed(path, iter)
-                end
+          @barcodes_treeview.model.freeze_notify do
+            @barcodes_treeview.model.each do |model, path, iter|
+              if iter[0] == isbn
+                iter[2] = book.title
+                model.row_changed(path, iter)
               end
             end
-
-            @add_button.sensitive = true
-          rescue StandardError => ex
-            log.error { "Book Search failed: #{ex.message}" }
-            log << ex if log.error?
-          ensure
-            stop_search
           end
+
+          @add_button.sensitive = true
+        rescue StandardError => ex
+          log.error { "Book Search failed: #{ex.message}" }
+          log << ex if log.error?
+        ensure
+          stop_search
         end
       end
 
       def set_cover_image_async(isbn, cover_uri)
         Thread.new do
-          begin
-            pixbuf = nil
-            if cover_uri
-              image_data = nil
-              if URI.parse(cover_uri).scheme.nil?
-                File.open(cover_uri, "r") do |io|
-                  image_data = io.read
-                end
-              else
-                image_data = URI.parse(cover_uri).read
+          pixbuf = nil
+          if cover_uri
+            image_data = nil
+            if URI.parse(cover_uri).scheme.nil?
+              File.open(cover_uri, "r") do |io|
+                image_data = io.read
               end
-              loader = GdkPixbuf::PixbufLoader.new
-              loader.last_write(image_data)
-              pixbuf = loader.pixbuf
             else
-              pixbuf = Icons::BOOK
+              image_data = URI.parse(cover_uri).read
             end
+            loader = GdkPixbuf::PixbufLoader.new
+            loader.last_write(image_data)
+            pixbuf = loader.pixbuf
+          else
+            pixbuf = Icons::BOOK
+          end
 
-            @barcodes_treeview.model.freeze_notify do
-              @barcodes_treeview.model.each do |model, path, iter|
-                if iter[0] == isbn
-                  iter[1] = pixbuf
-                  model.row_changed(path, iter)
-                end
+          @barcodes_treeview.model.freeze_notify do
+            @barcodes_treeview.model.each do |model, path, iter|
+              if iter[0] == isbn
+                iter[1] = pixbuf
+                model.row_changed(path, iter)
               end
             end
-          rescue StandardError => ex
-            log.error do
-              "Failed to load cover image icon: #{ex.message}"
-            end
-            log << ex if log.error?
           end
+        rescue StandardError => ex
+          log.error do
+            "Failed to load cover image icon: #{ex.message}"
+          end
+          log << ex if log.error?
         end
       end
 

@@ -80,82 +80,80 @@ module Alexandria
       FileUtils.rm_rf(tmpdir) if File.exist?(tmpdir)
       Dir.mkdir(tmpdir)
       Dir.chdir(tmpdir) do
-        begin
-          system("unzip -qq \"#{filename}\"")
-          file = File.exist?("bookcase.xml") ? "bookcase.xml" : "tellico.xml"
-          xml = REXML::Document.new(File.open(file))
-          raise unless ["bookcase", "tellico"].include? xml.root.name
-          # FIXME: handle multiple collections
-          raise unless xml.root.elements.size == 1
+        system("unzip -qq \"#{filename}\"")
+        file = File.exist?("bookcase.xml") ? "bookcase.xml" : "tellico.xml"
+        xml = REXML::Document.new(File.open(file))
+        raise unless ["bookcase", "tellico"].include? xml.root.name
+        # FIXME: handle multiple collections
+        raise unless xml.root.elements.size == 1
 
-          collection = xml.root.elements[1]
-          raise unless collection.name == "collection"
+        collection = xml.root.elements[1]
+        raise unless collection.name == "collection"
 
-          type = collection.attribute("type").value.to_i
-          raise unless (type == 2) || (type == 5)
+        type = collection.attribute("type").value.to_i
+        raise unless (type == 2) || (type == 5)
 
-          content = []
-          entries = collection.elements.to_a("entry")
-          (total = entries.size).times do |n|
-            entry = entries[n]
-            elements = entry.elements
-            # Feed an array in here, tomorrow.
-            keys = ["isbn", "publisher", "pub_year", "binding"]
+        content = []
+        entries = collection.elements.to_a("entry")
+        (total = entries.size).times do |n|
+          entry = entries[n]
+          elements = entry.elements
+          # Feed an array in here, tomorrow.
+          keys = ["isbn", "publisher", "pub_year", "binding"]
 
-            book_elements = [neaten(elements["title"].text)]
-            book_elements += if !elements["authors"].nil?
-                               [elements["authors"].elements.to_a.map \
-                                                 { |x| neaten(x.text) }]
-                             else
-                               [[]]
-                             end
-            book_elements += keys.map do |key|
-              neaten(elements[key].text) if elements[key]
-            end
-            # isbn
-            if book_elements[2].nil? || book_elements[2].strip.empty?
-              book_elements[2] = nil
-            else
-              begin
-                book_elements[2] = book_elements[2].strip
-                book_elements[2] = Library.canonicalise_ean(book_elements[2])
-              rescue StandardError => ex
-                puts book_elements[2]
-                puts ex.message
-                puts ex.backtrace.join("\n> ")
-                raise ex
-              end
-            end
-            # publishing_year
-            book_elements[4] = book_elements[4].to_i unless book_elements[4].nil?
-            puts book_elements.inspect
-            cover = (neaten(elements["cover"].text) if elements["cover"])
-            puts cover
-            book = Book.new(*book_elements)
-            if elements["rating"]
-              rating = elements["rating"].text.to_i
-              book.rating = rating if Book::VALID_RATINGS.member? rating
-            end
-            book.notes = neaten(elements["comments"].text) if elements["comments"]
-            content << [book, cover]
-            on_iterate_cb&.call(n + 1, total)
+          book_elements = [neaten(elements["title"].text)]
+          book_elements += if !elements["authors"].nil?
+                             [elements["authors"].elements.to_a.map \
+                                               { |x| neaten(x.text) }]
+                           else
+                             [[]]
+                           end
+          book_elements += keys.map do |key|
+            neaten(elements[key].text) if elements[key]
           end
-
-          library = Library.load(name)
-          content.each do |book, cover|
-            unless cover.nil?
-              library.save_cover(book,
-                                 File.join(Dir.pwd, "images",
-                                           cover))
+          # isbn
+          if book_elements[2].nil? || book_elements[2].strip.empty?
+            book_elements[2] = nil
+          else
+            begin
+              book_elements[2] = book_elements[2].strip
+              book_elements[2] = Library.canonicalise_ean(book_elements[2])
+            rescue StandardError => ex
+              puts book_elements[2]
+              puts ex.message
+              puts ex.backtrace.join("\n> ")
+              raise ex
             end
-            library << book
-            library.save(book)
           end
-          return [library, []]
-        rescue StandardError => ex
-          puts ex.message
-          return nil
+          # publishing_year
+          book_elements[4] = book_elements[4].to_i unless book_elements[4].nil?
+          puts book_elements.inspect
+          cover = (neaten(elements["cover"].text) if elements["cover"])
+          puts cover
+          book = Book.new(*book_elements)
+          if elements["rating"]
+            rating = elements["rating"].text.to_i
+            book.rating = rating if Book::VALID_RATINGS.member? rating
+          end
+          book.notes = neaten(elements["comments"].text) if elements["comments"]
+          content << [book, cover]
+          on_iterate_cb&.call(n + 1, total)
         end
+
+        library = Library.load(name)
+        content.each do |book, cover|
+          unless cover.nil?
+            library.save_cover(book,
+                               File.join(Dir.pwd, "images",
+                                         cover))
+          end
+          library << book
+          library.save(book)
+        end
+        return [library, []]
+      rescue StandardError => ex
+        puts ex.message
+        return nil
       end
     end
 
