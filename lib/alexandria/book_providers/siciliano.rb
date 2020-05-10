@@ -125,33 +125,31 @@ module Alexandria
 
         list_items = doc.search("div.pesquisa-item-lista-conteudo")
         list_items.each do |item|
-          begin
-            result = {}
+          result = {}
 
-            # author & publisher
-            author_publisher = ""
-            item.children.each do |node|
-              author_publisher += node.to_s if node.text?
-              author_publisher.strip!
-              break unless author_publisher.empty?
-            end
-            author, publisher = author_publisher.split("/")
-            result[:author] = author.strip if author
-            result[:publisher] = publisher.strip if publisher
-
-            # title & url
-            link = item % "a"
-            result[:title] = link.inner_text.strip
-            link_to_description = link["href"]
-            slash = ""
-            slash = "/" unless %r{^/}.match?(link_to_description)
-            result[:url] = "#{SITE}#{slash}#{link_to_description}"
-
-            book_search_results << result
-          rescue StandardError => ex
-            trace = ex.backtrace.join("\n> ")
-            log.error { "Failed parsing Siciliano search page #{ex.message}\n#{trace}" }
+          # author & publisher
+          author_publisher = ""
+          item.children.each do |node|
+            author_publisher += node.to_s if node.text?
+            author_publisher.strip!
+            break unless author_publisher.empty?
           end
+          author, publisher = author_publisher.split("/")
+          result[:author] = author.strip if author
+          result[:publisher] = publisher.strip if publisher
+
+          # title & url
+          link = item % "a"
+          result[:title] = link.inner_text.strip
+          link_to_description = link["href"]
+          slash = ""
+          slash = "/" unless %r{^/}.match?(link_to_description)
+          result[:url] = "#{SITE}#{slash}#{link_to_description}"
+
+          book_search_results << result
+        rescue StandardError => ex
+          trace = ex.backtrace.join("\n> ")
+          log.error { "Failed parsing Siciliano search page #{ex.message}\n#{trace}" }
         end
 
         book_search_results

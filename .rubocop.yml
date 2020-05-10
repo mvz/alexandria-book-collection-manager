@@ -8,7 +8,7 @@ AllCops:
   Exclude:
     - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.5
 
 Layout/HashAlignment:
   EnforcedColonStyle: key

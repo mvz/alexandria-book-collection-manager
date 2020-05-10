@@ -179,24 +179,22 @@ module Alexandria
             image_error_dialog(@image_error).display
           else
             @images.each_pair do |key, value|
-              begin
-                loader = GdkPixbuf::PixbufLoader.new
-                loader.last_write(value)
-                pixbuf = loader.pixbuf
+              loader = GdkPixbuf::PixbufLoader.new
+              loader.last_write(value)
+              pixbuf = loader.pixbuf
 
-                if pixbuf.width > 1
-                  iter = @treeview_results.model.get_iter(key.to_s)
-                  unless @treeview_results.model.iter_is_valid?(iter)
-                    raise format("Iter is invalid! %s", iter)
-                  end
-
-                  iter[2] = pixbuf # I bet you this is it!
+              if pixbuf.width > 1
+                iter = @treeview_results.model.get_iter(key.to_s)
+                unless @treeview_results.model.iter_is_valid?(iter)
+                  raise format("Iter is invalid! %s", iter)
                 end
 
-                @images.delete(key)
-              rescue StandardError => ex
-                image_error_dialog(ex.message).display
+                iter[2] = pixbuf # I bet you this is it!
               end
+
+              @images.delete(key)
+            rescue StandardError => ex
+              image_error_dialog(ex.message).display
             end
           end
 

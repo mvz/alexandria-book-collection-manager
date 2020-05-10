@@ -119,13 +119,11 @@ module Alexandria
           @bad_isbns = nil
           @failed_isbns = nil
           thread = Thread.start do
-            begin
-              library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
-                                                                 filename)
-            rescue StandardError => ex
-              trace = ex.backtrace.join("\n> ")
-              log.error { "Import failed: #{ex.message} #{trace}" }
-            end
+            library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
+                                                               filename)
+          rescue StandardError => ex
+            trace = ex.backtrace.join("\n> ")
+            log.error { "Import failed: #{ex.message} #{trace}" }
           end
 
           while thread.alive? && !@destroyed
