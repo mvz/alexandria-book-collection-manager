@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version = Alexandria::VERSION
 
   s.summary = "GNOME application for managing collections of books"
-  s.required_ruby_version = ">= 2.4.0"
+  s.required_ruby_version = ">= 2.5.0"
 
   s.authors = [
     "Alexander McCormmach",
