@@ -3,7 +3,7 @@ POT=./alexandria.pot
 
 RUBY=../bin/alexandria $(shell find ../lib -name '*.rb' -and -not -path '*macui*')
 
-GLADE=$(shell find ../data -name '*.glade')
+GLADE=$(shell find ../share/alexandria/glade -name '*.glade')
 
 HEADERS=$(shell find .. -name '*.h')
 
@@ -12,7 +12,7 @@ PO=$(wildcard *.po)
 $(POT): $(RUBY) $(GLADE) ../alexandria.desktop.in.h $(HEADERS)
 	rm -f $(POT)
 	@echo Updating PO template from Ruby files
-	@rgettext --output=$(POT) $(RUBY)
+	@rxgettext --output=$(POT) $(RUBY)
 	@echo Updating PO template from Glade files
 	@xgettext --output=$(POT) --join-existing $(GLADE)
 	@echo Updating PO template from header files
