@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.5 / 2020-05-11
+
+* Avoid crash when opening Import dialog
+* Avoid crash during export
+* Add support for Ruby 2.7
+* Drop support for Ruby 2.4
+* Remove broken Renaud provider
+
 ## 0.7.4 / 2019-10-24
 
 * Drop support for Ruby 2.3
