@@ -15,6 +15,7 @@ module Alexandria
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview,
                     :listview_model, :iconview_model, :filtered_model
       attr_reader :model
+
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")

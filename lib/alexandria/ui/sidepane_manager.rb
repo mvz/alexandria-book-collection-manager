@@ -12,6 +12,7 @@ module Alexandria
       include Logging
       include GetText
       attr_accessor :library_listview
+
       def initialize(library_listview, parent)
         @library_listview = library_listview
         @parent = parent

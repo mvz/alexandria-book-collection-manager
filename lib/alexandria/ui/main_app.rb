@@ -52,6 +52,7 @@ module Alexandria
       include Singleton
       attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs
       attr_accessor :ui_manager
+
       def initialize
         log.info { "Starting MainApp" }
         @ui_manager = UIManager.new self

@@ -6,6 +6,7 @@
 
 class Gtk::Entry
   attr_writer :mandatory
+
   def mandatory?
     @mandatory
   end
