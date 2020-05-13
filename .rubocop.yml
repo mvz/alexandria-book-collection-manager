@@ -14,6 +14,11 @@ AllCops:
 # Choose GetText-style I18n cops
 GetText:
   Enabled: true
+  # Exclude non-user-facing code
+  Exclude:
+    - Rakefile
+    - 'util/**/*'
+    - 'spec/**/*'
 RailsI18n:
   Enabled: false
 
