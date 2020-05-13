@@ -22,6 +22,11 @@ GetText:
 RailsI18n:
   Enabled: false
 
+# This code has a lot of pre-existing translations with percent-style
+# formatting. Maybe one day someone will re-do all of them ...
+GetText/DecorateStringFormattingUsingPercent:
+  Enabled: false
+
 Layout/HashAlignment:
   EnforcedColonStyle: key
   EnforcedHashRocketStyle: table
