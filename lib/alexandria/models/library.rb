@@ -17,6 +17,7 @@ module Alexandria
 
     attr_reader :name
     attr_accessor :ruined_books, :updating, :deleted_books
+
     DEFAULT_DIR = File.join(ENV["HOME"], ".alexandria")
     EXT = { book: ".yaml", cover: ".cover" }.freeze
 

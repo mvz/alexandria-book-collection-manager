@@ -8,6 +8,7 @@ require "alexandria/ui/error_dialog"
 
 class CellRendererToggle < Gtk::CellRendererToggle
   attr_accessor :text
+
   type_register
   install_property(GLib::Param::String.new(
                      "text",

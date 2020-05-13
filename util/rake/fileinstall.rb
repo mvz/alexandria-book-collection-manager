@@ -229,6 +229,7 @@ class FileInstallTask < Rake::TaskLib
   class FileGroup
     attr_reader :mode
     attr_accessor :description
+
     def initialize(src_dir, file_glob, dest_dir, mode = 0o644)
       @src_dir = src_dir
       @file_glob = file_glob

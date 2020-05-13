@@ -44,14 +44,6 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
-# Activate new cops from RuboCop 0.81 and 0.82
-Lint/RaiseException:
-  Enabled: true
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
-
 # Blocks in specs can be any size
 Metrics/BlockLength:
   Exclude:
@@ -68,21 +60,9 @@ Naming/RescuedExceptionsVariableName:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-# Activate new cop from RuboCop 0.82
-Style/ExponentialNotation:
-  Enabled: true
-
 # Require at least two dependent lines before suggesting a guard clause
 Style/GuardClause:
   MinBodyLength: 2
-
-# Activate new cops from RuboCop 0.80
-Style/HashEachMethods:
-  Enabled: true
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true
 
 # Not all objects that handle #== 0 also handle #zero?
 Style/NumericPredicate:
@@ -130,3 +110,23 @@ Style/WordArray:
 # Not all objects that handle #length also handle #empty?
 Style/ZeroLengthPredicate:
   Enabled: false
+
+# Activate new cops from RuboCop 0.80 - 0.83
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Style/ExponentialNotation:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+Style/SlicingWithRange:
+  Enabled: true
