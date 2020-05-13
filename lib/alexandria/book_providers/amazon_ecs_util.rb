@@ -55,7 +55,7 @@ module Amazon
     end
 
     def self.configure(&_proc)
-      raise ArgumentError, "Block is required." unless block_given?
+      raise ArgumentError, _("Block is required.") unless block_given?
 
       yield @@options
     end

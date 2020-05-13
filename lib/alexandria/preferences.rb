@@ -61,16 +61,18 @@ module Alexandria
       method = id.id2name
       if (match = /(.*)=$/.match(method))
         if args.length != 1
-          raise "Set method #{method} should be called with " \
-            "only one argument (was called with #{args.length})"
+          raise ArgumentError,
+                format(_("wrong number of arguments (given %<num>s, expected 1)"),
+                       num: args.length)
         end
         variable_name = match[1]
         new_value = args.first
         generic_setter(variable_name, new_value)
       else
         unless args.empty?
-          raise "Get method #{method} should be called " \
-            "without argument (was called with #{args.length})"
+          raise ArgumentError,
+                format(_("wrong number of arguments (given %<num>s, expected 0)"),
+                       num: args.length)
         end
         generic_getter(method)
       end

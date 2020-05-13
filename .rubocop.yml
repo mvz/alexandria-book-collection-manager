@@ -3,12 +3,29 @@ inherit_from: .rubocop_todo.yml
 require:
   - rubocop-performance
   - rubocop-rspec
+  - rubocop-i18n
 
 AllCops:
   Exclude:
     - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
   TargetRubyVersion: 2.5
+
+# Choose GetText-style I18n cops
+GetText:
+  Enabled: true
+  # Exclude non-user-facing code
+  Exclude:
+    - Rakefile
+    - 'util/**/*'
+    - 'spec/**/*'
+RailsI18n:
+  Enabled: false
+
+# This code has a lot of pre-existing translations with percent-style
+# formatting. Maybe one day someone will re-do all of them ...
+GetText/DecorateStringFormattingUsingPercent:
+  Enabled: false
 
 Layout/HashAlignment:
   EnforcedColonStyle: key

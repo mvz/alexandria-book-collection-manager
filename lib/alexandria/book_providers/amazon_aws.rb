@@ -72,9 +72,7 @@ module Alexandria
         prefs.read
 
         if prefs["secret_key"].empty?
-          raise(Amazon::RequestError,
-                "Secret Access Key required for Authentication:" \
-                " you must sign up for your own Amazon AWS account")
+          raise(Amazon::RequestError, _("Provide secret key for your Amazon AWS account."))
         end
 
         if (config = Alexandria::Preferences.instance.http_proxy_config)
@@ -163,7 +161,7 @@ module Alexandria
           else
             raise InvalidSearchTypeError
           end
-          raise Amazon::RequestError, "No products" if products.empty?
+          raise Amazon::RequestError, _("No products") if products.empty?
           # raise NoResultsError if products.empty?
         rescue Amazon::RequestError => ex
           log.debug { "Got Amazon::RequestError at #{request_locale}: #{ex}" }
