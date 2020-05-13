@@ -72,9 +72,7 @@ module Alexandria
         prefs.read
 
         if prefs["secret_key"].empty?
-          raise(Amazon::RequestError,
-                "Secret Access Key required for Authentication:" \
-                " you must sign up for your own Amazon AWS account")
+          raise(Amazon::RequestError, _("Provide secret key for your Amazon AWS account."))
         end
 
         if (config = Alexandria::Preferences.instance.http_proxy_config)
