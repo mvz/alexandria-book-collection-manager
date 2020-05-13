@@ -56,7 +56,7 @@ module Alexandria
       end
 
       def fetch_redirectly(uri_str, limit = 5)
-        raise NoResultsError, "HTTP redirect too deep" if limit.zero?
+        raise NoResultsError, _("HTTP redirect too deep") if limit.zero?
 
         if limit < 10
           sleep 0.1

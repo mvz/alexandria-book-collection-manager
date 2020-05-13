@@ -106,7 +106,7 @@ module Alexandria
         length = array.length % 4
 
         if length.nonzero?
-          raise "Error parsing CueCat input" if length == 1
+          raise _("Error parsing CueCat input") if length == 1
 
           length = 4 - length
           length.times { array.push(0) }

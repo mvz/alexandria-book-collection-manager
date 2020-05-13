@@ -114,7 +114,7 @@ module Alexandria
           if (h1 = doc.at("div.productTitleFormat h1"))
             title = text_of(h1)
           else
-            raise NoResultsError, "title not found on page"
+            raise NoResultsError, _("title not found on page")
           end
 
           product = doc.at("div.product")

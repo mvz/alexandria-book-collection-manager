@@ -196,7 +196,7 @@ module Alexandria
       elsif is_goodreads
         return GoodreadsCSVImport.new(header)
       end
-      raise "Not Recognized" unless is_librarything || is_goodreads
+      raise _("Not Recognized") unless is_librarything || is_goodreads
     end
   end
 end

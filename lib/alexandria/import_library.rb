@@ -67,7 +67,7 @@ module Alexandria
         import_as_csv_file(*args)
       else
         puts "Bailing on this import!"
-        raise "Not supported type"
+        raise _("Not supported type")
       end
     end
 

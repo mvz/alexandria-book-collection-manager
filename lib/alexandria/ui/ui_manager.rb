@@ -559,7 +559,7 @@ module Alexandria
         elsif caller.is_a?(Library)
           handle_update_caller_library ary unless caller.updating?
         else
-          raise "unrecognized update event"
+          raise _("unrecognized update event")
         end
       end
 

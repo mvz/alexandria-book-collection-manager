@@ -380,7 +380,7 @@ module Alexandria
           elsif isbn > "8800"
             isbn[0..1] + "-" + isbn[2..3] + "-" + isbn[4..8] + "-" + isbn[9..9]
           else
-            raise "Invalid ISBN"
+            raise _("Invalid ISBN")
           end
 
         else

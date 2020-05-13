@@ -163,7 +163,7 @@ module Alexandria
           else
             raise InvalidSearchTypeError
           end
-          raise Amazon::RequestError, "No products" if products.empty?
+          raise Amazon::RequestError, _("No products") if products.empty?
           # raise NoResultsError if products.empty?
         rescue Amazon::RequestError => ex
           log.debug { "Got Amazon::RequestError at #{request_locale}: #{ex}" }
