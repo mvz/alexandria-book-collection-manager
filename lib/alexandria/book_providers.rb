@@ -114,7 +114,7 @@ module Alexandria
                       ex.message
                     end
           puts "raising empty error #{message}"
-          raise SearchEmptyError, message
+          raise SearchEmptyError, message # rubocop:disable GetText/DecorateFunctionMessage
         else
           factory_n += 1
           retry

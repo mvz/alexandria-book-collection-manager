@@ -72,7 +72,8 @@ module Alexandria
 
         return code if type == "IBN"
 
-        raise "Don't know how to handle type #{type} (barcode: #{code})"
+        raise format(_("Don't know how to handle type %<type>s (barcode: %<code>s)"),
+                     type: type, code: code)
       end
 
       private

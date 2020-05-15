@@ -30,7 +30,7 @@ module Alexandria
         title = _("Import a Library")
         dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
         super(dialog)
-        puts "ImportDialog opened." if $DEBUG
+        puts _("ImportDialog opened.") if $DEBUG
         @destroyed = false
         @running = false
         add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)

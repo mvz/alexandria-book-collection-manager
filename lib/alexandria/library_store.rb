@@ -64,7 +64,7 @@ module Alexandria
           old_isbn = book.isbn
           old_pub_year = book.publishing_year
           begin
-            raise "Not a book: #{book.inspect}" unless book.is_a?(Book)
+            raise format(_("Not a book: %<book>s"), book.inspect) unless book.is_a?(Book)
 
             ean = Library.canonicalise_ean(book.isbn)
             book.isbn = ean if ean
@@ -74,16 +74,18 @@ module Alexandria
             end
 
             # Or if isbn has changed
-            raise "#{test[1]} isbn is not okay" unless book.isbn == old_isbn
+            unless book.isbn == old_isbn
+              raise format(_("%<file>s isbn is not okay"), file: test[1])
+            end
 
             # Re-save book if Alexandria::DATA_VERSION changes
             unless book.version == Alexandria::DATA_VERSION
-              raise "#{test[1]} version is not okay"
+              raise format(_("%<file>s version is not okay"), file: test[1])
             end
 
             # Or if publishing year has changed
             unless book.publishing_year == old_pub_year
-              raise "#{test[1]} pub year is not okay"
+              raise format(_("%<file>s pub year is not okay"), file: test[1])
             end
 
             # ruined_books << [book, book.isbn, library]

@@ -16,7 +16,7 @@ module Alexandria
 
       def initialize(parent, library, book)
         super(parent, library.cover(book))
-        puts "Initializing Book Properties Dialog..." if $DEBUG
+        puts _("Initializing Book Properties Dialog...") if $DEBUG
 
         cancel_button = Gtk::Button.new(stock_id: Gtk::Stock::CANCEL)
         cancel_button.signal_connect("clicked") { on_cancel }

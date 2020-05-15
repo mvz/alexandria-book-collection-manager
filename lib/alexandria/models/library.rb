@@ -284,7 +284,10 @@ module Alexandria
       else
         if @deleted_books.include?(book)
           doubles = @deleted_books.select { |b| b.equal?(book) }
-          raise ArgumentError, "Book #{book.isbn} was already deleted" unless doubles.empty?
+          unless doubles.empty?
+            raise ArgumentError, format(_("Book %<isbn>s was already deleted"),
+                                        isbn: book.isbn)
+          end
         end
         @deleted_books << book
         i = index(book)
@@ -347,7 +350,7 @@ module Alexandria
               when Integer
                 something
               else
-                raise "#{something} is a #{something.class}"
+                raise NotImplementedError
               end
       File.join(path, ident.to_s + EXT[:cover])
     end
@@ -361,7 +364,7 @@ module Alexandria
               when Integer
                 something
               else
-                raise "#{something} is #{something.class}"
+                raise NotImplementedError
               end
       File.join(basedir, ident.to_s + EXT[:book])
     end
