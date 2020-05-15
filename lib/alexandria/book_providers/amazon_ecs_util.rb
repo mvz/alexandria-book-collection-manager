@@ -100,7 +100,8 @@ module Amazon
 
       res = transport.get_response(URI.parse(request_url))
       unless res.is_a? Net::HTTPSuccess
-        raise Amazon::RequestError, "HTTP Response: #{res.code} #{res.message}"
+        raise Amazon::RequestError, format(_("HTTP Response: %<code>s %<message>s"),
+                                           code: res.code, message: res.message)
       end
 
       Response.new(res.body)
@@ -177,7 +178,10 @@ module Amazon
       country = opts.delete(:country)
       country = country.nil? ? "us" : country
       request_url = SERVICE_URLS[country.to_sym]
-      raise Amazon::RequestError, "Invalid country '#{country}'" unless request_url
+      unless request_url
+        raise Amazon::RequestError,
+              format(_("Invalid country '%<country>s'"), country: country)
+      end
 
       qs = ""
       opts.each do |k, v|

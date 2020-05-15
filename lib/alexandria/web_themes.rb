@@ -55,7 +55,9 @@ module Alexandria
           css_file = File.join(path, file + ".css")
           preview_file = File.join(path, "preview.jpg")
           [css_file, preview_file].each do |helper_file|
-            raise "#{helper_file} not found" unless File.exist?(helper_file)
+            unless File.exist?(helper_file)
+              raise format(_("File %<file>s not found"), file: helper_file)
+            end
           end
           themes << WebTheme.new(css_file, preview_file,
                                  File.join(path, file, "pixmaps"))

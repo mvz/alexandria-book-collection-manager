@@ -462,7 +462,7 @@ module Alexandria
             end
           end
         else
-          raise "invalid operand klass #{operand.klass}"
+          raise format(_("invalid operand klass %<klass>s"), klass: operand.klass)
         end
       end
 

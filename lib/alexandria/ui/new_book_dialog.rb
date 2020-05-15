@@ -186,7 +186,7 @@ module Alexandria
               if pixbuf.width > 1
                 iter = @treeview_results.model.get_iter(key.to_s)
                 unless @treeview_results.model.iter_is_valid?(iter)
-                  raise format("Iter is invalid! %s", iter)
+                  raise format(_("Iter is invalid! %s"), iter)
                 end
 
                 iter[2] = pixbuf # I bet you this is it!

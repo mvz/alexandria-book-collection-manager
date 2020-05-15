@@ -48,7 +48,7 @@ module Alexandria
         elsif data.length >= 13
           data[0, 13]
         else
-          raise "Unknown scan data #{data}"
+          raise format(_("Unknown scan data %s<data>"), data: data)
         end
       end
     end
