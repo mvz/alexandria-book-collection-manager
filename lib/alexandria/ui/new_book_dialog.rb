@@ -307,7 +307,7 @@ module Alexandria
               (book.authors == book2.authors)
           end
           s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
-          log.info { format("Copying %s into tree view.", book.title) }
+          log.info { format(_("Copying %s into tree view."), book.title) }
           iter = model.append
           iter[0] = s
           iter[1] = book.ident
