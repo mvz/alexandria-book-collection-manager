@@ -128,10 +128,12 @@ Style/WordArray:
 Style/ZeroLengthPredicate:
   Enabled: false
 
-# Activate new cops from RuboCop 0.80 - 0.83
+# Activate new cops from RuboCop 0.80 - 0.84
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+Lint/DeprecatedOpenSSLConstant:
   Enabled: true
 Lint/RaiseException:
   Enabled: true
