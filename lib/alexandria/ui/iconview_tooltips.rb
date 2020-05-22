@@ -1,25 +1,8 @@
 # frozen_string_literal: true
 
-# -*- ruby -*-
+# This file is part of Alexandria.
 #
-# Copyright (C) 2007 kksou
-# Copyright (C) 2008,2009 Cathal Mc Ginley
-# Copyright (C) 2011, 2014, 2016 Matijs van Zuijlen
-#
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 # Please retain the following note:
 #
@@ -31,47 +14,51 @@
 
 require "cgi"
 
-class IconViewTooltips
-  include Alexandria::Logging
+module Alexandria
+  module UI
+    class IconViewTooltips
+      include Logging
 
-  def initialize(view)
-    set_view(view)
-  end
+      def initialize(view)
+        set_view(view)
+      end
 
-  def set_view(view)
-    view.has_tooltip = true
-    view.signal_connect("query-tooltip") do |_widget, x, y, _keyboard_mode, tooltip|
-      tree_path = view.get_path_at_pos(x, y)
-      if tree_path
-        iter = view.model.get_iter(tree_path)
+      def set_view(view)
+        view.has_tooltip = true
+        view.signal_connect("query-tooltip") do |_widget, x, y, _keyboard_mode, tooltip|
+          tree_path = view.get_path_at_pos(x, y)
+          if tree_path
+            iter = view.model.get_iter(tree_path)
 
-        title = iter[2] # HACK: hardcoded, should use column names...
-        authors = iter[4]
-        publisher = iter[6]
-        year = iter[7]
-        tooltip.set_markup label_for_book(title, authors, publisher, year)
+            title = iter[2] # HACK: hardcoded, should use column names...
+            authors = iter[4]
+            publisher = iter[6]
+            year = iter[7]
+            tooltip.set_markup label_for_book(title, authors, publisher, year)
+          end
+        end
+      end
+
+      def label_for_book(title, authors, publisher, year)
+        # This is much too complex... but it works for now!
+        html = ""
+        unless title.empty?
+          html += "<b>#{CGI.escapeHTML(title)}</b>"
+          html += "\n" unless authors.empty?
+        end
+        html += "<i>#{CGI.escapeHTML(authors)}</i>" unless authors.empty?
+        html += "\n" if !title.empty? || !authors.empty?
+
+        html += "<small>"
+        html += CGI.escapeHTML(publisher).to_s if publisher && !publisher.empty?
+
+        if year && !year.empty?
+          html += " " if publisher && !publisher.empty?
+          html += "(#{year})"
+        end
+
+        html + "</small>"
       end
     end
-  end
-
-  def label_for_book(title, authors, publisher, year)
-    # This is much too complex... but it works for now!
-    html = ""
-    unless title.empty?
-      html += "<b>#{CGI.escapeHTML(title)}</b>"
-      html += "\n" unless authors.empty?
-    end
-    html += "<i>#{CGI.escapeHTML(authors)}</i>" unless authors.empty?
-    html += "\n" if !title.empty? || !authors.empty?
-
-    html += "<small>"
-    html += CGI.escapeHTML(publisher).to_s if publisher && !publisher.empty?
-
-    if year && !year.empty?
-      html += " " if publisher && !publisher.empty?
-      html += "(#{year})"
-    end
-
-    html + "</small>"
   end
 end

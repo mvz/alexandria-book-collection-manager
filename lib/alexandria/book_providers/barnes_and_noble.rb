@@ -35,7 +35,7 @@ require "alexandria/book_providers/web"
 module Alexandria
   class BookProviders
     class BarnesAndNobleProvider < WebsiteBasedProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "http://www.barnesandnoble.com"
 
@@ -79,7 +79,7 @@ module Alexandria
 
       def search(criterion, type)
         req = create_search_uri(type, criterion)
-        puts "Requesting #{req}" if $DEBUG
+        log.debug { "Requesting #{req}" }
         html_data = fetch_redirectly(req)
 
         if type == SEARCH_BY_ISBN

@@ -31,7 +31,7 @@ require "alexandria/book_providers/web"
 module Alexandria
   class BookProviders
     class ThaliaProvider < WebsiteBasedProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "http://www.thalia.de"
       BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
@@ -48,7 +48,7 @@ module Alexandria
 
       def search(criterion, type)
         req = create_search_uri(type, criterion)
-        puts req if $DEBUG
+        log.debug { req }
         html_data = transport.get_response(URI.parse(req))
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)

@@ -353,8 +353,7 @@ module Alexandria
               notify_end_add_by_isbn
 
               if book
-
-                puts "adding book #{book} to library"
+                log.debug { "adding book #{book} to library" }
                 add_book_to_library(library, book, cover_url)
                 @entry_isbn.text = ""
 
@@ -384,7 +383,7 @@ module Alexandria
 
             isbn = book.isbn
             if isbn.nil? || isbn.empty?
-              puts "noisbn"
+              log.debug { "noisbn" }
               book.isbn = book.saved_ident = nil
               books_to_add << [book, cover]
               next
@@ -392,7 +391,7 @@ module Alexandria
 
             isbn = Library.canonicalise_ean(isbn)
             unless isbn
-              puts "invalidisbn #{book.isbn}"
+              log.debug { "invalidisbn #{book.isbn}" }
               next unless KeepBadISBNDialog.new(@new_book_dialog, book).keep?
 
               book.isbn = book.saved_ident = nil
@@ -416,7 +415,7 @@ module Alexandria
       end
 
       def post_addition(books, library, is_new_library)
-        puts "post_addition #{books.size}"
+        log.debug { "post_addition #{books.size}" }
         return if books.empty?
 
         # books, a 1d array of Alexandria::Book
@@ -523,6 +522,7 @@ module Alexandria
                 false
               end
               log.debug { "Setting ISBN field to #{text}" }
+              # FIXME: Get rid of this puts!
               puts text # required, strangely, to prevent GUI strangeness
               # above last checked with ruby-gnome2 0.17.1 2009-12-09
               # if this puts is commented out, the cursor disappears

@@ -71,14 +71,9 @@ module Alexandria
 
       def book_in_library(isbn10, library)
         isbn13 = Library.canonicalise_ean(isbn10)
-        # puts "new book #{isbn10} (or #{isbn13})"
         match = library.find do |book|
-          # puts "testing #{book.isbn}"
           (book.isbn == isbn10 || book.isbn == isbn13)
-          # puts "book #{book.isbn}"
-          # book == new_book
         end
-        # puts "book_in_library match #{match.inspect}"
         !match.nil?
       rescue StandardError
         log.warn { "Failed to check for book #{isbn10} in library #{library}" }
@@ -472,7 +467,7 @@ module Alexandria
             if @scanner.match? @scanner_buffer
 
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
-                log.debug { _("Waiting for more scanner input...") }
+                log.debug { "Waiting for more scanner input" }
                 GLib::Idle.add do
                   @animation.manual_input
                   false
@@ -492,7 +487,7 @@ module Alexandria
 
                 else
                   log.debug do
-                    _("Buffer has changed while waiting, reading more characters...")
+                    "Buffer has changed while waiting; reading more characters"
                   end
                 end
               end
@@ -511,12 +506,12 @@ module Alexandria
 
       def play_sound(effect)
         if effect == "scanning"
-          puts "Effect: #{effect}, playing: #{@prefs.play_scanning_sound}" if $DEBUG
+          log.debug { "Effect: #{effect}, playing: #{@prefs.play_scanning_sound}" }
           return unless @prefs.play_scanning_sound
 
           @sound_players["scanning"].play("scanning")
         else
-          puts "Effect: #{effect}, playing: #{@prefs.play_scan_sound}" if $DEBUG
+          log.debug { "Effect: #{effect}, playing: #{@prefs.play_scan_sound}" }
           return unless @prefs.play_scan_sound
 
           # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
@@ -525,7 +520,7 @@ module Alexandria
       end
 
       def developer_test_scan
-        log.info { _("Developer test scan.") }
+        log.info { "Developer test scan" }
         scans = [".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3j3C3f1Dxj3Dq.",
                  ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.",
                  ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3r2DNbXCxTZCW.",

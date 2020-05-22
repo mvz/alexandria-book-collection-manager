@@ -972,7 +972,7 @@ module Alexandria
       end
 
       def restore_preferences
-        log.debug { _("Restoring preferences...") }
+        log.debug { "Restoring preferences" }
         if @prefs.maximized
           @main_app.maximize
         else

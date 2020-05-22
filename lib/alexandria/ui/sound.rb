@@ -39,9 +39,9 @@ module Alexandria
       def play(effect)
         file = File.join(@sounds_dir, "#{effect}.ogg")
         if @playing
-          puts "Already playing #{effect}." if $DEBUG
+          log.debug { "Already playing #{effect}." }
         else
-          puts "Not playing. Starting #{effect}." if $DEBUG
+          log.debug { "Not playing. Starting #{effect}." }
           @filesrc.location = file
           start_playback
         end
@@ -76,10 +76,8 @@ module Alexandria
           when Gst::MessageType::EOS
             stop_playback
           when Gst::MessageType::ERROR
-            if $DEBUG
-              puts "ERROR loop.quit"
-              p message.parse
-            end
+            log.debug { "ERROR loop.quit" }
+            log.debug { message.parse.inspect }
             stop_playback
           end
           true

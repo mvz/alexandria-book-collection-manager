@@ -22,7 +22,7 @@ require "alexandria/book_providers/web"
 module Alexandria
   class BookProviders
     class WorldCatProvider < WebsiteBasedProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "https://www.worldcat.org"
       BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
@@ -77,7 +77,6 @@ module Alexandria
         book_search_results = []
         begin
           result_cells = doc / "td.result/div.name/.."
-          # puts result_cells.length
           result_cells.each do |td|
             type_icon = (td % "div.type/img.icn")
             next unless type_icon && type_icon["src"] =~ /icon-bks/

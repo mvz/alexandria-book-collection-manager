@@ -132,20 +132,13 @@ module Alexandria
 
           this_line_data = {}
 
-          # puts code
-          # puts data
           d_idx = 0
           while d_idx < data.size
             d_str = data[d_idx..-1]
-            # puts d_str
             if (idx = d_str =~ /\$([a-z]) ([^\$]+)/)
-              # puts idx
               sub_code = Regexp.last_match[1]
               sub_data = Regexp.last_match[2]
               this_line_data[sub_code] = sub_data
-              # puts "  " + $1
-              # puts "    " + $2
-              # puts idx
               d_idx += idx + 2 # (2 extra to push beyond this '$a' etc.)
             else
               break
@@ -156,7 +149,6 @@ module Alexandria
             details[code] = [] unless details.key?(code)
             details[code] << this_line_data
           end
-
         end
       end
       details

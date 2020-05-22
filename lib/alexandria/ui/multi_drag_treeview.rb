@@ -14,8 +14,6 @@ module Alexandria
   end
 
   module TreeViewOverrides
-    # include Alexandria::Logging
-
     Context = Struct.new(:pressed_button,
                          :x,
                          :y,

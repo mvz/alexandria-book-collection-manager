@@ -17,7 +17,7 @@ require "alexandria/book_providers/web"
 module Alexandria
   class BookProviders
     class AdLibrisProvider < WebsiteBasedProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "http://www.adlibris.com/se/"
 

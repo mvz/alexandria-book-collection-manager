@@ -43,13 +43,12 @@ module Alexandria
 
     def self.search(criterion, type)
       factory_n = 0
-      # puts "book_providers search #{self.instance.count_observers}"
 
       begin
         factory = instance[factory_n]
-        puts factory.fullname + " lookup" if $DEBUG
+        log.debug { factory.fullname + " lookup" }
         unless factory.enabled
-          puts factory.fullname + " disabled!, skipping..." if $DEBUG
+          log.debug { factory.fullname + " disabled!, skipping..." }
           raise ProviderSkippedError
         end
         instance.changed
@@ -113,7 +112,7 @@ module Alexandria
                     else
                       ex.message
                     end
-          puts "raising empty error #{message}"
+          log.debug { "raising empty error #{message}" }
           raise SearchEmptyError, message # rubocop:disable GetText/DecorateFunctionMessage
         else
           factory_n += 1

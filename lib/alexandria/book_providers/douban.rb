@@ -16,7 +16,7 @@ require "yaml"
 module Alexandria
   class BookProviders
     class DoubanProvider < GenericProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "http://www.douban.com"
       BASE_URL = "http://api.douban.com/book/subjects?q=%s&max-results=5&alt=json"

@@ -16,7 +16,7 @@ module Alexandria
 
       def initialize(parent, library, book)
         super(parent, library.cover(book))
-        puts _("Initializing Book Properties Dialog...") if $DEBUG
+        log.debug { "Initializing Book Properties Dialog" }
 
         cancel_button = Gtk::Button.new(stock_id: Gtk::Stock::CANCEL)
         cancel_button.signal_connect("clicked") { on_cancel }
@@ -86,7 +86,7 @@ module Alexandria
         if (@checkbutton_redd.active = book.redd?)
           @redd_date.sensitive = true
           if book.redd_when.nil?
-            puts "no redd_when"
+            log.debug { "no redd_when" }
           else
             @redd_date.text = format_date(book.redd_when)
           end
