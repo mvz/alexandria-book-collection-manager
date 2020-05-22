@@ -14,7 +14,7 @@ module Alexandria
   class BookProviders
     class ProxisProvider < WebsiteBasedProvider
       # include GetText
-      include Alexandria::Logging
+      include Logging
       # GetText.bindtextdomain(Alexandria::TEXTDOMAIN, :charset => "UTF-8")
 
       # Proxis essentially has three book databases, NL, FR and EN.

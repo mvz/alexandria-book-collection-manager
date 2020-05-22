@@ -13,7 +13,7 @@ require "alexandria/ui/new_provider_dialog"
 module Alexandria
   module UI
     class PreferencesDialog < BuilderBase
-      include Alexandria::Logging
+      include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 

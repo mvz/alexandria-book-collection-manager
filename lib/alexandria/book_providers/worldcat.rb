@@ -22,7 +22,7 @@ require "alexandria/book_providers/web"
 module Alexandria
   class BookProviders
     class WorldCatProvider < WebsiteBasedProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "https://www.worldcat.org"
       BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term

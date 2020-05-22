@@ -23,7 +23,7 @@ require "alexandria/scanners"
 module Alexandria
   module Scanners
     class CueCat
-      include Alexandria::Logging
+      include Logging
 
       def name
         "CueCat"

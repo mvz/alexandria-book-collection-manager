@@ -31,7 +31,7 @@ require "alexandria/book_providers/web"
 module Alexandria
   class BookProviders
     class ThaliaProvider < WebsiteBasedProvider
-      include Alexandria::Logging
+      include Logging
 
       SITE = "http://www.thalia.de"
       BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
