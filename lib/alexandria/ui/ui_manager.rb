@@ -820,7 +820,7 @@ module Alexandria
         model.set_value(iter, 3, false)     # separator?
 
         if autoselect
-          @library_listview.set_cursor(iter.path,
+          @library_listview.set_cursor(model.get_path(iter),
                                        @library_listview.get_column(0),
                                        true)
           @actiongroup["Sidepane"].active = true
