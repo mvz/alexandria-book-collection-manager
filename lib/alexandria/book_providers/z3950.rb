@@ -37,19 +37,15 @@ module Alexandria
         prefs.read
         criterion = criterion.encode(prefs["charset"])
 
-        # We only decode MARC at the moment.
-        # SUTRS needs to be decoded separately, because each Z39.50 server has a
-        # different one.
-        raise NoResultsError unless marc?
-
         isbn = type == SEARCH_BY_ISBN ? criterion : nil
-        criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
-        conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
+        criterion = canonicalise_criterion(criterion, type)
+        conn_count = request_count(type)
         resultset = search_records(criterion, type, conn_count)
         log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.length == 0
 
-        results = books_from_marc(resultset, isbn)
+        results = books_from_resultset(resultset, isbn)
+        raise NoResultsError if results.empty?
+
         type == SEARCH_BY_ISBN ? results.first : results
       end
 
@@ -57,7 +53,33 @@ module Alexandria
         nil
       end
 
+      def books_from_resultset(resultset, isbn)
+        case prefs["record_syntax"]
+        when /MARC$/
+          books_from_marc(resultset, isbn)
+        when "SUTRS"
+          books_from_sutrs(resultset)
+        else
+          raise NoResultsError
+        end
+      end
+
       private
+
+      def request_count(type)
+        type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
+      end
+
+      def canonicalise_criterion(criterion, type)
+        criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
+        criterion
+      end
+
+      def books_from_sutrs(_resultset)
+        # SUTRS needs to be decoded separately, because each Z39.50 server has a
+        # different one.
+        raise NoResultsError
+      end
 
       def marc_to_book(marc_txt)
         begin
@@ -243,20 +265,6 @@ module Alexandria
         prefs.read
       end
 
-      def search(criterion, type)
-        return super unless prefs["record_syntax"] == "SUTRS"
-
-        prefs.read
-        criterion = Library.canonicalise_isbn(criterion) if type == SEARCH_BY_ISBN
-        conn_count = type == SEARCH_BY_ISBN ? 1 : 10 # results to retrieve
-        resultset = search_records(criterion, type, conn_count)
-        log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.length == 0
-
-        results = books_from_sutrs(resultset)
-        type == SEARCH_BY_ISBN ? results.first : results
-      end
-
       def url(book)
         "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
       rescue StandardError => ex
@@ -329,19 +337,6 @@ module Alexandria
         prefs.read
       end
 
-      def search(criterion, type)
-        prefs.read
-
-        isbn = type == SEARCH_BY_ISBN ? criterion : nil
-        criterion = canonicalise_isbn_with_dashes(criterion)
-        resultset = search_records(criterion, type, 0)
-        log.debug { "total #{resultset.length}" }
-        raise NoResultsError if resultset.length == 0
-
-        results = books_from_marc(resultset, isbn)
-        type == SEARCH_BY_ISBN ? results.first : results
-      end
-
       def url(book)
         "http://sbnonline.sbn.it/cgi-bin/zgw/BRIEF.pl?displayquery=" \
           "%253CB%253E%253Cfont%2520color%253D%2523000064%253E" \
@@ -358,6 +353,14 @@ module Alexandria
       end
 
       private
+
+      def canonicalise_criterion(criterion, _type)
+        canonicalise_isbn_with_dashes(criterion)
+      end
+
+      def request_count(_type)
+        0
+      end
 
       def canonicalise_isbn_with_dashes(isbn)
         # The reference for the position of the dashes is

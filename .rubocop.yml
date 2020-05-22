@@ -129,10 +129,6 @@ Style/TrailingCommaInArrayLiteral:
 Style/WordArray:
   Enabled: false
 
-# Not all objects that handle #length also handle #empty?
-Style/ZeroLengthPredicate:
-  Enabled: false
-
 # Activate new cops from RuboCop 0.80 - 0.84
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
