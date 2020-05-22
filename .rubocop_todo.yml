@@ -231,11 +231,6 @@ Style/FormatStringToken:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 2
-Style/IdenticalConditionalBranches:
-  Exclude:
-    - 'lib/alexandria/book_providers/amazon_aws.rb'
-
 # Offense count: 1
 Style/MethodMissingSuper:
   Exclude:

@@ -104,6 +104,7 @@ module Alexandria
             res = Amazon::Ecs.item_search(criterion,
                                           response_group: "ItemAttributes,Images",
                                           country: request_locale)
+
             res.items.each do |item|
               products << item
             end
@@ -199,20 +200,7 @@ module Alexandria
           if results.size == 1
             results.first
           else
-            log.info { "Found multiple results for lookup: checking each" }
-            query_isbn_canon = Library.canonicalise_ean(criterion)
-            results.each do |rslt|
-              book = rslt[0]
-              book_isbn_canon = Library.canonicalise_ean(book.isbn)
-              return rslt if query_isbn_canon == book_isbn_canon
-
-              log.debug { "rejected possible result #{book}" }
-            end
-            # gone through all and no ISBN match, so just return first result
-            log.info do
-              "no more results to check. Returning first result, just an approximation"
-            end
-            results.first
+            exact_match_or_first(criterion, results)
           end
         else
           results
@@ -244,6 +232,27 @@ module Alexandria
       def normalize(str)
         str = str.squeeze(" ").strip unless str.nil?
         str
+      end
+
+      private
+
+      def exact_match_or_first(criterion, results)
+        log.info { "Found multiple results for lookup: checking for exact isbn match" }
+        query_isbn_canon = Library.canonicalise_ean(criterion)
+        exact_match = results.find do |book, _|
+          book_isbn_canon = Library.canonicalise_ean(book.isbn)
+          query_isbn_canon == book_isbn_canon
+        end
+
+        if exact_match
+          # gone through all and no ISBN match, so just return first result
+          log.info do
+            "no more results to check. Returning first result, just an approximation"
+          end
+          exact_match
+        else
+          results.first
+        end
       end
     end
   end
