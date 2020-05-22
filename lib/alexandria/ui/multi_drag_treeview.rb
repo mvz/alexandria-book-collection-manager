@@ -4,6 +4,10 @@
 #
 # See the file README.md for authorship and licensing information.
 
+module Gtk
+  load_class :TreeView
+end
+
 module Alexandria
   module EventOverrides
     def ==(other)
@@ -41,16 +45,18 @@ module Alexandria
       end
     end
 
-    def enable_model_drag_source(start_button_mask, targets, actions)
+    # FIXME: Don't override this method.
+    # FIXME: Re-enable or re-implement
+    def xx_enable_model_drag_source(start_button_mask, targets, actions)
       super
 
       @context = Context.new
       @context.source_start_button_mask = start_button_mask
-      @context.source_targets = Gtk::TargetList.new(targets)
+      @context.source_targets = Gtk::TargetList.new(entries)
       @context.source_actions = actions
 
       @context.button_press_handler =
-        signal_connect("button_press_event") do |_widget, event, _data|
+        signal_connect("button-press-event") do |_widget, event, _data|
           button_press_event(event)
         end
     end
@@ -97,12 +103,12 @@ module Alexandria
         return true
       end
 
-      return false if event.event_type == :"2button_press"
+      return false if event.event_type == Gdk::Event::BUTTON2_PRESS
 
       path, _, cell_x, cell_y = get_path_at_pos(event.x, event.y)
       return false if path.nil?
 
-      (call_parent = !selection.path_is_selected?(path)) ||
+      (call_parent = !selection.path_is_selected(path)) ||
         (event.button != 1)
 
       if call_parent
@@ -111,7 +117,7 @@ module Alexandria
         end
       end
 
-      if selection.path_is_selected?(path)
+      if selection.path_is_selected(path)
         @context.pending_event = true
         @context.pressed_button = event.button
         @context.x = event.x

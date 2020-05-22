@@ -25,6 +25,9 @@
 
 require_relative "goo_canvas"
 
+GirFFI.setup :GooCanvas
+>>>>>>> dcaa4c1a (Use GirFFI to bind GObject libs)
+
 module Alexandria
   module UI
     class BarcodeAnimation
@@ -57,7 +60,7 @@ module Alexandria
       end
 
       def start
-        @timeout = GLib::Timeout.add(20) do
+        @timeout = GLib.timeout_add(GLib::PRIORITY_DEFAULT, 20) do
           scan_animation
           (@index >= 0)
         end
@@ -69,16 +72,16 @@ module Alexandria
       end
 
       def set_active
-        @canvas.set_property(:background_color, "white")
-        @barcode_bars.each { |rect| rect.set_property(:fill_color, "white") }
+        @canvas.background_color = "white"
+        @barcode_bars.each { |rect| rect.fill_color = "white" }
       end
 
       def set_passive
         @canvas or return
 
         passive_bg = "#F4F4F4"
-        @canvas.set_property(:background_color, passive_bg)
-        @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
+        @canvas.background_color = passive_bg
+        @barcode_bars.each { |rect| rect.fill_color = passive_bg }
       end
 
       def manual_input
@@ -129,9 +132,9 @@ module Alexandria
           @index += 1
         else
           @index = -1
-          GLib::Timeout.add(5) do
+          GLib.timeout_add(GLib::PRIORITY_DEFAULT, 5) do
             @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, 0x000000C0) }
-            GLib::Timeout.add(15) do
+            GLib.timeout_add(GLib::PRIORITY_DEFAULT, 15) do
               fade_animation
               (@fade_opacity != -1)
             end

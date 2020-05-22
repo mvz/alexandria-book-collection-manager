@@ -16,8 +16,8 @@ module Alexandria
       def initialize
         @models = []
         @libraries = []
-        5.times { @models << Gtk::ListStore.new(String) }
-        @models << Gtk::ListStore.new(String)
+        5.times { @models << Gtk::ListStore.new([GObject::TYPE_STRING]) }
+        @models << Gtk::ListStore.new([GObject::TYPE_STRING])
         touch
       end
 

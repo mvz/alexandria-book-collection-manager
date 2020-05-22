@@ -2,7 +2,7 @@
 
 # Copyright (C) 2004-2006 Laurent Sansonetti
 # Copyright (C) 2008 Joseph Method
-# Copyright (C) 2016 Matijs van Zuijlen
+# Copyright (C) 2015, 2016 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -57,12 +57,12 @@ module Alexandria
             pixmap.draw_layout(Gdk::GC.new(pixmap), x, y, layout)
 
             # And set the drag icon.
-            Gtk::Drag.set_icon(drag_context,
-                               pixmap.colormap,
-                               pixmap,
-                               mask,
-                               10,
-                               10)
+            Gtk.drag_set_icon_pixbuf(drag_context,
+                                     pixmap.colormap,
+                                     pixmap,
+                                     mask,
+                                     10,
+                                     10)
           end
         end
 
