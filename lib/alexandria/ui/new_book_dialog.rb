@@ -32,6 +32,10 @@ module Alexandria
         @progressbar.hide
       end
 
+      def show
+        @new_book_dialog.show
+      end
+
       def widget_names
         [:new_book_dialog, :button_add, :button_cancel, :button_find,
          :button_help, :combo_libraries, :combo_search, :entry_isbn,

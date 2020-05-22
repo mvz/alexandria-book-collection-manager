@@ -64,6 +64,10 @@ module Alexandria
         @search_threads_running = @search_thread_counter.new_cond
       end
 
+      def show
+        @acquire_dialog.show
+      end
+
       def widget_names
         [:acquire_dialog, :add_button, :barcodes_treeview, :barcode_label,
          :scan_area, :scan_frame, :combo_libraries]
