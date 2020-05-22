@@ -102,12 +102,6 @@ RSpec/FilePath:
     - 'spec/alexandria/ui/sidepane_manager_spec.rb'
     - 'spec/alexandria/ui/sound_spec.rb'
 
-# Offense count: 11
-# Configuration parameters: AssignmentOnly.
-RSpec/InstanceVariable:
-  Exclude:
-    - 'spec/alexandria/export_library_spec.rb'
-
 # Offense count: 2
 RSpec/MultipleDescribes:
   Exclude:

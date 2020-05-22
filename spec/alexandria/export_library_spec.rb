@@ -10,6 +10,7 @@ RSpec.describe Alexandria::ExportLibrary do
   let(:lib_version) { File.join(LIBDIR, "0.6.2") }
 
   let(:loader) { Alexandria::LibraryStore.new(TESTDIR) }
+  let(:my_library) { loader.load_library("My Library") }
 
   let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
   let(:outfile_base) { format.ext ? "my-library.#{format.ext}" : "my-library" }
@@ -19,7 +20,6 @@ RSpec.describe Alexandria::ExportLibrary do
 
   before do
     FileUtils.cp_r(lib_version, TESTDIR)
-    @my_library = loader.load_library("My Library")
   end
 
   after do
@@ -36,12 +36,12 @@ RSpec.describe Alexandria::ExportLibrary do
 
     it "can sort by title" do
       sort_by_title = Alexandria::LibrarySortOrder.new(:title)
-      format.invoke(@my_library, sort_by_title, outfile)
+      format.invoke(my_library, sort_by_title, outfile)
       expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
-      expect(@my_library.size).to eq 5
-      expect(rows.size).to eq(@my_library.size)
+      expect(my_library.size).to eq 5
+      expect(rows.size).to eq(my_library.size)
       title_index = 0
       comparisons = rows.size - 1
       comparisons.times do |index|
@@ -51,12 +51,12 @@ RSpec.describe Alexandria::ExportLibrary do
 
     it "can sort in descending order" do
       sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
-      format.invoke(@my_library, sort_by_date_desc, outfile)
+      format.invoke(my_library, sort_by_date_desc, outfile)
       expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
-      expect(@my_library.size).to eq 5
-      expect(rows.size).to eq(@my_library.size)
+      expect(my_library.size).to eq 5
+      expect(rows.size).to eq(my_library.size)
       date_index = 5
       comparisons = rows.size - 1
       comparisons.times do |index|
@@ -70,7 +70,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:index) { File.join(outfile, "index.html") }
 
     it "can export unsorted" do
-      format.invoke(@my_library, unsorted, outfile, Alexandria::WebTheme.all.first)
+      format.invoke(my_library, unsorted, outfile, Alexandria::WebTheme.all.first)
       aggregate_failures do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.exist?(index)).to be_truthy
@@ -83,7 +83,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_onix_xml_archive }
 
     it "can export unsorted" do
-      format.invoke(@my_library, unsorted, outfile)
+      format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.size(outfile)).to be_nonzero
@@ -95,7 +95,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_tellico_xml_archive }
 
     it "can export unsorted" do
-      format.invoke(@my_library, unsorted, outfile)
+      format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.size(outfile)).to be_nonzero
@@ -107,7 +107,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_bibtex }
 
     it "can export unsorted" do
-      format.invoke(@my_library, unsorted, outfile)
+      format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.size(outfile)).to be_nonzero
@@ -119,7 +119,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_isbn_list }
 
     it "can export unsorted" do
-      format.invoke(@my_library, unsorted, outfile)
+      format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.size(outfile)).to be_nonzero
@@ -132,7 +132,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:index) { File.join(outfile, "index.linx") }
 
     it "can export unsorted" do
-      format.invoke(@my_library, unsorted, outfile, nil)
+      format.invoke(my_library, unsorted, outfile, nil)
       aggregate_failures do
         expect(File.exist?(outfile)).to be_truthy
         expect(File.size(index)).to be_nonzero
