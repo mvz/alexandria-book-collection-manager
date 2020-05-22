@@ -22,6 +22,17 @@ module Alexandria
   class WebTheme
     attr_reader :name, :css_file, :preview_file, :pixmaps_directory
 
+    def initialize(css_file, preview_file, pixmaps_directory)
+      @name = File.basename(css_file, ".css").capitalize
+      @css_file = css_file
+      @preview_file = preview_file
+      @pixmaps_directory = pixmaps_directory
+    end
+
+    def has_pixmaps?
+      File.exist?(@pixmaps_directory)
+    end
+
     def self.all
       themes_dir = [
         # System dir
@@ -32,12 +43,6 @@ module Alexandria
       ]
       themes_dir.map { |x| load(x) }.flatten
     end
-
-    def has_pixmaps?
-      File.exist?(@pixmaps_directory)
-    end
-
-    private
 
     def self.load(themes_dir)
       themes = []
@@ -66,13 +71,6 @@ module Alexandria
         FileUtils.mkdir_p(themes_dir)
       end
       themes
-    end
-
-    def initialize(css_file, preview_file, pixmaps_directory)
-      @name = File.basename(css_file, ".css").capitalize
-      @css_file = css_file
-      @preview_file = preview_file
-      @pixmaps_directory = pixmaps_directory
     end
   end
 end
