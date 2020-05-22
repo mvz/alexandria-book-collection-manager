@@ -72,13 +72,6 @@ Naming/HeredocDelimiterNaming:
     - 'lib/alexandria/export_library.rb'
     - 'lib/alexandria/ui/about_dialog.rb'
 
-# Offense count: 2
-# Configuration parameters: EnforcedStyleForLeadingUnderscores.
-# SupportedStylesForLeadingUnderscores: disallowed, required, optional
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'lib/alexandria/logging.rb'
-
 # Offense count: 10
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at, ip, db, os, pp

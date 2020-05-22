@@ -25,7 +25,7 @@ module Alexandria
   # A Logger subclass which accepts a source for log messages
   # in order to improve legibility of the logs.
   # The source should usually be +self+, whether that be a Class, Module
-  # or Object. A LoggerWrapper can be used to simplify this procedure.
+  # or Object. A LogWrapper can be used to simplify this procedure.
   class Logger < ::Logger
     def add(severity, message = nil, source = nil, progname = nil, &block)
       return super(severity, message, progname, &block) if source.nil?
@@ -118,7 +118,7 @@ module Alexandria
   module Logging
     module ClassMethods
       def log
-        @log_wrapper ||= LogWrapper.new(Alexandria.log, self)
+        @log ||= LogWrapper.new(Alexandria.log, self)
       end
     end
 
@@ -127,7 +127,7 @@ module Alexandria
     end
 
     def log
-      @log_wrapper ||= LogWrapper.new(Alexandria.log, self)
+      @log ||= LogWrapper.new(Alexandria.log, self)
     end
   end
 
