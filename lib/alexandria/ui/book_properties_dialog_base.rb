@@ -55,7 +55,7 @@ module Alexandria
         @treeview_authors.append_column(col)
 
         setup_date_widgets
-        GLib::Timeout.add(150) do
+        GLib.timeout_add(GLib::PRIORITY_DEFAULT, 150) do
           @setup_finished = true
 
           false

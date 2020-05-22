@@ -13,11 +13,12 @@ module Alexandria
         # TODO: This emits the warning 'GtkDialog mapped without a transient
         # parent. This is discouraged.'
         builder.add_from_file(file)
-        builder.connect_signals do |handler|
-          method(handler)
+        builder.connect_signals do |handler_name|
+          method(handler_name)
         end
+
         widget_names.each do |name|
-          instance_variable_set("@#{name}".intern, builder[name.to_s])
+          instance_variable_set("@#{name}".intern, builder.get_object(name.to_s))
         end
       end
     end

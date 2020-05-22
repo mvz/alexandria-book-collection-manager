@@ -258,10 +258,10 @@ module Alexandria
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
-        GLib::Idle.add do
+        GLib.idle_add do
           main_progress_bar = MainApp.instance.appbar.children.first
           main_progress_bar.visible = true
-          @progress_pulsing = GLib::Timeout.add(100) do
+          @progress_pulsing = GLib.timeout_add(GLib::PRIORITY_DEFAULT, 100) do
             if @destroyed
               @progress_pulsing = nil
               false
@@ -275,7 +275,7 @@ module Alexandria
       end
 
       def notify_end_add_by_isbn
-        GLib::Idle.add do
+        GLib.idle_add do
           MainApp.instance.appbar.children.first.visible = false
           GLib::Source.remove(@progress_pulsing) if @progress_pulsing
           false
@@ -283,7 +283,7 @@ module Alexandria
       end
 
       def update(status, provider)
-        GLib::Idle.add do
+        GLib.idle_add do
           messages = {
             searching: _("Searching Provider '%s'..."),
             error: _("Error while Searching Provider '%s'"),
@@ -469,7 +469,7 @@ module Alexandria
 
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
                 log.debug { "Waiting for more scanner input" }
-                GLib::Idle.add do
+                GLib.idle_add do
                   @animation.manual_input
                   false
                 end
@@ -477,7 +477,7 @@ module Alexandria
                 sleep(time_to_wait)
                 if buffer == @scanner_buffer
                   log.debug { "Buffer unchanged; scanning complete" }
-                  GLib::Idle.add do
+                  GLib.idle_add do
                     @animation.scanner_input
                     false
                   end
@@ -539,7 +539,9 @@ module Alexandria
       end
 
       def init_treeview
-        liststore = Gtk::ListStore.new(String, GdkPixbuf::Pixbuf, String)
+        liststore = Gtk::ListStore.new([GObject::TYPE_STRING,
+                                        GdkPixbuf::Pixbuf.gtype,
+                                        GObject::TYPE_STRING])
 
         @barcodes_treeview.selection.mode = :multiple
 
@@ -549,12 +551,12 @@ module Alexandria
         text_renderer.editable = false
 
         # Add column using our renderer
-        col = Gtk::TreeViewColumn.new("ISBN", text_renderer, text: 0)
+        col = Gtk::TreeViewColumn.new_with_attributes("ISBN", text_renderer, text: 0)
         @barcodes_treeview.append_column(col)
 
         # Middle colulmn is cover-image renderer
         pixbuf_renderer = Gtk::CellRendererPixbuf.new
-        col = Gtk::TreeViewColumn.new("Cover", pixbuf_renderer)
+        col = Gtk::TreeViewColumn.new_with_attributes("Cover", pixbuf_renderer)
 
         col.set_cell_data_func(pixbuf_renderer) do |_column, cell, _model, iter|
           pixbuf = iter[1]
@@ -573,7 +575,7 @@ module Alexandria
         @barcodes_treeview.append_column(col)
 
         # Add column using the second renderer
-        col = Gtk::TreeViewColumn.new("Title", text_renderer, text: 2)
+        col = Gtk::TreeViewColumn.new_with_attributes("Title", text_renderer, text: 2)
         @barcodes_treeview.append_column(col)
 
         @barcodes_treeview.model.signal_connect("row-deleted") do |model, _path|
