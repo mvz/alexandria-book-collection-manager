@@ -223,6 +223,6 @@ module Alexandria
           raise NoResultsError
         end
       end
-    end # class WorldCatProvider
-  end # class BookProviders
-end # module Alexandria
+    end
+  end
+end

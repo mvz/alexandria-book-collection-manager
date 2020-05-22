@@ -36,10 +36,12 @@ module Alexandria
 
     class SearchError < StandardError; end
     class NoResultsError < SearchError; end
-    class ProviderSkippedError < NoResultsError; end # not an error :^(
-    class SearchEmptyError < SearchError; end # sigh, again not really an error
     class TooManyResultsError < SearchError; end
     class InvalidSearchTypeError < SearchError; end
+
+    # These errors are not really errors
+    class ProviderSkippedError < NoResultsError; end
+    class SearchEmptyError < SearchError; end
 
     def self.search(criterion, type)
       factory_n = 0

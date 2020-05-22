@@ -152,15 +152,6 @@ Style/ClassVars:
     - 'lib/alexandria/ui/book_properties_dialog_base.rb'
     - 'lib/alexandria/ui/new_book_dialog.rb'
 
-# Offense count: 11
-Style/CommentedKeyword:
-  Exclude:
-    - 'lib/alexandria/book_providers.rb'
-    - 'lib/alexandria/book_providers/barnes_and_noble.rb'
-    - 'lib/alexandria/book_providers/worldcat.rb'
-    - 'lib/alexandria/ui/new_book_dialog.rb'
-    - 'util/rake/fileinstall.rb'
-
 # Offense count: 112
 Style/Documentation:
   Enabled: false

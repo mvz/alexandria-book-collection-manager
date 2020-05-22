@@ -3,7 +3,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2009 Cathal Mc Ginley
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2020 Matijs van Zuijlen
 #
 # This file is part of the Alexandria build system.
 #
@@ -291,5 +291,5 @@ class FileInstallTask < Rake::TaskLib
         all_dirs_set << File.dirname(file)
       end
     end
-  end # class FileGroup
-end # class FileInstallTask
+  end
+end
