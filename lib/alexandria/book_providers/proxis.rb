@@ -108,8 +108,8 @@ module Alexandria
         book_search_results
       end
 
-      def data_for_header(th)
-        tr = th.parent
+      def data_for_header(header)
+        tr = header.parent
         td = tr.at("td")
         text_of(td) if td
       end

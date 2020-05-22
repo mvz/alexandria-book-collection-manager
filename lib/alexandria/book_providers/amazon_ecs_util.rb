@@ -183,8 +183,8 @@ module Alexandria
         sign_request(url)
       end
 
-      def self.camelize(s)
-        s.to_s
+      def self.camelize(string)
+        string.to_s
           .gsub(%r{/(.?)}) { "::" + Regexp.last_match[1].upcase }
           .gsub(/(^|_)(.)/) { Regexp.last_match[2].upcase }
       end

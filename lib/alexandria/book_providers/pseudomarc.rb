@@ -41,9 +41,9 @@ module Alexandria
       notes: ["520", "a"]
     }.freeze
 
-    def self.get_fields(data, type, stripping, m = USMARC_MAPPINGS)
+    def self.get_fields(data, type, stripping, mappings = USMARC_MAPPINGS)
       field = ""
-      m[type][1..m[type].length - 1].each do |part|
+      mappings[type][1..mappings[type].length - 1].each do |part|
         if data.first[part]
           part_data = data.first[part].strip
           if part_data =~ stripping
@@ -58,20 +58,20 @@ module Alexandria
       field
     end
 
-    def self.marc_text_to_book(marc, m = USMARC_MAPPINGS)
+    def self.marc_text_to_book(marc, mappings = USMARC_MAPPINGS)
       details = marc_text_to_details(marc)
       unless details.empty?
         title = nil
-        title_data = details[m[:title][0]]
+        title_data = details[mappings[:title][0]]
         if title_data
-          title_data_all = get_fields(title_data, :title, %r{(.*)[/:]$}, m)
+          title_data_all = get_fields(title_data, :title, %r{(.*)[/:]$}, mappings)
           title = title_data_all if title_data_all
         end
 
         authors = []
-        author_data = details[m[:authors][0]]
+        author_data = details[mappings[:authors][0]]
         author_data&.each do |ad|
-          author = ad[m[:authors][1]]
+          author = ad[mappings[:authors][1]]
           if author
             author = author.strip
             author = Regexp.last_match[1] if author =~ /(.*),$/
@@ -81,33 +81,35 @@ module Alexandria
 
         isbn = nil
         binding = nil
-        isbn_data = details[m[:isbn][0]]
+        isbn_data = details[mappings[:isbn][0]]
         if isbn_data
-          isbn = Regexp.last_match[1] if isbn_data.first[m[:isbn][1]] =~ /([-0-9xX]+)/
+          if isbn_data.first[mappings[:isbn][1]] =~ /([-0-9xX]+)/
+            isbn = Regexp.last_match[1]
+          end
         end
 
-        binding_data = details[m[:binding][0]]
+        binding_data = details[mappings[:binding][0]]
         if binding_data
-          if binding_data.first[m[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
+          if binding_data.first[mappings[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
             binding = Regexp.last_match[1]
           end
         end
 
         publisher = nil
-        publisher_data = details[m[:publisher][0]]
-        publisher = publisher_data.first[m[:publisher][1]] if publisher_data
+        publisher_data = details[mappings[:publisher][0]]
+        publisher = publisher_data.first[mappings[:publisher][1]] if publisher_data
 
         year = nil
-        publication_data = details[m[:year][0]]
+        publication_data = details[mappings[:year][0]]
         if publication_data
-          year = publication_data.first[m[:year][1]]
+          year = publication_data.first[mappings[:year][1]]
           year = Regexp.last_match[1].to_i if year =~ /(\d+)/
         end
 
         notes = ""
-        notes_data = details[m[:notes][0]]
+        notes_data = details[mappings[:notes][0]]
         notes_data&.each do |note|
-          txt = note[m[:notes][1]]
+          txt = note[mappings[:notes][1]]
           notes += txt if txt
         end
 

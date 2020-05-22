@@ -78,9 +78,9 @@ module Alexandria
         log.debug { "end window-state-event" }
       end
 
-      def on_toolbar_view_as_changed(cb)
+      def on_toolbar_view_as_changed(widget)
         log.debug { "changed" }
-        action = case cb.active
+        action = case widget.active
                  when 0
                    @actiongroup["AsIcons"]
                  when 1
@@ -102,9 +102,9 @@ module Alexandria
         @iconview.unfreeze
       end
 
-      def on_criterion_combobox_changed(cb)
+      def on_criterion_combobox_changed(widget)
         log.debug { "changed" }
-        @filter_books_mode = cb.active
+        @filter_books_mode = widget.active
         @filter_entry.text.strip!
         @iconview.freeze
         @filtered_model.refilter
