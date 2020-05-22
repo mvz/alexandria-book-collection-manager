@@ -30,7 +30,7 @@ module Alexandria
         title = _("Import a Library")
         dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
         super(dialog)
-        puts "ImportDialog opened." if $DEBUG
+        log.debug { "ImportDialog opened" }
         @destroyed = false
         @running = false
         add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)
@@ -51,7 +51,7 @@ module Alexandria
         FILTERS.each do |filter|
           filefilter = filter.to_filefilter
           add_filter(filefilter)
-          puts "Added ImportFilter #{filefilter} -- #{filefilter.name}" if $DEBUG
+          log.debug { "Added ImportFilter #{filefilter} -- #{filefilter.name}" }
           filters[filefilter] = filter
         end
 
@@ -98,13 +98,13 @@ module Alexandria
             base)
 
           filter = filters[self.filter]
-          puts "Going forward with filter: #{filter.name}" if $DEBUG
+          log.debug { "Going forward with filter: #{filter.name}" }
           self.sensitive = false
 
           filter.on_iterate do |n, total|
             unless @destroyed
               fraction = n * 1.0 / total
-              puts "#{inspect} fraction: #{fraction}" if $DEBUG
+              log.debug { "#{inspect} fraction: #{fraction}" }
               exec_queue.call(on_progress, fraction)
             end
           end
@@ -112,7 +112,7 @@ module Alexandria
           not_cancelled = true
           filter.on_error do |message|
             not_cancelled = exec_queue.sync_call(on_error, message)
-            puts "#{inspect} cancel state: #{not_cancelled}" if $DEBUG
+            log.debug { "#{inspect} cancel state: #{not_cancelled}" }
           end
 
           library = nil
@@ -127,7 +127,6 @@ module Alexandria
           end
 
           while thread.alive? && !@destroyed
-            # puts "Thread #{thread} still alive."
             @running = true
             exec_queue.iterate
             Gtk.main_iteration_do(false)
@@ -138,7 +137,7 @@ module Alexandria
               yield(library, @bad_isbns, @failed_isbns)
               break
             elsif not_cancelled
-              puts "Raising ErrorDialog because not_cancelled is #{not_cancelled}" if $DEBUG
+              log.debug { "Raising ErrorDialog because not_cancelled is #{not_cancelled}" }
               ErrorDialog.new(self,
                               _("Couldn't import the library"),
                               _("The format of the file you " \

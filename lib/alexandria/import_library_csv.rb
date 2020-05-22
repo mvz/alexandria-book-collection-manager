@@ -112,7 +112,7 @@ module Alexandria
           book.tags << tag unless book.tags.include? tag
         end
       end
-      puts "Goodreads loading #{book.title}" if $DEBUG
+      log.debug { "Goodreads loading #{book.title}" }
       book
     end
   end
@@ -169,7 +169,7 @@ module Alexandria
         end
       end
 
-      puts "LibraryThing loading #{book.title}" if $DEBUG
+      log.debug { "LibraryThing loading #{book.title}" }
       book
     end
   end

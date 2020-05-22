@@ -17,8 +17,6 @@ describe Alexandria::BookProviders do
       skip "Service is offline"
     end
 
-    puts results.inspect if $DEBUG
-
     expect(results).to be_instance_of(Array), "Results are not an array for #{provider}"
     expect(results).not_to be_empty, "Results are empty for #{provider}"
 

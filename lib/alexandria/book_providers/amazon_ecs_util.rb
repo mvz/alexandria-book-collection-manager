@@ -162,18 +162,6 @@ module Amazon
       end
     end
 
-    # protected
-    #  def self.log(s)
-    #    return unless self.debug
-    #    if defined? RAILS_DEFAULT_LOGGER
-    #      RAILS_DEFAULT_LOGGER.error(s)
-    #    elsif defined? LOGGER
-    #      LOGGER.error(s)
-    #    else
-    #      puts s
-    #    end
-    #  end
-
     def self.prepare_url(opts)
       country = opts.delete(:country)
       country = country.nil? ? "us" : country
@@ -191,10 +179,7 @@ module Amazon
         qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
       end
       url = "#{request_url}#{qs}"
-      # puts ">>> base url >> #{url}"
-      signed_url = sign_request(url)
-      # puts ">>> SIGNED >> #{signed_url}"
-      signed_url
+      sign_request(url)
     end
 
     def self.camelize(s)
@@ -268,8 +253,6 @@ module Amazon
 
       # Steps 6 & 7: Prepend HTTP request info
       string_to_sign = "GET\n#{host}\n#{path}\n#{canonical_param_string}"
-
-      # puts string_to_sign
 
       # Step 8 : Calculate RFC 2104-compliant HMAC with SHA256 hash algorithm
       sig = hmac_sha256(string_to_sign, @@secret_access_key)

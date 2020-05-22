@@ -77,7 +77,6 @@ module Alexandria
         book_search_results = []
         begin
           result_cells = doc / "td.result/div.name/.."
-          # puts result_cells.length
           result_cells.each do |td|
             type_icon = (td % "div.type/img.icn")
             next unless type_icon && type_icon["src"] =~ /icon-bks/

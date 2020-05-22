@@ -79,7 +79,7 @@ module Alexandria
 
       def search(criterion, type)
         req = create_search_uri(type, criterion)
-        puts "Requesting #{req}" if $DEBUG
+        log.debug { "Requesting #{req}" }
         html_data = fetch_redirectly(req)
 
         if type == SEARCH_BY_ISBN

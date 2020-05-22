@@ -190,15 +190,16 @@ module Alexandria
 
     def self.really_delete_deleted_libraries
       @@deleted_libraries.each do |library|
-        puts "Deleting smart library file (#{yaml})" if $DEBUG
+        log.debug { "Deleting smart library file (#{yaml})" }
         FileUtils.rm_rf(library.yaml)
       end
     end
 
     def delete
       if @@deleted_libraries.include?(self)
-        puts "Already deleted a SmartLibrary with this name"
-        puts "(this might mess up undeletes...)"
+        log.info do
+          "Already deleted a SmartLibrary with this name (this might mess up undeletes)"
+        end
         FileUtils.rm_rf(yaml)
         # so we just delete the old smart library, and
         # 'pending' delete the new one of the same name...
@@ -468,11 +469,7 @@ module Alexandria
 
       def filter_proc
         proc do |book|
-          begin
-            left_value = book.send(@operand.book_selector)
-          rescue StandardError => ex
-            puts ex.message
-          end
+          left_value = book.send(@operand.book_selector)
           right_value = @value
           if right_value.is_a?(String)
             left_value = left_value.to_s.downcase

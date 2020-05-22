@@ -10,6 +10,7 @@ module Alexandria
   module UI
     class SkipEntryDialog < AlertDialog
       include GetText
+      include Logging
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, message)
@@ -18,7 +19,7 @@ module Alexandria
               [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
                [_("_Continue"), Gtk::ResponseType::OK]],
               message)
-        puts "Opened SkipEntryDialog #{inspect}" if $DEBUG
+        log.debug { "Opened SkipEntryDialog #{inspect}" }
         self.default_response = Gtk::ResponseType::CANCEL
       end
 

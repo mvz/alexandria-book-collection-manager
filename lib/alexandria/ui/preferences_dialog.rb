@@ -174,7 +174,7 @@ module Alexandria
                 end
               end
             else
-              puts "not on a path"
+              log.debug { "not on a path" }
             end
           end
         end
@@ -182,7 +182,7 @@ module Alexandria
         # Popup the menu on Shift-F10
         @treeview_providers.signal_connect("popup_menu") do
           selected_prov = @treeview_providers.selection.selected
-          puts selected_prov.inspect
+          log.debug { selected_prov.inspect }
           if selected_prov
             GLib::Idle.add do
               already_enabled = selected_prov[2]
@@ -193,7 +193,7 @@ module Alexandria
               false
             end
           else
-            puts "no action"
+            log.debug { "no action" }
           end
         end
       end

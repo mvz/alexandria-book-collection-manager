@@ -34,7 +34,7 @@ module Alexandria
     end
 
     def invoke(library_name, filename)
-      puts "Selected: #{@message} -- #{library_name} -- #{filename}"
+      log.debug { "Selected: #{@message} -- #{library_name} -- #{filename}" }
       Library.send(@message, library_name, filename,
                    @on_iterate_cb, @on_error_cb)
     end
@@ -50,30 +50,24 @@ module Alexandria
 
   class Library
     def self.import_autodetect(*args)
-      puts args.inspect
+      log.debug { args.inspect }
       filename = args[1]
-      puts "Filename is #{filename} and ext is #{filename[-4..-1]}"
-      puts "Beginning import: #{args[0]}, #{args[1]}"
+      log.debug { "Filename is #{filename} and ext is #{filename[-4..-1]}" }
+      log.debug { "Beginning import: #{args[0]}, #{args[1]}" }
       if filename[-4..-1] == ".txt"
         import_as_isbn_list(*args)
       elsif [".tc", ".bc"].include? filename[-3..-1]
-        begin
-          import_as_tellico_xml_archive(*args)
-        rescue StandardError => ex
-          puts ex.message
-          puts ex.backtrace.join("\n>> ")
-        end
+        import_as_tellico_xml_archive(*args)
       elsif [".csv"].include? filename[-4..-1]
         import_as_csv_file(*args)
       else
-        puts "Bailing on this import!"
-        raise _("Not supported type")
+        raise _("Unsupported type")
       end
     end
 
     def self.import_as_tellico_xml_archive(name, filename,
                                            on_iterate_cb, _on_error_cb)
-      puts "Starting import_as_tellico_xml_archive... "
+      log.debug { "Starting import_as_tellico_xml_archive... " }
       return nil unless system("unzip -qqt \"#{filename}\"")
 
       tmpdir = File.join(Dir.tmpdir, "tellico_export")
@@ -115,21 +109,14 @@ module Alexandria
           if book_elements[2].nil? || book_elements[2].strip.empty?
             book_elements[2] = nil
           else
-            begin
-              book_elements[2] = book_elements[2].strip
-              book_elements[2] = Library.canonicalise_ean(book_elements[2])
-            rescue StandardError => ex
-              puts book_elements[2]
-              puts ex.message
-              puts ex.backtrace.join("\n> ")
-              raise ex
-            end
+            book_elements[2] = book_elements[2].strip
+            book_elements[2] = Library.canonicalise_ean(book_elements[2])
           end
           # publishing_year
           book_elements[4] = book_elements[4].to_i unless book_elements[4].nil?
-          puts book_elements.inspect
+          log.debug { book_elements.inspect }
           cover = (neaten(elements["cover"].text) if elements["cover"])
-          puts cover
+          log.debug { cover }
           book = Book.new(*book_elements)
           if elements["rating"]
             rating = elements["rating"].text.to_i
@@ -152,7 +139,7 @@ module Alexandria
         end
         return [library, []]
       rescue StandardError => ex
-        puts ex.message
+        log.info { ex.message }
         return nil
       end
     end
@@ -187,8 +174,7 @@ module Alexandria
               book.edition = dl_book.edition unless book.edition
               cover = dl_cover
             rescue StandardError
-              puts "failed to get cover for #{book.title} #{book.isbn}" if $DEBUG
-              # note failure
+              log.debug { "Failed to get cover for #{book.title} #{book.isbn}" }
             end
           end
 
@@ -219,9 +205,9 @@ module Alexandria
       library = Library.load(name)
 
       books_and_covers.each do |book, cover_uri|
-        puts "Saving #{book.isbn} cover..." if $DEBUG
+        log.debug { "Saving #{book.isbn} cover" }
         library.save_cover(book, cover_uri) unless cover_uri.nil?
-        puts "Saving #{book.isbn}..." if $DEBUG
+        log.debug { "Saving #{book.isbn}" }
         library << book
         library.save(book)
       end
@@ -230,18 +216,18 @@ module Alexandria
 
     def self.import_as_isbn_list(name, filename, on_iterate_cb,
                                  on_error_cb)
-      puts "Starting import_as_isbn_list... "
+      log.debug { "Starting import_as_isbn_list... " }
       isbn_list = IO.readlines(filename).map do |line|
-        puts "Trying line #{line}" if $DEBUG
+        log.debug { "Trying line #{line}" }
         # Let's preserve the failing isbns so we can report them later.
         begin
           [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
         rescue StandardError => ex
-          puts ex.message
+          log.debug { ex.message }
           [line.chomp, nil]
         end
       end
-      puts "Isbn list: #{isbn_list.inspect}"
+      log.debug { "Isbn list: #{isbn_list.inspect}" }
       isbn_list.compact!
       return nil if isbn_list.empty?
 
@@ -258,22 +244,22 @@ module Alexandria
             bad_isbns << isbn[0]
           end
         rescue StandardError => ex
-          puts ex.message
+          log.debug { ex.message }
           failed_lookup_isbns << isbn[1]
-          puts "NOTE : ignoring on_error_cb #{on_error_cb}"
+          log.debug { "NOTE : ignoring on_error_cb #{on_error_cb}" }
           # return nil unless
           #  (on_error_cb and on_error_cb.call(e.message))
         end
 
         on_iterate_cb&.call(current_iteration += 1, max_iterations)
       end
-      puts "Bad Isbn list: #{bad_isbns.inspect}" if bad_isbns
+      log.debug { "Bad Isbn list: #{bad_isbns.inspect}" } if bad_isbns
       library = load(name)
-      puts "Going with these #{books.length} books: #{books.inspect}" if $DEBUG
+      log.debug { "Going with these #{books.length} books: #{books.inspect}" }
       books.each do |book, cover_uri|
-        puts "Saving #{book.isbn} cover..." if $DEBUG
+        log.debug { "Saving #{book.isbn} cover..." }
         library.save_cover(book, cover_uri) unless cover_uri.nil?
-        puts "Saving #{book.isbn}..." if $DEBUG
+        log.debug { "Saving #{book.isbn}..." }
         library << book
         library.save(book)
         on_iterate_cb&.call(current_iteration += 1, max_iterations)

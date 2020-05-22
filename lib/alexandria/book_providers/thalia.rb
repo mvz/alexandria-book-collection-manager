@@ -48,7 +48,7 @@ module Alexandria
 
       def search(criterion, type)
         req = create_search_uri(type, criterion)
-        puts req if $DEBUG
+        log.debug { req }
         html_data = transport.get_response(URI.parse(req))
         if type == SEARCH_BY_ISBN
           parse_result_data(html_data.body, criterion)
