@@ -85,8 +85,8 @@ module Alexandria
       end
 
       def setup_dependents
-        @listview_model = @filtered_model.sort_new_with_model
-        @iconview_model = @filtered_model.sort_new_with_model
+        @listview_model = Gtk::TreeModelSort.new_with_model(@filtered_model)
+        @iconview_model = Gtk::TreeModelSort.new_with_model(@filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
         @sidepane_manager = SidepaneManager.new @library_listview, self
@@ -1021,8 +1021,8 @@ module Alexandria
           select_library(library)
         else
           # Select the first item by default.
-          iter = @library_listview.model.iter_first
-          @library_listview.selection.select_iter(iter)
+          success, iter = *@library_listview.model.iter_first
+          @library_listview.selection.select_iter(iter) if success
         end
       end
 
