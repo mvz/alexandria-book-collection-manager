@@ -20,7 +20,6 @@ RSpec.describe Alexandria::ExportLibrary do
   before do
     FileUtils.cp_r(lib_version, TESTDIR)
     @my_library = loader.load_library("My Library")
-    expect(@my_library.size).to eq 5
   end
 
   after do
@@ -41,6 +40,7 @@ RSpec.describe Alexandria::ExportLibrary do
       expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
+      expect(@my_library.size).to eq 5
       expect(rows.size).to eq(@my_library.size)
       title_index = 0
       comparisons = rows.size - 1
@@ -55,6 +55,7 @@ RSpec.describe Alexandria::ExportLibrary do
       expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
+      expect(@my_library.size).to eq 5
       expect(rows.size).to eq(@my_library.size)
       date_index = 5
       comparisons = rows.size - 1

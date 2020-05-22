@@ -94,11 +94,6 @@ RSpec/ExampleLength:
     - 'spec/alexandria/ui/smart_library_properties_dialog_spec.rb'
     - 'spec/end_to_end/basic_run_spec.rb'
 
-# Offense count: 1
-RSpec/ExpectInHook:
-  Exclude:
-    - 'spec/alexandria/export_library_spec.rb'
-
 # Offense count: 3
 # Configuration parameters: CustomTransform, IgnoreMethods.
 RSpec/FilePath:
