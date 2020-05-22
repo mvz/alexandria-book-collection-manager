@@ -158,8 +158,3 @@ Style/FormatStringToken:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Enabled: false
-
-# Offense count: 1
-Style/MissingRespondToMissing:
-  Exclude:
-    - 'lib/alexandria/preferences.rb'

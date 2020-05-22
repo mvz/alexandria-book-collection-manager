@@ -153,9 +153,8 @@ module Alexandria
         end
 
         def new_value=(new_value)
-          message = @provider.variable_name(self) + "="
-          Alexandria::Preferences.instance.send(message,
-                                                new_value)
+          name = @provider.variable_name(self)
+          Alexandria::Preferences.instance.set_variable(name, new_value)
           self.value = new_value
         end
 
@@ -188,8 +187,8 @@ module Alexandria
 
       def read
         each do |var|
-          message = @provider.variable_name(var)
-          val = Alexandria::Preferences.instance.send(message)
+          name = @provider.variable_name(var)
+          val = Alexandria::Preferences.instance.get_variable(name)
           var.value = val unless val.nil? || ((val == "") && var.mandatory?)
         end
       end

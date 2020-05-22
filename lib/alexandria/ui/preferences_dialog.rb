@@ -37,7 +37,7 @@ module Alexandria
         }
         @cols.each_pair do |checkbutton, pref_name|
           if checkbutton
-            checkbutton.active = Preferences.instance.send(pref_name)
+            checkbutton.active = Preferences.instance.get_variable(pref_name)
           else
             log.warn do
               "no CheckButton for property #{pref_name} " \
@@ -228,8 +228,7 @@ module Alexandria
       def on_column_toggled(checkbutton)
         raise if @cols[checkbutton].nil?
 
-        Preferences.instance.send("#{@cols[checkbutton]}=",
-                                  checkbutton.active?)
+        Preferences.instance.set_variable(@cols[checkbutton], checkbutton.active?)
 
         @changed_block.call
       end
