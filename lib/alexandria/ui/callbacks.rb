@@ -13,7 +13,7 @@ module Alexandria
 
       def on_new(*)
         name = Library.generate_new_name(@libraries.all_libraries)
-        library = Library.load(name)
+        library = @libraries.library_store.load_library(name)
         @libraries.add_library(library)
         append_library(library, true)
         setup_move_actions
