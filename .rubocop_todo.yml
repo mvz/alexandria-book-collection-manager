@@ -98,11 +98,6 @@ Naming/PredicateName:
     - 'lib/alexandria/ui/smart_library_properties_dialog_base.rb'
     - 'lib/alexandria/web_themes.rb'
 
-# Offense count: 1
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/end_to_end/basic_run_spec.rb'
-
 # Offense count: 17
 # Configuration parameters: Max.
 RSpec/ExampleLength:
