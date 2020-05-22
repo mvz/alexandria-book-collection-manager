@@ -17,8 +17,6 @@ module Alexandria
       include GetText
       include DragAndDropable
 
-      BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", :same_app, 0]].freeze
-
       def initialize(_listview, parent)
         @parent = parent
         @prefs = @parent.prefs
@@ -33,7 +31,8 @@ module Alexandria
       def setup_title_column
         title = _("Title")
         log.debug { format("Create listview column for %s", title) }
-        column = Gtk::TreeViewColumn.new(title)
+        column = Gtk::TreeViewColumn.new
+        column.set_title title
 
         renderer = Gtk::CellRendererPixbuf.new
         column.pack_start(renderer, false)
@@ -89,8 +88,8 @@ module Alexandria
         log.debug { "Create listview column for tags" }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
-        column = Gtk::TreeViewColumn.new(title, renderer,
-                                         text: Columns::TAGS)
+        column = Gtk::TreeViewColumn.new_with_attributes(title, renderer,
+                                                         text: Columns::TAGS)
         column.sort_column_id = Columns::TAGS
         column.resizable = true
         @listview.append_column(column)
@@ -107,7 +106,8 @@ module Alexandria
       def setup_rating_column
         title = _("Rating")
         log.debug { format("Create listview column for %s", title) }
-        column = Gtk::TreeViewColumn.new(title)
+        column = Gtk::TreeViewColumn.new
+        column.set_title title
         column.sizing = :fixed
         width = (Icons::STAR_SET.width + 1) * Book::MAX_RATING_STARS
         column.fixed_width = column.min_width = column.max_width = width
@@ -115,8 +115,8 @@ module Alexandria
           renderer = Gtk::CellRendererPixbuf.new
           renderer.xalign = 0.0
           column.pack_start(renderer, false)
-          column.set_cell_data_func(renderer) do |_tree_column, cell, _tree_model, iter|
-            rating = (iter[Columns::RATING] - Book::MAX_RATING_STARS).abs
+          column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
+            rating = (@model.get_value(iter, Columns::RATING) - Book::MAX_RATING_STARS).abs
             cell.pixbuf = rating >= i.succ ? Icons::STAR_SET : Icons::STAR_UNSET
           end
         end
@@ -126,7 +126,7 @@ module Alexandria
       end
 
       def setup_check_column(title, iterid)
-        renderer = CellRendererToggle.new
+        renderer = Gtk::CellRendererToggle.new
         renderer.activatable = true
         renderer.signal_connect("toggled") do |_rndrr, path|
           tree_path = Gtk::TreePath.new(path)
@@ -162,7 +162,7 @@ module Alexandria
         rescue StandardError => ex
           log.error { "toggle failed for path #{path} #{ex}\n" + e.backtrace.join("\n") }
         end
-        column = Gtk::TreeViewColumn.new(title, renderer, text: iterid)
+        column = Gtk::TreeViewColumn.new_with_attributes(title, renderer)
         column.sort_column_id = iterid
         column.resizable = true
         log.debug { format("Create listview column for %s", title) }
@@ -180,8 +180,8 @@ module Alexandria
         log.debug { format("Create listview column for %s", title) }
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
-        column = Gtk::TreeViewColumn.new(title, renderer,
-                                         text: iterid)
+        column = Gtk::TreeViewColumn.new_with_attributes(title, renderer,
+                                                         text: iterid)
         column.sort_column_id = iterid
         column.resizable = true
         @listview.append_column(column)
@@ -203,13 +203,13 @@ module Alexandria
           @prefs.col_rating_visible,
           @prefs.col_tags_visible
         ]
-        cols = @listview.columns[1..] # skip "Title"
+        cols = @listview.columns.to_a[1..] # skip "Title"
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end
         log.debug do
           "Columns visibility: " +
-            cols.map { |col| "#{col.title} #{col.visible?}" }.join(", ")
+            cols.map { |col| "#{col.title} #{col.visible}" }.join(", ")
         end
       end
 
