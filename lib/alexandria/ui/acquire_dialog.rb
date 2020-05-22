@@ -472,7 +472,7 @@ module Alexandria
             if @scanner.match? @scanner_buffer
 
               Thread.new(@interval, @scanner_buffer) do |interval, buffer|
-                log.debug { _("Waiting for more scanner input...") }
+                log.debug { "Waiting for more scanner input..." }
                 GLib::Idle.add do
                   @animation.manual_input
                   false
@@ -492,7 +492,7 @@ module Alexandria
 
                 else
                   log.debug do
-                    _("Buffer has changed while waiting, reading more characters...")
+                    "Buffer has changed while waiting, reading more characters..."
                   end
                 end
               end
@@ -525,7 +525,7 @@ module Alexandria
       end
 
       def developer_test_scan
-        log.info { _("Developer test scan.") }
+        log.info { "Developer test scan." }
         scans = [".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3j3C3f1Dxj3Dq.",
                  ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3z0CNj3Dhj1EW.",
                  ".C3nZC3nZC3n2ChnWENz7DxnY.cGen.ENr7C3r2DNbXCxTZCW.",

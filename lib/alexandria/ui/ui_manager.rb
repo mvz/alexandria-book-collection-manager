@@ -606,7 +606,7 @@ module Alexandria
       end
 
       def load_libraries
-        log.info { _("Loading libraries...") }
+        log.info { "Loading libraries..." }
         @completion_models = CompletionModels.instance
         if @libraries
           detach_old_libraries
@@ -972,7 +972,7 @@ module Alexandria
       end
 
       def restore_preferences
-        log.debug { _("Restoring preferences...") }
+        log.debug { "Restoring preferences..." }
         if @prefs.maximized
           @main_app.maximize
         else

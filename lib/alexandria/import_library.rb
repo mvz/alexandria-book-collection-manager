@@ -66,7 +66,7 @@ module Alexandria
       elsif [".csv"].include? filename[-4..-1]
         import_as_csv_file(*args)
       else
-        puts _("Bailing on this import!")
+        puts "Bailing on this import!"
         raise _("Not supported type")
       end
     end
