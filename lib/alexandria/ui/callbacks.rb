@@ -236,9 +236,10 @@ module Alexandria
       end
 
       def on_preferences(*)
-        PreferencesDialog.new(@main_app) do
+        dialog = PreferencesDialog.new(@main_app) do
           @listview_manager.setup_listview_columns_visibility
         end
+        dialog.show
       end
 
       def on_submit_bug_report(*)

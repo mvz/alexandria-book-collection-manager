@@ -107,6 +107,10 @@ module Alexandria
         setup_barcode_scanner_tab
       end
 
+      def show
+        @preferences_dialog.show
+      end
+
       def widget_names
         [:button_prov_add, :button_prov_down, :button_prov_remove,
          :button_prov_setup, :button_prov_up, :buttonbox_prov,
