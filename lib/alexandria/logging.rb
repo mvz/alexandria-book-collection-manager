@@ -131,8 +131,6 @@ module Alexandria
     end
   end
 
-  private
-
   # Creates the Logger for Alexandria
   def self.create_logger
     logger = Alexandria::Logger.new(STDERR)
@@ -149,8 +147,6 @@ module Alexandria
   end
 
   @@logger = create_logger
-
-  public
 
   # Returns the Logger for Alexandria
   def self.log
