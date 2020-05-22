@@ -399,7 +399,7 @@ module Alexandria
       end
 
       def providers_actions
-        BookProviders.map do |provider|
+        BookProviders.list.map do |provider|
           [provider.action_name, Gtk::Stock::JUMP_TO,
            _("At _%s") % provider.fullname, nil, nil,
            proc { open_web_browser(provider.url(selected_books.first)) }]

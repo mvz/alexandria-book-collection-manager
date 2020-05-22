@@ -159,8 +159,7 @@ Style/FormatStringToken:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 2
+# Offense count: 1
 Style/MissingRespondToMissing:
   Exclude:
-    - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/preferences.rb'

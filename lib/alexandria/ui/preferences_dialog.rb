@@ -76,21 +76,17 @@ module Alexandria
         renderer = Gtk::CellRendererText.new
         column = Gtk::TreeViewColumn.new("Providers",
                                          renderer)
-        # :text => 0)
         column.set_cell_data_func(renderer) do |_col, rndr, _mod, iter|
           rndr.markup = iter[0]
-          # enabled = iter[2]
-          # unless enabled
-          #  rndr.foreground = "gray"
-          # end
-          # rndr.active = value
         end
         @treeview_providers.append_column(column)
-        @treeview_providers.selection.signal_connect("changed") \
-        { sensitize_providers }
+        @treeview_providers.selection
+          .signal_connect("changed") { sensitize_providers }
 
         @button_prov_setup.sensitive = false
-        @button_prov_up.sensitive = @button_prov_down.sensitive = BookProviders.length > 1
+
+        @button_prov_up.sensitive =
+          @button_prov_down.sensitive = BookProviders.list.length > 1
 
         @buttonbox_prov.set_child_secondary(@button_prov_add, true)
         @buttonbox_prov.set_child_secondary(@button_prov_remove, true)
@@ -187,7 +183,7 @@ module Alexandria
       def on_provider_add
         dialog = NewProviderDialog.new(@preferences_dialog).acquire
         if dialog.instance
-          BookProviders.update_priority
+          BookProviders.instance.update_priority
           reload_providers
         end
       end
@@ -223,7 +219,7 @@ module Alexandria
         dialog.show_all
         if dialog.run == Gtk::ResponseType::OK
           provider.remove
-          BookProviders.update_priority
+          BookProviders.instance.update_priority
           reload_providers
         end
         dialog.destroy
@@ -258,7 +254,7 @@ module Alexandria
       def reload_providers
         model = @treeview_providers.model
         model.clear
-        BookProviders.each_with_index do |x, index|
+        BookProviders.list.each_with_index do |x, index|
           iter = model.append
           iter[0] = if x.enabled
                       x.fullname
@@ -273,7 +269,7 @@ module Alexandria
 
       def selected_provider
         iter = @treeview_providers.selection.selected
-        BookProviders.find { |x| x.name == iter[1] } unless iter.nil?
+        BookProviders.list.find { |x| x.name == iter[1] } unless iter.nil?
       end
 
       def adjust_selected_provider(prov)
@@ -296,10 +292,10 @@ module Alexandria
           @button_prov_setup.sensitive = false
           @button_prov_remove.sensitive = false
         else
-          last_iter = model.get_iter((BookProviders.length - 1).to_s)
+          last_iter = model.get_iter((BookProviders.list.length - 1).to_s)
           @button_prov_up.sensitive = sel_iter != model.iter_first
           @button_prov_down.sensitive = sel_iter != last_iter
-          provider = BookProviders.find { |x| x.name == sel_iter[1] }
+          provider = BookProviders.list.find { |x| x.name == sel_iter[1] }
           @button_prov_setup.sensitive = !prefs_empty(provider.prefs)
           @button_prov_remove.sensitive = provider.abstract?
         end
@@ -311,7 +307,7 @@ module Alexandria
           priority << iter[1]
         end
         Preferences.instance.providers_priority = priority
-        BookProviders.update_priority
+        BookProviders.instance.update_priority
       end
     end
   end

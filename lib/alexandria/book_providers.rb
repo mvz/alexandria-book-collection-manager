@@ -367,13 +367,12 @@ module Alexandria
       compact!
     end
 
-    # FIXME: Define the handful of methods that use this.
-    def self.method_missing(id, *args, &block)
-      if instance.respond_to? id
-        instance.method(id).call(*args, &block)
-      else
-        super
-      end
+    def self.list
+      instance
+    end
+
+    def self.abstract_classes
+      instance.abstract_classes
     end
 
     private

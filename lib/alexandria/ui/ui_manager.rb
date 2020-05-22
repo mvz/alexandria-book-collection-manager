@@ -184,7 +184,7 @@ module Alexandria
       def setup_book_providers
         log.debug { "setup_book_providers" }
         mid = @uimanager.new_merge_id
-        BookProviders.each do |provider|
+        BookProviders.list.each do |provider|
           name = provider.action_name
           ["ui/MainMenubar/ViewMenu/OnlineInformation/",
            "ui/BookPopup/OnlineInformation/",
