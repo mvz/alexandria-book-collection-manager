@@ -382,8 +382,8 @@ module Alexandria
       length - n_rated
     end
 
-    def ==(object)
-      object.is_a?(self.class) && object.name == name
+    def ==(other)
+      other.is_a?(self.class) && other.name == name
     end
 
     def copy_covers(somewhere)

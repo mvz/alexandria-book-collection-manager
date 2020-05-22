@@ -6,10 +6,10 @@
 
 module Alexandria
   module EventOverrides
-    def ==(obj)
-      obj.is_a?(self.class) &&
-        (time == obj.time) && (x == obj.x) && (y == obj.y) &&
-        (button == obj.button)
+    def ==(other)
+      other.is_a?(self.class) &&
+        (time == other.time) && (x == other.x) && (y == other.y) &&
+        (button == other.button)
     end
   end
 

@@ -55,12 +55,7 @@ Metrics/PerceivedComplexity:
 # Offense count: 8
 Naming/BinaryOperatorParameterName:
   Exclude:
-    - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/book_providers/amazon_ecs_util.rb'
-    - 'lib/alexandria/models/book.rb'
-    - 'lib/alexandria/models/library.rb'
-    - 'lib/alexandria/smart_library.rb'
-    - 'lib/alexandria/ui/multi_drag_treeview.rb'
 
 # Offense count: 13
 # Configuration parameters: ForbiddenDelimiters.

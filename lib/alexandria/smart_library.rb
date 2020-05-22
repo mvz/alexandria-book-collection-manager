@@ -178,8 +178,8 @@ module Alexandria
       length - n_rated
     end
 
-    def ==(object)
-      object.is_a?(self.class) && object.name == name
+    def ==(other)
+      other.is_a?(self.class) && other.name == name
     end
 
     @@deleted_libraries = []
@@ -266,8 +266,8 @@ module Alexandria
 
       Operand = Struct.new(:name, :klass)
       class Operand
-        def <=>(x)
-          name <=> x.name
+        def <=>(other)
+          name <=> other.name
         end
       end
 
@@ -282,8 +282,8 @@ module Alexandria
 
       Operator = Struct.new(:sym, :name, :proc)
       class Operator
-        def <=>(x)
-          name <=> x.name
+        def <=>(other)
+          name <=> other.name
         end
       end
 

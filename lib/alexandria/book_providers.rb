@@ -270,8 +270,8 @@ module Alexandria
         !included_modules.include?(Singleton)
       end
 
-      def <=>(provider)
-        fullname <=> provider.fullname
+      def <=>(other)
+        fullname <=> other.fullname
       end
 
       # FIXME: Clean up this complex abstract/concrete class system
