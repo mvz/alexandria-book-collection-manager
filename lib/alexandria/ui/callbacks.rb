@@ -13,7 +13,7 @@ module Alexandria
 
       def on_new(*)
         name = Library.generate_new_name(@libraries.all_libraries)
-        library = Library.load(name)
+        library = @libraries.library_store.load_library(name)
         @libraries.add_library(library)
         append_library(library, true)
         setup_move_actions
@@ -31,7 +31,7 @@ module Alexandria
 
       def on_add_book(*)
         log.info { "on_add_book" }
-        NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
+        dialog = NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
           if is_new
             append_library(library, true)
             setup_move_actions
@@ -39,13 +39,15 @@ module Alexandria
             select_library(library)
           end
         end
+        dialog.show
       end
 
       def on_add_book_manual(*)
         library = selected_library
-        NewBookDialogManual.new(@main_app, library) do |_book|
+        dialog = NewBookDialogManual.new(@main_app, library) do |_book|
           refresh_books
         end
+        dialog.show
       end
 
       def on_import(*)
@@ -114,15 +116,16 @@ module Alexandria
       end
 
       def on_acquire(*)
-        AcquireDialog.new(@main_app,
-                          selected_library) do |_books, library, is_new|
-                            if is_new
-                              append_library(library, true)
-                              setup_move_actions
-                            elsif selected_library != library
-                              select_library(library)
-                            end
-                          end
+        dialog =
+          AcquireDialog.new(@main_app, selected_library) do |_books, library, is_new|
+            if is_new
+              append_library(library, true)
+              setup_move_actions
+            elsif selected_library != library
+              select_library(library)
+            end
+          end
+        dialog.show
       end
 
       def on_properties(*)
@@ -138,9 +141,10 @@ module Alexandria
           books = selected_books
           if books.length == 1
             book = books.first
-            BookPropertiesDialog.new(@main_app,
-                                     selected_library,
-                                     book) # { |modified_book| }
+            dialog = BookPropertiesDialog.new(@main_app,
+                                              selected_library,
+                                              book)
+            dialog.show
           end
         end
       end
@@ -236,9 +240,10 @@ module Alexandria
       end
 
       def on_preferences(*)
-        PreferencesDialog.new(@main_app) do
+        dialog = PreferencesDialog.new(@main_app) do
           @listview_manager.setup_listview_columns_visibility
         end
+        dialog.show
       end
 
       def on_submit_bug_report(*)

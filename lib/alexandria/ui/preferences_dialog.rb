@@ -102,9 +102,12 @@ module Alexandria
           @checkbutton_prov_advanced.active = true if view_advanced
         end
 
-        setup_enable_disable_popup
         sensitize_providers
         setup_barcode_scanner_tab
+      end
+
+      def show
+        @preferences_dialog.show
       end
 
       def widget_names
@@ -139,63 +142,6 @@ module Alexandria
 
         @use_scanning_sound.active = Preferences.instance.play_scanning_sound
         @use_scan_sound.active = Preferences.instance.play_scan_sound
-      end
-
-      def setup_enable_disable_popup
-        # New Enable/Disable pop-up menu...
-        @enable_disable_providers_menu = Gtk::Menu.new
-        @enable_item = Gtk::MenuItem.new(label: _("Disable Provider"))
-        @enable_item.signal_connect("activate") do
-          prov = selected_provider
-          prov.toggle_enabled
-          adjust_selected_provider(prov)
-        end
-        @enable_disable_providers_menu.append(@enable_item)
-        @enable_disable_providers_menu.show_all
-
-        @treeview_providers.signal_connect("button_press_event") do |widget, event|
-          if event_is_right_click(event)
-            if (path = widget.get_path_at_pos(event.x, event.y))
-              widget.grab_focus
-              obj = widget.selection
-              path = path.first
-              unless obj.path_is_selected?(path)
-                widget.unselect_all
-                obj.select_path(path)
-              end
-              sel = widget.selection.selected
-              if sel
-                already_enabled = sel[2]
-                message = already_enabled ? _("Disable Provider") : _("Enable Provider")
-                @enable_item.label = message
-                GLib::Idle.add do
-                  @enable_disable_providers_menu.popup(nil, nil, event.button, event.time)
-                  false
-                end
-              end
-            else
-              log.debug { "not on a path" }
-            end
-          end
-        end
-
-        # Popup the menu on Shift-F10
-        @treeview_providers.signal_connect("popup_menu") do
-          selected_prov = @treeview_providers.selection.selected
-          log.debug { selected_prov.inspect }
-          if selected_prov
-            GLib::Idle.add do
-              already_enabled = selected_prov[2]
-              message = already_enabled ? _("Disable Provider") : _("Enable Provider")
-              @enable_item.label = message
-
-              @enable_disable_providers_menu.popup(nil, nil, 0, :current_time)
-              false
-            end
-          else
-            log.debug { "no action" }
-          end
-        end
       end
 
       def event_is_right_click(event)
