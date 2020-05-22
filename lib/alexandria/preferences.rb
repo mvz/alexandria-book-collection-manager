@@ -68,13 +68,10 @@ module Alexandria
         variable_name = match[1]
         new_value = args.first
         generic_setter(variable_name, new_value)
-      else
-        unless args.empty?
-          raise ArgumentError,
-                format(_("wrong number of arguments (given %<num>s, expected 0)"),
-                       num: args.length)
-        end
+      elsif args.empty?
         generic_getter(method)
+      else
+        super
       end
     end
 

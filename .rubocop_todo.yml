@@ -209,11 +209,6 @@ Style/FormatStringToken:
 Style/GuardClause:
   Enabled: false
 
-# Offense count: 1
-Style/MethodMissingSuper:
-  Exclude:
-    - 'lib/alexandria/preferences.rb'
-
 # Offense count: 2
 Style/MissingRespondToMissing:
   Exclude:
