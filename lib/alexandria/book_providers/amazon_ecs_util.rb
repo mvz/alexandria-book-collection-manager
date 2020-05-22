@@ -169,7 +169,7 @@ module Alexandria
         request_url = SERVICE_URLS[country.to_sym]
         unless request_url
           raise Amazon::RequestError,
-            format(_("Invalid country '%<country>s'"), country: country)
+                format(_("Invalid country '%<country>s'"), country: country)
         end
 
         qs = ""
@@ -177,7 +177,7 @@ module Alexandria
           next unless v
 
           v = v.join(",") if v.is_a? Array
-          qs << "&#{camelize(k.to_s)}=#{URI.encode(v.to_s)}"
+          qs << "&#{camelize(k.to_s)}=#{CGI.escape(v.to_s)}"
         end
         url = "#{request_url}#{qs}"
         sign_request(url)
