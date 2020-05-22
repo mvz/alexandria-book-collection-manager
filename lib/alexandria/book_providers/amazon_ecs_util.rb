@@ -169,7 +169,7 @@ module Alexandria
         request_url = SERVICE_URLS[country.to_sym]
         unless request_url
           raise Amazon::RequestError,
-            format(_("Invalid country '%<country>s'"), country: country)
+                format(_("Invalid country '%<country>s'"), country: country)
         end
 
         qs = ""
