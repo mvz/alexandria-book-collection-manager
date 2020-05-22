@@ -203,7 +203,7 @@ module Alexandria
         ]
         cols = @listview.columns[1..-1] # skip "Title"
         cols.each_index do |i|
-          cols[i].visible = !!cols_visibility[i]
+          cols[i].visible = cols_visibility[i]
         end
         log.debug do
           "Columns visibility: " +
