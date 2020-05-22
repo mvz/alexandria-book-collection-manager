@@ -7,11 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # Offense count: 1
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'lib/alexandria/ui/libraries_combo.rb'
-
-# Offense count: 1
 Lint/UriEscapeUnescape:
   Exclude:
     - 'lib/alexandria/book_providers/amazon_ecs_util.rb'

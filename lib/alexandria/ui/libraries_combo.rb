@@ -35,16 +35,10 @@ module Alexandria
       clear
       self.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf, String, TrueClass)
       libraries_names.each do |library_name|
-        iter = model.append
-        iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
-        iter[1] = library_name
-        iter[2] = false
+        append_entry(Alexandria::UI::Icons::LIBRARY_SMALL, library_name, false)
       end
-      model.append[1] = "-"
-      iter = model.append
-      iter[0] = Alexandria::UI::Icons::LIBRARY_SMALL
-      iter[1] = _("New Library")
-      iter[2] = true
+      append_entry(nil, "-", nil)
+      append_entry(Alexandria::UI::Icons::LIBRARY_SMALL, _("New Library"), true)
       renderer = Gtk::CellRendererPixbuf.new
       pack_start(renderer, false)
       set_attributes(renderer, pixbuf: 0)
@@ -78,6 +72,13 @@ module Alexandria
       raise unless library
 
       [library, is_new]
+    end
+
+    def append_entry(icon, label, is_new)
+      iter = model.append
+      iter[0] = icon
+      iter[1] = label
+      iter[2] = is_new
     end
   end
 end
