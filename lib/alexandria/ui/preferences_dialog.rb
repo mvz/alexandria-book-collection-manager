@@ -181,11 +181,11 @@ module Alexandria
       end
 
       def on_provider_add
-        dialog = NewProviderDialog.new(@preferences_dialog).acquire
-        if dialog.instance
-          BookProviders.instance.update_priority
-          reload_providers
-        end
+        provider = NewProviderDialog.new(@preferences_dialog).acquire
+        return unless provider
+
+        BookProviders.instance.update_priority
+        reload_providers
       end
 
       def on_scanner_device_type(_combo)

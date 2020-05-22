@@ -30,19 +30,16 @@ module Alexandria
         vbox.homogeneous = false
         hbox.pack_start(vbox)
 
+        vbox.pack_start make_label("<b><big>#{title}</big></b>")
+        vbox.pack_start make_label(message.strip) unless message
+      end
+
+      def make_label(markup)
         label = Gtk::Label.new
         label.set_alignment(0, 0)
         label.wrap = label.selectable = true
-        label.markup = "<b><big>#{title}</big></b>"
-        vbox.pack_start(label)
-
-        if message
-          label = Gtk::Label.new
-          label.set_alignment(0, 0)
-          label.wrap = label.selectable = true
-          label.markup = message.strip
-          vbox.pack_start(label)
-        end
+        label.markup = markup
+        label
       end
     end
   end

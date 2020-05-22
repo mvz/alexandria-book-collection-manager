@@ -59,12 +59,11 @@ module Alexandria
           secret.new_value = secret.value.strip if secret.value != secret.value.strip
         end
 
-        associate = prefs.variable_named("associate_tag")
-        if associate
-          associate.new_value = "rubyalexa-20" if associate.value.strip.empty?
-          if associate.value != associate.value.strip
-            associate.new_value = associate.value.strip
-          end
+        associate = prefs.variable_named("associate_tag") or return
+
+        associate.new_value = "rubyalexa-20" if associate.value.strip.empty?
+        if associate.value != associate.value.strip
+          associate.new_value = associate.value.strip
         end
       end
 

@@ -63,10 +63,11 @@ module Alexandria
 
       id, procedure, args, need_retval = ary
       retval = procedure.call(*args)
-      if need_retval
-        @protect_pending_retvals.synchronize do
-          @pending_retvals << [id, retval]
-        end
+
+      return unless need_retval
+
+      @protect_pending_retvals.synchronize do
+        @pending_retvals << [id, retval]
       end
     end
 
@@ -81,14 +82,14 @@ module Alexandria
         @id += 1
         @pending_calls << [@id, procedure, args, need_retval]
       end
-      if need_retval
-        loop do
-          @protect_pending_retvals.synchronize do
-            ary = @pending_retvals.find { |id, _retval| id == @id }
-            if ary
-              @pending_retvals.delete(ary)
-              return ary[1]
-            end
+      return unless need_retval
+
+      loop do
+        @protect_pending_retvals.synchronize do
+          ary = @pending_retvals.find { |id, _retval| id == @id }
+          if ary
+            @pending_retvals.delete(ary)
+            return ary[1]
           end
         end
       end

@@ -128,22 +128,20 @@ module Alexandria
               html2 = rslt2.body
 
               book, cover_url = parse_result_data(html2, search_isbn, true)
-              first_result = [book, cover_url] if first_result.nil?
 
               log.debug { "got book #{book}" }
 
-              if search_isbn
-                search_isbn_canon = Library.canonicalise_ean(search_isbn)
-                rslt_isbn_canon = Library.canonicalise_ean(book.isbn)
-                if search_isbn_canon == rslt_isbn_canon
-                  log.info { "book #{book} is a match" }
-                  return [book, cover_url]
-                end
-                log.debug { "not a match, checking next" }
-              else
-                # no constraint to match isbn, just return first result
+              return [book, cover_url] unless search_isbn
+
+              first_result = [book, cover_url] if first_result.nil?
+
+              search_isbn_canon = Library.canonicalise_ean(search_isbn)
+              rslt_isbn_canon = Library.canonicalise_ean(book.isbn)
+              if search_isbn_canon == rslt_isbn_canon
+                log.info { "book #{book} is a match" }
                 return [book, cover_url]
               end
+              log.debug { "not a match, checking next" }
             end
 
             # gone through all and no ISBN match, so just return first result
@@ -151,7 +149,6 @@ module Alexandria
               "no more results to check. Returning first result, just an approximation"
             end
             return first_result
-
           end
 
           title_header = doc % "h1.title"

@@ -169,9 +169,6 @@ module Alexandria
         conn = ZOOM::Connection.new(options).connect(hostname, port)
         conn.database_name = prefs["database"]
 
-        # HACK: turn off piggybacking, just to see CMcG
-        # #conn.piggyback = false
-
         conn.preferred_record_syntax = prefs["record_syntax"]
         conn.element_set_name = "F"
         conn.count = conn_count
@@ -195,19 +192,15 @@ module Alexandria
           end
           conn.search(pqf)
         rescue StandardError => ex
-          if /1005/.match?(ex.message)
-            if prefs.variable_named("piggyback") && prefs["piggyback"]
-              log.error { "Z39.50 search failed:: #{ex.message}" }
-              log.info { "Turning off piggybacking for this provider" }
-              prefs.variable_named("piggyback").new_value = false
-              search_records(criterion, type, conn_count)
-              # hopefully these precautions will prevent infinite loops here
-            else
-              raise ex
-            end
-          else
-            raise ex
+          if /1005/.match?(ex.message) &&
+              prefs.variable_named("piggyback") && prefs["piggyback"]
+            log.error { "Z39.50 search failed:: #{ex.message}" }
+            log.info { "Turning off piggybacking for this provider" }
+            prefs.variable_named("piggyback").new_value = false
+            retry
           end
+
+          raise ex
         end
       end
     end

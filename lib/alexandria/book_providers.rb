@@ -378,24 +378,24 @@ module Alexandria
 
     def rejig_providers_priority
       priority = (@prefs.providers_priority || [])
-      unless priority.empty?
-        changed = false
+      return if priority.empty?
 
-        if (ecs_index = priority.index("AmazonECS"))
-          priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
-          priority.uniq! # remove any other "Amazon" from the list
-          changed = true
-        end
-        if (worldcat_index = priority.index("Worldcat"))
-          priority[worldcat_index] = "WorldCat"
-          changed = true
-        end
-        if (adlibris_index = priority.index("Adlibris"))
-          priority[adlibris_index] = "AdLibris"
-          changed = true
-        end
-        @prefs.providers_priority = priority if changed
+      changed = false
+
+      if (ecs_index = priority.index("AmazonECS"))
+        priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
+        priority.uniq! # remove any other "Amazon" from the list
+        changed = true
       end
+      if (worldcat_index = priority.index("Worldcat"))
+        priority[worldcat_index] = "WorldCat"
+        changed = true
+      end
+      if (adlibris_index = priority.index("Adlibris"))
+        priority[adlibris_index] = "AdLibris"
+        changed = true
+      end
+      @prefs.providers_priority = priority if changed
     end
   end
 end

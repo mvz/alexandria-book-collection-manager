@@ -153,8 +153,3 @@ Style/FormatStringToken:
     - 'lib/alexandria/ui/dndable.rb'
     - 'lib/alexandria/ui/listview.rb'
     - 'lib/alexandria/ui/new_book_dialog.rb'
-
-# Offense count: 27
-# Configuration parameters: MinBodyLength.
-Style/GuardClause:
-  Enabled: false

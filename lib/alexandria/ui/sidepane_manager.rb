@@ -47,42 +47,40 @@ module Alexandria
 
       def on_edited_library(cell, path_string, new_text)
         log.debug { "edited library name #{new_text}" }
-        ## new_text = new_text.reverse # for testing;
-        # a great way to generate broken UTF-8
-        if cell.text != new_text
-          if (match = contains_illegal_character(new_text))
-            if match.instance_of? MatchData
-              chars = match[1].gsub(/&/, "&amp;")
-              ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
-                              _("The name provided contains the " \
-                                "disallowed character <b>%s</b> ") % chars).display
-            else
-              ErrorDialog.new(@main_app, _("Invalid library name"),
-                              _("The name provided contains " \
-                                "invalid characters.")).display
-            end
+        return if cell.text == new_text
 
-          elsif new_text.strip.empty?
-            log.debug { "Empty text" }
-            ErrorDialog.new(@main_app, _("The library name " \
-                                         "can not be empty")).display
-          elsif library_already_exists new_text
-            log.debug { "Already exists" }
-            ErrorDialog.new(@main_app,
-                            _("The library can not be renamed"),
-                            _("There is already a library named " \
-                              "'%s'.  Please choose a different " \
-                              "name.") % new_text.strip).display
+        if (match = contains_illegal_character(new_text))
+          if match.instance_of? MatchData
+            chars = match[1].gsub(/&/, "&amp;")
+            ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
+                            _("The name provided contains the " \
+                              "disallowed character <b>%s</b> ") % chars).display
           else
-            log.debug { "Attempting to apply #{path_string}, #{new_text}" }
-            path = Gtk::TreePath.new(path_string)
-            iter = @library_listview.model.get_iter(path)
-            library_name = new_text.strip
-            log.info { "library name is #{library_name}" }
-            iter[1] = @parent.selected_library.name = library_name
-            @parent.setup_move_actions
-            @parent.refresh_libraries
+            ErrorDialog.new(@main_app, _("Invalid library name"),
+                            _("The name provided contains " \
+                              "invalid characters.")).display
           end
+
+        elsif new_text.strip.empty?
+          log.debug { "Empty text" }
+          ErrorDialog.new(@main_app, _("The library name " \
+                                       "can not be empty")).display
+        elsif library_already_exists new_text
+          log.debug { "Already exists" }
+          ErrorDialog.new(@main_app,
+                          _("The library can not be renamed"),
+                          _("There is already a library named " \
+                            "'%s'.  Please choose a different " \
+                            "name.") % new_text.strip).display
+        else
+          log.debug { "Attempting to apply #{path_string}, #{new_text}" }
+          path = Gtk::TreePath.new(path_string)
+          iter = @library_listview.model.get_iter(path)
+          library_name = new_text.strip
+          log.info { "library name is #{library_name}" }
+          iter[1] = @parent.selected_library.name = library_name
+          @parent.setup_move_actions
+          @parent.refresh_libraries
         end
       end
 

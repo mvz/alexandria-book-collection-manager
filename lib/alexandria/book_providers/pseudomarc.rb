@@ -60,69 +60,67 @@ module Alexandria
 
     def self.marc_text_to_book(marc, mappings = USMARC_MAPPINGS)
       details = marc_text_to_details(marc)
-      unless details.empty?
-        title = nil
-        title_data = details[mappings[:title][0]]
-        if title_data
-          title_data_all = get_fields(title_data, :title, %r{(.*)[/:]$}, mappings)
-          title = title_data_all if title_data_all
-        end
+      return if details.empty?
 
-        authors = []
-        author_data = details[mappings[:authors][0]]
-        author_data&.each do |ad|
-          author = ad[mappings[:authors][1]]
-          if author
-            author = author.strip
-            author = Regexp.last_match[1] if author =~ /(.*),$/
-            authors << author
-          end
-        end
-
-        isbn = nil
-        binding = nil
-        isbn_data = details[mappings[:isbn][0]]
-        if isbn_data
-          if isbn_data.first[mappings[:isbn][1]] =~ /([-0-9xX]+)/
-            isbn = Regexp.last_match[1]
-          end
-        end
-
-        binding_data = details[mappings[:binding][0]]
-        if binding_data
-          if binding_data.first[mappings[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
-            binding = Regexp.last_match[1]
-          end
-        end
-
-        publisher = nil
-        publisher_data = details[mappings[:publisher][0]]
-        publisher = publisher_data.first[mappings[:publisher][1]] if publisher_data
-
-        year = nil
-        publication_data = details[mappings[:year][0]]
-        if publication_data
-          year = publication_data.first[mappings[:year][1]]
-          year = Regexp.last_match[1].to_i if year =~ /(\d+)/
-        end
-
-        notes = ""
-        notes_data = details[mappings[:notes][0]]
-        notes_data&.each do |note|
-          txt = note[mappings[:notes][1]]
-          notes += txt if txt
-        end
-
-        if title.nil? && isbn.nil?
-          # probably didn't undertand the MARC dialect
-          return nil
-        end
-
-        book = Alexandria::Book.new(title, authors, isbn,
-                                    publisher, year, binding)
-        book.notes = notes unless notes.empty?
-        book
+      title = nil
+      title_data = details[mappings[:title][0]]
+      if title_data
+        title_data_all = get_fields(title_data, :title, %r{(.*)[/:]$}, mappings)
+        title = title_data_all if title_data_all
       end
+
+      authors = []
+      author_data = details[mappings[:authors][0]]
+      author_data&.each do |ad|
+        author = ad[mappings[:authors][1]]
+        if author
+          author = author.strip
+          author = Regexp.last_match[1] if author =~ /(.*),$/
+          authors << author
+        end
+      end
+
+      isbn = nil
+      binding = nil
+      isbn_data = details[mappings[:isbn][0]]
+      if isbn_data
+        isbn = Regexp.last_match[1] if isbn_data.first[mappings[:isbn][1]] =~ /([-0-9xX]+)/
+      end
+
+      binding_data = details[mappings[:binding][0]]
+      if binding_data
+        if binding_data.first[mappings[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
+          binding = Regexp.last_match[1]
+        end
+      end
+
+      publisher = nil
+      publisher_data = details[mappings[:publisher][0]]
+      publisher = publisher_data.first[mappings[:publisher][1]] if publisher_data
+
+      year = nil
+      publication_data = details[mappings[:year][0]]
+      if publication_data
+        year = publication_data.first[mappings[:year][1]]
+        year = Regexp.last_match[1].to_i if year =~ /(\d+)/
+      end
+
+      notes = ""
+      notes_data = details[mappings[:notes][0]]
+      notes_data&.each do |note|
+        txt = note[mappings[:notes][1]]
+        notes += txt if txt
+      end
+
+      if title.nil? && isbn.nil?
+        # probably didn't undertand the MARC dialect
+        return nil
+      end
+
+      book = Alexandria::Book.new(title, authors, isbn,
+                                  publisher, year, binding)
+      book.notes = notes unless notes.empty?
+      book
     end
 
     def self.marc_text_to_details(marc)
@@ -137,14 +135,13 @@ module Alexandria
           d_idx = 0
           while d_idx < data.size
             d_str = data[d_idx..-1]
-            if (idx = d_str =~ /\$([a-z]) ([^\$]+)/)
-              sub_code = Regexp.last_match[1]
-              sub_data = Regexp.last_match[2]
-              this_line_data[sub_code] = sub_data
-              d_idx += idx + 2 # (2 extra to push beyond this '$a' etc.)
-            else
-              break
-            end
+            idx = d_str =~ /\$([a-z]) ([^\$]+)/
+            break unless idx
+
+            sub_code = Regexp.last_match[1]
+            sub_data = Regexp.last_match[2]
+            this_line_data[sub_code] = sub_data
+            d_idx += idx + 2 # (2 extra to push beyond this '$a' etc.)
           end
 
           unless this_line_data.empty?

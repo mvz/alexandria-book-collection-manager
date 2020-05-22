@@ -52,10 +52,10 @@ module Alexandria
       private
 
       def smart_library_base_name(rules)
-        if rules.length == 1
-          value = rules.first.value
-          return value if value.is_a?(String) && !value.strip.empty?
-        end
+        return unless rules.length == 1
+
+        value = rules.first.value
+        value if value.is_a?(String) && !value.strip.empty?
       end
     end
   end

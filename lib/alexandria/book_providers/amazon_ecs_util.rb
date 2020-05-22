@@ -356,17 +356,15 @@ module Alexandria
 
       # Similar to #get_hash, except an element object must be passed-in.
       def self.get_hash(element, path = "")
-        return unless element
+        result = element&.at(path)
+        return unless result
 
-        result = element.at(path)
-        if result
-          hash = {}
-          result = result.children
-          result.each do |item|
-            hash[item.name.to_sym] = item.inner_html
-          end
-          hash
+        hash = {}
+        result = result.children
+        result.each do |item|
+          hash[item.name.to_sym] = item.inner_html
         end
+        hash
       end
 
       def to_s

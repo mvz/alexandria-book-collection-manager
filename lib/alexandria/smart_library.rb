@@ -94,12 +94,12 @@ module Alexandria
     end
 
     def name=(new_name)
-      if @name != new_name
-        old_yaml = yaml
-        @name = new_name
-        FileUtils.mv(old_yaml, yaml)
-        save
-      end
+      return unless @name != new_name
+
+      old_yaml = yaml
+      @name = new_name
+      FileUtils.mv(old_yaml, yaml)
+      save
     end
 
     def update(*params)

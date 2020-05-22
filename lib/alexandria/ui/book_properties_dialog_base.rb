@@ -351,10 +351,11 @@ module Alexandria
       def redd_toggled
         redd_yes = @checkbutton_redd.active?
         @redd_date.sensitive = redd_yes
-        if @setup_finished
-          # don't do this when popping up the dialog for the first time
-          display_calendar_popup(@redd_date) if redd_yes && @redd_date.text.strip.empty?
-        end
+
+        return unless redd_yes && @redd_date.text.strip.empty?
+
+        # don't do this when popping up the dialog for the first time
+        display_calendar_popup(@redd_date) if @setup_finished
       end
 
       private

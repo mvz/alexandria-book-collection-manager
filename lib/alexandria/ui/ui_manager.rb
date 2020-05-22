@@ -372,25 +372,25 @@ module Alexandria
 
       def on_books_button_press_event(widget, event)
         log.debug { "books_button_press_event" }
-        if event_is_right_click event
-          widget.grab_focus
+        event_is_right_click event or return
 
-          if (path = widget.get_path_at_pos(event.x.to_i, event.y.to_i))
-            obj, path =
-              widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+        widget.grab_focus
 
-            unless obj.path_is_selected?(path)
-              log.debug { "Select #{path}" }
-              widget.unselect_all
-              obj.select_path(path)
-            end
-          else
+        if (path = widget.get_path_at_pos(event.x.to_i, event.y.to_i))
+          obj, path =
+            widget.is_a?(Gtk::TreeView) ? [widget.selection, path.first] : [widget, path]
+
+          unless obj.path_is_selected?(path)
+            log.debug { "Select #{path}" }
             widget.unselect_all
+            obj.select_path(path)
           end
-
-          menu = selected_books.empty? ? @nobook_popup : @book_popup
-          menu.popup(nil, nil, event.button, event.time)
+        else
+          widget.unselect_all
         end
+
+        menu = selected_books.empty? ? @nobook_popup : @book_popup
+        menu.popup(nil, nil, event.button, event.time)
       end
 
       def get_library_selection_text(library)
@@ -1148,10 +1148,10 @@ module Alexandria
       end
 
       def remove_library_separator
-        if !@library_separator_iter.nil? && @libraries.all_smart_libraries.empty?
-          @library_listview.model.remove(@library_separator_iter)
-          @library_separator_iter = nil
-        end
+        return if @library_separator_iter.nil? || @libraries.all_smart_libraries.any?
+
+        @library_listview.model.remove(@library_separator_iter)
+        @library_separator_iter = nil
       end
 
       def undoable_undelete(library, books = nil)

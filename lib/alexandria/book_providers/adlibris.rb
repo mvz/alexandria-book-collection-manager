@@ -107,12 +107,10 @@ module Alexandria
       def parse_result_data(html)
         doc = html_to_doc(html)
         begin
-          title = nil
-          if (h1 = doc.at("div.productTitleFormat h1"))
-            title = text_of(h1)
-          else
-            raise NoResultsError, _("title not found on page")
-          end
+          h1 = doc.at("div.productTitleFormat h1")
+          raise NoResultsError, _("title not found on page") unless h1
+
+          title = text_of(h1)
 
           product = doc.at("div.product")
           ul_info = doc.at("ul.info") # NOTE, two of these
