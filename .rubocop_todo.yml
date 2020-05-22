@@ -188,14 +188,6 @@ Style/CommentedKeyword:
 Style/Documentation:
   Enabled: false
 
-# Offense count: 2
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: allowed_in_returns, forbidden
-Style/DoubleNegation:
-  Exclude:
-    - 'lib/alexandria/ui/import_dialog.rb'
-    - 'lib/alexandria/ui/listview.rb'
-
 # Offense count: 8
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: annotated, template, unannotated
