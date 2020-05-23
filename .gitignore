@@ -3,7 +3,6 @@ config.save
 alexandria.desktop
 alexandria.desktop.in.h
 .svn-authors
-lib/alexandria/default_preferences.rb
 Gemfile.lock
 .yardoc/
 share/locale/
