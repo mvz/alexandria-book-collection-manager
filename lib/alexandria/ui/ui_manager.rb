@@ -1170,16 +1170,16 @@ module Alexandria
 
       private
 
-      def select_book_in_view(bk, view)
+      def select_book_in_view(book, view)
         @filtered_model.refilter
-        iter = iter_from_book bk
+        iter = iter_from_book book
         return unless iter
 
         path = iter.path
         return unless view.model
 
         path = view_path_to_model_path(view, path)
-        log.debug { "Path for #{bk.ident} is #{path}" }
+        log.debug { "Path for #{book.ident} is #{path}" }
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all
         selection.select_path(path)
