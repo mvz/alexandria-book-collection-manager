@@ -10,12 +10,7 @@ RSpec.describe Alexandria do
   let(:lib_version) { File.join(LIBDIR, "0.6.2") }
 
   before do
-    FileUtils.rm_rf(TESTDIR)
     FileUtils.cp_r(lib_version, TESTDIR)
-  end
-
-  after do
-    FileUtils.rm_rf(TESTDIR)
   end
 
   describe ".list_books_on_console" do

@@ -476,7 +476,7 @@ module Alexandria
             b = books.first
             # FIXME: Clean up endless negation in this logic
             no_urls = true
-            BookProviders.each do |provider|
+            BookProviders.list.each do |provider|
               has_no_url = true
               begin
                 has_no_url = (b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?)
@@ -523,31 +523,12 @@ module Alexandria
         @actiongroup["Sidepane"].active = false
       end
 
+      # TODO: Figure out why this frequently selects the wrong book!
       def select_a_book(book)
-        select_this_book = proc do |bk, view|
-          @filtered_model.refilter
-          iter = iter_from_book bk
-          next unless iter
-
-          path = iter.path
-          next unless view.model
-
-          path = view_path_to_model_path(view, path)
-          log.debug { "Path for #{bk.ident} is #{path}" }
-          selection = view.respond_to?(:selection) ? @listview.selection : @iconview
-          selection.unselect_all
-          selection.select_path(path)
-        end
-        begin
-          log.debug { "select_a_book: listview" }
-          select_this_book.call(book, @listview)
-          log.debug { "select_a_book: listview" }
-          select_this_book.call(book, @iconview)
-        rescue StandardError => ex
-          trace = ex.backtrace.join("\n> ")
-          log.warn { "Failed to automatically select book: #{ex.message} #{trace}" }
-        end
-        # TODO: Figure out why this frequently selects the wrong book!
+        log.debug { "select_a_book: listview" }
+        select_book_in_view(book, @listview)
+        log.debug { "select_a_book: iconview" }
+        select_book_in_view(book, @iconview)
       end
 
       def update(*ary)
@@ -584,8 +565,6 @@ module Alexandria
           refresh_books
         end
       end
-
-      # private
 
       def open_web_browser(url)
         if url.nil?
@@ -892,7 +871,7 @@ module Alexandria
       def iter_from_ident(ident)
         log.debug { ident.to_s }
         iter = @model.iter_first
-        ok = true
+        ok = true if iter
         while ok
           return iter if iter[Columns::IDENT] == ident
 
@@ -1190,6 +1169,21 @@ module Alexandria
       end
 
       private
+
+      def select_book_in_view(bk, view)
+        @filtered_model.refilter
+        iter = iter_from_book bk
+        return unless iter
+
+        path = iter.path
+        return unless view.model
+
+        path = view_path_to_model_path(view, path)
+        log.debug { "Path for #{bk.ident} is #{path}" }
+        selection = view.respond_to?(:selection) ? view.selection : view
+        selection.unselect_all
+        selection.select_path(path)
+      end
 
       def view_path_to_model_path(view, path)
         path = view.model.convert_path_to_child_path(path)
