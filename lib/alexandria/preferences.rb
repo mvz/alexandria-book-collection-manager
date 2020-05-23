@@ -68,11 +68,11 @@ module Alexandria
     end
 
     def get_variable(variable_name)
-      generic_getter(variable_name)
+      generic_getter(variable_name.to_s)
     end
 
     def set_variable(variable_name, value)
-      generic_setter(variable_name, value)
+      generic_setter(variable_name.to_s, value)
     end
 
     private
