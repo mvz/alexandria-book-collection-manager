@@ -415,7 +415,7 @@ msgid "Show information about Alexandria"
 msgstr "Показать сведения о Alexandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "_Боковая панель"
 
 #: ../lib/alexandria/ui/callbacks.rb:336

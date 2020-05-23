@@ -412,7 +412,7 @@ msgid "Show information about Alexandria"
 msgstr "Прикажи податоци за Александрија"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "_Странична плоча"
 
 #: ../lib/alexandria/ui/callbacks.rb:336

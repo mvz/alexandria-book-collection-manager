@@ -742,7 +742,7 @@ msgid "Show information about Alexandria"
 msgstr "Wyświetla informacje o programie Aleksandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:320
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "_Panel boczny"
 
 #: ../lib/alexandria/ui/callbacks.rb:321

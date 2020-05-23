@@ -85,7 +85,6 @@ Naming/PredicateName:
 RSpec/FilePath:
   Exclude:
     - 'spec/alexandria/ui/iconview_spec.rb'
-    - 'spec/alexandria/ui/sidepane_manager_spec.rb'
     - 'spec/alexandria/ui/sound_spec.rb'
 
 # Offense count: 13

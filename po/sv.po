@@ -408,7 +408,7 @@ msgid "Show information about Alexandria"
 msgstr "Visa information om Alexandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "Sido_panel"
 
 #: ../lib/alexandria/ui/callbacks.rb:336

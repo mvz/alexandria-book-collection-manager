@@ -75,7 +75,7 @@ module Alexandria
         @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
-        @sidepane_manager = SidePaneManager.new @library_listview, self
+        @sidepane_manager = SidepaneManager.new @library_listview, self
         @library_listview = @sidepane_manager.library_listview
         @listview_manager.setup_listview_columns_visibility
         @listview_manager.setup_listview_columns_width

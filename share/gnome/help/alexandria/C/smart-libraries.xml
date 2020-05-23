@@ -18,7 +18,7 @@
 
   <para>
     Smart Libraries are listed beneath the actual libraries in the
-    application side pane. They do not actually contain books, but
+    application sidepane. They do not actually contain books, but
     rather a set of rules describing which books you wish to see. The
     books from all libraries which satisfy the set of rules will be
     displayed. You cannot directly add books to a Smart Library.
