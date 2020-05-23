@@ -191,11 +191,10 @@ module Alexandria
           break
         end
       end
-      if is_librarything
-        return LibraryThingCSVImport.new(header)
-      elsif is_goodreads
-        return GoodreadsCSVImport.new(header)
-      end
+
+      return LibraryThingCSVImport.new(header) if is_librarything
+      return GoodreadsCSVImport.new(header) if is_goodreads
+
       raise _("Not Recognized") unless is_librarything || is_goodreads
     end
   end

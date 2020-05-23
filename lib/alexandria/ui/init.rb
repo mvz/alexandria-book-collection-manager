@@ -19,8 +19,8 @@ class CellRendererToggle < Gtk::CellRendererToggle
 end
 
 class Gtk::ActionGroup
-  def [](x)
-    get_action(x)
+  def [](index)
+    get_action(index)
   end
 end
 

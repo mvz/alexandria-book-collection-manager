@@ -70,6 +70,7 @@ module Alexandria
           @selected_instance = nil
         end
         destroy
+        instance
       end
 
       def instance

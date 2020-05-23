@@ -75,9 +75,9 @@ module Alexandria
           if (type == SEARCH_BY_ISBN) && (trying_again == false)
             trying_again = true
             retry
-          else
-            raise ex
           end
+
+          raise ex
         end
       end
 

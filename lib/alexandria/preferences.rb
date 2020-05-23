@@ -57,27 +57,22 @@ module Alexandria
       @changed_settings.clear
     end
 
-    def method_missing(id, *args)
-      method = id.id2name
-      if (match = /(.*)=$/.match(method))
-        if args.length != 1
-          raise ArgumentError,
-                format(_("wrong number of arguments (given %<num>s, expected 1)"),
-                       num: args.length)
-        end
-        variable_name = match[1]
-        new_value = args.first
-        generic_setter(variable_name, new_value)
-      elsif args.empty?
-        generic_getter(method)
-      else
-        super
-      end
-    end
-
     def remove_preference(variable_name)
       @alexandria_settings.delete(variable_name)
       @changed_settings << variable_name
+    end
+
+    DEFAULT_VALUES.each_key do |var|
+      define_method(var) { generic_getter var }
+      define_method("#{var}=") { |val| generic_setter var, val }
+    end
+
+    def get_variable(variable_name)
+      generic_getter(variable_name)
+    end
+
+    def set_variable(variable_name, value)
+      generic_setter(variable_name, value)
     end
 
     private

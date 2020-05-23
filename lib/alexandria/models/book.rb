@@ -64,8 +64,8 @@ module Alexandria
       own || false
     end
 
-    def ==(obj)
-      obj.is_a?(self.class) && (ident == obj.ident)
+    def ==(other)
+      other.is_a?(self.class) && (ident == other.ident)
     end
 
     def inspect

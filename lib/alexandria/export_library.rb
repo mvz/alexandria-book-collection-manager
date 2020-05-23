@@ -186,7 +186,7 @@ module Alexandria
             File.join("images", final_cover(book))
         end
         if book.isbn
-          BookProviders.each do |provider|
+          BookProviders.list.each do |provider|
             elem = prod.add_element("ProductWebsite")
             elem.add_element("ProductWebsiteDescription").text =
               provider.fullname

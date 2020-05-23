@@ -204,6 +204,6 @@ module Alexandria
           raise NoResultsError
         end
       end
-    end # class BarnesAndNobleProvider
-  end # class BookProviders
-end # module Alexandria
+    end
+  end
+end

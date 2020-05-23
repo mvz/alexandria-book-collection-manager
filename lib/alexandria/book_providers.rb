@@ -36,10 +36,12 @@ module Alexandria
 
     class SearchError < StandardError; end
     class NoResultsError < SearchError; end
-    class ProviderSkippedError < NoResultsError; end # not an error :^(
-    class SearchEmptyError < SearchError; end # sigh, again not really an error
     class TooManyResultsError < SearchError; end
     class InvalidSearchTypeError < SearchError; end
+
+    # These errors are not really errors
+    class ProviderSkippedError < NoResultsError; end
+    class SearchEmptyError < SearchError; end
 
     def self.search(criterion, type)
       factory_n = 0
@@ -151,9 +153,8 @@ module Alexandria
         end
 
         def new_value=(new_value)
-          message = @provider.variable_name(self) + "="
-          Alexandria::Preferences.instance.send(message,
-                                                new_value)
+          name = @provider.variable_name(self)
+          Alexandria::Preferences.instance.set_variable(name, new_value)
           self.value = new_value
         end
 
@@ -186,8 +187,8 @@ module Alexandria
 
       def read
         each do |var|
-          message = @provider.variable_name(var)
-          val = Alexandria::Preferences.instance.send(message)
+          name = @provider.variable_name(var)
+          val = Alexandria::Preferences.instance.get_variable(name)
           var.value = val unless val.nil? || ((val == "") && var.mandatory?)
         end
       end
@@ -270,8 +271,8 @@ module Alexandria
         !included_modules.include?(Singleton)
       end
 
-      def <=>(provider)
-        fullname <=> provider.fullname
+      def <=>(other)
+        fullname <=> other.fullname
       end
 
       # FIXME: Clean up this complex abstract/concrete class system
@@ -365,37 +366,36 @@ module Alexandria
       compact!
     end
 
-    # FIXME: Define the handful of methods that use this.
-    def self.method_missing(id, *args, &block)
-      if instance.respond_to? id
-        instance.method(id).call(*args, &block)
-      else
-        super
-      end
+    def self.list
+      instance
+    end
+
+    def self.abstract_classes
+      instance.abstract_classes
     end
 
     private
 
     def rejig_providers_priority
       priority = (@prefs.providers_priority || [])
-      unless priority.empty?
-        changed = false
+      return if priority.empty?
 
-        if (ecs_index = priority.index("AmazonECS"))
-          priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
-          priority.uniq! # remove any other "Amazon" from the list
-          changed = true
-        end
-        if (worldcat_index = priority.index("Worldcat"))
-          priority[worldcat_index] = "WorldCat"
-          changed = true
-        end
-        if (adlibris_index = priority.index("Adlibris"))
-          priority[adlibris_index] = "AdLibris"
-          changed = true
-        end
-        @prefs.providers_priority = priority if changed
+      changed = false
+
+      if (ecs_index = priority.index("AmazonECS"))
+        priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
+        priority.uniq! # remove any other "Amazon" from the list
+        changed = true
       end
+      if (worldcat_index = priority.index("Worldcat"))
+        priority[worldcat_index] = "WorldCat"
+        changed = true
+      end
+      if (adlibris_index = priority.index("Adlibris"))
+        priority[adlibris_index] = "AdLibris"
+        changed = true
+      end
+      @prefs.providers_priority = priority if changed
     end
   end
 end

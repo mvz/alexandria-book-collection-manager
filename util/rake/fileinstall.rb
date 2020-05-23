@@ -3,7 +3,7 @@
 # -*- ruby -*-
 #--
 # Copyright (C) 2009 Cathal Mc Ginley
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2020 Matijs van Zuijlen
 #
 # This file is part of the Alexandria build system.
 #
@@ -210,16 +210,16 @@ class FileInstallTask < Rake::TaskLib
     end
   end
 
-  # Delete the directory at the given Pathname +p+ if all its children
+  # Delete the directory at the given Pathname +path+ if all its children
   # can be similarly deleted, and if it is then empty.
-  def delete_if_empty(p)
-    return false unless p.directory?
+  def delete_if_empty(path)
+    return false unless path.directory?
 
-    p.children.each do |c|
+    path.children.each do |c|
       delete_if_empty(c)
     end
-    if p.children.empty?
-      p.delete # TODO: optional verbose output here
+    if path.children.empty?
+      path.delete # TODO: optional verbose output here
       true
     else
       false
@@ -291,5 +291,5 @@ class FileInstallTask < Rake::TaskLib
         all_dirs_set << File.dirname(file)
       end
     end
-  end # class FileGroup
-end # class FileInstallTask
+  end
+end

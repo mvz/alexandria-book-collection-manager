@@ -143,7 +143,7 @@ module Alexandria
 
       def on_changed(entry)
         ok = !entry.text.strip.empty?
-        decode_cuecat?(@entry_isbn) if entry == @entry_isbn
+        decode_cuecat(@entry_isbn) if entry == @entry_isbn
         (entry == @entry_isbn ? @button_add : @button_find).sensitive = ok
       end
 
@@ -319,14 +319,14 @@ module Alexandria
         end
       end
 
-      def decode_cuecat?(entry) # srsly?
-        if entry.text =~ /^\..*?\..*?\.(.*?)\.$/
-          tmp = Regexp.last_match[1].tr("a-zA-Z0-9+-", " -_")
-          tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack1("u")
-          tmp.chomp!("\000")
-          entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
-          entry.text = "Bad scan result" if entry.text.count("^ -~") > 0
-        end
+      def decode_cuecat(entry)
+        return unless entry.text =~ /^\..*?\..*?\.(.*?)\.$/
+
+        tmp = Regexp.last_match[1].tr("a-zA-Z0-9+-", " -_")
+        tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack1("u")
+        tmp.chomp!("\000")
+        entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
+        entry.text = "Bad scan result" if entry.text.count("^ -~") > 0
       end
 
       def on_results_button_press_event(_widget, event)
@@ -494,10 +494,10 @@ module Alexandria
 
       def notify_end_add_by_isbn
         MainApp.instance.appbar.children.first.visible = false
-        if @progress_pulsing
-          GLib::Source.remove(@progress_pulsing)
-          @progress_pulsing = nil
-        end
+        return unless @progress_pulsing
+
+        GLib::Source.remove(@progress_pulsing)
+        @progress_pulsing = nil
       end
 
       def update(status, provider)
@@ -513,26 +513,26 @@ module Alexandria
       end
 
       def on_focus
-        if @isbn_radiobutton.active? && @entry_isbn.text.strip.empty?
-          clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
-          if (text = clipboard.wait_for_text)
-            if Library.valid_isbn?(text) || Library.valid_ean?(text) ||
-                Library.valid_upc?(text)
-              GLib::Idle.add do
-                @entry_isbn.text = text
-                @entry_isbn.grab_focus
-                @entry_isbn.select_region(0, -1) # select all...
-                # @button_add.grab_focus
-                false
-              end
-              log.debug { "Setting ISBN field to #{text}" }
-              # FIXME: Get rid of this puts!
-              puts text # required, strangely, to prevent GUI strangeness
-              # above last checked with ruby-gnome2 0.17.1 2009-12-09
-              # if this puts is commented out, the cursor disappears
-              # from the @entry_isbn box... weird, ne? - CathalMagus
-            end
+        return unless @isbn_radiobutton.active? && @entry_isbn.text.strip.empty?
+
+        clipboard = Gtk::Clipboard.get(Gdk::Selection::CLIPBOARD)
+        text = clipboard.wait_for_text or return
+
+        if Library.valid_isbn?(text) || Library.valid_ean?(text) ||
+            Library.valid_upc?(text)
+          GLib::Idle.add do
+            @entry_isbn.text = text
+            @entry_isbn.grab_focus
+            @entry_isbn.select_region(0, -1) # select all...
+            # @button_add.grab_focus
+            false
           end
+          log.debug { "Setting ISBN field to #{text}" }
+          # FIXME: Get rid of this puts!
+          puts text # required, strangely, to prevent GUI strangeness
+          # above last checked with ruby-gnome2 0.17.1 2009-12-09
+          # if this puts is commented out, the cursor disappears
+          # from the @entry_isbn box... weird, ne? - CathalMagus
         end
       end
 
@@ -570,11 +570,12 @@ module Alexandria
         isbn13 = Library.canonicalise_ean(isbn)
         return unless isbn13
 
-        if (book = library.find { |bk| bk.isbn == isbn13 })
-          raise DuplicateBookException,
-                format(_("'%s' already exists in '%s' (titled '%s')."),
-                       isbn, library.name, book.title.sub("&", "&amp;"))
-        end
+        book = library.find { |bk| bk.isbn == isbn13 }
+        return unless book
+
+        raise DuplicateBookException,
+              format(_("'%s' already exists in '%s' (titled '%s')."),
+                     isbn, library.name, book.title.sub("&", "&amp;"))
       end
     end
   end

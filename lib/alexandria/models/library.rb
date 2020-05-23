@@ -222,11 +222,11 @@ module Alexandria
       File.open(yaml(temp_book), "w") { |io| io.puts temp_book.to_yaml }
 
       # Do not notify twice.
-      if changed?
-        notify_observers(self,
-                         already_there ? BOOK_UPDATED : BOOK_ADDED,
-                         book)
-      end
+      return unless changed?
+
+      notify_observers(self,
+                       already_there ? BOOK_UPDATED : BOOK_ADDED,
+                       book)
     end
 
     def transport
@@ -382,8 +382,8 @@ module Alexandria
       length - n_rated
     end
 
-    def ==(object)
-      object.is_a?(self.class) && object.name == name
+    def ==(other)
+      other.is_a?(self.class) && other.name == name
     end
 
     def copy_covers(somewhere)

@@ -96,11 +96,11 @@ module Alexandria
       end
 
       def set_passive
-        if @canvas
-          passive_bg = "#F4F4F4"
-          @canvas.set_property(:background_color, passive_bg)
-          @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
-        end
+        @canvas or return
+
+        passive_bg = "#F4F4F4"
+        @canvas.set_property(:background_color, passive_bg)
+        @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
       end
 
       def manual_input
