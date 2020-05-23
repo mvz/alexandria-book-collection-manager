@@ -22,4 +22,30 @@ describe Alexandria::UI::UIManager do
       expect(libraries.all_libraries.count).to eq libraries_count + 1
     end
   end
+
+  describe "#on_books_selection_changed" do
+    let(:lib_version) { File.join(LIBDIR, "0.6.2") }
+    let(:ui) { described_class.new main_app }
+    let(:libraries) { ui.instance_variable_get("@libraries") }
+    let(:regular_library) { libraries.all_regular_libraries.last }
+
+    before do
+      FileUtils.cp_r(lib_version, TESTDIR)
+    end
+
+    it "works when single book is selected" do
+      ui.select_a_library regular_library
+
+      # FIXME: This is needed because right now UIManager#refresh_books doesn't
+      # work without Gtk loop.
+      regular_library.each { |book| ui.append_book book }
+      ui.iconview.unfreeze
+      expect(ui.model.iter_n_children).to eq regular_library.count
+
+      # This triggers the #on_books_selection_changed callback
+      ui.select_a_book regular_library.first
+
+      expect(ui.iconview.selected_items).not_to be_empty
+    end
+  end
 end

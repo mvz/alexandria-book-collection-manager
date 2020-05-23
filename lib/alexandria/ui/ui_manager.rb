@@ -476,7 +476,7 @@ module Alexandria
             b = books.first
             # FIXME: Clean up endless negation in this logic
             no_urls = true
-            BookProviders.each do |provider|
+            BookProviders.list.each do |provider|
               has_no_url = true
               begin
                 has_no_url = (b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?)
