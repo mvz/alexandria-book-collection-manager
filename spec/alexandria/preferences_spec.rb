@@ -9,8 +9,34 @@ require File.dirname(__FILE__) + "/../spec_helper"
 describe Alexandria::Preferences do
   let(:instance) { described_class.instance }
 
-  it "returns nil fetching unknown setting" do
-    expect(instance.get_variable("does_not_exist")).to eq nil
+  describe "#get_variable" do
+    it "returns nil fetching unknown setting" do
+      expect(instance.get_variable("does_not_exist")).to eq nil
+    end
+
+    it "allows fetching by string" do
+      instance.toolbar_visible = false
+      expect(instance.get_variable("toolbar_visible")).to eq false
+    end
+
+    it "allows fetching by symbol" do
+      instance.toolbar_visible = true
+      expect(instance.get_variable(:toolbar_visible)).to eq true
+    end
+  end
+
+  describe "#set_variable" do
+    it "allows setting by string" do
+      instance.toolbar_visible = false
+      instance.set_variable("toolbar_visible", true)
+      expect(instance.toolbar_visible).to eq true
+    end
+
+    it "allows setting by symbol" do
+      instance.toolbar_visible = false
+      instance.set_variable(:toolbar_visible, true)
+      expect(instance.toolbar_visible).to eq true
+    end
   end
 
   it "allows setting known setting to false" do

@@ -107,8 +107,10 @@ def convert_with_type(value, type)
     value.to_f
   when "bool"
     value == "true"
+  when "string"
+    value.to_s.strip
   else
-    value.strip
+    raise NotImplementedError, "Unknown type #{type}"
   end
 end
 
@@ -117,14 +119,13 @@ SCHEMA_PATH = "schemas/alexandria.schemas"
 # This generates default_preferences.rb by copying over values from
 # providers_priority key in alexandria.schemas (necessary?)
 
-file "lib/alexandria/default_preferences.rb" => [SCHEMA_PATH] do |f|
+file "lib/alexandria/default_preferences.rb" => ["Rakefile", SCHEMA_PATH] do |f|
   require "rexml/document"
   generated_lines = []
 
   doc = REXML::Document.new(IO.read(SCHEMA_PATH))
   doc.elements.each("gconfschemafile/schemalist/schema") do |element|
     default = element.elements["default"].text
-    next unless default
 
     varname = File.basename(element.elements["key"].text)
     type = element.elements["type"].text
