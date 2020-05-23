@@ -119,16 +119,20 @@ describe Alexandria::Library do
   end
 
   context "when importing from 0.6.1 data files" do
+    let(:libs) { loader.load_all_libraries }
+    let(:my_library) { libs[0] }
+
     before do
       lib_version = File.join(LIBDIR, "0.6.1")
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
-    it "imports cleanly from version 0.6.1 data format" do
-      libs = loader.load_all_libraries
+    it "can be loaded" do
       expect(libs.size).to eq(1)
-      my_library = libs[0]
       expect(my_library.size).to eq(3)
+    end
+
+    it "imports cleanly from version 0.6.1 data format" do
       # Malory
       malory_book = my_library.select { |b| b.isbn == "9780192812179" }[0]
       expect(malory_book.publisher).to eq("Oxford University Press")
@@ -143,6 +147,9 @@ describe Alexandria::Library do
   end
 
   context "when importing from 0.6.1 with books without an ISBN" do
+    let(:libs) { loader.load_all_libraries }
+    let(:my_library) { libs[0] }
+
     before do
       lib_version = File.join(LIBDIR, "0.6.1-noisbn")
       FileUtils.cp_r(lib_version, TESTDIR)
@@ -152,58 +159,63 @@ describe Alexandria::Library do
       FileUtils.rm_rf(TESTDIR)
     end
 
-    it "allows books to have no ISBN" do
-      libs = loader.load_all_libraries
+    it "can be loaded" do
       expect(libs.size).to eq(1)
-      my_library = libs[0]
       expect(my_library.size).to eq(2)
+    end
 
+    it "loads a book with ISBN" do
       # Guide to LaTeX
-      latex_book = my_library.select { |b| b.title.include? "Latex" }[0]
+      latex_book = my_library.find { |b| b.title.include? "Latex" }
       expect(latex_book.isbn).to eq("9780201398250")
       expect(latex_book.publisher).to eq("Addison Wesley") # note, no Ruby-Amazon cruft
       expect(latex_book.version).to eq(Alexandria::DATA_VERSION)
+    end
 
+    it "loads a book without ISBN" do
       # Lex and Yacc
-      lex_and_yacc_book = my_library.select { |b| b.title.include? "Lex" }[0]
+      lex_and_yacc_book = my_library.find { |b| b.title.include? "Lex" }
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
+    end
 
-      my_library.each do |book|
-        my_library.save(book, true)
-      end
-
-      libraries_reloaded = loader.load_all_libraries
-      my_library_reloaded = libraries_reloaded[0]
-
+    it "saves loaded books properly" do
+      my_library.each { |book| my_library.save(book, true) }
+      my_library_reloaded = loader.load_all_libraries[0]
       expect(my_library_reloaded.size).to eq(2)
 
-      latex_book = my_library_reloaded.select { |b| b.title.include? "Latex" }[0]
-      expect(latex_book).not_to be_nil
+      latex_book = my_library_reloaded.find { |b| b.title.include? "Latex" }
       expect(latex_book.publisher).to eq("Addison Wesley")
 
-      lex_and_yacc_book = my_library_reloaded.select { |b| b.title.include? "Lex" }[0]
-      expect(lex_and_yacc_book).not_to be_nil
+      lex_and_yacc_book = my_library_reloaded.find { |b| b.title.include? "Lex" }
       expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
     end
   end
 
   describe ".move" do
+    let(:source) { loader.load_library("My Library") }
+    let(:target) { loader.load_library("Target") }
+    let(:book) { source.first }
+
     before do
       lib_version = File.join(LIBDIR, "0.6.2")
       FileUtils.cp_r(lib_version, TESTDIR)
     end
 
-    it "moves the given book from source to target" do
-      source = loader.load_library("My Library")
+    it "changes the number of books in the source and target libraries" do
       count = source.count
-      book = source.first
-      target = loader.load_library("Target")
 
-      described_class.move(source, target, source.first)
+      described_class.move(source, target, book)
 
       aggregate_failures do
         expect(source.count).to eq count - 1
         expect(target.count).to eq 1
+      end
+    end
+
+    it "moves the book files from source to target" do
+      described_class.move(source, target, book)
+
+      aggregate_failures do
         expect(File.exist?(source.yaml(book))).to be_falsey
         expect(File.exist?(source.cover(book))).to be_falsey
         expect(File.exist?(target.yaml(book))).to be_truthy

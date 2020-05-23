@@ -80,20 +80,6 @@ Naming/PredicateName:
     - 'lib/alexandria/ui/smart_library_properties_dialog_base.rb'
     - 'lib/alexandria/web_themes.rb'
 
-# Offense count: 17
-# Configuration parameters: Max.
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/alexandria/book_providers_spec.rb'
-    - 'spec/alexandria/book_spec.rb'
-    - 'spec/alexandria/console_spec.rb'
-    - 'spec/alexandria/export_library_spec.rb'
-    - 'spec/alexandria/library_spec.rb'
-    - 'spec/alexandria/library_store_spec.rb'
-    - 'spec/alexandria/ui/provider_preferences_dialog_spec.rb'
-    - 'spec/alexandria/ui/smart_library_properties_dialog_spec.rb'
-    - 'spec/end_to_end/basic_run_spec.rb'
-
 # Offense count: 3
 # Configuration parameters: CustomTransform, IgnoreMethods.
 RSpec/FilePath:

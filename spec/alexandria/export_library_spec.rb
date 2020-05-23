@@ -28,39 +28,27 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe "#export_as_csv_list" do
     let(:message) { :export_as_csv_list }
+    let(:sort_by_title) { Alexandria::LibrarySortOrder.new(:title) }
+    let(:sort_by_date_desc) { Alexandria::LibrarySortOrder.new(:publishing_year, false) }
 
     def load_rows_from_csv
       CSV.read(outfile, col_sep: ";")
     end
 
     it "can sort by title" do
-      sort_by_title = Alexandria::LibrarySortOrder.new(:title)
       format.invoke(my_library, sort_by_title, outfile)
-      expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
-      expect(my_library.size).to eq 5
-      expect(rows.size).to eq(my_library.size)
-      title_index = 0
-      comparisons = rows.size - 1
-      comparisons.times do |index|
-        expect(rows[index][title_index]).to be <= rows[index + 1][title_index]
-      end
+      titles = rows.map(&:first)
+      expect(titles).to eq titles.sort
     end
 
     it "can sort in descending order" do
-      sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
       format.invoke(my_library, sort_by_date_desc, outfile)
-      expect(File.exist?(outfile)).to be_truthy
       rows = load_rows_from_csv
       rows.shift
-      expect(my_library.size).to eq 5
-      expect(rows.size).to eq(my_library.size)
-      date_index = 5
-      comparisons = rows.size - 1
-      comparisons.times do |index|
-        expect(rows[index][date_index]).to be >= rows[index + 1][date_index]
-      end
+      dates = rows.map { |it| it[5] }
+      expect(dates).to eq dates.sort.reverse
     end
   end
 
