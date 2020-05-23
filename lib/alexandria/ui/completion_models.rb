@@ -164,7 +164,7 @@ module Alexandria
             editions << book.edition
             borrowers << book.loaned_to
             # TODO: Ensure #tags is always an array
-            (book.tags || []).each { |tag| tags << tag }
+            tags.concat(book.tags) if book.tags
           end
         end
 
