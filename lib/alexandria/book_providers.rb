@@ -219,19 +219,19 @@ module Alexandria
         @name << "_" << fullname.hash.to_s
         @fullname = fullname
         prefs = Alexandria::Preferences.instance
-        ary = prefs.abstract_providers
+        ary = prefs.get_variable :abstract_providers
         ary ||= []
         ary << @name
-        prefs.abstract_providers = ary
+        prefs.set_variable :abstract_providers, ary
         message = variable_name("name") + "="
         prefs.send(message, @fullname)
       end
 
       def remove
         prefs = Alexandria::Preferences.instance
-        if (ary = prefs.abstract_providers)
+        if (ary = prefs.get_variable :abstract_providers)
           ary.delete(@name)
-          prefs.abstract_providers = ary
+          prefs.set_variable :abstract_providers, ary
         end
         if (ary = prefs.providers_priority) && ary.include?(@name)
           ary.delete(@name)
@@ -337,7 +337,7 @@ module Alexandria
           end
         end
       end
-      if (ary = @prefs.abstract_providers)
+      if (ary = @prefs.get_variable :abstract_providers)
         ary.each do |name|
           md = /^(.+)_/.match(name)
           next unless md
