@@ -11,6 +11,7 @@ module Alexandria
       "view_as" => 0,
       "arrange_icons_mode" => 0,
       "reverse_icons" => false,
+      "selected_library" => "",
       "barcode_scanner" => "CueCat",
       "play_scanning_sound" => true,
       "play_scan_sound" => true,
