@@ -109,7 +109,6 @@ RSpec/PredicateMatcher:
 # SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
   Exclude:
-    - 'lib/alexandria/ui/import_dialog.rb'
     - 'lib/alexandria/ui/init.rb'
     - 'lib/alexandria/ui/provider_preferences_base_dialog.rb'
 
