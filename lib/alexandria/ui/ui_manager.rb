@@ -730,7 +730,7 @@ module Alexandria
           new_height = [ICON_HEIGHT, icon.height].min
           icon = cache_scaled_icon(icon, new_width, new_height)
         end
-        icon = icon.tag(Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
+        icon = Icons.tag_icon(icon, Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
         iter[Columns::COVER_ICON] = icon
         log.debug { "Full iter: " + (0..15).map { |num| iter[num].inspect }.join(", ") }
       end

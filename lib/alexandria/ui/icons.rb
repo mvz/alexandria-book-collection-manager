@@ -4,41 +4,6 @@
 #
 # See the file README.md for authorship and licensing information.
 
-class GdkPixbuf::Pixbuf
-  def tag(tag_pixbuf)
-    # Computes some tweaks.
-    tweak_x = tag_pixbuf.width / 3
-    tweak_y = tag_pixbuf.height / 3
-
-    # Creates the destination pixbuf.
-    new_pixbuf = GdkPixbuf::Pixbuf.new(colorspace: :rgb,
-                                       has_alpha: true,
-                                       bits_per_sample: 8,
-                                       width: width + tweak_x,
-                                       height: height + tweak_y)
-
-    # Fills with blank.
-    new_pixbuf.fill!(0)
-
-    # Copies the current pixbuf there (south-west).
-    copy_area(0, 0,
-              width, height,
-              new_pixbuf,
-              0, tweak_y)
-
-    # Copies the tag pixbuf there (north-est).
-    tag_pixbuf_x = width - (tweak_x * 2)
-    new_pixbuf.composite!(tag_pixbuf,
-                          dest_x: 0, dest_y: 0,
-                          dest_width: tag_pixbuf.width + tag_pixbuf_x,
-                          dest_height: tag_pixbuf.height,
-                          offset_x: tag_pixbuf_x, offset_y: 0,
-                          scale_x: 1, scale_y: 1,
-                          interpolation_type: :hyper, overall_alpha: 255)
-    new_pixbuf
-  end
-end
-
 module Alexandria
   module UI
     module Icons
@@ -75,6 +40,39 @@ module Alexandria
           end
         end
         BOOK_ICON
+      end
+
+      def self.tag_icon(icon_pixbuf, tag_pixbuf)
+        # Computes some tweaks.
+        tweak_x = tag_pixbuf.width / 3
+        tweak_y = tag_pixbuf.height / 3
+
+        # Creates the destination pixbuf.
+        new_pixbuf = GdkPixbuf::Pixbuf.new(colorspace: :rgb,
+                                           has_alpha: true,
+                                           bits_per_sample: 8,
+                                           width: icon_pixbuf.width + tweak_x,
+                                           height: icon_pixbuf.height + tweak_y)
+
+        # Fills with blank.
+        new_pixbuf.fill!(0)
+
+        # Copies the current pixbuf there (south-west).
+        icon_pixbuf.copy_area(0, 0,
+                              icon_pixbuf.width, icon_pixbuf.height,
+                              new_pixbuf,
+                              0, tweak_y)
+
+        # Copies the tag pixbuf there (north-est).
+        tag_pixbuf_x = icon_pixbuf.width - (tweak_x * 2)
+        new_pixbuf.composite!(tag_pixbuf,
+                              dest_x: 0, dest_y: 0,
+                              dest_width: tag_pixbuf.width + tag_pixbuf_x,
+                              dest_height: tag_pixbuf.height,
+                              offset_x: tag_pixbuf_x, offset_y: 0,
+                              scale_x: 1, scale_y: 1,
+                              interpolation_type: :hyper, overall_alpha: 255)
+        new_pixbuf
       end
 
       def self.blank?(filename)
