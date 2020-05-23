@@ -23,7 +23,6 @@ RSpec.describe Alexandria::ExportLibrary do
   end
 
   after do
-    FileUtils.rm_rf(TESTDIR)
     FileUtils.rm_rf(outfile) if File.exist? outfile
   end
 

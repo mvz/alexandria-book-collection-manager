@@ -78,10 +78,6 @@ describe Alexandria::Library do
       FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
     end
 
-    after do
-      FileUtils.rm_rf(TESTDIR)
-    end
-
     it "disallows multiple deletion of the same copy of a book" do
       first_copy = an_artist_of_the_floating_world
       my_library << first_copy
@@ -126,10 +122,6 @@ describe Alexandria::Library do
     before do
       lib_version = File.join(LIBDIR, "0.6.1")
       FileUtils.cp_r(lib_version, TESTDIR)
-    end
-
-    after do
-      FileUtils.rm_rf(TESTDIR)
     end
 
     it "imports cleanly from version 0.6.1 data format" do
