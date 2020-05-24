@@ -20,11 +20,11 @@ module Alexandria
 
       def initialize(parent, library, sort_order)
         @dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
-                                                    parent: parent,
-                                                    action: :save,
-                                                    buttons: [[Gtk::Stock::HELP, :help],
-                                                              [Gtk::Stock::CANCEL, :cancel],
-                                                              [_("_Export"), :accept]])
+                                             parent: parent,
+                                             action: :save,
+                                             buttons: [[Gtk::Stock::HELP, :help],
+                                                       [Gtk::Stock::CANCEL, :cancel],
+                                                       [_("_Export"), :accept]])
         @dialog.current_name = library.name
         @dialog.signal_connect("destroy") { @dialog.hide }
 

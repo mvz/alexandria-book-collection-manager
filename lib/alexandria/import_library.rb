@@ -131,9 +131,7 @@ module Alexandria
         # TODO: Pass in library store as an argument
         library = LibraryCollection.instance.library_store.load_library name
         content.each do |book, cover|
-          unless cover.nil?
-            library.save_cover(book, File.join(Dir.pwd, "images", cover))
-          end
+          library.save_cover(book, File.join(Dir.pwd, "images", cover)) unless cover.nil?
           library << book
           library.save(book)
         end
