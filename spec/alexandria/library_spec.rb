@@ -100,21 +100,29 @@ describe Alexandria::Library do
   end
 
   describe ".import_as_isbn_list" do
-    def __test_fake_import_isbns
+    before do
       libraries = Alexandria::LibraryCollection.instance
       library = Alexandria::Library.new("Test Library")
       libraries.add_library(library)
-      [library, libraries]
+
+      allow(Alexandria::BookProviders)
+        .to receive(:isbn_search)
+        .and_raise Alexandria::BookProviders::SearchEmptyError
+      allow(Alexandria::BookProviders)
+        .to receive(:isbn_search).with("0595371086")
+        .and_return(an_artist_of_the_floating_world)
     end
 
-    it "doesn't work quite yet" do
-      skip
-      # Doesn't work quite yet.
-      on_iterate_cb = proc {}
-      on_error_cb = proc {}
-      library, _libraries = __test_fake_import_isbns
-      test_file = "data/isbns.txt"
-      library.import_as_isbn_list("Test Library", test_file, on_iterate_cb, on_error_cb)
+    it "imports books with correct isbn and search result" do
+      library, bad_isbns, failed_lookup_isbns =
+        Alexandria::Library.import_as_isbn_list("Test Library", "spec/data/isbns.txt",
+                                                proc {}, proc {})
+
+      aggregate_failures do
+        expect(library.to_a).to eq [an_artist_of_the_floating_world]
+        expect(bad_isbns).to eq ["0911826449"]
+        expect(failed_lookup_isbns).to eq ["0740704923"]
+      end
     end
   end
 

@@ -127,12 +127,11 @@ module Alexandria
           on_iterate_cb&.call(n + 1, total)
         end
 
-        library = Library.load(name)
+        # TODO: Pass in library store as an argument
+        library = LibraryCollection.instance.library_store.load_library name
         content.each do |book, cover|
           unless cover.nil?
-            library.save_cover(book,
-                               File.join(Dir.pwd, "images",
-                                         cover))
+            library.save_cover(book, File.join(Dir.pwd, "images", cover))
           end
           library << book
           library.save(book)
@@ -164,7 +163,7 @@ module Alexandria
           if book.isbn
             # if we can search by ISBN, try to grab the cover
             begin
-              dl_book, dl_cover = Alexandria::BookProviders.isbn_search(book.isbn)
+              dl_book, dl_cover = BookProviders.isbn_search(book.isbn)
               if dl_book.authors.size > book.authors.size
                 # LibraryThing only supports a single author, so
                 # attempt to include more author information if it's
@@ -202,7 +201,8 @@ module Alexandria
         end
       end
 
-      library = Library.load(name)
+      # TODO: Pass in library store as an argument
+      library = LibraryCollection.instance.library_store.load_library name
 
       books_and_covers.each do |book, cover_uri|
         log.debug { "Saving #{book.isbn} cover" }
@@ -219,13 +219,7 @@ module Alexandria
       log.debug { "Starting import_as_isbn_list... " }
       isbn_list = IO.readlines(filename).map do |line|
         log.debug { "Trying line #{line}" }
-        # Let's preserve the failing isbns so we can report them later.
-        begin
-          [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
-        rescue StandardError => ex
-          log.debug { ex.message }
-          [line.chomp, nil]
-        end
+        [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
       end
       log.debug { "Isbn list: #{isbn_list.inspect}" }
       isbn_list.compact!
@@ -239,11 +233,11 @@ module Alexandria
       isbn_list.each do |isbn|
         begin
           if isbn[1]
-            books << Alexandria::BookProviders.isbn_search(isbn[1])
+            books << BookProviders.isbn_search(isbn[1])
           else
             bad_isbns << isbn[0]
           end
-        rescue StandardError => ex
+        rescue BookProviders::SearchEmptyError => ex
           log.debug { ex.message }
           failed_lookup_isbns << isbn[1]
           log.debug { "NOTE : ignoring on_error_cb #{on_error_cb}" }
@@ -254,7 +248,10 @@ module Alexandria
         on_iterate_cb&.call(current_iteration += 1, max_iterations)
       end
       log.debug { "Bad Isbn list: #{bad_isbns.inspect}" } if bad_isbns
-      library = load(name)
+
+      # TODO: Pass in library store as an argument
+      library = LibraryCollection.instance.library_store.load_library name
+
       log.debug { "Going with these #{books.length} books: #{books.inspect}" }
       books.each do |book, cover_uri|
         log.debug { "Saving #{book.isbn} cover..." }

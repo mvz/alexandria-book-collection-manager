@@ -84,7 +84,7 @@ module Alexandria
           trace = ex.backtrace.join("\n >")
           log.warn { "Provider #{factory.name} encountered error: #{ex.message} #{trace}" }
         end
-        if last == factory
+        if factory == instance.last
           log.warn { "Error while searching #{criterion}" }
           message = case ex
                     when Timeout::Error
