@@ -53,13 +53,13 @@ module Alexandria
       end
 
       def handle_ok_response
-        if user_confirms_possible_weirdnesses_before_saving?
-          @smart_library.rules = smart_library_rules
-          @smart_library.predicate_operator_rule =
-            predicate_operator_rule
-          @smart_library.save
-          true
-        end
+        user_confirms_possible_weirdnesses_before_saving? or return
+
+        @smart_library.rules = smart_library_rules
+        @smart_library.predicate_operator_rule =
+          predicate_operator_rule
+        @smart_library.save
+        true
       end
 
       def handle_help_response
