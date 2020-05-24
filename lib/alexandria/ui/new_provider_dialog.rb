@@ -33,10 +33,10 @@ module Alexandria
         label_name.xalign = 0
         @table.attach_defaults(label_name, 0, 1, 0, 1)
 
-        entry_name = Gtk::Entry.new
-        entry_name.mandatory = true
-        label_name.mnemonic_widget = entry_name
-        @table.attach_defaults(entry_name, 1, 2, 0, 1)
+        @entry_name = Gtk::Entry.new
+        @entry_name.mandatory = true
+        label_name.mnemonic_widget = @entry_name
+        @table.attach_defaults(@entry_name, 1, 2, 0, 1)
 
         # Type.
 
@@ -62,14 +62,14 @@ module Alexandria
       end
 
       def acquire
-        show_all
-        if run == Gtk::ResponseType::ACCEPT
-          @selected_instance.reinitialize(entry_name.text)
+        dialog.show_all
+        if dialog.run == Gtk::ResponseType::ACCEPT
+          @selected_instance.reinitialize(@entry_name.text)
           sync_variables
         else
           @selected_instance = nil
         end
-        destroy
+        dialog.destroy
         instance
       end
 
