@@ -13,12 +13,12 @@ module Alexandria
       def initialize(parent)
         super(parent)
 
-        add_buttons([Gtk::Stock::CANCEL, :cancel],
+        @dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
                     [Gtk::Stock::NEW, :ok])
 
-        self.title = _("New Smart Library")
+        @dialog.title = _("New Smart Library")
         # FIXME: Should accept just :cancel
-        self.default_response = Gtk::ResponseType::CANCEL
+        @dialog.default_response = Gtk::ResponseType::CANCEL
         insert_new_rule
       end
 

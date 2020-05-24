@@ -8,7 +8,7 @@ require "alexandria/ui/smart_library_rule_box"
 
 module Alexandria
   module UI
-    class SmartLibraryPropertiesDialogBase < SimpleDelegator
+    class SmartLibraryPropertiesDialogBase
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
@@ -20,18 +20,17 @@ module Alexandria
                                   parent: parent,
                                   flags: :modal,
                                   buttons: [[Gtk::Stock::HELP, :help]])
-        super(@dialog)
 
-        self.window_position = :center
-        self.resizable = true
-        self.border_width = 4
-        child.border_width = 12
+        @dialog.window_position = :center
+        @dialog.resizable = true
+        @dialog.border_width = 4
+        @dialog.child.border_width = 12
 
         main_box = Gtk::Box.new :vertical
         main_box.border_width = 4
         main_box.spacing = 8
 
-        child << main_box
+        @dialog.child << main_box
 
         @smart_library_rules = []
 
