@@ -132,7 +132,9 @@ module Alexandria
         if @library_listview.focus? || selected_books.empty?
           library = selected_library
           if library.is_a?(SmartLibrary)
-            SmartLibraryPropertiesDialog.new(@main_app, library).acquire do
+            success = SmartLibraryPropertiesDialog.new(@main_app, library).acquire
+
+            if success
               library.refilter
               refresh_books
             end
