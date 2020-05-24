@@ -57,7 +57,7 @@ module Alexandria
                                      rules,
                                      predicate_operator_rule,
                                      library_store)
-          return library
+          library
         end
       end
 
