@@ -17,14 +17,14 @@ module Alexandria
               parent: parent,
               flags: :modal,
               buttons: [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL]])
-        @add_button = add_button(Gtk::Stock::ADD,
-                                 Gtk::ResponseType::ACCEPT)
+        @add_button = dialog.add_button(Gtk::Stock::ADD,
+                                        Gtk::ResponseType::ACCEPT)
 
         instances = BookProviders.abstract_classes.map(&:new)
         @selected_instance = nil
 
         @table = Gtk::Table.new(2, 2)
-        child.pack_start(@table)
+        dialog.child.pack_start(@table)
 
         # Name.
 

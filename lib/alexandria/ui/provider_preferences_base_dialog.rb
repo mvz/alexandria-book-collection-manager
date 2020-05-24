@@ -14,17 +14,20 @@ end
 
 module Alexandria
   module UI
-    class ProviderPreferencesBaseDialog < SimpleDelegator
+    class ProviderPreferencesBaseDialog
       def initialize(title:, parent:, flags:, buttons:)
-        dialog = Gtk::Dialog.new(title: title, parent: parent, flags: flags,
+        @dialog = Gtk::Dialog.new(title: title, parent: parent, flags: flags,
                                  buttons: buttons)
-        super(dialog)
 
-        self.resizable = false
-        child.border_width = 12
+        @dialog.resizable = false
+        @dialog.child.border_width = 12
 
         @controls = []
       end
+
+      private
+
+      attr_reader :dialog
 
       def fill_table(table, provider)
         i = table.n_rows
