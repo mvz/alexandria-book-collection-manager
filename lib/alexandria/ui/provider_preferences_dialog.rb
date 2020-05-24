@@ -26,9 +26,9 @@ module Alexandria
       end
 
       def acquire
-        show_all
-        run
-        destroy
+        dialog.show_all
+        dialog.run
+        dialog.destroy
       end
     end
   end

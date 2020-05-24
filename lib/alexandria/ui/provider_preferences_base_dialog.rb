@@ -15,6 +15,8 @@ end
 module Alexandria
   module UI
     class ProviderPreferencesBaseDialog
+      attr_reader :dialog
+
       def initialize(title:, parent:, flags:, buttons:)
         @dialog = Gtk::Dialog.new(title: title, parent: parent, flags: flags,
                                  buttons: buttons)
@@ -26,8 +28,6 @@ module Alexandria
       end
 
       private
-
-      attr_reader :dialog
 
       def fill_table(table, provider)
         i = table.n_rows
