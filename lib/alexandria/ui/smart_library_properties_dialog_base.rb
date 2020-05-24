@@ -1,22 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module UI
@@ -135,7 +121,7 @@ module Alexandria
         @rules_header_box.show_all
       end
 
-      def insert_new_rule(rule = nil)
+      def make_rule_box(rule = nil)
         rule_box = Gtk::Box.new :horizontal
         rule_box.spacing = 8
 
@@ -146,6 +132,7 @@ module Alexandria
 
         date_entry = Gtk::Entry.new
         date_entry.primary_icon_name = Gtk::Stock::EDIT
+
         date_entry.primary_icon_activatable = true
         date_entry.signal_connect("icon-press") do |entry, primary, _icon|
           display_calendar_popup(entry) if primary.nick == "primary"
@@ -170,13 +157,7 @@ module Alexandria
                                         size: Gtk::IconSize::BUTTON)
 
         remove_button.signal_connect("clicked") do |_button|
-          idx = @rules_box.children.index(rule_box)
-          raise if idx.nil?
-
-          @smart_library_rules.delete_at(idx)
-          @rules_box.remove(rule_box)
-          sensitize_remove_rule_buttons
-          update_rules_header_box
+          remove_rule_box(rule_box)
         end
 
         operands = SmartLibrary::Rule::Operands::LEFT
@@ -204,18 +185,9 @@ module Alexandria
             end
           end
 
-          idx = @rules_box.children.index(rule_box)
-          new_rule = @smart_library_rules[idx]
-          if new_rule.nil?
-            new_rule = SmartLibrary::Rule.new(operand,
-                                              operation.first,
-                                              nil)
-            @smart_library_rules << new_rule
-          end
-          new_rule.operand = operand
-          new_rule.operation = operation.first
-          new_rule.value = nil
+          apply_smart_rule_for_rule_box(rule_box, operand, operation)
         end
+
         left_operand_combo.signal_connect("changed") do
           operand = operands[left_operand_combo.active]
           operator_combo.freeze_notify do
@@ -263,10 +235,38 @@ module Alexandria
         else
           left_operand_combo.active = 0
         end
+      end
 
+      def insert_new_rule(rule = nil)
+        rule_box = make_rule_box(rule)
         @rules_box.check_resize # force a layout
         update_rules_header_box
         sensitize_remove_rule_buttons
+      end
+
+      def remove_rule_box(rule_box)
+        idx = @rules_box.children.index(rule_box)
+        raise if idx.nil?
+
+        @smart_library_rules.delete_at(idx)
+        @rules_box.remove(rule_box)
+        sensitize_remove_rule_buttons
+        update_rules_header_box
+      end
+
+      def apply_smart_rule_for_rule_box(rule_box, operand, operation)
+        idx = @rules_box.children.index(rule_box)
+        new_rule = @smart_library_rules[idx]
+        if new_rule.nil?
+          new_rule = SmartLibrary::Rule.new(operand,
+                                            operation.first,
+                                            nil)
+          # FIXME: Why not do @smart_library_rules[idx] = new_rule ?
+          @smart_library_rules << new_rule
+        end
+        new_rule.operand = operand
+        new_rule.operation = operation.first
+        new_rule.value = nil
       end
 
       def sensitize_remove_rule_buttons
