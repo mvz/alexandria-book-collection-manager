@@ -10,7 +10,7 @@ require "alexandria/ui/error_dialog"
 
 module Alexandria
   module UI
-    class ExportDialog < SimpleDelegator
+    class ExportDialog
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
@@ -19,16 +19,14 @@ module Alexandria
       THEMES = Alexandria::WebTheme.all
 
       def initialize(parent, library, sort_order)
-        @export_dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
+        @dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
                                                     parent: parent,
                                                     action: :save,
                                                     buttons: [[Gtk::Stock::HELP, :help],
                                                               [Gtk::Stock::CANCEL, :cancel],
                                                               [_("_Export"), :accept]])
-        super(@export_dialog)
-
-        self.current_name = library.name
-        signal_connect("destroy") { hide }
+        @dialog.current_name = library.name
+        @dialog.signal_connect("destroy") { @dialog.hide }
 
         @parent = parent
         @library = library
@@ -84,7 +82,7 @@ module Alexandria
         grid.attach theme_label, 0, 1, 1, 1
         grid.attach @theme_combo, 1, 1, 1, 1
         grid.attach preview_image, 2, 0, 1, 3
-        set_extra_widget grid
+        @dialog.set_extra_widget grid
       end
 
       def perform
@@ -98,7 +96,7 @@ module Alexandria
               break if on_export(FORMATS[@types_combo.active],
                                  THEMES[@theme_combo.active])
             rescue StandardError => ex
-              ErrorDialog.new(@export_dialog, _("Export failed"), ex.message).display
+              ErrorDialog.new(@dialog, _("Export failed"), ex.message).display
             end
           end
         end
@@ -112,7 +110,7 @@ module Alexandria
         if format.ext
           filename += "." + format.ext if File.extname(filename).empty?
           if File.exist?(filename)
-            dialog = ConfirmEraseDialog.new(@export_dialog, filename)
+            dialog = ConfirmEraseDialog.new(@dialog, filename)
             return unless dialog.erase?
 
             FileUtils.rm(filename)
@@ -125,7 +123,7 @@ module Alexandria
                       "file.  A directory is needed for this " \
                       "operation.  Please select a directory and " \
                       "try again.") % filename
-              ErrorDialog.new(@export_dialog, _("Not a directory"), msg).display
+              ErrorDialog.new(@dialog, _("Not a directory"), msg).display
               return
             end
           else
