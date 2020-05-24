@@ -11,6 +11,7 @@ module Alexandria
   class ImportFilter
     attr_reader :name, :patterns, :message
 
+    include Logging
     include GetText
     extend GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")

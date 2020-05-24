@@ -39,12 +39,12 @@ module Alexandria
           end
         end
 
-        filters = {}
+        @filters = {}
         FILTERS.each do |filter|
           filefilter = make_filefilter filter
           dialog.add_filter(filefilter)
           log.debug { "Added ImportFilter #{filefilter} -- #{filefilter.name}" }
-          filters[filefilter] = filter
+          @filters[filefilter] = filter
         end
 
         dialog.signal_connect("selection_changed") do
@@ -58,15 +58,15 @@ module Alexandria
         dialog.child.set_child_packing(buttonbox, pack_type: :start)
         dialog.child.reorder_child(buttonbox, 1)
 
-        pbar = Gtk::ProgressBar.new
-        pbar.show_text = true
-        dialog.child.pack_start(pbar, expand: false)
+        @pbar = Gtk::ProgressBar.new
+        @pbar.show_text = true
+        dialog.child.pack_start(@pbar, expand: false)
       end
 
       def acquire
         on_progress = proc do |fraction|
-          pbar.show unless pbar.visible?
-          pbar.fraction = fraction
+          @pbar.show unless @pbar.visible?
+          @pbar.fraction = fraction
         end
 
         on_error = proc do |message|
@@ -83,15 +83,15 @@ module Alexandria
             Alexandria::UI.display_help(self, "import-library")
             next
           end
-          file = File.basename(filename, ".*")
+          file = File.basename(dialog.filename, ".*")
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             LibraryCollection.instance.all_libraries,
             base)
 
-          filter = filters[self.filter]
+          filter = @filters[dialog.filter]
           log.debug { "Going forward with filter: #{filter.name}" }
-          self.sensitive = false
+          dialog.sensitive = false
 
           filter.on_iterate do |n, total|
             unless @destroyed
@@ -112,7 +112,7 @@ module Alexandria
           @failed_isbns = nil
           thread = Thread.start do
             library, @bad_isbns, @failed_isbns =
-              filter.invoke(new_library_name, filename)
+              filter.invoke(new_library_name, dialog.filename)
           rescue StandardError => ex
             trace = ex.backtrace.join("\n> ")
             log.error { "Import failed: #{ex.message} #{trace}" }
@@ -130,7 +130,7 @@ module Alexandria
               break
             elsif not_cancelled
               log.debug { "Raising ErrorDialog because not_cancelled is #{not_cancelled}" }
-              ErrorDialog.new(self,
+              ErrorDialog.new(dialog,
                               _("Couldn't import the library"),
                               _("The format of the file you " \
                                 "provided is unknown.  Please " \
