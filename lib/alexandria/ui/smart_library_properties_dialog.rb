@@ -32,12 +32,12 @@ module Alexandria
         self.title = _("Properties for '%s'") % smart_library.name
         # FIXME: Should accept just :cancel
         self.default_response = Gtk::ResponseType::CANCEL
+        smart_library.rules.each { |x| insert_new_rule(x) }
+        update_rules_header_box(smart_library.predicate_operator_rule)
       end
 
       def acquire
         show_all
-        smart_library.rules.each { |x| insert_new_rule(x) }
-        update_rules_header_box(smart_library.predicate_operator_rule)
 
         while (response = run) != Gtk::ResponseType::CANCEL
           if response == Gtk::ResponseType::HELP
