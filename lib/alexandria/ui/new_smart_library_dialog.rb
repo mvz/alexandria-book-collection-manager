@@ -25,28 +25,38 @@ module Alexandria
       def acquire
         show_all
 
+        result = nil
         while ((response = run) != Gtk::ResponseType::CANCEL) &&
             (response != Gtk::ResponseType::DELETE_EVENT)
 
           if response == Gtk::ResponseType::HELP
-            Alexandria::UI.display_help(self, "new-smart-library")
+            handle_help_response
           elsif response == Gtk::ResponseType::OK
-            if user_confirms_possible_weirdnesses_before_saving?
-              rules = smart_library_rules
-              basename = smart_library_base_name(rules) || _("Smart Library")
-              name = Library.generate_new_name(
-                LibraryCollection.instance.all_libraries,
-                basename)
-              library = SmartLibrary.new(name,
-                                         rules,
-                                         predicate_operator_rule)
-              yield(library)
-              break
-            end
+            result = handle_ok_response
+            break if result
           end
         end
 
         destroy
+        result
+      end
+
+      def handle_help_response
+        Alexandria::UI.display_help(self, "new-smart-library")
+      end
+
+      def handle_ok_response
+        if user_confirms_possible_weirdnesses_before_saving?
+          rules = smart_library_rules
+          basename = smart_library_base_name(rules) || _("Smart Library")
+          name = Library.generate_new_name(
+            LibraryCollection.instance.all_libraries,
+            basename)
+          library = SmartLibrary.new(name,
+                                     rules,
+                                     predicate_operator_rule)
+          return library
+        end
       end
 
       private

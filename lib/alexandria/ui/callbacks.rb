@@ -21,12 +21,12 @@ module Alexandria
       end
 
       def on_new_smart(*)
-        NewSmartLibraryDialog.new(@main_app).acquire do |smart_library|
-          smart_library.refilter
-          @libraries.add_library(smart_library)
-          append_library(smart_library, true)
-          smart_library.save
-        end
+        smart_library = NewSmartLibraryDialog.new(@main_app).acquire or return
+
+        smart_library.refilter
+        @libraries.add_library(smart_library)
+        append_library(smart_library, true)
+        smart_library.save
       end
 
       def on_add_book(*)
