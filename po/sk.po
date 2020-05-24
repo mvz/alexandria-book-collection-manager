@@ -413,7 +413,7 @@ msgid "Show information about Alexandria"
 msgstr "Zobraziť informácie o Alexandrii"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "Bočný _Panel"
 
 #: ../lib/alexandria/ui/callbacks.rb:336

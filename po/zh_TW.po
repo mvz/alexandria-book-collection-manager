@@ -406,7 +406,7 @@ msgid "Show information about Alexandria"
 msgstr "秀出有關 Alexandria 的資訊"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "側邊窗格(_P)"
 
 #: ../lib/alexandria/ui/callbacks.rb:336

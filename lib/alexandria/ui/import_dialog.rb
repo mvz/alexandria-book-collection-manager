@@ -7,15 +7,6 @@
 require "alexandria/ui/error_dialog"
 require "alexandria/ui/skip_entry_dialog"
 
-class Alexandria::ImportFilter
-  def to_filefilter
-    filefilter = Gtk::FileFilter.new
-    filefilter.name = name
-    patterns.each { |x| filefilter.add_pattern(x) }
-    filefilter
-  end
-end
-
 module Alexandria
   module UI
     class ImportDialog < SimpleDelegator
@@ -49,7 +40,7 @@ module Alexandria
 
         filters = {}
         FILTERS.each do |filter|
-          filefilter = filter.to_filefilter
+          filefilter = make_filefilter filter
           add_filter(filefilter)
           log.debug { "Added ImportFilter #{filefilter} -- #{filefilter.name}" }
           filters[filefilter] = filter
@@ -149,6 +140,15 @@ module Alexandria
           end
         end
         destroy unless @destroyed
+      end
+
+      private
+
+      def make_filefilter(import_filter)
+        filefilter = Gtk::FileFilter.new
+        filefilter.name = import_filter.name
+        import_filter.patterns.each { |x| filefilter.add_pattern(x) }
+        filefilter
       end
     end
   end

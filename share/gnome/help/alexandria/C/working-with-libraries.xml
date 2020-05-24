@@ -12,7 +12,7 @@
   <para>Books stored in &app; can be grouped into different collections, called libraries. For instance, you may have
   one library for all your novels, and other for your programming manuals. &app; allows you to create, edit, and move books
   between libraries.</para>
-  <para>Available libraries are listed in the <guilabel>Library pane</guilabel> at the left of the main &app; window. If you cannot see the library pane, open it with <menuchoice><guimenu>View</guimenu><guimenuitem>Side Pane</guimenuitem></menuchoice>. You can close it again with the same menu option, or by clicking the <guibutton>Close</guibutton> icon in the top right of the library pane.</para>
+  <para>Available libraries are listed in the <guilabel>Library pane</guilabel> at the left of the main &app; window. If you cannot see the library pane, open it with <menuchoice><guimenu>View</guimenu><guimenuitem>Sidepane</guimenuitem></menuchoice>. You can close it again with the same menu option, or by clicking the <guibutton>Close</guibutton> icon in the top right of the library pane.</para>
   <figure id="library-pane-fig">
     <title>An &app; list of libraries</title>
     <screenshot>

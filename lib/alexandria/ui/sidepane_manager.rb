@@ -8,7 +8,7 @@ require "alexandria/ui/error_dialog"
 
 module Alexandria
   module UI
-    class SidePaneManager
+    class SidepaneManager
       include Logging
       include GetText
       attr_accessor :library_listview

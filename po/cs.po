@@ -411,7 +411,7 @@ msgid "Show information about Alexandria"
 msgstr "Zobrazit informace o programu Alexandria"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "Boční _panel"
 
 #: ../lib/alexandria/ui/callbacks.rb:336

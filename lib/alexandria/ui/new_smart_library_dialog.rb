@@ -46,19 +46,19 @@ module Alexandria
       end
 
       def handle_ok_response
-        if user_confirms_possible_weirdnesses_before_saving?
-          rules = smart_library_rules
-          basename = smart_library_base_name(rules) || _("Smart Library")
-          name = Library.generate_new_name(
-            LibraryCollection.instance.all_libraries,
-            basename)
-          library_store = LibraryCollection.instance.library_store
-          library = SmartLibrary.new(name,
-                                     rules,
-                                     predicate_operator_rule,
-                                     library_store)
-          return library
-        end
+        user_confirms_possible_weirdnesses_before_saving? or return
+
+        rules = smart_library_rules
+        basename = smart_library_base_name(rules) || _("Smart Library")
+        name = Library.generate_new_name(
+          LibraryCollection.instance.all_libraries,
+          basename)
+        library_store = LibraryCollection.instance.library_store
+        library = SmartLibrary.new(name,
+                                   rules,
+                                   predicate_operator_rule,
+                                   library_store)
+        library
       end
 
       private

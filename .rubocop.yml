@@ -78,6 +78,11 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/end_to_end/**/*_spec.rb'
 
+RSpec/ExampleLength:
+  Max: 8
+  Exclude:
+    - 'spec/end_to_end/**/*_spec.rb'
+
 # Allow and/or for control flow only
 Style/AndOr:
   EnforcedStyle: conditionals

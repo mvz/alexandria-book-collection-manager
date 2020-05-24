@@ -75,7 +75,7 @@ module Alexandria
         @iconview_model = Gtk::TreeModelSort.new(@filtered_model)
         @listview_manager = ListViewManager.new @listview, self
         @iconview_manager = IconViewManager.new @iconview, self
-        @sidepane_manager = SidePaneManager.new @library_listview, self
+        @sidepane_manager = SidepaneManager.new @library_listview, self
         @library_listview = @sidepane_manager.library_listview
         @listview_manager.setup_listview_columns_visibility
         @listview_manager.setup_listview_columns_width
@@ -730,7 +730,7 @@ module Alexandria
           new_height = [ICON_HEIGHT, icon.height].min
           icon = cache_scaled_icon(icon, new_width, new_height)
         end
-        icon = icon.tag(Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
+        icon = Icons.tag_icon(icon, Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
         iter[Columns::COVER_ICON] = icon
         log.debug { "Full iter: " + (0..15).map { |num| iter[num].inspect }.join(", ") }
       end
@@ -1170,16 +1170,16 @@ module Alexandria
 
       private
 
-      def select_book_in_view(bk, view)
+      def select_book_in_view(book, view)
         @filtered_model.refilter
-        iter = iter_from_book bk
+        iter = iter_from_book book
         return unless iter
 
         path = iter.path
         return unless view.model
 
         path = view_path_to_model_path(view, path)
-        log.debug { "Path for #{bk.ident} is #{path}" }
+        log.debug { "Path for #{book.ident} is #{path}" }
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all
         selection.select_path(path)

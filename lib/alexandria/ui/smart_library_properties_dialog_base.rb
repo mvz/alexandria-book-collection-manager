@@ -1,22 +1,10 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2011, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
+
+require "alexandria/ui/smart_library_rule_box"
 
 module Alexandria
   module UI
@@ -63,6 +51,30 @@ module Alexandria
         main_box.pack_start(@rules_header_box, expand: false, fill: false)
         main_box << scrollview
         setup_calendar_widgets
+      end
+
+      def handle_date_icon_press(widget, primary, _icon)
+        display_calendar_popup(widget) if primary.nick == "primary"
+      end
+
+      def handle_add_rule_clicked
+        insert_new_rule
+      end
+
+      def handle_remove_rule_clicked(box_controller)
+        remove_rule_box(box_controller.rule_box)
+      end
+
+      # TODO: Move logic to SmartLibraryRuleBox
+      def apply_smart_rule_for_rule_box(rule_box, operand, operation)
+        idx = @rules_box.children.index(rule_box)
+        @smart_library_rules[idx] ||= SmartLibrary::Rule.new(operand,
+                                                             operation.first,
+                                                             nil)
+        new_rule = @smart_library_rules[idx]
+        new_rule.operand = operand
+        new_rule.operation = operation.first
+        new_rule.value = nil
       end
 
       protected
@@ -135,138 +147,51 @@ module Alexandria
         @rules_header_box.show_all
       end
 
-      def insert_new_rule(rule = nil)
-        rule_box = Gtk::Box.new :horizontal
-        rule_box.spacing = 8
-
-        left_operand_combo = Gtk::ComboBoxText.new
-        operator_combo = Gtk::ComboBoxText.new
-
-        value_entry = Gtk::Entry.new
-
-        date_entry = Gtk::Entry.new
-        date_entry.primary_icon_name = Gtk::Stock::EDIT
-        date_entry.primary_icon_activatable = true
-        date_entry.signal_connect("icon-press") do |entry, primary, _icon|
-          display_calendar_popup(entry) if primary.nick == "primary"
-        end
-
-        # Really hide the time part of the date entry, as the constructor
-        # does not seem to do it...
-        # ##date_entry.children[2..3].each { |x| date_entry.remove(x) }
-        # ##date_entry.spacing = 8
-        entry_label = Gtk::Label.new("")
-
-        add_button = Gtk::Button.new(label: "")
-        add_button.remove(add_button.children.first)
-        add_button << Gtk::Image.new(stock: Gtk::Stock::ADD,
-                                     size: Gtk::IconSize::BUTTON)
-
-        add_button.signal_connect("clicked") { insert_new_rule }
-
-        remove_button = Gtk::Button.new(label: "")
-        remove_button.remove(remove_button.children.first)
-        remove_button << Gtk::Image.new(stock: Gtk::Stock::REMOVE,
-                                        size: Gtk::IconSize::BUTTON)
-
-        remove_button.signal_connect("clicked") do |_button|
-          idx = @rules_box.children.index(rule_box)
-          raise if idx.nil?
-
-          @smart_library_rules.delete_at(idx)
-          @rules_box.remove(rule_box)
-          sensitize_remove_rule_buttons
-          update_rules_header_box
-        end
-
-        operands = SmartLibrary::Rule::Operands::LEFT
-        operands.each do |operand|
-          left_operand_combo.append_text(operand.name)
-        end
-        operator_combo.signal_connect("changed") do
-          operand = operands[left_operand_combo.active]
-          operations = SmartLibrary::Rule.operations_for_operand(operand)
-          operation = operations[operator_combo.active]
-
-          value_entry.visible = date_entry.visible = entry_label.visible = false
-          right_operand = operation.last
-          unless right_operand.nil?
-            entry = case right_operand.klass.name
-                    when "Time"
-                      date_entry
-                    else
-                      value_entry
-                    end
-            entry.visible = true
-            unless right_operand.name.nil?
-              entry_label.text = right_operand.name
-              entry_label.visible = true
-            end
-          end
-
-          idx = @rules_box.children.index(rule_box)
-          new_rule = @smart_library_rules[idx]
-          if new_rule.nil?
-            new_rule = SmartLibrary::Rule.new(operand,
-                                              operation.first,
-                                              nil)
-            @smart_library_rules << new_rule
-          end
-          new_rule.operand = operand
-          new_rule.operation = operation.first
-          new_rule.value = nil
-        end
-        left_operand_combo.signal_connect("changed") do
-          operand = operands[left_operand_combo.active]
-          operator_combo.freeze_notify do
-            operator_combo.remove_all
-            operations = SmartLibrary::Rule.operations_for_operand(operand)
-            operations.each do |operation|
-              operator = operation.first
-              operator_combo.append_text(operator.name)
-            end
-            operator_combo.active = 0
-          end
-        end
-
-        rule_box.pack_start(left_operand_combo, expand: false, fill: false)
-        rule_box.pack_start(operator_combo, expand: false, fill: false)
-        rule_box.pack_start(value_entry)
-        rule_box.pack_start(date_entry)
-        rule_box.pack_start(entry_label, expand: false, fill: false)
-        rule_box.pack_end(remove_button, expand: false, fill: false)
-        rule_box.pack_end(add_button, expand: false, fill: false)
-
+      def make_rule_box(rule = nil)
+        box_controller = SmartLibraryRuleBox.new self
+        rule_box = box_controller.rule_box
         rule_box.show_all
-        value_entry.visible = date_entry.visible = entry_label.visible = false
-
         @rules_box.pack_start(rule_box, expand: false, fill: true)
 
         if rule
+          operands = SmartLibrary::Rule::Operands::LEFT
           operand_idx = operands.index(rule.operand)
           operations =
             SmartLibrary::Rule.operations_for_operand(rule.operand)
           operation_idx = operations.map(&:first).index(rule.operation)
 
           if !operand_idx.nil? && !operation_idx.nil?
-            left_operand_combo.active = operand_idx
-            operator_combo.active = operation_idx
+            box_controller.left_operand_combo.active = operand_idx
+            box_controller.operator_combo.active = operation_idx
             unless rule.value.nil?
               case rule.value
               when String
-                value_entry.text = rule.value
+                box_controller.value_entry.text = rule.value
               when Time
-                date_entry.text = format_date(rule.value)
+                box_controller.date_entry.text = format_date(rule.value)
               end
             end
           end
         else
-          left_operand_combo.active = 0
+          box_controller.left_operand_combo.active = 0
         end
+      end
 
+      def insert_new_rule(rule = nil)
+        make_rule_box(rule)
         @rules_box.check_resize # force a layout
         update_rules_header_box
         sensitize_remove_rule_buttons
+      end
+
+      def remove_rule_box(rule_box)
+        idx = @rules_box.children.index(rule_box)
+        raise if idx.nil?
+
+        @smart_library_rules.delete_at(idx)
+        @rules_box.remove(rule_box)
+        sensitize_remove_rule_buttons
+        update_rules_header_box
       end
 
       def sensitize_remove_rule_buttons

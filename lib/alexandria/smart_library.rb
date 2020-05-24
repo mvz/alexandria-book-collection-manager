@@ -326,10 +326,10 @@ module Alexandria
 
         IS_TRUE = Operator.new(:is_true,
                                _("is set"),
-                               :itself.to_proc)
+                               proc { |x| x })
         IS_NOT_TRUE = Operator.new(:is_not_true,
                                    _("is not set"),
-                                   :!.to_proc)
+                                   proc { |x| !x })
         IS = Operator.new(:is,
                           _("is"),
                           proc { |x, y| x == y })

@@ -405,7 +405,7 @@ msgid "Show information about Alexandria"
 msgstr "Alexandriaに関する情報を表示します"
 
 #: ../lib/alexandria/ui/callbacks.rb:334
-msgid "Side _Pane"
+msgid "Side_pane"
 msgstr "サイドペイン(_P)"
 
 #: ../lib/alexandria/ui/callbacks.rb:336
