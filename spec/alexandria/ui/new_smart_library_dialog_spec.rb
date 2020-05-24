@@ -20,5 +20,12 @@ describe Alexandria::UI::NewSmartLibraryDialog do
 
       expect(result).to be_a Alexandria::SmartLibrary
     end
+
+    it "returns a result that can be saved" do
+      dialog = described_class.new parent
+      result = dialog.handle_ok_response
+
+      expect { result.save }.not_to raise_error
+    end
   end
 end

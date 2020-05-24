@@ -52,9 +52,11 @@ module Alexandria
           name = Library.generate_new_name(
             LibraryCollection.instance.all_libraries,
             basename)
+          library_store = LibraryCollection.instance.library_store
           library = SmartLibrary.new(name,
                                      rules,
-                                     predicate_operator_rule)
+                                     predicate_operator_rule,
+                                     library_store)
           return library
         end
       end
