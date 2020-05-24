@@ -55,14 +55,12 @@ module Alexandria
           unless bad_isbns.empty?
             log.debug { "bad_isbn" }
             message = _("The following lines are not valid ISBNs and were not imported:")
-            bad_isbn_warn = BadIsbnsDialog.new(@main_app, message, bad_isbns)
-            bad_isbn_warn.signal_connect("response") { bad_isbn_warn.destroy }
+            BadIsbnsDialog.new(@main_app, message, bad_isbns).show
           end
           unless failed_isbns.nil? || failed_isbns.empty?
             log.debug { "failed lookup of #{failed_isbns.size} ISBNs" }
             message = _("Books could not be found for the following ISBNs:")
-            failed_lookup = BadIsbnsDialog.new(@main_app, message, failed_isbns)
-            failed_lookup.signal_connect("response") { failed_lookup.destroy }
+            BadIsbnsDialog.new(@main_app, message, failed_isbns).show
           end
           @libraries.add_library(library)
           append_library(library, true)
