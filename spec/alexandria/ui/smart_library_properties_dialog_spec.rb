@@ -15,12 +15,18 @@ describe Alexandria::UI::SmartLibraryPropertiesDialog do
     described_class.new parent, smart_library
   end
 
-  describe "#handle_ok_response" do
-    it "returns true" do
-      dialog = described_class.new parent, smart_library
-      result = dialog.handle_ok_response
+  describe "#acquire" do
+    let(:properties_dialog) { described_class.new parent, smart_library }
+    let(:gtk_dialog) { properties_dialog.dialog }
 
-      expect(result).to be_truthy
+    it "works when response is cancel" do
+      allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
+      properties_dialog.acquire
+    end
+
+    it "works when response is ok" do
+      allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::OK)
+      properties_dialog.acquire
     end
   end
 end

@@ -15,20 +15,20 @@ module Alexandria
 
         @smart_library = smart_library
 
-        @dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
-                    [Gtk::Stock::SAVE, :ok])
+        dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
+                           [Gtk::Stock::SAVE, :ok])
 
-        @dialog.title = _("Properties for '%s'") % @smart_library.name
+        dialog.title = _("Properties for '%s'") % @smart_library.name
         # FIXME: Should accept just :cancel
-        @dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
         @smart_library.rules.each { |x| insert_new_rule(x) }
         update_rules_header_box(@smart_library.predicate_operator_rule)
       end
 
       def acquire
-        show_all
+        dialog.show_all
 
-        while (response = run) != Gtk::ResponseType::CANCEL
+        while (response = dialog.run) != Gtk::ResponseType::CANCEL
           if response == Gtk::ResponseType::HELP
             handle_help_response
           elsif response == Gtk::ResponseType::OK
@@ -36,8 +36,10 @@ module Alexandria
           end
         end
 
-        destroy
+        dialog.destroy
       end
+
+      private
 
       def handle_ok_response
         user_confirms_possible_weirdnesses_before_saving? or return

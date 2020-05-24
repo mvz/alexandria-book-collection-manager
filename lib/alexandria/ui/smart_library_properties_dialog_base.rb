@@ -14,6 +14,7 @@ module Alexandria
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_reader :predicate_operator_rule
+      attr_reader :dialog
 
       def initialize(parent)
         @dialog = Gtk::Dialog.new(title: "",
