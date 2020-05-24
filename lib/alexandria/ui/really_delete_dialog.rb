@@ -40,7 +40,7 @@ module Alexandria
                [Gtk::Stock::DELETE, Gtk::ResponseType::OK]],
               description)
 
-        self.default_response = Gtk::ResponseType::CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
       end
 
       def ok?

@@ -6,20 +6,17 @@
 
 module Alexandria
   module UI
-    class AlertDialog < SimpleDelegator
+    class AlertDialog
       def initialize(parent, title, stock_icon, buttons, message = nil)
-        dialog = Gtk::Dialog.new(title: "", parent: parent, flags: :destroy_with_parent,
-                                 buttons: buttons)
-        super(dialog)
-
-        self.border_width = 6
-        self.resizable = false
-        child.spacing = 12
+        @dialog = Gtk::Dialog.new(title: "", parent: parent, flags: :destroy_with_parent,
+                                  buttons: buttons)
+        @dialog.border_width = 6
+        @dialog.resizable = false
+        @dialog.child.spacing = 12
 
         hbox = Gtk::Box.new(:horizontal, 12)
         hbox.homogeneous = false
         hbox.border_width = 6
-        child.pack_start(hbox)
 
         image = Gtk::Image.new(stock: stock_icon,
                                size: Gtk::IconSize::DIALOG)
@@ -28,11 +25,28 @@ module Alexandria
 
         vbox = Gtk::Box.new(:vertical, 6)
         vbox.homogeneous = false
-        hbox.pack_start(vbox)
-
         vbox.pack_start make_label("<b><big>#{title}</big></b>")
         vbox.pack_start make_label(message.strip) unless message
+        hbox.pack_start(vbox)
+
+        @dialog.child.pack_start(hbox)
       end
+
+      def show_all
+        dialog.show_all
+      end
+
+      def run
+        dialog.run
+      end
+
+      def destroy
+        dialog.destroy
+      end
+
+      private
+
+      attr_reader :dialog
 
       def make_label(markup)
         label = Gtk::Label.new

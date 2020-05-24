@@ -22,7 +22,7 @@ module Alexandria
               Gtk::Stock::DIALOG_QUESTION,
               [[Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
                [_("_Keep"), Gtk::ResponseType::OK]], message)
-        self.default_response = Gtk::ResponseType::OK
+        dialog.default_response = Gtk::ResponseType::OK
       end
 
       def keep?
