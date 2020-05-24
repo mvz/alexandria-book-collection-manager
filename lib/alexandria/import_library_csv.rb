@@ -72,8 +72,7 @@ module Alexandria
       additional.split(",").each do |add|
         authors << normalize(add)
       end
-      isbn = row[@isbn] # TODO: canonicalize_ean...
-      isbn = Library.canonicalise_ean(isbn) if isbn
+      isbn = Library.canonicalise_ean(row[@isbn])
       publisher = normalize(row[@publisher])
       year = row[@publishing_year].to_i
       edition = normalize(row[@edition])

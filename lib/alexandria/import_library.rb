@@ -106,13 +106,7 @@ module Alexandria
           book_elements += keys.map do |key|
             neaten(elements[key].text) if elements[key]
           end
-          # isbn
-          if book_elements[2].nil? || book_elements[2].strip.empty?
-            book_elements[2] = nil
-          else
-            book_elements[2] = book_elements[2].strip
-            book_elements[2] = Library.canonicalise_ean(book_elements[2])
-          end
+          book_elements[2] = Library.canonicalise_ean(book_elements[2])
           # publishing_year
           book_elements[4] = book_elements[4].to_i unless book_elements[4].nil?
           log.debug { book_elements.inspect }
