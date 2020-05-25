@@ -8,17 +8,16 @@ module Alexandria
   module UI
     # Generalized Dialog for lists of bad isbns. Used for on_import. Can also
     # be used for on_load library conversions.
-    class BadIsbnsDialog < SimpleDelegator
+    class BadIsbnsDialog
       def initialize(parent, message, list)
-        dialog = Gtk::MessageDialog.new(parent: parent,
-                                        flags: :modal,
-                                        type: :warning,
-                                        buttons: :close,
-                                        message: message)
-        super(dialog)
+        @dialog = Gtk::MessageDialog.new(parent: parent,
+                                         flags: :modal,
+                                         type: :warning,
+                                         buttons: :close,
+                                         message: message)
+        the_vbox = @dialog.children.first
 
         isbn_container = Gtk::Box.new :horizontal
-        the_vbox = children.first
         the_vbox.pack_start(isbn_container)
         the_vbox.reorder_child(isbn_container, 3)
         scrolley = Gtk::ScrolledWindow.new
@@ -30,7 +29,12 @@ module Alexandria
         list.each do |li|
           textview.buffer.insert_at_cursor("#{li}\n")
         end
-        show_all
+
+        @dialog.signal_connect("response") { @dialog.destroy }
+      end
+
+      def show
+        @dialog.show_all
       end
     end
   end

@@ -20,7 +20,7 @@ module Alexandria
                [_("_Continue"), Gtk::ResponseType::OK]],
               message)
         log.debug { "Opened SkipEntryDialog #{inspect}" }
-        self.default_response = Gtk::ResponseType::CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
       end
 
       def continue?

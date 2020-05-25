@@ -1,21 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 module Alexandria
   module UI
@@ -28,20 +15,20 @@ module Alexandria
 
         @smart_library = smart_library
 
-        add_buttons([Gtk::Stock::CANCEL, :cancel],
-                    [Gtk::Stock::SAVE, :ok])
+        dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
+                           [Gtk::Stock::SAVE, :ok])
 
-        self.title = _("Properties for '%s'") % @smart_library.name
+        dialog.title = _("Properties for '%s'") % @smart_library.name
         # FIXME: Should accept just :cancel
-        self.default_response = Gtk::ResponseType::CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
         @smart_library.rules.each { |x| insert_new_rule(x) }
         update_rules_header_box(@smart_library.predicate_operator_rule)
       end
 
       def acquire
-        show_all
+        dialog.show_all
 
-        while (response = run) != Gtk::ResponseType::CANCEL
+        while (response = dialog.run) != Gtk::ResponseType::CANCEL
           if response == Gtk::ResponseType::HELP
             handle_help_response
           elsif response == Gtk::ResponseType::OK
@@ -49,8 +36,10 @@ module Alexandria
           end
         end
 
-        destroy
+        dialog.destroy
       end
+
+      private
 
       def handle_ok_response
         user_confirms_possible_weirdnesses_before_saving? or return

@@ -84,7 +84,7 @@ module Alexandria
           trace = ex.backtrace.join("\n >")
           log.warn { "Provider #{factory.name} encountered error: #{ex.message} #{trace}" }
         end
-        if last == factory
+        if factory == instance.last
           log.warn { "Error while searching #{criterion}" }
           message = case ex
                     when Timeout::Error
@@ -216,15 +216,15 @@ module Alexandria
       end
 
       def reinitialize(fullname)
-        @name << "_" << fullname.hash.to_s
+        @name = "#{name}_#{fullname.hash.to_s}"
         @fullname = fullname
         prefs = Alexandria::Preferences.instance
         ary = prefs.get_variable :abstract_providers
         ary ||= []
         ary << @name
         prefs.set_variable :abstract_providers, ary
-        message = variable_name("name") + "="
-        prefs.send(message, @fullname)
+        message = variable_name("name")
+        prefs.set_variable(message, @fullname)
       end
 
       def remove

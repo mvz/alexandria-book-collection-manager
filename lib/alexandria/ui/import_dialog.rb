@@ -9,7 +9,7 @@ require "alexandria/ui/skip_entry_dialog"
 
 module Alexandria
   module UI
-    class ImportDialog < SimpleDelegator
+    class ImportDialog
       include GetText
       include Logging
 
@@ -17,55 +17,56 @@ module Alexandria
 
       FILTERS = Alexandria::ImportFilter.all
 
+      attr_reader :dialog
+
       def initialize(parent)
         title = _("Import a Library")
-        dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
-        super(dialog)
+        @dialog = Gtk::FileChooserDialog.new title: title, parent: parent, action: :open
         log.debug { "ImportDialog opened" }
         @destroyed = false
         @running = false
-        add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)
-        add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
-        import_button = add_button(_("_Import"),
-                                   Gtk::ResponseType::ACCEPT)
+        dialog.add_button(Gtk::Stock::HELP, Gtk::ResponseType::HELP)
+        dialog.add_button(Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL)
+        import_button = dialog.add_button(_("_Import"),
+                                          Gtk::ResponseType::ACCEPT)
         import_button.sensitive = false
 
-        signal_connect("destroy") do
+        dialog.signal_connect("destroy") do
           if @running
             @destroyed = true
           else
-            destroy
+            dialog.destroy
           end
         end
 
-        filters = {}
+        @filters = {}
         FILTERS.each do |filter|
           filefilter = make_filefilter filter
-          add_filter(filefilter)
+          dialog.add_filter(filefilter)
           log.debug { "Added ImportFilter #{filefilter} -- #{filefilter.name}" }
-          filters[filefilter] = filter
+          @filters[filefilter] = filter
         end
 
-        signal_connect("selection_changed") do
+        dialog.signal_connect("selection_changed") do
           import_button.sensitive = filename && File.file?(filename)
         end
 
         # before adding the (hidden) progress bar, we must re-set the
         # packing of the button box (currently packed at the end),
         # because the progressbar will be *after* the button box.
-        buttonbox = child.children.last
-        child.set_child_packing(buttonbox, pack_type: :start)
-        child.reorder_child(buttonbox, 1)
+        buttonbox = dialog.child.children.last
+        dialog.child.set_child_packing(buttonbox, pack_type: :start)
+        dialog.child.reorder_child(buttonbox, 1)
 
-        pbar = Gtk::ProgressBar.new
-        pbar.show_text = true
-        child.pack_start(pbar, expand: false)
+        @pbar = Gtk::ProgressBar.new
+        @pbar.show_text = true
+        dialog.child.pack_start(@pbar, expand: false)
       end
 
       def acquire
         on_progress = proc do |fraction|
-          pbar.show unless pbar.visible?
-          pbar.fraction = fraction
+          @pbar.show unless @pbar.visible?
+          @pbar.fraction = fraction
         end
 
         on_error = proc do |message|
@@ -75,22 +76,22 @@ module Alexandria
         exec_queue = ExecutionQueue.new
 
         while !@destroyed &&
-            ((response = run) != Gtk::ResponseType::CANCEL) &&
+            ((response = dialog.run) != Gtk::ResponseType::CANCEL) &&
             response != Gtk::ResponseType::DELETE_EVENT
 
           if response == Gtk::ResponseType::HELP
             Alexandria::UI.display_help(self, "import-library")
             next
           end
-          file = File.basename(filename, ".*")
+          file = File.basename(dialog.filename, ".*")
           base = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             LibraryCollection.instance.all_libraries,
             base)
 
-          filter = filters[self.filter]
+          filter = @filters[dialog.filter]
           log.debug { "Going forward with filter: #{filter.name}" }
-          self.sensitive = false
+          dialog.sensitive = false
 
           filter.on_iterate do |n, total|
             unless @destroyed
@@ -110,8 +111,8 @@ module Alexandria
           @bad_isbns = nil
           @failed_isbns = nil
           thread = Thread.start do
-            library, @bad_isbns, @failed_isbns = filter.invoke(new_library_name,
-                                                               filename)
+            library, @bad_isbns, @failed_isbns =
+              filter.invoke(new_library_name, dialog.filename)
           rescue StandardError => ex
             trace = ex.backtrace.join("\n> ")
             log.error { "Import failed: #{ex.message} #{trace}" }
@@ -129,7 +130,7 @@ module Alexandria
               break
             elsif not_cancelled
               log.debug { "Raising ErrorDialog because not_cancelled is #{not_cancelled}" }
-              ErrorDialog.new(self,
+              ErrorDialog.new(dialog,
                               _("Couldn't import the library"),
                               _("The format of the file you " \
                                 "provided is unknown.  Please " \
@@ -139,7 +140,8 @@ module Alexandria
             self.sensitive = true
           end
         end
-        destroy unless @destroyed
+
+        dialog.destroy unless @destroyed
       end
 
       private

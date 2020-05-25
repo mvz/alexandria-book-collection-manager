@@ -8,30 +8,30 @@ require "alexandria/ui/smart_library_rule_box"
 
 module Alexandria
   module UI
-    class SmartLibraryPropertiesDialogBase < SimpleDelegator
+    class SmartLibraryPropertiesDialogBase
       include Logging
       include GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_reader :predicate_operator_rule
+      attr_reader :dialog
 
       def initialize(parent)
         @dialog = Gtk::Dialog.new(title: "",
                                   parent: parent,
                                   flags: :modal,
                                   buttons: [[Gtk::Stock::HELP, :help]])
-        super(@dialog)
 
-        self.window_position = :center
-        self.resizable = true
-        self.border_width = 4
-        child.border_width = 12
+        @dialog.window_position = :center
+        @dialog.resizable = true
+        @dialog.border_width = 4
+        @dialog.child.border_width = 12
 
         main_box = Gtk::Box.new :vertical
         main_box.border_width = 4
         main_box.spacing = 8
 
-        child << main_box
+        @dialog.child << main_box
 
         @smart_library_rules = []
 
@@ -68,10 +68,10 @@ module Alexandria
       # TODO: Move logic to SmartLibraryRuleBox
       def apply_smart_rule_for_rule_box(rule_box, operand, operation)
         idx = @rules_box.children.index(rule_box)
-        @smart_library_rules[idx] ||= SmartLibrary::Rule.new(operand,
+        smart_library_rules[idx] ||= SmartLibrary::Rule.new(operand,
                                                              operation.first,
                                                              nil)
-        new_rule = @smart_library_rules[idx]
+        new_rule = smart_library_rules[idx]
         new_rule.operand = operand
         new_rule.operation = operation.first
         new_rule.value = nil
@@ -79,10 +79,7 @@ module Alexandria
 
       protected
 
-      def smart_library_rules
-        fill_smart_library_rules_values
-        @smart_library_rules
-      end
+      attr_reader :smart_library_rules
 
       def has_weirdnesses?
         fill_smart_library_rules_values
@@ -188,7 +185,7 @@ module Alexandria
         idx = @rules_box.children.index(rule_box)
         raise if idx.nil?
 
-        @smart_library_rules.delete_at(idx)
+        smart_library_rules.delete_at(idx)
         @rules_box.remove(rule_box)
         sensitize_remove_rule_buttons
         update_rules_header_box
@@ -221,7 +218,7 @@ module Alexandria
               value = Time.now
             end
           end
-          @smart_library_rules[i].value = value
+          smart_library_rules[i].value = value
         end
       end
 

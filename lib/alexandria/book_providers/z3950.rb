@@ -81,7 +81,7 @@ module Alexandria
         raise NoResultsError
       end
 
-      def marc_to_book(marc_txt)
+      def marc_to_book(marc_txt, isbn)
         begin
           marc = MARC::Record.new_from_marc(marc_txt, forgiving: true)
         rescue StandardError => ex
@@ -109,7 +109,7 @@ module Alexandria
 
         return if marc.title.nil? # or marc.authors.empty?
 
-        (isbn = isbn) || marc.isbn
+        isbn = isbn || marc.isbn
         isbn = Library.canonicalise_ean(isbn)
 
         book = Book.new(marc.title, marc.authors,
@@ -120,7 +120,7 @@ module Alexandria
         book
       end
 
-      def books_from_marc(resultset, _isbn)
+      def books_from_marc(resultset, isbn)
         results = []
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs["charset"], "UTF-8")
@@ -141,7 +141,7 @@ module Alexandria
                                                                   mappings)
             if book.nil?
               # failing that, try the genuine MARC parser
-              book = marc_to_book(marc_txt)
+              book = marc_to_book(marc_txt, isbn)
             end
           rescue StandardError => ex
             log.warn { ex }

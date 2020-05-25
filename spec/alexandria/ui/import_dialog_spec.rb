@@ -7,8 +7,35 @@
 require File.dirname(__FILE__) + "/../../spec_helper"
 
 describe Alexandria::UI::ImportDialog do
-  it "works" do
-    parent = Gtk::Window.new :toplevel
+  let(:parent) { Gtk::Window.new :toplevel }
+
+  it "can be instantiated" do
     described_class.new parent
+  end
+
+  describe "#acquire" do
+    let(:import_dialog) { described_class.new parent }
+    let(:chooser) { import_dialog.dialog }
+
+    before do
+      allow(chooser).to receive(:filename).and_return("spec/data/isbns.txt")
+      allow(Alexandria::BookProviders).to receive(:isbn_search)
+        .and_raise Alexandria::BookProviders::SearchEmptyError
+      allow(Alexandria::BookProviders).to receive(:isbn_search).with("0595371086")
+        .and_return(an_artist_of_the_floating_world)
+    end
+
+    it "works when response is cancel" do
+      allow(chooser).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
+      import_dialog.acquire {}
+    end
+
+    it "works when response is OK" do
+      allow(chooser).to receive(:run).and_return(Gtk::ResponseType::OK)
+
+      result = nil
+      import_dialog.acquire { |*args| result = args }
+      expect(result.first.to_a).to eq [an_artist_of_the_floating_world]
+    end
   end
 end
