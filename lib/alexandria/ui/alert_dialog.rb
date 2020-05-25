@@ -44,6 +44,10 @@ module Alexandria
         dialog.destroy
       end
 
+      def default_response=(response)
+        dialog.default_response = response
+      end
+
       private
 
       attr_reader :dialog

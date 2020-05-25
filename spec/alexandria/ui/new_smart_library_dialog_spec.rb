@@ -13,18 +13,26 @@ describe Alexandria::UI::NewSmartLibraryDialog do
     described_class.new parent
   end
 
-  describe "#handle_ok_response" do
-    it "returns a smart library" do
-      dialog = described_class.new parent
-      result = dialog.handle_ok_response
+  describe "#acquire" do
+    let(:properties_dialog) { described_class.new parent }
+    let(:gtk_dialog) { properties_dialog.dialog }
 
-      expect(result).to be_a Alexandria::SmartLibrary
+    it "works when response is cancel" do
+      allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
+      properties_dialog.acquire
     end
 
-    it "returns a result that can be saved" do
-      dialog = described_class.new parent
-      result = dialog.handle_ok_response
+    it "returns a smart library that can be saved when response is ok" do
+      allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::OK)
 
+      # Make sure entered rule is valid
+      rules_box = properties_dialog.instance_variable_get("@rules_box")
+      entry = rules_box.children.first.children[2]
+      entry.text = "foo"
+
+      result = properties_dialog.acquire
+
+      expect(result).to be_a Alexandria::SmartLibrary
       expect { result.save }.not_to raise_error
     end
   end

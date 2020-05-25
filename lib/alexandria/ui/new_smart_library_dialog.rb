@@ -13,20 +13,20 @@ module Alexandria
       def initialize(parent)
         super(parent)
 
-        @dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
-                    [Gtk::Stock::NEW, :ok])
+        dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
+                           [Gtk::Stock::NEW, :ok])
 
-        @dialog.title = _("New Smart Library")
+        dialog.title = _("New Smart Library")
         # FIXME: Should accept just :cancel
-        @dialog.default_response = Gtk::ResponseType::CANCEL
+        dialog.default_response = Gtk::ResponseType::CANCEL
         insert_new_rule
       end
 
       def acquire
-        show_all
+        dialog.show_all
 
         result = nil
-        while ((response = run) != Gtk::ResponseType::CANCEL) &&
+        while ((response = dialog.run) != Gtk::ResponseType::CANCEL) &&
             (response != Gtk::ResponseType::DELETE_EVENT)
 
           if response == Gtk::ResponseType::HELP
@@ -37,9 +37,11 @@ module Alexandria
           end
         end
 
-        destroy
+        dialog.destroy
         result
       end
+
+      private
 
       def handle_help_response
         Alexandria::UI.display_help(self, "new-smart-library")
@@ -60,8 +62,6 @@ module Alexandria
                                    library_store)
         library
       end
-
-      private
 
       def smart_library_base_name(rules)
         return unless rules.length == 1
