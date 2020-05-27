@@ -216,7 +216,7 @@ module Alexandria
       end
 
       def reinitialize(fullname)
-        @name = "#{name}_#{fullname.hash.to_s}"
+        @name = "#{name}_#{fullname.hash}"
         @fullname = fullname
         prefs = Alexandria::Preferences.instance
         ary = prefs.get_variable :abstract_providers

@@ -109,7 +109,7 @@ module Alexandria
 
         return if marc.title.nil? # or marc.authors.empty?
 
-        isbn = isbn || marc.isbn
+        isbn ||= marc.isbn
         isbn = Library.canonicalise_ean(isbn)
 
         book = Book.new(marc.title, marc.authors,
