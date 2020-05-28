@@ -1025,7 +1025,7 @@ module Alexandria
 
       def setup_move_actions
         @actiongroup.actions.each do |action|
-          next unless /^MoveIn/.match?(action.name)
+          next unless action.name.start_with?("MoveIn")
 
           @actiongroup.remove_action(action)
         end

@@ -69,8 +69,8 @@ module Alexandria
       def apply_smart_rule_for_rule_box(rule_box, operand, operation)
         idx = @rules_box.children.index(rule_box)
         smart_library_rules[idx] ||= SmartLibrary::Rule.new(operand,
-                                                             operation.first,
-                                                             nil)
+                                                            operation.first,
+                                                            nil)
         new_rule = smart_library_rules[idx]
         new_rule.operand = operand
         new_rule.operation = operation.first

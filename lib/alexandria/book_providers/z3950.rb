@@ -109,7 +109,7 @@ module Alexandria
 
         return if marc.title.nil? # or marc.authors.empty?
 
-        isbn = isbn || marc.isbn
+        isbn ||= marc.isbn
         isbn = Library.canonicalise_ean(isbn)
 
         book = Book.new(marc.title, marc.authors,
@@ -154,7 +154,7 @@ module Alexandria
       end
 
       def marc?
-        /MARC$/.match(prefs["record_syntax"])
+        prefs["record_syntax"].end_with?("MARC")
       end
 
       def search_records(criterion, type, conn_count)

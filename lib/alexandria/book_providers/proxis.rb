@@ -96,7 +96,7 @@ module Alexandria
           if title_link
             result[:title] = text_of(title_link)
             result[:lookup_url] = title_link["href"]
-            unless /^http/.match?(result[:lookup_url])
+            unless result[:lookup_url].start_with?("http")
               result[:lookup_url] = "#{SITE}#{result[:lookup_url]}"
             end
           end
@@ -157,7 +157,7 @@ module Alexandria
 
         image_url = nil
         if (cover_img = doc.at("img[@id$='imgProduct']"))
-          image_url = if /^http/.match?(cover_img["src"])
+          image_url = if cover_img["src"].start_with?("http")
                         cover_img["src"]
                       else
                         "#{SITE}/#{cover_img['src']}" # TODO: use html <base>
