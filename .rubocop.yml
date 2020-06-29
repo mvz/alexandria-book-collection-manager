@@ -120,8 +120,6 @@ Style/StringLiterals:
 Style/SymbolArray:
   EnforcedStyle: brackets
 
-# Project-specific configuration goes here.
-
 # Accessors are only trivial if they match the ivar name.
 Style/TrivialAccessors:
   ExactNameMatch: true
