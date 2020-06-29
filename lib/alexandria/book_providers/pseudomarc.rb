@@ -135,7 +135,7 @@ module Alexandria
           d_idx = 0
           while d_idx < data.size
             d_str = data[d_idx..-1]
-            idx = d_str =~ /\$([a-z]) ([^\$]+)/
+            idx = d_str =~ /\$([a-z]) ([^$]+)/
             break unless idx
 
             sub_code = Regexp.last_match[1]

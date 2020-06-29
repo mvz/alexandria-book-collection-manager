@@ -167,7 +167,7 @@ module Alexandria
 
             year = nil
             date = data_from_label(item_details, "Erschienen:")
-            year = Regexp.last_match[1].to_i if date =~ /([\d]{4})/
+            year = Regexp.last_match[1].to_i if date =~ /(\d{4})/
 
             binding = data_from_label(item_details, "Einband")
 

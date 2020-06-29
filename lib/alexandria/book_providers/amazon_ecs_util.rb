@@ -228,7 +228,7 @@ module Alexandria
         raise AmazonNotConfiguredError unless @@secret_access_key
 
         # Step 0 : Split apart request string
-        url_pattern = %r{http://([^/]+)(/[^\?]+)\?(.*$)}
+        url_pattern = %r{http://([^/]+)(/[^?]+)\?(.*$)}
         url_pattern =~ request
         host = Regexp.last_match[1]
         path = Regexp.last_match[2]

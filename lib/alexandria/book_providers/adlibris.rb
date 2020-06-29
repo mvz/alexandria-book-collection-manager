@@ -131,7 +131,7 @@ module Alexandria
           binding = nil
           if (format = doc.search("div.productTitleFormat span").first)
             binding = text_of(format)
-            binding = Regexp.last_match[1] if binding =~ /\(([^\)]+)\)/
+            binding = Regexp.last_match[1] if binding =~ /\(([^)]+)\)/
           end
 
           year = nil
@@ -148,7 +148,7 @@ module Alexandria
             next unless isbn =~ /[0-9x]{10,13}/i
 
             isbn.gsub(/(\n|\r)/, " ")
-            isbn = Regexp.last_match[1] if isbn =~ /:[\s]*([0-9x]+)/i
+            isbn = Regexp.last_match[1] if isbn =~ /:\s*([0-9x]+)/i
             isbns << isbn
           end
           isbn = isbns.first

@@ -263,7 +263,7 @@ module Alexandria
       escaped.gsub!(/&/, "&amp;")
       escaped.gsub!(/</, "&lt;")
       escaped.gsub!(/>/, "&gt;")
-      escaped.gsub!(/\"/, "&quot;")
+      escaped.gsub!(/"/, "&quot;")
       escaped
     end
 
@@ -394,13 +394,13 @@ module Alexandria
       my_str = str.dup
       my_str.gsub!(/%/, '\\%')
       my_str.gsub!(/~/, '\\textasciitilde')
-      my_str.gsub!(/\&/, '\\\\&')
+      my_str.gsub!(/&/, '\\\\&')
       my_str.gsub!(/\#/, '\\\\#')
       my_str.gsub!(/\{/, '\\{')
       my_str.gsub!(/\}/, '\\}')
       my_str.gsub!(/_/, '\\_')
       my_str.gsub!(/\$/, "\\\$")
-      my_str.gsub!(/\"(.+)\"/, "``\1''")
+      my_str.gsub!(/"(.+)"/, "``\1''")
       my_str
     end
   end

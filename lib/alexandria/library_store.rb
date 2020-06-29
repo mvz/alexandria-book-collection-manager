@@ -9,7 +9,7 @@ module Alexandria
     include Logging
 
     FIX_BIGNUM_REGEX =
-      %r{loaned_since:\s*(\!ruby/object\:Bignum\s*)?(\d+)\n}.freeze
+      %r{loaned_since:\s*(!ruby/object:Bignum\s*)?(\d+)\n}.freeze
 
     include GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
@@ -200,7 +200,7 @@ module Alexandria
       if (md = FIX_BIGNUM_REGEX.match(text))
         new_yaml = Time.at(md[2].to_i).to_yaml
         # Remove the "---" prefix.
-        new_yaml.sub!(/^\s*\-+\s*/, "")
+        new_yaml.sub!(/^\s*-+\s*/, "")
         text.sub!(md[0], "loaned_since: #{new_yaml}\n")
       end
 
