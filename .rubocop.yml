@@ -73,6 +73,12 @@ Naming/AccessorMethodName:
 Naming/RescuedExceptionsVariableName:
   PreferredName: ex
 
+Performance/EndWith:
+  AutoCorrect: true
+
+Performance/StartWith:
+  AutoCorrect: true
+
 # End-to-end specs do not describe classes
 RSpec/DescribeClass:
   Exclude:
