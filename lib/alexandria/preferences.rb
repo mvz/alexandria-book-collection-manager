@@ -162,7 +162,7 @@ module Alexandria
     end
 
     def make_list_string(list)
-      list.map! { |x| x.gsub(/\"/, '\\"') } if get_gconf_type(list.first) == "string"
+      list.map! { |x| x.gsub(/"/, '\\"') } if get_gconf_type(list.first) == "string"
       contents = list.join(",")
       "[" + contents + "]"
     end
@@ -176,7 +176,7 @@ module Alexandria
       type = get_gconf_type(new_value)
       value_str = new_value
       if new_value.is_a? String
-        new_value = new_value.gsub(/\"/, '\\"')
+        new_value = new_value.gsub(/"/, '\\"')
         value_str = "\"#{new_value}\""
       end
       log.debug { value_str } if /cols_width/.match?(var_path)

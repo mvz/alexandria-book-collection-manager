@@ -58,7 +58,7 @@ module Alexandria
       def json2yaml(json)
         # insert spaces after : and , except within strings
         # i.e. when followed by numeral, quote, { or [
-        yaml = json.gsub(/(\:|\,)([0-9'"{\[])/) do |_match|
+        yaml = json.gsub(/(:|,)([0-9'"{\[])/) do |_match|
           "#{Regexp.last_match[1]} #{Regexp.last_match[2]}"
         end
         yaml.gsub!(%r{\\/}, "/") # unescape forward slashes

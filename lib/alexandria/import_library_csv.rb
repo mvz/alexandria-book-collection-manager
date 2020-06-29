@@ -145,7 +145,7 @@ module Alexandria
       # sometimes "Publisher (YEAR), Edition: NUM, Binding, NUM pages"
       publisher_info = normalize(row[@publisher_info])
       publisher = publisher_info
-      publisher = Regexp.last_match[1] if publisher_info =~ /([^\(]+)\(/
+      publisher = Regexp.last_match[1] if publisher_info =~ /([^(]+)\(/
       edition = publisher_info # binding
       edition_info = publisher_info.split(",")
       edition = publisher_info.split(",")[-2] if edition_info.size >= 3

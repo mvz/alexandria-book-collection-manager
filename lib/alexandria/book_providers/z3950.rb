@@ -286,7 +286,7 @@ module Alexandria
               authors << md[1]
             elsif (md = /^ISBN:\s+([\dXx]+)/.match(line))
               isbn = Library.canonicalise_ean(md[1])
-            elsif (md = /^Imprint:.+\:\s*(.+)\,/.match(line))
+            elsif (md = /^Imprint:.+:\s*(.+),/.match(line))
               publisher = md[1]
             end
           end

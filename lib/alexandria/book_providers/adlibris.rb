@@ -131,7 +131,7 @@ module Alexandria
           binding = nil
           if (format = doc.search("div.productTitleFormat span").first)
             binding = text_of(format)
-            binding = Regexp.last_match[1] if binding =~ /\(([^\)]+)\)/
+            binding = Regexp.last_match[1] if binding =~ /\(([^)]+)\)/
           end
 
           year = nil
