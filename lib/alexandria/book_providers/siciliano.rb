@@ -194,7 +194,7 @@ module Alexandria
 
           script.children.each do |ch|
             ch_text = ch.to_s
-            if ch_text =~ /ImgSrc\[[\d]\]="(.+)";/
+            if ch_text =~ /ImgSrc\[\d\]="(.+)";/
               img_link = Regexp.last_match[1]
               image_urls << img_link
             end

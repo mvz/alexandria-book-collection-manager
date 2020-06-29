@@ -176,9 +176,9 @@ module Alexandria
             publication_info = (publisher_row / "td").last.inner_text
 
             publication_info =~ if publication_info.index(";")
-                                  /;[\s]*([^\d]+)[\s]*[\d]*/
+                                  /;\s*([^\d]+)\s*\d*/
                                 elsif publication_info.index(":")
-                                  /:[\s]*([^;:,]+)/
+                                  /:\s*([^;:,]+)/
                                 else
                                   /([^;,]+)/
                                 end
