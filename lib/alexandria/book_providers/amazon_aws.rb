@@ -1,23 +1,8 @@
 # frozen_string_literal: true
 
-# Copyright (C) 2004-2006 Laurent Sansonetti
-# Copyright (C) 2008 Cathal Mc Ginley
-# Copyright (C) 2014, 2016 Matijs van Zuijlen
+# This file is part of Alexandria.
 #
-# Alexandria is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# Alexandria is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public
-# License along with Alexandria; see the file COPYING.  If not,
-# write to the Free Software Foundation, Inc., 51 Franklin Street,
-# Fifth Floor, Boston, MA 02110-1301 USA.
+# See the file README.md for authorship and licensing information.
 
 # http://en.wikipedia.org/wiki/Amazon
 
@@ -206,22 +191,18 @@ module Alexandria
         end
       end
 
+      LOCALE_URLS = {
+        "fr" => "http://www.amazon.fr/exec/obidos/ASIN/%s",
+        "uk" => "http://www.amazon.co.uk/exec/obidos/ASIN/%s",
+        "de" => "http://www.amazon.de/exec/obidos/ASIN/%s",
+        "ca" => "http://www.amazon.ca/exec/obidos/ASIN/%s",
+        "jp" => "http://www.amazon.jp/exec/obidos/ASIN/%s",
+        "us" => "http://www.amazon.com/exec/obidos/ASIN/%s"
+      }.freeze
+
       def url(book)
         isbn = Library.canonicalise_isbn(book.isbn)
-        url = case prefs["locale"]
-              when "fr"
-                "http://www.amazon.fr/exec/obidos/ASIN/%s"
-              when "uk"
-                "http://www.amazon.co.uk/exec/obidos/ASIN/%s"
-              when "de"
-                "http://www.amazon.de/exec/obidos/ASIN/%s"
-              when "ca"
-                "http://www.amazon.ca/exec/obidos/ASIN/%s"
-              when "jp"
-                "http://www.amazon.jp/exec/obidos/ASIN/%s"
-              when "us"
-                "http://www.amazon.com/exec/obidos/ASIN/%s"
-              end
+        url = LOCALE_URLS.fetch(prefs["locale"])
         url % isbn
       rescue StandardError => ex
         log.warn { "Cannot create url for book #{book}; #{ex.message}" }
