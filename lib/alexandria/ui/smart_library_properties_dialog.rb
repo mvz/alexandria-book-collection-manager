@@ -29,9 +29,10 @@ module Alexandria
         dialog.show_all
 
         while (response = dialog.run) != Gtk::ResponseType::CANCEL
-          if response == Gtk::ResponseType::HELP
+          case response
+          when Gtk::ResponseType::HELP
             handle_help_response
-          elsif response == Gtk::ResponseType::OK
+          when Gtk::ResponseType::OK
             break if handle_ok_response
           end
         end

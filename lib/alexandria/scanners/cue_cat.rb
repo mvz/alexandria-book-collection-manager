@@ -86,8 +86,7 @@ module Alexandria
 
         padding = pad(values)
         result  = calc(values)
-        result  = result[0, result.length - padding]
-        result
+        result[0, result.length - padding]
       end
 
       def calc(values)

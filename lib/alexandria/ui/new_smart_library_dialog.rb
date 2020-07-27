@@ -29,9 +29,10 @@ module Alexandria
         while ((response = dialog.run) != Gtk::ResponseType::CANCEL) &&
             (response != Gtk::ResponseType::DELETE_EVENT)
 
-          if response == Gtk::ResponseType::HELP
+          case response
+          when Gtk::ResponseType::HELP
             handle_help_response
-          elsif response == Gtk::ResponseType::OK
+          when Gtk::ResponseType::OK
             result = handle_ok_response
             break if result
           end
@@ -56,11 +57,10 @@ module Alexandria
           LibraryCollection.instance.all_libraries,
           basename)
         library_store = LibraryCollection.instance.library_store
-        library = SmartLibrary.new(name,
-                                   rules,
-                                   predicate_operator_rule,
-                                   library_store)
-        library
+        SmartLibrary.new(name,
+                         rules,
+                         predicate_operator_rule,
+                         library_store)
       end
 
       def smart_library_base_name(rules)

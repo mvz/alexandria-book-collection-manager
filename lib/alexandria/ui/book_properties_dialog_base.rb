@@ -111,17 +111,19 @@ module Alexandria
         end
 
         @redd_date.signal_connect("icon-press") do |entry, primary, _icon|
-          if primary.nick == "primary"
+          case primary.nick
+          when "primary"
             display_calendar_popup(entry)
-          elsif primary.nick == "secondary"
+          when "secondary"
             clear_date_entry(entry)
           end
         end
 
         @date_loaned_since.signal_connect("icon-press") do |entry, primary, _icon|
-          if primary.nick == "primary"
+          case primary.nick
+          when "primary"
             display_calendar_popup(entry)
-          elsif primary.nick == "secondary"
+          when "secondary"
             clear_date_entry(entry)
             @label_loaning_duration.label = ""
           end
@@ -267,7 +269,8 @@ module Alexandria
                                             [Gtk::Stock::OPEN, Gtk::ResponseType::ACCEPT])
         dialog.current_folder = @@latest_filechooser_directory
         response = dialog.run
-        if response == Gtk::ResponseType::ACCEPT
+        case response
+        when Gtk::ResponseType::ACCEPT
           begin
             @delete_cover_file = false
             cover = GdkPixbuf::Pixbuf.new(file: dialog.filename)
@@ -298,7 +301,7 @@ module Alexandria
           rescue RuntimeError => ex
             ErrorDialog.new(@book_properties_dialog, ex.message).display
           end
-        elsif response == Gtk::ResponseType::REJECT
+        when Gtk::ResponseType::REJECT
           ## FileUtils.rm_f(@cover_file) # fixing bug #16707
           @delete_cover_file = true
 

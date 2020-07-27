@@ -112,12 +112,11 @@ module Alexandria
         isbn ||= marc.isbn
         isbn = Library.canonicalise_ean(isbn)
 
-        book = Book.new(marc.title, marc.authors,
-                        isbn,
-                        (marc.publisher || ""),
-                        marc.respond_to?(:publish_year) ? marc.publish_year.to_i : nil,
-                        (marc.edition || ""))
-        book
+        Book.new(marc.title, marc.authors,
+                 isbn,
+                 (marc.publisher || ""),
+                 marc.respond_to?(:publish_year) ? marc.publish_year.to_i : nil,
+                 (marc.edition || ""))
       end
 
       def books_from_marc(resultset, isbn)

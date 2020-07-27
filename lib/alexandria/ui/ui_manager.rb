@@ -534,10 +534,11 @@ module Alexandria
       def update(*ary)
         log.debug { "on_update #{ary}" }
         caller = ary.first
-        if caller.is_a?(UndoManager)
+        case caller
+        when UndoManager
           @actiongroup["Undo"].sensitive = caller.can_undo?
           @actiongroup["Redo"].sensitive = caller.can_redo?
-        elsif caller.is_a?(Library)
+        when Library
           handle_update_caller_library ary unless caller.updating?
         else
           raise _("unrecognized update event")

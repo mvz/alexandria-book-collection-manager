@@ -94,12 +94,13 @@ module Alexandria
         book.redd = true
       end
       if row[@mainshelf]
-        if row[@mainshelf] == "read"
+        case row[@mainshelf]
+        when "read"
           book.redd = true
-        elsif row[@mainshelf] == "to-read"
+        when "to-read"
           book.redd = false
           book.tags = ["to read"]
-        elsif row[@mainshelf] == "currently-reading"
+        when "currently-reading"
           book.redd = false
           book.tags = ["currently reading"]
         end
@@ -182,10 +183,11 @@ module Alexandria
       is_librarything = false
       is_goodreads = false
       header.each do |head|
-        if head == "'PUBLICATION INFO'"
+        case head
+        when "'PUBLICATION INFO'"
           is_librarything = true
           break
-        elsif head == "Year Published"
+        when "Year Published"
           is_goodreads = true
           break
         end

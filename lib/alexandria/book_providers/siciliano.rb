@@ -201,8 +201,7 @@ module Alexandria
           end
         end
         book = Book.new(title, authors, isbn, publisher, publish_year, binding)
-        result = [book, image_urls.first]
-        result
+        [book, image_urls.first]
       rescue StandardError => ex
         trace = ex.backtrace.join("\n> ")
         log.error { "Failed parsing Siciliano product page #{ex.message}\n#{trace}" }
