@@ -141,15 +141,16 @@ module Alexandria
         unless info_headers.empty?
           info_headers.each do |th|
             header_text = th.inner_text
-            if /Type/.match?(header_text)
+            case header_text
+            when /Type/
               book_data[:binding] = data_for_header(th)
-            elsif /Verschijningsdatum/.match?(header_text)
+            when /Verschijningsdatum/
               date = data_for_header(th)
               date =~ %r{/(\d{4})}
               book_data[:publish_year] = Regexp.last_match[1].to_i
-            elsif /Auteur/.match?(header_text)
+            when /Auteur/
               book_data[:authors] << data_for_header(th)
-            elsif /Uitgever/.match?(header_text)
+            when /Uitgever/
               book_data[:publisher] = data_for_header(th)
             end
           end

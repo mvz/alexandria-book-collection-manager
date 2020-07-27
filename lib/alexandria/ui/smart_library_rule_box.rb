@@ -7,11 +7,10 @@
 module Alexandria
   module UI
     class SmartLibraryRuleBox
-      attr_accessor :rule_box
-      attr_accessor :left_operand_combo, :operator_combo
-      attr_accessor :value_entry, :date_entry
-      attr_accessor :entry_label
-      attr_accessor :add_button, :remove_button
+      attr_accessor :rule_box,
+                    :left_operand_combo, :operator_combo,
+                    :value_entry, :date_entry, :entry_label,
+                    :add_button, :remove_button
 
       def initialize(parent)
         @parent = parent

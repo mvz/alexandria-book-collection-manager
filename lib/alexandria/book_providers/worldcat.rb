@@ -79,7 +79,7 @@ module Alexandria
           result_cells = doc / "td.result/div.name/.."
           result_cells.each do |td|
             type_icon = (td % "div.type/img.icn")
-            next unless type_icon && type_icon["src"] =~ /icon-bks/
+            next unless type_icon && type_icon["src"].include?("icon-bks")
 
             name_div = td % "div.name"
             title = name_div.inner_text

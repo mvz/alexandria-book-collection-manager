@@ -9,6 +9,7 @@ AllCops:
   Exclude:
     - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
+  NewCops: enable
   TargetRubyVersion: 2.5
 
 # Choose GetText-style I18n cops
@@ -97,12 +98,12 @@ Style/AndOr:
 Style/GuardClause:
   MinBodyLength: 2
 
-# Not all objects that handle #== 0 also handle #zero?
-Style/NumericPredicate:
-  Enabled: false
-
 # Sometimes an if statement just looks better than next with a guard clause
 Style/Next:
+  Enabled: false
+
+# Not all objects that handle #== 0 also handle #zero?
+Style/NumericPredicate:
   Enabled: false
 
 # Use older RuboCop default
@@ -126,7 +127,7 @@ Style/StringLiterals:
 Style/SymbolArray:
   EnforcedStyle: brackets
 
-# Accessors are only trivial if they match the ivar name.
+# Accessors are only trivial if they match the ivar name
 Style/TrivialAccessors:
   ExactNameMatch: true
 
@@ -137,33 +138,3 @@ Style/TrailingCommaInArrayLiteral:
 # Alexandria uses regular arrays
 Style/WordArray:
   Enabled: false
-
-# Activate new cops from RuboCop 0.80 - 0.86
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: true
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-Lint/RaiseException:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
-Style/ExponentialNotation:
-  Enabled: true
-Style/HashEachMethods:
-  Enabled: true
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true
-Style/RedundantFetchBlock:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-Style/RedundantRegexpEscape:
-  Enabled: true
-Style/SlicingWithRange:
-  Enabled: true

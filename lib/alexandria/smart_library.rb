@@ -16,7 +16,7 @@ module Alexandria
 
     ALL_RULES = 1
     ANY_RULE = 2
-    attr_reader :name
+    attr_reader :name, :n_rated
     attr_accessor :rules, :predicate_operator_rule, :deleted_books
 
     EXT = ".yaml"
@@ -103,13 +103,14 @@ module Alexandria
     end
 
     def update(*params)
-      if params.first.is_a?(LibraryCollection)
+      case params.first
+      when LibraryCollection
         libraries, _, library = params
         unless library.is_a?(self.class)
           self.libraries = libraries.all_libraries
           refilter
         end
-      elsif params.first.is_a?(Library)
+      when Library
         refilter
       end
     end
@@ -171,8 +172,6 @@ module Alexandria
                      File.join(somewhere, library.final_cover(book)))
       end
     end
-
-    attr_reader :n_rated
 
     def n_unrated
       length - n_rated

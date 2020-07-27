@@ -50,8 +50,7 @@ module Alexandria
       include Logging
       include GetText
       include Singleton
-      attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs
-      attr_accessor :ui_manager
+      attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs, :ui_manager
 
       def initialize
         log.info { "Starting MainApp" }

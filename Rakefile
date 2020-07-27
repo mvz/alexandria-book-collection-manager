@@ -134,10 +134,11 @@ file "lib/alexandria/default_preferences.rb" => ["Rakefile", SCHEMA_PATH] do |f|
       ary = default[1..-2].split(",")
       next if ary.empty?
 
-      if type == "list"
+      case type
+      when "list"
         list_type = element.elements["list_type"].text
         ary.map! { |x| convert_with_type(x, list_type) }
-      elsif type == "pair"
+      when "pair"
         next if ary.length != 2
 
         ary[0] = convert_with_type(ary[0],

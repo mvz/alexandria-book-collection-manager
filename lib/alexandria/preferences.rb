@@ -134,11 +134,12 @@ module Alexandria
     ##
 
     def get_gconf_type(value)
-      if value.is_a?(String)
+      case value
+      when String
         "string"
-      elsif value.is_a?(Integer)
+      when Integer
         "int"
-      elsif value.is_a?(TrueClass) || value.is_a?(FalseClass)
+      when TrueClass, FalseClass
         "bool"
       else
         "string"
@@ -236,15 +237,16 @@ module Alexandria
     # gconftool. This is not fool-proof, but it *does* work for the
     # range of values used by Alexandria.
     def discriminate(value)
-      if value == "true"        # bool
+      case value
+      when "true" # bool
         true
-      elsif value == "false"    # bool
+      when "false"    # bool
         false
-      elsif /^[0-9]+$/.match?(value) # int
+      when /^[0-9]+$/ # int
         value.to_i
-      elsif value =~ /^\[(.*)\]$/ # list (assume of type String)
+      when /^\[(.*)\]$/ # list (assume of type String)
         Regexp.last_match[1].split(",")
-      elsif value =~ /^\((.*)\)$/ # pair (assume of type int)
+      when /^\((.*)\)$/ # pair (assume of type int)
         begin
           pair = Regexp.last_match[1].split(",")
           [discriminate(pair.first), discriminate(pair.last)]
