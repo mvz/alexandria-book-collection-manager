@@ -152,7 +152,7 @@ module Alexandria
               authors = []
               author_links = author_h.parent / :a
               author_links.each do |a|
-                if a["href"] =~ %r{BUCH/sa}
+                if a["href"].include? "BUCH/sa"
                   # 'sa' means search author, there may also be 'ssw' (search keyword) links
                   authors << a.inner_text[0..-2].strip
                   # NOTE stripping the little >> character here...
