@@ -325,10 +325,9 @@ module Alexandria
         next unless md
 
         klass = self.class.module_eval(constant.to_s)
-        if klass.ancestors.include?(AbstractProvider) &&
+        if klass < AbstractProvider &&
             (klass != GenericProvider) &&
-            (klass != WebsiteBasedProvider) &&
-            (klass != AbstractProvider)
+            (klass != WebsiteBasedProvider)
 
           if klass.abstract?
             @abstract_classes << klass
