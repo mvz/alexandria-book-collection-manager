@@ -53,9 +53,28 @@
     :why: 
     :versions: []
     :when: 2017-07-23 05:54:54.822319735 Z
-- - :approve
+- - :license
   - zoom
+  - LGPL-2.1
   - :who: 
-    :why: Actually licensed under LGPL-2.1
+    :why: 
     :versions: []
-    :when: 2017-07-23 06:00:43.594558953 Z
+    :when: 2020-07-30 06:44:22.960902375 Z
+- - :permit
+  - Simplified BSD
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2020-07-30 06:45:58.599399721 Z
+- - :permit
+  - Apache 2.0
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2020-07-30 06:46:08.280121582 Z
+- - :permit
+  - LGPL-2.1
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2020-07-30 06:46:32.729325577 Z
