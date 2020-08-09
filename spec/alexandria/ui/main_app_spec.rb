@@ -6,7 +6,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require File.dirname(__FILE__) + "/../../spec_helper"
+require_relative "../../spec_helper"
 
 describe Alexandria::UI::MainApp do
   it "is a singleton" do
