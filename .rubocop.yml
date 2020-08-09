@@ -62,6 +62,10 @@ Lint/AmbiguousBlockAssociation:
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
+# This cop's reach is too broad
+Lint/MissingSuper:
+  Enabled: false
+
 # Blocks in specs can be any size
 Metrics/BlockLength:
   Exclude:
@@ -117,6 +121,10 @@ Style/RedundantReturn:
   AllowMultipleReturnValues: true
 
 Style/SingleLineBlockParams:
+  Enabled: false
+
+# Allow all ways to construct strings for now
+Style/StringConcatenation:
   Enabled: false
 
 # Do not commit to use of interpolation
