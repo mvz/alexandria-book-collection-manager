@@ -133,7 +133,7 @@ module Alexandria
 
   # Creates the Logger for Alexandria
   def self.create_logger
-    logger = Alexandria::Logger.new(STDERR)
+    logger = Alexandria::Logger.new($stderr)
 
     level = ENV["LOGLEVEL"] ? ENV["LOGLEVEL"].intern : nil
     if [:FATAL, :ERROR, :WARN, :INFO, :DEBUG].include? level
