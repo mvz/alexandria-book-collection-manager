@@ -63,6 +63,7 @@ Lint/AssignmentInCondition:
   AllowSafeAssignment: true
 
 # This cop's reach is too broad
+# See https://github.com/rubocop-hq/rubocop/pull/8480
 Lint/MissingSuper:
   Enabled: false
 
