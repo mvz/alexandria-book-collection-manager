@@ -4,7 +4,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require File.dirname(__FILE__) + "/../../spec_helper"
+require_relative "../../spec_helper"
 
 describe Alexandria::Scanners::CueCat do
   let(:cuecat) { described_class.new }
