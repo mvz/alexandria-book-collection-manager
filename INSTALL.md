@@ -56,23 +56,32 @@ to merge translations into generated files (and to extract
 translatable string from xml files during development).
 
 Note that these files are pre-generated in tar.gz releases, so you'll
-only need them if you're building from the SVN version, or want to
+only need them if you're building from the Git version, or want to
 change the translations.
+
+For support of the Z38.50 protocol you will need the
+[`yaz`](http://www.indexdata.dk/yaz) package.
+
+On Debian/Ubuntu systems, you can install the needed dependencies by running
+
+```
+apt-get install gettext intltool libyaz-dev
+```
 
 ### Ruby/ZOOM and Yaz
 
-For Z39.50 support and and the *Library of Congress* and
-*British Library* book providers you will need
-[`ruby-zoom`](http://ruby-zoom.rubyforge.org), which in turn
-requires the non-Ruby package [`yaz`](http://www.indexdata.dk/yaz).
+For Z39.50 support and the *Library of Congress* and *British Library* book
+providers you will need [`ruby-zoom`](http://ruby-zoom.rubyforge.org), which in
+turn requires the non-Ruby package [`yaz`](http://www.indexdata.dk/yaz) (see
+Native Dependencies above).
 
-Note that if you install the recent Ruby/ZOOM as the `zoom` gem, you
-will also need to install the `marc` gem. (Older implementations of
-ruby-zoom contained their own implementation of MARC.)
+Note that if you install the recent Ruby/ZOOM as the `zoom` gem, you will also
+need to install the `marc` gem. (Older implementations of ruby-zoom contained
+their own implementation of MARC.)
 
-The Z39.50 Object-Orientation Model (ZOOM) is an international
-standard for communication between computer systems, particularly
-libraries and information-related systems.
+The Z39.50 Object-Orientation Model (ZOOM) is an international standard for
+communication between computer systems, particularly libraries and
+information-related systems.
 
 ### image_size
 
