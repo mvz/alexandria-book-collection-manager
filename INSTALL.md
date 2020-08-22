@@ -62,10 +62,13 @@ change the translations.
 For support of the Z38.50 protocol you will need the
 [`yaz`](http://www.indexdata.dk/yaz) package.
 
+Alexandria also uses the outdate gconf2 configuration storage system, so you'll
+need to install `gconf2`.
+
 On Debian/Ubuntu systems, you can install the needed dependencies by running
 
 ```
-apt-get install gettext intltool libyaz-dev
+apt-get install gettext intltool libyaz-dev gconf2
 ```
 
 ### Ruby/ZOOM and Yaz
