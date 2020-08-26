@@ -4,11 +4,10 @@
 #
 # See the file README.md for authorship and licensing information.
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "/../lib"))
-
+require "rspec"
 require "alexandria"
 
-LIBDIR = File.expand_path(File.join(File.dirname(__FILE__), "/data/libraries"))
+LIBDIR = File.expand_path("data/libraries", __dir__)
 TESTDIR = File.join(LIBDIR, "test")
 
 def an_artist_of_the_floating_world
