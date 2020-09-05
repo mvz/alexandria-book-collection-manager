@@ -288,15 +288,10 @@ module Alexandria
           # continue == false if @find_error OR if results are returned
           # timeout ends if continue is false!
 
-          unless continue
-            unless @find_thread.alive? # This happens after find_thread is done
-              unless @destroyed
-                # GLib::Source.remove(progress_pulsing)
-                # @progressbar.hide
-                notify_end_add_by_isbn
-                @button_add.sensitive = false
-              end
-            end
+          # @find_thread.alive? happens after find_thread is done
+          unless continue || @find_thread.alive? || @destroyed
+            notify_end_add_by_isbn
+            @button_add.sensitive = false
           end
 
           continue # timeout loop condition

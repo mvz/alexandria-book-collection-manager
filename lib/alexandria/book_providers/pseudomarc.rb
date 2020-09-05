@@ -83,15 +83,14 @@ module Alexandria
       isbn = nil
       binding = nil
       isbn_data = details[mappings[:isbn][0]]
-      if isbn_data
-        isbn = Regexp.last_match[1] if isbn_data.first[mappings[:isbn][1]] =~ /([-0-9xX]+)/
+      if isbn_data && isbn_data.first[mappings[:isbn][1]] =~ /([-0-9xX]+)/
+        isbn = Regexp.last_match[1]
       end
 
       binding_data = details[mappings[:binding][0]]
-      if binding_data
-        if binding_data.first[mappings[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
-          binding = Regexp.last_match[1]
-        end
+      if binding_data &&
+          binding_data.first[mappings[:binding][1]] =~ /([a-zA-Z][a-z\s]+[a-z])/
+        binding = Regexp.last_match[1]
       end
 
       publisher = nil

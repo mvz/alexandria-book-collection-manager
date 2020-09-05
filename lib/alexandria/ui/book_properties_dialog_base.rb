@@ -276,12 +276,10 @@ module Alexandria
             cover = GdkPixbuf::Pixbuf.new(file: dialog.filename)
             # At this stage the file format is recognized.
 
-            if File.exist?(@cover_file)
-              unless @original_cover_file
-                # make a back up, but only of the original
-                @original_cover_file = "#{@cover_file}~"
-                FileUtils.cp(@cover_file, @original_cover_file)
-              end
+            if File.exist?(@cover_file) && !@original_cover_file
+              # make a back up, but only of the original
+              @original_cover_file = "#{@cover_file}~"
+              FileUtils.cp(@cover_file, @original_cover_file)
             end
             if cover.height > COVER_ABSOLUTE_MAXHEIGHT
               FileUtils.cp(dialog.filename, "#{@cover_file}.orig")

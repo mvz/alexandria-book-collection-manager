@@ -96,8 +96,8 @@ module Alexandria
     end
 
     def self.ean_checksum(numbers)
-      -(numbers.values_at(1, 3, 5, 7, 9, 11).reduce(:+) * 3 +
-        numbers.values_at(0, 2, 4, 6, 8, 10).reduce(:+)) % 10
+      -(numbers.values_at(1, 3, 5, 7, 9, 11).sum * 3 +
+        numbers.values_at(0, 2, 4, 6, 8, 10).sum) % 10
     end
 
     def self.valid_ean?(ean)
@@ -109,8 +109,8 @@ module Alexandria
     end
 
     def self.upc_checksum(numbers)
-      -(numbers.values_at(0, 2, 4, 6, 8, 10).reduce(:+) * 3 +
-        numbers.values_at(1, 3, 5, 7, 9).reduce(:+)) % 10
+      -(numbers.values_at(0, 2, 4, 6, 8, 10).sum * 3 +
+        numbers.values_at(1, 3, 5, 7, 9).sum) % 10
     end
 
     def self.valid_upc?(upc)

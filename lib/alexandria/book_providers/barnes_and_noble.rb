@@ -67,8 +67,8 @@ module Alexandria
         response = agent.get(uri_str)
         log.debug { response.inspect }
         case response
-        when Net::HTTPSuccess     then response
-        when Net::HTTPRedirection then
+        when Net::HTTPSuccess then response
+        when Net::HTTPRedirection
           redirect = URI.parse response["Location"]
           redirect = URI.parse(uri_str) + redirect if redirect.relative?
           fetch_redirectly(redirect.to_s, (limit - 1))

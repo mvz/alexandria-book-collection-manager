@@ -34,14 +34,14 @@ module Alexandria
 
         if token
           token.new_value = token.value.strip if token.value != token.value.strip
-        end
-        if token && ((token.value.size != 20) || (token.value == "0J356Z09CN88KB743582"))
-          token.new_value = ""
+          if (token.value.size != 20) || (token.value == "0J356Z09CN88KB743582")
+            token.new_value = ""
+          end
         end
 
         secret = prefs.variable_named("secret_key")
-        if secret
-          secret.new_value = secret.value.strip if secret.value != secret.value.strip
+        if secret && (secret.value != secret.value.strip)
+          secret.new_value = secret.value.strip
         end
 
         associate = prefs.variable_named("associate_tag") or return

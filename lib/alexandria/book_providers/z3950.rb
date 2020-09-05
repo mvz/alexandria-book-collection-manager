@@ -183,11 +183,9 @@ module Alexandria
         log.debug { "pqf is #{pqf}, syntax #{prefs['record_syntax']}" }
 
         begin
-          if prefs.variable_named("piggyback")
-            unless prefs["piggyback"]
-              log.debug { "setting conn.piggyback to false" }
-              conn.piggyback = false
-            end
+          if prefs.variable_named("piggyback") && !prefs["piggyback"]
+            log.debug { "setting conn.piggyback to false" }
+            conn.piggyback = false
           end
           conn.search(pqf)
         rescue StandardError => ex
