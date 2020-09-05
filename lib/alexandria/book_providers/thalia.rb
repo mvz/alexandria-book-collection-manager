@@ -130,11 +130,10 @@ module Alexandria
           # e.g. .../dave_thomas/ISBN0-9745140-5-5/ID6017044.html
           chosen = results.first # fallback!
           results.each do |rslt|
-            if rslt[:lookup_url] =~ %r{/ISBN(\d+[\d-]*)/}
-              if Regexp.last_match[1].delete("-") == isbn10
-                chosen = rslt
-                break
-              end
+            if rslt[:lookup_url] =~ %r{/ISBN(\d+[\d-]*)/} &&
+                (Regexp.last_match[1].delete("-") == isbn10)
+              chosen = rslt
+              break
             end
           end
           html_data = transport.get_response(URI.parse(chosen[:lookup_url]))

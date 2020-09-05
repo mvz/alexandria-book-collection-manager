@@ -94,13 +94,11 @@ module Alexandria
             ## TODO copy cover image file, if necessary
             # due to #26909 cover files for books without ISBN are re-saved as
             # "g#{ident}.cover"
-            if book.isbn.nil? || book.isbn.empty?
-              if File.exist? library.old_cover(book)
-                log.debug do
-                  "#{library.name}; book #{book.title} has no ISBN, fixing cover image"
-                end
-                FileUtils::Verbose.mv(library.old_cover(book), library.cover(book))
+            if (book.isbn.nil? || book.isbn.empty?) && File.exist?(library.old_cover(book))
+              log.debug do
+                "#{library.name}; book #{book.title} has no ISBN, fixing cover image"
               end
+              FileUtils::Verbose.mv(library.old_cover(book), library.cover(book))
             end
 
             library << book

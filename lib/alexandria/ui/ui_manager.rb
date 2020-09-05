@@ -184,15 +184,16 @@ module Alexandria
       def setup_book_providers
         log.debug { "setup_book_providers" }
         mid = @uimanager.new_merge_id
+        ui_paths = ["ui/MainMenubar/ViewMenu/OnlineInformation/",
+                    "ui/BookPopup/OnlineInformation/",
+                    "ui/NoBookPopup/OnlineInformation/"]
         BookProviders.list.each do |provider|
           name = provider.action_name
-          ["ui/MainMenubar/ViewMenu/OnlineInformation/",
-           "ui/BookPopup/OnlineInformation/",
-           "ui/NoBookPopup/OnlineInformation/"].each do |path|
-             log.debug { "Adding #{name} to #{path}" }
-             @uimanager.add_ui(mid, path, name, name,
-                               :menuitem, false)
-           end
+          ui_paths.each do |path|
+            log.debug { "Adding #{name} to #{path}" }
+            @uimanager.add_ui(mid, path, name, name,
+                              :menuitem, false)
+          end
         end
       end
 
@@ -1041,10 +1042,11 @@ module Alexandria
         @actiongroup.add_actions(actions)
         @uimanager.remove_ui(@move_mid) if @move_mid
         @move_mid = @uimanager.new_merge_id
+        ui_paths = ["ui/MainMenubar/EditMenu/Move/",
+                    "ui/BookPopup/Move/"]
         @libraries.all_regular_libraries.each do |library|
           name = library.action_name
-          ["ui/MainMenubar/EditMenu/Move/",
-           "ui/BookPopup/Move/"].each do |path|
+          ui_paths.each do |path|
             @uimanager.add_ui(@move_mid, path, name, name,
                               :menuitem, false)
           end

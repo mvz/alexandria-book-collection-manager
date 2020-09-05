@@ -29,7 +29,9 @@ module Alexandria
     end
 
     class Unsorted < LibrarySortOrder
-      def initialize; end
+      def initialize
+        super(nil, nil)
+      end
 
       def sort(library)
         library
