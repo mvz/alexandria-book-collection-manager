@@ -1163,14 +1163,14 @@ msgid "_Keep Dialog Open after Adding Book"
 msgstr "Ponechať dialógové okno otvorené po pridaní knihy"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"podľa názvu\n"
-"podľa autorov\n"
-"podľa kľúčového slova"
+msgid "by title"
+msgstr "podľa názvu"
+
+msgid "by authors"
+msgstr "podľa autorov"
+
+msgid "by keyword"
+msgstr "podľa kľúčového slova"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:201
 msgid "_Search:"

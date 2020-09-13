@@ -1197,14 +1197,14 @@ msgid "_Keep Dialog Open after Adding Book"
 msgstr ""
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"yn ôl teitl\n"
-"yn ôl awduron\n"
-"yn ôl allweddair"
+msgid "by title"
+msgstr "yn ôl teitl"
+
+msgid "by authors"
+msgstr "yn ôl awduron"
+
+msgid "by keyword"
+msgstr "yn ôl allweddair"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:201
 msgid "_Search:"
@@ -1473,12 +1473,6 @@ msgstr "Trefnu eich casgliad llyfrau"
 
 #~ msgid "The '%s' provider doesn't have any preference to setup"
 #~ msgstr "Nid oes gan y darparwr '%s' unrhyw hoffterau i'w gosod"
-
-#~ msgid "by authors"
-#~ msgstr "yn ôl awdur"
-
-#~ msgid "by keyword"
-#~ msgstr "yn ôl allweddair"
 
 #~ msgid "Edition"
 #~ msgstr "Rhifyn"

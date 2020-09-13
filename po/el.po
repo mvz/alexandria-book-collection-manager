@@ -1161,14 +1161,14 @@ msgid "_Keep Dialog Open after Adding Book"
 msgstr "_Να μείνει ανοιχτός ο διάλογος μετά την προσθήκη βιβλίου"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"κατά τίτλο\n"
-"κατά συγγραφείς\n"
-"κατά λέξη"
+msgid "by title"
+msgstr "κατά τίτλο"
+
+msgid "by authors"
+msgstr "κατά συγγραφείς"
+
+msgid "by keyword"
+msgstr "κατά λέξη"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:201
 msgid "_Search:"

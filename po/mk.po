@@ -1155,14 +1155,14 @@ msgid "_Keep Dialog Open after Adding Book"
 msgstr "_Остави го Дијалогот отворен и после Внесување на Книга"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"по наслов\n"
-"по автор\n"
-"по клучен збор"
+msgid "by title"
+msgstr "по наслов"
+
+msgid "by authors"
+msgstr "по автор"
+
+msgid "by keyword"
+msgstr "по клучен збор"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:201
 msgid "_Search:"

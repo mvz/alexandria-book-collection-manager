@@ -1160,14 +1160,14 @@ msgid "_Keep Dialog Open after Adding Book"
 msgstr ""
 
 #: ../data/alexandria/glade/new_book_dialog.glade:114
-msgid ""
-"by title\n"
-"by authors\n"
-"by keyword"
-msgstr ""
-"efter titel\n"
-"efter författare\n"
-"efter nyckelord"
+msgid "by title"
+msgstr "efter titel"
+
+msgid "by authors"
+msgstr "efter författare"
+
+msgid "by keyword"
+msgstr "efter nyckelord"
 
 #: ../data/alexandria/glade/new_book_dialog.glade:201
 msgid "_Search:"
