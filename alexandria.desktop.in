@@ -1,9 +1,9 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-_Name=Alexandria Book Collection Manager
-_GenericName=Book Collection Manager
-_Comment=Manage your book collection
+Name=Alexandria Book Collection Manager
+GenericName=Book Collection Manager
+Comment=Manage your book collection
 Exec=/usr/bin/alexandria
 Terminal=false
 Categories=GNOME;GTK;Office;Database;
