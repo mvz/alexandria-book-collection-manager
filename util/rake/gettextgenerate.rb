@@ -69,12 +69,8 @@ class GettextGenerateTask < Rake::TaskLib
   def generate_desktop(infile, outfile)
     @generated_files << outfile
     file outfile => [infile, *po_files] do |_f|
-      begin
-        `intltool-merge --version`
-      rescue Errno::ENOENT
-        raise "Need to install intltool"
-      end
-      system("intltool-merge -d #{@po_dir} #{infile} #{outfile}")
+      result = system("msgfmt --desktop --template #{infile} -d #{@po_dir} -o #{outfile}")
+      raise "msgfmt failed for #{infile}" unless result
     end
   end
 
