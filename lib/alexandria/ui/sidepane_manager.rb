@@ -53,7 +53,7 @@ module Alexandria
             chars = match[1].gsub(/&/, "&amp;")
             ErrorDialog.new(@main_app, _("Invalid library name '%s'") % new_text,
                             _("The name provided contains the " \
-                              "disallowed character <b>%s</b> ") % chars).display
+                              "disallowed character <b>%s</b>") % chars).display
           else
             ErrorDialog.new(@main_app, _("Invalid library name"),
                             _("The name provided contains " \
