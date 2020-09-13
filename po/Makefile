@@ -3,23 +3,20 @@ POT=./alexandria.pot
 
 RUBY=../exe/alexandria $(shell find ../lib -name '*.rb' -and -not -path '*macui*')
 
-GLADE=$(shell find ../share/alexandria/glade -name '*.glade')
+DESKTOP=../alexandria.desktop
 
-HEADERS=$(shell find .. -name '*.h')
+GLADE=$(shell find ../share/alexandria/glade -name '*.glade')
 
 PO=$(wildcard *.po)
 
-$(POT): $(RUBY) $(GLADE) ../alexandria.desktop.in.h $(HEADERS)
+$(POT): $(RUBY) $(GLADE) $(DESKTOP)
 	rm -f $(POT)
 	@echo Updating PO template from Ruby files
 	@rxgettext --output=$(POT) $(RUBY)
 	@echo Updating PO template from Glade files
 	@xgettext --output=$(POT) --join-existing $(GLADE)
-	@echo Updating PO template from header files
-	@xgettext --output=$(POT) --join-existing --extract-all $(HEADERS)
-
-../alexandria.desktop.in.h: ../alexandria.desktop.in
-	intltool-extract --type=gettext/ini ../alexandria.desktop.in
+	@echo Updating PO template from desktop file
+	@xgettext --output=$(POT) --join-existing $(DESKTOP)
 
 $(PO): $(POT)
 	msgmerge -U $@ $(POT)
