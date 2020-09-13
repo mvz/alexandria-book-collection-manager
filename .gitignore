@@ -10,5 +10,8 @@ share/omf/alexandria/*.omf
 pkg/
 coverage/
 tmp/
+po/*.po~
+po/*.mo
+po/*.pot
 *.gem
 *.glade~
