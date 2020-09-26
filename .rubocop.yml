@@ -9,6 +9,7 @@ AllCops:
   Exclude:
     - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
+    - 'vendor/bundle/**/*'
   NewCops: enable
   TargetRubyVersion: 2.5
 
