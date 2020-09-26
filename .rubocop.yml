@@ -28,6 +28,10 @@ RailsI18n:
 GetText/DecorateStringFormattingUsingPercent:
   Enabled: false
 
+# Make BeginEndAlignment behavior match EndAlignment
+Layout/BeginEndAlignment:
+  EnforcedStyleAlignWith: begin
+
 Layout/HashAlignment:
   EnforcedColonStyle: key
   EnforcedHashRocketStyle: table
