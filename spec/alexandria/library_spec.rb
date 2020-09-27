@@ -142,13 +142,13 @@ describe Alexandria::Library do
 
     it "imports cleanly from version 0.6.1 data format" do
       # Malory
-      malory_book = my_library.select { |b| b.isbn == "9780192812179" }[0]
+      malory_book = my_library.find { |b| b.isbn == "9780192812179" }
       expect(malory_book.publisher).to eq("Oxford University Press")
       expect(malory_book.authors.include?("Vinaver")).to be_truthy
       expect(malory_book.version).to eq(Alexandria::DATA_VERSION)
 
       # Guide to LaTeX
-      latex_book = my_library.select { |b| b.title.include? "Latex" }[0]
+      latex_book = my_library.find { |b| b.title.include? "Latex" }
       expect(latex_book.isbn).to eq("9780201398250")
       expect(latex_book.publisher).to eq("Addison Wesley") # note, no Ruby-Amazon cruft
     end
