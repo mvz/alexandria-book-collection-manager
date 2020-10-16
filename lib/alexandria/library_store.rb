@@ -205,7 +205,7 @@ module Alexandria
       # TODO: Ensure book loading passes through Book#initialize
       book = YAML.safe_load(text, permitted_classes: [Book, Time])
 
-      unless book.isbn.class == String
+      unless book.isbn.instance_of? String
         # HACK
         md = /isbn: (.+)/.match(text)
         if md
@@ -215,7 +215,7 @@ module Alexandria
       end
 
       # another HACK of the same type as above
-      unless book.saved_ident.class == String
+      unless book.saved_ident.instance_of? String
 
         md2 = /saved_ident: (.+)/.match(text)
         if md2
@@ -224,7 +224,7 @@ module Alexandria
           book.saved_ident = string_saved_ident
         end
       end
-      if (book.isbn.class == String) && book.isbn.empty?
+      if (book.isbn.instance_of? String) && book.isbn.empty?
         book.isbn = nil # save trouble later
       end
       book
