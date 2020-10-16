@@ -4,7 +4,7 @@ Alexandria is a GNOME application for managing collections of books.
 
 Alexandria is written in Ruby, and is free software, distributed under
 the terms of the GNU General Public License, version 2 or later. See
-the file COPYING for more information.
+the file [COPYING](COPYING) for more information.
 
 What is Alexandria?
 ===================
@@ -39,49 +39,50 @@ Alexandria is a simple program designed to allow individuals to keep a
 catalogue of their book collection. In addition, it enables users to
 keep track of books which are on loan.
 
-    * retrieves and displays book information (sometimes with cover
-      pictures) from several online libraries and bookshops, such as
-          o Amazon
-          o Proxis
-          o AdLibris
-          o Spanish Ministry of Culture
-          o Livraria Siciliano
-          o WorldCat
-          o US Library of Congress
-          o British Library
-    * allows books to be added and updated by hand
-    * enables searches either by ISBN, title, author or keyword
-    * supports the Z39.50 standard and allow you to manage your own
-      sources (e.g. university libraries)
-    * saves data using the plain-text YAML format
-    * can import and export data into ONIX, Tellico, ISBN-list
-      and GoodReads CSV formats
-    * can export XHTML web pages of your libraries, themable with CSS
-    * allows marking your books as loaned, each with the loan-date and
-      the name of the person who has borrowed them
-    * features a HIG-compliant user interface
-    * shows books in different views (standard list or icons list),
-      that can be filtered and/or sorted
-    * handles book rating and notes
-    * supports CueCat and standard "keyboard wedge" barcode readers
-    * includes translations for several languages
-    * is documented in a complete manual (at the moment only in
-      English and Japanese)
+* retrieves and displays book information (sometimes with cover
+  pictures) from several online libraries and bookshops, such as
+   - Amazon
+   - Proxis
+   - AdLibris
+   - Spanish Ministry of Culture
+   - Livraria Siciliano
+   - WorldCat
+   - US Library of Congress
+   - British Library
+* allows books to be added and updated by hand
+* enables searches either by ISBN, title, author or keyword
+* supports the Z39.50 standard and allow you to manage your own
+  sources (e.g. university libraries)
+* saves data using the plain-text YAML format
+* can import and export data into ONIX, Tellico, ISBN-list
+  and GoodReads CSV formats
+* can export XHTML web pages of your libraries, themable with CSS
+* allows marking your books as loaned, each with the loan-date and
+  the name of the person who has borrowed them
+* features a HIG-compliant user interface
+* shows books in different views (standard list or icons list),
+  that can be filtered and/or sorted
+* handles book rating and notes
+* supports CueCat and standard "keyboard wedge" barcode readers
+* includes translations for several languages
+* is documented in a complete manual (at the moment only in
+  English and Japanese)
 
-Alexandria is not without problems. See doc/BUGS for a summary of issues.
+Alexandria is not without problems. See [doc/BUGS](doc/BUGS) for a
+summary of issues.
 
 ## Installation
 
 There are full instructions for installing Alexandria from source in the
-file INSTALL, including information about all the dependencies.
+file [INSTALL](INSTALL), including information about all the dependencies.
 
 If you are installing on a Debian-based system, things should be
 easier as the dependencies can be handled automatically.
 
 To run the program, just type
-    alexandria
+    `alexandria`
 or, to get verbose debugging information,
-    alexandria --debug
+    `alexandria --debug`
 
 If you are running GNOME, Alexandria should appear under the
 'Applications > Office' menu.
@@ -166,4 +167,4 @@ Copyright (C) 2005-2010,2014-2020 Alexandria Contributors
 Alexandria is free software; you can redistribute it and/or modify it under the
 terms of the GNU General Public License as published by the Free Software
 Foundation; either version 2 of the License, or (at your option) any later
-version. See the file COPYING for details.
+version. See the file [COPYING](COPYING) for details.
