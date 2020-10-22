@@ -61,7 +61,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rubocop", "~> 0.93.1")
   s.add_development_dependency("rubocop-i18n", ["~> 2.0.2"])
   s.add_development_dependency("rubocop-performance", ["~> 1.8.0"])
-  s.add_development_dependency("rubocop-rspec", ["~> 1.43.1"])
+  s.add_development_dependency("rubocop-rspec", "~> 1.44.1")
 
   s.require_paths = ["lib"]
 end
