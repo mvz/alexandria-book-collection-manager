@@ -7,6 +7,7 @@ Gemfile.lock
 .yardoc/
 share/locale/
 share/omf/alexandria/*.omf
+spec/examples.txt
 pkg/
 coverage/
 tmp/

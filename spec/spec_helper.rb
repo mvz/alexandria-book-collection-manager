@@ -24,6 +24,8 @@ test_store = Alexandria::LibraryStore.new(TESTDIR)
 Alexandria::LibraryCollection.instance.library_store = test_store
 
 RSpec.configure do |config|
+  config.example_status_persistence_file_path = "spec/examples.txt"
+
   config.before do
     FileUtils.rm_rf(TESTDIR)
   end
