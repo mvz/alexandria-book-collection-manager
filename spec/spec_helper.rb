@@ -6,6 +6,7 @@
 
 require "rspec"
 require "alexandria"
+require "webmock/rspec"
 
 LIBDIR = File.expand_path("data/libraries", __dir__)
 TESTDIR = File.join(LIBDIR, "test")
