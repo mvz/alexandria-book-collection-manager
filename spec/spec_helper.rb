@@ -19,6 +19,47 @@ def an_artist_of_the_floating_world
                        "Paperback")
 end
 
+def assert_correct_search_result(provider, query,
+                                 search_type = Alexandria::BookProviders::SEARCH_BY_ISBN)
+  begin
+    results = provider.instance.search(query, search_type)
+  rescue SocketError
+    skip "Service is offline"
+  end
+
+  expect(results).to be_instance_of(Array), "Results are not an array for #{provider}"
+  expect(results).not_to be_empty, "Results are empty for #{provider}"
+
+  if search_type == Alexandria::BookProviders::SEARCH_BY_ISBN
+    expect(results.length).to be <= 2, "Results are greater than 2 for #{provider}"
+
+    book = results.first
+
+    expect(book).to be_instance_of(Alexandria::Book),
+                    "Result is not a Book for #{provider}"
+
+    canonical_query = Alexandria::Library.canonicalise_ean(query)
+    canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
+    expect(canonical_query)
+      .to eq(canonical_result),
+          "Result's isbn #{book.isbn} is not equivalent" \
+          " to the requested isbn #{query} for #{provider}"
+
+    if results.length == 2
+      cover_url = results.last
+      if cover_url
+        expect(cover_url)
+          .to be_instance_of(String),
+              "Unexpected cover_url #{cover_url.inspect} for #{provider}"
+      end
+    end
+  else
+    expect(results.first.first)
+      .to be_instance_of(Alexandria::Book), "Result item is not a Book for #{provider}"
+  end
+  results
+end
+
 Alexandria::UI::Icons.init
 
 test_store = Alexandria::LibraryStore.new(TESTDIR)
