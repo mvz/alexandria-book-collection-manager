@@ -191,20 +191,18 @@ module Alexandria
             year = nil
           end
 
-          isbn = search_isbn
-          unless isbn
-            isbn_row = doc % "tr#details-standardno"
-            if isbn_row
-              isbns = (isbn_row / "td").last.inner_text.split
-              isbn = Library.canonicalise_isbn(isbns.first)
-            else
-              log.warn { "No ISBN found on page" }
-            end
+          isbn_row = doc % "tr#details-standardno"
+          if isbn_row
+            isbns = (isbn_row / "td").last.inner_text.split
+            isbn = Library.canonicalise_isbn(isbns.first)
+          else
+            log.warn { "No ISBN found on page" }
+            isbn = search_isbn
           end
 
-          binding = "" # not given on WorldCat website (as far as I can tell)
+          book_binding = "" # not given on WorldCat website (as far as I can tell)
 
-          book = Book.new(title, authors, isbn, publisher, year, binding)
+          book = Book.new(title, authors, isbn, publisher, year, book_binding)
 
           image_url = nil # hm, it's on the website, but uses JavaScript...
 
