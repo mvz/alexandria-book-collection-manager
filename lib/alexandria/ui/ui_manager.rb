@@ -911,12 +911,11 @@ module Alexandria
 
       def iter_from_ident(ident)
         log.debug { ident.to_s }
-        iter = @model.iter_first
-        ok = true if iter
+        ok, iter = @model.iter_first
         while ok
-          return iter if iter[Columns::IDENT] == ident
+          return iter if @model.get_value(iter, Columns::IDENT) == ident
 
-          ok = iter.next!
+          ok = @model.iter_next(iter)
         end
         nil
       end
