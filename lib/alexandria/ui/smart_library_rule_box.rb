@@ -15,12 +15,9 @@ module Alexandria
       def initialize(parent)
         @parent = parent
 
-        self.rule_box = Gtk::Box.new :horizontal
-        rule_box.spacing = 8
-
+        self.rule_box = Gtk::Box.new :horizontal, 0
         self.left_operand_combo = Gtk::ComboBoxText.new
         self.operator_combo = Gtk::ComboBoxText.new
-
         self.value_entry = Gtk::Entry.new
 
         self.date_entry = Gtk::Entry.new.tap do |entry|
