@@ -46,7 +46,7 @@ describe Alexandria::UI::UIManager do
       # This triggers the #on_books_selection_changed callback
       ui.select_a_book regular_library.first
 
-      expect(ui.iconview.selected_items).not_to be_empty
+      expect(ui.iconview.selected_items.to_a).not_to be_empty
     end
   end
 end
