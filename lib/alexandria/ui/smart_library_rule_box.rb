@@ -32,13 +32,14 @@ module Alexandria
         self.entry_label = Gtk::Label.new("")
 
         self.add_button = Gtk::Button.new.tap do |widget|
-          widget << Gtk::Image.new_from_stock(Gtk::STOCK_ADD, Gtk::IconSize::BUTTON)
+          widget.add Gtk::Image.new_from_stock(Gtk::STOCK_ADD, Gtk::IconSize::BUTTON)
 
           widget.signal_connect("clicked") { @parent.handle_add_rule_clicked }
         end
 
         self.remove_button = Gtk::Button.new
-        remove_button << Gtk::Image.new_from_stock(Gtk::STOCK_REMOVE, Gtk::IconSize::BUTTON)
+        remove_button.add Gtk::Image.new_from_stock(Gtk::STOCK_REMOVE,
+                                                    Gtk::IconSize::BUTTON)
 
         remove_button.signal_connect("clicked") do |_button|
           @parent.handle_remove_rule_clicked(self)
@@ -56,13 +57,13 @@ module Alexandria
           handle_left_operand_changed
         end
 
-        rule_box.pack_start(left_operand_combo, expand: false, fill: false)
-        rule_box.pack_start(operator_combo, expand: false, fill: false)
+        rule_box.pack_start(left_operand_combo, false, false, 0)
+        rule_box.pack_start(operator_combo, false, false, 0)
         rule_box.pack_start(value_entry)
         rule_box.pack_start(date_entry)
-        rule_box.pack_start(entry_label, expand: false, fill: false)
-        rule_box.pack_end(remove_button, expand: false, fill: false)
-        rule_box.pack_end(add_button, expand: false, fill: false)
+        rule_box.pack_start(entry_label, false, false, 0)
+        rule_box.pack_end(remove_button, false, false, 0)
+        rule_box.pack_end(add_button, false, false, 0)
 
         value_entry.visible = date_entry.visible = entry_label.visible = false
       end
