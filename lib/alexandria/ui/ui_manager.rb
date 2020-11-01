@@ -1271,7 +1271,7 @@ module Alexandria
 
         @filtered_model.refilter
         iter = iter_from_book(book) or return
-        path = iter.path
+        path = @model.get_path(iter)
         path = view_path_to_model_path(view, path)
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all
