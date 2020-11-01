@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.7.6 / 2020-11-01
+
+* Make more strings translatable with help from rubocop-i18n
+* Code quality and testing infrastructure improvements
+* Update Polish translation ([#51] and [#64], by [Piotr Drąg][piotrdrag])
+* Update Dutch translation
+* Make several dialogs that stopped appearing appear again
+* Remove ability to enable and disable providers through a pop-up menu
+* Fix New Library functionality
+* Update dependencies on gtk3, gstreamer, and psych
+* Fix issues in preferences, smart library dialog, and book selection
+* Improve installation instructions
+* Improve README ([#83] by [Happy][HappyFacade])
+
 ## 0.7.5 / 2020-05-11
 
 * Avoid crash when opening Import dialog
@@ -82,7 +96,12 @@
 
 <!-- contributors -->
 [jrmhaig]: https://github.com/jrmhaig
+[piotrdrag]: https://github.com/piotrdrag
+[HappyFacade]: https://github.com/HappyFacade
 
 <!-- issues and pull requests -->
+[#83]: https://github.com/mvz/alexandria-book-collection-manager/pull/83
+[#64]: https://github.com/mvz/alexandria-book-collection-manager/pull/64
+[#51]: https://github.com/mvz/alexandria-book-collection-manager/pull/51
 [#23]: https://github.com/mvz/alexandria-book-collection-manager/pull/23
 [#19]: https://github.com/mvz/alexandria-book-collection-manager/issues/19

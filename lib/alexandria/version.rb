@@ -5,7 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 module Alexandria
-  VERSION = "0.7.5"
+  VERSION = "0.7.6"
   DATA_VERSION = "0.6.3"
-  DISPLAY_VERSION = "0.7.5"
+  DISPLAY_VERSION = "0.7.6"
 end
