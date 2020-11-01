@@ -1225,7 +1225,7 @@ module Alexandria
         iter = iter_from_book book
         return unless iter
 
-        path = iter.path
+        path = @model.get_path(iter)
         return unless view.model
 
         path = view_path_to_model_path(view, path)
