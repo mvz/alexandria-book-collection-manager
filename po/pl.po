@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-13 14:52+0200\n"
-"PO-Revision-Date: 2020-06-28 01:02+0200\n"
+"PO-Revision-Date: 2020-11-01 14:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "Language: pl\n"
@@ -846,7 +846,6 @@ msgid "Invalid ISBN '%s'"
 msgstr "Nieprawidłowy numer ISBN „%s”"
 
 #: ../lib/alexandria/ui/keep_bad_isbn_dialog.rb:18
-#, fuzzy
 msgid ""
 "The book titled '%s' has an invalid ISBN, but still exists in the providers "
 "libraries. Do you want to keep the book but change the ISBN or cancel the "
@@ -990,9 +989,8 @@ msgid "Invalid library name '%s'"
 msgstr "Nieprawidłowa nazwa biblioteki „%s”"
 
 #: ../lib/alexandria/ui/sidepane_manager.rb:55
-#, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b>"
-msgstr "Podana nazwa zawiera niedozwolony znak <b>%s</b> "
+msgstr "Podana nazwa zawiera niedozwolony znak <b>%s</b>"
 
 #: ../lib/alexandria/ui/sidepane_manager.rb:58
 msgid "Invalid library name"
@@ -1416,9 +1414,3 @@ msgstr "Menedżer domowej biblioteki"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Zarządzanie domową biblioteką"
-
-#~ msgid "Block is required."
-#~ msgstr "Blokada jest wymagana."
-
-#~ msgid "label"
-#~ msgstr "etykieta"
