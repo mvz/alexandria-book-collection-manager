@@ -44,7 +44,7 @@ module Alexandria
           filefilter = make_filefilter filter
           dialog.add_filter(filefilter)
           log.debug { "Added ImportFilter #{filefilter} -- #{filefilter.name}" }
-          @filters[filefilter] = filter
+          @filters[filefilter.name] = filter
         end
 
         dialog.signal_connect("selection-changed") do
@@ -86,12 +86,13 @@ module Alexandria
             next
           end
           file = File.basename(dialog.filename, ".*")
-          base = GLib.locale_to_utf8(file)
+          # FIXME: Should just return a string
+          base, = GLib.locale_to_utf8(file)
           new_library_name = Library.generate_new_name(
             LibraryCollection.instance.all_libraries,
             base)
 
-          filter = @filters[dialog.filter]
+          filter = @filters[dialog.filter.name]
           log.debug { "Going forward with filter: #{filter.name}" }
           dialog.sensitive = false
 
