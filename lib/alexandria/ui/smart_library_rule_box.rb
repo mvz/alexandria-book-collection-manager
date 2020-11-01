@@ -32,15 +32,13 @@ module Alexandria
         self.entry_label = Gtk::Label.new("")
 
         self.add_button = Gtk::Button.new.tap do |widget|
-          widget << Gtk::Image.new(stock: Gtk::STOCK_ADD,
-                                   size: Gtk::IconSize::BUTTON)
+          widget << Gtk::Image.new_from_stock(Gtk::STOCK_ADD, Gtk::IconSize::BUTTON)
 
           widget.signal_connect("clicked") { @parent.handle_add_rule_clicked }
         end
 
         self.remove_button = Gtk::Button.new
-        remove_button << Gtk::Image.new(stock: Gtk::STOCK_REMOVE,
-                                        size: Gtk::IconSize::BUTTON)
+        remove_button << Gtk::Image.new_from_stock(Gtk::STOCK_REMOVE, Gtk::IconSize::BUTTON)
 
         remove_button.signal_connect("clicked") do |_button|
           @parent.handle_remove_rule_clicked(self)
