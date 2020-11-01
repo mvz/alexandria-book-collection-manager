@@ -136,7 +136,7 @@ module Alexandria
                                 "provided is unknown.  Please " \
                                 "retry with another file.")).display
             end
-            pbar.hide
+            @pbar.hide
             self.sensitive = true
           end
         end
