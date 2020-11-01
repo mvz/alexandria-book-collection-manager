@@ -67,7 +67,7 @@ module Alexandria
 
       def acquire
         on_progress = proc do |fraction|
-          @pbar.show unless @pbar.visible?
+          @pbar.show unless @pbar.visible
           @pbar.fraction = fraction
         end
 
