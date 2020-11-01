@@ -31,16 +31,14 @@ module Alexandria
 
         self.entry_label = Gtk::Label.new("")
 
-        self.add_button = Gtk::Button.new(label: "").tap do |widget|
-          widget.remove(widget.children.first)
+        self.add_button = Gtk::Button.new.tap do |widget|
           widget << Gtk::Image.new(stock: Gtk::STOCK_ADD,
                                    size: Gtk::IconSize::BUTTON)
 
           widget.signal_connect("clicked") { @parent.handle_add_rule_clicked }
         end
 
-        self.remove_button = Gtk::Button.new(label: "")
-        remove_button.remove(remove_button.children.first)
+        self.remove_button = Gtk::Button.new
         remove_button << Gtk::Image.new(stock: Gtk::STOCK_REMOVE,
                                         size: Gtk::IconSize::BUTTON)
 
