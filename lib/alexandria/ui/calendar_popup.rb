@@ -30,10 +30,8 @@ module Alexandria
         year = date_arr[0]
         month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
         day = date_arr[2]
-        if @calendar_popup_for_entry
-          time = Time.gm(year, month, day)
-          @calendar_popup_for_entry.text = format_date(time)
-        end
+        time = Time.gm(year, month, day)
+        @calendar_popup_for_entry.text = format_date(time)
       end
 
       def clear_date_entry(entry)
