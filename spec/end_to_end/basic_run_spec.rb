@@ -19,13 +19,6 @@ describe "The Alexandria application" do
     driver.cleanup
   end
 
-  it "starts and can be quit with Ctrl-q" do
-    driver.press_ctrl_q
-
-    status = driver.cleanup
-    expect(status.exitstatus).to eq 0
-  end
-
   it "starts and can be quit with the menu" do
     frame = driver.frame
     menu = frame.find_role :menu_item, /Quit/
@@ -49,7 +42,9 @@ describe "The Alexandria application" do
       table_cell.do_action idx if name == "activate"
     end
 
-    driver.press_ctrl_q
+    frame = driver.frame
+    menu = frame.find_role :menu_item, /Quit/
+    menu.do_action 0
 
     status = driver.cleanup
     expect(status.exitstatus).to eq 0
