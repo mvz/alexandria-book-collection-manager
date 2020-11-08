@@ -27,7 +27,7 @@ module Alexandria
           entry.primary_icon_name = Gtk::Stock::EDIT
 
           entry.primary_icon_activatable = true
-          entry.signal_connect("icon-press") do |widget, primary, _icon|
+          entry.signal_connect("icon-press") do |widget, primary, icon|
             @parent.handle_date_icon_press(widget, primary, icon)
           end
         end
