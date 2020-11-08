@@ -51,7 +51,6 @@ module Alexandria
 
         main_box.pack_start(@rules_header_box, expand: false, fill: false)
         main_box << scrollview
-        setup_calendar_widgets
       end
 
       def handle_date_icon_press(widget, primary, _icon)

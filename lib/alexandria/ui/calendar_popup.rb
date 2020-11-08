@@ -44,6 +44,8 @@ module Alexandria
       end
 
       def display_calendar_popup(entry)
+        setup_calendar_widgets unless defined? @calendar_popup
+
         @calendar_popup_for_entry = entry
         unless entry.text.strip.empty?
           time = parse_date(entry.text)

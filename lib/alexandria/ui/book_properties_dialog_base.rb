@@ -53,7 +53,6 @@ module Alexandria
                                       editable: 1)
         @treeview_authors.append_column(col)
 
-        setup_calendar_widgets
         setup_date_widgets
         GLib::Timeout.add(150) do
           @setup_finished = true
