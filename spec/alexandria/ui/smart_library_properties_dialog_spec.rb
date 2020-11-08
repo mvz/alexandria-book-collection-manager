@@ -7,15 +7,13 @@
 require_relative "../../spec_helper"
 
 describe Alexandria::UI::SmartLibraryPropertiesDialog do
-  let(:parent) { Gtk::Window.new :toplevel }
-  let(:loader) { Alexandria::LibraryStore.new(TESTDIR) }
-  let(:smart_library) { Alexandria::SmartLibrary.new("Foo", [], :all, loader) }
-  let(:properties_dialog) { described_class.new parent, smart_library }
-  let(:gtk_dialog) { properties_dialog.dialog }
-
-  it "can be instantiated" do
+  let(:properties_dialog) do
+    parent = Gtk::Window.new :toplevel
+    loader = Alexandria::LibraryStore.new(TESTDIR)
+    smart_library = Alexandria::SmartLibrary.new("Foo", [], :all, loader)
     described_class.new parent, smart_library
   end
+  let(:gtk_dialog) { properties_dialog.dialog }
 
   describe "#acquire" do
     it "works when response is cancel" do
