@@ -16,26 +16,23 @@ module Alexandria
         @calendar_popup.add(@calendar)
 
         @calendar.signal_connect("day-selected") do
-          date_arr = @calendar.date
-          year = date_arr[0]
-          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
-          day = date_arr[2]
-          if @calendar_popup_for_entry
-            time = Time.gm(year, month, day)
-            @calendar_popup_for_entry.text = format_date(time)
-          end
+          assign_selected_date
         end
 
         @calendar.signal_connect("day-selected-double-click") do
-          date_arr = @calendar.date
-          year = date_arr[0]
-          month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
-          day = date_arr[2]
-          if @calendar_popup_for_entry
-            time = Time.gm(year, month, day)
-            @calendar_popup_for_entry.text = format_date(time)
-          end
+          assign_selected_date
           @calendar_popup.hide
+        end
+      end
+
+      def assign_selected_date
+        date_arr = @calendar.date
+        year = date_arr[0]
+        month = date_arr[1] # + 1 # gtk : months 0-indexed, Time.gm : 1-index
+        day = date_arr[2]
+        if @calendar_popup_for_entry
+          time = Time.gm(year, month, day)
+          @calendar_popup_for_entry.text = format_date(time)
         end
       end
 
