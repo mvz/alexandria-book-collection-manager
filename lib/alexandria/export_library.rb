@@ -36,16 +36,19 @@ module Alexandria
     end
 
     def export_as_onix_xml_archive(filename)
-      File.open(File.join(Dir.tmpdir, "onix.xml"), "w") do |io|
+      dir = Dir.mktmpdir
+      File.open(File.join(dir, "onix.xml"), "w") do |io|
         to_onix_document.write(io, 0)
       end
-      copy_covers(File.join(Dir.tmpdir, "images"))
-      Dir.chdir(Dir.tmpdir) do
+      copy_covers(File.join(dir, "images"))
+      Dir.chdir(dir) do
         output = `tar -cjf \"#{filename}\" onix.xml images 2>&1`
         raise output unless $CHILD_STATUS.success?
       end
-      FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
-      FileUtils.rm(File.join(Dir.tmpdir, "onix.xml"))
+      FileUtils.rm_rf(File.join(dir, "images"))
+      FileUtils.rm(File.join(dir, "onix.xml"))
+    ensure
+      FileUtils.remove_entry dir
     end
 
     def export_as_tellico_xml_archive(filename)
