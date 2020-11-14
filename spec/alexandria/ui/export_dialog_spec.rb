@@ -8,7 +8,7 @@ require_relative "../../spec_helper"
 
 describe Alexandria::UI::ExportDialog do
   let(:parent) { Gtk::Window.new :toplevel }
-  let(:library) { instance_double(Alexandria::Library, name: "Bar Library") }
+  let(:library) { Alexandria::Library.new "Bar Library" }
   let(:sort_order) { Alexandria::LibrarySortOrder::Unsorted.new }
 
   it "works" do
@@ -26,11 +26,8 @@ describe Alexandria::UI::ExportDialog do
 
     it "works when response is OK" do
       dir = Dir.mktmpdir
-      filename = File.join(dir, "export")
       allow(chooser).to receive(:run).and_return(Gtk::ResponseType::OK)
-      allow(chooser).to receive(:filename).and_return(filename)
-      allow(library).to receive(:each_with_index)
-      allow(library).to receive(:copy_covers) { |target| FileUtils.mkdir(target) }
+      allow(chooser).to receive(:filename).and_return File.join(dir, "export")
       export_dialog.perform
     ensure
       FileUtils.remove_entry dir
