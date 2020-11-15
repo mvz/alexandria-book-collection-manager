@@ -18,6 +18,8 @@ module Alexandria
       FORMATS = Alexandria::ExportFormat.all
       THEMES = Alexandria::WebTheme.all
 
+      attr_reader :dialog
+
       def initialize(parent, library, sort_order)
         @dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
                                              parent: parent,
@@ -86,7 +88,7 @@ module Alexandria
       end
 
       def perform
-        while ((response = run) != Gtk::ResponseType::CANCEL) &&
+        while ((response = dialog.run) != Gtk::ResponseType::CANCEL) &&
             (response != Gtk::ResponseType::DELETE_EVENT)
 
           if response == Gtk::ResponseType::HELP
@@ -97,16 +99,17 @@ module Alexandria
                                  THEMES[@theme_combo.active])
             rescue StandardError => ex
               ErrorDialog.new(@dialog, _("Export failed"), ex.message).display
+              break
             end
           end
         end
-        destroy
+        dialog.destroy
       end
 
       private
 
       def on_export(format, theme)
-        filename = self.filename
+        filename = dialog.filename
         if format.ext
           filename += "." + format.ext if File.extname(filename).empty?
           if File.exist?(filename)

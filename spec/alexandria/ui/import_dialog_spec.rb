@@ -13,6 +13,11 @@ describe Alexandria::UI::ImportDialog do
     described_class.new parent
   end
 
+  it "handles a selection change" do
+    importdialog = described_class.new parent
+    importdialog.dialog.signal_emit "selection_changed"
+  end
+
   describe "#acquire" do
     let(:import_dialog) { described_class.new parent }
     let(:chooser) { import_dialog.dialog }
