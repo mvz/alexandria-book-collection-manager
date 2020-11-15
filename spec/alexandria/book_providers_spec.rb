@@ -76,23 +76,6 @@ describe Alexandria::BookProviders do
     end
   end
 
-  describe Alexandria::BookProviders::ThaliaProvider do
-    before do
-      skip "Needs fixing"
-    end
-
-    it "works" do
-      # german book
-      assert_correct_search_result(described_class, "9783896673305")
-      # international book
-      assert_correct_search_result(described_class, "9780440241904")
-      # movie dvd
-      assert_correct_search_result(described_class, "4010232037824")
-      # music cd
-      assert_correct_search_result(described_class, "0094638203520")
-    end
-  end
-
   describe Alexandria::BookProviders::AdLibrisProvider do
     it "works" do
       skip "Needs fixing: site has changed"
