@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.7 / 2020-11-15
+
+* Update Polish translation ([#88] by [Piotr Drąg][piotrdrag])
+* Fix hiding of progress bar of import dialog
+* Fix calendar popups in Smart Library and Book Properties dialogs
+* Fix crashes when activating Export and Import menu items
+
 ## 0.7.6 / 2020-11-01
 
 * Make more strings translatable with help from rubocop-i18n
@@ -100,6 +107,7 @@
 [HappyFacade]: https://github.com/HappyFacade
 
 <!-- issues and pull requests -->
+[#88]: https://github.com/mvz/alexandria-book-collection-manager/pull/88
 [#83]: https://github.com/mvz/alexandria-book-collection-manager/pull/83
 [#64]: https://github.com/mvz/alexandria-book-collection-manager/pull/64
 [#51]: https://github.com/mvz/alexandria-book-collection-manager/pull/51
