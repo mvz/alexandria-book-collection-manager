@@ -24,27 +24,28 @@ class Gtk::ActionGroup
   end
 end
 
-class Gtk::IconView
+module Alexandria::UI::FreezeThaw
+  def frozen?
+    @old_model && !model
+  end
+
   def freeze
+    return if frozen?
+
     @old_model = model
     self.model = nil
   end
 
   def unfreeze
+    return unless frozen?
+
     self.model = @old_model
+    @old_model = nil
   end
 end
 
-class Gtk::TreeView
-  def freeze
-    @old_model = model
-    self.model = nil
-  end
-
-  def unfreeze
-    self.model = @old_model
-  end
-end
+Gtk::IconView.include Alexandria::UI::FreezeThaw
+Gtk::TreeView.include Alexandria::UI::FreezeThaw
 
 class Alexandria::Library
   def action_name

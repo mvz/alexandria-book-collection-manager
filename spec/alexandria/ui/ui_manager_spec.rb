@@ -39,6 +39,7 @@ describe Alexandria::UI::UIManager do
       # FIXME: This is needed because right now UIManager#refresh_books doesn't
       # work without Gtk loop.
       regular_library.each { |book| ui.append_book book }
+      # This makes the iconview model re-appear
       ui.iconview.unfreeze
       expect(ui.model.iter_n_children).to eq regular_library.count
 
