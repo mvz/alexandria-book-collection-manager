@@ -343,7 +343,7 @@ module Alexandria
           sensitize_library selected_library if library_already_selected
 
           GLib::Idle.add do
-            menu.popup(nil, nil, event.button, event.time)
+            menu.popup_at_pointer(event)
             false
           end
 
@@ -391,7 +391,7 @@ module Alexandria
         end
 
         menu = selected_books.empty? ? @nobook_popup : @book_popup
-        menu.popup(nil, nil, event.button, event.time)
+        menu.popup_at_pointer(event)
       end
 
       def get_library_selection_text(library)
