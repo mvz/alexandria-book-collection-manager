@@ -201,9 +201,9 @@ module Alexandria
 
       def on_rename(*)
         iter = @library_listview.selection.selected
-        @library_listview.set_cursor(iter.path,
-                                     @library_listview.get_column(0),
-                                     true)
+        column = @library_listview.get_column(0)
+        cell = column.cells.last
+        @library_listview.set_cursor_on_cell(iter.path, column, cell, true)
       end
 
       def on_delete(*)
