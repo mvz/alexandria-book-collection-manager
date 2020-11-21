@@ -9,7 +9,6 @@ require "alexandria/ui/error_dialog"
 module Alexandria
   module UI
     class BookPropertiesDialog < BookPropertiesDialogBase
-      include Logging
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")

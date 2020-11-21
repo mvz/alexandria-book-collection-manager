@@ -12,6 +12,7 @@ module Alexandria
   module UI
     class BookPropertiesDialogBase < BuilderBase
       include CalendarPopup
+      include Logging
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
