@@ -8,18 +8,44 @@ require_relative "../../spec_helper"
 
 describe Alexandria::UI::NewBookDialogManual do
   let(:parent) { Gtk::Window.new :toplevel }
-  let(:library) {
+  let(:library) do
     store = Alexandria::LibraryCollection.instance.library_store
     store.load_library("Bar Library")
-  }
-  let(:book) do
-    Alexandria::Book.new("Foo Book", ["Jane Doe"], "98765432", "Bar Publisher",
-                         1972, "edition")
   end
 
   it "works" do
-    parent = Gtk::Window.new :toplevel
-    library = instance_double(Alexandria::Library)
     described_class.new parent, library
+  end
+
+  describe "#on_change_cover" do
+    let(:dialog) { described_class.new parent, library }
+    let(:filechooser) { instance_double(Gtk::FileChooserDialog).as_null_object }
+
+    before do
+      allow(Gtk::FileChooserDialog).to receive(:new).and_return(filechooser)
+      allow(filechooser).to receive(:filename)
+        .and_return File.join(__dir__, "../../fixtures/cover.jpg")
+    end
+
+    it "works when response is accept" do
+      allow(filechooser)
+        .to receive(:run).and_return(Gtk::ResponseType::ACCEPT)
+
+      dialog.on_change_cover
+    end
+
+    it "works when response is reject" do
+      allow(filechooser)
+        .to receive(:run).and_return(Gtk::ResponseType::REJECT)
+
+      dialog.on_change_cover
+    end
+
+    it "works when response is cancel" do
+      allow(filechooser)
+        .to receive(:run).and_return(Gtk::ResponseType::CANCEL)
+
+      dialog.on_change_cover
+    end
   end
 end
