@@ -157,14 +157,12 @@ module Alexandria
 
       @@latest_filechooser_directory = ENV["HOME"]
       def on_change_cover
-        backend = `uname`.chomp == "FreeBSD" ? "neant" : "gnome-vfs"
-        dialog = Gtk::FileChooserDialog.new(_("Select a cover image"),
-                                            @book_properties_dialog,
-                                            Gtk::FileChooser::ACTION_OPEN,
-                                            backend,
-                                            [_("No Cover"), Gtk::ResponseType::REJECT],
-                                            [Gtk::Stock::CANCEL, Gtk::ResponseType::CANCEL],
-                                            [Gtk::Stock::OPEN, Gtk::ResponseType::ACCEPT])
+        dialog = Gtk::FileChooserDialog.new(title: _("Select a cover image"),
+                                            parent: @book_properties_dialog,
+                                            action: :open,
+                                            buttons: [[_("No Cover"), :reject],
+                                                      [Gtk::Stock::CANCEL, :cancel],
+                                                      [Gtk::Stock::OPEN, :accept]])
         dialog.current_folder = @@latest_filechooser_directory
         response = dialog.run
         case response
