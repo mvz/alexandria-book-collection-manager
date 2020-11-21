@@ -123,7 +123,9 @@ module Alexandria
 
       def setup_toolbar_filter_entry
         @filter_entry = Gtk::Entry.new
-        @filter_entry.signal_connect("changed", &method(:on_toolbar_filter_entry_changed))
+        @filter_entry.signal_connect("changed") do |entry|
+          on_toolbar_filter_entry_changed(entry)
+        end
         @toolitem = Gtk::ToolItem.new
         @toolitem.expand = true
         @toolitem.border_width = 5
@@ -149,7 +151,7 @@ module Alexandria
           cb.append_text(item)
         end
         cb.active = 0
-        cb.signal_connect("changed", &method(:on_criterion_combobox_changed))
+        cb.signal_connect("changed") { |combo| on_criterion_combobox_changed(combo) }
 
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
@@ -167,8 +169,9 @@ module Alexandria
         @toolbar_view_as.append_text(_("View as Icons"))
         @toolbar_view_as.append_text(_("View as List"))
         @toolbar_view_as.active = 0
-        @toolbar_view_as_signal_hid = \
-          @toolbar_view_as.signal_connect("changed", &method(:on_toolbar_view_as_changed))
+        @toolbar_view_as_signal_hid = @toolbar_view_as.signal_connect("changed") do |combo|
+          on_toolbar_view_as_changed(combo)
+        end
 
         # Put the combo box in a event box because it is not currently
         # possible assign a tooltip to a combo box.
@@ -226,8 +229,12 @@ module Alexandria
 
       def setup_window_events
         log.debug { "setup_window_events" }
-        @main_app.signal_connect("window-state-event", &method(:on_window_state_event))
-        @main_app.signal_connect("destroy", &method(:on_window_destroy))
+        @main_app.signal_connect("window-state-event") do |window, event|
+          on_window_state_event(window, event)
+        end
+        @main_app.signal_connect("destroy") do |window|
+          on_window_destroy(window)
+        end
       end
 
       def setup_active_model

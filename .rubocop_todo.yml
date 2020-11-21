@@ -21,7 +21,7 @@ Metrics/BlockNesting:
 
 # Configuration parameters: CountComments, CountAsOne.
 Metrics/ClassLength:
-  Max: 990
+  Max: 997
 
 # Configuration parameters: IgnoredMethods.
 Metrics/CyclomaticComplexity:
@@ -125,7 +125,6 @@ Style/OptionalBooleanParameter:
     - 'lib/alexandria/book_providers.rb'
     - 'lib/alexandria/book_providers/barnes_and_noble.rb'
     - 'lib/alexandria/book_providers/siciliano.rb'
-    - 'lib/alexandria/book_providers/thalia.rb'
     - 'lib/alexandria/book_providers/worldcat.rb'
     - 'lib/alexandria/console.rb'
     - 'lib/alexandria/execution_queue.rb'
