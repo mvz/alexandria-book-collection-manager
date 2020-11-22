@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+require "cgi"
+
 module Alexandria
   module UI
     class AlertDialog
@@ -26,7 +28,7 @@ module Alexandria
         vbox = Gtk::Box.new(:vertical, 6)
         vbox.homogeneous = false
         vbox.pack_start make_label("<b><big>#{title}</big></b>")
-        vbox.pack_start make_label(message.strip) unless message
+        vbox.pack_start make_label CGI.escapeHTML(message.strip) if message
         hbox.pack_start(vbox)
 
         @dialog.child.pack_start(hbox)
