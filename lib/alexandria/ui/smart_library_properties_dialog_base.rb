@@ -148,7 +148,7 @@ module Alexandria
         box_controller = SmartLibraryRuleBox.new self
         rule_box = box_controller.rule_box
         rule_box.show_all
-        @rules_box.pack_start(rule_box, expand: false, fill: true)
+        @rules_box.pack_start(rule_box, false, true, 0)
 
         if rule
           operands = SmartLibrary::Rule::Operands::LEFT
