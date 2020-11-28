@@ -15,7 +15,7 @@ describe Alexandria::UI::ImportDialog do
 
   it "handles a selection change" do
     importdialog = described_class.new parent
-    importdialog.dialog.signal_emit "selection_changed"
+    GObject.signal_emit importdialog.dialog, "selection-changed"
   end
 
   describe "#acquire" do
