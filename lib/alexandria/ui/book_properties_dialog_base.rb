@@ -278,7 +278,7 @@ module Alexandria
           new_height = pixbuf.height / (pixbuf.width / COVER_MAXWIDTH.to_f)
           # We don't want to modify in place the given pixbuf,
           # that's why we make a copy.
-          pixbuf = pixbuf.scale(COVER_MAXWIDTH, new_height)
+          pixbuf = pixbuf.scale_simple(COVER_MAXWIDTH, new_height, :bilinear)
         end
         @image_cover.set_from_pixbuf pixbuf
       end
