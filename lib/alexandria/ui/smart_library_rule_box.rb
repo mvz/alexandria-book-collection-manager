@@ -59,8 +59,8 @@ module Alexandria
 
         rule_box.pack_start(left_operand_combo, false, false, 0)
         rule_box.pack_start(operator_combo, false, false, 0)
-        rule_box.pack_start(value_entry)
-        rule_box.pack_start(date_entry)
+        rule_box.pack_start(value_entry, false, false, 0)
+        rule_box.pack_start(date_entry, false, false, 0)
         rule_box.pack_start(entry_label, false, false, 0)
         rule_box.pack_end(remove_button, false, false, 0)
         rule_box.pack_end(add_button, false, false, 0)
