@@ -170,7 +170,7 @@ module Alexandria
         when Gtk::ResponseType::ACCEPT
           begin
             @delete_cover_file = false
-            cover = GdkPixbuf::Pixbuf.new(file: dialog.filename)
+            cover = GdkPixbuf::Pixbuf.new_from_file dialog.filename
             # At this stage the file format is recognized.
 
             if File.exist?(@cover_file) && !@original_cover_file
@@ -185,7 +185,7 @@ module Alexandria
                 "Scaling large cover image to" \
                   " #{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
               end
-              cover = cover.scale(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT)
+              cover = cover.scale_simple(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT, :bilinear)
               cover.save(@cover_file, "jpeg")
             else
               FileUtils.cp(dialog.filename, @cover_file)
