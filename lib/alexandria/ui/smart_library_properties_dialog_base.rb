@@ -110,7 +110,7 @@ module Alexandria
       end
 
       def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)
-        @rules_header_box.children.each { |x| @rules_header_box.remove(x) }
+        @rules_header_box.children&.each { |x| @rules_header_box.remove(x) }
 
         if @rules_box.children.length > 1
           label1 = Gtk::Label.new
@@ -130,9 +130,9 @@ module Alexandria
           label2.set_alignment(0.0, 0.5)
           label2.text = _("of the following rules:")
 
-          @rules_header_box.pack_start(label1, expand: false, fill: false)
-          @rules_header_box.pack_start(cb, expand: false, fill: false)
-          @rules_header_box.pack_start(label2, expand: false, fill: false)
+          @rules_header_box.pack_start(label1, false, false, 0)
+          @rules_header_box.pack_start(cb, false, false, 0)
+          @rules_header_box.pack_start(label2, false, false, 0)
         else
           label = Gtk::Label.new
           label.set_alignment(0.0, 0.5)
