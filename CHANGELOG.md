@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.8 / 2020-11-29
+
+* Fix ThaliaProvider
+* Avoid warnings for calendar popup
+* Make Rename menu item work
+* Fix crash when changing covers
+* Make alerts show alert details if available
+
 ## 0.7.7 / 2020-11-15
 
 * Update Polish translation ([#88] by [Piotr Drąg][piotrdrag])
