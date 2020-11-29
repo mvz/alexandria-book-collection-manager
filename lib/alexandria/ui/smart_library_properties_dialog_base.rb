@@ -112,7 +112,8 @@ module Alexandria
       def update_rules_header_box(predicate_operator_rule = SmartLibrary::ALL_RULES)
         @rules_header_box.children&.each { |x| @rules_header_box.remove(x) }
 
-        if @rules_box.children.length > 1
+        # FIXME: Length should just work!?
+        if @rules_box.children.to_a.length > 1
           label1 = Gtk::Label.new
           label1.set_alignment(0.0, 0.5)
           label1.text = _("Match")
