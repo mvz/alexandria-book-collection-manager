@@ -97,11 +97,11 @@ module Alexandria
           keys = ["isbn", "publisher", "pub_year", "binding"]
 
           book_elements = [neaten(elements["title"].text)]
-          book_elements += if !elements["authors"].nil?
+          book_elements += if elements["authors"].nil?
+                             [[]]
+                           else
                              [elements["authors"].elements.to_a.map \
                                                { |x| neaten(x.text) }]
-                           else
-                             [[]]
                            end
           book_elements += keys.map do |key|
             neaten(elements[key].text) if elements[key]
