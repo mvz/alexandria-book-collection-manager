@@ -147,7 +147,7 @@ module Alexandria
     end
 
     def exec_gconf_set_list(var_path, new_list)
-      # NOTE we must check between list and pair...
+      # NOTE: we must check between list and pair...
 
       list_type = get_gconf_type(new_list.first)
       if list_type == "int" && new_list.size == 2
