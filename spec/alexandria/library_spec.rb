@@ -116,7 +116,7 @@ describe Alexandria::Library do
     it "imports books with correct isbn and search result" do
       library, bad_isbns, failed_lookup_isbns =
         described_class.import_as_isbn_list("Test Library", "spec/data/isbns.txt",
-                                            proc {}, proc {})
+                                            proc { nil }, proc { nil })
 
       aggregate_failures do
         expect(library.to_a).to eq [an_artist_of_the_floating_world]

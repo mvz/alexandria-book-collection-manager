@@ -32,7 +32,7 @@ describe Alexandria::UI::ImportDialog do
 
     it "works when response is cancel" do
       allow(chooser).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      import_dialog.acquire {}
+      import_dialog.acquire { nil }
     end
 
     it "works when response is OK" do
