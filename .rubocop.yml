@@ -29,6 +29,11 @@ I18n/RailsI18n:
 I18n/GetText/DecorateStringFormattingUsingPercent:
   Enabled: false
 
+# Disable cop in disabled department explictly until
+# https://github.com/rubocop-hq/rubocop/pull/9258 is merged.
+I18n/RailsI18n/DecorateString:
+  Enabled: false
+
 # Make BeginEndAlignment behavior match EndAlignment
 Layout/BeginEndAlignment:
   EnforcedStyleAlignWith: begin
