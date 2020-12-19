@@ -231,4 +231,22 @@ describe Alexandria::Library do
       end
     end
   end
+
+  describe "#name=" do
+    let(:my_library) { loader.load_library("Empty") }
+
+    before do
+      FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
+    end
+
+    it "changes the library's name" do
+      my_library.name = "Really Empty"
+      expect(my_library.name).to eq "Really Empty"
+    end
+
+    it "moves the library's directory" do
+      my_library.name = "Really Empty"
+      expect(File.exist?(File.join(TESTDIR, "Really Empty"))).to be_truthy
+    end
+  end
 end
