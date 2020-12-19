@@ -345,9 +345,7 @@ module Alexandria
                 else
                   "g#{something.ident}" # g is for generated id...
                 end
-              when String
-                something
-              when Integer
+              when String, Integer
                 something
               else
                 raise NotImplementedError
@@ -359,9 +357,7 @@ module Alexandria
       ident = case something
               when Book
                 something.ident
-              when String
-                something
-              when Integer
+              when String, Integer
                 something
               else
                 raise NotImplementedError
