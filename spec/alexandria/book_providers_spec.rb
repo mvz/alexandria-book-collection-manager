@@ -50,7 +50,6 @@ describe Alexandria::BookProviders do
 
   describe Alexandria::BookProviders::BLProvider do
     it "works" do
-      skip "Not working: connect failed"
       assert_correct_search_result(described_class, "9781853260803")
     end
   end
