@@ -91,7 +91,7 @@ module Alexandria
         library, is_new_library =
           @combo_libraries.selection_from_libraries(libraries)
 
-        # NOTE at this stage, the ISBN is 10-digit...
+        # NOTE: at this stage, the ISBN is 10-digit...
         #
 
         selection = @barcodes_treeview.selection
