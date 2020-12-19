@@ -99,12 +99,7 @@ module Alexandria
                       format(_("Couldn't reach the provider '%s': socket " \
                         "error (%s)."), factory.name, ex.message)
 
-                    when NoResultsError
-                      _("No results were found.  Make sure your " \
-                        "search criterion is spelled correctly, and " \
-                        "try again.")
-
-                    when ProviderSkippedError
+                    when NoResultsError, ProviderSkippedError
                       _("No results were found.  Make sure your " \
                         "search criterion is spelled correctly, and " \
                         "try again.")

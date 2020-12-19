@@ -135,8 +135,6 @@ module Alexandria
 
     def get_gconf_type(value)
       case value
-      when String
-        "string"
       when Integer
         "int"
       when TrueClass, FalseClass
