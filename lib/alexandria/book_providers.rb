@@ -35,12 +35,16 @@ module Alexandria
     SEARCH_BY_KEYWORD = (0..3).to_a
 
     class SearchError < StandardError; end
+
     class NoResultsError < SearchError; end
+
     class TooManyResultsError < SearchError; end
+
     class InvalidSearchTypeError < SearchError; end
 
     # These errors are not really errors
     class ProviderSkippedError < NoResultsError; end
+
     class SearchEmptyError < SearchError; end
 
     def self.search(criterion, type)
