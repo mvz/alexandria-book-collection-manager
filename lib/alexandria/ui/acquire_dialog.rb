@@ -5,6 +5,9 @@
 # See the file README.md for authorship and licensing information.
 
 require "monitor"
+
+require "alexandria/image_fetcher"
+
 require "alexandria/scanners/cue_cat"
 require "alexandria/scanners/keyboard"
 
@@ -40,6 +43,7 @@ module Alexandria
 
     class AcquireDialog < BuilderBase
       include GetText
+      include ImageFetcher
       include Logging
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
@@ -357,14 +361,7 @@ module Alexandria
         Thread.new do
           pixbuf = nil
           if cover_uri
-            image_data = nil
-            if URI.parse(cover_uri).scheme.nil?
-              File.open(cover_uri, "r") do |io|
-                image_data = io.read
-              end
-            else
-              image_data = URI.parse(cover_uri).read
-            end
+            image_data = fetch_image(cover_uri)
             loader = GdkPixbuf::PixbufLoader.new
             loader.last_write(image_data)
             pixbuf = loader.pixbuf
