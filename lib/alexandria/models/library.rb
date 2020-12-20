@@ -370,7 +370,7 @@ module Alexandria
     end
 
     def name=(name)
-      File.rename(path, File.join(dir, name))
+      File.rename(path, File.join(@store.library_dir, name))
       @name = name
     end
 
