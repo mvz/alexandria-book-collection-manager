@@ -8,6 +8,7 @@ require "gdk_pixbuf2"
 require "alexandria/ui/builder_base"
 require "alexandria/ui/error_dialog"
 require "alexandria/ui/keep_bad_isbn_dialog"
+require "alexandria/image_fetcher"
 
 module Alexandria
   class DuplicateBookException < NameError
@@ -16,6 +17,7 @@ module Alexandria
   module UI
     class NewBookDialog < BuilderBase
       include Logging
+      include ImageFetcher
       include GetText
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
@@ -163,17 +165,11 @@ module Alexandria
           begin
             @results.each_with_index do |result, i|
               uri = result[1]
-              if uri
-                if URI.parse(uri).scheme.nil?
-                  File.open(uri, "r") do |io|
-                    @images[i] = io.read
-                  end
-                else
-                  @images[i] = URI.parse(uri).read
-                end
-              end
+              @images[i] = fetch_image(uri) if uri
             end
           rescue StandardError => ex
+            log.error { "Couldn't download image: #{ex.class} #{ex}" }
+            log.error { ex.backtrace.join("\n") }
             @image_error = ex.message
           end
         end
@@ -181,8 +177,13 @@ module Alexandria
         GLib::Timeout.add(100) do
           if @image_error
             image_error_dialog(@image_error).display
+            @image_error = nil
           else
             @images.each_pair do |key, value|
+              @images.delete(key)
+
+              next unless value
+
               loader = GdkPixbuf::PixbufLoader.new
               loader.last_write(value)
               pixbuf = loader.pixbuf
@@ -195,8 +196,6 @@ module Alexandria
 
                 iter[2] = pixbuf # I bet you this is it!
               end
-
-              @images.delete(key)
             rescue StandardError => ex
               image_error_dialog(ex.message).display
             end
@@ -462,7 +461,6 @@ module Alexandria
           # Do not destroy if there is no addition.
           #          return unless book_was_added
         rescue StandardError => ex
-          # FIXME: Message containing <> should be displayed correctly.
           ErrorDialog.new(@new_book_dialog, _("Couldn't add the book"), ex.message).display
         end
         # books_to_add

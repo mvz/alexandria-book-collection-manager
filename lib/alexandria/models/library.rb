@@ -10,10 +10,12 @@ require "rexml/document"
 require "tempfile"
 require "etc"
 require "alexandria/library_store"
+require "alexandria/image_fetcher"
 
 module Alexandria
   class Library < Array
     include Logging
+    include ImageFetcher
 
     attr_reader :name
     attr_accessor :ruined_books, :updating, :deleted_books
@@ -238,19 +240,13 @@ module Alexandria
       Dir.chdir(path) do
         # Fetch the cover picture.
         cover_file = cover(book)
-        File.open(cover_file, "w") do |io|
-          uri = URI.parse(cover_uri)
-          if uri.scheme.nil?
-            # Regular filename.
-            File.open(cover_uri) { |io2| io.puts io2.read }
-          else
-            # Try open-uri.
-            io.puts transport.get(uri)
-          end
-        end
+        data = fetch_image(cover_uri)
+        if data
+          File.write(cover_file, data)
 
-        # Remove the file if its blank.
-        File.delete(cover_file) if Alexandria::UI::Icons.blank?(cover_file)
+          # Remove the file if its blank.
+          File.delete(cover_file) if Alexandria::UI::Icons.blank?(cover_file)
+        end
       end
     end
 
