@@ -43,7 +43,6 @@ keep track of books which are on loan.
   pictures) from several online libraries and bookshops, such as
    - Amazon
    - Proxis
-   - AdLibris
    - Spanish Ministry of Culture
    - WorldCat
    - US Library of Congress

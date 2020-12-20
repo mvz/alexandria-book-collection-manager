@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2020-09-13 11:55+0200\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
@@ -48,10 +48,6 @@ msgstr "Ongeldig zoektype."
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr "Geactiveerd"
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
-msgstr "titel niet gevonden op de pagina"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
 msgid "Locale"
@@ -1405,6 +1401,9 @@ msgstr "Boekcollectiebeheerder"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
+
+#~ msgid "title not found on page"
+#~ msgstr "titel niet gevonden op de pagina"
 
 #~ msgid "Unable to launch the web browser"
 #~ msgstr "Kon geen webbrowser starten"

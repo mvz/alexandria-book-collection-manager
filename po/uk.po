@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2007-11-12 22:01+0200\n"
 "Last-Translator: Serhij Dubyk <dubyk@library.lviv.ua>\n"
 "Language-Team: \n"
@@ -46,10 +46,6 @@ msgstr "Неправильний тип пошуку."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26

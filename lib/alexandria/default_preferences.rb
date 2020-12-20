@@ -30,7 +30,7 @@ module Alexandria
       "col_want_visible" => true,
       "col_tags_visible" => true,
       "cols_width" => "{}",
-      "providers_priority" => ["Amazon", "BarnesAndNoble", "AdLibris", "Proxis", "Thalia", "WorldCat", "LOC", "BL", "SBN"],
+      "providers_priority" => ["Amazon", "BarnesAndNoble", "Proxis", "Thalia", "WorldCat", "LOC", "BL", "SBN"],
       "view_advanced_settings" => false
     }
   end

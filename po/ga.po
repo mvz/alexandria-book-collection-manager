@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandia 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2009-07-01 00:00+0100\n"
 "Last-Translator: Cathal Mc Ginley <cathal.magus@gnostai.org>\n"
 "Language-Team: Irish\n"
@@ -44,10 +44,6 @@ msgstr ""
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26

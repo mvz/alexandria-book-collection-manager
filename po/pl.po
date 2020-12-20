@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2020-11-01 14:20+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -50,10 +50,6 @@ msgstr "Nieprawidłowy typ wyszukiwania."
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr "Włączone"
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
-msgstr "na stronie nie odnaleziono tytułu"
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
 msgid "Locale"
@@ -1413,3 +1409,6 @@ msgstr "Menedżer domowej biblioteki"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Zarządzanie domową biblioteką"
+
+#~ msgid "title not found on page"
+#~ msgstr "na stronie nie odnaleziono tytułu"

@@ -294,7 +294,6 @@ module Alexandria
     require "alexandria/book_providers/amazon_aws"
 
     # Website based providers
-    require "alexandria/book_providers/adlibris"
     require "alexandria/book_providers/barnes_and_noble"
     require "alexandria/book_providers/proxis"
     require "alexandria/book_providers/thalia_provider"
@@ -386,10 +385,6 @@ module Alexandria
       end
       if (worldcat_index = priority.index("Worldcat"))
         priority[worldcat_index] = "WorldCat"
-        changed = true
-      end
-      if (adlibris_index = priority.index("Adlibris"))
-        priority[adlibris_index] = "AdLibris"
         changed = true
       end
       @prefs.providers_priority = priority if changed

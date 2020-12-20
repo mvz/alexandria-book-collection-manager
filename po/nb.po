@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2008-02-27 21:35+0100\n"
 "Last-Translator: Jack Myrseh <jack@enkom.no>\n"
 "Language-Team: Norwegian\n"
@@ -47,10 +47,6 @@ msgstr "Ugyldig søkemetode."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26

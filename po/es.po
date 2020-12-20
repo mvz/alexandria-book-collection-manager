@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2009-12-16 10:33+0100\n"
 "Last-Translator: Miguel Ángel García <miguelangel.garcia@gmail.com>\n"
 "Language-Team: es <alexandria-i18n-list@rubyforge.org>\n"
@@ -51,10 +51,6 @@ msgstr "Tipo de búsqueda no válido."
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr "Habilitado"
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
-msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
 msgid "Locale"

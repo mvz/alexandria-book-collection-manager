@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:29+0100\n"
 "PO-Revision-Date: 2008-07-31 00:16+0100\n"
 "Last-Translator: Ligia Moreira <ligia.moreira@netvisao.pt >\n"
 "Language-Team: Lígia Moreira <ligia.moreira@netvisao.pt>\n"
@@ -50,10 +50,6 @@ msgstr "Type de recherche invalide."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
