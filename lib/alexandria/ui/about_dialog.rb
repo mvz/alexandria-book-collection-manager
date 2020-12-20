@@ -7,7 +7,7 @@
 module Alexandria
   module UI
     class AboutDialog
-      GPL = <<~EOL # rubocop:disable GetText/DecorateString
+      GPL = <<~EOL # rubocop:disable I18n/GetText/DecorateString
         Alexandria is free software; you can redistribute it and/or
         modify it under the terms of the GNU General Public License as
         published by the Free Software Foundation; either version 2 of the

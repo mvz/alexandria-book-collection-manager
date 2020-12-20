@@ -35,12 +35,16 @@ module Alexandria
     SEARCH_BY_KEYWORD = (0..3).to_a
 
     class SearchError < StandardError; end
+
     class NoResultsError < SearchError; end
+
     class TooManyResultsError < SearchError; end
+
     class InvalidSearchTypeError < SearchError; end
 
     # These errors are not really errors
     class ProviderSkippedError < NoResultsError; end
+
     class SearchEmptyError < SearchError; end
 
     def self.search(criterion, type)
@@ -95,12 +99,7 @@ module Alexandria
                       format(_("Couldn't reach the provider '%s': socket " \
                         "error (%s)."), factory.name, ex.message)
 
-                    when NoResultsError
-                      _("No results were found.  Make sure your " \
-                        "search criterion is spelled correctly, and " \
-                        "try again.")
-
-                    when ProviderSkippedError
+                    when NoResultsError, ProviderSkippedError
                       _("No results were found.  Make sure your " \
                         "search criterion is spelled correctly, and " \
                         "try again.")
@@ -115,7 +114,7 @@ module Alexandria
                       ex.message
                     end
           log.debug { "raising empty error #{message}" }
-          raise SearchEmptyError, message # rubocop:disable GetText/DecorateFunctionMessage
+          raise SearchEmptyError, message # rubocop:disable I18n/GetText/DecorateFunctionMessage
         else
           factory_n += 1
           retry

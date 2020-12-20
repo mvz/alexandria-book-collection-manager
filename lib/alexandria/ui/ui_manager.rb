@@ -1100,10 +1100,10 @@ module Alexandria
       def get_previous_selected_library(library)
         log.debug { "get_previous_selected_library: #{library}" }
         @previous_selected_library = selected_library
-        if @previous_selected_library != library
-          select_library(library)
-        else
+        if @previous_selected_library == library
           @previous_selected_library = nil
+        else
+          select_library(library)
         end
       end
 

@@ -14,19 +14,24 @@ AllCops:
   TargetRubyVersion: 2.6
 
 # Choose GetText-style I18n cops
-GetText:
+I18n/GetText:
   Enabled: true
   # Exclude non-user-facing code
   Exclude:
     - Rakefile
     - 'util/**/*'
     - 'spec/**/*'
-RailsI18n:
+I18n/RailsI18n:
   Enabled: false
 
 # This code has a lot of pre-existing translations with percent-style
 # formatting. Maybe one day someone will re-do all of them ...
-GetText/DecorateStringFormattingUsingPercent:
+I18n/GetText/DecorateStringFormattingUsingPercent:
+  Enabled: false
+
+# Disable cop in disabled department explictly until
+# https://github.com/rubocop-hq/rubocop/pull/9258 is merged.
+I18n/RailsI18n/DecorateString:
   Enabled: false
 
 # Make BeginEndAlignment behavior match EndAlignment
