@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-13 14:52+0200\n"
+"POT-Creation-Date: 2020-12-20 13:24+0100\n"
 "PO-Revision-Date: 2008-02-25 20:29+0800\n"
 "Last-Translator: Jos'e Ling <jlgdot369@gmail.com>\n"
 "Language-Team: Chinese/Traditional\n"
@@ -20,30 +20,29 @@ msgstr ""
 msgid "A program to help you manage your book collection."
 msgstr "一個幫助你管理藏書的程式。"
 
-#: ../lib/alexandria/book_providers.rb:91
+#: ../lib/alexandria/book_providers.rb:95
 msgid "Couldn't reach the provider '%s': timeout expired."
 msgstr "無法連結到提供者 '%s'： 等候時間超過。"
 
-#: ../lib/alexandria/book_providers.rb:95
+#: ../lib/alexandria/book_providers.rb:99
 msgid "Couldn't reach the provider '%s': socket error (%s)."
 msgstr "無法連結到提供者 '%s'： socket 錯誤 (%s)。"
 
-#: ../lib/alexandria/book_providers.rb:99
-#: ../lib/alexandria/book_providers.rb:104
+#: ../lib/alexandria/book_providers.rb:103
 msgid ""
 "No results were found.  Make sure your search criterion is spelled "
 "correctly, and try again."
 msgstr "找不到任何結果。  請確定您的搜尋尺度有正確地拼字，然後再試一試。"
 
-#: ../lib/alexandria/book_providers.rb:109
+#: ../lib/alexandria/book_providers.rb:108
 msgid "Too many results for that search."
 msgstr "搜尋結果太多。"
 
-#: ../lib/alexandria/book_providers.rb:112
+#: ../lib/alexandria/book_providers.rb:111
 msgid "Invalid search type."
 msgstr "搜尋種類無效"
 
-#: ../lib/alexandria/book_providers.rb:206
+#: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr ""
 
@@ -124,7 +123,7 @@ msgstr "(美國)國會圖書館"
 msgid "British Library"
 msgstr "英國圖書館"
 
-#: ../lib/alexandria/book_providers/z3950.rb:376
+#: ../lib/alexandria/book_providers/z3950.rb:374
 #, fuzzy
 msgid "Invalid ISBN"
 msgstr "無效的 ISBN ： '%s'"
@@ -201,11 +200,11 @@ msgstr ""
 msgid "%<file>s pub year is not okay"
 msgstr ""
 
-#: ../lib/alexandria/models/library.rb:40
+#: ../lib/alexandria/models/library.rb:42
 msgid "Untitled"
 msgstr "無書名"
 
-#: ../lib/alexandria/models/library.rb:288
+#: ../lib/alexandria/models/library.rb:284
 msgid "Book %<isbn>s was already deleted"
 msgstr ""
 
@@ -368,92 +367,92 @@ msgstr "最後不是在"
 msgid "invalid operand klass %<klass>s"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:202
+#: ../lib/alexandria/ui/acquire_dialog.rb:206
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:205
+#: ../lib/alexandria/ui/acquire_dialog.rb:209
 #, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "無法加入此書"
 msgstr[1] "無法加入此書"
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:284
-#: ../lib/alexandria/ui/new_book_dialog.rb:500
+#: ../lib/alexandria/ui/acquire_dialog.rb:288
+#: ../lib/alexandria/ui/new_book_dialog.rb:498
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:285
-#: ../lib/alexandria/ui/new_book_dialog.rb:501
+#: ../lib/alexandria/ui/acquire_dialog.rb:289
+#: ../lib/alexandria/ui/new_book_dialog.rb:499
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:286
-#: ../lib/alexandria/ui/new_book_dialog.rb:502
+#: ../lib/alexandria/ui/acquire_dialog.rb:290
+#: ../lib/alexandria/ui/new_book_dialog.rb:500
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:287
-#: ../lib/alexandria/ui/new_book_dialog.rb:503
+#: ../lib/alexandria/ui/acquire_dialog.rb:291
+#: ../lib/alexandria/ui/new_book_dialog.rb:501
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:406
+#: ../lib/alexandria/ui/acquire_dialog.rb:403
 msgid "Ready to use %s barcode scanner"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:430
+#: ../lib/alexandria/ui/acquire_dialog.rb:427
 msgid "Click below to scan _barcodes"
 msgstr "按下面開始掃描條碼(_B)"
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:112
-#: ../lib/alexandria/ui/book_properties_dialog.rb:122
+#: ../lib/alexandria/ui/book_properties_dialog.rb:111
+#: ../lib/alexandria/ui/book_properties_dialog.rb:121
 msgid "Couldn't modify the book"
 msgstr "無法修改此書"
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:113
+#: ../lib/alexandria/ui/book_properties_dialog.rb:112
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:74
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correcty, and try again."
 msgstr "無法驗證您提供的 EAN/ISBN 。  請確定您有正確地填寫， 然後再試一次。"
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:123
+#: ../lib/alexandria/ui/book_properties_dialog.rb:122
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:79
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr "您提供的 EAN/ISBN 在此書庫裡已經被使用了。"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:206
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:104
 msgid "Properties"
 msgstr "屬性"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:208
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:106
 #: ../lib/alexandria/ui/smart_library_properties_dialog.rb:21
 msgid "Properties for '%s'"
 msgstr "'%s' 的屬性"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:214
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:112
 msgid "Author"
 msgstr "作者"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:263
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:160
 msgid "Select a cover image"
 msgstr "選擇一個封面圖片"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:267
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:163
 msgid "No Cover"
 msgstr "沒有封面"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:346
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:242
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 天"
 msgstr[1] "%d 天"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:372
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:268
 msgid "out of range"
 msgstr ""
 
@@ -765,31 +764,31 @@ msgstr "略過(_S)"
 msgid "If you replace the existing book, its contents will be overwritten."
 msgstr "如果你取代已經存在的書本，原先的內容會被覆蓋掉。"
 
-#: ../lib/alexandria/ui/export_dialog.rb:22
+#: ../lib/alexandria/ui/export_dialog.rb:24
 msgid "Export '%s'"
 msgstr "匯出 '%s'"
 
-#: ../lib/alexandria/ui/export_dialog.rb:27
+#: ../lib/alexandria/ui/export_dialog.rb:29
 msgid "_Export"
 msgstr "匯出(_E)"
 
-#: ../lib/alexandria/ui/export_dialog.rb:48
+#: ../lib/alexandria/ui/export_dialog.rb:50
 msgid "_Theme:"
 msgstr "主題(_T)："
 
-#: ../lib/alexandria/ui/export_dialog.rb:60
+#: ../lib/alexandria/ui/export_dialog.rb:62
 msgid "directory"
 msgstr "目錄"
 
-#: ../lib/alexandria/ui/export_dialog.rb:72
+#: ../lib/alexandria/ui/export_dialog.rb:74
 msgid "Export for_mat:"
 msgstr "匯出格式(_M)："
 
-#: ../lib/alexandria/ui/export_dialog.rb:99
+#: ../lib/alexandria/ui/export_dialog.rb:101
 msgid "Export failed"
 msgstr "匯出失敗"
 
-#: ../lib/alexandria/ui/export_dialog.rb:122
+#: ../lib/alexandria/ui/export_dialog.rb:125
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
@@ -797,7 +796,7 @@ msgstr ""
 "名為 '%s' 的目標， 是一個普通檔案。 此操作需要一個目錄。請選擇一個目錄然後在"
 "試一次。"
 
-#: ../lib/alexandria/ui/export_dialog.rb:126
+#: ../lib/alexandria/ui/export_dialog.rb:129
 msgid "Not a directory"
 msgstr "不是一個目錄"
 
@@ -819,11 +818,11 @@ msgid ""
 "file."
 msgstr "無法辨識檔案格式。  請再試別的檔案。"
 
-#: ../lib/alexandria/ui/init.rb:69
+#: ../lib/alexandria/ui/init.rb:70
 msgid "Unable to launch the help browser"
 msgstr "無法開啟求助文件瀏覽器"
 
-#: ../lib/alexandria/ui/init.rb:70
+#: ../lib/alexandria/ui/init.rb:71
 msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
@@ -857,38 +856,38 @@ msgstr "新的書庫"
 msgid "Loaned To"
 msgstr "已借出的"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:153
+#: ../lib/alexandria/ui/new_book_dialog.rb:155
 msgid "A problem occurred while downloading images"
 msgstr "下載圖片時發生了一個問題"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:193
+#: ../lib/alexandria/ui/new_book_dialog.rb:194
 msgid "Iter is invalid! %s"
 msgstr ""
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:267
+#: ../lib/alexandria/ui/new_book_dialog.rb:266
 msgid "Unable to find matches for your search"
 msgstr "找不到您的搜尋"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:303
+#: ../lib/alexandria/ui/new_book_dialog.rb:302
 msgid "%s, by %s"
 msgstr "%s， 由 %s 撰寫"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:309
+#: ../lib/alexandria/ui/new_book_dialog.rb:308
 msgid "Copying %s into tree view."
 msgstr ""
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:337
+#: ../lib/alexandria/ui/new_book_dialog.rb:336
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correctly, and try again."
 msgstr "無法驗證您提供的 EAN/ISBN 。  請確定您有正確地填寫，然後再試一次。"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:466
+#: ../lib/alexandria/ui/new_book_dialog.rb:464
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:119
 msgid "Couldn't add the book"
 msgstr "無法加入此書"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:572
+#: ../lib/alexandria/ui/new_book_dialog.rb:570
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' 已經存在 '%s' 裏面(書名 '%s')。"
 
@@ -1012,15 +1011,15 @@ msgstr "匯入時發生錯誤"
 msgid "_Continue"
 msgstr "繼續(_C)"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:96
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:97
 msgid "Empty or conflictive condition"
 msgstr "空白的或者衝突的條件"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:99
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:100
 msgid "_Save However"
 msgstr "不論如何繼續儲存(_S)"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:100
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:101
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
@@ -1029,116 +1028,116 @@ msgstr ""
 "此聰明書庫含有一個或多個互相衝突或空白的條件。這樣有可能會永遠找不到書。您希"
 "望就這樣儲存書庫嗎？"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:117
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:118
 msgid "Match"
 msgstr "匹配"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:120
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:121
 msgid "all"
 msgstr "所有"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:120
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:121
 msgid "any"
 msgstr "任何一個"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:130
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:131
 msgid "of the following rules:"
 msgstr "以下的規則："
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:138
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:139
 msgid "Match the following rule:"
 msgstr "匹配以下的規則："
 
-#: ../lib/alexandria/ui/ui_manager.rb:130
+#: ../lib/alexandria/ui/ui_manager.rb:132
 msgid "Type here the search criterion"
 msgstr "在這裡鍵入搜尋尺度"
 
-#: ../lib/alexandria/ui/ui_manager.rb:141
+#: ../lib/alexandria/ui/ui_manager.rb:143
 msgid "Match everything"
 msgstr "匹對所有的"
 
-#: ../lib/alexandria/ui/ui_manager.rb:143
+#: ../lib/alexandria/ui/ui_manager.rb:145
 msgid "Title contains"
 msgstr "書名含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:144
+#: ../lib/alexandria/ui/ui_manager.rb:146
 msgid "Authors contain"
 msgstr "作者含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:145
+#: ../lib/alexandria/ui/ui_manager.rb:147
 msgid "ISBN contains"
 msgstr "ISBN 含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:146
+#: ../lib/alexandria/ui/ui_manager.rb:148
 msgid "Publisher contains"
 msgstr "出版社含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:147
+#: ../lib/alexandria/ui/ui_manager.rb:149
 msgid "Notes contain"
 msgstr "筆記含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:148
+#: ../lib/alexandria/ui/ui_manager.rb:150
 msgid "Tags contain"
 msgstr "標籤含有"
 
-#: ../lib/alexandria/ui/ui_manager.rb:162
+#: ../lib/alexandria/ui/ui_manager.rb:164
 msgid "Change the search type"
 msgstr "更改搜尋種類"
 
-#: ../lib/alexandria/ui/ui_manager.rb:167
+#: ../lib/alexandria/ui/ui_manager.rb:169
 msgid "View as Icons"
 msgstr "以圖案方式檢視"
 
-#: ../lib/alexandria/ui/ui_manager.rb:168
+#: ../lib/alexandria/ui/ui_manager.rb:170
 msgid "View as List"
 msgstr "以清單方式檢視"
 
-#: ../lib/alexandria/ui/ui_manager.rb:181
+#: ../lib/alexandria/ui/ui_manager.rb:184
 msgid "Choose how to show books"
 msgstr "選擇如何顯示書本"
 
-#: ../lib/alexandria/ui/ui_manager.rb:400
+#: ../lib/alexandria/ui/ui_manager.rb:407
 msgid "Library '%s' selected"
 msgstr "書庫 '%s' 被選取"
 
-#: ../lib/alexandria/ui/ui_manager.rb:405
+#: ../lib/alexandria/ui/ui_manager.rb:412
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "書庫 '%s' 被選取， %d 本書未被評價。"
 msgstr[1] "書庫 '%s' 被選取， %d 本書未被評價。"
 
-#: ../lib/alexandria/ui/ui_manager.rb:409
+#: ../lib/alexandria/ui/ui_manager.rb:416
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "書庫 '%s' 被選取， 共%d本書"
 msgstr[1] "書庫 '%s' 被選取， 共%d本書"
 
-#: ../lib/alexandria/ui/ui_manager.rb:413
+#: ../lib/alexandria/ui/ui_manager.rb:420
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "書庫 '%s' 被選取， 共%d本書，有%d本書未被評價"
 msgstr[1] "書庫 '%s' 被選取， 共%d本書，有%d本書未被評價"
 
-#: ../lib/alexandria/ui/ui_manager.rb:427
+#: ../lib/alexandria/ui/ui_manager.rb:434
 msgid "'%s' selected"
 msgstr "'%s' 被選取"
 
-#: ../lib/alexandria/ui/ui_manager.rb:429
+#: ../lib/alexandria/ui/ui_manager.rb:436
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d 本書被選取"
 msgstr[1] "%d 本書被選取"
 
-#: ../lib/alexandria/ui/ui_manager.rb:545
+#: ../lib/alexandria/ui/ui_manager.rb:552
 msgid "unrecognized update event"
 msgstr ""
 
-#: ../lib/alexandria/ui/ui_manager.rb:590
+#: ../lib/alexandria/ui/ui_manager.rb:597
 #, fuzzy
 msgid "Loading libraries..."
 msgstr "載入 '%s' 中..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:607
+#: ../lib/alexandria/ui/ui_manager.rb:614
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
@@ -1147,15 +1146,15 @@ msgstr ""
 "下列書本的資料檔案是空的或不正常的。你希望嘗試從書本提供者那裡為它們下載新的"
 "資訊嗎？\n"
 
-#: ../lib/alexandria/ui/ui_manager.rb:659
+#: ../lib/alexandria/ui/ui_manager.rb:666
 msgid "Added '%s' to library '%s'"
 msgstr "已增加 '%s' 到 '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:808
+#: ../lib/alexandria/ui/ui_manager.rb:815
 msgid "Loading '%s'..."
 msgstr "載入 '%s' 中..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:1038
+#: ../lib/alexandria/ui/ui_manager.rb:1045
 msgid "In '_%s'"
 msgstr "在 '_%s'"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-13 14:52+0200\n"
+"POT-Creation-Date: 2020-12-20 13:24+0100\n"
 "PO-Revision-Date: 2008-11-04 23:32+0100\n"
 "Last-Translator: Giacomo Margarito <giacomomargarito@gmail.com>\n"
 "Language-Team: Alexandria\n"
@@ -22,16 +22,15 @@ msgstr ""
 msgid "A program to help you manage your book collection."
 msgstr "Un programma per gestire la vostra collezione di libri."
 
-#: ../lib/alexandria/book_providers.rb:91
+#: ../lib/alexandria/book_providers.rb:95
 msgid "Couldn't reach the provider '%s': timeout expired."
 msgstr "Impossibile raggiungere il provider '%s': tempo scaduto."
 
-#: ../lib/alexandria/book_providers.rb:95
+#: ../lib/alexandria/book_providers.rb:99
 msgid "Couldn't reach the provider '%s': socket error (%s)."
 msgstr "Impossibile raggiungere il provider '%s': errore del socket (%s)."
 
-#: ../lib/alexandria/book_providers.rb:99
-#: ../lib/alexandria/book_providers.rb:104
+#: ../lib/alexandria/book_providers.rb:103
 msgid ""
 "No results were found.  Make sure your search criterion is spelled "
 "correctly, and try again."
@@ -39,15 +38,15 @@ msgstr ""
 "Nessun risultato. Controllare di aver scritto correttamente il criterio di "
 "ricerca e riprovare."
 
-#: ../lib/alexandria/book_providers.rb:109
+#: ../lib/alexandria/book_providers.rb:108
 msgid "Too many results for that search."
 msgstr "Troppi risultati per questa ricerca."
 
-#: ../lib/alexandria/book_providers.rb:112
+#: ../lib/alexandria/book_providers.rb:111
 msgid "Invalid search type."
 msgstr "Tipo di ricerca non valido."
 
-#: ../lib/alexandria/book_providers.rb:206
+#: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr ""
 
@@ -128,7 +127,7 @@ msgstr "Library of Congress (USA)"
 msgid "British Library"
 msgstr "British Library"
 
-#: ../lib/alexandria/book_providers/z3950.rb:376
+#: ../lib/alexandria/book_providers/z3950.rb:374
 #, fuzzy
 msgid "Invalid ISBN"
 msgstr "Codice ISBN '%s' non valido"
@@ -205,11 +204,11 @@ msgstr ""
 msgid "%<file>s pub year is not okay"
 msgstr ""
 
-#: ../lib/alexandria/models/library.rb:40
+#: ../lib/alexandria/models/library.rb:42
 msgid "Untitled"
 msgstr "Senza titolo"
 
-#: ../lib/alexandria/models/library.rb:288
+#: ../lib/alexandria/models/library.rb:284
 msgid "Book %<isbn>s was already deleted"
 msgstr ""
 
@@ -372,53 +371,53 @@ msgstr "non è nell'ultimo"
 msgid "invalid operand klass %<klass>s"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:202
+#: ../lib/alexandria/ui/acquire_dialog.rb:206
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:205
+#: ../lib/alexandria/ui/acquire_dialog.rb:209
 #, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "Impossibile aggiungere il libro"
 msgstr[1] "Impossibile aggiungere il libro"
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:284
-#: ../lib/alexandria/ui/new_book_dialog.rb:500
+#: ../lib/alexandria/ui/acquire_dialog.rb:288
+#: ../lib/alexandria/ui/new_book_dialog.rb:498
 msgid "Searching Provider '%s'..."
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:285
-#: ../lib/alexandria/ui/new_book_dialog.rb:501
+#: ../lib/alexandria/ui/acquire_dialog.rb:289
+#: ../lib/alexandria/ui/new_book_dialog.rb:499
 msgid "Error while Searching Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:286
-#: ../lib/alexandria/ui/new_book_dialog.rb:502
+#: ../lib/alexandria/ui/acquire_dialog.rb:290
+#: ../lib/alexandria/ui/new_book_dialog.rb:500
 msgid "Not Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:287
-#: ../lib/alexandria/ui/new_book_dialog.rb:503
+#: ../lib/alexandria/ui/acquire_dialog.rb:291
+#: ../lib/alexandria/ui/new_book_dialog.rb:501
 msgid "Found at Provider '%s'"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:406
+#: ../lib/alexandria/ui/acquire_dialog.rb:403
 msgid "Ready to use %s barcode scanner"
 msgstr ""
 
-#: ../lib/alexandria/ui/acquire_dialog.rb:430
+#: ../lib/alexandria/ui/acquire_dialog.rb:427
 msgid "Click below to scan _barcodes"
 msgstr "Clicca qui sotto per esaminare i _codici a barre"
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:112
-#: ../lib/alexandria/ui/book_properties_dialog.rb:122
+#: ../lib/alexandria/ui/book_properties_dialog.rb:111
+#: ../lib/alexandria/ui/book_properties_dialog.rb:121
 msgid "Couldn't modify the book"
 msgstr "Impossibile modificare il libro"
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:113
+#: ../lib/alexandria/ui/book_properties_dialog.rb:112
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:74
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
@@ -427,39 +426,39 @@ msgstr ""
 "Impossibile convalidare il codice EAN/ISBN fornito. Assicurarsi di averlo "
 "scritto correttamente e riprovare."
 
-#: ../lib/alexandria/ui/book_properties_dialog.rb:123
+#: ../lib/alexandria/ui/book_properties_dialog.rb:122
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:79
 msgid "The EAN/ISBN you provided is already used in this library."
 msgstr "Il codice EAN/ISBN fornito è già in uso in questa biblioteca."
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:206
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:104
 msgid "Properties"
 msgstr "Proprietà"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:208
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:106
 #: ../lib/alexandria/ui/smart_library_properties_dialog.rb:21
 msgid "Properties for '%s'"
 msgstr "Proprietà per %s"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:214
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:112
 msgid "Author"
 msgstr "Autore"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:263
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:160
 msgid "Select a cover image"
 msgstr "Seleziona un'immagine di copertina"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:267
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:163
 msgid "No Cover"
 msgstr "Nessuna copertina"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:346
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:242
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d giorno"
 msgstr[1] "%d giorni"
 
-#: ../lib/alexandria/ui/book_properties_dialog_base.rb:372
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:268
 msgid "out of range"
 msgstr ""
 
@@ -775,31 +774,31 @@ msgid "If you replace the existing book, its contents will be overwritten."
 msgstr ""
 "Rimpiazzando il libro esistente i suoi contenuti verranno sovrascritti."
 
-#: ../lib/alexandria/ui/export_dialog.rb:22
+#: ../lib/alexandria/ui/export_dialog.rb:24
 msgid "Export '%s'"
 msgstr "Esporta '%s'"
 
-#: ../lib/alexandria/ui/export_dialog.rb:27
+#: ../lib/alexandria/ui/export_dialog.rb:29
 msgid "_Export"
 msgstr "_Esporta"
 
-#: ../lib/alexandria/ui/export_dialog.rb:48
+#: ../lib/alexandria/ui/export_dialog.rb:50
 msgid "_Theme:"
 msgstr "_Tema:"
 
-#: ../lib/alexandria/ui/export_dialog.rb:60
+#: ../lib/alexandria/ui/export_dialog.rb:62
 msgid "directory"
 msgstr "cartella"
 
-#: ../lib/alexandria/ui/export_dialog.rb:72
+#: ../lib/alexandria/ui/export_dialog.rb:74
 msgid "Export for_mat:"
 msgstr "For_mato di esportazione:"
 
-#: ../lib/alexandria/ui/export_dialog.rb:99
+#: ../lib/alexandria/ui/export_dialog.rb:101
 msgid "Export failed"
 msgstr "Esportazione fallita"
 
-#: ../lib/alexandria/ui/export_dialog.rb:122
+#: ../lib/alexandria/ui/export_dialog.rb:125
 msgid ""
 "The target, named '%s', is a regular file.  A directory is needed for this "
 "operation.  Please select a directory and try again."
@@ -807,7 +806,7 @@ msgstr ""
 "La destinazione, chiamata '%s', è un file. Per questa operazione è "
 "necessario specificare una cartella. Selezionare una cartella e riprovare. "
 
-#: ../lib/alexandria/ui/export_dialog.rb:126
+#: ../lib/alexandria/ui/export_dialog.rb:129
 msgid "Not a directory"
 msgstr "Non è una cartella"
 
@@ -831,11 +830,11 @@ msgstr ""
 "Il formato del file selezionato è sconosciuto. Si prega di provare con un "
 "altro file."
 
-#: ../lib/alexandria/ui/init.rb:69
+#: ../lib/alexandria/ui/init.rb:70
 msgid "Unable to launch the help browser"
 msgstr "Impossibile avviare il navigatore della guida"
 
-#: ../lib/alexandria/ui/init.rb:70
+#: ../lib/alexandria/ui/init.rb:71
 msgid ""
 "Could not display help for Alexandria. There was an error launching the "
 "system help browser."
@@ -871,27 +870,27 @@ msgstr "Nuova Biblioteca"
 msgid "Loaned To"
 msgstr "Prestato"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:153
+#: ../lib/alexandria/ui/new_book_dialog.rb:155
 msgid "A problem occurred while downloading images"
 msgstr "Ci sono stati problemi durante lo scaricamento delle immagini"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:193
+#: ../lib/alexandria/ui/new_book_dialog.rb:194
 msgid "Iter is invalid! %s"
 msgstr ""
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:267
+#: ../lib/alexandria/ui/new_book_dialog.rb:266
 msgid "Unable to find matches for your search"
 msgstr "Impossibile trovare una corrispondenza per la ricerca"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:303
+#: ../lib/alexandria/ui/new_book_dialog.rb:302
 msgid "%s, by %s"
 msgstr "%s, di %s"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:309
+#: ../lib/alexandria/ui/new_book_dialog.rb:308
 msgid "Copying %s into tree view."
 msgstr ""
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:337
+#: ../lib/alexandria/ui/new_book_dialog.rb:336
 msgid ""
 "Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
 "correctly, and try again."
@@ -899,12 +898,12 @@ msgstr ""
 "Impossibile convalidare il codice EAN/ISBN fornito. Assicurarsi di averlo "
 "scritto correttamente e riprovare."
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:466
+#: ../lib/alexandria/ui/new_book_dialog.rb:464
 #: ../lib/alexandria/ui/new_book_dialog_manual.rb:119
 msgid "Couldn't add the book"
 msgstr "Impossibile aggiungere il libro"
 
-#: ../lib/alexandria/ui/new_book_dialog.rb:572
+#: ../lib/alexandria/ui/new_book_dialog.rb:570
 msgid "'%s' already exists in '%s' (titled '%s')."
 msgstr "'%s' esiste già in '%s' (con il titolo '%s')."
 
@@ -1030,15 +1029,15 @@ msgstr "Errore durante l'importazione"
 msgid "_Continue"
 msgstr "_Continua"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:96
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:97
 msgid "Empty or conflictive condition"
 msgstr "Condizione vuota o conflittuale "
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:99
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:100
 msgid "_Save However"
 msgstr "_Salva comunque"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:100
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:101
 msgid ""
 "This smart library contains one or more conditions which are empty or "
 "conflict with each other. This is likely to result in never matching a book. "
@@ -1048,116 +1047,116 @@ msgstr ""
 "conflitto con altre. Questo di solito succede quando non si è mai trovato un "
 "riscontro per il libro. Siete sicuri di voler salvare questa biblioteca?"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:117
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:118
 msgid "Match"
 msgstr "Corrisponde"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:120
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:121
 msgid "all"
 msgstr "tutto"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:120
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:121
 msgid "any"
 msgstr "niente"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:130
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:131
 msgid "of the following rules:"
 msgstr "della seguente regola:"
 
-#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:138
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:139
 msgid "Match the following rule:"
 msgstr "Corrisponde alla seguente regola:"
 
-#: ../lib/alexandria/ui/ui_manager.rb:130
+#: ../lib/alexandria/ui/ui_manager.rb:132
 msgid "Type here the search criterion"
 msgstr "Scrivi qui il criterio di ricerca"
 
-#: ../lib/alexandria/ui/ui_manager.rb:141
+#: ../lib/alexandria/ui/ui_manager.rb:143
 msgid "Match everything"
 msgstr "Trova tutto"
 
-#: ../lib/alexandria/ui/ui_manager.rb:143
+#: ../lib/alexandria/ui/ui_manager.rb:145
 msgid "Title contains"
 msgstr "Il Titolo contiene"
 
-#: ../lib/alexandria/ui/ui_manager.rb:144
+#: ../lib/alexandria/ui/ui_manager.rb:146
 msgid "Authors contain"
 msgstr "L'Autore contiene"
 
-#: ../lib/alexandria/ui/ui_manager.rb:145
+#: ../lib/alexandria/ui/ui_manager.rb:147
 msgid "ISBN contains"
 msgstr "L'ISBN contiene"
 
-#: ../lib/alexandria/ui/ui_manager.rb:146
+#: ../lib/alexandria/ui/ui_manager.rb:148
 msgid "Publisher contains"
 msgstr "L'Editore contiene"
 
-#: ../lib/alexandria/ui/ui_manager.rb:147
+#: ../lib/alexandria/ui/ui_manager.rb:149
 msgid "Notes contain"
 msgstr "Le Note contengono"
 
-#: ../lib/alexandria/ui/ui_manager.rb:148
+#: ../lib/alexandria/ui/ui_manager.rb:150
 msgid "Tags contain"
 msgstr "I tags contengono"
 
-#: ../lib/alexandria/ui/ui_manager.rb:162
+#: ../lib/alexandria/ui/ui_manager.rb:164
 msgid "Change the search type"
 msgstr "Cambia il tipo di ricerca"
 
-#: ../lib/alexandria/ui/ui_manager.rb:167
+#: ../lib/alexandria/ui/ui_manager.rb:169
 msgid "View as Icons"
 msgstr "Visualizza come Icone"
 
-#: ../lib/alexandria/ui/ui_manager.rb:168
+#: ../lib/alexandria/ui/ui_manager.rb:170
 msgid "View as List"
 msgstr "Visualizza come Lista"
 
-#: ../lib/alexandria/ui/ui_manager.rb:181
+#: ../lib/alexandria/ui/ui_manager.rb:184
 msgid "Choose how to show books"
 msgstr "Scegli come mostrare i libri"
 
-#: ../lib/alexandria/ui/ui_manager.rb:400
+#: ../lib/alexandria/ui/ui_manager.rb:407
 msgid "Library '%s' selected"
 msgstr "Biblioteca '%s' selezionata"
 
-#: ../lib/alexandria/ui/ui_manager.rb:405
+#: ../lib/alexandria/ui/ui_manager.rb:412
 msgid "Library '%s' selected, %d unrated book"
 msgid_plural "Library '%s' selected, %d unrated books"
 msgstr[0] "Selezionata la biblioteca '%s', %d libro non valutato"
 msgstr[1] "Selezionata la biblioteca '%s', %d libri non valutati"
 
-#: ../lib/alexandria/ui/ui_manager.rb:409
+#: ../lib/alexandria/ui/ui_manager.rb:416
 msgid "Library '%s' selected, %d book"
 msgid_plural "Library '%s' selected, %d books"
 msgstr[0] "Selezionata la biblioteca '%s', %d libro"
 msgstr[1] "Selezionata la biblioteca '%s', %d libri"
 
-#: ../lib/alexandria/ui/ui_manager.rb:413
+#: ../lib/alexandria/ui/ui_manager.rb:420
 msgid "Library '%s' selected, %d book, %d unrated"
 msgid_plural "Library '%s' selected, %d books, %d unrated"
 msgstr[0] "Selezionata la biblioteca '%s', %d libro, %d non valutato"
 msgstr[1] "Selezionata la biblioteca '%s', %d libri, %d non valutati"
 
-#: ../lib/alexandria/ui/ui_manager.rb:427
+#: ../lib/alexandria/ui/ui_manager.rb:434
 msgid "'%s' selected"
 msgstr "'%s' selezionato"
 
-#: ../lib/alexandria/ui/ui_manager.rb:429
+#: ../lib/alexandria/ui/ui_manager.rb:436
 msgid "%d book selected"
 msgid_plural "%d books selected"
 msgstr[0] "%d libro selezionato"
 msgstr[1] "%d libri selezionati"
 
-#: ../lib/alexandria/ui/ui_manager.rb:545
+#: ../lib/alexandria/ui/ui_manager.rb:552
 msgid "unrecognized update event"
 msgstr ""
 
-#: ../lib/alexandria/ui/ui_manager.rb:590
+#: ../lib/alexandria/ui/ui_manager.rb:597
 #, fuzzy
 msgid "Loading libraries..."
 msgstr "Caricamento di '%s'..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:607
+#: ../lib/alexandria/ui/ui_manager.rb:614
 msgid ""
 "The data files for the following books are malformed or empty. Do you wish "
 "to attempt to download new information for them from the online book "
@@ -1167,15 +1166,15 @@ msgstr ""
 "Desiderate tentare di scaricare le nuove informazioni dai provider dei libri "
 "onlines?\n"
 
-#: ../lib/alexandria/ui/ui_manager.rb:659
+#: ../lib/alexandria/ui/ui_manager.rb:666
 msgid "Added '%s' to library '%s'"
 msgstr "Aggiunto '%s' alla bblioteca '%s'"
 
-#: ../lib/alexandria/ui/ui_manager.rb:808
+#: ../lib/alexandria/ui/ui_manager.rb:815
 msgid "Loading '%s'..."
 msgstr "Caricamento di '%s'..."
 
-#: ../lib/alexandria/ui/ui_manager.rb:1038
+#: ../lib/alexandria/ui/ui_manager.rb:1045
 msgid "In '_%s'"
 msgstr "In '_%s'"
 
