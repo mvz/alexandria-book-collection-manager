@@ -295,7 +295,6 @@ module Alexandria
 
     # Website based providers
     require "alexandria/book_providers/barnes_and_noble"
-    require "alexandria/book_providers/proxis"
     require "alexandria/book_providers/thalia_provider"
     require "alexandria/book_providers/worldcat"
 

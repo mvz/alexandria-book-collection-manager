@@ -66,12 +66,4 @@ describe Alexandria::BookProviders do
       assert_correct_search_result(described_class, "9780961328917") # see #1433
     end
   end
-
-  describe Alexandria::BookProviders::ProxisProvider do
-    it "works" do
-      skip "Needs fixing"
-      assert_correct_search_result(described_class, "9789026965746")
-      assert_correct_search_result(described_class, "9780586071403")
-    end
-  end
 end

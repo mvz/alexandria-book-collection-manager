@@ -40,7 +40,6 @@
     <para>&app; can download information from a variety of different online sources; some of these sources have additional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
     <itemizedlist>
       <listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
-      <listitem><para><xref linkend="alexandria-proxis-prefs"/></para></listitem>
       <listitem><para>The Spanish Culture Ministry</para></listitem>
       <listitem><para>Barnes and Noble</para></listitem>
       <listitem><para>Amadeus Buch</para></listitem>
@@ -77,11 +76,6 @@
     </sect3>
 
 
-    <sect3 id="alexandria-proxis-prefs">
-      <title>Proxis preferences</title>
-      <para>&app; can search the Proxis website for books in either English, French or Dutch. To change which language to use, select Proxis from the Provider list, and click on <guibutton>Setup</guibutton>. Then chose either <guilabel>en, fr</guilabel> or <guilabel>nl</guilabel> from the drop-down menu.</para>
-    </sect3>
-    
     <sect3 id="alexandria-britlib-prefs">
       <title>British Library preferences</title>
       <para>If you have an account with the British Library, you can use this dialogue to specify your username and password for the z39.50 service. You can also choose which database to connect to.</para>

@@ -172,11 +172,6 @@ Date : 30 décembre 2005
 					</listitem>
 					<listitem>
 						<para>
-							<orgname>Proxis</orgname>&nbsp;;
-						</para>
-					</listitem>
-					<listitem>
-						<para>
 							<orgname>Barnes and Noble</orgname>&nbsp;;
 						</para>
 					</listitem> 
@@ -1625,7 +1620,7 @@ Date : 30 décembre 2005
 			taken directly to the relevant book. Simply select the book you 
 			wish to know more about, right-click on it, and from the menu 
 			<guimenuitem>Display Online Information</guimenuitem>, choose 
-			from either Amazon, Barnes and Nobel, Proxis, 
+			from either Amazon, Barnes and Nobel,
 			Spanish Culture Ministry, Amadeus Buch, or 
 			Internet Bookshop Italia.-->
 		</para>
@@ -1979,11 +1974,6 @@ Date : 30 décembre 2005
 				</listitem>
 				<listitem>
 					<para>
-						<xref linkend="alexandria-proxis-prefs"/>&nbsp;;
-					</para>
-				</listitem>
-				<listitem>
-					<para>
 						Ministère de la Culture espagnol&nbsp;;
 						<!--The Spanish Culture Ministry-->
 					</para>
@@ -2082,30 +2072,6 @@ Date : 30 décembre 2005
       </sect3>
 
 
-      <sect3 id="alexandria-proxis-prefs">
-        	<title>
-        		Préférences <orgname>Proxis</orgname>
-        		<!--Proxis preferences-->
-        	</title>
-        	<para>
-        		&app; peut chercher dans le site web de 
-        		<orgname>Proxis</orgname> pour des livres en 
-        		anglais (en), français (fr) ou néerlandais (nl). Pour changer
-        		la langue utilisée, sélectionnez <guilabel>Proxis</guilabel>
-        		dans la liste 
-        		<guilabel><accel>F</accel>ournisseurs</guilabel> et cliquez
-        		sur <guibutton><accel>C</accel>onfigurer</guibutton>.
-        		Ensuite, sélectionnez la langue dans le menu déroulant
-        		<guilabel><accel>L</accel>angue</guilabel>.
-        		<!--&app; can search the Proxis website for books in either 
-        		English, French or Dutch. To change which language to use, 
-        		select Proxis from the Provider list, and click on 
-        		<guibutton>Setup</guibutton>. Then chose either 
-        		<guilabel>en, fr</guilabel> or <guilabel>nl</guilabel> from 
-        		the drop-down menu.-->
-        	</para>
-      </sect3>
-	  
 	  <sect3 id="alexandria-britlib-prefs">
 		  	<title>
 		  		Préférences <orgname>Bibliothèque Britannique</orgname>
