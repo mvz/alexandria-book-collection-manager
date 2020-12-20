@@ -374,7 +374,7 @@ module Alexandria
         bibtex << 'author = "'
         if book.authors != []
           bibtex << book.authors[0]
-          book.authors[1..-1].each do |author|
+          book.authors[1..].each do |author|
             bibtex << " and #{latex_escape(author)}"
           end
         end

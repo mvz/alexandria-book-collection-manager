@@ -121,7 +121,7 @@ module Alexandria
         until d.empty?
           space_width = d[0].chr.to_i
           bar_width = d[1].chr.to_i
-          d = d[2..-1]
+          d = d[2..]
           @barcode_data << [space_width, bar_width]
         end
       end

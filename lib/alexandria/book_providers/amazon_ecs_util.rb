@@ -206,8 +206,8 @@ module Alexandria
           opad_xor << (opad_bytes[i] ^ key_bytes[i])
         end
 
-        ipad = ipad_xor + ipad[key.size..-1]
-        opad = opad_xor + opad[key.size..-1]
+        ipad = ipad_xor + ipad[key.size..]
+        opad = opad_xor + opad[key.size..]
 
         # inner hash
         d1 = Digest::SHA256.new

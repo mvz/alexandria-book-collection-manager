@@ -11,7 +11,7 @@ AllCops:
     - 'pkg/**/*'
     - 'vendor/bundle/**/*'
   NewCops: enable
-  TargetRubyVersion: 2.5
+  TargetRubyVersion: 2.6
 
 # Choose GetText-style I18n cops
 GetText:
