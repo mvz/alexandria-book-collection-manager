@@ -79,7 +79,7 @@
   <!-- ========= Finding out more online =========== -->
   <section id="searching-more-online">
     <title>Finding out more information about your books online</title>
-    <para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon, Barnes and Noble, or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Barnes and Nobel, Spanish Culture Ministry, Amadeus Buch or Internet Bookshop Italia.</para>
+    <para>If you want to find out more information about your book, you can use &app; to open the web page of Amazon or one of the other online information providers and be taken directly to the relevant book. Simply select the book you wish to know more about, right-click on it, and from the menu <guimenuitem>Display Online Information</guimenuitem>, choose from either Amazon, Spanish Culture Ministry, Amadeus Buch or Internet Bookshop Italia.</para>
     <tip>
       <para>The <menuchoice><guimenu>Display Online Information</guimenu><guimenuitem>At Amazon</guimenuitem></menuchoice> choice will take you to the Amazon .com, .co.uk, .de, or jp site, as set up in the <xref linkend="alexandria-amazon-prefs"/>.</para>
     </tip>

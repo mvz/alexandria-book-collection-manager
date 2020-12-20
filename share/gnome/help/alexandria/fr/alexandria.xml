@@ -172,11 +172,6 @@ Date : 30 décembre 2005
 					</listitem>
 					<listitem>
 						<para>
-							<orgname>Barnes and Noble</orgname>&nbsp;;
-						</para>
-					</listitem> 
-					<listitem>
-						<para>
 							<orgname>Ministère de la Culture espagnole</orgname>&nbsp;;
 							<!--the Spanish Ministry of Culture-->
 						</para>
@@ -1606,7 +1601,7 @@ Date : 30 décembre 2005
 		<para>
 			Pour trouver plus d&#8217;informations au sujet de vos livres, vous
 			pouvez utiliser &app; pour ouvrir une page web sur 
-			<orgname>Amazon</orgname>, <orgname>Barnes and Noble</orgname>
+			<orgname>Amazon</orgname>
 			ou chez l&#8217;un des autres fournisseurs d&#8217;informations en ligne
 			et être dirigé directement à la page du livre concerné.
 			Pour cela, sélectionnez le livre, cliquez dessus avec le bouton 
@@ -1615,12 +1610,12 @@ Date : 30 décembre 2005
 			<guimenu>Afficher les <accel>i</accel>nformations en ligne</guimenu>
 			puis sélectionnez le fournisseur dans la liste présentée.
 			<!--If you want to find out more information about your book, you 
-			can use &app; to open the web page of Amazon, Barnes and Noble, 
+			can use &app; to open the web page of Amazon,
 			or one of the other online information providers and be 
 			taken directly to the relevant book. Simply select the book you 
 			wish to know more about, right-click on it, and from the menu 
 			<guimenuitem>Display Online Information</guimenuitem>, choose 
-			from either Amazon, Barnes and Nobel,
+			from either Amazon,
 			Spanish Culture Ministry, Amadeus Buch, or 
 			Internet Bookshop Italia.-->
 		</para>
@@ -1976,11 +1971,6 @@ Date : 30 décembre 2005
 					<para>
 						Ministère de la Culture espagnol&nbsp;;
 						<!--The Spanish Culture Ministry-->
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Barnes and Noble&nbsp;;
 					</para>
 				</listitem>
 				<listitem>

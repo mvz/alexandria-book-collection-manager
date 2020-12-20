@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:29+0100\n"
+"POT-Creation-Date: 2020-12-20 13:39+0100\n"
 "PO-Revision-Date: 2008-07-30 22:20-0000\n"
 "Last-Translator: Ligia Moreira <ligia.moreira@netvisao.pt >\n"
 "Language-Team: Lígia Moreira <ligia.moreira@netvisao.pt>\n"
@@ -82,10 +82,6 @@ msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
 msgid "Invalid country '%<country>s'"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/barnes_and_noble.rb:59
-msgid "HTTP redirect too deep"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22

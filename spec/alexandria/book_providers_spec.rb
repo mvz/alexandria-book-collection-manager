@@ -59,11 +59,4 @@ describe Alexandria::BookProviders do
       assert_correct_search_result(described_class, "9788835926436")
     end
   end
-
-  describe Alexandria::BookProviders::BarnesAndNobleProvider do
-    it "works" do
-      skip "Barnes and Noble is not operational at the moment"
-      assert_correct_search_result(described_class, "9780961328917") # see #1433
-    end
-  end
 end

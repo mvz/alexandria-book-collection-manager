@@ -294,7 +294,6 @@ module Alexandria
     require "alexandria/book_providers/amazon_aws"
 
     # Website based providers
-    require "alexandria/book_providers/barnes_and_noble"
     require "alexandria/book_providers/thalia_provider"
     require "alexandria/book_providers/worldcat"
 
