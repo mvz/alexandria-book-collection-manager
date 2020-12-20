@@ -81,11 +81,4 @@ describe Alexandria::BookProviders do
       assert_correct_search_result(described_class, "9789100109332")
     end
   end
-
-  describe Alexandria::BookProviders::SicilianoProvider do
-    it "works" do
-      skip "Needs fixing: no results found"
-      assert_correct_search_result(described_class, "9788599170380")
-    end
-  end
 end

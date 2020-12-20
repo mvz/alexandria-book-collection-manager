@@ -45,7 +45,6 @@ keep track of books which are on loan.
    - Proxis
    - AdLibris
    - Spanish Ministry of Culture
-   - Livraria Siciliano
    - WorldCat
    - US Library of Congress
    - British Library

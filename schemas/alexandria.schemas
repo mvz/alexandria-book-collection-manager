@@ -300,7 +300,7 @@
       <owner>alexandria</owner>
       <type>list</type>
       <list_type>string</list_type>
-      <default>[Amazon, BarnesAndNoble, AdLibris, Proxis, Thalia, Siciliano, WorldCat, LOC, BL, SBN]</default>
+      <default>[Amazon, BarnesAndNoble, AdLibris, Proxis, Thalia, WorldCat, LOC, BL, SBN]</default>
       <!-- BROKEN [Webster_it, Thalia, IBS_it, ] -->
       <locale name="C">
         <short>Providers priority</short>
