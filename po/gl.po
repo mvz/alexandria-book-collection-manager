@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:39+0100\n"
 "PO-Revision-Date: 2008-04-09 14:04+0100\n"
 "Last-Translator: Leandro Regueiro <leandro DOT regueiro AT gmail DOT com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -53,10 +53,6 @@ msgstr "Tipo de busca incorrecto."
 msgid "Enabled"
 msgstr ""
 
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
-msgstr ""
-
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
 msgid "Locale"
 msgstr "gl"
@@ -88,10 +84,6 @@ msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
 msgid "Invalid country '%<country>s'"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/barnes_and_noble.rb:59
-msgid "HTTP redirect too deep"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22

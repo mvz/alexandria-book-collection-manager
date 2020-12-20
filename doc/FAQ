@@ -291,8 +291,8 @@ of "Name Surname".
 
 Answer: Alexandria relies on what the providers say: 
 some providers report "Surname Name": Webster.it, Ibs.it,
-some "Name Surname": Bn, Thalia, Bol.it, Adlibris, L Siciliano, Worldcat,
-and some without any rule: Amazon, Proxis.
+some "Name Surname": Bn, Thalia, Bol.it, Worldcat,
+and some without any rule: Amazon.
 You can change, in the preferences, the order in which the providers are 
 queried.
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:39+0100\n"
 "PO-Revision-Date: 2005-03-25 18:52+0100\n"
 "Last-Translator: Dafydd Harries <daf@muse.19inch.net>\n"
 "Language-Team: Welsh <cy@pengwyn.linux.org.uk>\n"
@@ -48,10 +48,6 @@ msgstr "Math chwilio annilys."
 msgid "Enabled"
 msgstr ""
 
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
-msgstr ""
-
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
 msgid "Locale"
 msgstr ""
@@ -83,10 +79,6 @@ msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
 msgid "Invalid country '%<country>s'"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/barnes_and_noble.rb:59
-msgid "HTTP redirect too deep"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22

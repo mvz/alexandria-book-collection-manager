@@ -38,9 +38,7 @@
 検索する情報源の順番を変えることができます。
     <itemizedlist>
       <listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
-      <listitem><para><xref linkend="alexandria-proxis-prefs"/></para></listitem>
       <listitem><para>スペイン文化省</para></listitem>
-      <listitem><para>Barnes and Noble</para></listitem>
       <listitem><para>Amadeus Buch</para></listitem>
       <listitem><para>Internet Bookshop Italia</para></listitem>
       <listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
@@ -70,15 +68,6 @@
       </warning>
     </sect3>
 
-
-    <sect3 id="alexandria-proxis-prefs">
-      <title>Proxisの設定</title>
-      <para>&app; は Proxisのウェブサイトで英語またはフランス語、またはオランダ語で
-本を検索できます。どの言語で検索するかを選択するには、プロバイダーの一覧からProxisを
-選択し、<guibutton>セットアップ</guibutton>をクリックします。次にドロップダウンメニュー
-から<guilabel>en, fr, nl</guilabel>のいずれかを選択します。</para>
-    </sect3>
-    
     <sect3 id="alexandria-britlib-prefs">
       <title>大英図書館の設定</title>
       <para>大英図書館のアカウントを持っているなら、ダイアログでz39.50サービス用の

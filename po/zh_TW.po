@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:24+0100\n"
+"POT-Creation-Date: 2020-12-20 13:39+0100\n"
 "PO-Revision-Date: 2008-02-25 20:29+0800\n"
 "Last-Translator: Jos'e Ling <jlgdot369@gmail.com>\n"
 "Language-Team: Chinese/Traditional\n"
@@ -46,10 +46,6 @@ msgstr "搜尋種類無效"
 msgid "Enabled"
 msgstr ""
 
-#: ../lib/alexandria/book_providers/adlibris.rb:111
-msgid "title not found on page"
-msgstr ""
-
 #: ../lib/alexandria/book_providers/amazon_aws.rb:26
 msgid "Locale"
 msgstr "區域設置"
@@ -81,10 +77,6 @@ msgstr ""
 
 #: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
 msgid "Invalid country '%<country>s'"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/barnes_and_noble.rb:59
-msgid "HTTP redirect too deep"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22

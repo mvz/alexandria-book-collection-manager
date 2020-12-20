@@ -59,33 +59,4 @@ describe Alexandria::BookProviders do
       assert_correct_search_result(described_class, "9788835926436")
     end
   end
-
-  describe Alexandria::BookProviders::BarnesAndNobleProvider do
-    it "works" do
-      skip "Barnes and Noble is not operational at the moment"
-      assert_correct_search_result(described_class, "9780961328917") # see #1433
-    end
-  end
-
-  describe Alexandria::BookProviders::ProxisProvider do
-    it "works" do
-      skip "Needs fixing"
-      assert_correct_search_result(described_class, "9789026965746")
-      assert_correct_search_result(described_class, "9780586071403")
-    end
-  end
-
-  describe Alexandria::BookProviders::AdLibrisProvider do
-    it "works" do
-      skip "Needs fixing: site has changed"
-      assert_correct_search_result(described_class, "9789100109332")
-    end
-  end
-
-  describe Alexandria::BookProviders::SicilianoProvider do
-    it "works" do
-      skip "Needs fixing: no results found"
-      assert_correct_search_result(described_class, "9788599170380")
-    end
-  end
 end

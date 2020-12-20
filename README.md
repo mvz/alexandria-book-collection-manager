@@ -42,10 +42,7 @@ keep track of books which are on loan.
 * retrieves and displays book information (sometimes with cover
   pictures) from several online libraries and bookshops, such as
    - Amazon
-   - Proxis
-   - AdLibris
    - Spanish Ministry of Culture
-   - Livraria Siciliano
    - WorldCat
    - US Library of Congress
    - British Library
