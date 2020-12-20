@@ -133,7 +133,7 @@ module Alexandria
 
           d_idx = 0
           while d_idx < data.size
-            d_str = data[d_idx..-1]
+            d_str = data[d_idx..]
             idx = d_str =~ /\$([a-z]) ([^$]+)/
             break unless idx
 

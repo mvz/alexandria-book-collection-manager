@@ -182,7 +182,7 @@ class FileInstallTask < Rake::TaskLib
     if @prefix == ruby_prefix
       @rubylib = ruby_libdir
     elsif ruby_libdir.index(ruby_prefix).zero?
-      libpart = ruby_libdir[ruby_prefix.size..-1]
+      libpart = ruby_libdir[ruby_prefix.size..]
       @rubylib = File.join(@prefix, libpart)
     else
       @rubylib = ruby_libdir

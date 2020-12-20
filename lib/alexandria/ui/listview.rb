@@ -201,7 +201,7 @@ module Alexandria
           @prefs.col_rating_visible,
           @prefs.col_tags_visible
         ]
-        cols = @listview.columns[1..-1] # skip "Title"
+        cols = @listview.columns[1..] # skip "Title"
         cols.each_index do |i|
           cols[i].visible = cols_visibility[i]
         end

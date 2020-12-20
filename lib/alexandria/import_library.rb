@@ -53,13 +53,13 @@ module Alexandria
     def self.import_autodetect(*args)
       log.debug { args.inspect }
       filename = args[1]
-      log.debug { "Filename is #{filename} and ext is #{filename[-4..-1]}" }
+      log.debug { "Filename is #{filename} and ext is #{filename[-4..]}" }
       log.debug { "Beginning import: #{args[0]}, #{args[1]}" }
-      if filename[-4..-1] == ".txt"
+      if filename[-4..] == ".txt"
         import_as_isbn_list(*args)
-      elsif [".tc", ".bc"].include? filename[-3..-1]
+      elsif [".tc", ".bc"].include? filename[-3..]
         import_as_tellico_xml_archive(*args)
-      elsif [".csv"].include? filename[-4..-1]
+      elsif [".csv"].include? filename[-4..]
         import_as_csv_file(*args)
       else
         raise _("Unsupported type")
