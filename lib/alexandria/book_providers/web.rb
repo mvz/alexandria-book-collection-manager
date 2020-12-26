@@ -4,7 +4,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require "hpricot"
+require "nokogiri"
 require "htmlentities"
 
 module Alexandria
@@ -19,7 +19,7 @@ module Alexandria
         html.force_encoding source_data_charset
         utf8_html = html.encode("utf-8")
         normalized_html = @htmlentities.decode(utf8_html)
-        Hpricot(normalized_html)
+        Nokogiri.parse(normalized_html)
       end
 
       ## from Palatina

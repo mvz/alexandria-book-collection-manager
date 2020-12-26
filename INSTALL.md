@@ -23,10 +23,10 @@ You should have GTK+ 3, and use Ruby-GNOME2 `~> 3.1.0`.
 is required for the internationalisation of the user interface.
 Requires version `~> 3.1`.
 
-### Hpricot
+### Nokogiri
 
-Alexandria uses [hpricot](https://github.com/hpricot/hpricot) to
-parse the HTML from web pages for web-based providers.
+Alexandria uses [nokogiri](https://nokogiri.org/) to parse the HTML from web
+pages for web-based providers.
 
 ## HTMLEntities
 
