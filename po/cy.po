@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:39+0100\n"
+"POT-Creation-Date: 2020-12-26 12:17+0100\n"
 "PO-Revision-Date: 2005-03-25 18:52+0100\n"
 "Last-Translator: Dafydd Harries <daf@muse.19inch.net>\n"
 "Language-Team: Welsh <cy@pengwyn.linux.org.uk>\n"
@@ -46,39 +46,6 @@ msgstr "Math chwilio annilys."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:26
-msgid "Locale"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:27
-msgid "Access key ID"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:28
-msgid "Secret access key"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:29
-#, fuzzy
-msgid "Associate Tag"
-msgstr "ID Partner"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:59
-msgid "Provide secret key for your Amazon AWS account."
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:149
-msgid "No products"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:102
-msgid "HTTP Response: %<code>s %<message>s"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
-msgid "Invalid country '%<country>s'"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22
@@ -1448,6 +1415,10 @@ msgstr "Trefnydd Casgliad Llyfrau"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Trefnu eich casgliad llyfrau"
+
+#, fuzzy
+#~ msgid "Associate Tag"
+#~ msgstr "ID Partner"
 
 #~ msgid "Unable to launch the web browser"
 #~ msgstr "Ni ellir lansio'r porwr gwe"

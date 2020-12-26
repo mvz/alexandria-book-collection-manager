@@ -9,35 +9,6 @@ require "spec_helper"
 describe Alexandria::BookProviders do
   it "should be less clever"
 
-  describe Alexandria::BookProviders::AmazonProvider do
-    before do
-      skip "Amazon requires an API key. Remove it altogether as a provider?"
-    end
-
-    it "does not piss off Rich Burridge" do
-      assert_correct_search_result(described_class, "033025068X")
-    end
-
-    it "works" do
-      assert_correct_search_result(described_class, "9780385504201")
-    end
-
-    it "works when searching for title" do
-      assert_correct_search_result(described_class, "A Confederacy of Dunces",
-                                   Alexandria::BookProviders::SEARCH_BY_TITLE)
-    end
-
-    it "amazon authors should work" do
-      assert_correct_search_result(described_class, "John Kennedy Toole",
-                                   Alexandria::BookProviders::SEARCH_BY_AUTHORS)
-    end
-
-    it "amazon keyword should work" do
-      assert_correct_search_result(described_class, "Confederacy Dunces",
-                                   Alexandria::BookProviders::SEARCH_BY_KEYWORD)
-    end
-  end
-
   describe Alexandria::BookProviders::LOCProvider do
     it "works for a book with ASCII title" do
       assert_correct_search_result(described_class, "9780805335583")

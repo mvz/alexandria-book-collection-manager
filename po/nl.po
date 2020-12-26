@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:39+0100\n"
+"POT-Creation-Date: 2020-12-26 12:17+0100\n"
 "PO-Revision-Date: 2020-09-13 11:55+0200\n"
 "Last-Translator: L.C. Karssen <lennart@karssen.org>\n"
 "Language-Team: Dutch\n"
@@ -48,38 +48,6 @@ msgstr "Ongeldig zoektype."
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr "Geactiveerd"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:26
-msgid "Locale"
-msgstr "Taal"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:27
-msgid "Access key ID"
-msgstr "Toegangssleutel ID"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:28
-msgid "Secret access key"
-msgstr "Geheime toegangssleutel"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:29
-msgid "Associate Tag"
-msgstr "Geassocieerd ID"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:59
-msgid "Provide secret key for your Amazon AWS account."
-msgstr "Stel een sleutel in voor uw Amazon AWS account."
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:149
-msgid "No products"
-msgstr "Geen producten"
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:102
-msgid "HTTP Response: %<code>s %<message>s"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
-msgid "Invalid country '%<country>s'"
-msgstr "Ongeldig land '%<country>s'"
 
 #: ../lib/alexandria/book_providers/z3950.rb:22
 msgid "Hostname"
@@ -1397,6 +1365,27 @@ msgstr "Boekcollectiebeheerder"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
+
+#~ msgid "Locale"
+#~ msgstr "Taal"
+
+#~ msgid "Access key ID"
+#~ msgstr "Toegangssleutel ID"
+
+#~ msgid "Secret access key"
+#~ msgstr "Geheime toegangssleutel"
+
+#~ msgid "Associate Tag"
+#~ msgstr "Geassocieerd ID"
+
+#~ msgid "Provide secret key for your Amazon AWS account."
+#~ msgstr "Stel een sleutel in voor uw Amazon AWS account."
+
+#~ msgid "No products"
+#~ msgstr "Geen producten"
+
+#~ msgid "Invalid country '%<country>s'"
+#~ msgstr "Ongeldig land '%<country>s'"
 
 #~ msgid "title not found on page"
 #~ msgstr "titel niet gevonden op de pagina"

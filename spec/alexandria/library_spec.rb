@@ -150,7 +150,7 @@ describe Alexandria::Library do
       # Guide to LaTeX
       latex_book = my_library.find { |b| b.title.include? "Latex" }
       expect(latex_book.isbn).to eq("9780201398250")
-      expect(latex_book.publisher).to eq("Addison Wesley") # note, no Ruby-Amazon cruft
+      expect(latex_book.publisher).to eq("Addison Wesley")
     end
   end
 
@@ -176,7 +176,7 @@ describe Alexandria::Library do
       # Guide to LaTeX
       latex_book = my_library.find { |b| b.title.include? "Latex" }
       expect(latex_book.isbn).to eq("9780201398250")
-      expect(latex_book.publisher).to eq("Addison Wesley") # note, no Ruby-Amazon cruft
+      expect(latex_book.publisher).to eq("Addison Wesley")
       expect(latex_book.version).to eq(Alexandria::DATA_VERSION)
     end
 

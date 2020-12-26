@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:39+0100\n"
+"POT-Creation-Date: 2020-12-26 12:17+0100\n"
 "PO-Revision-Date: 2008-01-05 21:48+0100\n"
 "Last-Translator: Petr Vanek <vanous@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -49,39 +49,6 @@ msgstr "Chybný druh hledání."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:26
-msgid "Locale"
-msgstr "Pobočka"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:27
-msgid "Access key ID"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:28
-msgid "Secret access key"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:29
-#, fuzzy
-msgid "Associate Tag"
-msgstr "Přičleněné ID"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:59
-msgid "Provide secret key for your Amazon AWS account."
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:149
-msgid "No products"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:102
-msgid "HTTP Response: %<code>s %<message>s"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
-msgid "Invalid country '%<country>s'"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22
@@ -1425,6 +1392,13 @@ msgstr "Správce sbírky knih"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Spravovat vaši sbírku knih"
+
+#~ msgid "Locale"
+#~ msgstr "Pobočka"
+
+#, fuzzy
+#~ msgid "Associate Tag"
+#~ msgstr "Přičleněné ID"
 
 #~ msgid "Unable to launch the web browser"
 #~ msgstr "Nelze spustit prohlížeč webových stránek·"

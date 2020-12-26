@@ -87,15 +87,11 @@
   <!-- ========= Finding out more online =========== -->
   <section id="searching-more-online">
     <title>オンラインで本に関する詳細な情報を探すには</title>
-    <para>もし本について詳細な情報を知りたければ、&app; はAmazon
-などのオンライン情報プロバイダーのウェブページを開いて、その本に関する情報を直接得ることが
+    <para>もし本について詳細な情報を知りたければ、&app; は
+オンライン情報プロバイダーのウェブページを開いて、その本に関する情報を直接得ることが
 出来ます。より詳しく知りたい本を選択して右クリックし、
-<guimenuitem>オンライン情報の表示</guimenuitem>を選択して、Amazonなどのプロバイダーを
+<guimenuitem>オンライン情報の表示</guimenuitem>を選択して、プロバイダーを
 選択してください。</para>
-    <tip>
-      <para><menuchoice><guimenu>オンライン情報の表示</guimenu><guimenuitem>Amazon</guimenuitem></menuchoice>を選択した時は、<xref linkend="alexandria-amazon-prefs"/>で
-設定した amazon.com, co.uk, .de, .jpのいずれかのサイトが選択されます。</para>
-    </tip>
     <caution>
       <para>すべてのオンライン情報源が、本に関する完璧な情報を持っているわけではありません。
 欲しい情報を得るために、別のプロバイダーをいくつか試す必要があるかもしれません。</para>

@@ -39,7 +39,6 @@
     <title>Online information providers</title>
     <para>&app; can download information from a variety of different online sources; some of these sources have additional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
     <itemizedlist>
-      <listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
       <listitem><para>The Spanish Culture Ministry</para></listitem>
       <listitem><para>Amadeus Buch</para></listitem>
       <listitem><para>Internet Bookshop Italia</para></listitem>
@@ -53,27 +52,6 @@
       <listitem><para><xref linkend="alexandria-z3950-prefs"/></para></listitem>
     </itemizedlist>
     </para>
-
-
-    <sect3 id="alexandria-amazon-prefs">
-      <title>Amazon preferences</title>
-      <para>In order to use the Amazon provider, you must sign up for a free <ulink url="http://aws.amazon.com/">Amazon AWS</ulink> account, and enter your <guilabel>Access Key Id</guilabel> <guilabel>Secret Access Key</guilabel>. You can find these "Access Identifiers" under the link to "Your Account" on the AWS website.</para>
-      <note>
-	<para>Previous versions of &app; included an Amazon AWS Access
-	Key ID. From August 15 2009, Amazon have changed their
-	"Product Advertising API" so each request must be
-	authenticated, requiring a Secret Access Key. It is not
-	possible for us to distribute secret keys to users. So, in
-	order to continue using the Amazon provider you will need to
-	sign up for your own free AWS account.</para>
-        <para>You don't require an Amazon AWS account in order to use
-        &app;'s other providers. So, if you don't want to sign up for
-        an AWS account, you can leave these settings blank, and &app;
-        will simply not search Amazon when looking up books. </para>
-      </note>
-      <para>&app; can download book information from different amazon websites - currently, amazon.com, .co.uk, .fr, .de, .ca and .jp . To change which site to use, select Amazon from the Provider list, and click on <guibutton>Setup</guibutton>. Then choose either <guilabel>ca, de, fr, jp, uk</guilabel> or <guilabel>us</guilabel> from the drop-down menu.</para>
-    </sect3>
-
 
     <sect3 id="alexandria-britlib-prefs">
       <title>British Library preferences</title>
