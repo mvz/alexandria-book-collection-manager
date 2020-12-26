@@ -110,10 +110,9 @@
     
     <para>If you do not know the ISBN of the book you wish to add, you
     can specify either the Title, the Authors or the Keywords, and
-    &app; will search your online information provider, such as
-    Amazon, for books that match. You can then select the desired book
-    from the displayed list and click <guibutton>Add</guibutton> to
-    the book to the selected library.</para>
+    &app; will search your online information provider for books that match.
+    You can then select the desired book from the displayed list and click
+    <guibutton>Add</guibutton> to the book to the selected library.</para>
     
     <para>With the <guilabel>Adding a Book</guilabel> dialog open,
     click on the <guilabel>Search</guilabel> checkbox then choose

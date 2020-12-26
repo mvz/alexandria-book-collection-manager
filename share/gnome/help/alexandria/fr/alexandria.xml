@@ -167,11 +167,6 @@ Date : 30 décembre 2005
 				<itemizedlist>
 					<listitem>
 						<para>
-							<orgname>Amazon</orgname> (.com, .co.uk, .de et .jp)&nbsp;;
-						</para>
-					</listitem>
-					<listitem>
-						<para>
 							<orgname>Ministère de la Culture espagnole</orgname>&nbsp;;
 							<!--the Spanish Ministry of Culture-->
 						</para>
@@ -608,15 +603,14 @@ Date : 30 décembre 2005
 			ajouter, vous pouvez rechercher par le titre, 
 			les auteurs ou des mots clés.
 			&app; recherche les livres qui correspondent aux critères définis
-			à partir de fournisseurs d&#8217;informations en ligne tel 
-			qu&#8217;<ulink url="http://www.amazon.fr">Amazon</ulink>.
+			à partir de fournisseurs d&#8217;informations en ligne.
 			Vous pouvez ensuite sélectionner le livre désiré à partir de la liste
 			affichée et cliquer sur le bouton 
 			<guibutton>A<accel>j</accel>outer</guibutton> pour
 			l&#8217;intégrer à votre bibliothèque.
 			<!--If you do not know the ISBN of the book you wish to add, you can specify
 			either the Title, the Authors or the Keywords, and &app; will search
-			your online information provider, such as Amazon, for books that match.
+			your online information provider for books that match.
 			You can then select the desired book from the displayed list and
 			click <guibutton>Add</guibutton> to the book to the selected library.-->
 		</para>
@@ -1600,55 +1594,21 @@ Date : 30 décembre 2005
 		</title>
 		<para>
 			Pour trouver plus d&#8217;informations au sujet de vos livres, vous
-			pouvez utiliser &app; pour ouvrir une page web sur 
-			<orgname>Amazon</orgname>
-			ou chez l&#8217;un des autres fournisseurs d&#8217;informations en ligne
+			pouvez utiliser &app; pour ouvrir une page web
+			chez l&#8217;un des fournisseurs d&#8217;informations en ligne
 			et être dirigé directement à la page du livre concerné.
 			Pour cela, sélectionnez le livre, cliquez dessus avec le bouton 
 			<mousebutton>droit</mousebutton> de la souris,
 			et à partir du menu contextuel choisissez
 			<guimenu>Afficher les <accel>i</accel>nformations en ligne</guimenu>
 			puis sélectionnez le fournisseur dans la liste présentée.
-			<!--If you want to find out more information about your book, you 
-			can use &app; to open the web page of Amazon,
-			or one of the other online information providers and be 
-			taken directly to the relevant book. Simply select the book you 
-			wish to know more about, right-click on it, and from the menu 
-			<guimenuitem>Display Online Information</guimenuitem>, choose 
-			from either Amazon,
-			Spanish Culture Ministry, Amadeus Buch, or 
-			Internet Bookshop Italia.-->
 		</para>
-		<tip>
-			<para>
-				Le menu
-				<menuchoice>
-				<guimenu>Afficher les <accel>i</accel>nformations en ligne</guimenu>
-				<guimenuitem>Sur <accel>A</accel>mazon</guimenuitem>
-				</menuchoice>
-				vous envoie sur le site d&#8217;<orgname>Amazon</orgname> .com, 
-				.ca, .co.uk, .de, .fr, ou .jp en fonction de votre 
-				configuration pour ce fournisseur (voir 
-				<xref linkend="alexandria-amazon-prefs"/>).
-				<!--The 
-				<menuchoice>
-				<guimenu>Display Online Information</guimenu>
-				<guimenuitem>At Amazon</guimenuitem>
-				</menuchoice> 
-				choice will take you to the Amazon .com, .co.uk, .de, or jp 
-				site, as set up in the 
-				<xref linkend="alexandria-amazon-prefs"/>.-->
-			</para>
-		</tip>
 		<caution>
 			<para>
 				Les sources d&#8217;informations en ligne n&#8217;ont pas une liste
 				complète de livres et il est possible que vous deviez
 				essayer plusieurs fournisseurs pour trouver
 				l&#8217;information recherchée.
-				<!--Not every online information source has a complete list of 
-				books and you may have to try several different providers 
-				to find the information you want.-->
 			</para>
 		</caution>
 	</sect2>
@@ -1954,23 +1914,10 @@ Date : 30 décembre 2005
       	en déplaçant chaque source en utilisant
       	les boutons <guibutton><accel>V</accel>ers le haut</guibutton>
       	ou <guibutton><accel>V</accel>ers le bas</guibutton>.
-      	<!--&app; can download information from a variety of different 
-      	online sources; some of these sources have additional options 
-      	to control how the information is downloaded. &app; will 
-      	search each of the sources in turn, in the order displayed in 
-      	the list. You can change the order in which the sources are 
-      	searched by moving each source up or down using the 
-      	<guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.-->
 			<itemizedlist>
 				<listitem>
 					<para>
-						<xref linkend="alexandria-amazon-prefs"/>&nbsp;;
-					</para>
-				</listitem>
-				<listitem>
-					<para>
 						Ministère de la Culture espagnol&nbsp;;
-						<!--The Spanish Culture Ministry-->
 					</para>
 				</listitem>
 				<listitem>
@@ -2013,53 +1960,6 @@ Date : 30 décembre 2005
 				</listitem>
 			</itemizedlist>
 		</para>
-
-
-      <sect3 id="alexandria-amazon-prefs">
-        	<title>
-        		Préférences pour <orgname>Amazon</orgname>
-        		<!-- Amazon preferences-->
-        	</title>
-        	<para>
-        		&app; peut télécharger les informations d&#8217;un livre à partir
-        		de différents sites web d&#8217;<orgname>Amazon</orgname>. 
-        		Les sites actuellement supportés sont&nbsp;:
-        		amazon.com (us), .ca, .co.uk (uk), .de, .fr et .jp.
-        		Pour changer le site utilisé, sélectionnez 
-        		<guilabel>Amazon</guilabel> à partir de la liste des 
-        		fournisseurs et cliquez sur 
-        		<guibutton><accel>C</accel>onfigurer</guibutton>.
-        		Ensuite choisissez dans le menu déroulant 
-        		<guilabel><accel>L</accel>angue</guilabel> le site 
-        		qui vous convient.
-        		<!--&app; can download book information from different amazon 
-        		websites - currently, amazon.com, .co.uk, .de and .jp. 
-        		To change which site to use, select Amazon from the 
-        		Provider list, and click on <guibutton>Setup</guibutton>. 
-        		Then choose either <guilabel>UK, DE, JP</guilabel> or 
-        		<guilabel>US</guilabel> from the drop-down menu.-->
-        	</para>
-	  	
-	  		<warning>
-				<para>
-					<guilabel><accel>J</accel>eton de développeur</guilabel>
-					et <guilabel><accel>I</accel>dentifiant d&#8217;associé</guilabel>
-					peuvent être changés si vous avez un compte de service web
-					d&#8217;<orgname>Amazon</orgname>. Vous pouvez obtenir
-					un compte à l&#8217;adresse 
-					<ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>.
-					Si vous ne savez pas ce que cela signifie, alors vous pouvez 
-					laisser ces champs tels quels.
-					<!--The <guilabel>Development token</guilabel> and 
-					<guilabel>Associate ID</guilabel> can be changed if you 
-					have an amazon web services account. You sign for an 
-					Amazon Web Services account at 
-					<ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>. 
-					If you don&#8217;t know what this means, then you can leave 
-					these values alone.-->
-				</para>
-			</warning>
-      </sect3>
 
 
 	  <sect3 id="alexandria-britlib-prefs">

@@ -41,7 +41,6 @@ keep track of books which are on loan.
 
 * retrieves and displays book information (sometimes with cover
   pictures) from several online libraries and bookshops, such as
-   - Amazon
    - Spanish Ministry of Culture
    - WorldCat
    - US Library of Congress

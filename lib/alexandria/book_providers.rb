@@ -290,9 +290,6 @@ module Alexandria
 
     require "alexandria/book_providers/douban" # only requires YAML
 
-    # Amazon AWS (Amazon Associates Web Services) provider, needs hpricot
-    require "alexandria/book_providers/amazon_aws"
-
     # Website based providers
     require "alexandria/book_providers/thalia_provider"
     require "alexandria/book_providers/worldcat"
@@ -376,11 +373,6 @@ module Alexandria
 
       changed = false
 
-      if (ecs_index = priority.index("AmazonECS"))
-        priority[ecs_index] = "Amazon" # replace legacy "AmazonECS" name
-        priority.uniq! # remove any other "Amazon" from the list
-        changed = true
-      end
       if (worldcat_index = priority.index("Worldcat"))
         priority[worldcat_index] = "WorldCat"
         changed = true

@@ -37,7 +37,6 @@
 <guibutton>上へ</guibutton>と<guibutton>下へ</guibutton>のボタンを使って
 検索する情報源の順番を変えることができます。
     <itemizedlist>
-      <listitem><para><xref linkend="alexandria-amazon-prefs"/></para></listitem>
       <listitem><para>スペイン文化省</para></listitem>
       <listitem><para>Amadeus Buch</para></listitem>
       <listitem><para>Internet Bookshop Italia</para></listitem>
@@ -52,21 +51,6 @@
     </itemizedlist>
     </para>
 
-
-    <sect3 id="alexandria-amazon-prefs">
-      <title>Amazonの設定</title>
-      <para>&app; はいくつかの異なるAmazonのサイトから本の情報をダウンロード出来ます。
-現時点では、amazon.com, .co.uk, .de, .jp, .fr, .ca です。使用するサイトを
-変更するには、プロバイダーの一覧からAmazonを選択し、<guibutton>セットアップ</guibutton>
-をクリックします。次にドロップダウンメニューから<guilabel>UK, DE, JP, FR, CA, US</guilabel>
-のいずれかを選択します。</para>
-      <warning>
-	<para><guilabel>デベロッパートークン</guilabel>と <guilabel>アソシエイトID</guilabel>は、もしあなたがAmazonのウェブサービスアカウントを持っていればそれに変更できます。
- <ulink url="https://aws-portal.amazon.com/gp/aws/developer/registration/index.html/002-9602971-5248069">aws-portal.amazon.com</ulink>でAmazon
-ウェブサービスアカウントのサインアップをしてください。もしこの意味が分からなければ、
-変更せずにデフォルトのままにしておいてください。</para>
-      </warning>
-    </sect3>
 
     <sect3 id="alexandria-britlib-prefs">
       <title>大英図書館の設定</title>
