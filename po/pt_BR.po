@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:39+0100\n"
+"POT-Creation-Date: 2020-12-26 12:17+0100\n"
 "PO-Revision-Date: 2008-07-30 22:21-0000\n"
 "Last-Translator: Ligia Moreira <ligia.moreira@netvisao.pt >\n"
 "Language-Team: Lígia Moreira <ligia.moreira@netvisao.pt>\n"
@@ -50,39 +50,6 @@ msgstr "Tipo de pesquisa inválida."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:26
-msgid "Locale"
-msgstr "Local"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:27
-msgid "Access key ID"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:28
-msgid "Secret access key"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:29
-#, fuzzy
-msgid "Associate Tag"
-msgstr "Identidade de associado"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:59
-msgid "Provide secret key for your Amazon AWS account."
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:149
-msgid "No products"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:102
-msgid "HTTP Response: %<code>s %<message>s"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
-msgid "Invalid country '%<country>s'"
 msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22
@@ -1414,6 +1381,13 @@ msgstr "Gerenciador de coleções de livros"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Gerencie a sua coleção de livros"
+
+#~ msgid "Locale"
+#~ msgstr "Local"
+
+#, fuzzy
+#~ msgid "Associate Tag"
+#~ msgstr "Identidade de associado"
 
 #~ msgid "Unable to launch the web browser"
 #~ msgstr "Não foi possível lançar o navegador web"

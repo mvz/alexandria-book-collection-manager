@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: alexandria 0.6.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-20 13:39+0100\n"
+"POT-Creation-Date: 2020-12-26 12:17+0100\n"
 "PO-Revision-Date: 2009-12-16 11:47+0100\n"
 "Last-Translator: Joachim Breitner <mail@joachim-breitner.de>\n"
 "Language-Team: German\n"
@@ -48,39 +48,6 @@ msgstr "Ungültiger Suchtyp."
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
 msgstr "Aktiviert"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:26
-msgid "Locale"
-msgstr "Sprache"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:27
-msgid "Access key ID"
-msgstr "Zugriffs-Schlüssel-ID"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:28
-msgid "Secret access key"
-msgstr "Privater Zugriffsschlüssel"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:29
-#, fuzzy
-msgid "Associate Tag"
-msgstr "Associate ID"
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:59
-msgid "Provide secret key for your Amazon AWS account."
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_aws.rb:149
-msgid "No products"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:102
-msgid "HTTP Response: %<code>s %<message>s"
-msgstr ""
-
-#: ../lib/alexandria/book_providers/amazon_ecs_util.rb:170
-msgid "Invalid country '%<country>s'"
-msgstr ""
 
 #: ../lib/alexandria/book_providers/z3950.rb:22
 msgid "Hostname"
@@ -1420,6 +1387,19 @@ msgstr "Büchersammlungs-Manager"
 #: ../alexandria.desktop.in.h:3
 msgid "Manage your book collection"
 msgstr "Ordnen sie ihre Büchersammlung."
+
+#~ msgid "Locale"
+#~ msgstr "Sprache"
+
+#~ msgid "Access key ID"
+#~ msgstr "Zugriffs-Schlüssel-ID"
+
+#~ msgid "Secret access key"
+#~ msgstr "Privater Zugriffsschlüssel"
+
+#, fuzzy
+#~ msgid "Associate Tag"
+#~ msgstr "Associate ID"
 
 #~ msgid "Unable to launch the web browser"
 #~ msgstr "Konnte den Webbrowser nicht starten"
