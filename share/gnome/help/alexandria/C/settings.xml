@@ -39,7 +39,6 @@
     <title>Online information providers</title>
     <para>&app; can download information from a variety of different online sources; some of these sources have additional options to control how the information is downloaded. &app; will search each of the sources in turn, in the order displayed in the list. You can change the order in which the sources are searched by moving each source up or down using the <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons.
     <itemizedlist>
-      <listitem><para>The Spanish Culture Ministry</para></listitem>
       <listitem><para>Amadeus Buch</para></listitem>
       <listitem><para>Internet Bookshop Italia</para></listitem>
       <listitem><para><xref linkend="alexandria-britlib-prefs"/></para></listitem>
