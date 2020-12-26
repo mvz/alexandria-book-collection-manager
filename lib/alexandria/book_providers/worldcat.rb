@@ -76,9 +76,10 @@ module Alexandria
         doc = html_to_doc(html, "UTF-8")
         book_search_results = []
         begin
-          result_cells = doc / "td.result/div.name/.."
-          result_cells.each do |td|
-            type_icon = (td % "div.type/img.icn")
+          result_divs = doc / "td.result/div.name"
+          result_divs.each do |div|
+            td = div.parent
+            type_icon = td % "div.type/img.icn"
             next unless type_icon && type_icon["src"].include?("icon-bks")
 
             name_div = td % "div.name"
@@ -170,9 +171,10 @@ module Alexandria
           # can we do better? get the City name?? or multiple publishers?
           bibdata = doc % "div#bibdata"
           bibdata_table = bibdata % :table
-          publisher_row = bibdata_table % "th[text()*=Publisher]/.."
+          publisher_header = bibdata_table % "th[text()*=Publisher]"
 
-          if publisher_row
+          if publisher_header
+            publisher_row = publisher_header.parent
             publication_info = (publisher_row / "td").last.inner_text
 
             publication_info =~ if publication_info.index(";")
