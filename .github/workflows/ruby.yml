@@ -23,26 +23,17 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install non-ruby dependencies
       run: |
-        # Needed for gtk3 gem
-        sudo apt-get install libgtk-3-dev
-        # Needed for gstreamer gem
-        sudo apt-get install libgstreamer1.0-dev
-        # Needed for GooCanvas::Canvas widget
-        sudo apt-get install libgoocanvas-2.0-dev
-        # Needed for zoom gem
-        sudo apt-get install libyaz-dev
-        # Needed for intltool-merge executable
-        sudo apt-get install intltool
-        # Needed for gconftool-2 executable
-        sudo apt-get install gconf2
-        # Needed to provide A11y dbus service to silence warnings
-        sudo apt-get install at-spi2-core
-        # Needed to set up sound player pipeline
-        sudo apt-get install gstreamer1.0-plugins-good
-        # Needed to play sound
-        sudo apt-get install pulseaudio
-        # Provides xvfb-run
-        sudo apt-get install xvfb
+        sudo apt-get update
+        sudo apt-get install libgtk-3-dev              # Needed for gtk3 gem
+        sudo apt-get install libgstreamer1.0-dev       # Needed for gstreamer gem
+        sudo apt-get install libgoocanvas-2.0-dev      # Needed for GooCanvas::Canvas widget
+        sudo apt-get install libyaz-dev                # Needed for zoom gem
+        sudo apt-get install intltool                  # Needed for intltool-merge executable
+        sudo apt-get install gconf2                    # Needed for gconftool-2 executable
+        sudo apt-get install at-spi2-core              # Needed to provide A11y dbus service to silence warnings
+        sudo apt-get install gstreamer1.0-plugins-good # Needed to set up sound player pipeline
+        sudo apt-get install pulseaudio                # Needed to play sound
+        sudo apt-get install xvfb                      # Provides xvfb-run
 
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
