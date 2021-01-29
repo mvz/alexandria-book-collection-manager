@@ -44,11 +44,7 @@ module Alexandria
         cur_tag = key.split(",").last.strip
         if cur_tag.size >= min
           begin
-            if /^#{cur_tag}/.match?(iter[0])
-              true
-            else
-              false
-            end
+            /^#{cur_tag}/.match?(iter[0])
           rescue StandardError
             false
           end
