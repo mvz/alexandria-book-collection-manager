@@ -1187,9 +1187,9 @@ module Alexandria
         selection.select_path(path) if path
       end
 
-      def view_path_to_model_path(view, path)
-        path = view.model.convert_path_to_child_path(path)
-        @filtered_model.convert_path_to_child_path(path) if path
+      def view_path_to_model_path(view, view_path)
+        filter_path = view.model.convert_path_to_child_path(view_path)
+        @filtered_model.convert_path_to_child_path(filter_path) if filter_path
       end
     end
   end
