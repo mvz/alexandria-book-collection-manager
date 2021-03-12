@@ -49,4 +49,80 @@ describe Alexandria::UI::UIManager do
       expect(ui.iconview.selected_items).not_to be_empty
     end
   end
+
+  describe "#select_a_book" do
+    let(:ui) { described_class.new main_app }
+    let(:libraries) { ui.instance_variable_get("@libraries") }
+    let(:filter_entry) { ui.instance_variable_get("@filter_entry") }
+    let(:regular_library) { libraries.all_regular_libraries.last }
+
+    before do
+      lib_version = File.join(LIBDIR, "0.6.2")
+      FileUtils.cp_r(lib_version, TESTDIR)
+
+      ui.select_a_library regular_library
+      # Make books appear in the view
+      regular_library.each { |book| ui.append_book book }
+    end
+
+    context "when selecting in the icon view" do
+      before do
+        # Make view model re-appear
+        ui.iconview.unfreeze
+      end
+
+      it "selects book if it is in view" do
+        ui.select_a_book regular_library.first
+
+        selected = ui.iconview.selected_items
+        expect(selected.count).to eq 1
+      end
+
+      it "selects nothing if book is not in view due to a filter" do
+        filter_entry.text = regular_library.last.title
+        ui.filtered_model.refilter
+
+        ui.select_a_book regular_library.first
+
+        selected = ui.iconview.selected_items
+        expect(selected.count).to eq 0
+      end
+    end
+
+    context "when selecting in the list view" do
+      before do
+        # Make view model re-appear
+        ui.listview.unfreeze
+      end
+
+      it "selects book if it is in view" do
+        ui.select_a_book regular_library.first
+
+        selected, _model = ui.listview.selection.selected_rows
+        expect(selected.count).to eq 1
+      end
+
+      it "selects nothing if book is not in view due to a filter" do
+        filter_entry.text = regular_library.last.title
+        ui.filtered_model.refilter
+
+        ui.select_a_book regular_library.first
+
+        selected = ui.listview.selection.to_a
+        expect(selected).to be_empty
+      end
+
+      it "selects nothing if a new book is not in view due to a filter" do
+        filter_entry.text = regular_library.last.title
+        ui.filtered_model.refilter
+
+        book = an_artist_of_the_floating_world
+        ui.append_book book
+        ui.select_a_book book
+
+        selected = ui.listview.selection.to_a
+        expect(selected).to be_empty
+      end
+    end
+  end
 end
