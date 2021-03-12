@@ -71,5 +71,18 @@ module Alexandria
     def inspect
       "#<Alexandria::Book title: #{@title}>"
     end
+
+    def self.from_yaml(text)
+      node = YAML.parse_stream text
+      doc = node.children.first
+      mapping = doc.children.first
+      mapping.children.each_slice(2) do |_k, v|
+        v.tag = nil if v.tag == "!ruby/array:Alexandria:Library"
+      end
+      yaml = node.to_yaml
+
+      # TODO: Ensure book loading passes through Book#initialize
+      YAML.safe_load(yaml, permitted_classes: [Book, Time])
+    end
   end
 end

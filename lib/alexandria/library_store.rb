@@ -202,8 +202,7 @@ module Alexandria
         text.sub!(md[0], "loaned_since: #{new_yaml}\n")
       end
 
-      # TODO: Ensure book loading passes through Book#initialize
-      book = YAML.safe_load(text, permitted_classes: [Book, Time])
+      book = Book.from_yaml(text)
 
       unless book.isbn.instance_of? String
         # HACK

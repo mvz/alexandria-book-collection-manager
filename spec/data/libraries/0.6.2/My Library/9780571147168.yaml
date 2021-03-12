@@ -18,3 +18,5 @@ tags: []
 title: An Artist of the Floating World
 version: 0.6.2b1
 want: true
+library: !ruby/array:Alexandria:Library
+  internal: []
