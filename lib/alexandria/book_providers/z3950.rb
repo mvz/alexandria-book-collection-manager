@@ -274,7 +274,7 @@ module Alexandria
           title = isbn = publisher = publish_year = edition = nil
           authors = []
 
-          text.split(/\n/).each do |line|
+          text.split("\n").each do |line|
             if (md = /^Title:\s+(.*)$/.match(line))
               title = md[1].sub(/\.$/, "").squeeze(" ")
             elsif (md = /^(?:Added Person|ME-Personal) Name:\s+(.*),[^,]+$/.match(line))
