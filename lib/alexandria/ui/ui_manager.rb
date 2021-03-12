@@ -531,11 +531,8 @@ module Alexandria
         @actiongroup["Sidepane"].active = false
       end
 
-      # TODO: Figure out why this frequently selects the wrong book!
       def select_a_book(book)
-        log.debug { "select_a_book: listview" }
         select_book_in_view(book, @listview)
-        log.debug { "select_a_book: iconview" }
         select_book_in_view(book, @iconview)
       end
 
@@ -878,7 +875,6 @@ module Alexandria
       end
 
       def iter_from_ident(ident)
-        log.debug { ident.to_s }
         iter = @model.iter_first
         ok = true if iter
         while ok
@@ -890,7 +886,6 @@ module Alexandria
       end
 
       def iter_from_book(book)
-        log.debug { book.to_s }
         iter_from_ident(book.ident)
       end
 
@@ -1189,7 +1184,6 @@ module Alexandria
         return unless view.model
 
         path = view_path_to_model_path(view, path)
-        log.debug { "Path for #{book.ident} is #{path}" }
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all
         selection.select_path(path) if path
