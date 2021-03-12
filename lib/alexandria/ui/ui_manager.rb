@@ -1176,13 +1176,11 @@ module Alexandria
       private
 
       def select_book_in_view(book, view)
-        @filtered_model.refilter
-        iter = iter_from_book book
-        return unless iter
-
-        path = iter.path
         return unless view.model
 
+        @filtered_model.refilter
+        iter = iter_from_book(book) or return
+        path = iter.path
         path = view_path_to_model_path(view, path)
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all
