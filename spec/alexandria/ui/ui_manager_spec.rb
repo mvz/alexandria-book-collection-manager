@@ -111,6 +111,18 @@ describe Alexandria::UI::UIManager do
         selected = ui.listview.selection.to_a
         expect(selected).to be_empty
       end
+
+      it "selects nothing if a new book is not in view due to a filter" do
+        filter_entry.text = regular_library.last.title
+        ui.filtered_model.refilter
+
+        book = an_artist_of_the_floating_world
+        ui.append_book book
+        ui.select_a_book book
+
+        selected = ui.listview.selection.to_a
+        expect(selected).to be_empty
+      end
     end
   end
 end

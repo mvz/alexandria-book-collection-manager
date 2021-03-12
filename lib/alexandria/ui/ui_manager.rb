@@ -1192,7 +1192,7 @@ module Alexandria
         log.debug { "Path for #{book.ident} is #{path}" }
         selection = view.respond_to?(:selection) ? view.selection : view
         selection.unselect_all
-        selection.select_path(path)
+        selection.select_path(path) if path
       end
 
       def view_path_to_model_path(view, path)
