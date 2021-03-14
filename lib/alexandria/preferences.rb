@@ -236,11 +236,11 @@ module Alexandria
     # range of values used by Alexandria.
     def discriminate(value)
       case value
-      when "true" # bool
+      when "true"       # bool
         true
-      when "false"    # bool
+      when "false"      # bool
         false
-      when /^[0-9]+$/ # int
+      when /^-?[0-9]+$/ # int
         value.to_i
       when /^\[(.*)\]$/ # list (assume of type String)
         Regexp.last_match[1].split(",")
