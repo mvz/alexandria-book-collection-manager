@@ -30,25 +30,25 @@ end
 
 OmfGenerateTask.new(PROJECT) do |o|
   o.gnome_helpfiles_dir = "#{SHARE}/gnome/help"
-  o.generate_omf("data/omf/alexandria", "share/omf/alexandria/*.in")
+  o.generate_omf("share/omf/alexandria", "share/omf/alexandria/*.in")
 end
 
-SHARE_FILE_GLOBS = ["data/alexandria/**/*", "data/gnome/**/*.*",
-                    "data/locale/**/*.mo", "data/omf/**/*.omf",
-                    "data/sounds/**/*.ogg"].freeze # , 'data/menu/*']
+SHARE_FILE_GLOBS = ["share/alexandria/**/*", "share/gnome/**/*.*",
+                    "share/locale/**/*.mo", "share/omf/**/*.omf",
+                    "share/sounds/**/*.ogg"].freeze # , 'share/menu/*']
 
-ICON_FILE_GLOBS = ["data/app-icon/**/*.png",
-                   "data/app-icon/scalable/*.svg"].freeze
+ICON_FILE_GLOBS = ["share/app-icon/**/*.png",
+                   "share/app-icon/scalable/*.svg"].freeze
 
-PIXMAP_GLOBS = "data/app-icon/32x32/*.xpm"
+PIXMAP_GLOBS = "share/app-icon/32x32/*.xpm"
 
 def install_common(install_task)
   install_task.install_exe("bin", "bin/*", "#{PREFIX}/bin")
   install_task.install("lib", "lib/**/*.rb", install_task.rubylib)
 
-  install_task.install("data", SHARE_FILE_GLOBS, SHARE)
+  install_task.install("share", SHARE_FILE_GLOBS, SHARE)
   install_task.install_icons(ICON_FILE_GLOBS, "#{SHARE}/icons")
-  install_task.install("data/app-icon/32x32", PIXMAP_GLOBS, "#{SHARE}/pixmaps")
+  install_task.install("share/app-icon/32x32", PIXMAP_GLOBS, "#{SHARE}/pixmaps")
 
   install_task.install("", "schemas/alexandria.schemas", "#{SHARE}/gconf")
   install_task.install("", "alexandria.desktop", "#{SHARE}/applications")
@@ -202,7 +202,7 @@ Rake::PackageTask.new(PROJECT, Alexandria::DISPLAY_VERSION) do |p|
                           "Rakefile", "util/**/*",
                           "TODO.md", "alexandria.desktop",
                           "alexandria.desktop.in",
-                          "bin/**/*", "data/**/*", "misc/**/*",
+                          "bin/**/*", "share/**/*", "misc/**/*",
                           "doc/**/*", "lib/**/*", "po/**/*",
                           "schemas/**/*", "spec/**/*")
 end
