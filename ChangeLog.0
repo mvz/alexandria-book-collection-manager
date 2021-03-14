@@ -98,7 +98,7 @@
 	- test of provider MCU: added test that bugs [#2533] and [#2518]
 	  are fixed
 	- added test of SBN, LOC and BL, and grouped together tests of
-          providers depending on optional libraries
+	  providers depending on optional libraries
 
 	* z3950.rb:
 	- refactored
@@ -595,22 +595,22 @@
 
 2005-10-13  Laurent Sansonetti  <lrz@gnome.org>
 
-    * lib/alexandria/macui/Icons.rb,
-      lib/alexandria/macui/ImportController.rb,
-      lib/alexandria/macui/MainController.rb,
-      lib/alexandria/macui/TableView.rb,
-      lib/alexandria/macui/MainWindow.nib/info.nib,
-      lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
+	* lib/alexandria/macui/Icons.rb,
+	  lib/alexandria/macui/ImportController.rb,
+	  lib/alexandria/macui/MainController.rb,
+	  lib/alexandria/macui/TableView.rb,
+	  lib/alexandria/macui/MainWindow.nib/info.nib,
+	  lib/alexandria/macui/MainWindow.nib/keyedobjects.nib:
 
-    - Fixed the end of the import action ;
-    - Double click on a row in the libraries table view will edit ;
-    - Added ellipsis after action names in some popup menus ;
-    - Set the vertical scrollbar as autohide in the libraries table view ;
-    - Double click outside a row in the libraries table view will create a
-      new library ;
-    - Double click outside a row in the books table view or a cell in the
-      books matrix will open the add book sheet ;
-    - Some cleaning.
+	- Fixed the end of the import action ;
+	- Double click on a row in the libraries table view will edit ;
+	- Added ellipsis after action names in some popup menus ;
+	- Set the vertical scrollbar as autohide in the libraries table view ;
+	- Double click outside a row in the libraries table view will create a
+	  new library ;
+	- Double click outside a row in the books table view or a cell in the
+	  books matrix will open the add book sheet ;
+	- Some cleaning.
 
 2005-10-02  Laurent Sansonetti  <lrz@gnome.org>
 
@@ -642,7 +642,7 @@
 
 	- Removed all scanning stuff ;
 	- The libraries popup menu now display a "New Library" item that
-   	  automatically generates a library then adds the books in it ;
+	  automatically generates a library then adds the books in it ;
 	- Fixed the help error transcient window.
 
 	* lib/alexandria/library.rb:
@@ -3242,7 +3242,7 @@
 	Use the 'clicked' signal instead of 'pressed' for
 	Gtk::Button's.
 
-      	* data/alexandria/glade/preferences_dialog.glade,
+	* data/alexandria/glade/preferences_dialog.glade,
 	  lib/alexandria/ui/preferences_dialog.rb:
 
 	- Removed the network proxy tab ;
