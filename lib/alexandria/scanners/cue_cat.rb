@@ -81,7 +81,7 @@ module Alexandria
       def decode_field(encoded)
         seq = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+-"
 
-        chars   = encoded.split("")
+        chars   = encoded.chars
         values  = chars.map { |c| seq.index(c) }
 
         padding = pad(values)

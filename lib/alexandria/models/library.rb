@@ -79,7 +79,7 @@ module Alexandria
       normalized = entry.delete("- ").upcase
       return [] unless /\A[\dX]*\Z/.match?(normalized)
 
-      normalized.split("").map do |char|
+      normalized.chars.map do |char|
         char == "X" ? 10 : char.to_i
       end
     end
