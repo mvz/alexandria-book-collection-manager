@@ -19,7 +19,7 @@ module Alexandria
 
       def initialize(title:, parent:, flags:, buttons:)
         @dialog = Gtk::Dialog.new(title: title, parent: parent, flags: flags,
-                                 buttons: buttons)
+                                  buttons: buttons)
 
         @dialog.resizable = false
         @dialog.child.border_width = 12
