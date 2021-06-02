@@ -325,7 +325,7 @@ module Alexandria
 
       def on_results_button_press_event(_widget, event)
         # double left click
-        on_add if (event.event_type == :'2button_press') && (event.button == 1)
+        on_add if (event.event_type == :"2button_press") && (event.button == 1)
       end
 
       def add_single_book_by_isbn(library, is_new)
