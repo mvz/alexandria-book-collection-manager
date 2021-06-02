@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("gtk3", ["~> 3.4.3"])
   s.add_runtime_dependency("htmlentities", ["~> 4.3"])
   s.add_runtime_dependency("image_size", ["~> 2.0"])
-  s.add_runtime_dependency("marc", ["~> 1.0.0"])
+  s.add_runtime_dependency("marc", ">= 1.0", "< 1.2")
   s.add_runtime_dependency("nokogiri", ["~> 1.11"])
   s.add_runtime_dependency("psych", ">= 3.2", "< 3.4")
   s.add_runtime_dependency("zoom", ["~> 0.5.0"])
