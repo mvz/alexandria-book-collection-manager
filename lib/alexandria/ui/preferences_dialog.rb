@@ -235,7 +235,7 @@ module Alexandria
 
       def on_providers_button_press_event(_widget, event)
         # double left click
-        on_provider_setup if (event.event_type == :'2button_press') && (event.button == 1)
+        on_provider_setup if (event.event_type == :"2button_press") && (event.button == 1)
       end
 
       def on_close
