@@ -418,7 +418,7 @@ module Alexandria
                       library.length), library.name, library.length)
           else
             format(n_("Library '%s' selected, %d book, " \
-               "%d unrated",
+                      "%d unrated",
                       "Library '%s' selected, %d books, " \
                       "%d unrated",
                       library.length), library.name, library.length, n_unrated)
@@ -455,7 +455,7 @@ module Alexandria
           log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
           log.debug do
             "@library_listview: #{@library_listview.has_focus?} " \
-            "or @library_popup:#{@library_popup.has_focus?}"
+              "or @library_popup:#{@library_popup.has_focus?}"
           end
           log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
@@ -655,7 +655,7 @@ module Alexandria
 
                   log.debug do
                     "Trying to add #{book.title}, #{cover_uri}" \
-                    " in library ''#{library.name}'"
+                      " in library ''#{library.name}'"
                   end
                   library.save_cover(book, cover_uri) unless cover_uri.nil?
                   library << book
@@ -1069,7 +1069,7 @@ module Alexandria
         # added by Cathal Mc Ginley, 23 Oct 2007
         log.debug do
           "library_sort_order #{@notebook.page}: " \
-          "#{@iconview.model.inspect} #{@listview.model.inspect}"
+            "#{@iconview.model.inspect} #{@listview.model.inspect}"
         end
         result, sort_column, sort_order = current_view.model.sort_column_id
         if result

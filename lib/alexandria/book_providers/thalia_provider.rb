@@ -151,7 +151,7 @@ module Alexandria
           trace = ex.backtrace.join("\n> ")
           log.warn do
             "Failed parsing search results for Thalia " \
-            "#{ex.message} #{trace}"
+              "#{ex.message} #{trace}"
           end
           raise NoResultsError
         end

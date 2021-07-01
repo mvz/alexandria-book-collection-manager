@@ -15,7 +15,7 @@ module Alexandria
       def initialize(parent, library, book)
         super(parent,
               format(_("The book '%s' already exists in '%s'. Would you like " \
-                "to replace it?"), book.title, library.name),
+                       "to replace it?"), book.title, library.name),
               Gtk::Stock::DIALOG_QUESTION,
               [[_("_Skip"), Gtk::ResponseType::CANCEL],
                [_("_Replace"), Gtk::ResponseType::OK]],

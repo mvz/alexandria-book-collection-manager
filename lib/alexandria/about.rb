@@ -26,7 +26,7 @@ module Alexandria
   bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
   DESCRIPTION = _("A program to help you manage your book collection.")
   COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" \
-    "Copyright (C) 2007-2010,2014,2015 Alexandria Contributors"
+              "Copyright (C) 2007-2010,2014,2015 Alexandria Contributors"
   AUTHORS = [
     "Alexander McCormmach <alexander@tunicate.org>",
     "Aymeric Nys <aymeric@nnx.com>",

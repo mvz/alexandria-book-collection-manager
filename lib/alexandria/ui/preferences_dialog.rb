@@ -41,7 +41,7 @@ module Alexandria
           else
             log.warn do
               "no CheckButton for property #{pref_name} " \
-              "(probably conflicting versions of GUI and lib code)"
+                "(probably conflicting versions of GUI and lib code)"
             end
           end
         end
