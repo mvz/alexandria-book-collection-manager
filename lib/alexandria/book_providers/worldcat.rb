@@ -97,7 +97,7 @@ module Alexandria
           trace = ex.backtrace.join("\n> ")
           log.warn do
             "Failed parsing search results for WorldCat " \
-                    "#{ex.message} #{trace}"
+              "#{ex.message} #{trace}"
           end
         end
         book_search_results
@@ -215,7 +215,7 @@ module Alexandria
           trace = ex.backtrace.join("\n> ")
           log.warn do
             "Failed parsing search results for WorldCat " \
-                    "#{ex.message} #{trace}"
+              "#{ex.message} #{trace}"
           end
           raise NoResultsError
         end

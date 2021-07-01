@@ -27,7 +27,7 @@ module Alexandria
         else
           message = if books.length == 1
                       format(_("Are you sure you want to delete '%s' " \
-                        "from '%s'?"), books.first.title, library.name)
+                               "from '%s'?"), books.first.title, library.name)
                     else
                       _("Are you sure you want to delete the " \
                         "selected books from '%s'?") % library.name

@@ -93,7 +93,7 @@ module Alexandria
         @treeview_authors.model.each { |_m, _p, i| authors << i[0] }
         if authors.empty?
           raise AddError, _("At least one author must be " \
-                               "provided.")
+                            "provided.")
         end
         book = Book.new(title, authors, isbn, publisher,
                         publishing_year.zero? ? nil : publishing_year,

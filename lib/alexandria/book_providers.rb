@@ -97,7 +97,7 @@ module Alexandria
 
                     when SocketError
                       format(_("Couldn't reach the provider '%s': socket " \
-                        "error (%s)."), factory.name, ex.message)
+                               "error (%s)."), factory.name, ex.message)
 
                     when NoResultsError, ProviderSkippedError
                       _("No results were found.  Make sure your " \
