@@ -54,6 +54,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install non-ruby dependencies
       run: |
+        sudo apt-get update
         # Needed for gtk3 gem
         sudo apt-get install libgtk-3-dev
         # Needed for gstreamer gem
