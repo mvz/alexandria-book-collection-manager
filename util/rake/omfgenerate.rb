@@ -67,7 +67,7 @@ class OmfGenerateTask < Rake::TaskLib
     rule ".omf" => [".omf.in"] do |t|
       path = File.join(@gnome_helpfiles_dir, @projectname,
                        locale_for(t.name), "#{@projectname}.xml")
-      data = IO.read(t.source)
+      data = File.read(t.source)
       data.sub!(/PATH_TO_DOC_FILE/, path)
       puts "Generating #{t.name}..."
       File.open(t.name, "w") { |io| io.puts data }

@@ -251,7 +251,7 @@ module Alexandria
           entry.add_element("cover").text = final_cover(book)
           image = images.add_element("image")
           image.add_attribute("id", final_cover(book))
-          image_s = ImageSize.new(IO.read(cover(book)))
+          image_s = ImageSize.new(File.read(cover(book)))
           image.add_attribute("height", image_s.height.to_s)
           image.add_attribute("width", image_s.width.to_s)
           image.add_attribute("format", image_s.format)
@@ -298,7 +298,7 @@ module Alexandria
         EOS
 
         if File.exist?(cover(book))
-          image_s = ImageSize.new(IO.read(cover(book)))
+          image_s = ImageSize.new(File.read(cover(book)))
           xhtml << <<~EOS
             <img class="book_cover"
                  src="#{File.join('pixmaps', final_cover(book))}"

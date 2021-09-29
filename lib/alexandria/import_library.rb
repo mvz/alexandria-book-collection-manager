@@ -139,7 +139,7 @@ module Alexandria
     def self.import_as_csv_file(name, filename, on_iterate_cb, _on_error_cb)
       require "alexandria/import_library_csv"
       books_and_covers = []
-      line_count = IO.readlines(filename).reduce(0) { |count, _line| count + 1 }
+      line_count = File.readlines(filename).reduce(0) { |count, _line| count + 1 }
 
       import_count = 0
       max_import = line_count - 1
@@ -210,7 +210,7 @@ module Alexandria
     def self.import_as_isbn_list(name, filename, on_iterate_cb,
                                  on_error_cb)
       log.debug { "Starting import_as_isbn_list... " }
-      isbn_list = IO.readlines(filename).map do |line|
+      isbn_list = File.readlines(filename).map do |line|
         log.debug { "Trying line #{line}" }
         [line.chomp, canonicalise_isbn(line.chomp)] unless line == "\n"
       end
