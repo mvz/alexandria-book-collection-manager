@@ -123,7 +123,7 @@ file "lib/alexandria/default_preferences.rb" => ["Rakefile", SCHEMA_PATH] do |f|
   require "rexml/document"
   generated_lines = []
 
-  doc = REXML::Document.new(IO.read(SCHEMA_PATH))
+  doc = REXML::Document.new(File.read(SCHEMA_PATH))
   doc.elements.each("gconfschemafile/schemalist/schema") do |element|
     default = element.elements["default"].text
 
