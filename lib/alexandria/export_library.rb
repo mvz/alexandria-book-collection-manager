@@ -395,13 +395,13 @@ module Alexandria
       return "" if str.nil?
 
       my_str = str.dup
-      my_str.gsub!(/%/, '\\%')
-      my_str.gsub!(/~/, '\\textasciitilde')
-      my_str.gsub!(/&/, '\\\\&')
-      my_str.gsub!(/\#/, '\\\\#')
-      my_str.gsub!(/\{/, '\\{')
-      my_str.gsub!(/\}/, '\\}')
-      my_str.gsub!(/_/, '\\_')
+      my_str.gsub!(/%/, "\\%")
+      my_str.gsub!(/~/, "\\textasciitilde")
+      my_str.gsub!(/&/, "\\\\&")
+      my_str.gsub!(/\#/, "\\\\#")
+      my_str.gsub!(/\{/, "\\{")
+      my_str.gsub!(/\}/, "\\}")
+      my_str.gsub!(/_/, "\\_")
       my_str.gsub!(/\$/, "\\\$")
       my_str.gsub!(/"(.+)"/, "``\1''")
       my_str

@@ -193,9 +193,9 @@ class FileInstallTask < Rake::TaskLib
     pathglob += "/" if pathglob.end_with?("**")
     real_parts = pathglob.split("**/")
     real_parts.each do |part|
-      part.gsub!(".", '\\.')
-      part.gsub!("*", '[^\\/]*')
-      part.gsub!("?", '[^\\/]')
+      part.gsub!(".", "\\.")
+      part.gsub!("*", "[^\\/]*")
+      part.gsub!("?", "[^\\/]")
     end
     pattern = real_parts.join("([^\/]+\/)*")
     /(#{pattern})/
