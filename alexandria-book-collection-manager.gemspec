@@ -55,7 +55,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("zoom", ["~> 0.5.0"])
 
   s.add_development_dependency("gnome_app_driver", "~> 0.3.0")
-  s.add_development_dependency("minitest", ["~> 5.0"])
   s.add_development_dependency("rake", ["~> 13.0"])
   s.add_development_dependency("rspec", ["~> 3.0"])
   s.add_development_dependency("rubocop", "~> 1.22.1")
