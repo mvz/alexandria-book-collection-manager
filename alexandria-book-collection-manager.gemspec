@@ -55,12 +55,12 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("zoom", ["~> 0.5.0"])
 
   s.add_development_dependency("gnome_app_driver", "~> 0.3.0")
-  s.add_development_dependency("minitest", ["~> 5.0"])
   s.add_development_dependency("rake", ["~> 13.0"])
   s.add_development_dependency("rspec", ["~> 3.0"])
-  s.add_development_dependency("rubocop", "~> 1.22.0")
+  s.add_development_dependency("rubocop", "~> 1.22.1")
   s.add_development_dependency("rubocop-i18n", ["~> 3.0.0"])
   s.add_development_dependency("rubocop-performance", "~> 1.11.0")
+  s.add_development_dependency("rubocop-rake", "~> 0.6.0")
   s.add_development_dependency("rubocop-rspec", "~> 2.5.0")
   s.add_development_dependency("webmock", "~> 3.9")
 
