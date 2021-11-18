@@ -9,6 +9,8 @@ Gem::Specification.new do |s|
   s.summary = "GNOME application for managing collections of books"
   s.required_ruby_version = ">= 2.6.0"
 
+  s.metadata["rubygems_mfa_required"] = "true"
+
   s.authors = [
     "Alexander McCormmach",
     "Aymeric Nys",
