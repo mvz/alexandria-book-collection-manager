@@ -9,6 +9,8 @@ Gem::Specification.new do |s|
   s.summary = "GNOME application for managing collections of books"
   s.required_ruby_version = ">= 2.6.0"
 
+  s.metadata["rubygems_mfa_required"] = "true"
+
   s.authors = [
     "Alexander McCormmach",
     "Aymeric Nys",
@@ -57,7 +59,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("gnome_app_driver", "~> 0.3.0")
   s.add_development_dependency("rake", ["~> 13.0"])
   s.add_development_dependency("rspec", ["~> 3.0"])
-  s.add_development_dependency("rubocop", "~> 1.22.1")
+  s.add_development_dependency("rubocop", "~> 1.23.0")
   s.add_development_dependency("rubocop-i18n", ["~> 3.0.0"])
   s.add_development_dependency("rubocop-performance", "~> 1.12.0")
   s.add_development_dependency("rubocop-rake", "~> 0.6.0")
