@@ -124,11 +124,7 @@ module Alexandria
         resultset[0..9].each do |record|
           marc_txt = record.render(prefs["charset"], "UTF-8")
           log.debug { marc_txt }
-          if $DEBUG
-            File.open(",marc.txt", "wb") do |f| # DEBUG
-              f.write(marc_txt)
-            end
-          end
+          File.binwrite(",marc.txt", marc_txt) if $DEBUG
           book = nil
           begin
             mappings = Alexandria::PseudoMarcParser::USMARC_MAPPINGS
