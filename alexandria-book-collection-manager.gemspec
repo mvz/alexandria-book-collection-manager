@@ -61,7 +61,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rspec", ["~> 3.0"])
   s.add_development_dependency("rubocop", "~> 1.24.0")
   s.add_development_dependency("rubocop-i18n", ["~> 3.0.0"])
-  s.add_development_dependency("rubocop-performance", "~> 1.12.0")
+  s.add_development_dependency("rubocop-performance", "~> 1.13.0")
   s.add_development_dependency("rubocop-rake", "~> 0.6.0")
   s.add_development_dependency("rubocop-rspec", "~> 2.7.0")
   s.add_development_dependency("webmock", "~> 3.9")
