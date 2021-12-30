@@ -16,7 +16,7 @@ describe Alexandria::UI::UIManager do
   describe "#on_new" do
     it "works" do
       ui = described_class.new main_app
-      libraries = ui.instance_variable_get("@libraries")
+      libraries = ui.instance_variable_get(:@libraries)
       libraries_count = libraries.all_libraries.count
       ui.on_new
       expect(libraries.all_libraries.count).to eq libraries_count + 1
@@ -26,7 +26,7 @@ describe Alexandria::UI::UIManager do
   describe "#on_books_selection_changed" do
     let(:lib_version) { File.join(LIBDIR, "0.6.2") }
     let(:ui) { described_class.new main_app }
-    let(:libraries) { ui.instance_variable_get("@libraries") }
+    let(:libraries) { ui.instance_variable_get(:@libraries) }
     let(:regular_library) { libraries.all_regular_libraries.last }
 
     before do
@@ -52,8 +52,8 @@ describe Alexandria::UI::UIManager do
 
   describe "#select_a_book" do
     let(:ui) { described_class.new main_app }
-    let(:libraries) { ui.instance_variable_get("@libraries") }
-    let(:filter_entry) { ui.instance_variable_get("@filter_entry") }
+    let(:libraries) { ui.instance_variable_get(:@libraries) }
+    let(:filter_entry) { ui.instance_variable_get(:@filter_entry) }
     let(:regular_library) { libraries.all_regular_libraries.last }
 
     before do
