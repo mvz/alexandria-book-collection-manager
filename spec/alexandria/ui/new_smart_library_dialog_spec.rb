@@ -26,7 +26,7 @@ describe Alexandria::UI::NewSmartLibraryDialog do
       allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::OK)
 
       # Make sure entered rule is valid
-      rules_box = properties_dialog.instance_variable_get("@rules_box")
+      rules_box = properties_dialog.instance_variable_get(:@rules_box)
       entry = rules_box.children.first.children[2]
       entry.text = "foo"
 
