@@ -295,7 +295,9 @@ module Alexandria
     require "alexandria/book_providers/worldcat"
 
     # Z39.50 based providers
-    require "alexandria/book_providers/z3950"
+    require "alexandria/book_providers/loc_provider"
+    require "alexandria/book_providers/bl_provider"
+    require "alexandria/book_providers/sbn_provider"
 
     attr_reader :abstract_classes
 
