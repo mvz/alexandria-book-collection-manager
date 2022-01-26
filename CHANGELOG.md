@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.7.9 / 2022-02-04
+
+* Drop support for Ruby 2.5
+* Support up to Ruby 3.1
+* Fix crash when renaming a Library ([#112] by [mvz])
+* Remove broken book data providers: Siciliano, AdLibris, Proxis and Barnes and
+  Noble ([#115] by [mvz])
+* Remove Amazon provider ([#118] by [mvz])
+* Remove references to obsolete MCE (Spanish Ministry of Culture) provider from
+  documentation ([#119] by [mvz])
+* Use nokogiri instead of hpricot, which is no longer being maintained ([#120]
+  by [mvz])
+* Filter out Library objects when loading Book from yaml ([#133] by [mvz])
+* Fix selection update when added book does not match current filter ([#134] by
+  [mvz])
+* Recognize negative integers in GConf settings (#136] by [mvz])
+* Fix source for shared items to install ([#139] by [mvz])
+* Various dependency updates
+
 ## 0.7.8 / 2020-11-29
 
 * Fix ThaliaProvider
@@ -111,10 +130,20 @@
 
 <!-- contributors -->
 [jrmhaig]: https://github.com/jrmhaig
+[mvz]: https://github.com/mvz
 [piotrdrag]: https://github.com/piotrdrag
 [HappyFacade]: https://github.com/HappyFacade
 
 <!-- issues and pull requests -->
+[#139]: https://github.com/mvz/alexandria-book-collection-manager/pull/139
+[#136]: https://github.com/mvz/alexandria-book-collection-manager/pull/136
+[#134]: https://github.com/mvz/alexandria-book-collection-manager/pull/134
+[#133]: https://github.com/mvz/alexandria-book-collection-manager/pull/133
+[#120]: https://github.com/mvz/alexandria-book-collection-manager/pull/120
+[#119]: https://github.com/mvz/alexandria-book-collection-manager/pull/119
+[#118]: https://github.com/mvz/alexandria-book-collection-manager/pull/118
+[#115]: https://github.com/mvz/alexandria-book-collection-manager/pull/115
+[#112]: https://github.com/mvz/alexandria-book-collection-manager/pull/112
 [#88]: https://github.com/mvz/alexandria-book-collection-manager/pull/88
 [#83]: https://github.com/mvz/alexandria-book-collection-manager/pull/83
 [#64]: https://github.com/mvz/alexandria-book-collection-manager/pull/64
