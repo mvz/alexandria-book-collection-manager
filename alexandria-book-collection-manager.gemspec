@@ -2,16 +2,10 @@
 
 require_relative "lib/alexandria/version"
 
-Gem::Specification.new do |s|
-  s.name = "alexandria-book-collection-manager"
-  s.version = Alexandria::VERSION
-
-  s.summary = "GNOME application for managing collections of books"
-  s.required_ruby_version = ">= 2.6.0"
-
-  s.metadata["rubygems_mfa_required"] = "true"
-
-  s.authors = [
+Gem::Specification.new do |spec|
+  spec.name = "alexandria-book-collection-manager"
+  spec.version = Alexandria::VERSION
+  spec.authors = [
     "Alexander McCormmach",
     "Aymeric Nys",
     "Cathal Mc Ginley",
@@ -34,37 +28,42 @@ Gem::Specification.new do |s|
     "Timothy Malone",
     "Zachary P. Landau"
   ]
-  s.email = ["matijs@matijs.net"]
-  s.homepage = "http://www.github.com/mvz/alexandria-book-collection-manager"
+  spec.email = ["matijs@matijs.net"]
 
-  s.license = "GPL-2"
+  spec.summary = "GNOME application for managing collections of books"
 
-  s.files = `git ls-files -z`.split("\0") |
+  spec.homepage = "http://www.github.com/mvz/alexandria-book-collection-manager"
+  spec.license = "GPL-2.0+"
+
+  spec.required_ruby_version = ">= 2.6.0"
+
+  spec.metadata["rubygems_mfa_required"] = "true"
+
+  spec.files = `git ls-files -z`.split("\0") |
     ["lib/alexandria/default_preferences.rb"]
 
-  s.executables = ["alexandria"]
+  spec.executables = ["alexandria"]
 
-  s.rdoc_options = ["--main", "README.md"]
+  spec.require_paths = ["lib"]
+  spec.rdoc_options = ["--main", "README.md"]
 
-  s.add_runtime_dependency("gettext", ["~> 3.1"])
-  s.add_runtime_dependency("gstreamer", ["~> 3.5.0"])
-  s.add_runtime_dependency("gtk3", ["~> 3.5.0"])
-  s.add_runtime_dependency("htmlentities", ["~> 4.3"])
-  s.add_runtime_dependency("image_size", ["~> 3.0"])
-  s.add_runtime_dependency("marc", ">= 1.0", "< 1.2")
-  s.add_runtime_dependency("nokogiri", ["~> 1.11"])
-  s.add_runtime_dependency("psych", ">= 3.2", "< 4.1")
-  s.add_runtime_dependency("zoom", ["~> 0.5.0"])
+  spec.add_runtime_dependency("gettext", ["~> 3.1"])
+  spec.add_runtime_dependency("gstreamer", ["~> 3.5.0"])
+  spec.add_runtime_dependency("gtk3", ["~> 3.5.0"])
+  spec.add_runtime_dependency("htmlentities", ["~> 4.3"])
+  spec.add_runtime_dependency("image_size", ["~> 3.0"])
+  spec.add_runtime_dependency("marc", ">= 1.0", "< 1.2")
+  spec.add_runtime_dependency("nokogiri", ["~> 1.11"])
+  spec.add_runtime_dependency("psych", ">= 3.2", "< 4.1")
+  spec.add_runtime_dependency("zoom", ["~> 0.5.0"])
 
-  s.add_development_dependency("gnome_app_driver", "~> 0.3.0")
-  s.add_development_dependency("rake", ["~> 13.0"])
-  s.add_development_dependency("rspec", ["~> 3.0"])
-  s.add_development_dependency("rubocop", "~> 1.25")
-  s.add_development_dependency("rubocop-i18n", ["~> 3.0"])
-  s.add_development_dependency("rubocop-performance", "~> 1.13")
-  s.add_development_dependency("rubocop-rake", "~> 0.6.0")
-  s.add_development_dependency("rubocop-rspec", "~> 2.7")
-  s.add_development_dependency("webmock", "~> 3.9")
-
-  s.require_paths = ["lib"]
+  spec.add_development_dependency("gnome_app_driver", "~> 0.3.0")
+  spec.add_development_dependency("rake", ["~> 13.0"])
+  spec.add_development_dependency("rspec", ["~> 3.0"])
+  spec.add_development_dependency("rubocop", "~> 1.25")
+  spec.add_development_dependency("rubocop-i18n", ["~> 3.0"])
+  spec.add_development_dependency("rubocop-performance", "~> 1.13")
+  spec.add_development_dependency("rubocop-rake", "~> 0.6.0")
+  spec.add_development_dependency("rubocop-rspec", "~> 2.7")
+  spec.add_development_dependency("webmock", "~> 3.9")
 end
