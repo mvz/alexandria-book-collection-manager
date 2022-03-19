@@ -11,7 +11,7 @@ describe Alexandria::Preferences do
 
   describe "#get_variable" do
     it "returns nil fetching unknown setting" do
-      expect(instance.get_variable("does_not_exist")).to be nil
+      expect(instance.get_variable("does_not_exist")).to be_nil
     end
 
     it "allows fetching by string" do
