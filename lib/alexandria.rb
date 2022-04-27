@@ -21,10 +21,11 @@ require "alexandria/logging"
 require "alexandria/about"
 
 module Alexandria
-  def self.set_proxy
-    if !ENV["http_proxy"].nil? && URI.parse(ENV["http_proxy"]).userinfo.nil?
-      ENV["http_proxy"] = nil
-    end
+  def self.clear_invalid_proxy
+    current_proxy = ENV.fetch("http_proxy", nil)
+    return if current_proxy.nil?
+
+    ENV["http_proxy"] = nil if URI.parse(current_proxy).userinfo.nil?
   end
 
   def self.set_log_level
@@ -33,7 +34,7 @@ module Alexandria
   end
 
   def self.main
-    set_proxy
+    clear_invalid_proxy
     set_log_level
     Alexandria::UI.main
   end

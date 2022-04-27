@@ -15,12 +15,12 @@ require "omfgenerate"
 
 require_relative "lib/alexandria/version"
 
-stage_dir = ENV["DESTDIR"] || "tmp"
-prefix_dir = ENV["PREFIX"] || "/usr"
+stage_dir = ENV.fetch("DESTDIR", "tmp")
+prefix_dir = ENV.fetch("PREFIX", "/usr")
 
 PROJECT = "alexandria"
 PREFIX = prefix_dir
-share_dir = ENV["SHARE"] || "#{PREFIX}/share"
+share_dir = ENV.fetch("SHARE", "#{PREFIX}/share")
 SHARE = share_dir
 
 GettextGenerateTask.new(PROJECT) do |g|

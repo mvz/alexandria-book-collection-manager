@@ -39,7 +39,7 @@ module Alexandria
         File.join(Alexandria::Config::DATA_DIR, "web-themes"),
 
         # User dir
-        File.join(ENV["HOME"], ".alexandria", ".web-themes")
+        File.join(ENV.fetch("HOME"), ".alexandria", ".web-themes")
       ]
       themes_dir.map { |x| load(x) }.flatten
     end
