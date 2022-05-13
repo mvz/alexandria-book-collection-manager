@@ -151,7 +151,7 @@ module Alexandria
 
       def want_toggled; end
 
-      @@latest_filechooser_directory = ENV.fetch("HOME")
+      @@latest_filechooser_directory = Dir.home
       def on_change_cover
         dialog = Gtk::FileChooserDialog.new(title: _("Select a cover image"),
                                             parent: @book_properties_dialog,
