@@ -609,8 +609,8 @@ module Alexandria
 
       def handle_ruined_books
         new_message = _(
-          "The data files for the following books are malformed or empty. Do you wish to" \
-          " attempt to download new information for them from the online book providers?\n")
+          "The data files for the following books are malformed or empty. Do you wish to " \
+          "attempt to download new information for them from the online book providers?\n")
 
         @libraries.ruined_books.each do |bi|
           new_message += "\n#{bi[1] || bi[1].inspect}"
@@ -654,8 +654,8 @@ module Alexandria
                   end
 
                   log.debug do
-                    "Trying to add #{book.title}, #{cover_uri}" \
-                      " in library ''#{library.name}'"
+                    "Trying to add #{book.title}, #{cover_uri} " \
+                      "in library ''#{library.name}'"
                   end
                   library.save_cover(book, cover_uri) unless cover_uri.nil?
                   library << book

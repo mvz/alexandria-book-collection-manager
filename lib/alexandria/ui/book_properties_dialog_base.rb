@@ -177,8 +177,8 @@ module Alexandria
               FileUtils.cp(dialog.filename, "#{@cover_file}.orig")
               new_width = cover.width / (cover.height / COVER_ABSOLUTE_MAXHEIGHT.to_f)
               log.info do
-                "Scaling large cover image to" \
-                  " #{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
+                "Scaling large cover image to " \
+                  "#{new_width.to_i} x #{COVER_ABSOLUTE_MAXHEIGHT}"
               end
               cover = cover.scale(new_width.to_i, COVER_ABSOLUTE_MAXHEIGHT)
               cover.save(@cover_file, "jpeg")
