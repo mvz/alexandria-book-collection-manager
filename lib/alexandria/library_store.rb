@@ -43,7 +43,7 @@ module Alexandria
       test = [0, nil]
       ruined_books = []
       library = Library.new(name, self)
-      FileUtils.mkdir_p(library.path) unless File.exist?(library.path)
+      FileUtils.mkdir_p(library.path)
       Dir.chdir(library.path) do
         Dir["*" + Library::EXT[:book]].sort.each do |filename|
           test[1] = filename if (test[0]).zero?

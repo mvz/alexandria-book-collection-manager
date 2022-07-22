@@ -379,7 +379,7 @@ module Alexandria
     end
 
     def copy_covers(somewhere)
-      FileUtils.rm_rf(somewhere) if File.exist?(somewhere)
+      FileUtils.rm_rf(somewhere)
       FileUtils.mkdir(somewhere)
       each do |book|
         next unless File.exist?(cover(book))

@@ -72,7 +72,7 @@ module Alexandria
       return nil unless system("unzip -qqt \"#{filename}\"")
 
       tmpdir = File.join(Dir.tmpdir, "tellico_export")
-      FileUtils.rm_rf(tmpdir) if File.exist?(tmpdir)
+      FileUtils.rm_rf(tmpdir)
       Dir.mkdir(tmpdir)
       Dir.chdir(tmpdir) do
         system("unzip -qq \"#{filename}\"")
