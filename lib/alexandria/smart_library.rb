@@ -148,7 +148,7 @@ module Alexandria
       if book
         @cache[book].save(book)
       else
-        FileUtils.mkdir_p(base_dir) unless File.exist? base_dir
+        FileUtils.mkdir_p(base_dir)
         File.open(yaml, "w") { |io| io.puts to_hash.to_yaml }
       end
     end
@@ -162,7 +162,7 @@ module Alexandria
     end
 
     def copy_covers(somewhere)
-      FileUtils.rm_rf(somewhere) if File.exist?(somewhere)
+      FileUtils.rm_rf(somewhere)
       FileUtils.mkdir(somewhere)
       each do |book|
         library = @cache[book]

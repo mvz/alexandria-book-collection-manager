@@ -54,7 +54,7 @@ class GettextGenerateTask < Rake::TaskLib
     # create MO files
     rule(/\.mo$/ => [->(dest) { source_file(dest) }]) do |t|
       dest_dir = File.dirname(t.name)
-      FileUtils.makedirs(dest_dir) unless FileTest.exists?(dest_dir)
+      FileUtils.makedirs(dest_dir)
       puts "Generating #{t.name}"
       result = system("msgfmt #{t.source} -o #{t.name}")
       raise "msgfmt failed for #{t.source}" unless result

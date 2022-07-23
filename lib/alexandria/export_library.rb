@@ -73,7 +73,7 @@ module Alexandria
     end
 
     def export_as_html(filename, theme)
-      FileUtils.mkdir(filename) unless File.exist?(filename)
+      FileUtils.mkdir_p(filename)
       Dir.chdir(filename) do
         copy_covers("pixmaps")
         FileUtils.cp_r(theme.pixmaps_directory, "pixmaps") if theme.has_pixmaps?
@@ -91,7 +91,7 @@ module Alexandria
     end
 
     def export_as_ipod_notes(filename, _theme)
-      FileUtils.mkdir(filename) unless File.exist?(filename)
+      FileUtils.mkdir_p(filename)
       tempdir = Dir.getwd
       Dir.chdir(filename)
       copy_covers("pixmaps")
@@ -211,8 +211,8 @@ module Alexandria
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
       doc << REXML::DocType.new("tellico",
-                                'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN"' \
-                                ' "http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
+                                'PUBLIC "-//Robby Stephenson/DTD Tellico V7.0//EN" ' \
+                                '"http://periapsis.org/tellico/dtd/v7/tellico.dtd"')
       tellico = doc.add_element("tellico")
       tellico.add_attribute("syntaxVersion", "7")
       tellico.add_namespace("http://periapsis.org/tellico/")

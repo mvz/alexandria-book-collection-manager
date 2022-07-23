@@ -75,7 +75,7 @@ describe Alexandria::Library do
     let(:my_library) { loader.load_library("Empty") }
 
     before do
-      FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
+      FileUtils.mkdir_p(TESTDIR)
     end
 
     it "disallows multiple deletion of the same copy of a book" do
@@ -236,7 +236,7 @@ describe Alexandria::Library do
     let(:my_library) { loader.load_library("Empty") }
 
     before do
-      FileUtils.mkdir(TESTDIR) unless File.exist? TESTDIR
+      FileUtils.mkdir_p(TESTDIR)
     end
 
     it "changes the library's name" do

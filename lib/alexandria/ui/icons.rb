@@ -35,8 +35,8 @@ module Alexandria
           return GdkPixbuf::Pixbuf.new(file: filename) if File.exist?(filename)
         rescue GdkPixbuf::PixbufError
           log.error do
-            "Failed to load GdkPixbuf::Pixbuf," \
-              " please ensure that #{filename} is a valid image file"
+            "Failed to load GdkPixbuf::Pixbuf, " \
+              "please ensure that #{filename} is a valid image file"
           end
         end
         BOOK_ICON

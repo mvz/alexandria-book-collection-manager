@@ -24,7 +24,7 @@ RSpec.describe Alexandria::ExportLibrary do
   end
 
   after do
-    FileUtils.rm_rf(outfile) if File.exist? outfile
+    FileUtils.rm_rf(outfile)
   end
 
   describe "#export_as_csv_list" do
