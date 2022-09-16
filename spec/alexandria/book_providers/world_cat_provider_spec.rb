@@ -139,22 +139,34 @@ RSpec.describe Alexandria::BookProviders::WorldCatProvider do
                  "sky-catalogue-20000-ed-by-alan-hirshfeld-and-roger-w-sinnott" \
                  "/oclc/476534140&referer=brief_results")
       .to_return(status: 200, body: +sky_catalog_details, headers: {})
-    assert_correct_search_result(described_class, "9780521247108")
+    expect(described_class).to have_correct_search_result_for "9780521247108"
   end
 
   it "works with vernacular" do
     stub_request(:get, "https://www.worldcat.org/search?q=isbn:9785941454136&qt=advanced")
       .to_return(status: 200, body: +florence_ru_details, headers: {})
-    assert_correct_search_result(described_class, "9785941454136")
+    expect(described_class).to have_correct_search_result_for "9785941454136"
   end
 
-  it "works with multiple authors" do
-    stub_request(:get, "https://www.worldcat.org/search?q=isbn:9785941454136&qt=advanced")
-      .to_return(status: 200, body: +florence_ru_details, headers: {})
-    results = assert_correct_search_result(described_class,
-                                           "9785941454136")
-    this_book = results.first
-    expect(this_book.authors).to be_instance_of(Array), "Not an array!"
-    expect(this_book.authors.length).to eq(2), "Wrong number of authors for this book!"
+  context "when book has multiple authors" do
+    let(:search_result) do
+      described_class.instance.search("9785941454136",
+                                      Alexandria::BookProviders::SEARCH_BY_ISBN)
+    rescue SocketError
+      skip "Service is offline"
+    end
+
+    before do
+      stub_request(:get, "https://www.worldcat.org/search?q=isbn:9785941454136&qt=advanced")
+        .to_return(status: 200, body: +florence_ru_details, headers: {})
+    end
+
+    it "returns all authors" do
+      this_book, = search_result
+      aggregate_failures do
+        expect(this_book.authors).to be_instance_of(Array), "Not an array!"
+        expect(this_book.authors.length).to eq(2), "Wrong number of authors for this book!"
+      end
+    end
   end
 end
