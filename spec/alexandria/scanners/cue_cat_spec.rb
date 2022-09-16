@@ -27,10 +27,17 @@ describe Alexandria::Scanners::CueCat do
     expect(cuecat.name).to match(/CueCat/i)
   end
 
-  it "detects a complete scan only" do
-    partials.each { |scan| expect(cuecat.match?(scan)).not_to be_truthy }
-    expect(cuecat.match?(scans[:isbn])).to be_truthy
-    expect(cuecat.match?(scans[:ib5])).to be_truthy
+  it "refuses to detect incomplete scans" do
+    aggregate_failures do
+      partials.each { |scan| expect(cuecat.match?(scan)).not_to be_truthy }
+    end
+  end
+
+  it "detects complete scans" do
+    aggregate_failures do
+      expect(cuecat.match?(scans[:isbn])).to be_truthy
+      expect(cuecat.match?(scans[:ib5])).to be_truthy
+    end
   end
 
   it "decodes ISBN barcodes" do

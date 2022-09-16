@@ -16,8 +16,10 @@ RSpec.describe Alexandria::SmartLibrary do
     it "normalizes the encoding" do
       bad_name = (+"Prêts").force_encoding("ascii")
       lib = described_class.new(bad_name, [], :all)
-      expect(lib.name.encoding.name).to eq "UTF-8"
-      expect(bad_name.encoding.name).to eq "US-ASCII"
+      aggregate_failures do
+        expect(lib.name.encoding.name).to eq "UTF-8"
+        expect(bad_name.encoding.name).to eq "US-ASCII"
+      end
     end
   end
 

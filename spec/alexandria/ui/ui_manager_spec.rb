@@ -41,12 +41,14 @@ describe Alexandria::UI::UIManager do
       regular_library.each { |book| ui.append_book book }
       # This makes the iconview model re-appear
       ui.iconview.unfreeze
-      expect(ui.model.iter_n_children).to eq regular_library.count
 
       # This triggers the #on_books_selection_changed callback
       ui.select_a_book regular_library.first
 
-      expect(ui.iconview.selected_items).not_to be_empty
+      aggregate_failures do
+        expect(ui.model.iter_n_children).to eq regular_library.count
+        expect(ui.iconview.selected_items).not_to be_empty
+      end
     end
   end
 

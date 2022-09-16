@@ -12,8 +12,10 @@ describe Alexandria::Library do
   describe "::EXT" do
     it "has symbolic references to file extensions" do
       extensions = Alexandria::Library::EXT
-      expect(extensions[:book]).not_to be_nil
-      expect(extensions[:cover]).not_to be_nil
+      aggregate_failures do
+        expect(extensions[:book]).not_to be_nil
+        expect(extensions[:cover]).not_to be_nil
+      end
     end
   end
 
@@ -27,23 +29,26 @@ describe Alexandria::Library do
 
   describe "#valid_ean?" do
     it "returns a true value for valid EANs" do
-      expect(described_class.valid_ean?("9780345431929")).to be_truthy
-      expect(described_class.valid_ean?("978034543192912345")).to be_truthy
+      aggregate_failures do
+        expect(described_class.valid_ean?("9780345431929")).to be_truthy
+        expect(described_class.valid_ean?("978034543192912345")).to be_truthy
 
-      # Regression test: this EAN has a checksum of 10, which should be
-      # treated like a checksum of 0.
-      expect(described_class.valid_ean?("9784047041790")).to be_truthy
+        # Regression test: this EAN has a checksum of 10, which should be
+        # treated like a checksum of 0.
+        expect(described_class.valid_ean?("9784047041790")).to be_truthy
+      end
     end
 
     it "returns a false value for invalid EANs" do
-      expect(described_class.valid_ean?("780345431929")).to be_falsey
-      expect(described_class.valid_ean?("97803454319290")).to be_falsey
-      expect(described_class.valid_ean?("97803454319291234")).to be_falsey
-      expect(described_class.valid_ean?("9780345431929123456")).to be_falsey
-      expect(described_class.valid_ean?("9780345431928")).to be_falsey
-      expect(described_class.valid_ean?("9780345431929A")).to be_falsey
+      invalid_eans = ["780345431929", "97803454319290", "97803454319291234",
+                      "9780345431929123456", "9780345431928", "9780345431929A",
+                      "9784047041791"]
 
-      expect(described_class.valid_ean?("9784047041791")).to be_falsey
+      aggregate_failures do
+        invalid_eans.each do |ean|
+          expect(described_class.valid_ean?(ean)).to be_falsey
+        end
+      end
     end
   end
 
@@ -53,21 +58,25 @@ describe Alexandria::Library do
     end
 
     it "returns a false value for invalid UPCs" do
-      expect(described_class.valid_upc?("978034543193123567")).to be_falsey
-      expect(described_class.valid_upc?("9780345431931235")).to be_falsey
+      aggregate_failures do
+        expect(described_class.valid_upc?("978034543193123567")).to be_falsey
+        expect(described_class.valid_upc?("9780345431931235")).to be_falsey
 
-      expect(described_class.valid_upc?("97803454319412356")).to be_falsey
-      expect(described_class.valid_upc?("97803454319212356")).to be_falsey
+        expect(described_class.valid_upc?("97803454319412356")).to be_falsey
+        expect(described_class.valid_upc?("97803454319212356")).to be_falsey
+      end
     end
   end
 
   describe "#canonicalise_isbn" do
     it "returns the correct value for several examples" do
-      expect(described_class.canonicalise_isbn("014143984X")).to eq "014143984X"
-      expect(described_class.canonicalise_isbn("0-345-43192-8")).to eq "0345431928"
-      expect(described_class.canonicalise_isbn("3522105907")).to eq "3522105907"
-      # EAN number
-      expect(described_class.canonicalise_isbn("9780345431929")).to eq "0345431928"
+      aggregate_failures do
+        expect(described_class.canonicalise_isbn("014143984X")).to eq "014143984X"
+        expect(described_class.canonicalise_isbn("0-345-43192-8")).to eq "0345431928"
+        expect(described_class.canonicalise_isbn("3522105907")).to eq "3522105907"
+        # EAN number
+        expect(described_class.canonicalise_isbn("9780345431929")).to eq "0345431928"
+      end
     end
   end
 
@@ -136,21 +145,27 @@ describe Alexandria::Library do
     end
 
     it "can be loaded" do
-      expect(libs.size).to eq(1)
-      expect(my_library.size).to eq(3)
+      aggregate_failures do
+        expect(libs.size).to eq(1)
+        expect(my_library.size).to eq(3)
+      end
     end
 
-    it "imports cleanly from version 0.6.1 data format" do
-      # Malory
+    it "imports Malory book cleanly from version 0.6.1 data format" do
       malory_book = my_library.find { |b| b.isbn == "9780192812179" }
-      expect(malory_book.publisher).to eq("Oxford University Press")
-      expect(malory_book.authors.include?("Vinaver")).to be_truthy
-      expect(malory_book.version).to eq(Alexandria::DATA_VERSION)
+      aggregate_failures do
+        expect(malory_book.publisher).to eq("Oxford University Press")
+        expect(malory_book.authors.include?("Vinaver")).to be_truthy
+        expect(malory_book.version).to eq(Alexandria::DATA_VERSION)
+      end
+    end
 
-      # Guide to LaTeX
+    it "imports Guide to LaTeX cleanly from version 0.6.1 data format" do
       latex_book = my_library.find { |b| b.title.include? "Latex" }
-      expect(latex_book.isbn).to eq("9780201398250")
-      expect(latex_book.publisher).to eq("Addison Wesley")
+      aggregate_failures do
+        expect(latex_book.isbn).to eq("9780201398250")
+        expect(latex_book.publisher).to eq("Addison Wesley")
+      end
     end
   end
 
@@ -168,16 +183,20 @@ describe Alexandria::Library do
     end
 
     it "can be loaded" do
-      expect(libs.size).to eq(1)
-      expect(my_library.size).to eq(2)
+      aggregate_failures do
+        expect(libs.size).to eq(1)
+        expect(my_library.size).to eq(2)
+      end
     end
 
     it "loads a book with ISBN" do
       # Guide to LaTeX
       latex_book = my_library.find { |b| b.title.include? "Latex" }
-      expect(latex_book.isbn).to eq("9780201398250")
-      expect(latex_book.publisher).to eq("Addison Wesley")
-      expect(latex_book.version).to eq(Alexandria::DATA_VERSION)
+      aggregate_failures do
+        expect(latex_book.isbn).to eq("9780201398250")
+        expect(latex_book.publisher).to eq("Addison Wesley")
+        expect(latex_book.version).to eq(Alexandria::DATA_VERSION)
+      end
     end
 
     it "loads a book without ISBN" do
@@ -189,13 +208,8 @@ describe Alexandria::Library do
     it "saves loaded books properly" do
       my_library.each { |book| my_library.save(book, true) }
       my_library_reloaded = loader.load_all_libraries[0]
-      expect(my_library_reloaded.size).to eq(2)
 
-      latex_book = my_library_reloaded.find { |b| b.title.include? "Latex" }
-      expect(latex_book.publisher).to eq("Addison Wesley")
-
-      lex_and_yacc_book = my_library_reloaded.find { |b| b.title.include? "Lex" }
-      expect(lex_and_yacc_book.publisher).to eq("O'Reilley")
+      expect(my_library_reloaded.map(&:publisher)).to eq ["O'Reilley", "Addison Wesley"]
     end
   end
 

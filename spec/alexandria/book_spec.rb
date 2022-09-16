@@ -28,10 +28,12 @@ describe Alexandria::Book do
   it "establishes equality only with books with the same identity" do
     book = an_artist_of_the_floating_world
     same_book = an_artist_of_the_floating_world
-    expect(same_book).to eq book
     different_book = an_artist_of_the_floating_world
     different_book.isbn = "9780571147999"
-    expect(different_book).not_to eq book
+    aggregate_failures do
+      expect(same_book).to eq book
+      expect(different_book).not_to eq book
+    end
   end
 
   describe "#rating" do
