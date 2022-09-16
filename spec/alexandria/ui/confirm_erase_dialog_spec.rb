@@ -9,6 +9,6 @@ require_relative "../../spec_helper"
 describe Alexandria::UI::ConfirmEraseDialog do
   it "works" do
     parent = Gtk::Window.new :toplevel
-    described_class.new parent, "foo-file"
+    expect { described_class.new parent, "foo-file" }.not_to raise_error
   end
 end

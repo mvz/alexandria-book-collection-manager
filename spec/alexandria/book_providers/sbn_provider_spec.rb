@@ -8,6 +8,6 @@ require "spec_helper"
 
 describe Alexandria::BookProviders::SBNProvider do
   it "works" do
-    assert_correct_search_result(described_class, "9788835926436")
+    expect(described_class).to have_correct_search_result_for "9788835926436"
   end
 end

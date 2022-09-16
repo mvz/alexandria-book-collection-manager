@@ -10,7 +10,7 @@ describe Alexandria::UI::NewProviderDialog do
   let(:parent) { Gtk::Window.new :toplevel }
 
   it "can be instantiated" do
-    described_class.new parent
+    expect { described_class.new parent }.not_to raise_error
   end
 
   describe "#acquire" do
@@ -19,12 +19,12 @@ describe Alexandria::UI::NewProviderDialog do
 
     it "works when response is cancel" do
       allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      provider_dialog.acquire
+      expect { provider_dialog.acquire }.not_to raise_error
     end
 
     it "works when response is accept" do
       allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::ACCEPT)
-      provider_dialog.acquire
+      expect { provider_dialog.acquire }.not_to raise_error
     end
   end
 end

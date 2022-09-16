@@ -114,6 +114,6 @@ RSpec.describe Alexandria::BookProviders::ThaliaProvider do
     stub_request(:get, "https://www.thalia.de/shop/home/artikeldetails/ID134292338.html")
       .to_return(status: 200, body: normal_people_details, headers: {})
 
-    assert_correct_search_result(described_class, "9780571334650")
+    expect(described_class).to have_correct_search_result_for "9780571334650"
   end
 end

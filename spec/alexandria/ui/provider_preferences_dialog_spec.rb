@@ -19,7 +19,7 @@ describe Alexandria::UI::ProviderPreferencesDialog do
   end
 
   it "can be instantiated" do
-    described_class.new parent, provider
+    expect { described_class.new parent, provider }.not_to raise_error
   end
 
   describe "#acquire" do
@@ -28,7 +28,7 @@ describe Alexandria::UI::ProviderPreferencesDialog do
       gtk_dialog = preferences_dialog.dialog
       allow(gtk_dialog).to receive(:run)
 
-      preferences_dialog.acquire
+      expect { preferences_dialog.acquire }.not_to raise_error
     end
   end
 end

@@ -11,6 +11,6 @@ describe Alexandria::UI::ReallyDeleteDialog do
     library = instance_double(Alexandria::Library,
                               name: "Bar Library", empty?: false, size: 12)
     parent = Gtk::Window.new :toplevel
-    described_class.new parent, library
+    expect { described_class.new parent, library }.not_to raise_error
   end
 end

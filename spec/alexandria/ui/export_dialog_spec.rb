@@ -12,7 +12,7 @@ describe Alexandria::UI::ExportDialog do
   let(:sort_order) { Alexandria::LibrarySortOrder::Unsorted.new }
 
   it "works" do
-    described_class.new parent, library, sort_order
+    expect { described_class.new parent, library, sort_order }.not_to raise_error
   end
 
   describe "#perform" do
@@ -21,14 +21,14 @@ describe Alexandria::UI::ExportDialog do
 
     it "works when response is cancel" do
       allow(chooser).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      export_dialog.perform
+      expect { export_dialog.perform }.not_to raise_error
     end
 
     it "works when response is OK" do
       dir = Dir.mktmpdir
       allow(chooser).to receive(:run).and_return(Gtk::ResponseType::OK)
       allow(chooser).to receive(:filename).and_return File.join(dir, "export")
-      export_dialog.perform
+      expect { export_dialog.perform }.not_to raise_error
     ensure
       FileUtils.remove_entry dir
     end

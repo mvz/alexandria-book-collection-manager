@@ -14,7 +14,7 @@ describe Alexandria::UI::NewBookDialogManual do
   end
 
   it "works" do
-    described_class.new parent, library
+    expect { described_class.new parent, library }.not_to raise_error
   end
 
   describe "#on_change_cover" do
@@ -31,21 +31,21 @@ describe Alexandria::UI::NewBookDialogManual do
       allow(filechooser)
         .to receive(:run).and_return(Gtk::ResponseType::ACCEPT)
 
-      dialog.on_change_cover
+      expect { dialog.on_change_cover }.not_to raise_error
     end
 
     it "works when response is reject" do
       allow(filechooser)
         .to receive(:run).and_return(Gtk::ResponseType::REJECT)
 
-      dialog.on_change_cover
+      expect { dialog.on_change_cover }.not_to raise_error
     end
 
     it "works when response is cancel" do
       allow(filechooser)
         .to receive(:run).and_return(Gtk::ResponseType::CANCEL)
 
-      dialog.on_change_cover
+      expect { dialog.on_change_cover }.not_to raise_error
     end
   end
 end

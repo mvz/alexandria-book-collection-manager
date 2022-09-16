@@ -10,12 +10,12 @@ describe Alexandria::UI::ImportDialog do
   let(:parent) { Gtk::Window.new :toplevel }
 
   it "can be instantiated" do
-    described_class.new parent
+    expect { described_class.new parent }.not_to raise_error
   end
 
   it "handles a selection change" do
     importdialog = described_class.new parent
-    importdialog.dialog.signal_emit "selection_changed"
+    expect { importdialog.dialog.signal_emit "selection_changed" }.not_to raise_error
   end
 
   describe "#acquire" do
@@ -32,7 +32,7 @@ describe Alexandria::UI::ImportDialog do
 
     it "works when response is cancel" do
       allow(chooser).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      import_dialog.acquire { nil }
+      expect { import_dialog.acquire { nil } }.not_to raise_error
     end
 
     it "works when response is OK" do

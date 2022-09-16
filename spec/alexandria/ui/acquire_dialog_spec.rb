@@ -9,6 +9,6 @@ require_relative "../../spec_helper"
 describe Alexandria::UI::AcquireDialog do
   it "works" do
     parent = Gtk::Window.new :toplevel
-    described_class.new parent
+    expect { described_class.new parent }.not_to raise_error
   end
 end

@@ -16,8 +16,10 @@ RSpec.describe Alexandria::SmartLibrary do
     it "normalizes the encoding" do
       bad_name = (+"Prêts").force_encoding("ascii")
       lib = described_class.new(bad_name, [], :all)
-      expect(lib.name.encoding.name).to eq "UTF-8"
-      expect(bad_name.encoding.name).to eq "US-ASCII"
+      aggregate_failures do
+        expect(lib.name.encoding.name).to eq "UTF-8"
+        expect(bad_name.encoding.name).to eq "US-ASCII"
+      end
     end
   end
 
@@ -25,15 +27,15 @@ RSpec.describe Alexandria::SmartLibrary do
     let(:lib) { described_class.new("Hello", [], :all) }
 
     it "works when given no parameters" do
-      lib.update
+      expect { lib.update }.not_to raise_error
     end
 
     it "works when given a LibraryCollection" do
-      lib.update Alexandria::LibraryCollection.instance
+      expect { lib.update Alexandria::LibraryCollection.instance }.not_to raise_error
     end
 
     it "works when given a Library" do
-      lib.update Alexandria::Library.new("Hi")
+      expect { lib.update Alexandria::Library.new("Hi") }.not_to raise_error
     end
   end
 end

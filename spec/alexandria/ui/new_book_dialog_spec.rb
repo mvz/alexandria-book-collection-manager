@@ -11,12 +11,12 @@ describe Alexandria::UI::NewBookDialog do
   let(:model) { Gtk::ListStore.new(String, String, GdkPixbuf::Pixbuf) }
 
   it "works" do
-    described_class.new parent
+    expect { described_class.new parent }.not_to raise_error
   end
 
   it "can copy search results into result treeview" do
     results = [[an_artist_of_the_floating_world, "cover-url"]]
     dialog = described_class.new parent
-    dialog.copy_results_to_treeview_model results, model
+    expect { dialog.copy_results_to_treeview_model results, model }.not_to raise_error
   end
 end

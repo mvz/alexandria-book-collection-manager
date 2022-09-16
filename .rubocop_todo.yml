@@ -76,9 +76,6 @@ RSpec/FilePath:
     - 'spec/alexandria/ui/iconview_spec.rb'
     - 'spec/alexandria/ui/sound_spec.rb'
 
-RSpec/MultipleExpectations:
-  Max: 7
-
 # Cop supports --auto-correct.
 # Configuration parameters: Strict, EnforcedStyle, AllowedExplicitMatchers.
 # SupportedStyles: inflected, explicit

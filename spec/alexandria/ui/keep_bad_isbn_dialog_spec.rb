@@ -12,6 +12,6 @@ describe Alexandria::UI::KeepBadISBNDialog do
     book = instance_double(Alexandria::Book,
                            title: "Foo Book",
                            isbn: "98765432")
-    described_class.new parent, book
+    expect { described_class.new parent, book }.not_to raise_error
   end
 end

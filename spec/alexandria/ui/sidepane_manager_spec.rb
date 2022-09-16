@@ -10,6 +10,6 @@ describe Alexandria::UI::SidepaneManager do
   it "works" do
     library_listview = instance_double(Gtk::TreeView).as_null_object
     parent = instance_double(Alexandria::UI::UIManager, main_app: nil, append_library: nil)
-    described_class.new library_listview, parent
+    expect { described_class.new library_listview, parent }.not_to raise_error
   end
 end
