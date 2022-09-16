@@ -10,7 +10,7 @@ describe Alexandria::UI::NewSmartLibraryDialog do
   let(:parent) { Gtk::Window.new :toplevel }
 
   it "can be instantiated" do
-    described_class.new parent
+    expect { described_class.new parent }.not_to raise_error
   end
 
   describe "#acquire" do
@@ -19,7 +19,7 @@ describe Alexandria::UI::NewSmartLibraryDialog do
 
     it "works when response is cancel" do
       allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      properties_dialog.acquire
+      expect { properties_dialog.acquire }.not_to raise_error
     end
 
     it "returns a smart library that can be saved when response is ok" do

@@ -10,7 +10,7 @@ describe Alexandria::UI::UIManager do
   let(:main_app) { instance_double(Alexandria::UI::MainApp) }
 
   it "works" do
-    described_class.new main_app
+    expect { described_class.new main_app }.not_to raise_error
   end
 
   describe "#on_new" do

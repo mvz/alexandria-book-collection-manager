@@ -18,12 +18,12 @@ describe Alexandria::UI::SmartLibraryPropertiesDialog do
   describe "#acquire" do
     it "works when response is cancel" do
       allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      properties_dialog.acquire
+      expect { properties_dialog.acquire }.not_to raise_error
     end
 
     it "works when response is ok" do
       allow(gtk_dialog).to receive(:run).and_return(Gtk::ResponseType::OK)
-      properties_dialog.acquire
+      expect { properties_dialog.acquire }.not_to raise_error
     end
   end
 

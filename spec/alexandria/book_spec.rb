@@ -22,7 +22,7 @@ require "spec_helper"
 
 describe Alexandria::Book do
   it "is a thing" do
-    an_artist_of_the_floating_world
+    expect(an_artist_of_the_floating_world).to be_a described_class
   end
 
   it "establishes equality only with books with the same identity" do

@@ -10,6 +10,6 @@ describe Alexandria::UI::IconViewManager do
   it "works" do
     iconview = instance_double(Gtk::IconView).as_null_object
     parent = instance_double(Alexandria::UI::UIManager, iconview: iconview).as_null_object
-    described_class.new iconview, parent
+    expect { described_class.new iconview, parent }.not_to raise_error
   end
 end

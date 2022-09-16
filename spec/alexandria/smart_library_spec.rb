@@ -25,15 +25,15 @@ RSpec.describe Alexandria::SmartLibrary do
     let(:lib) { described_class.new("Hello", [], :all) }
 
     it "works when given no parameters" do
-      lib.update
+      expect { lib.update }.not_to raise_error
     end
 
     it "works when given a LibraryCollection" do
-      lib.update Alexandria::LibraryCollection.instance
+      expect { lib.update Alexandria::LibraryCollection.instance }.not_to raise_error
     end
 
     it "works when given a Library" do
-      lib.update Alexandria::Library.new("Hi")
+      expect { lib.update Alexandria::Library.new("Hi") }.not_to raise_error
     end
   end
 end

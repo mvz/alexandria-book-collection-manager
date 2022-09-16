@@ -11,6 +11,6 @@ describe Alexandria::UI::ConflictWhileCopyingDialog do
     parent = Gtk::Window.new :toplevel
     library = instance_double(Alexandria::Library, name: "Bar Library")
     book = instance_double(Alexandria::Book, title: "Foo Book")
-    described_class.new parent, library, book
+    expect { described_class.new parent, library, book }.not_to raise_error
   end
 end
