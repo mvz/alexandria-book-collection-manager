@@ -42,6 +42,7 @@ describe Alexandria::Scanners::CueCat do
     # TODO are we supposed to keep the +5 bit?
   end
 
+  # rubocop:disable RSpec/NoExpectationExample
   it "decodes ISSN barcodes" do
     skip "Test scan ISSN"
   end
@@ -49,4 +50,5 @@ describe Alexandria::Scanners::CueCat do
   it "decodes UPC barcodes" do
     skip "Test scan UPC"
   end
+  # rubocop:enable RSpec/NoExpectationExample
 end
