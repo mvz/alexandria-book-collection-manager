@@ -16,7 +16,7 @@ RSpec.describe Alexandria::LibraryStore do
         aggregate_failures do
           expect(smart_libs.size).to eq 5
           smart_libs.each do |lib|
-            expect(File.exist?(lib.yaml)).to be_truthy
+            expect(lib.yaml).to be_an_existing_file
           end
         end
       end

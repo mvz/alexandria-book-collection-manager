@@ -59,8 +59,8 @@ RSpec.describe Alexandria::ExportLibrary do
       index = File.join(outfile, "index.html")
 
       aggregate_failures do
-        expect(File.exist?(outfile)).to be_truthy
-        expect(File.exist?(index)).to be_truthy
+        expect(outfile).to be_an_existing_file
+        expect(index).to be_an_existing_file
         expect(File.size(index)).to be_nonzero
       end
     end
@@ -72,7 +72,7 @@ RSpec.describe Alexandria::ExportLibrary do
     it "can export unsorted" do
       format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
-        expect(File.exist?(outfile)).to be_truthy
+        expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe Alexandria::ExportLibrary do
     it "can export unsorted" do
       format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
-        expect(File.exist?(outfile)).to be_truthy
+        expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe Alexandria::ExportLibrary do
     it "can export unsorted" do
       format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
-        expect(File.exist?(outfile)).to be_truthy
+        expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
       end
     end
@@ -108,7 +108,7 @@ RSpec.describe Alexandria::ExportLibrary do
     it "can export unsorted" do
       format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
-        expect(File.exist?(outfile)).to be_truthy
+        expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe Alexandria::ExportLibrary do
       index = File.join(outfile, "index.linx")
 
       aggregate_failures do
-        expect(File.exist?(outfile)).to be_truthy
+        expect(outfile).to be_an_existing_file
         expect(File.size(index)).to be_nonzero
       end
     end

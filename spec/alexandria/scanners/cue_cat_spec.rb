@@ -29,14 +29,14 @@ describe Alexandria::Scanners::CueCat do
 
   it "refuses to detect incomplete scans" do
     aggregate_failures do
-      partials.each { |scan| expect(cuecat.match?(scan)).not_to be_truthy }
+      partials.each { |scan| expect(cuecat.match?(scan)).to be false }
     end
   end
 
   it "detects complete scans" do
     aggregate_failures do
-      expect(cuecat.match?(scans[:isbn])).to be_truthy
-      expect(cuecat.match?(scans[:ib5])).to be_truthy
+      expect(cuecat.match?(scans[:isbn])).to be true
+      expect(cuecat.match?(scans[:ib5])).to be true
     end
   end
 
