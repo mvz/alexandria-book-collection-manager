@@ -76,16 +76,6 @@ RSpec/FilePath:
     - 'spec/alexandria/ui/iconview_spec.rb'
     - 'spec/alexandria/ui/sound_spec.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Strict, EnforcedStyle, AllowedExplicitMatchers.
-# SupportedStyles: inflected, explicit
-RSpec/PredicateMatcher:
-  Exclude:
-    - 'spec/alexandria/library_spec.rb'
-    - 'spec/alexandria/scanners/cue_cat_spec.rb'
-    - 'spec/alexandria/ui/confirm_erase_dialog_spec.rb'
-    - 'spec/alexandria/ui/skip_entry_dialog_spec.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 Rake/Desc:
   Exclude:

@@ -17,14 +17,14 @@ describe Alexandria::UI::ConfirmEraseDialog do
     let(:instance) { described_class.new parent, "foo-file" }
     let(:dialog) { instance.dialog }
 
-    it "works when response is cancel" do
+    it "returns false when response is cancel" do
       allow(dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
-      expect(instance.erase?).to be_falsey
+      expect(instance.erase?).to be false
     end
 
-    it "works when response is OK" do
+    it "returns true when response is OK" do
       allow(dialog).to receive(:run).and_return(Gtk::ResponseType::OK)
-      expect(instance.erase?).to be_truthy
+      expect(instance.erase?).to be true
     end
   end
 end

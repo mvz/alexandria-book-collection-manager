@@ -22,7 +22,7 @@ describe Alexandria::Library do
   describe "#valid_isbn?" do
     it "returns a true value for valid isbns" do
       ["014143984X", "0-345-43192-8"].each do |x|
-        expect(described_class.valid_isbn?(x)).to be_truthy
+        expect(described_class.valid_isbn?(x)).to be true
       end
     end
   end
@@ -30,12 +30,12 @@ describe Alexandria::Library do
   describe "#valid_ean?" do
     it "returns a true value for valid EANs" do
       aggregate_failures do
-        expect(described_class.valid_ean?("9780345431929")).to be_truthy
-        expect(described_class.valid_ean?("978034543192912345")).to be_truthy
+        expect(described_class.valid_ean?("9780345431929")).to be true
+        expect(described_class.valid_ean?("978034543192912345")).to be true
 
         # Regression test: this EAN has a checksum of 10, which should be
         # treated like a checksum of 0.
-        expect(described_class.valid_ean?("9784047041790")).to be_truthy
+        expect(described_class.valid_ean?("9784047041790")).to be true
       end
     end
 
@@ -46,7 +46,7 @@ describe Alexandria::Library do
 
       aggregate_failures do
         invalid_eans.each do |ean|
-          expect(described_class.valid_ean?(ean)).to be_falsey
+          expect(described_class.valid_ean?(ean)).to be false
         end
       end
     end
@@ -54,16 +54,16 @@ describe Alexandria::Library do
 
   describe "#valid_upc?" do
     it "returns a true value for valid UPCs" do
-      expect(described_class.valid_upc?("97803454319312356")).to be_truthy
+      expect(described_class.valid_upc?("97803454319312356")).to be true
     end
 
     it "returns a false value for invalid UPCs" do
       aggregate_failures do
-        expect(described_class.valid_upc?("978034543193123567")).to be_falsey
-        expect(described_class.valid_upc?("9780345431931235")).to be_falsey
+        expect(described_class.valid_upc?("978034543193123567")).to be false
+        expect(described_class.valid_upc?("9780345431931235")).to be false
 
-        expect(described_class.valid_upc?("97803454319412356")).to be_falsey
-        expect(described_class.valid_upc?("97803454319212356")).to be_falsey
+        expect(described_class.valid_upc?("97803454319412356")).to be false
+        expect(described_class.valid_upc?("97803454319212356")).to be false
       end
     end
   end
@@ -155,7 +155,7 @@ describe Alexandria::Library do
       malory_book = my_library.find { |b| b.isbn == "9780192812179" }
       aggregate_failures do
         expect(malory_book.publisher).to eq("Oxford University Press")
-        expect(malory_book.authors.include?("Vinaver")).to be_truthy
+        expect(malory_book.authors).to include "Vinaver"
         expect(malory_book.version).to eq(Alexandria::DATA_VERSION)
       end
     end
