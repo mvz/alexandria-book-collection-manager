@@ -34,6 +34,8 @@ module Alexandria
         @dialog.child.pack_start(hbox)
       end
 
+      attr_reader :dialog
+
       def show_all
         dialog.show_all
       end
@@ -51,8 +53,6 @@ module Alexandria
       end
 
       private
-
-      attr_reader :dialog
 
       def make_label(markup)
         label = Gtk::Label.new

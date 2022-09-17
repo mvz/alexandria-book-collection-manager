@@ -7,8 +7,24 @@
 require_relative "../../spec_helper"
 
 describe Alexandria::UI::SkipEntryDialog do
+  let(:parent) { Gtk::Window.new :toplevel }
+
   it "works" do
-    parent = Gtk::Window.new :toplevel
     expect { described_class.new parent, "Foo" }.not_to raise_error
+  end
+
+  describe "continue?" do
+    let(:instance) { described_class.new parent, "Foo" }
+    let(:dialog) { instance.dialog }
+
+    it "works when response is cancel" do
+      allow(dialog).to receive(:run).and_return(Gtk::ResponseType::CANCEL)
+      expect(instance.continue?).to be_falsey
+    end
+
+    it "works when response is OK" do
+      allow(dialog).to receive(:run).and_return(Gtk::ResponseType::OK)
+      expect(instance.continue?).to be_truthy
+    end
   end
 end
