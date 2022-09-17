@@ -46,6 +46,12 @@ RSpec::Matchers.define :have_correct_search_result_for do |query|
   end
 end
 
+RSpec::Matchers.define :be_an_existing_file do
+  match do |filename|
+    File.exist? filename
+  end
+end
+
 Alexandria::UI::Icons.init
 
 test_store = Alexandria::LibraryStore.new(TESTDIR)

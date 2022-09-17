@@ -238,10 +238,10 @@ describe Alexandria::Library do
       described_class.move(source, target, book)
 
       aggregate_failures do
-        expect(File.exist?(source.yaml(book))).to be_falsey
-        expect(File.exist?(source.cover(book))).to be_falsey
-        expect(File.exist?(target.yaml(book))).to be_truthy
-        expect(File.exist?(target.cover(book))).to be_truthy
+        expect(source.yaml(book)).not_to be_an_existing_file
+        expect(source.cover(book)).not_to be_an_existing_file
+        expect(target.yaml(book)).to be_an_existing_file
+        expect(target.cover(book)).to be_an_existing_file
       end
     end
   end
@@ -260,7 +260,7 @@ describe Alexandria::Library do
 
     it "moves the library's directory" do
       my_library.name = "Really Empty"
-      expect(File.exist?(File.join(TESTDIR, "Really Empty"))).to be_truthy
+      expect(File.join(TESTDIR, "Really Empty")).to be_an_existing_file
     end
   end
 end

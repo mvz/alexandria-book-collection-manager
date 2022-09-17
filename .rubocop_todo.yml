@@ -81,9 +81,7 @@ RSpec/FilePath:
 # SupportedStyles: inflected, explicit
 RSpec/PredicateMatcher:
   Exclude:
-    - 'spec/alexandria/export_library_spec.rb'
     - 'spec/alexandria/library_spec.rb'
-    - 'spec/alexandria/library_store_spec.rb'
     - 'spec/alexandria/scanners/cue_cat_spec.rb'
     - 'spec/alexandria/ui/confirm_erase_dialog_spec.rb'
     - 'spec/alexandria/ui/skip_entry_dialog_spec.rb'
