@@ -22,7 +22,7 @@ jobs:
         ruby: [2.6, 2.7, "3.0", "3.1"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install non-ruby dependencies
         run: |
           sudo apt-get update
@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install non-ruby dependencies
         run: |
           sudo apt-get update
