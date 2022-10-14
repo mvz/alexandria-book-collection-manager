@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.10 / 2022-10-14
+
+* Loosen dependency on the marc gem
+* Update dependency on the gtk3 and gstreamer gems
+* Make Alexandria's own MARC parser handle nil records ([#198] by [mvz])
+* Support upcoming Ruby 3.2
+
 ## 0.7.9 / 2022-02-04
 
 * Drop support for Ruby 2.5
@@ -135,6 +142,7 @@
 [HappyFacade]: https://github.com/HappyFacade
 
 <!-- issues and pull requests -->
+[#198]: https://github.com/mvz/alexandria-book-collection-manager/pull/198
 [#139]: https://github.com/mvz/alexandria-book-collection-manager/pull/139
 [#136]: https://github.com/mvz/alexandria-book-collection-manager/pull/136
 [#134]: https://github.com/mvz/alexandria-book-collection-manager/pull/134
