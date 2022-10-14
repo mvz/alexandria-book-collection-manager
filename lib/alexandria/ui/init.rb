@@ -25,22 +25,28 @@ class Gtk::ActionGroup
 end
 
 module Alexandria::UI::FreezeThaw
+  def self.included(base)
+    base.class_eval do
+      attr_accessor :old_model
+    end
+  end
+
   def frozen?
-    @old_model && !model
+    old_model && !model
   end
 
   def freeze
     return if frozen?
 
-    @old_model = model
+    self.old_model = model
     self.model = nil
   end
 
   def unfreeze
     return unless frozen?
 
-    self.model = @old_model
-    @old_model = nil
+    self.model = old_model
+    self.old_model = nil
   end
 end
 
