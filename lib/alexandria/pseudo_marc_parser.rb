@@ -124,7 +124,7 @@ module Alexandria
 
     def self.marc_text_to_details(marc)
       details = {}
-      marc.each_line do |line|
+      marc&.each_line do |line|
         if line =~ /(\d+)\s*(.+)/
           code = Regexp.last_match[1]
           data = Regexp.last_match[2]
