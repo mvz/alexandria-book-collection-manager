@@ -5,7 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 require "zoom"
-require "alexandria/book_providers/pseudomarc"
+require "alexandria/pseudo_marc_parser"
 require "marc"
 
 module Alexandria
