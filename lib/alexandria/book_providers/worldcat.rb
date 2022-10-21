@@ -3,7 +3,6 @@
 # This file is part of Alexandria.
 #
 # See the file README.md for authorship and licensing information.
-# frozen_string_literal: true
 
 # http://en.wikipedia.org/wiki/WorldCat
 # See http://www.oclc.org/worldcat/policies/terms/

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# frozen_string_literal: true
 
 # This file is part of Alexandria.
 #
