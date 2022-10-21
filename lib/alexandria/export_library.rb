@@ -357,8 +357,8 @@ module Alexandria
     def to_bibtex
       generator = "Alexandria " + Alexandria::DISPLAY_VERSION
       bibtex = +""
-      bibtex << "\%Generated on #{Date.today} by: #{generator}\n"
-      bibtex << "\%\n"
+      bibtex << "%Generated on #{Date.today} by: #{generator}\n"
+      bibtex << "%\n"
       bibtex << "\n"
 
       auths = Hash.new(0)
@@ -402,7 +402,7 @@ module Alexandria
       my_str.gsub!(/\{/, "\\{")
       my_str.gsub!(/\}/, "\\}")
       my_str.gsub!(/_/, "\\_")
-      my_str.gsub!(/\$/, "\\\$")
+      my_str.gsub!(/\$/, "\\$")
       my_str.gsub!(/"(.+)"/, "``\1''")
       my_str
     end
