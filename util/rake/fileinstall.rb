@@ -197,7 +197,7 @@ class FileInstallTask < Rake::TaskLib
       part.gsub!("*", "[^\\/]*")
       part.gsub!("?", "[^\\/]")
     end
-    pattern = real_parts.join("([^\/]+\/)*")
+    pattern = real_parts.join("([^/]+/)*")
     /(#{pattern})/
   end
 
