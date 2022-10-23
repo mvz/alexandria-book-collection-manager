@@ -209,7 +209,8 @@ describe Alexandria::Library do
       my_library.each { |book| my_library.save(book, true) }
       my_library_reloaded = loader.load_all_libraries[0]
 
-      expect(my_library_reloaded.map(&:publisher)).to eq ["O'Reilley", "Addison Wesley"]
+      expect(my_library_reloaded.map(&:publisher))
+        .to match_array ["O'Reilley", "Addison Wesley"]
     end
   end
 
