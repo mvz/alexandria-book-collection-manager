@@ -10,7 +10,7 @@ describe Alexandria::UI::NewBookDialog do
   let(:parent) { Gtk::Window.new :toplevel }
   let(:model) { Gtk::ListStore.new(String, String, GdkPixbuf::Pixbuf) }
 
-  it "works" do
+  it "can be instantiated" do
     expect { described_class.new parent }.not_to raise_error
   end
 

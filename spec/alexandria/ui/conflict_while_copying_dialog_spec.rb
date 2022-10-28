@@ -7,7 +7,7 @@
 require_relative "../../spec_helper"
 
 describe Alexandria::UI::ConflictWhileCopyingDialog do
-  it "works" do
+  it "can be instantiated" do
     parent = Gtk::Window.new :toplevel
     library = instance_double(Alexandria::Library, name: "Bar Library")
     book = instance_double(Alexandria::Book, title: "Foo Book")
