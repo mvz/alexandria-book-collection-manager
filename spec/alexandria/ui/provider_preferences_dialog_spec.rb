@@ -8,9 +8,13 @@ require_relative "../../spec_helper"
 
 describe Alexandria::UI::ProviderPreferencesDialog do
   let(:parent) { Gtk::Window.new :toplevel }
+  let(:variable) do
+    instance_double(Alexandria::BookProviders::Preferences::Variable,
+                    name: "foo-bar", description: "Foo Bar", possible_values: nil,
+                    value: "baz", mandatory?: false)
+  end
   let(:preferences) do
-    instance_double(Alexandria::BookProviders::Preferences,
-                    length: 0, read: [])
+    instance_double(Alexandria::BookProviders::Preferences, length: 0, read: [variable])
   end
   let(:provider) do
     instance_double(Alexandria::BookProviders::GenericProvider,
@@ -23,13 +27,23 @@ describe Alexandria::UI::ProviderPreferencesDialog do
   end
 
   describe "#acquire" do
-    it "runs the native dialog" do
-      preferences_dialog = described_class.new parent, provider
-      gtk_dialog = preferences_dialog.dialog
-      allow(gtk_dialog).to receive(:run)
+    let(:preferences_dialog) { described_class.new parent, provider }
 
+    before do
+      allow(preferences_dialog.dialog).to receive(:run)
+      allow(variable).to receive(:new_value=)
+    end
+
+    it "runs the underlying Gtk+ dialog" do
       preferences_dialog.acquire
-      expect(gtk_dialog).to have_received(:run)
+
+      expect(preferences_dialog.dialog).to have_received(:run)
+    end
+
+    it "updates variables" do
+      preferences_dialog.acquire
+
+      expect(variable).to have_received(:new_value=).with "baz"
     end
   end
 end
