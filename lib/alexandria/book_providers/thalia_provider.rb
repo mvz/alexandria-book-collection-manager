@@ -12,7 +12,7 @@
 
 require "net/http"
 require "cgi"
-require "alexandria/book_providers/web"
+require "alexandria/book_providers/website_based_provider"
 
 module Alexandria
   class BookProviders

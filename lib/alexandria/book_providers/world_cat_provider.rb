@@ -16,7 +16,7 @@
 
 require "cgi"
 require "alexandria/net"
-require "alexandria/book_providers/web"
+require "alexandria/book_providers/website_based_provider"
 
 module Alexandria
   class BookProviders

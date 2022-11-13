@@ -120,7 +120,7 @@ Style/FormatStringToken:
 Style/OptionalBooleanParameter:
   Exclude:
     - 'lib/alexandria/book_providers.rb'
-    - 'lib/alexandria/book_providers/worldcat.rb'
+    - 'lib/alexandria/book_providers/world_cat_provider.rb'
     - 'lib/alexandria/execution_queue.rb'
     - 'lib/alexandria/export_format.rb'
     - 'lib/alexandria/library_sort_order.rb'
