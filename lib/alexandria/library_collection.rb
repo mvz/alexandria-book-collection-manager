@@ -23,7 +23,7 @@ module Alexandria
       ruined = []
       deleted = []
       all_regular_libraries.each do |library|
-        ruined += library.ruined_books
+        library.ruined_books.each { |isbn| ruined << [nil, isbn, library] }
         # make deleted books from each library accessible so we don't crash on
         # smart libraries
         deleted += library.deleted_books

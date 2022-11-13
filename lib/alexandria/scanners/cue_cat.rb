@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Copyright (C) 2005-2006 Christopher Cyll
-# Copyright (C) 2011 Matijs van Zuijlen
+# Copyright (C) 2011, 2014-2022 Matijs van Zuijlen
 #
 # Alexandria is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -60,14 +60,10 @@ module Alexandria
           code = code[0, 13]
         end
 
-        begin
-          if Library.valid_upc? code
-            isbn13 = Library.canonicalise_ean(code)
-            code = isbn13
-            type = "IBN"
-          end
-        rescue StandardError
-          log.debug { "Cannot translate UPC (#{type}) code #{code} to ISBN" }
+        if Library.valid_upc? code
+          isbn13 = Library.canonicalise_ean(code)
+          code = isbn13
+          type = "IBN"
         end
 
         return code if type == "IBN"

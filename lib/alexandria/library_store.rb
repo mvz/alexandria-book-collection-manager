@@ -32,8 +32,8 @@ module Alexandria
       rescue Errno::ENOENT
         FileUtils.mkdir_p(library_dir)
       end
-      # Create the default library if there is no library yet.
 
+      # Create the default library if there is no library yet.
       a << load_library(_("My Library")) if a.empty?
 
       a
@@ -49,15 +49,7 @@ module Alexandria
           test[1] = filename if (test[0]).zero?
 
           unless File.size? test[1]
-            log.warn { "Book file #{test[1]} was empty" }
-            md = /([\dxX]{10,13})#{Library::EXT[:book]}/.match(filename)
-            if md
-              file_isbn = md[1]
-              ruined_books << [nil, file_isbn, library]
-            else
-              log.warn { "Filename #{filename} does not contain an ISBN" }
-              # TODO: delete this file...
-            end
+            handle_empty_book_file(test[1], ruined_books)
             next
           end
           book = regularize_book_from_yaml(test[1])
@@ -179,6 +171,18 @@ module Alexandria
     end
 
     private
+
+    def handle_empty_book_file(filename, ruined_books)
+      log.warn { "Book file #{filename} was empty" }
+      md = /([\dxX]{10,13})#{Library::EXT[:book]}/.match(filename)
+      if md
+        file_isbn = md[1]
+        ruined_books << file_isbn
+      else
+        log.warn { "Filename #{filename} does not contain an ISBN" }
+        # TODO: delete this file...
+      end
+    end
 
     def regularize_book_from_yaml(name)
       text = File.read(name)
