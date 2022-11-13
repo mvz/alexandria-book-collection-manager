@@ -34,10 +34,7 @@ module Alexandria
         prefs.read
       end
 
-      def url(book)
-        "http://copac.ac.uk/openurl?isbn=" + Library.canonicalise_isbn(book.isbn)
-      rescue StandardError => ex
-        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+      def url(_book)
         nil
       end
 

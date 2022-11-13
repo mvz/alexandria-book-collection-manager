@@ -116,4 +116,12 @@ RSpec.describe Alexandria::BookProviders::ThaliaProvider do
 
     expect(described_class).to have_correct_search_result_for "9780571334650"
   end
+
+  describe "#url" do
+    it "returns an url with isbn" do
+      book = an_artist_of_the_floating_world
+      url = described_class.instance.url(book)
+      expect(url).to eq "https://www.thalia.de/shop/bde_bu_hg_startseite/suche/?sq=057114716X"
+    end
+  end
 end
