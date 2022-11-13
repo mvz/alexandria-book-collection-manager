@@ -23,12 +23,13 @@ describe Alexandria::UI::ProviderPreferencesDialog do
   end
 
   describe "#acquire" do
-    it "works" do
+    it "runs the native dialog" do
       preferences_dialog = described_class.new parent, provider
       gtk_dialog = preferences_dialog.dialog
       allow(gtk_dialog).to receive(:run)
 
-      expect { preferences_dialog.acquire }.not_to raise_error
+      preferences_dialog.acquire
+      expect(gtk_dialog).to have_received(:run)
     end
   end
 end

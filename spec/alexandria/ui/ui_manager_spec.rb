@@ -9,12 +9,12 @@ require_relative "../../spec_helper"
 describe Alexandria::UI::UIManager do
   let(:main_app) { instance_double(Alexandria::UI::MainApp) }
 
-  it "works" do
+  it "can be instantiated" do
     expect { described_class.new main_app }.not_to raise_error
   end
 
   describe "#on_new" do
-    it "works" do
+    it "adds one library" do
       ui = described_class.new main_app
       libraries = ui.instance_variable_get(:@libraries)
       libraries_count = libraries.all_libraries.count

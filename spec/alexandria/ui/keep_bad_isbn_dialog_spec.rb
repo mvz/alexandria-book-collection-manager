@@ -7,7 +7,7 @@
 require_relative "../../spec_helper"
 
 describe Alexandria::UI::KeepBadISBNDialog do
-  it "works" do
+  it "can be instantiated" do
     parent = Gtk::Window.new :toplevel
     book = instance_double(Alexandria::Book,
                            title: "Foo Book",

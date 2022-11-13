@@ -9,7 +9,7 @@ require_relative "../../spec_helper"
 describe Alexandria::UI::ConfirmEraseDialog do
   let(:parent) { Gtk::Window.new :toplevel }
 
-  it "works" do
+  it "can be instantiated" do
     expect { described_class.new parent, "foo-file" }.not_to raise_error
   end
 

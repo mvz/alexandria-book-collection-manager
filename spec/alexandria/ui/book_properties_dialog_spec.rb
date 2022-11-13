@@ -21,7 +21,7 @@ describe Alexandria::UI::BookPropertiesDialog do
     library << book
   end
 
-  it "works" do
+  it "can be instantiated" do
     expect { described_class.new parent, library, book }.not_to raise_error
   end
 

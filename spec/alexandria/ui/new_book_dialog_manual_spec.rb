@@ -13,7 +13,7 @@ describe Alexandria::UI::NewBookDialogManual do
     store.load_library("Bar Library")
   end
 
-  it "works" do
+  it "can be instantiated" do
     expect { described_class.new parent, library }.not_to raise_error
   end
 

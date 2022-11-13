@@ -11,7 +11,7 @@ describe Alexandria::UI::ExportDialog do
   let(:library) { Alexandria::Library.new "Bar Library" }
   let(:sort_order) { Alexandria::LibrarySortOrder::Unsorted.new }
 
-  it "works" do
+  it "can be instantiated" do
     expect { described_class.new parent, library, sort_order }.not_to raise_error
   end
 
