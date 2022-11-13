@@ -49,7 +49,7 @@ module Alexandria
           test[1] = filename if (test[0]).zero?
 
           unless File.size? test[1]
-            handle_empty_book_file(test[1], library, ruined_books)
+            handle_empty_book_file(test[1], ruined_books)
             next
           end
           book = regularize_book_from_yaml(test[1])
@@ -172,12 +172,12 @@ module Alexandria
 
     private
 
-    def handle_empty_book_file(filename, library, ruined_books)
+    def handle_empty_book_file(filename, ruined_books)
       log.warn { "Book file #{filename} was empty" }
       md = /([\dxX]{10,13})#{Library::EXT[:book]}/.match(filename)
       if md
         file_isbn = md[1]
-        ruined_books << [nil, file_isbn, library]
+        ruined_books << file_isbn
       else
         log.warn { "Filename #{filename} does not contain an ISBN" }
         # TODO: delete this file...

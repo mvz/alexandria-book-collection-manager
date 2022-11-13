@@ -56,7 +56,7 @@ RSpec.describe Alexandria::LibraryStore do
       FileUtils.touch File.join(TESTDIR, "My Library", "0740704923.yaml")
       result = loader.load_all_libraries
       library = result.first
-      expect(library.ruined_books).to match_array [[nil, "0740704923", library]]
+      expect(library.ruined_books).to match_array ["0740704923"]
     end
 
     it "skips empty files with names that are not valid ISBNs" do
