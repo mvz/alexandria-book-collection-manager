@@ -32,8 +32,8 @@ module Alexandria
       rescue Errno::ENOENT
         FileUtils.mkdir_p(library_dir)
       end
-      # Create the default library if there is no library yet.
 
+      # Create the default library if there is no library yet.
       a << load_library(_("My Library")) if a.empty?
 
       a
