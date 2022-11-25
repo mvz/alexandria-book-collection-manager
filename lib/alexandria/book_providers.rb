@@ -288,11 +288,11 @@ module Alexandria
       unabstract
     end
 
-    require "alexandria/book_providers/douban" # only requires YAML
+    require "alexandria/book_providers/douban_provider"
 
     # Website based providers
     require "alexandria/book_providers/thalia_provider"
-    require "alexandria/book_providers/worldcat"
+    require "alexandria/book_providers/world_cat_provider"
 
     # Z39.50 based providers
     require "alexandria/book_providers/loc_provider"

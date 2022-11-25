@@ -169,4 +169,12 @@ RSpec.describe Alexandria::BookProviders::WorldCatProvider do
       end
     end
   end
+
+  describe "#url" do
+    it "returns an url with isbn" do
+      book = an_artist_of_the_floating_world
+      url = described_class.instance.url(book)
+      expect(url).to eq "https://www.worldcat.org/search?q=isbn%3A9780571147168&qt=advanced"
+    end
+  end
 end

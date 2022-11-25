@@ -25,12 +25,7 @@ module Alexandria
         prefs.read
       end
 
-      def url(book)
-        isbn = Library.canonicalise_isbn(book.isbn)
-        "http://catalog.loc.gov/cgi-bin/Pwebrecon.cgi?" \
-          "DB=local&CNT=25+records+per+page&CMD=isbn+#{isbn}"
-      rescue StandardError => ex
-        log.warn { "Cannot create url for book #{book}; #{ex.message}" }
+      def url(_book)
         nil
       end
     end
