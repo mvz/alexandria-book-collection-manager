@@ -54,7 +54,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "image_size", ["~> 3.0"]
   spec.add_runtime_dependency "marc", ">= 1.0", "< 1.3"
   spec.add_runtime_dependency "nokogiri", ["~> 1.11"]
-  spec.add_runtime_dependency "psych", ">= 3.2", "< 4.1"
+  spec.add_runtime_dependency "psych", ">= 3.2", "< 5.1"
   spec.add_runtime_dependency "zoom", ["~> 0.5.0"]
 
   spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
