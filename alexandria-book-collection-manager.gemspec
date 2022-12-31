@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.homepage = "http://www.github.com/mvz/alexandria-book-collection-manager"
   spec.license = "GPL-2.0+"
 
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 2.7.0"
 
   spec.metadata["rubygems_mfa_required"] = "true"
 
