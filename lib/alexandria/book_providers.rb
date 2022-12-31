@@ -174,7 +174,7 @@ module Alexandria
         case obj
         when String
           var = variable_named(obj)
-          var ? var.value : nil
+          var&.value
         when Integer
           super(obj)
         end

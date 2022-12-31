@@ -135,7 +135,7 @@ module Alexandria
   def self.create_logger
     logger = Alexandria::Logger.new($stderr)
 
-    level = ENV["LOGLEVEL"] ? ENV["LOGLEVEL"].intern : nil
+    level = ENV["LOGLEVEL"]&.intern
     if [:FATAL, :ERROR, :WARN, :INFO, :DEBUG].include? level
       logger.level = Logger.const_get(level)
     else
