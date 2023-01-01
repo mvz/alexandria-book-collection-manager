@@ -59,7 +59,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
   spec.add_development_dependency "rake", ["~> 13.0"]
   spec.add_development_dependency "rspec", ["~> 3.0"]
-  spec.add_development_dependency "rubocop", "~> 1.41"
+  spec.add_development_dependency "rubocop", "~> 1.42"
   spec.add_development_dependency "rubocop-i18n", "~> 3.0"
   spec.add_development_dependency "rubocop-performance", "~> 1.15"
   spec.add_development_dependency "rubocop-rake", "~> 0.6.0"
