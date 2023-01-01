@@ -317,7 +317,7 @@ module Alexandria
         return unless entry.text =~ /^\..*?\..*?\.(.*?)\.$/
 
         tmp = Regexp.last_match[1].tr("a-zA-Z0-9+-", " -_")
-        tmp = ((32 + tmp.length * 3 / 4).to_i.chr << tmp).unpack1("u")
+        tmp = ((tmp.length * 3 / 4 + 32).to_i.chr << tmp).unpack1("u")
         tmp.chomp!("\000")
         entry.text = tmp.gsub!(/./) { |c| (c[0] ^ 67).chr }
         entry.text = "Bad scan result" if entry.text.count("^ -~") > 0

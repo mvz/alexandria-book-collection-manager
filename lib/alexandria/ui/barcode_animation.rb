@@ -143,9 +143,9 @@ module Alexandria
       def scan_animation
         if @index < @barcode_bars.size
           @index = 0 if @index < 0
-          alpha = 7 * (@index + 1)
+          alpha = (@index + 1) * 7
           @barcode_bars.each_with_index do |rect, i|
-            rect.set_property(:fill_color_rgba, 0xFF000000 + alpha)
+            rect.set_property(:fill_color_rgba, alpha + 0xFF000000)
             break if i >= @index
           end
           @index += 1
@@ -166,7 +166,7 @@ module Alexandria
       def fade_animation
         @fade_opacity = 255 if @fade_opacity == -1
         if @fade_opacity >= 0
-          grey = 0x00000000 + @fade_opacity
+          grey = @fade_opacity + 0x00000000
           @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, grey) }
           @fade_opacity -= 5
         else

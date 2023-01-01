@@ -167,7 +167,7 @@ module Alexandria
                   elsif valid_upc?(isbn)
                     # Seems to be a valid UPC number.
                     prefix = upc_convert(numbers[0..5])
-                    isbn_sans_chcksm = prefix + numbers[(8 + prefix.length)..17]
+                    isbn_sans_chcksm = prefix + numbers[(prefix.length + 8)..17]
                     isbn_sans_chcksm + [isbn_checksum(isbn_sans_chcksm)]
                   elsif valid_isbn?(isbn)
                     # Seems to be a valid ISBN number.
