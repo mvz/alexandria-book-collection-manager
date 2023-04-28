@@ -48,8 +48,8 @@ Gem::Specification.new do |spec|
   spec.rdoc_options = ["--main", "README.md"]
 
   spec.add_runtime_dependency "gettext", ["~> 3.1"]
-  spec.add_runtime_dependency "gstreamer", ["~> 4.0.2"]
-  spec.add_runtime_dependency "gtk3", ["~> 4.0.2"]
+  spec.add_runtime_dependency "gstreamer", ["4.0.8"]
+  spec.add_runtime_dependency "gtk3", ["4.0.8"]
   spec.add_runtime_dependency "htmlentities", ["~> 4.3"]
   spec.add_runtime_dependency "image_size", ["~> 3.0"]
   spec.add_runtime_dependency "marc", ">= 1.0", "< 1.3"
