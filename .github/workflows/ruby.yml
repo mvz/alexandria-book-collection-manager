@@ -15,7 +15,7 @@ name: CI
 jobs:
   test:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
@@ -24,50 +24,61 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Install non-ruby dependencies
         run: |
           sudo apt-get update
+
+          sudo apt-get remove libunwind-14-dev           # Prevent conflict with libunwind-dev, needed by libgstreamer1.0-dev
+
           sudo apt-get install libgtk-3-dev              # Needed for gtk3 gem
           sudo apt-get install libgstreamer1.0-dev       # Needed for gstreamer gem
-          sudo apt-get install libgoocanvas-2.0-dev      # Needed for GooCanvas::Canvas widget
           sudo apt-get install libyaz-dev                # Needed for zoom gem
+
+          sudo apt-get install libgoocanvas-2.0-dev      # Needed for GooCanvas::Canvas widget
           sudo apt-get install intltool                  # Needed for intltool-merge executable
           sudo apt-get install gconf2                    # Needed for gconftool-2 executable
           sudo apt-get install at-spi2-core              # Needed to provide A11y dbus service to silence warnings
           sudo apt-get install gstreamer1.0-plugins-good # Needed to set up sound player pipeline
           sudo apt-get install pulseaudio                # Needed to play sound
+
           sudo apt-get install xvfb                      # Provides xvfb-run
-          sudo apt-get install yaru-theme-icon           # Needed to avoid warnings about missing icons on Ubuntu 20.04
+          sudo apt-get install yaru-theme-icon           # Needed to avoid warnings about missing icons
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+
       - name: Run unit tests
         run: xvfb-run bundle exec rake spec:unit
+
       - name: Run end-to-end tests in a dbus session
         run: xvfb-run dbus-run-session bundle exec rake spec:end_to_end
 
   rubocop:
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Install non-ruby dependencies
         run: |
           sudo apt-get update
-          # Needed for gtk3 gem
-          sudo apt-get install libgtk-3-dev
-          # Needed for gstreamer gem
-          sudo apt-get install libgstreamer1.0-dev
-          # Needed for zoom gem
-          sudo apt-get install libyaz-dev
+
+          sudo apt-get remove libunwind-14-dev           # Prevent conflict with libunwind-dev, needed by libgstreamer1.0-dev
+
+          sudo apt-get install libgtk-3-dev              # Needed for gtk3 gem
+          sudo apt-get install libgstreamer1.0-dev       # Needed for gstreamer gem
+          sudo apt-get install libyaz-dev                # Needed for zoom gem
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
           bundler-cache: true
+
       - name: Run RuboCop
         run: bundle exec rubocop -P
