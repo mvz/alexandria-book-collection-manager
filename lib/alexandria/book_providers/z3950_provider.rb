@@ -171,7 +171,7 @@ module Alexandria
           end
           conn.search(pqf)
         rescue StandardError => ex
-          if /1005/.match?(ex.message) &&
+          if ex.message.include?("1005") &&
               prefs.variable_named("piggyback") && prefs["piggyback"]
             log.error { "Z39.50 search failed:: #{ex.message}" }
             log.info { "Turning off piggybacking for this provider" }

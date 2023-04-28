@@ -210,7 +210,7 @@ describe Alexandria::Library do
       my_library_reloaded = loader.load_all_libraries[0]
 
       expect(my_library_reloaded.map(&:publisher))
-        .to match_array ["O'Reilley", "Addison Wesley"]
+        .to contain_exactly("O'Reilley", "Addison Wesley")
     end
   end
 

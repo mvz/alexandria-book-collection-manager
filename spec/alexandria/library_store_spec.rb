@@ -46,9 +46,9 @@ RSpec.describe Alexandria::LibraryStore do
       aggregate_failures do
         expect(result.count).to eq 1
         expect(result.first.map(&:title))
-          .to match_array ["Pattern Recognition", "Bonjour Tristesse",
-                           "An Artist of the Floating World", "The Dispossessed",
-                           "Neverwhere"]
+          .to contain_exactly("Pattern Recognition", "Bonjour Tristesse",
+                              "An Artist of the Floating World", "The Dispossessed",
+                              "Neverwhere")
       end
     end
 
@@ -56,7 +56,7 @@ RSpec.describe Alexandria::LibraryStore do
       FileUtils.touch File.join(TESTDIR, "My Library", "0740704923.yaml")
       result = loader.load_all_libraries
       library = result.first
-      expect(library.ruined_books).to match_array ["0740704923"]
+      expect(library.ruined_books).to eq ["0740704923"]
     end
 
     it "skips empty files with names that are not valid ISBNs" do

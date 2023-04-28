@@ -167,7 +167,7 @@ module Alexandria
     end
 
     def exec_gconf_set(var_path, new_value)
-      if /cols_width/.match?(var_path)
+      if var_path.include?("cols_width")
         log.debug { new_value }
 
         # new_value = {}
@@ -178,7 +178,7 @@ module Alexandria
         new_value = new_value.gsub(/"/, '\\"')
         value_str = "\"#{new_value}\""
       end
-      log.debug { value_str } if /cols_width/.match?(var_path)
+      log.debug { value_str } if var_path.include?("cols_width")
       `gconftool-2 --type #{type} --set #{var_path} #{value_str}`
     end
 
