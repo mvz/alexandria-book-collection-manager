@@ -18,7 +18,7 @@ RSpec.describe Alexandria::LibraryCollection do
       collection = described_class.instance
       collection.reload
       library = collection.all_libraries.first
-      expect(collection.ruined_books).to match_array [[nil, "0740704923", library]]
+      expect(collection.ruined_books).to eq [[nil, "0740704923", library]]
     end
   end
 end
