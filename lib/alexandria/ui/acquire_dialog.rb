@@ -258,28 +258,11 @@ module Alexandria
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
-        GLib::Idle.add do
-          main_progress_bar = MainApp.instance.appbar.children.first
-          main_progress_bar.visible = true
-          @progress_pulsing = GLib::Timeout.add(100) do
-            if @destroyed
-              @progress_pulsing = nil
-              false
-            else
-              main_progress_bar.pulse
-              true
-            end
-          end
-          false
-        end
+        MainApp.instance.ui_manager.start_progress_bar_pulsing(self)
       end
 
       def notify_end_add_by_isbn
-        GLib::Idle.add do
-          MainApp.instance.appbar.children.first.visible = false
-          GLib::Source.remove(@progress_pulsing) if @progress_pulsing
-          false
-        end
+        MainApp.instance.ui_manager.stop_progress_bar_pulsing
       end
 
       def update(status, provider)
@@ -295,6 +278,10 @@ module Alexandria
           MainApp.instance.ui_manager.set_status_label(message)
           false
         end
+      end
+
+      def destroyed?
+        @acquire_dialog.destroyed?
       end
 
       # end copy-n-paste

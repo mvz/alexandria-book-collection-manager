@@ -691,12 +691,41 @@ module Alexandria
         end
       end
 
+      def progress_bar
+        @progress_bar ||= @appbar.children.first
+      end
+
       def show_progress_bar
-        @appbar.children.first.visible = true
+        progress_bar.visible = true
       end
 
       def hide_progress_bar
-        @appbar.children.first.visible = false
+        progress_bar.visible = false
+      end
+
+      def start_progress_bar_pulsing(dialog)
+        GLib::Idle.add do
+          show_progress_bar
+          @progress_pulsing = GLib::Timeout.add(100) do
+            if dialog.destroyed?
+              @progress_pulsing = nil
+              hide_progress_bar
+              false
+            else
+              progress_bar.pulse
+              true
+            end
+          end
+          false
+        end
+      end
+
+      def stop_progress_bar_pulsing
+        GLib::Idle.add do
+          hide_progress_bar
+          GLib::Source.remove(@progress_pulsing) if @progress_pulsing
+          false
+        end
       end
 
       def cache_scaled_icon(icon, width, height)
