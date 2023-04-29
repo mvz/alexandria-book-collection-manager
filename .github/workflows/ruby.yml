@@ -51,8 +51,17 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - name: Run unit tests
-        run: xvfb-run bundle exec rake spec:unit
+      - name: Run unit tests - book providers
+        run: xvfb-run bundle exec rspec spec/alexandria/book_providers
+
+      - name: Run unit tests - ui
+        run: xvfb-run bundle exec rspec spec/alexandria/ui
+
+      - name: Run unit tests - scanners
+        run: xvfb-run bundle exec rspec spec/alexandria/scanners
+
+      - name: Run unit tests - main
+        run: xvfb-run bundle exec rspec spec/alexandria/*_spec.rb
 
       - name: Run end-to-end tests in a dbus session
         run: xvfb-run dbus-run-session bundle exec rake spec:end_to_end
