@@ -23,10 +23,11 @@ module Alexandria
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
       @@last_criterion_was_not_isbn = false
 
-      def initialize(parent, selected_library = nil, &block)
+      def initialize(parent_window, ui_manager, selected_library, &block)
         super("new_book_dialog__builder.glade", widget_names)
         log.info { "New Book Dialog" }
-        @new_book_dialog.transient_for = @parent = parent
+        @new_book_dialog.transient_for = @parent = parent_window
+        @ui_manager = ui_manager
         @block = block
         @destroyed = false
         @selected_library = selected_library
@@ -473,24 +474,11 @@ module Alexandria
       end
 
       def notify_start_add_by_isbn
-        main_progress_bar = MainApp.instance.appbar.children.first
-        main_progress_bar.visible = true
-        @progress_pulsing = GLib::Timeout.add(100) do
-          if @destroyed
-            false
-          else
-            main_progress_bar.pulse
-            true
-          end
-        end
+        ui_manager.start_progress_bar_pulsing(self)
       end
 
       def notify_end_add_by_isbn
-        MainApp.instance.appbar.children.first.visible = false
-        return unless @progress_pulsing
-
-        GLib::Source.remove(@progress_pulsing)
-        @progress_pulsing = nil
+        ui_manager.stop_progress_bar_pulsing
       end
 
       def update(status, provider)
@@ -502,7 +490,7 @@ module Alexandria
         }
         message = messages[status] % provider
         log.debug { "update message : #{message}" }
-        MainApp.instance.ui_manager.set_status_label(message)
+        ui_manager.set_status_label(message)
       end
 
       def on_focus
@@ -555,6 +543,12 @@ module Alexandria
       def on_help
         Alexandria::UI.display_help(@preferences_dialog, "add-book-by-isbn")
       end
+
+      def destroyed?
+        @new_book_dialog.destroyed?
+      end
+
+      attr_reader :ui_manager
 
       private
 

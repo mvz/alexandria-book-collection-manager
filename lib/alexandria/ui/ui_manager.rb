@@ -624,7 +624,7 @@ module Alexandria
           if response_type == Gtk::ResponseType::OK
             # progress indicator...
             @progressbar.fraction = 0
-            @appbar.children.first.visible = true # show the progress bar
+            show_progress_bar
 
             total_book_count = @libraries.ruined_books.size
             fraction_per_book = 1.0 / total_book_count
@@ -680,8 +680,7 @@ module Alexandria
                 # @listview.columns_autosize
 
                 @progressbar.fraction = 1
-                ## Hide the progress bar.
-                @appbar.children.first.visible = false
+                hide_progress_bar
                 ## Refresh the status bar.
                 set_status_label("")
                 # on_books_selection_changed
@@ -689,6 +688,43 @@ module Alexandria
               end
             end
           end
+        end
+      end
+
+      def progress_bar
+        @progress_bar ||= @appbar.children.first
+      end
+
+      def show_progress_bar
+        progress_bar.visible = true
+      end
+
+      def hide_progress_bar
+        progress_bar.visible = false
+      end
+
+      def start_progress_bar_pulsing(dialog)
+        GLib::Idle.add do
+          show_progress_bar
+          @progress_pulsing = GLib::Timeout.add(100) do
+            if dialog.destroyed?
+              @progress_pulsing = nil
+              hide_progress_bar
+              false
+            else
+              progress_bar.pulse
+              true
+            end
+          end
+          false
+        end
+      end
+
+      def stop_progress_bar_pulsing
+        GLib::Idle.add do
+          hide_progress_bar
+          GLib::Source.remove(@progress_pulsing) if @progress_pulsing
+          false
         end
       end
 
@@ -807,8 +843,10 @@ module Alexandria
         @iconview.freeze
         @listview.freeze
         @model.clear
+
         @progressbar.fraction = 0
-        @appbar.children.first.visible = true # show the progress bar
+        show_progress_bar
+
         set_status_label(_("Loading '%s'...") % library.name)
         total = library.length
         log.debug { "library #{library.name} length #{library.length}" }
@@ -833,9 +871,10 @@ module Alexandria
             @listview.unfreeze # NEW / bdewey
             @filtered_model.refilter
             @listview.columns_autosize
+
             @progressbar.fraction = 1
-            # Hide the progress bar.
-            @appbar.children.first.visible = false
+            hide_progress_bar
+
             # Refresh the status bar.
             on_books_selection_changed
             @library_listview.set_sensitive(true)

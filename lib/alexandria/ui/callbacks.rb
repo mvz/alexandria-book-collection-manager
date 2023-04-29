@@ -31,7 +31,8 @@ module Alexandria
 
       def on_add_book(*)
         log.info { "on_add_book" }
-        dialog = NewBookDialog.new(@main_app, selected_library) do |_books, library, is_new|
+        dialog = NewBookDialog.new(@main_app, self, selected_library) do
+          |_books, library, is_new|
           if is_new
             append_library(library, true)
             setup_move_actions
@@ -115,7 +116,7 @@ module Alexandria
 
       def on_acquire(*)
         dialog =
-          AcquireDialog.new(@main_app, selected_library) do |_books, library, is_new|
+          AcquireDialog.new(@main_app, self, selected_library) do |_books, library, is_new|
             if is_new
               append_library(library, true)
               setup_move_actions
