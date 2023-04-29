@@ -9,7 +9,7 @@ require "monitor"
 require "alexandria/image_fetcher"
 
 require "alexandria/scanners/cue_cat"
-require "alexandria/scanners/keyboard"
+require "alexandria/scanners/keyboard_wedge"
 
 require "alexandria/ui/builder_base"
 require "alexandria/ui/barcode_animation"
