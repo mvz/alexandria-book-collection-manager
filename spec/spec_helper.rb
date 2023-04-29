@@ -38,7 +38,7 @@ RSpec::Matchers.define :have_correct_search_result_for do |query|
 
     canonical_query = Alexandria::Library.canonicalise_ean(query)
     canonical_result = Alexandria::Library.canonicalise_ean(book.isbn)
-    expect(canonical_query).to eq(canonical_result)
+    expect(canonical_result).to eq(canonical_query)
 
     expect(cover_url).to be_instance_of(String) if cover_url
 
