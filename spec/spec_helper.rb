@@ -62,6 +62,7 @@ RSpec.configure do |config|
 
   config.before do
     FileUtils.rm_rf(TESTDIR)
+    Alexandria.log.level = Logger::DEBUG if ENV["DEBUG"]
   end
 
   config.after do
