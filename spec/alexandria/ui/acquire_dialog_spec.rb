@@ -7,8 +7,13 @@
 require_relative "../../spec_helper"
 
 describe Alexandria::UI::AcquireDialog do
+  let(:parent) { Gtk::Window.new :toplevel }
+  let(:library) { Alexandria::Library.new("Hi") }
+  let(:ui_manager) { instance_double(Alexandria::UI::UIManager) }
+
   it "can be instantiated" do
-    parent = Gtk::Window.new :toplevel
-    expect { described_class.new parent }.not_to raise_error
+    allow(ui_manager).to receive :set_status_label
+    dialog = described_class.new parent, ui_manager, library
+    expect(dialog).to be_a described_class
   end
 end

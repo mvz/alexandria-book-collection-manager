@@ -48,8 +48,9 @@ module Alexandria
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      def initialize(parent, selected_library = nil, &block)
+      def initialize(parent, ui_manager, selected_library, &block)
         super("acquire_dialog__builder.glade", widget_names)
+        @ui_manager = ui_manager
         @acquire_dialog.transient_for = @parent = parent
         @block = block
 
@@ -258,11 +259,11 @@ module Alexandria
       # begin copy-n-paste from new_book_dialog
 
       def notify_start_add_by_isbn
-        MainApp.instance.ui_manager.start_progress_bar_pulsing(self)
+        ui_manager.start_progress_bar_pulsing(self)
       end
 
       def notify_end_add_by_isbn
-        MainApp.instance.ui_manager.stop_progress_bar_pulsing
+        ui_manager.stop_progress_bar_pulsing
       end
 
       def update(status, provider)
@@ -275,7 +276,7 @@ module Alexandria
           }
           message = messages[status] % provider
           log.debug { "update message : #{message}" }
-          MainApp.instance.ui_manager.set_status_label(message)
+          ui_manager.set_status_label(message)
           false
         end
       end
@@ -285,6 +286,8 @@ module Alexandria
       end
 
       # end copy-n-paste
+
+      attr_reader :ui_manager
 
       private
 
@@ -373,7 +376,7 @@ module Alexandria
       end
 
       def on_destroy
-        MainApp.instance.ui_manager.set_status_label("")
+        ui_manager.set_status_label("")
         notify_end_add_by_isbn
         # TODO: possibly make sure all threads have stopped running
         @animation.destroy
@@ -388,7 +391,7 @@ module Alexandria
 
         log.debug { "Using #{@scanner.name} scanner" }
         message = _("Ready to use %s barcode scanner") % @scanner.name
-        MainApp.instance.ui_manager.set_status_label(message)
+        ui_manager.set_status_label(message)
 
         @prev_time = 0
         @interval = 0
