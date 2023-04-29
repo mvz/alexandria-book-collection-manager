@@ -28,7 +28,10 @@ module Alexandria
   module UI
     ## Uses Ruby/GStreamer to play Ogg/Vorbis sound effects
     class SoundEffectsPlayer
+      include Logging
+
       def initialize
+        log.info { "Setting up SoundEffectsPlayer" }
         @sounds_dir = Alexandria::Config::SOUNDS_DIR
         @ogg_vorbis_pipeline = Gst::Pipeline.new
         set_up_pipeline

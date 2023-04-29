@@ -14,7 +14,7 @@ require "alexandria/scanners/keyboard"
 require "alexandria/ui/builder_base"
 require "alexandria/ui/barcode_animation"
 require "alexandria/ui/error_dialog"
-require "alexandria/ui/sound"
+require "alexandria/ui/sound_effects_player"
 
 module Alexandria
   module UI
@@ -487,11 +487,6 @@ module Alexandria
           end
         end
 
-        # @sound_player = SoundEffectsPlayer.new
-        @sound_players = {}
-        @sound_players["scanning"] = SoundEffectsPlayer.new
-        @sound_players["good_scan"] = SoundEffectsPlayer.new
-        @sound_players["bad_scan"] = SoundEffectsPlayer.new
         @test_scan = false
       end
 
@@ -500,14 +495,18 @@ module Alexandria
           log.debug { "Effect: #{effect}, playing: #{@prefs.play_scanning_sound}" }
           return unless @prefs.play_scanning_sound
 
-          @sound_players["scanning"].play("scanning")
+          sound_player.play("scanning")
         else
           log.debug { "Effect: #{effect}, playing: #{@prefs.play_scan_sound}" }
           return unless @prefs.play_scan_sound
 
           # sleep(0.5) # "scanning" effect lasts 0.5 seconds, wait for it to end
-          @sound_players[effect].play(effect)
+          sound_player.play(effect)
         end
+      end
+
+      def sound_player
+        @sound_player ||= SoundEffectsPlayer.new
       end
 
       def developer_test_scan
