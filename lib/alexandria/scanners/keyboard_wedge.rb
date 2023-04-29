@@ -36,13 +36,13 @@ module Alexandria
 
       # Checks if data looks like a completed scan
       def match?(data)
-        data.gsub!(/\s/, "")
-        (data =~ /[0-9]{12,18}/) || (data =~ /[0-9]{9}[0-9Xx]/)
+        data = data.gsub(/\s/, "")
+        data.match?(/^[0-9]{13,18}$/) || data.match?(/^[0-9]{9}[0-9Xx]$/)
       end
 
       # Gets the essential 13-digits from an ISBN barcode (EAN-13)
       def decode(data)
-        data.gsub!(/\s/, "")
+        data = data.gsub(/\s/, "")
         if data.length == 10
           data
         elsif data.length >= 13

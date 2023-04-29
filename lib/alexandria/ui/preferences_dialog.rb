@@ -5,7 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 require "alexandria/scanners/cue_cat"
-require "alexandria/scanners/keyboard"
+require "alexandria/scanners/keyboard_wedge"
 require "alexandria/ui/builder_base"
 require "alexandria/ui/provider_preferences_dialog"
 require "alexandria/ui/new_provider_dialog"
