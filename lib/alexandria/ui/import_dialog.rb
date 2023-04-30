@@ -96,7 +96,7 @@ module Alexandria
           filter.on_iterate do |n, total|
             unless @destroyed
               fraction = n * 1.0 / total
-              log.debug { "#{inspect} fraction: #{fraction}" }
+              log.debug { "fraction: #{fraction}" }
               exec_queue.call(on_progress, fraction)
             end
           end
@@ -104,7 +104,7 @@ module Alexandria
           not_cancelled = true
           filter.on_error do |message|
             not_cancelled = exec_queue.sync_call(on_error, message)
-            log.debug { "#{inspect} cancel state: #{not_cancelled}" }
+            log.debug { "cancel state: #{not_cancelled}" }
           end
 
           library = nil
