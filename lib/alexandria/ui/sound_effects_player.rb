@@ -69,6 +69,8 @@ module Alexandria
           ogg_src_pad.link(vorbis_sink_pad)
         end
 
+        demuxer.unref
+
         decoder >> converter >> audiosink
       end
 
