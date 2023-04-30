@@ -10,12 +10,19 @@ describe Alexandria::UI::ImportDialog do
   let(:parent) { Gtk::Window.new :toplevel }
 
   it "can be instantiated" do
-    expect { described_class.new parent }.not_to raise_error
+    obj = described_class.new parent
+    expect(obj).to be_a described_class
+
+    # NOTE: Dialog must be destroyed to avoid a TypeError after the spec run
+    # (visible when running ruby in debug mode).
+    # TODO: Delay initialization of the dialog until needed in #acquire
+    obj.destroy
   end
 
   it "handles a selection change" do
     importdialog = described_class.new parent
     expect { importdialog.dialog.signal_emit "selection_changed" }.not_to raise_error
+    importdialog.destroy
   end
 
   describe "#acquire" do

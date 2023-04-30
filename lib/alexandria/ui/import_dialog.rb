@@ -144,6 +144,10 @@ module Alexandria
         dialog.destroy unless @destroyed
       end
 
+      def destroy
+        dialog.destroy
+      end
+
       private
 
       def make_filefilter(import_filter)
