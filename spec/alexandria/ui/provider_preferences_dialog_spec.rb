@@ -11,7 +11,7 @@ describe Alexandria::UI::ProviderPreferencesDialog do
   let(:variable) do
     instance_double(Alexandria::BookProviders::Preferences::Variable,
                     name: "foo-bar", description: "Foo Bar", possible_values: nil,
-                    value: "baz", mandatory?: false)
+                    value: "baz", mandatory?: false, :new_value= => nil)
   end
   let(:preferences) do
     instance_double(Alexandria::BookProviders::Preferences, length: 0, read: [variable])
@@ -37,7 +37,6 @@ describe Alexandria::UI::ProviderPreferencesDialog do
 
     before do
       allow(preferences_dialog.dialog).to receive(:run)
-      allow(variable).to receive(:new_value=)
     end
 
     it "runs the underlying Gtk+ dialog" do
