@@ -106,6 +106,10 @@ module Alexandria
         dialog.destroy
       end
 
+      def destroy
+        dialog.destroy
+      end
+
       private
 
       def on_export(format, theme)

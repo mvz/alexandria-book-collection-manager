@@ -12,7 +12,12 @@ describe Alexandria::UI::ExportDialog do
   let(:sort_order) { Alexandria::LibrarySortOrder::Unsorted.new }
 
   it "can be instantiated" do
-    expect { described_class.new parent, library, sort_order }.not_to raise_error
+    obj = described_class.new parent, library, sort_order
+    expect(obj).to be_a described_class
+
+    # NOTE: The dialog must be destroyed to avoid a TypeError after the spec
+    # run (visible when running ruby in debug mode).
+    obj.destroy
   end
 
   describe "#perform" do
