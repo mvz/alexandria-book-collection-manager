@@ -77,6 +77,10 @@ module Alexandria
         new_rule.value = nil
       end
 
+      def destroy
+        dialog.destroy
+      end
+
       protected
 
       attr_reader :smart_library_rules
