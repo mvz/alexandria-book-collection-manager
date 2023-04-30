@@ -10,7 +10,13 @@ describe Alexandria::UI::NewProviderDialog do
   let(:parent) { Gtk::Window.new :toplevel }
 
   it "can be instantiated" do
-    expect { described_class.new parent }.not_to raise_error
+    obj = described_class.new parent
+    expect(obj).to be_a described_class
+
+    # NOTE: Dialog must be destroyed to avoid a TypeError after the spec run
+    # (visible when running ruby in debug mode).
+    # TODO: Delay initialization of the dialog until needed in #acquire
+    obj.dialog.destroy
   end
 
   describe "#acquire" do

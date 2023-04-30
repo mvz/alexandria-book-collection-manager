@@ -15,5 +15,9 @@ describe Alexandria::UI::AcquireDialog do
     allow(ui_manager).to receive :set_status_label
     dialog = described_class.new parent, ui_manager, library
     expect(dialog).to be_a described_class
+
+    # NOTE: Dialog must be destroyed to avoid a TypeError after the spec run
+    # (visible when running ruby in debug mode).
+    dialog.acquire_dialog.destroy
   end
 end

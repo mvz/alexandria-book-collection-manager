@@ -287,7 +287,7 @@ module Alexandria
 
       # end copy-n-paste
 
-      attr_reader :ui_manager
+      attr_reader :ui_manager, :acquire_dialog
 
       private
 

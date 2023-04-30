@@ -62,6 +62,10 @@ module Alexandria
         @book_properties_dialog.show
       end
 
+      def destroy
+        @book_properties_dialog.destroy
+      end
+
       def setup_date_widgets
         @redd_date.signal_connect("icon-press") do |entry, primary, _icon|
           case primary.nick

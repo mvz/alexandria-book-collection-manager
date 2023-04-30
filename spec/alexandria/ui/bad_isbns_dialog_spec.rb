@@ -9,6 +9,11 @@ require_relative "../../spec_helper"
 describe Alexandria::UI::BadIsbnsDialog do
   it "can be instantiated" do
     parent = Gtk::Window.new :toplevel
-    expect { described_class.new parent, "Careful", [] }.not_to raise_error
+    obj = described_class.new parent, "Careful", []
+    expect(obj).to be_a described_class
+
+    # NOTE: Dialog must be destroyed to avoid a TypeError after the spec run
+    # (visible when running ruby in debug mode).
+    obj.destroy
   end
 end
