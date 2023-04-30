@@ -27,6 +27,10 @@ module Alexandria
         @controls = []
       end
 
+      def destroy
+        @dialog.destroy
+      end
+
       private
 
       def fill_table(table, provider)

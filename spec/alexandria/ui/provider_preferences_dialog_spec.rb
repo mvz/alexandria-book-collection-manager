@@ -29,7 +29,7 @@ describe Alexandria::UI::ProviderPreferencesDialog do
     # NOTE: Dialog must be destroyed to avoid a TypeError after the spec run
     # (visible when running ruby in debug mode).
     # TODO: Delay initialization of the dialog until needed in #acquire
-    obj.dialog.destroy
+    obj.destroy
   end
 
   describe "#acquire" do

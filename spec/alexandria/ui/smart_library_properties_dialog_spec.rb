@@ -38,12 +38,21 @@ describe Alexandria::UI::SmartLibraryPropertiesDialog do
       gtk_dialog.show_all
     end
 
+    after do
+      # NOTE: Dialog must be destroyed to avoid a TypeError after the spec run
+      # (visible when running ruby in debug mode).
+      properties_dialog.destroy
+    end
+
     it "pops up the calendar widget" do
       properties_dialog.handle_date_icon_press(date_entry,
                                                Gtk::EntryIconPosition::PRIMARY,
                                                nil)
       popup = properties_dialog.instance_variable_get(:@calendar_popup)
       expect(popup).to be_visible
+      # NOTE: Popup must be destroyed to avoid a TypeError after the spec run
+      # (visible when running ruby in debug mode).
+      popup.destroy
     end
   end
 end
