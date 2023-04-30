@@ -44,6 +44,10 @@ module Alexandria
       def show
         @dialog.show
       end
+
+      def destroy
+        @dialog.destroy
+      end
     end
   end
 end
