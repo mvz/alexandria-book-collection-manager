@@ -82,17 +82,16 @@ module Alexandria
         end
 
         @checkbutton_own.active = book.own?
-        if (@checkbutton_redd.active = book.redd?)
-          @redd_date.sensitive = true
-          if book.redd_when.nil?
-            log.debug { "no redd_when" }
-          else
-            @redd_date.text = format_date(book.redd_when)
-          end
-          # self.redd_when = (book.redd_when or Time.now)
+
+        @block_calendar_popup = true
+        if book.redd?
+          @redd_date.text = format_date(book.redd_when) unless book.redd_when.nil?
+          @checkbutton_redd.active = true
         else
-          @redd_date.sensitive = false
+          @checkbutton_redd.active = false
         end
+        @block_calendar_popup = false
+
         @checkbutton_want.active = book.want?
 
         @checkbutton_want.inconsistent = true if (@checkbutton_own.active = book.own?)
