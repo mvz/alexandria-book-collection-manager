@@ -52,6 +52,7 @@ module Alexandria
         col = Gtk::TreeViewColumn.new("", renderer,
                                       text: 0,
                                       editable: 1)
+        renderer.unref
         @treeview_authors.append_column(col)
 
         setup_date_widgets
