@@ -111,6 +111,8 @@ module Alexandria
         renderer.signal_connect("edited") do |cell, path_string, new_text|
           on_edited_library(cell, path_string, new_text)
         end
+        # Make column responsible for the renderer lifetime
+        renderer.unref
         @library_listview.append_column(column)
 
         @library_listview.set_row_separator_func do |model, iter|
