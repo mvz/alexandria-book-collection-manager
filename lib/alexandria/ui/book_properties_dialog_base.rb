@@ -55,11 +55,7 @@ module Alexandria
         @treeview_authors.append_column(col)
 
         setup_date_widgets
-        GLib::Timeout.add(150) do
-          @setup_finished = true
-
-          false
-        end
+        @block_calendar_popup = false
       end
 
       def show
@@ -242,13 +238,15 @@ module Alexandria
       end
 
       def redd_toggled
-        redd_yes = @checkbutton_redd.active?
-        @redd_date.sensitive = redd_yes
+        if @checkbutton_redd.active?
+          @redd_date.sensitive = true
 
-        return unless redd_yes && @redd_date.text.strip.empty?
+          return if @block_calendar_popup
 
-        # don't do this when popping up the dialog for the first time
-        display_calendar_popup(@redd_date) if @setup_finished
+          display_calendar_popup(@redd_date) if @redd_date.text.strip.empty?
+        else
+          @redd_date.sensitive = false
+        end
       end
 
       private
