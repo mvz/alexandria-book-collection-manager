@@ -51,33 +51,33 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_manual_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_provider_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_smart_library_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/preferences_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/provider_preferences_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/really_delete_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/sidepane_manager_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/skip_entry_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/smart_library_properties_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/sound_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/ui_manager_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_manual_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_provider_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/new_smart_library_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/preferences_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/provider_preferences_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/really_delete_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/sidepane_manager_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/skip_entry_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/smart_library_properties_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/sound_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/ui_manager_spec.rb -w
 
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/about_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/acquire_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/alert_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/bad_isbns_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/book_properties_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/confirm_erase_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/conflict_while_copying_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/error_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/export_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/icons_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/iconview_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/import_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/keep_bad_isbn_dialog_spec.rb -w
-      - run: DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/main_app_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/about_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/acquire_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/alert_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/bad_isbns_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/book_properties_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/confirm_erase_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/conflict_while_copying_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/error_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/export_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/icons_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/iconview_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/import_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/keep_bad_isbn_dialog_spec.rb -w
+      - run: RUBYOPT=-d DEBUG=1 xvfb-run bundle exec rspec spec/alexandria/ui/main_app_spec.rb -w
 
       - name: Run unit tests - book providers
         run: xvfb-run bundle exec rspec spec/alexandria/book_providers
