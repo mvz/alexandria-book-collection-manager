@@ -51,11 +51,18 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
 
-      - name: Run unit tests - book providers
-        run: xvfb-run bundle exec rspec spec/alexandria/book_providers
-
-      - name: Run unit tests - scanners
-        run: xvfb-run bundle exec rspec spec/alexandria/scanners
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_manual_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_provider_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_smart_library_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/preferences_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/provider_preferences_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/really_delete_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/sidepane_manager_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/skip_entry_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/smart_library_properties_dialog_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/sound_spec.rb
+      - run: xvfb-run bundle exec rspec spec/alexandria/ui/ui_manager_spec.rb
 
       - run: xvfb-run bundle exec rspec spec/alexandria/ui/about_dialog_spec.rb
       - run: xvfb-run bundle exec rspec spec/alexandria/ui/acquire_dialog_spec.rb
@@ -71,18 +78,12 @@ jobs:
       - run: xvfb-run bundle exec rspec spec/alexandria/ui/import_dialog_spec.rb
       - run: xvfb-run bundle exec rspec spec/alexandria/ui/keep_bad_isbn_dialog_spec.rb
       - run: xvfb-run bundle exec rspec spec/alexandria/ui/main_app_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_manual_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_book_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_provider_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/new_smart_library_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/preferences_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/provider_preferences_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/really_delete_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/sidepane_manager_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/skip_entry_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/smart_library_properties_dialog_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/sound_spec.rb
-      - run: xvfb-run bundle exec rspec spec/alexandria/ui/ui_manager_spec.rb
+
+      - name: Run unit tests - book providers
+        run: xvfb-run bundle exec rspec spec/alexandria/book_providers
+
+      - name: Run unit tests - scanners
+        run: xvfb-run bundle exec rspec spec/alexandria/scanners
 
       - name: Run unit tests - main
         run: xvfb-run bundle exec rspec spec/alexandria/*_spec.rb
