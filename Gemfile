@@ -11,7 +11,7 @@ group :development, :test do
   gem "yard", "~> 0.9.5"
 end
 
-git "https://github.com/mvz/ruby-gnome", branch: "fix-rclosure-invalidate-type-error" do
+git "https://github.com/mvz/ruby-gnome", branch: "debug-type-error" do
   gem "atk"
   gem "cairo-gobject"
   gem "gdk3"
@@ -19,6 +19,7 @@ git "https://github.com/mvz/ruby-gnome", branch: "fix-rclosure-invalidate-type-e
   gem "gio2"
   gem "glib2"
   gem "gobject-introspection"
+  gem "gstreamer"
   gem "gtk3"
   gem "pango"
 end
