@@ -11,7 +11,7 @@ group :development, :test do
   gem "yard", "~> 0.9.5"
 end
 
-git "https://github.com/mvz/ruby-gnome", branch: "debug-type-error" do
+git "https://github.com/mvz/ruby-gnome", branch: "type-error-patch-2" do
   gem "atk"
   gem "cairo-gobject"
   gem "gdk3"
