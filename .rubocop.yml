@@ -17,6 +17,10 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
 
+# Put development dependencies in the gemspec so rubygems.org knows about them
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
 # Choose GetText-style I18n cops
 I18n/GetText:
   Enabled: true
