@@ -28,5 +28,5 @@ require "rake/clean"
 
 # Load the other rake files in the tasks folder
 tasks_dir = __dir__
-rakefiles = Dir.glob(File.join(tasks_dir, "*.rake")).sort
+rakefiles = Dir.glob(File.join(tasks_dir, "*.rake"))
 import(*rakefiles)
