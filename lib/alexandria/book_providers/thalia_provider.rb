@@ -20,7 +20,7 @@ module Alexandria
       include Logging
 
       SITE = "https://www.thalia.de"
-      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s" # type,term
+      BASE_SEARCH_URL = "#{SITE}/shop/bde_bu_hg_startseite/suche/?%s=%s".freeze # type,term
 
       def initialize
         super("Thalia", "Thalia (Germany)")

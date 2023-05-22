@@ -24,7 +24,7 @@ module Alexandria
       include Logging
 
       SITE = "https://www.worldcat.org"
-      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced" # type, term
+      BASE_SEARCH_URL = "#{SITE}/search?q=%s%s&qt=advanced".freeze # type, term
 
       def initialize
         super("WorldCat", "WorldCat")
