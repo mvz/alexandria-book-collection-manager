@@ -9,7 +9,7 @@ module Alexandria
     include Logging
 
     FIX_BIGNUM_REGEX =
-      %r{loaned_since:\s*(!ruby/object:Bignum\s*)?(\d+)\n}.freeze
+      %r{loaned_since:\s*(!ruby/object:Bignum\s*)?(\d+)\n}
 
     include GetText
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
@@ -45,7 +45,7 @@ module Alexandria
       library = Library.new(name, self)
       FileUtils.mkdir_p(library.path)
       Dir.chdir(library.path) do
-        Dir["*" + Library::EXT[:book]].sort.each do |filename|
+        Dir["*" + Library::EXT[:book]].each do |filename|
           test[1] = filename if (test[0]).zero?
 
           unless File.size? test[1]
