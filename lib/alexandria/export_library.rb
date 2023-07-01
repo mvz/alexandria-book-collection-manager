@@ -374,12 +374,7 @@ module Alexandria
         cite_key = k + auths[k].to_s
         bibtex << "@BOOK{#{cite_key},\n"
         bibtex << 'author = "'
-        if book.authors != []
-          bibtex << book.authors[0]
-          book.authors[1..].each do |author|
-            bibtex << " and #{latex_escape(author)}"
-          end
-        end
+        bibtex << book.authors.map { latex_escape(_1) }.join(" and ")
         bibtex << "\",\n"
         bibtex << "title = \"#{latex_escape(book.title)}\",\n"
         bibtex << "publisher = \"#{latex_escape(book.publisher)}\",\n"
