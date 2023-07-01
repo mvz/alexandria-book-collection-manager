@@ -14,7 +14,7 @@ RSpec.describe Alexandria::ExportLibrary do
   let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
   let(:outfile) do
     outfile_base = format.ext ? "my-library.#{format.ext}" : "my-library"
-    File.join(Dir.tmpdir, outfile_base)
+    File.join(Dir.mktmpdir, outfile_base)
   end
   let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
 

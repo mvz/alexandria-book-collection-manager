@@ -14,13 +14,13 @@ module Alexandria
       extend GetText
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
-      TMP_COVER_FILE = File.join(Dir.tmpdir, "tmp_cover")
       def initialize(parent, library, &on_add_cb)
-        super(parent, TMP_COVER_FILE)
+        tmp_cover_file = File.join(Dir.mktmpdir("cover"), "tmp_cover")
+        super(parent, tmp_cover_file)
 
         @library = library
         @on_add_cb = on_add_cb
-        FileUtils.rm_f(TMP_COVER_FILE)
+        FileUtils.rm_f(@cover_file)
 
         cancel_button = Gtk::Button.new(stock_id: Gtk::Stock::CANCEL)
         cancel_button.signal_connect("clicked") { on_cancel }
@@ -110,8 +110,8 @@ module Alexandria
         book.tags = @entry_tags.text.split
         @library << book
         @library.save(book)
-        if File.exist?(TMP_COVER_FILE) && !@delete_cover_file
-          FileUtils.cp(TMP_COVER_FILE, @library.cover(book))
+        if File.exist?(@cover_file) && !@delete_cover_file
+          FileUtils.cp(@cover_file, @library.cover(book))
         end
         @on_add_cb.call(book)
         @book_properties_dialog.destroy

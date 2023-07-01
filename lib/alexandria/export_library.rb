@@ -52,16 +52,18 @@ module Alexandria
     end
 
     def export_as_tellico_xml_archive(filename)
-      File.open(File.join(Dir.tmpdir, "tellico.xml"), "w") do |io|
+      tmpdir = Dir.mktmpdir "tellico_export"
+
+      File.open(File.join(tmpdir, "tellico.xml"), "w") do |io|
         to_tellico_document.write(io, 0)
       end
-      copy_covers(File.join(Dir.tmpdir, "images"))
-      Dir.chdir(Dir.tmpdir) do
+      copy_covers(File.join(tmpdir, "images"))
+      Dir.chdir(tmpdir) do
         output = `zip -q -r \"#{filename}\" tellico.xml images 2>&1`
         raise output unless $CHILD_STATUS.success?
       end
-      FileUtils.rm_rf(File.join(Dir.tmpdir, "images"))
-      FileUtils.rm(File.join(Dir.tmpdir, "tellico.xml"))
+      FileUtils.rm_rf(File.join(tmpdir, "images"))
+      FileUtils.rm(File.join(tmpdir, "tellico.xml"))
     end
 
     def export_as_isbn_list(filename)
