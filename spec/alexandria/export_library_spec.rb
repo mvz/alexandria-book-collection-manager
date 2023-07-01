@@ -92,12 +92,58 @@ RSpec.describe Alexandria::ExportLibrary do
 
   describe "#export_as_bibtex" do
     let(:message) { :export_as_bibtex }
+    let(:expected_content) do
+      <<~BIBTEX
+        %Generated on #{Date.today} by: Alexandria #{Alexandria::DISPLAY_VERSION}
+        %
+
+        @BOOK{William1,
+        author = "William Gibson",
+        title = "Pattern Recognition",
+        publisher = "Penguin Books Ltd",
+        year = 2004
+        }
+
+        @BOOK{Francoise1,
+        author = "Francoise Sagan and Irene Ash",
+        title = "Bonjour Tristesse",
+        publisher = "Penguin Books Ltd",
+        OPTnote = "Essential penguin",
+        year = 1998
+        }
+
+        @BOOK{Kazuo1,
+        author = "Kazuo Ishiguro",
+        title = "An Artist of the Floating World",
+        publisher = "Faber and Faber",
+        year = 1999
+        }
+
+        @BOOK{Ursula1,
+        author = "Ursula Le Guin",
+        title = "The Dispossessed",
+        publisher = "Gollancz",
+        OPTnote = "Gollancz S.F.",
+        year = 2006
+        }
+
+        @BOOK{Neil1,
+        author = "Neil Gaiman",
+        title = "Neverwhere",
+        publisher = "Headline Review",
+        OPTnote = "The Author's Preferred Text",
+        year = 2005
+        }
+
+      BIBTEX
+    end
 
     it "can export unsorted" do
       format.invoke(my_library, unsorted, outfile)
       aggregate_failures do
         expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
+        expect(File.read(outfile)).to eq expected_content
       end
     end
   end
