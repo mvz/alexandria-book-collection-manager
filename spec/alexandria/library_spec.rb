@@ -135,6 +135,47 @@ describe Alexandria::Library do
     end
   end
 
+  describe ".import_as_tellico_xml_archive" do
+    let(:tellico_export_file) do
+      existing_library = loader.load_library("My Library")
+      exporter = Alexandria::ExportLibrary.new(existing_library,
+                                               Alexandria::LibrarySortOrder::Unsorted.new)
+      tmpdir = Dir.mktmpdir
+      zipfile = File.join(tmpdir, "tellico.zip")
+      exporter.export_as_tellico_xml_archive(zipfile)
+      zipfile
+    end
+    let(:expected_titles) do
+      [
+        "Pattern Recognition",
+        "Bonjour Tristesse",
+        "An Artist of the Floating World",
+        "The Dispossessed",
+        "Neverwhere"
+      ]
+    end
+
+    before do
+      test_library = File.join(LIBDIR, "0.6.2")
+      FileUtils.cp_r(test_library, TESTDIR)
+
+      libraries = Alexandria::LibraryCollection.instance
+      library = described_class.new("Test Library")
+      libraries.add_library(library)
+    end
+
+    it "imports books from own tellico export" do
+      library, bad_isbns =
+        described_class.import_as_tellico_xml_archive("Test Library", tellico_export_file,
+                                                      proc {}, proc {})
+
+      aggregate_failures do
+        expect(library.map(&:title)).to eq expected_titles
+        expect(bad_isbns).to be_empty
+      end
+    end
+  end
+
   context "when importing from 0.6.1 data files" do
     let(:libs) { loader.load_all_libraries }
     let(:my_library) { libs[0] }
