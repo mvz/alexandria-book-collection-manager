@@ -181,7 +181,7 @@ module Alexandria
           # probably Goodreads' wonky ISBN fields ,,="043432432X",
           # this is a hack to fix up such files
           data = File.read(filename)
-          data.gsub!(/,="/, ',"')
+          data.gsub!(',="', ',"')
           csv_fixed = Tempfile.new("alexandria_import_csv_fixed_")
           csv_fixed.write(data)
           csv_fixed.close
