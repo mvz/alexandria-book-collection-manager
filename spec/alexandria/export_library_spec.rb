@@ -16,7 +16,6 @@ RSpec.describe Alexandria::ExportLibrary do
     outfile_base = format.ext ? "my-library.#{format.ext}" : "my-library"
     File.join(Dir.mktmpdir, outfile_base)
   end
-  let(:unsorted) { Alexandria::LibrarySortOrder::Unsorted.new }
 
   before do
     test_library = File.join(LIBDIR, "0.6.2")
@@ -55,7 +54,8 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_html }
 
     it "can export unsorted" do
-      format.invoke(my_library, unsorted, outfile, Alexandria::WebTheme.all.first)
+      format.invoke(my_library, Alexandria::LibrarySortOrder::Unsorted.new,
+                    outfile, Alexandria::WebTheme.all.first)
       index = File.join(outfile, "index.html")
 
       aggregate_failures do
@@ -70,7 +70,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_onix_xml_archive }
 
     it "can export unsorted" do
-      format.invoke(my_library, unsorted, outfile)
+      format.invoke(my_library, Alexandria::LibrarySortOrder::Unsorted.new, outfile)
       aggregate_failures do
         expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
@@ -82,7 +82,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_tellico_xml_archive }
 
     it "can export unsorted" do
-      format.invoke(my_library, unsorted, outfile)
+      format.invoke(my_library, Alexandria::LibrarySortOrder::Unsorted.new, outfile)
       aggregate_failures do
         expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
@@ -139,7 +139,7 @@ RSpec.describe Alexandria::ExportLibrary do
     end
 
     it "can export unsorted" do
-      format.invoke(my_library, unsorted, outfile)
+      format.invoke(my_library, Alexandria::LibrarySortOrder::Unsorted.new, outfile)
       aggregate_failures do
         expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
@@ -152,7 +152,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_isbn_list }
 
     it "can export unsorted" do
-      format.invoke(my_library, unsorted, outfile)
+      format.invoke(my_library, Alexandria::LibrarySortOrder::Unsorted.new, outfile)
       aggregate_failures do
         expect(outfile).to be_an_existing_file
         expect(File.size(outfile)).to be_nonzero
@@ -164,7 +164,7 @@ RSpec.describe Alexandria::ExportLibrary do
     let(:message) { :export_as_ipod_notes }
 
     it "can export unsorted" do
-      format.invoke(my_library, unsorted, outfile, nil)
+      format.invoke(my_library, Alexandria::LibrarySortOrder::Unsorted.new, outfile, nil)
       index = File.join(outfile, "index.linx")
 
       aggregate_failures do
