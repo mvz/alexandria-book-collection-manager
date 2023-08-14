@@ -365,13 +365,9 @@ module Alexandria
 
       auths = Hash.new(0)
       each do |book|
-        k = (book.authors[0] || "Anonymous").split[0]
-        if auths.key?(k)
-          auths[k] += 1
-        else
-          auths[k] = 1
-        end
-        cite_key = k + auths[k].to_s
+        auth_key = (book.authors[0] || "Anonymous").split[0]
+        auths[auth_key] += 1
+        cite_key = "#{auth_key}#{auths[auth_key]}"
         bibtex << "@BOOK{#{cite_key},\n"
         bibtex << 'author = "'
         bibtex << book.authors.map { latex_escape(_1) }.join(" and ")
