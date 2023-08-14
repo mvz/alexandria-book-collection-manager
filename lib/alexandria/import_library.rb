@@ -71,9 +71,7 @@ module Alexandria
       log.debug { "Starting import_as_tellico_xml_archive... " }
       return nil unless system("unzip -qqt \"#{filename}\"")
 
-      tmpdir = File.join(Dir.tmpdir, "tellico_export")
-      FileUtils.rm_rf(tmpdir)
-      Dir.mkdir(tmpdir)
+      tmpdir = Dir.mktmpdir "tellico_import"
       Dir.chdir(tmpdir) do
         system("unzip -qq \"#{filename}\"")
         file = File.exist?("bookcase.xml") ? "bookcase.xml" : "tellico.xml"
