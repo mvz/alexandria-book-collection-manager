@@ -26,8 +26,8 @@ describe Alexandria::UI::ExportDialog do
 
     it "works when response is OK" do
       dir = Dir.mktmpdir
-      allow(chooser).to receive(:run).and_return(Gtk::ResponseType::OK)
-      allow(chooser).to receive(:filename).and_return File.join(dir, "export")
+      allow(chooser).to receive_messages(run: Gtk::ResponseType::OK,
+                                         filename: File.join(dir, "export"))
       expect { export_dialog.perform }.not_to raise_error
     ensure
       FileUtils.remove_entry dir
