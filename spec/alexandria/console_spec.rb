@@ -6,7 +6,7 @@
 
 require "spec_helper"
 
-RSpec.describe Alexandria do
+RSpec.describe Alexandria::Console do
   let(:lib_version) { File.join(LIBDIR, "0.6.2") }
 
   before do
