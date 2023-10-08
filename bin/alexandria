@@ -17,7 +17,7 @@ Alexandria::LibraryCollection.instance.library_store = store
 OptionParser.new do |opts|
   opts.banner = "Usage: alexandria [options]"
   opts.on("-l", "--list", "List libraries in numbered format") do
-    puts Alexandria.list_books_on_console
+    puts Alexandria::Console.list_books_on_console
     exit
   end
   opts.on("-d", "--debug", "Run in debug mode") do
