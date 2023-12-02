@@ -202,7 +202,7 @@ module Alexandria
 
       def initialize(name, fullname = nil)
         @name = name
-        @fullname = (fullname || name)
+        @fullname = fullname || name
         @prefs = Preferences.new(self)
         @prefs.add("enabled", _("Enabled"), true, [true, false])
       end
@@ -353,7 +353,7 @@ module Alexandria
       end
       clear
       rejig_providers_priority
-      priority = (@prefs.providers_priority || [])
+      priority = @prefs.providers_priority || []
       priority.map!(&:strip)
       rest = providers.keys - priority
       priority.each { |pname| self << providers[pname] }
@@ -372,7 +372,7 @@ module Alexandria
     private
 
     def rejig_providers_priority
-      priority = (@prefs.providers_priority || [])
+      priority = @prefs.providers_priority || []
       return if priority.empty?
 
       changed = false

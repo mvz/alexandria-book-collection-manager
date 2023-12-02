@@ -117,8 +117,7 @@ module Alexandria
 
     def self.valid_upc?(upc)
       numbers = extract_numbers(upc)
-      ((numbers.length == 17) &&
-       (upc_checksum(numbers[0..10]) == numbers[11]))
+      numbers.length == 17 && upc_checksum(numbers[0..10]) == numbers[11]
     end
 
     AMERICAN_UPC_LOOKUP = {
@@ -216,8 +215,7 @@ module Alexandria
         book.saved_ident = book.ident
       end
       # #was File.exist? but that returns true for empty files... CathalMagus
-      already_there = (File.size?(yaml(book)) &&
-                       !@deleted_books.include?(book))
+      already_there = File.size?(yaml(book)) && !@deleted_books.include?(book)
 
       temp_book = book.dup
       temp_book.library = nil

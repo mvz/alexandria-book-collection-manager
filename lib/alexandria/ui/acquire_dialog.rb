@@ -81,7 +81,7 @@ module Alexandria
       def book_in_library(isbn10, library)
         isbn13 = Library.canonicalise_ean(isbn10)
         match = library.find do |book|
-          (book.isbn == isbn10 || book.isbn == isbn13)
+          book.isbn == isbn10 || book.isbn == isbn13
         end
         !match.nil?
       rescue StandardError
