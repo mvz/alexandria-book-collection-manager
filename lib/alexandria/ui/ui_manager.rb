@@ -459,14 +459,14 @@ module Alexandria
           end
           log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
-          @actiongroup["Properties"].sensitive = \
-            @actiongroup["OnlineInformation"].sensitive = \
+          @actiongroup["Properties"].sensitive =
+            @actiongroup["OnlineInformation"].sensitive =
               books.length == 1
-          @actiongroup["SelectAll"].sensitive = \
+          @actiongroup["SelectAll"].sensitive =
             books.length < library.length
 
-          @actiongroup["Delete"].sensitive = \
-            @actiongroup["DeselectAll"].sensitive = \
+          @actiongroup["Delete"].sensitive =
+            @actiongroup["DeselectAll"].sensitive =
               @actiongroup["Move"].sensitive =
                 @actiongroup["SetRating"].sensitive = !books.empty?
 
