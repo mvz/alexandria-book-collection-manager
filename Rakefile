@@ -43,7 +43,7 @@ ICON_FILE_GLOBS = ["share/app-icon/**/*.png",
 PIXMAP_GLOBS = "share/app-icon/32x32/*.xpm"
 
 def install_common(install_task)
-  install_task.install_exe("bin", "bin/*", "#{PREFIX}/bin")
+  install_task.install_exe("exe", "exe/*", "#{PREFIX}/bin")
   install_task.install("lib", "lib/**/*.rb", install_task.rubylib)
 
   install_task.install("share", SHARE_FILE_GLOBS, SHARE)

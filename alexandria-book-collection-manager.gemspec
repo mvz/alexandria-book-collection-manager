@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
 
   spec.files = `git ls-files -z`.split("\0") |
     ["lib/alexandria/default_preferences.rb"]
+  spec.bindir = "exe"
 
   spec.executables = ["alexandria"]
 

@@ -1,7 +1,7 @@
 
 POT=./alexandria.pot
 
-RUBY=../bin/alexandria $(shell find ../lib -name '*.rb' -and -not -path '*macui*')
+RUBY=../exe/alexandria $(shell find ../lib -name '*.rb' -and -not -path '*macui*')
 
 GLADE=$(shell find ../share/alexandria/glade -name '*.glade')
 
