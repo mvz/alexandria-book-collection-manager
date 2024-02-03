@@ -36,6 +36,8 @@ module Alexandria
 
     class SearchError < StandardError; end
 
+    class ConnectionError < SearchError; end
+
     class NoResultsError < SearchError; end
 
     class TooManyResultsError < SearchError; end

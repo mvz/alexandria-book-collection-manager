@@ -139,19 +139,11 @@ module Alexandria
       end
 
       def search_records(criterion, type, conn_count)
-        options = {}
-        unless prefs["username"].empty? || prefs["password"].empty?
-          options["user"] = prefs["username"]
-          options["password"] = prefs["password"]
-        end
-        hostname = prefs["hostname"]
-        port = prefs["port"].to_i
-        log.debug { "hostname #{hostname} port #{port} options #{options}" }
-        conn = ZOOM::Connection.new(options).connect(hostname, port)
+        conn = connect_to_server
         conn.database_name = prefs["database"]
-
         conn.preferred_record_syntax = prefs["record_syntax"]
         conn.element_set_name = "F"
+
         conn.count = conn_count
         attr = case type
                when SEARCH_BY_ISBN     then [7]
@@ -181,6 +173,23 @@ module Alexandria
 
           raise ex
         end
+      end
+
+      def connect_to_server
+        options = {}
+        unless prefs["username"].empty? || prefs["password"].empty?
+          options["user"] = prefs["username"]
+          options["password"] = prefs["password"]
+        end
+        hostname = prefs["hostname"]
+        port = prefs["port"].to_i
+        log.debug { "hostname #{hostname} port #{port} options #{options}" }
+
+        ZOOM::Connection.new(options).connect(hostname, port)
+      rescue RuntimeError => ex
+        raise ConnectionError if ex.message.include?("10007")
+
+        raise ex
       end
     end
   end
