@@ -25,6 +25,8 @@ RSpec::Matchers.define :have_correct_search_result_for do |query|
       results = provider.instance.search(query, Alexandria::BookProviders::SEARCH_BY_ISBN)
     rescue SocketError
       skip "Service is offline"
+    rescue Alexandria::BookProviders::ConnectionError
+      skip "Connection failed"
     end
 
     expect(results).to be_instance_of(Array)
