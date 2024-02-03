@@ -459,14 +459,14 @@ module Alexandria
           end
           log.debug { "@library_listview does *NOT* have focus" }
           log.debug { "Books are empty: #{books.empty?}" }
-          @actiongroup["Properties"].sensitive = \
-            @actiongroup["OnlineInformation"].sensitive = \
+          @actiongroup["Properties"].sensitive =
+            @actiongroup["OnlineInformation"].sensitive =
               books.length == 1
-          @actiongroup["SelectAll"].sensitive = \
+          @actiongroup["SelectAll"].sensitive =
             books.length < library.length
 
-          @actiongroup["Delete"].sensitive = \
-            @actiongroup["DeselectAll"].sensitive = \
+          @actiongroup["Delete"].sensitive =
+            @actiongroup["DeselectAll"].sensitive =
               @actiongroup["Move"].sensitive =
                 @actiongroup["SetRating"].sensitive = !books.empty?
 
@@ -487,7 +487,7 @@ module Alexandria
             BookProviders.list.each do |provider|
               has_no_url = true
               begin
-                has_no_url = (b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?)
+                has_no_url = b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?
               rescue StandardError => ex
                 log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
               end
@@ -751,7 +751,7 @@ module Alexandria
         iter[Columns::EDITION] = book.edition
         iter[Columns::NOTES] = (book.notes || "")
         iter[Columns::LOANED_TO] = (book.loaned_to || "")
-        rating = (book.rating || Book::DEFAULT_RATING)
+        rating = book.rating || Book::DEFAULT_RATING
         # ascending order is the default
         iter[Columns::RATING] = Book::MAX_RATING_STARS - rating
         iter[Columns::OWN] = book.own?

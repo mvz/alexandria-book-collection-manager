@@ -77,10 +77,10 @@ class FileInstallTask < Rake::TaskLib
   # of the @file_groups list
   def make_tasks
     tasknames = {}
-    tasknames[:install] = "install_#{@taskname}".intern
-    tasknames[:uninstall] = "uninstall_#{@taskname}".intern
-    tasknames[:uninstall_files] = "uninstall_#{@taskname}_files".intern
-    tasknames[:uninstall_dirs] = "uninstall_#{@taskname}_dirs".intern
+    tasknames[:install] = :"install_#{@taskname}"
+    tasknames[:uninstall] = :"uninstall_#{@taskname}"
+    tasknames[:uninstall_files] = :"uninstall_#{@taskname}_files"
+    tasknames[:uninstall_dirs] = :"uninstall_#{@taskname}_dirs"
 
     # INSTALL TASK
 

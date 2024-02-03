@@ -64,7 +64,7 @@ module Alexandria
 
     DEFAULT_VALUES.each_key do |var|
       define_method(var) { generic_getter var }
-      define_method("#{var}=") { |val| generic_setter var, val }
+      define_method(:"#{var}=") { |val| generic_setter var, val }
     end
 
     def get_variable(variable_name)

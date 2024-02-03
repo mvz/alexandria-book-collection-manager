@@ -17,7 +17,7 @@ module Alexandria
           method(handler)
         end
         widget_names.each do |name|
-          instance_variable_set("@#{name}".intern, builder[name.to_s])
+          instance_variable_set(:"@#{name}", builder[name.to_s])
         end
       end
     end
