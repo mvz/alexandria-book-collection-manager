@@ -54,7 +54,7 @@ Metrics/PerceivedComplexity:
 Naming/HeredocDelimiterNaming:
   Exclude:
     - 'Rakefile'
-    - 'bin/alexandria'
+    - 'exe/alexandria'
     - 'lib/alexandria/export_library.rb'
     - 'lib/alexandria/ui/about_dialog.rb'
 

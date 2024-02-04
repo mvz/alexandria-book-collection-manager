@@ -8,7 +8,8 @@ require "gnome_app_driver"
 require "tmpdir"
 
 describe "The Alexandria application" do
-  let(:driver) { GnomeAppDriver.new "alexandria" }
+  # TODO: Remove app_file argument once GnomeAppDriver is smart about executable location
+  let(:driver) { GnomeAppDriver.new "alexandria", app_file: "exe/alexandria" }
 
   before do
     ENV["HOME"] = Dir.mktmpdir
