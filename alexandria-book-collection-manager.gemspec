@@ -49,6 +49,7 @@ Gem::Specification.new do |spec|
   spec.rdoc_options = ["--main", "README.md"]
 
   spec.add_runtime_dependency "alexandria-zoom", ["~> 0.6.0"]
+  spec.add_runtime_dependency "csv", "~> 3.2"
   spec.add_runtime_dependency "gettext", ["~> 3.1"]
   spec.add_runtime_dependency "gstreamer", "~> 4.2.0"
   spec.add_runtime_dependency "gtk3", "~> 4.2.0"
@@ -56,7 +57,9 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "image_size", ["~> 3.0"]
   spec.add_runtime_dependency "marc", ">= 1.0", "< 1.3"
   spec.add_runtime_dependency "nokogiri", ["~> 1.11"]
+  spec.add_runtime_dependency "observer", "~> 0.1.2"
 
+  spec.add_development_dependency "base64", "~> 0.2.0"
   spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
   spec.add_development_dependency "rake", ["~> 13.0"]
   spec.add_development_dependency "rspec", ["~> 3.0"]
