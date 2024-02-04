@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.summary = "GNOME application for managing collections of books"
 
   spec.homepage = "http://www.github.com/mvz/alexandria-book-collection-manager"
-  spec.license = "GPL-2.0+"
+  spec.license = "GPL-2.0-or-later"
 
   spec.required_ruby_version = ">= 3.0"
 
