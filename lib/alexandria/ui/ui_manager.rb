@@ -11,6 +11,7 @@ require "alexandria/library_sort_order"
 
 module Alexandria
   module UI
+    # rubocop:disable Metrics/ClassLength:
     class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview,
                     :listview_model, :iconview_model, :filtered_model
@@ -237,63 +238,65 @@ module Alexandria
         end
       end
 
+      LIST_STORE_COLUMNS = [
+        GdkPixbuf::Pixbuf,    # COVER_LIST
+        GdkPixbuf::Pixbuf,    # COVER_ICON
+        String,         # TITLE
+        String,         # TITLE_REDUCED
+        String,         # AUTHORS
+        String,         # ISBN
+        String,         # PUBLISHER
+        String,         # PUBLISH_DATE
+        String,         # EDITION
+        Integer,        # RATING
+        String,         # IDENT
+        String,         # NOTES
+        TrueClass,      # REDD
+        TrueClass,      # OWN
+        TrueClass,      # WANT
+        String,         # TAGS
+        String          # LOANED TO
+      ].freeze
+
       def setup_active_model
         log.debug { "setting up active model" }
         # The active model.
 
-        list = [
-          GdkPixbuf::Pixbuf,    # COVER_LIST
-          GdkPixbuf::Pixbuf,    # COVER_ICON
-          String,         # TITLE
-          String,         # TITLE_REDUCED
-          String,         # AUTHORS
-          String,         # ISBN
-          String,         # PUBLISHER
-          String,         # PUBLISH_DATE
-          String,         # EDITION
-          Integer,        # RATING
-          String,         # IDENT
-          String,         # NOTES
-          TrueClass,      # REDD
-          TrueClass,      # OWN
-          TrueClass,      # WANT
-          String,         # TAGS
-          String          # LOANED TO
-        ]
-
-        @model = Gtk::ListStore.new(*list)
+        @model = Gtk::ListStore.new(*LIST_STORE_COLUMNS)
 
         # Filter books according to the search toolbar widgets.
         @filtered_model = Gtk::TreeModelFilter.new(@model)
         @filtered_model.set_visible_func do |_model, iter|
-          # log.debug { "visible_func" }
-          @filter_books_mode ||= 0
-          filter = @filter_entry.text
-          if filter.empty?
-            true
-          else
-            data = case @filter_books_mode
-                   when 0
-                     (iter[Columns::TITLE] || "") +
-                       (iter[Columns::AUTHORS] || "") +
-                       (iter[Columns::ISBN] || "") +
-                       (iter[Columns::PUBLISHER] || "") +
-                       (iter[Columns::NOTES] || "") +
-                       (iter[Columns::TAGS] || "")
-                   when 2 then iter[Columns::TITLE]
-                   when 3 then iter[Columns::AUTHORS]
-                   when 4 then iter[Columns::ISBN]
-                   when 5 then iter[Columns::PUBLISHER]
-                   when 6 then iter[Columns::NOTES]
-                   when 7 then iter[Columns::TAGS]
-                   end
-            !data.nil? && data.downcase.include?(filter.downcase)
-          end
+          filter_iter(iter, @filter_entry.text)
         end
 
         # Give filter entry the initial keyboard focus.
         @filter_entry.grab_focus
         log.debug { "done setting up active model" }
+      end
+
+      def filter_iter(iter, filter)
+        if filter.empty?
+          true
+        else
+          @filter_books_mode ||= 0
+          data = case @filter_books_mode
+                 when 0
+                   (iter[Columns::TITLE] || "") +
+                     (iter[Columns::AUTHORS] || "") +
+                     (iter[Columns::ISBN] || "") +
+                     (iter[Columns::PUBLISHER] || "") +
+                     (iter[Columns::NOTES] || "") +
+                     (iter[Columns::TAGS] || "")
+                 when 2 then iter[Columns::TITLE]
+                 when 3 then iter[Columns::AUTHORS]
+                 when 4 then iter[Columns::ISBN]
+                 when 5 then iter[Columns::PUBLISHER]
+                 when 6 then iter[Columns::NOTES]
+                 when 7 then iter[Columns::TAGS]
+                 end
+          !data.nil? && data.downcase.include?(filter.downcase)
+        end
       end
 
       def on_library_button_press_event(widget, event)
@@ -449,55 +452,56 @@ module Alexandria
 
         # Focus is the wrong idiom here.
         unless @clicking_on_sidepane || (@main_app.focus == @library_listview)
-          # unless @main_app.focus == @library_listview
-
-          log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
-          log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
-          log.debug do
-            "@library_listview: #{@library_listview.has_focus?} " \
-              "or @library_popup:#{@library_popup.has_focus?}"
-          end
-          log.debug { "@library_listview does *NOT* have focus" }
-          log.debug { "Books are empty: #{books.empty?}" }
-          @actiongroup["Properties"].sensitive =
-            @actiongroup["OnlineInformation"].sensitive =
-              books.length == 1
-          @actiongroup["SelectAll"].sensitive =
-            books.length < library.length
-
-          @actiongroup["Delete"].sensitive =
-            @actiongroup["DeselectAll"].sensitive =
-              @actiongroup["Move"].sensitive =
-                @actiongroup["SetRating"].sensitive = !books.empty?
-
-          log.debug do
-            "on_books_selection_changed Delete: #{@actiongroup['Delete'].sensitive?}"
-          end
-
-          if library.is_a?(SmartLibrary)
-            @actiongroup["Delete"].sensitive =
-              @actiongroup["Move"].sensitive = false
-          end
-
-          # Sensitize providers URL
-          if books.length == 1
-            b = books.first
-            # FIXME: Clean up endless negation in this logic
-            no_urls = true
-            BookProviders.list.each do |provider|
-              has_no_url = true
-              begin
-                has_no_url = b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?
-              rescue StandardError => ex
-                log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
-              end
-              @actiongroup[provider.action_name].sensitive = !has_no_url
-              no_urls = false unless has_no_url
-            end
-            @actiongroup["OnlineInformation"].sensitive = false if no_urls
-          end
+          sensizite_action_group_items(books, library)
+          sensitize_provider_actions(books)
         end
         @clicking_on_sidepane = false
+      end
+
+      def sensizite_action_group_items(books, library)
+        log.debug { "Currently focused widget: #{@main_app.focus.inspect}" }
+        log.debug { "#{@library_listview} : #{@library_popup} : #{@listview}" }
+        log.debug do
+          "@library_listview: #{@library_listview.has_focus?} " \
+            "or @library_popup:#{@library_popup.has_focus?}"
+        end
+        log.debug { "@library_listview does *NOT* have focus" }
+        log.debug { "Books are empty: #{books.empty?}" }
+
+        @actiongroup["Properties"].sensitive = @actiongroup["OnlineInformation"].sensitive =
+          books.length == 1
+        @actiongroup["SelectAll"].sensitive = books.length < library.length
+        @actiongroup["DeselectAll"].sensitive = @actiongroup["SetRating"].sensitive =
+          !books.empty?
+
+        can_delete_or_move =
+          if library.is_a?(SmartLibrary)
+            false
+          else
+            !books.empty?
+          end
+        @actiongroup["Delete"].sensitive = @actiongroup["Move"].sensitive =
+          can_delete_or_move
+      end
+
+      # Sensitize providers URL
+      def sensitize_provider_actions(books)
+        return if books.length != 1
+
+        b = books.first
+        # FIXME: Clean up endless negation in this logic
+        no_urls = true
+        BookProviders.list.each do |provider|
+          has_no_url = true
+          begin
+            has_no_url = b.isbn.nil? || b.isbn.strip.empty? || provider.url(b).nil?
+          rescue StandardError => ex
+            log.warn { "Error determining URL from #{provider.name}; #{ex.message}" }
+          end
+          @actiongroup[provider.action_name].sensitive = !has_no_url
+          no_urls = false unless has_no_url
+        end
+        @actiongroup["OnlineInformation"].sensitive = false if no_urls
       end
 
       def on_switch_page(_notebook, _page, page_num)
@@ -634,38 +638,8 @@ module Alexandria
             GLib::Idle.add do
               ruined_book = @libraries.ruined_books.pop
               if ruined_book
-                book, isbn, library = ruined_book
-                begin
-                  book_rslt = Alexandria::BookProviders.isbn_search(isbn.to_s)
-                  book = book_rslt[0]
-                  cover_uri = book_rslt[1]
-
-                  # TODO: if the book was saved okay, make sure the old
-                  # empty yaml file doesn't stick around esp if doing
-                  # isbn-10 --> isbn-13 conversion...
-                  if isbn.size == 10
-                    filename = library.yaml(isbn)
-                    log.debug { "removing old file #{filename}" }
-                    begin
-                      File.delete(filename)
-                    rescue StandardError => ex
-                      log.error { "Could not delete empty file #{filename}" }
-                    end
-                  end
-
-                  log.debug do
-                    "Trying to add #{book.title}, #{cover_uri} " \
-                      "in library ''#{library.name}'"
-                  end
-                  library.save_cover(book, cover_uri) unless cover_uri.nil?
-                  library << book
-                  library.save(book)
-                  set_status_label(format(_("Added '%s' to library '%s'"),
-                                          book.title, library.name))
-                rescue StandardError => ex
-                  log.error { "Couldn't add book #{isbn}: #{ex}" }
-                  log.error { ex.backtrace.join("\n") }
-                end
+                _book, isbn, library = ruined_book
+                repair_ruined_book(isbn, library)
 
                 prog_percentage += fraction_per_book
                 @progressbar.fraction = prog_percentage
@@ -689,6 +663,38 @@ module Alexandria
             end
           end
         end
+      end
+
+      def repair_ruined_book(isbn, library)
+        book_rslt = Alexandria::BookProviders.isbn_search(isbn.to_s)
+        book = book_rslt[0]
+        cover_uri = book_rslt[1]
+
+        # TODO: if the book was saved okay, make sure the old
+        # empty yaml file doesn't stick around esp if doing
+        # isbn-10 --> isbn-13 conversion...
+        if isbn.size == 10
+          filename = library.yaml(isbn)
+          log.debug { "removing old file #{filename}" }
+          begin
+            File.delete(filename)
+          rescue StandardError => ex
+            log.error { "Could not delete empty file #{filename}" }
+          end
+        end
+
+        log.debug do
+          "Trying to add #{book.title}, #{cover_uri} " \
+            "in library ''#{library.name}'"
+        end
+        library.save_cover(book, cover_uri) unless cover_uri.nil?
+        library << book
+        library.save(book)
+        set_status_label(format(_("Added '%s' to library '%s'"),
+                                book.title, library.name))
+      rescue StandardError => ex
+        log.error { "Couldn't add book #{isbn}: #{ex}" }
+        log.error { ex.backtrace.join("\n") }
       end
 
       def progress_bar
@@ -739,11 +745,9 @@ module Alexandria
       REDUCE_TITLE_REGEX = Regexp.new("^(.{#{ICON_TITLE_MAXLEN}}).*$")
 
       def fill_iter_with_book(iter, book)
-        log.debug { "fill iter #{iter} with book #{book}" }
         iter[Columns::IDENT] = book.ident.to_s
         iter[Columns::TITLE] = book.title
-        title = book.title.sub(REDUCE_TITLE_REGEX, '\1...')
-        iter[Columns::TITLE_REDUCED] = title
+        iter[Columns::TITLE_REDUCED] = reduced_title(book.title)
         iter[Columns::AUTHORS] = book.authors.join(", ")
         iter[Columns::ISBN] = book.isbn.to_s
         iter[Columns::PUBLISHER] = book.publisher
@@ -751,30 +755,37 @@ module Alexandria
         iter[Columns::EDITION] = book.edition
         iter[Columns::NOTES] = (book.notes || "")
         iter[Columns::LOANED_TO] = (book.loaned_to || "")
+
         rating = book.rating || Book::DEFAULT_RATING
         # ascending order is the default
         iter[Columns::RATING] = Book::MAX_RATING_STARS - rating
+
         iter[Columns::OWN] = book.own?
         iter[Columns::REDD] = book.redd?
         iter[Columns::WANT] = book.want?
-        iter[Columns::TAGS] = if book.tags
-                                book.tags.join(",")
-                              else
-                                ""
-                              end
+        iter[Columns::TAGS] = book.tags&.join(",") || ""
 
         icon = Icons.cover(selected_library, book)
-        log.debug { "Setting icon #{icon} for book #{book.title}" }
-        iter[Columns::COVER_LIST] = cache_scaled_icon(icon, 20, 25)
+        iter[Columns::COVER_LIST] = cover_list_icon(icon)
+        iter[Columns::COVER_ICON] = cover_icon(icon, rating)
+      end
 
+      def reduced_title(title)
+        title.sub(REDUCE_TITLE_REGEX, '\1...')
+      end
+
+      def cover_list_icon(icon)
+        cache_scaled_icon(icon, 20, 25)
+      end
+
+      def cover_icon(icon, rating)
         if icon.height > ICON_HEIGHT
           new_width = icon.width / (icon.height / ICON_HEIGHT.to_f)
           new_height = [ICON_HEIGHT, icon.height].min
           icon = cache_scaled_icon(icon, new_width, new_height)
         end
         icon = Icons.tag_icon(icon, Icons::FAVORITE_TAG) if rating == Book::MAX_RATING_STARS
-        iter[Columns::COVER_ICON] = icon
-        log.debug { "Full iter: " + (0..15).map { |num| iter[num].inspect }.join(", ") }
+        icon
       end
 
       def append_book(book, _tail = nil)
@@ -1231,5 +1242,6 @@ module Alexandria
         @filtered_model.convert_path_to_child_path(filter_path) if filter_path
       end
     end
+    # rubocop:enable Metrics/ClassLength:
   end
 end
