@@ -27,8 +27,9 @@ I18n/GetText:
   # Exclude non-user-facing code
   Exclude:
     - Rakefile
-    - 'util/**/*'
+    - 'bin/*'
     - 'spec/**/*'
+    - 'util/**/*'
 I18n/RailsI18n:
   Enabled: false
 
