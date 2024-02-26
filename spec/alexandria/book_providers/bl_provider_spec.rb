@@ -8,6 +8,7 @@ require "spec_helper"
 
 describe Alexandria::BookProviders::BLProvider do
   it "produces a valid search result" do
+    skip "Search of the British Library is offline as per 4 February 2024"
     expect(described_class).to have_correct_search_result_for "9781853260803"
   end
 
