@@ -11,8 +11,8 @@ describe Alexandria::UI::AlertDialog do
     parent = Gtk::Window.new :toplevel
     expect do
       described_class.new(parent, "Hello",
-                          Gtk::Stock::DIALOG_QUESTION,
-                          [[Gtk::Stock::CANCEL, :cancel]], "Hi there")
+                          Gtk::STOCK_DIALOG_QUESTION,
+                          [[Gtk::STOCK_CANCEL, :cancel]], "Hi there")
     end.not_to raise_error
   end
 end
