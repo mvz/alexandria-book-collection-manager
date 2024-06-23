@@ -79,8 +79,6 @@ module Alexandria
     def motion_notify_event(event)
       if drag_check_threshold(@context.x, @context.y, event.x, event.y)
         stop_drag_check
-        paths = []
-        selection.each { |_model, path, _iter| paths << path }
         @context.drag_context = drag_begin(@context.source_targets,
                                            @context.source_actions,
                                            @context.pressed_button,
