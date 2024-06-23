@@ -116,10 +116,9 @@ module Alexandria
             title = div["data-titel"]
 
             if (author_p = doc % "p.aim-author")
-              authors = []
               author_links = author_p / :a
-              author_links.each do |a|
-                authors << a.inner_text.strip
+              authors = author_links.map do |a|
+                a.inner_text.strip
               end
             end
 
