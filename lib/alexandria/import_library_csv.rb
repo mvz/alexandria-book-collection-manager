@@ -46,7 +46,7 @@ module Alexandria
 
   class GoodreadsCSVImport < CSVImport
     def initialize(header)
-      super(header)
+      super
       @title = index_of("Title")
       @author = index_of("Author")
       @additional_authors = index_of("Additional Authors")
@@ -119,7 +119,7 @@ module Alexandria
 
   class LibraryThingCSVImport < CSVImport
     def initialize(header)
-      super(header)
+      super
       @title = index_of("'TITLE'")
       @author = index_of("'AUTHOR (first, last)'")
       @isbn = index_of("'ISBN'")

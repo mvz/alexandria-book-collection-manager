@@ -11,7 +11,7 @@ module Alexandria
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent)
-        super(parent)
+        super
 
         dialog.add_buttons([Gtk::Stock::CANCEL, :cancel],
                            [Gtk::Stock::NEW, :ok])
