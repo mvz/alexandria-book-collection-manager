@@ -301,9 +301,8 @@ module Alexandria
       end
 
       def update_priority
-        priority = []
-        @treeview_providers.model.each do |_model, _path, iter|
-          priority << iter[1]
+        priority = @treeview_providers.model.map do |_model, _path, iter|
+          iter[1]
         end
         Preferences.instance.providers_priority = priority
         BookProviders.instance.update_priority

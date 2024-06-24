@@ -178,7 +178,7 @@ module Alexandria
           var = variable_named(obj)
           var&.value
         when Integer
-          super(obj)
+          super
         end
       end
 

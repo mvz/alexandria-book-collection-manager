@@ -1083,9 +1083,8 @@ module Alexandria
 
           @actiongroup.remove_action(action)
         end
-        actions = []
-        @libraries.all_regular_libraries.each do |library|
-          actions << [
+        actions = @libraries.all_regular_libraries.map do |library|
+          [
             library.action_name, nil,
             _("In '_%s'") % library.name,
             nil, nil, proc { move_selected_books_to_library(library) }

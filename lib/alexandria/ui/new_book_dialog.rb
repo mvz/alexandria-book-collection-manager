@@ -427,7 +427,7 @@ module Alexandria
             @treeview_results.model.clear
             @entry_search.grab_focus
           else
-            @button_add.sensitive = true #
+            @button_add.sensitive = true
             @entry_isbn.text = "" # blank ISBN field
             @entry_isbn.grab_focus
           end

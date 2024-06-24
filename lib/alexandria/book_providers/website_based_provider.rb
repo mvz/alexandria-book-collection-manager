@@ -30,7 +30,7 @@ module Alexandria
   class BookProviders
     class WebsiteBasedProvider < GenericProvider
       def initialize(name, fullname = nil)
-        super(name, fullname)
+        super
         @htmlentities = HTMLEntities.new
       end
 
