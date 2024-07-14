@@ -48,16 +48,16 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.rdoc_options = ["--main", "README.md"]
 
-  spec.add_runtime_dependency "alexandria-zoom", ["~> 0.6.0"]
-  spec.add_runtime_dependency "csv", "~> 3.2"
-  spec.add_runtime_dependency "gettext", ["~> 3.1"]
-  spec.add_runtime_dependency "gstreamer", "~> 4.2.0"
-  spec.add_runtime_dependency "gtk3", "~> 4.2.0"
-  spec.add_runtime_dependency "htmlentities", ["~> 4.3"]
-  spec.add_runtime_dependency "image_size", ["~> 3.0"]
-  spec.add_runtime_dependency "marc", ">= 1.0", "< 1.3"
-  spec.add_runtime_dependency "nokogiri", ["~> 1.11"]
-  spec.add_runtime_dependency "observer", "~> 0.1.2"
+  spec.add_dependency "alexandria-zoom", ["~> 0.6.0"]
+  spec.add_dependency "csv", "~> 3.2"
+  spec.add_dependency "gettext", ["~> 3.1"]
+  spec.add_dependency "gstreamer", "~> 4.2.0"
+  spec.add_dependency "gtk3", "~> 4.2.0"
+  spec.add_dependency "htmlentities", ["~> 4.3"]
+  spec.add_dependency "image_size", ["~> 3.0"]
+  spec.add_dependency "marc", ">= 1.0", "< 1.3"
+  spec.add_dependency "nokogiri", ["~> 1.11"]
+  spec.add_dependency "observer", "~> 0.1.2"
 
   spec.add_development_dependency "base64", "~> 0.2.0"
   spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
