@@ -1354,17 +1354,21 @@ msgstr "_Sinds:"
 msgid "Loaning"
 msgstr "Uitlenen"
 
-#: ../alexandria.desktop.in.h:1
+#: ../alexandria.desktop:5
 msgid "Alexandria Book Collection Manager"
 msgstr "Alexandria Boekcollectiebeheerder"
 
-#: ../alexandria.desktop.in.h:2
+#: ../alexandria.desktop:6
 msgid "Book Collection Manager"
 msgstr "Boekcollectiebeheerder"
 
-#: ../alexandria.desktop.in.h:3
+#: ../alexandria.desktop:7
 msgid "Manage your book collection"
 msgstr "Beheer uw boekcollectie"
+
+#: ../alexandria.desktop:11
+msgid "alexandria"
+msgstr ""
 
 #~ msgid "Locale"
 #~ msgstr "Taal"
