@@ -19,7 +19,6 @@ module Alexandria
 
     def initialize(title, authors, isbn, publisher, publishing_year,
                    edition)
-
       @title = title
       @authors = authors
       @isbn = isbn

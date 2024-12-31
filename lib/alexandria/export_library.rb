@@ -31,8 +31,8 @@ module Alexandria
       @library.name
     end
 
-    def each(&block)
-      @sorted.each(&block)
+    def each(&)
+      @sorted.each(&)
     end
 
     def export_as_onix_xml_archive(filename)

@@ -37,24 +37,24 @@ module Alexandria
       super(severity, message, category, &block)
     end
 
-    def debug(source = nil, progname = nil, &block)
-      add(DEBUG, nil, source, progname, &block)
+    def debug(source = nil, progname = nil, &)
+      add(DEBUG, nil, source, progname, &)
     end
 
-    def info(source = nil, progname = nil, &block)
-      add(INFO, nil, source, progname, &block)
+    def info(source = nil, progname = nil, &)
+      add(INFO, nil, source, progname, &)
     end
 
-    def warn(source = nil, progname = nil, &block)
-      add(WARN, nil, source, progname, &block)
+    def warn(source = nil, progname = nil, &)
+      add(WARN, nil, source, progname, &)
     end
 
-    def error(source = nil, progname = nil, &block)
-      add(ERROR, nil, source, progname, &block)
+    def error(source = nil, progname = nil, &)
+      add(ERROR, nil, source, progname, &)
     end
 
-    def fatal(source = nil, progname = nil, &block)
-      add(FATAL, nil, source, progname, &block)
+    def fatal(source = nil, progname = nil, &)
+      add(FATAL, nil, source, progname, &)
     end
 
     def self.category(source)
@@ -90,24 +90,24 @@ module Alexandria
       end
     end
 
-    def debug(progname = nil, &block)
-      @logger.debug(@source, progname, &block)
+    def debug(progname = nil, &)
+      @logger.debug(@source, progname, &)
     end
 
-    def info(progname = nil, &block)
-      @logger.info(@source, progname, &block)
+    def info(progname = nil, &)
+      @logger.info(@source, progname, &)
     end
 
-    def warn(progname = nil, &block)
-      @logger.warn(@source, progname, &block)
+    def warn(progname = nil, &)
+      @logger.warn(@source, progname, &)
     end
 
-    def error(progname = nil, &block)
-      @logger.error(@source, progname, &block)
+    def error(progname = nil, &)
+      @logger.error(@source, progname, &)
     end
 
-    def fatal(progname = nil, &block)
-      @logger.fatal(@source, progname, &block)
+    def fatal(progname = nil, &)
+      @logger.fatal(@source, progname, &)
     end
   end
 

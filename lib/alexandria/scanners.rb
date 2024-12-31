@@ -40,8 +40,8 @@ module Alexandria
       registry.find { |scanner| scanner.name == name }
     end
 
-    def self.each_scanner(&block)
-      registry.each(&block)
+    def self.each_scanner(&)
+      registry.each(&)
     end
 
     private_class_method :registry

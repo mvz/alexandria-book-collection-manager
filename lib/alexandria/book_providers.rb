@@ -140,7 +140,6 @@ module Alexandria
 
         def initialize(provider, name, description, default_value,
                        possible_values = nil, mandatory = true)
-
           @provider = provider
           @name = name
           @description = description
