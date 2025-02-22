@@ -11,7 +11,7 @@ require "alexandria/library_sort_order"
 
 module Alexandria
   module UI
-    # rubocop:disable Metrics/ClassLength:
+    # rubocop:disable Metrics/ClassLength
     class UIManager < BuilderBase
       attr_accessor :main_app, :actiongroup, :appbar, :prefs, :listview, :iconview,
                     :listview_model, :iconview_model, :filtered_model
@@ -1241,6 +1241,6 @@ module Alexandria
         @filtered_model.convert_path_to_child_path(filter_path) if filter_path
       end
     end
-    # rubocop:enable Metrics/ClassLength:
+    # rubocop:enable Metrics/ClassLength
   end
 end

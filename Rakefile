@@ -148,7 +148,7 @@ file "lib/alexandria/default_preferences.rb" => ["Rakefile", SCHEMA_PATH] do |f|
       end
       default = ary.inspect
     else
-      default = convert_with_type(default, type).inspect.to_s
+      default = convert_with_type(default, type).inspect
     end
 
     generated_lines << varname.inspect + " => " + default
