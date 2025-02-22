@@ -62,11 +62,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
   spec.add_development_dependency "rake", ["~> 13.0"]
   spec.add_development_dependency "rspec", ["~> 3.0"]
-  spec.add_development_dependency "rubocop", "~> 1.56"
-  spec.add_development_dependency "rubocop-i18n", "~> 3.0"
-  spec.add_development_dependency "rubocop-performance", "~> 1.19"
-  spec.add_development_dependency "rubocop-rake", "~> 0.6.0"
-  spec.add_development_dependency "rubocop-rspec", "~> 3.0"
+  spec.add_development_dependency "rubocop", "~> 1.72"
+  spec.add_development_dependency "rubocop-i18n", "~> 3.2"
+  spec.add_development_dependency "rubocop-performance", "~> 1.24"
+  spec.add_development_dependency "rubocop-rake", "~> 0.7.1"
+  spec.add_development_dependency "rubocop-rspec", "~> 3.5"
   spec.add_development_dependency "simplecov", "~> 0.22.0"
   spec.add_development_dependency "webmock", "~> 3.9"
 end
