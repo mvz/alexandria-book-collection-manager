@@ -46,7 +46,7 @@ module Alexandria
       FileUtils.mkdir_p(library.path)
       Dir.chdir(library.path) do
         Dir["*" + Library::EXT[:book]].each do |filename|
-          test[1] = filename if (test[0]).zero?
+          test[1] = filename if test[0].zero?
 
           unless File.size? test[1]
             handle_empty_book_file(test[1], ruined_books)

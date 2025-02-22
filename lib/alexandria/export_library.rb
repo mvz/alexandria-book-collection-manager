@@ -142,6 +142,8 @@ module Alexandria
     private
 
     ONIX_DTD_URL = "http://www.editeur.org/onix/2.1/reference/onix-international.dtd"
+    private_constant :ONIX_DTD_URL
+
     def to_onix_document
       doc = REXML::Document.new
       doc << REXML::XMLDecl.new
