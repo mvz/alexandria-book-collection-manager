@@ -1,80 +1,86 @@
 ---
 - - :permit
   - LGPL-3+
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:51:53.629753437 Z
 - - :permit
   - LGPL-2.1+
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:52:02.088395832 Z
 - - :permit
   - MIT
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:52:06.806192042 Z
 - - :permit
   - LGPLv2+
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:52:24.618189811 Z
 - - :permit
   - ruby
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:52:36.986497403 Z
 - - :approve
   - alexandria-book-collection-manager
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:53:02.657760962 Z
 - - :approve
   - unf
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:54:45.171526986 Z
 - - :approve
   - gettext
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:54:51.349832715 Z
 - - :approve
   - cairo
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2017-07-23 05:54:54.822319735 Z
 - - :license
   - zoom
   - LGPL-2.1
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2020-07-30 06:44:22.960902375 Z
 - - :permit
   - Simplified BSD
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2020-07-30 06:45:58.599399721 Z
 - - :permit
   - Apache 2.0
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2020-07-30 06:46:08.280121582 Z
 - - :permit
   - LGPL-2.1
-  - :who: 
-    :why: 
+  - :who:
+    :why:
     :versions: []
     :when: 2020-07-30 06:46:32.729325577 Z
+- - :permit
+  - LGPL-2.1-or-later
+  - :who:
+    :why:
+    :versions: []
+    :when: 2025-04-19 19:30:36.770204331 Z
