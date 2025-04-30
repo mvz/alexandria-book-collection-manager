@@ -2,6 +2,7 @@
 # Copyright (C) 2005 Mirko Maischberger <mirko@lilik.it>
 # Copyright (C) 2007 Marco Costantini <costanti@science.unitn.it>
 # Copyright (C) 2008 Giacomo Margarito <giacomomargarito@gmail.com>
+# Copyright (C) 2025 Albano Battistella <albanobattistella@gmail.com>
 # This file is distributed under the same license as the Alexandria package.
 #
 msgid ""
@@ -9,10 +10,10 @@ msgstr ""
 "Project-Id-Version: 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-26 12:17+0100\n"
-"PO-Revision-Date: 2008-11-04 23:32+0100\n"
-"Last-Translator: Giacomo Margarito <giacomomargarito@gmail.com>\n"
+"PO-Revision-Date: 2025-04-30 19:32+0100\n"
+"Last-Translator: Albano Battistella <albanobattistella@gmail.com>\n"
 "Language-Team: Alexandria\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,7 +49,7 @@ msgstr "Tipo di ricerca non valido."
 
 #: ../lib/alexandria/book_providers.rb:205
 msgid "Enabled"
-msgstr ""
+msgstr "Abilitato"
 
 #: ../lib/alexandria/book_providers/z3950.rb:22
 msgid "Hostname"
@@ -87,9 +88,8 @@ msgid "British Library"
 msgstr "British Library"
 
 #: ../lib/alexandria/book_providers/z3950.rb:374
-#, fuzzy
 msgid "Invalid ISBN"
-msgstr "Codice ISBN '%s' non valido"
+msgstr "ISBN non valido"
 
 #: ../lib/alexandria/export_format.rb:18
 msgid "Archived ONIX XML"
@@ -133,15 +133,15 @@ msgstr "Elenco di ISBN (*.txt)"
 
 #: ../lib/alexandria/import_library.rb:25
 msgid "GoodReads CSV"
-msgstr ""
+msgstr "CSV di GoodReads"
 
 #: ../lib/alexandria/import_library.rb:65
 msgid "Unsupported type"
-msgstr ""
+msgstr "Tipo non supportato"
 
 #: ../lib/alexandria/import_library_csv.rb:199
 msgid "Not Recognized"
-msgstr ""
+msgstr "Non riconosciuto"
 
 #: ../lib/alexandria/library_store.rb:37
 msgid "My Library"
@@ -149,19 +149,19 @@ msgstr "Biblioteca personale"
 
 #: ../lib/alexandria/library_store.rb:67
 msgid "Not a book: %<book>s"
-msgstr ""
+msgstr "Non è un libro: %<book>"
 
 #: ../lib/alexandria/library_store.rb:78
 msgid "%<file>s isbn is not okay"
-msgstr ""
+msgstr "L'ISBN di %<file> non è corretto"
 
 #: ../lib/alexandria/library_store.rb:83
 msgid "%<file>s version is not okay"
-msgstr ""
+msgstr "La versione di %<file> non è corretta"
 
 #: ../lib/alexandria/library_store.rb:88
 msgid "%<file>s pub year is not okay"
-msgstr ""
+msgstr "L'anno di pubblicazione di %<file> non è corretto"
 
 #: ../lib/alexandria/models/library.rb:42
 msgid "Untitled"
@@ -169,19 +169,19 @@ msgstr "Senza titolo"
 
 #: ../lib/alexandria/models/library.rb:284
 msgid "Book %<isbn>s was already deleted"
-msgstr ""
+msgstr "Il libro %<isbn> è già stato eliminato"
 
 #: ../lib/alexandria/scanners/cue_cat.rb:75
 msgid "Don't know how to handle type %<type>s (barcode: %<code>s)"
-msgstr ""
+msgstr "Non so come gestire il tipo %<tipo>s (codice a barre: %<codice>s)"
 
 #: ../lib/alexandria/scanners/cue_cat.rb:109
 msgid "Error parsing CueCat input"
-msgstr ""
+msgstr "Errore durante l'analisi dell'input di CueCat"
 
 #: ../lib/alexandria/scanners/keyboard.rb:51
 msgid "Unknown scan data %s<data>"
-msgstr ""
+msgstr "Dati di scansione sconosciuti %s<dati>"
 
 #: ../lib/alexandria/smart_library.rb:49
 msgid "Favorite"
@@ -240,7 +240,7 @@ msgstr "Note"
 #: ../lib/alexandria/smart_library.rb:303 ../lib/alexandria/ui/listview.rb:86
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:230
 msgid "Tags"
-msgstr "Tags"
+msgstr "Tag"
 
 #: ../lib/alexandria/smart_library.rb:304
 msgid "Loaning State"
@@ -328,44 +328,43 @@ msgstr "non è nell'ultimo"
 
 #: ../lib/alexandria/smart_library.rb:465
 msgid "invalid operand klass %<klass>s"
-msgstr ""
+msgstr "classe operando non valida %<klass>s"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:206
 msgid "There was %d duplicate"
 msgid_plural "There were %d duplicates"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "C'era %d duplicato"
+msgstr[1] "C'erano %d duplicati"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:209
-#, fuzzy
 msgid "Couldn't add this book"
 msgid_plural "Couldn't add these books"
 msgstr[0] "Impossibile aggiungere il libro"
-msgstr[1] "Impossibile aggiungere il libro"
+msgstr[1] "Impossibile aggiungere i libri"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:288
 #: ../lib/alexandria/ui/new_book_dialog.rb:498
 msgid "Searching Provider '%s'..."
-msgstr ""
+msgstr "Ricerca del provider '%s'..."
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:289
 #: ../lib/alexandria/ui/new_book_dialog.rb:499
 msgid "Error while Searching Provider '%s'"
-msgstr ""
+msgstr "Errore durante la ricerca del provider '%s'"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:290
 #: ../lib/alexandria/ui/new_book_dialog.rb:500
 msgid "Not Found at Provider '%s'"
-msgstr ""
+msgstr "Non trovato presso il provider '%s'"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:291
 #: ../lib/alexandria/ui/new_book_dialog.rb:501
 msgid "Found at Provider '%s'"
-msgstr ""
+msgstr "Trovato presso il fornitore '%s'"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:403
 msgid "Ready to use %s barcode scanner"
-msgstr ""
+msgstr "Scanner di codici a barre %s pronto all'uso"
 
 #: ../lib/alexandria/ui/acquire_dialog.rb:427
 msgid "Click below to scan _barcodes"
@@ -419,7 +418,7 @@ msgstr[1] "%d giorni"
 
 #: ../lib/alexandria/ui/book_properties_dialog_base.rb:268
 msgid "out of range"
-msgstr ""
+msgstr "fuori portata"
 
 #: ../lib/alexandria/ui/callbacks.rb:57
 msgid "The following lines are not valid ISBNs and were not imported:"
@@ -428,7 +427,7 @@ msgstr ""
 
 #: ../lib/alexandria/ui/callbacks.rb:62
 msgid "Books could not be found for the following ISBNs:"
-msgstr ""
+msgstr "Non è stato possibile trovare libri con i seguenti ISBN:"
 
 #: ../lib/alexandria/ui/callbacks.rb:362
 msgid "_Library"
@@ -483,9 +482,8 @@ msgid "Export the selected library"
 msgstr "Esporta la biblioteca selezionata"
 
 #: ../lib/alexandria/ui/callbacks.rb:369
-#, fuzzy
 msgid "A_cquire from Scanner..."
-msgstr "_Acquisici con lo scanner..."
+msgstr "_Acquisici da scanner..."
 
 #: ../lib/alexandria/ui/callbacks.rb:369
 msgid "Acquire books from a scanner"
@@ -806,15 +804,14 @@ msgid "Invalid ISBN '%s'"
 msgstr "Codice ISBN '%s' non valido"
 
 #: ../lib/alexandria/ui/keep_bad_isbn_dialog.rb:18
-#, fuzzy
 msgid ""
 "The book titled '%s' has an invalid ISBN, but still exists in the providers "
 "libraries. Do you want to keep the book but change the ISBN or cancel the "
 "addition?"
 msgstr ""
-"Il libro dal titolo '%s' ha un codice ISBN non valido, ma esiste ancora "
-"nella biblioteca del provider. Si desidera mantenere il libro, ma cambiare "
-"il codice ISBN o cancellare l'operazione di aggiunta?"
+"Il libro intitolato '%s' ha un ISBN non valido, ma è ancora presente nelle biblioteche "
+"del fornitore. Vuoi conservare il libro ma modificare l'ISBN o annullare "
+"l'aggiunta?"
 
 #: ../lib/alexandria/ui/keep_bad_isbn_dialog.rb:24
 msgid "_Keep"
@@ -825,9 +822,8 @@ msgid "New Library"
 msgstr "Nuova Biblioteca"
 
 #: ../lib/alexandria/ui/listview.rb:56
-#, fuzzy
 msgid "Loaned To"
-msgstr "Prestato"
+msgstr "Prestato a"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:155
 msgid "A problem occurred while downloading images"
@@ -835,7 +831,7 @@ msgstr "Ci sono stati problemi durante lo scaricamento delle immagini"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:194
 msgid "Iter is invalid! %s"
-msgstr ""
+msgstr "Iter non valido! %s"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:266
 msgid "Unable to find matches for your search"
@@ -847,7 +843,7 @@ msgstr "%s, di %s"
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:308
 msgid "Copying %s into tree view."
-msgstr ""
+msgstr "Copia di %s nella vista ad albero."
 
 #: ../lib/alexandria/ui/new_book_dialog.rb:336
 msgid ""
@@ -950,19 +946,16 @@ msgid "Invalid library name '%s'"
 msgstr "Nome della biblioteca '%s' non valido"
 
 #: ../lib/alexandria/ui/sidepane_manager.rb:55
-#, fuzzy
 msgid "The name provided contains the disallowed character <b>%s</b>"
-msgstr "Il nome fornito contiene il carattere non legale '<i>%s</i>'."
+msgstr "Il nome fornito contiene il carattere non consentito <b>%s</b>."
 
 #: ../lib/alexandria/ui/sidepane_manager.rb:58
-#, fuzzy
 msgid "Invalid library name"
-msgstr "Nome della biblioteca '%s' non valido"
+msgstr "Nome della biblioteca non valido"
 
 #: ../lib/alexandria/ui/sidepane_manager.rb:59
-#, fuzzy
 msgid "The name provided contains invalid characters."
-msgstr "Il nome fornito contiene il carattere non legale '<i>%s</i>'."
+msgstr "Il nome fornito contiene caratteri non validi."
 
 #: ../lib/alexandria/ui/sidepane_manager.rb:65
 msgid "The library name can not be empty"
@@ -1108,12 +1101,11 @@ msgstr[1] "%d libri selezionati"
 
 #: ../lib/alexandria/ui/ui_manager.rb:552
 msgid "unrecognized update event"
-msgstr ""
+msgstr "evento di aggiornamento non riconosciuto"
 
 #: ../lib/alexandria/ui/ui_manager.rb:597
-#, fuzzy
 msgid "Loading libraries..."
-msgstr "Caricamento di '%s'..."
+msgstr "Caricamento librerie..."
 
 #: ../lib/alexandria/ui/ui_manager.rb:614
 msgid ""
@@ -1139,7 +1131,7 @@ msgstr "In '_%s'"
 
 #: ../lib/alexandria/web_themes.rb:64
 msgid "File %<file>s not found"
-msgstr ""
+msgstr "File %<file>s non trovato"
 
 #: ../share/alexandria/glade/acquire_dialog__builder.glade:9
 msgid "Acquire from Scanner"
@@ -1168,7 +1160,7 @@ msgstr "per parola chiave"
 
 #: ../share/alexandria/glade/new_book_dialog__builder.glade:115
 msgid "_Keep Dialog Open after Adding Book"
-msgstr ""
+msgstr "Mantieni aperta la finestra di dialogo dopo aver aggiunto il libro"
 
 #: ../share/alexandria/glade/new_book_dialog__builder.glade:285
 msgid "_Search:"
@@ -1224,19 +1216,16 @@ msgid "Want?"
 msgstr "Vuoi?"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:245
-#, fuzzy
 msgid "Loaned to"
-msgstr "Prestato"
+msgstr "Prestato a"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:271
-#, fuzzy
 msgid "_List View"
-msgstr "Vista ad elenco"
+msgstr "_Vista ad elenco"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:290
-#, fuzzy
 msgid "<b>Book Data Providers</b>"
-msgstr "<b>_Provider</b>"
+msgstr "Fornitori di dati di libri"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:372
 msgid "_Setup"
@@ -1254,49 +1243,47 @@ msgstr ""
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:486
 msgid "Custom _Z39.50 Providers"
-msgstr ""
+msgstr "Fornitori personalizzati _Z39.50"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:490
 msgid ""
 "Add and remove your own Z39.50 providers.\n"
 "Requires the Ruby/ZOOM software library."
 msgstr ""
+"Aggiungi e rimuovi i tuoi provider Z39.50."
+"Richiede la libreria software Ruby/ZOOM."
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:511
-#, fuzzy
 msgid "_Providers"
-msgstr "Provider"
+msgstr "Provides"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:537
-#, fuzzy
 msgid "<b>Barcode Scanner Device</b>"
-msgstr "_Lettore dei codici a barre pronto"
+msgstr "<b>Dispositivo scanner per codici a barre</b>"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:556
 msgid "_Device type:"
-msgstr ""
+msgstr "_Tipo di dispositivo:"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:602
 msgid "<b>Sound Effects</b>"
-msgstr ""
+msgstr "<b>Effetti sonori</b>"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:618
-#, fuzzy
 msgid "Scanning"
-msgstr "Prestito"
+msgstr "Scansione"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:632
 msgid "Good Scan / Bad Scan"
-msgstr ""
+msgstr "Scansione buona / Scansione cattiva"
 
 #: ../share/alexandria/glade/preferences_dialog__builder.glade:667
-#, fuzzy
 msgid "_Barcode Scanner"
-msgstr "_Lettore dei codici a barre pronto"
+msgstr "_Scanner per codici a barre"
 
 #: ../share/alexandria/glade/main_app__builder.glade:48
 msgid "_Libraries:"
-msgstr "Bib_lioteche:"
+msgstr "_Biblioteche:"
 
 #: ../share/alexandria/glade/book_properties_dialog__builder.glade:60
 msgid "_Title:"
@@ -1308,7 +1295,7 @@ msgstr "_Autori:"
 
 #: ../share/alexandria/glade/book_properties_dialog__builder.glade:213
 msgid "Tags:"
-msgstr "Tags:"
+msgstr "Tag:"
 
 #: ../share/alexandria/glade/book_properties_dialog__builder.glade:245
 msgid "_Binding:"
@@ -1339,13 +1326,12 @@ msgid "Read it?"
 msgstr "Leggerlo?"
 
 #: ../share/alexandria/glade/book_properties_dialog__builder.glade:576
-#, fuzzy
 msgid "Select Date"
-msgstr "_Seleziona tutto"
+msgstr "_Seleziona data"
 
 #: ../share/alexandria/glade/book_properties_dialog__builder.glade:577
 msgid "Clear Date"
-msgstr ""
+msgstr "Cancella data"
 
 #: ../share/alexandria/glade/book_properties_dialog__builder.glade:587
 msgid "Own it?"
@@ -1386,9 +1372,8 @@ msgstr "Gestisce la vostra biblioteca"
 #~ msgid "Locale"
 #~ msgstr "Lingua"
 
-#, fuzzy
 #~ msgid "Associate Tag"
-#~ msgstr "ID associato"
+#~ msgstr "Tag associato"
 
 #~ msgid "Unable to launch the web browser"
 #~ msgstr "Impossibile avviare il navigatore web"
@@ -1418,13 +1403,11 @@ msgstr "Gestisce la vostra biblioteca"
 #~ msgid "There's a problem"
 #~ msgstr "Si è verificato un problema"
 
-#, fuzzy
 #~ msgid "Disable Provider"
-#~ msgstr "Nuovo Provider"
+#~ msgstr "Disabilita Provider"
 
-#, fuzzy
 #~ msgid "Enable Provider"
-#~ msgstr "Nuovo Provider"
+#~ msgstr "Abilita Provider"
 
 #~ msgid "Main Window"
 #~ msgstr "Finestra principale"
@@ -1459,9 +1442,8 @@ msgstr "Gestisce la vostra biblioteca"
 #~ msgid "Development token"
 #~ msgstr "Token di sviluppo"
 
-#, fuzzy
 #~ msgid "Couldn't add these books"
-#~ msgstr "Impossibile aggiungere il libro"
+#~ msgstr "Non è stato possibile aggiungere questi libri"
 
 #~ msgid "_Refresh"
 #~ msgstr "_Aggiorna"
