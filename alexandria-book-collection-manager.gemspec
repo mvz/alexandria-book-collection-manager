@@ -58,7 +58,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "nokogiri", ["~> 1.11"]
   spec.add_dependency "observer", "~> 0.1.2"
 
-  spec.add_development_dependency "base64", "~> 0.2.0"
   spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
   spec.add_development_dependency "rake", ["~> 13.0"]
   spec.add_development_dependency "rspec", ["~> 3.0"]
