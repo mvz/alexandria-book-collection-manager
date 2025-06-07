@@ -100,9 +100,9 @@ module Alexandria
 
         Book.new(marc.title, marc.authors,
                  isbn,
-                 (marc.publisher || ""),
+                 marc.publisher || "",
                  marc.respond_to?(:publish_year) ? marc.publish_year.to_i : nil,
-                 (marc.edition || ""))
+                 marc.edition || "")
       end
 
       def books_from_marc(resultset, isbn)

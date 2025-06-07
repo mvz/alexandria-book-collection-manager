@@ -73,8 +73,8 @@ module Alexandria
           end
 
           if title # and !authors.empty?
-            book = Book.new(title, authors, isbn, (publisher || nil),
-                            (publish_year || nil), (edition || nil))
+            book = Book.new(title, authors, isbn, publisher || nil,
+                            publish_year || nil, edition || nil)
             results << [book]
           end
         end

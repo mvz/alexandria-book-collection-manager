@@ -98,6 +98,10 @@ Metrics/BlockLength:
 Naming/AccessorMethodName:
   Enabled: false
 
+# Most methods that return a boolean are not predicate methods
+Naming/PredicateMethod:
+  Enabled: false
+
 # Avoid one-letter exception variable name
 Naming/RescuedExceptionsVariableName:
   PreferredName: ex
