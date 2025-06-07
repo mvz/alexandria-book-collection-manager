@@ -69,7 +69,7 @@ module Alexandria
     def export_as_isbn_list(filename)
       File.open(filename, "w") do |io|
         each do |book|
-          io.puts((book.isbn || ""))
+          io.puts(book.isbn || "")
         end
       end
     end
@@ -115,7 +115,7 @@ module Alexandria
           end
           io.puts book.authors.join(", ")
           io.puts book.edition
-          io.puts((book.isbn || ""))
+          io.puts(book.isbn || "")
           # we need to close the files so the iPod can be ejected/unmounted
           # without us closing Alexandria
           io.close
