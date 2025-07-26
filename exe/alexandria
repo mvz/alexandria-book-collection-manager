@@ -8,12 +8,10 @@
 require "gettext"
 require "alexandria"
 require "optparse"
-require "ostruct"
 
 store = Alexandria::LibraryStore.new(Alexandria::Library::DEFAULT_DIR)
 Alexandria::LibraryCollection.instance.library_store = store
 
-# options = OpenStruct.new
 OptionParser.new do |opts|
   opts.banner = "Usage: alexandria [options]"
   opts.on("-l", "--list", "List libraries in numbered format") do
