@@ -11,7 +11,7 @@ RSpec.describe Alexandria::ExportLibrary do
     loader = Alexandria::LibraryStore.new(TESTDIR)
     loader.load_library("My Library")
   end
-  let(:format) { Alexandria::ExportFormat.all.find { |it| it.message == message } }
+  let(:format) { Alexandria::ExportFormat.all.find { _1.message == message } }
   let(:outfile) do
     outfile_base = format.ext ? "my-library.#{format.ext}" : "my-library"
     File.join(Dir.mktmpdir, outfile_base)
@@ -37,7 +37,7 @@ RSpec.describe Alexandria::ExportLibrary do
       sort_by_title = Alexandria::LibrarySortOrder.new(:title)
       format.invoke(my_library, sort_by_title, outfile)
       rows = load_rows_from_csv
-      titles = rows.map { |it| it["Title"] }
+      titles = rows.map { _1["Title"] }
       expect(titles).to eq titles.sort
     end
 
@@ -45,7 +45,7 @@ RSpec.describe Alexandria::ExportLibrary do
       sort_by_date_desc = Alexandria::LibrarySortOrder.new(:publishing_year, false)
       format.invoke(my_library, sort_by_date_desc, outfile)
       rows = load_rows_from_csv
-      dates = rows.map { |it| it["Year Published"] }
+      dates = rows.map { _1["Year Published"] }
       expect(dates).to eq dates.sort.reverse
     end
   end
