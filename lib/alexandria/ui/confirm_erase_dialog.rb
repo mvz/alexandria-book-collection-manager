@@ -10,6 +10,7 @@ module Alexandria
   module UI
     class ConfirmEraseDialog < AlertDialog
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, filename)

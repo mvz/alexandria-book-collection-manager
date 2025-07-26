@@ -14,6 +14,7 @@ module Alexandria
     include Logging
     include GetText
     extend GetText
+
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def self.all

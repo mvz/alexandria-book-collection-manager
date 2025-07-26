@@ -10,11 +10,13 @@ module Alexandria
   module UI
     include Logging
     include GetText
+
     GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
     class ListViewManager
       include Logging
       include GetText
       include DragAndDropable
+
       BOOKS_TARGET_TABLE = [["ALEXANDRIA_BOOKS", :same_app, 0]].freeze
 
       def initialize(_listview, parent)

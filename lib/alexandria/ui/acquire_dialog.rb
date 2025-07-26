@@ -46,6 +46,7 @@ module Alexandria
       include ImageFetcher
       include Logging
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, ui_manager, selected_library, &block)

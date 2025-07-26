@@ -13,6 +13,7 @@ module Alexandria
       unabstract
 
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize

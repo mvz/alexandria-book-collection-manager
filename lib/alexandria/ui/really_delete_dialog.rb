@@ -10,6 +10,7 @@ module Alexandria
   module UI
     class ReallyDeleteDialog < AlertDialog
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, library, books = nil)

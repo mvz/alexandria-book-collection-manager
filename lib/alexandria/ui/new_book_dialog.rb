@@ -20,6 +20,7 @@ module Alexandria
       include ImageFetcher
       include GetText
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
       @@last_criterion_was_not_isbn = false
 

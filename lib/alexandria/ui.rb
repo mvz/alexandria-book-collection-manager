@@ -30,6 +30,7 @@ require "alexandria/ui/main_app"
 module Alexandria
   module UI
     include Logging
+
     def self.init_icons
       log.info { "Initializing Icons" }
       Icons.init

@@ -23,6 +23,7 @@ module Alexandria
   TITLE = "Alexandria"
   TEXTDOMAIN = "alexandria"
   extend GetText
+
   bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
   DESCRIPTION = _("A program to help you manage your book collection.")
   COPYRIGHT = "Copyright (C) 2004-2006 Laurent Sansonetti\n" \

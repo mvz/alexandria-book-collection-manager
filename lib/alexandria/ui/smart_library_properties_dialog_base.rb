@@ -13,6 +13,7 @@ module Alexandria
       include Logging
       include CalendarPopup
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_reader :predicate_operator_rule, :dialog

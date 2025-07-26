@@ -13,6 +13,7 @@ module Alexandria
     class Z3950Provider < AbstractProvider
       include Logging
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(name = "Z3950", fullname = "Z39.50")

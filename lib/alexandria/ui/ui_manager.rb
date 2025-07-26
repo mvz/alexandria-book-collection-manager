@@ -19,6 +19,7 @@ module Alexandria
 
       include Logging
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent)

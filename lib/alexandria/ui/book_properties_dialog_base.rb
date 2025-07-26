@@ -15,6 +15,7 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       COVER_MAXWIDTH = 140 # pixels

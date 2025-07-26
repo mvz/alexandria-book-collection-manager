@@ -13,6 +13,7 @@ module Alexandria
     class ExportDialog
       include GetText
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       FORMATS = Alexandria::ExportFormat.all
