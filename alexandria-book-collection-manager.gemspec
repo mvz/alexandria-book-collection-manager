@@ -50,8 +50,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "alexandria-zoom", ["~> 0.6.0"]
   spec.add_dependency "csv", "~> 3.2"
   spec.add_dependency "gettext", ["~> 3.1"]
-  spec.add_dependency "gstreamer", "~> 4.2.0"
-  spec.add_dependency "gtk3", "~> 4.2.0"
+  spec.add_dependency "gstreamer", "~> 4.3.0"
+  spec.add_dependency "gtk3", "~> 4.3.0"
   spec.add_dependency "htmlentities", ["~> 4.3"]
   spec.add_dependency "image_size", ["~> 3.0"]
   spec.add_dependency "marc", "~> 1.3"
