@@ -11,6 +11,7 @@ module Alexandria
     class BookPropertiesDialog < BookPropertiesDialogBase
       include GetText
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, library, book)

@@ -20,9 +20,7 @@ module Alexandria
   module UI
     # assists in turning on progress bar when searching
     # and turning it off when all search threads have completed...
-    class SearchThreadCounter < Monitor
-      attr_reader :count
-
+    class SearchThreadMonitor < Monitor
       def initialize
         @count = 0
         super
@@ -39,6 +37,14 @@ module Alexandria
           @count -= 1 unless @count.zero?
         end
       end
+
+      def any?
+        @count > 0
+      end
+
+      def none?
+        @count.zero?
+      end
     end
 
     class AcquireDialog < BuilderBase
@@ -46,6 +52,7 @@ module Alexandria
       include ImageFetcher
       include Logging
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, ui_manager, selected_library, &block)
@@ -65,8 +72,8 @@ module Alexandria
         init_treeview
         @book_results = {}
 
-        @search_thread_counter = SearchThreadCounter.new
-        @search_threads_running = @search_thread_counter.new_cond
+        @search_thread_monitor = SearchThreadMonitor.new
+        @search_threads_running = @search_thread_monitor.new_cond
       end
 
       def show
@@ -293,18 +300,18 @@ module Alexandria
       private
 
       def start_search
-        @search_thread_counter.synchronize do
-          first_search = @search_thread_counter.count.zero?
+        @search_thread_monitor.synchronize do
+          first_search = @search_thread_monitor.none?
 
-          @search_thread_counter.new_search
+          @search_thread_monitor.new_search
 
           if first_search
             @progress_bar_thread = Thread.new do
               notify_start_add_by_isbn
               Alexandria::BookProviders.instance.add_observer(self)
-              @search_thread_counter.synchronize do
+              @search_thread_monitor.synchronize do
                 @search_threads_running.wait_while do
-                  @search_thread_counter.count > 0
+                  @search_thread_monitor.any?
                 end
               end
               notify_end_add_by_isbn
@@ -315,8 +322,8 @@ module Alexandria
       end
 
       def stop_search
-        @search_thread_counter.synchronize do
-          @search_thread_counter.end_search
+        @search_thread_monitor.synchronize do
+          @search_thread_monitor.end_search
           @search_threads_running.signal
         end
       end

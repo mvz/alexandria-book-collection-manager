@@ -15,6 +15,7 @@ module Alexandria
     class PreferencesDialog < BuilderBase
       include Logging
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, &changed_block)

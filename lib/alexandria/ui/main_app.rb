@@ -44,12 +44,14 @@ module Alexandria
   module UI
     include Logging
     include GetText
+
     GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     class MainApp
       include Logging
       include GetText
       include Singleton
+
       attr_accessor :main_app, :libraries, :actiongroup, :appbar, :prefs, :ui_manager
 
       def initialize

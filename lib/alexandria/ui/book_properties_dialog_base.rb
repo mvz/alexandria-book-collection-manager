@@ -15,6 +15,7 @@ module Alexandria
       include Logging
       include GetText
       extend GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       COVER_MAXWIDTH = 140 # pixels
@@ -261,7 +262,7 @@ module Alexandria
         ]
         raise _("out of range") if rating < 0 || rating > images.length
 
-        images[0..rating - 1].each { |x| x.pixbuf = Icons::STAR_SET }
+        images[0..(rating - 1)].each { |x| x.pixbuf = Icons::STAR_SET }
         images[rating..].each { |x| x.pixbuf = Icons::STAR_UNSET }
         @current_rating = rating
       end

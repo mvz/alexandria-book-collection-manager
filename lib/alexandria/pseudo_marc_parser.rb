@@ -43,7 +43,7 @@ module Alexandria
 
     def self.get_fields(data, type, stripping, mappings = USMARC_MAPPINGS)
       field = ""
-      mappings[type][1..mappings[type].length - 1].each do |part|
+      mappings[type][1..(mappings[type].length - 1)].each do |part|
         if data.first[part]
           part_data = data.first[part].strip
           if part_data =~ stripping

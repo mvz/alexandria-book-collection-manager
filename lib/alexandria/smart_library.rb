@@ -12,6 +12,7 @@ module Alexandria
     include Logging
     include GetText
     extend GetText
+
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     ALL_RULES = 1
@@ -233,6 +234,7 @@ module Alexandria
     class Rule
       include GetText
       extend GetText
+
       bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       attr_accessor :operand, :operation, :value
@@ -289,6 +291,7 @@ module Alexandria
       module Operands
         include GetText
         extend GetText
+
         bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
         LEFT = [
@@ -321,6 +324,7 @@ module Alexandria
         include Logging
         include GetText
         extend GetText
+
         bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
         IS_TRUE = Operator.new(:is_true,

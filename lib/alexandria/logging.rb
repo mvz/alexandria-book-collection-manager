@@ -73,6 +73,7 @@ module Alexandria
   # whithout needing to specify the source each time.
   class LogWrapper
     extend Forwardable
+
     def initialize(logger, source)
       @logger = logger
       @source = source

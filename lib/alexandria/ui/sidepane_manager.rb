@@ -11,6 +11,7 @@ module Alexandria
     class SidepaneManager
       include Logging
       include GetText
+
       attr_accessor :library_listview
 
       def initialize(library_listview, parent)

@@ -29,6 +29,7 @@ module Alexandria
       include Logging
       include GetText
       include DragAndDropable
+
       def initialize(_iconview, parent)
         @parent = parent
         @iconview = @parent.iconview

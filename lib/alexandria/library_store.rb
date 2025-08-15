@@ -12,6 +12,7 @@ module Alexandria
       %r{loaned_since:\s*(!ruby/object:Bignum\s*)?(\d+)\n}
 
     include GetText
+
     bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def initialize(dir)

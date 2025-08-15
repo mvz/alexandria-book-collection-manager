@@ -11,6 +11,7 @@ module Alexandria
     class SkipEntryDialog < AlertDialog
       include GetText
       include Logging
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent, message)

@@ -24,6 +24,7 @@ module Alexandria
   module ComboBoxOverrides
     include GetText
     extend GetText
+
     GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     def populate_with_libraries(libraries, selected_library)

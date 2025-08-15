@@ -19,6 +19,7 @@ module Alexandria
 
       include Logging
       include GetText
+
       GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
       def initialize(parent)
@@ -900,7 +901,7 @@ module Alexandria
         log.debug { "selected_library" }
         if (iter = @library_listview.selection.selected)
           target_name = iter[1]
-          @libraries.all_libraries.find { |it| it.name == target_name }
+          @libraries.all_libraries.find { _1.name == target_name }
         else
           @libraries.all_libraries.first
         end

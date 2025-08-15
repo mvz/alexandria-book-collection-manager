@@ -29,6 +29,7 @@ module Alexandria
     include Singleton
     include Observable
     include GetText
+
     GetText.bindtextdomain(Alexandria::TEXTDOMAIN, charset: "UTF-8")
 
     SEARCH_BY_ISBN, SEARCH_BY_TITLE, SEARCH_BY_AUTHORS,
@@ -196,6 +197,7 @@ module Alexandria
 
     class AbstractProvider
       include GetText
+
       attr_reader :prefs
       attr_accessor :name, :fullname
 
@@ -278,6 +280,7 @@ module Alexandria
       # FIXME: Clean up this complex abstract/concrete class system
       def self.unabstract
         include Singleton
+
         undef_method :reinitialize
         undef_method :name=
         undef_method :fullname=
