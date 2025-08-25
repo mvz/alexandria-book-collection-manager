@@ -168,8 +168,8 @@ module Alexandria
         end
       end
 
-      def add(*args)
-        self << Variable.new(@provider, *args)
+      def add(*)
+        self << Variable.new(@provider, *)
       end
 
       def [](obj)

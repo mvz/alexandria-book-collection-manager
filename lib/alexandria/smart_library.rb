@@ -275,8 +275,8 @@ module Alexandria
       class LeftOperand < Operand
         attr_accessor :book_selector
 
-        def initialize(book_selector, *args)
-          super(*args)
+        def initialize(book_selector, *)
+          super(*)
           @book_selector = book_selector
         end
       end

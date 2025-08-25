@@ -5,7 +5,6 @@
 # See the file README.md for authorship and licensing information.
 
 require "singleton"
-require "set"
 require "alexandria/default_preferences"
 
 module Alexandria
