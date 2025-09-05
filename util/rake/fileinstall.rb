@@ -29,7 +29,6 @@
 
 require "fileutils"
 require "pathname"
-require "set"
 require "rake/tasklib"
 
 # A file installer task, capable of installing into the system
