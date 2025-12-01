@@ -22,7 +22,7 @@ jobs:
         ruby: ["3.2", "3.3", "3.4"]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install non-ruby dependencies
         run: |
@@ -64,7 +64,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install non-ruby dependencies
         run: |
