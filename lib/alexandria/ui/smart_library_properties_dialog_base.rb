@@ -78,7 +78,7 @@ module Alexandria
         new_rule.value = nil
       end
 
-      protected
+      private
 
       attr_reader :smart_library_rules
 

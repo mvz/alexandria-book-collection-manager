@@ -397,7 +397,7 @@ module Alexandria
       book.ident + (Library.jpeg?(cover(book)) ? ".jpg" : ".gif")
     end
 
-    protected
+    private
 
     def initialize(name, store = nil)
       @name = name
