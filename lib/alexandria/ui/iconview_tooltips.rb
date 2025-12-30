@@ -12,7 +12,7 @@
 #
 # Ported to ruby-gtk2 (and modified for IconView) by Cathal Mc Ginley
 
-require "cgi"
+require "cgi/escape"
 
 module Alexandria
   module UI

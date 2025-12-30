@@ -14,7 +14,7 @@
 # Updated from Palatina, to reflect changes in the worldcat website.
 # (1 Sep 2009)
 
-require "cgi"
+require "cgi/escape"
 require "alexandria/net"
 require "alexandria/book_providers/website_based_provider"
 
