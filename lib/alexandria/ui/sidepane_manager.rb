@@ -129,71 +129,71 @@ module Alexandria
 
         @library_listview
           .signal_connect("drag-motion") do |_widget, drag_context, x, y, time, _data|
-          log.debug { "drag-motion" }
+            log.debug { "drag-motion" }
 
-          path, column, =
-            @library_listview.get_path_at_pos(x, y)
+            path, column, =
+              @library_listview.get_path_at_pos(x, y)
 
-          if path
-            # Refuse drags from/to smart libraries.
-            if @parent.selected_library.is_a?(SmartLibrary)
-              path = nil
-            else
-              iter = @library_listview.model.get_iter(path)
-              if iter[3] # separator?
+            if path
+              # Refuse drags from/to smart libraries.
+              if @parent.selected_library.is_a?(SmartLibrary)
                 path = nil
               else
-                library = @libraries.all_libraries.find do |lib|
-                  lib.name == iter[1]
+                iter = @library_listview.model.get_iter(path)
+                if iter[3] # separator?
+                  path = nil
+                else
+                  library = @libraries.all_libraries.find do |lib|
+                    lib.name == iter[1]
+                  end
+                  path = nil if library.is_a?(SmartLibrary)
                 end
-                path = nil if library.is_a?(SmartLibrary)
               end
             end
-          end
 
-          @library_listview.set_drag_dest_row(path, :into_or_after)
+            @library_listview.set_drag_dest_row(path, :into_or_after)
 
-          Gdk.drag_status(drag_context,
-                          path ? drag_context.suggested_action : 0,
-                          time)
+            Gdk.drag_status(drag_context,
+                            path ? drag_context.suggested_action : 0,
+                            time)
         end
 
         @library_listview
           .signal_connect("drag-drop") do |widget, drag_context, _x, _y, time, _data|
-          log.debug { "drag-drop" }
+            log.debug { "drag-drop" }
 
-          widget.drag_get_data(drag_context,
-                               drag_context.targets.first,
-                               time)
-          true
+            widget.drag_get_data(drag_context,
+                                 drag_context.targets.first,
+                                 time)
+            true
         end
 
         @library_listview
           .signal_connect("drag-data-received") do |_, drag_context, x, y, data, _, _|
-          log.debug { "drag-data-received" }
+            log.debug { "drag-data-received" }
 
-          success = false
-          # FIXME: Ruby-GNOME2 should make comparison work without needing to
-          # call #name.
-          if data.data_type.name == Gdk::Selection::TYPE_STRING.name
-            success, path =
-              @library_listview.get_dest_row_at_pos(x, y)
+            success = false
+            # FIXME: Ruby-GNOME2 should make comparison work without needing to
+            # call #name.
+            if data.data_type.name == Gdk::Selection::TYPE_STRING.name
+              success, path =
+                @library_listview.get_dest_row_at_pos(x, y)
 
-            if success
-              iter = @library_listview.model.get_iter(path)
-              library = @libraries.all_libraries.find do |lib|
-                lib.name == iter[1]
+              if success
+                iter = @library_listview.model.get_iter(path)
+                library = @libraries.all_libraries.find do |lib|
+                  lib.name == iter[1]
+                end
+                @parent.move_selected_books_to_library(library)
+                success = true
               end
-              @parent.move_selected_books_to_library(library)
-              success = true
             end
-          end
-          begin
-            drag_context.finish(success: success, delete: false)
-          rescue StandardError => ex
-            log.error { "drag_context.finish failed: #{ex}" }
-            raise
-          end
+            begin
+              drag_context.finish(success: success, delete: false)
+            rescue StandardError => ex
+              log.error { "drag_context.finish failed: #{ex}" }
+              raise
+            end
         end
       end
     end

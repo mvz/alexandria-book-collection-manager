@@ -314,11 +314,11 @@ module Alexandria
       def connect_toggle_actions
         toggle_actions
           .each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
-          action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip,
-                                         stock_id: stock_id)
-          action.set_active is_active
-          @actiongroup.add_action_with_accel(action, accelerator)
-          action.signal_connect("toggled", &callback) if callback
+            action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip,
+                                           stock_id: stock_id)
+            action.set_active is_active
+            @actiongroup.add_action_with_accel(action, accelerator)
+            action.signal_connect("toggled", &callback) if callback
         end
       end
 

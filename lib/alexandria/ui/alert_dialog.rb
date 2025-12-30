@@ -4,7 +4,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require "cgi"
+require "cgi/escape"
 
 module Alexandria
   module UI

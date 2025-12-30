@@ -9,7 +9,7 @@
 
 # Author: Sun Ning <classicning@gmail.com>, http://sunng.info/
 
-require "cgi"
+require "cgi/escape"
 require "alexandria/net"
 require "yaml"
 

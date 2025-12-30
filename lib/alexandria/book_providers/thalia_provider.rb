@@ -11,7 +11,7 @@
 # for Alexandria. (21 Dec 2009)
 
 require "net/http"
-require "cgi"
+require "cgi/escape"
 require "alexandria/book_providers/website_based_provider"
 
 module Alexandria
