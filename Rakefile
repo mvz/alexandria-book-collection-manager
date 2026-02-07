@@ -214,13 +214,6 @@ end
 ## # # # system installation # # # ##
 
 task pre_install: [:build]
-task :scrollkeeper do
-  unless system("which scrollkeeper-update")
-    raise "scrollkeeper-update cannot be found, is Scrollkeeper correctly installed?"
-  end
-
-  system("scrollkeeper-update -q") || raise("Scrollkeeper update failed")
-end
 
 task :gconf do
   return if ENV["GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL"]
@@ -240,7 +233,7 @@ task :update_icon_cache do
   system("gtk-update-icon-cache -f -t /usr/share/icons/hicolor") # HACK
 end
 
-task post_install: [:scrollkeeper, :gconf, :update_icon_cache]
+task post_install: [:gconf, :update_icon_cache]
 
 desc "Install Alexandria"
 task install: [:pre_install, :install_package, :post_install]
