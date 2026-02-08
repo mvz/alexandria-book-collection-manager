@@ -270,7 +270,7 @@ module Alexandria
       end
 
       def self.abstract?
-        !included_modules.include?(Singleton)
+        !include?(Singleton)
       end
 
       def <=>(other)
