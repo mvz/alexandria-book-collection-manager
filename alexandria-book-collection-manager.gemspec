@@ -58,15 +58,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "marc", "~> 1.3"
   spec.add_dependency "nokogiri", ["~> 1.11"]
   spec.add_dependency "observer", "~> 0.1.2"
-
-  spec.add_development_dependency "gnome_app_driver", "~> 0.3.2"
-  spec.add_development_dependency "rake", ["~> 13.0"]
-  spec.add_development_dependency "rspec", ["~> 3.0"]
-  spec.add_development_dependency "rubocop", "~> 1.79"
-  spec.add_development_dependency "rubocop-i18n", "~> 3.2"
-  spec.add_development_dependency "rubocop-performance", "~> 1.25"
-  spec.add_development_dependency "rubocop-rake", "~> 0.7.1"
-  spec.add_development_dependency "rubocop-rspec", "~> 3.6"
-  spec.add_development_dependency "simplecov", "~> 0.22.0"
-  spec.add_development_dependency "webmock", "~> 3.9"
 end
