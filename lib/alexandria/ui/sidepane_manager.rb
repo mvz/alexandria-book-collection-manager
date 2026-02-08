@@ -85,28 +85,29 @@ module Alexandria
       end
 
       def setup_sidepane
-        @library_listview.model = Gtk::ListStore.new(GdkPixbuf::Pixbuf,
-                                                     String,
-                                                     TrueClass,
-                                                     TrueClass)
+        @library_listview.model = Gtk::ListStore.new([GdkPixbuf::Pixbuf.gtype,
+                                                      GObject::TYPE_STRING,
+                                                      GObject::TYPE_BOOLEAN,
+                                                      GObject::TYPE_BOOLEAN])
         @library_separator_iter = nil
         @libraries.all_regular_libraries.each { |x| @parent.append_library(x) }
         @libraries.all_smart_libraries.each { |x| @parent.append_library(x) }
 
         renderer = Gtk::CellRendererPixbuf.new
-        column = Gtk::TreeViewColumn.new(_("Library"))
+        column = Gtk::TreeViewColumn.new
+        column.set_title(_("Library"))
         column.pack_start(renderer, false)
-        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, model, iter|
           # log.debug { "sidepane: cell_data_func #{col}, #{cell}, #{iter}" }
-          cell.pixbuf = iter[0]
+          cell.pixbuf = model.get_value(iter, 0)
         end
         renderer = Gtk::CellRendererText.new
         renderer.ellipsize = :end
         column.pack_start(renderer, true)
-        column.set_cell_data_func(renderer) do |_col, cell, _model, iter|
+        column.set_cell_data_func(renderer) do |_col, cell, model, iter|
           # log.debug { "sidepane: editable #{cell}, #{iter} #{iter[1]}: #{iter[2]}" }
-          cell.text = iter[1]
-          cell.editable = iter[2]
+          cell.text = model.get_value(iter, 1)
+          cell.editable = model.get_value(iter, 2)
           # log.debug { "exit sidepane: editable #{cell}, #{iter}" }
         end
         renderer.signal_connect("edited") do |cell, path_string, new_text|

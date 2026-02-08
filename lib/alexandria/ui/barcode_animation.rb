@@ -23,29 +23,9 @@
 # Boston, MA 02110-1301 USA.
 #++
 
-require "gobject-introspection"
+require "gir_ffi"
 
-module GooCanvas
-  class << self
-    def const_missing(name)
-      init
-      if const_defined?(name)
-        const_get(name)
-      else
-        super
-      end
-    end
-
-    def init
-      class << self
-        remove_method(:init)
-        remove_method(:const_missing)
-      end
-      loader = GObjectIntrospection::Loader.new(self)
-      loader.load("GooCanvas")
-    end
-  end
-end
+GirFFI.setup :GooCanvas
 
 module Alexandria
   module UI
@@ -79,7 +59,7 @@ module Alexandria
       end
 
       def start
-        @timeout = GLib::Timeout.add(20) do
+        @timeout = GLib.timeout_add(GLib::PRIORITY_DEFAULT, 20) do
           scan_animation
           (@index >= 0)
         end
@@ -91,16 +71,16 @@ module Alexandria
       end
 
       def set_active
-        @canvas.set_property(:background_color, "white")
-        @barcode_bars.each { |rect| rect.set_property(:fill_color, "white") }
+        @canvas.background_color = "white"
+        @barcode_bars.each { |rect| rect.fill_color = "white" }
       end
 
       def set_passive
         @canvas or return
 
         passive_bg = "#F4F4F4"
-        @canvas.set_property(:background_color, passive_bg)
-        @barcode_bars.each { |rect| rect.set_property(:fill_color, passive_bg) }
+        @canvas.background_color = passive_bg
+        @barcode_bars.each { |rect| rect.fill_color = passive_bg }
       end
 
       def manual_input
@@ -151,9 +131,9 @@ module Alexandria
           @index += 1
         else
           @index = -1
-          GLib::Timeout.add(5) do
+          GLib.timeout_add(GLib::PRIORITY_DEFAULT, 5) do
             @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, 0x000000C0) }
-            GLib::Timeout.add(15) do
+            GLib.timeout_add(GLib::PRIORITY_DEFAULT, 15) do
               fade_animation
               (@fade_opacity != -1)
             end

@@ -18,11 +18,10 @@ module Alexandria
       attr_reader :dialog
 
       def initialize(title:, parent:, flags:, buttons:)
-        @dialog = Gtk::Dialog.new(title: title, parent: parent, flags: flags,
-                                  buttons: buttons)
+        @dialog = Gtk::Dialog.new_with_buttons(title, parent, flags, buttons)
 
         @dialog.resizable = false
-        @dialog.child.border_width = 12
+        @dialog.content_area.border_width = 12
 
         @controls = []
       end
@@ -35,7 +34,7 @@ module Alexandria
                      table.n_columns)
         table.border_width = 12
         table.row_spacings = 6
-        table.column_spacings = 12
+        table.col_spacings = 12
 
         @controls.clear
 

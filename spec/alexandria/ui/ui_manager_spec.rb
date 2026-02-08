@@ -47,7 +47,7 @@ describe Alexandria::UI::UIManager do
 
       aggregate_failures do
         expect(ui.model.iter_n_children).to eq regular_library.count
-        expect(ui.iconview.selected_items).not_to be_empty
+        expect(ui.iconview.selected_items.to_a).not_to be_empty
       end
     end
   end

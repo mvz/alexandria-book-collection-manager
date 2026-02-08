@@ -69,7 +69,7 @@ module Alexandria
         end
       end
 
-      def on_window_state_event(_window, event)
+      def on_window_state_event(_window, event, _data)
         log.debug { "window-state-event" }
         if event.is_a?(Gdk::EventWindowState)
           @maximized = event.new_window_state == :maximized
@@ -77,7 +77,7 @@ module Alexandria
         log.debug { "end window-state-event" }
       end
 
-      def on_toolbar_view_as_changed(widget)
+      def on_toolbar_view_as_changed(widget, _user_data)
         log.debug { "changed" }
         action = case widget.active
                  when 0
@@ -88,7 +88,7 @@ module Alexandria
         action.active = true
       end
 
-      def on_window_destroy(_window)
+      def on_window_destroy(_window, _user_data)
         log.debug { "destroy" }
         @actiongroup["Quit"].activate
       end
@@ -101,7 +101,7 @@ module Alexandria
         @iconview.unfreeze
       end
 
-      def on_criterion_combobox_changed(widget)
+      def on_criterion_combobox_changed(widget, _user_data)
         log.debug { "changed" }
         @filter_books_mode = widget.active
         @filter_entry.text.strip!
@@ -305,7 +305,7 @@ module Alexandria
 
       def connect_actions(actions)
         actions.each do |name, stock_id, label, accelerator, tooltip, callback|
-          action = Gtk::Action.new(name, label: label, tooltip: tooltip, stock_id: stock_id)
+          action = Gtk::Action.new(name, label, tooltip, stock_id)
           @actiongroup.add_action_with_accel(action, accelerator)
           action.signal_connect("activate", &callback) if callback
         end
@@ -314,8 +314,7 @@ module Alexandria
       def connect_toggle_actions
         toggle_actions
           .each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
-            action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip,
-                                           stock_id: stock_id)
+            action = Gtk::ToggleAction.new(name, label, tooltip, stock_id)
             action.set_active is_active
             @actiongroup.add_action_with_accel(action, accelerator)
             action.signal_connect("toggled", &callback) if callback
@@ -328,9 +327,9 @@ module Alexandria
         first_action.signal_connect "changed" do |_action, current, _user_data|
           @notebook.page = current.current_value
           hid = @toolbar_view_as_signal_hid
-          @toolbar_view_as.signal_handler_block(hid) do
-            @toolbar_view_as.active = current.current_value
-          end
+          GObject.signal_handler_block(@toolbar_view_as, hid)
+          @toolbar_view_as.active = current.current_value
+          GObject.signal_handler_unblock(@toolbar_view_as, hid)
         end
       end
 
@@ -346,8 +345,7 @@ module Alexandria
       def connect_radio_actions(actions)
         first_action = nil
         actions.each do |name, stock_id, label, accelerator, tooltip, value|
-          action = Gtk::RadioAction.new(name, value, label: label, tooltip: tooltip,
-                                        stock_id: stock_id)
+          action = Gtk::RadioAction.new(name, label, tooltip, stock_id, value)
           if first_action
             action.join_group first_action
           else
@@ -361,18 +359,18 @@ module Alexandria
       def standard_actions
         # rubocop:disable Layout/LineLength
         [["LibraryMenu", nil, _("_Library")],
-         ["New", Gtk::Stock::NEW, _("_New Library"), "<control>L", _("Create a new library"), method(:on_new)],
+         ["New", Gtk::STOCK_NEW, _("_New Library"), "<control>L", _("Create a new library"), method(:on_new)],
          ["NewSmart", nil, _("New _Smart Library..."), "<control><shift>L", _("Create a new smart library"), method(:on_new_smart)],
-         ["AddBook", Gtk::Stock::ADD, _("_Add Book..."), "<control>N", _("Add a new book from the Internet"), method(:on_add_book)],
+         ["AddBook", Gtk::STOCK_ADD, _("_Add Book..."), "<control>N", _("Add a new book from the Internet"), method(:on_add_book)],
          ["AddBookManual", nil, _("Add Book _Manually..."), "<control><shift>N", _("Add a new book manually"), method(:on_add_book_manual)],
          ["Import", nil, _("_Import..."), "<control>I", _("Import a library"), method(:on_import)],
          ["Export", nil, _("_Export..."), "<control><shift>E", _("Export the selected library"), method(:on_export)],
          ["Acquire", nil, _("A_cquire from Scanner..."), "<control><shift>S", _("Acquire books from a scanner"), method(:on_acquire)],
-         ["Properties", Gtk::Stock::PROPERTIES, _("_Properties"), nil, _("Edit the properties of the selected book"), method(:on_properties)],
-         ["Quit", Gtk::Stock::QUIT, _("_Quit"), "<control>Q", _("Quit the program"), method(:on_quit)],
+         ["Properties", Gtk::STOCK_PROPERTIES, _("_Properties"), nil, _("Edit the properties of the selected book"), method(:on_properties)],
+         ["Quit", Gtk::STOCK_QUIT, _("_Quit"), "<control>Q", _("Quit the program"), method(:on_quit)],
          ["EditMenu", nil, _("_Edit")],
-         ["Undo", Gtk::Stock::UNDO, _("_Undo"), "<control>Z", _("Undo the last action"), method(:on_undo)],
-         ["Redo", Gtk::Stock::REDO, _("_Redo"), "<control><shift>Z", _("Redo the undone action"), method(:on_redo)],
+         ["Undo", Gtk::STOCK_UNDO, _("_Undo"), "<control>Z", _("Undo the last action"), method(:on_undo)],
+         ["Redo", Gtk::STOCK_REDO, _("_Redo"), "<control><shift>Z", _("Redo the undone action"), method(:on_redo)],
          ["SelectAll", nil, _("_Select All"), "<control>A", _("Select all visible books"), method(:on_select_all)],
          ["DeselectAll", nil, _("Dese_lect All"), "<control><shift>A", _("Deselect everything"), method(:on_deselect_all)],
          ["SetRating", nil, _("My _Rating")],
@@ -384,24 +382,24 @@ module Alexandria
          ["SetRating5", nil, _("Five Stars"), nil, nil, proc { on_set_rating[5].call }],
          ["Move", nil, _("_Move")],
          ["Rename", nil, _("_Rename"), nil, nil, method(:on_rename)],
-         ["Delete", Gtk::Stock::DELETE, _("_Delete"), "Delete", _("Delete the selected books or library"), method(:on_delete)],
-         ["Search", Gtk::Stock::FIND, _("_Search"), "<control>F", _("Filter books"), method(:on_search)],
-         ["ClearSearchResult", Gtk::Stock::CLEAR, _("_Clear Results"), "<control><alt>B", _("Clear the search results"), method(:on_clear_search_results)],
-         ["Preferences", Gtk::Stock::PREFERENCES, _("_Preferences"), "<control>O", _("Change Alexandria's settings"), method(:on_preferences)],
+         ["Delete", Gtk::STOCK_DELETE, _("_Delete"), "Delete", _("Delete the selected books or library"), method(:on_delete)],
+         ["Search", Gtk::STOCK_FIND, _("_Search"), "<control>F", _("Filter books"), method(:on_search)],
+         ["ClearSearchResult", Gtk::STOCK_CLEAR, _("_Clear Results"), "<control><alt>B", _("Clear the search results"), method(:on_clear_search_results)],
+         ["Preferences", Gtk::STOCK_PREFERENCES, _("_Preferences"), "<control>O", _("Change Alexandria's settings"), method(:on_preferences)],
          ["ViewMenu", nil, _("_View")],
          ["ArrangeIcons", nil, _("Arran_ge Icons")],
          ["OnlineInformation", nil, _("Display Online _Information")],
 
          ["HelpMenu", nil, _("_Help")],
-         ["SubmitBugReport", Gtk::Stock::EDIT, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
-         ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
-         ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)]]
+         ["SubmitBugReport", Gtk::STOCK_EDIT, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
+         ["Help", Gtk::STOCK_HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
+         ["About", Gtk::STOCK_ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)]]
         # rubocop:enable Layout/LineLength
       end
 
       def providers_actions
         BookProviders.list.map do |provider|
-          [provider.action_name, Gtk::Stock::JUMP_TO,
+          [provider.action_name, Gtk::STOCK_JUMP_TO,
            _("At _%s") % provider.fullname, nil, nil,
            proc { open_web_browser(provider.url(selected_books.first)) }]
         end

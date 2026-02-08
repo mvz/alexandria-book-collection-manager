@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+Gtk.load_class :Entry
+
 module Alexandria
   module EntryOverrides
     def complete_titles
@@ -78,8 +80,8 @@ module Alexandria
       def initialize
         @models = []
         @libraries = []
-        5.times { @models << Gtk::ListStore.new(String) }
-        @models << Gtk::ListStore.new(String)
+        5.times { @models << Gtk::ListStore.new([GObject::TYPE_STRING]) }
+        @models << Gtk::ListStore.new([GObject::TYPE_STRING])
         touch
       end
 
