@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 group :development, :test do
   gem "gnome_app_driver", "~> 0.3.2"
+  gem "irb", "~> 1.16"
   gem "rake", "~> 13.0"
   gem "rspec", "~> 3.0"
   gem "rubocop", "~> 1.79"
