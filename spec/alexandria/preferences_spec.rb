@@ -39,13 +39,29 @@ describe Alexandria::Preferences do
     end
   end
 
-  it "allows setting known setting to false" do
-    instance.toolbar_visible = false
-    expect(instance.toolbar_visible).to be false
+  describe "setter generated from default values" do
+    it "allows setting known setting to false" do
+      instance.toolbar_visible = false
+      expect(instance.toolbar_visible).to be false
+    end
+
+    it "resets known setting by setting to nil" do
+      instance.toolbar_visible = nil
+      expect(instance.toolbar_visible).to be true
+    end
   end
 
-  it "resets known setting by setting to nil" do
-    instance.toolbar_visible = nil
-    expect(instance.toolbar_visible).to be true
+  describe "private method #gconftool_values_to_hash" do
+    it "works with custom z3950 providers" do
+      all_vals = <<~SETTINGS
+        z3950_12345_name = Foo
+        z3950_-8765_name = Bar
+      SETTINGS
+      result = instance.send :gconftool_values_to_hash, all_vals
+      expect(result).to eq({
+                             "z3950_12345_name" => "Foo",
+                             "z3950_-8765_name" => "Bar"
+                           })
+    end
   end
 end

@@ -114,6 +114,10 @@ RSpec/DescribeClass:
     - 'spec/end_to_end/**/*_spec.rb'
 
 RSpec/ExampleLength:
+  CountAsOne:
+    - hash
+    - array
+    - heredoc
   Max: 8
   Exclude:
     - 'spec/end_to_end/**/*_spec.rb'
