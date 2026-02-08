@@ -343,7 +343,7 @@ module Alexandria
           klass = @abstract_classes.find { |x| x.name.include?(klass_name) }
           next unless klass
 
-          fullname = @prefs.send(name.downcase + "_name")
+          fullname = @prefs.get_variable(name.downcase + "_name")
           next unless fullname
 
           instance = klass.new
