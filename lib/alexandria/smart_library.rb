@@ -223,7 +223,7 @@ module Alexandria
     def libraries=(ary)
       @libraries ||= []
       @libraries.each { |x| x.delete_observer(self) }
-      @libraries = ary.select { |x| x.is_a?(Library) }
+      @libraries = ary.grep(Library)
       @libraries.each { |x| x.add_observer(self) }
     end
 
@@ -406,8 +406,7 @@ module Alexandria
                        })
 
         ALL = constants.map \
-          { |x| module_eval(x.to_s) }.select \
-          { |x| x.is_a?(Operator) }
+          { |x| module_eval(x.to_s) }.grep(Operator)
       end
 
       BOOLEAN_OPERATORS = [

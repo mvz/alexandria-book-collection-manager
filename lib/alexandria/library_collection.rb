@@ -33,11 +33,11 @@ module Alexandria
     end
 
     def all_regular_libraries
-      @all_libraries.select { |x| x.is_a?(Library) }
+      @all_libraries.grep(Library)
     end
 
     def all_smart_libraries
-      @all_libraries.select { |x| x.is_a?(SmartLibrary) }
+      @all_libraries.grep(SmartLibrary)
     end
 
     LIBRARY_ADDED = 1
