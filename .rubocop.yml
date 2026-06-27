@@ -15,7 +15,7 @@ AllCops:
     - 'lib/alexandria/default_preferences.rb'
     - 'pkg/**/*'
   NewCops: enable
-  TargetRubyVersion: 3.2
+  TargetRubyVersion: 3.3
 
 # Choose GetText-style I18n cops
 I18n/GetText:
