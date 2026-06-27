@@ -5,6 +5,7 @@
 # See the file README.md for authorship and licensing information.
 
 require "alexandria/ui/columns"
+require_relative "cell_render_toggle"
 
 module Alexandria
   module UI

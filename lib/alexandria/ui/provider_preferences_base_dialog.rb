@@ -4,13 +4,7 @@
 #
 # See the file README.md for authorship and licensing information.
 
-class Gtk::Entry
-  attr_writer :mandatory
-
-  def mandatory?
-    @mandatory
-  end
-end
+require_relative "gtk_entry_overrides"
 
 module Alexandria
   module UI

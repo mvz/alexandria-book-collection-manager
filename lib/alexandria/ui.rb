@@ -23,6 +23,7 @@ require "gtk3"
 require "alexandria/ui/icons"
 require "alexandria/ui/builder_base"
 require "alexandria/ui/completion_models"
+require "alexandria/ui/error_dialog"
 require "alexandria/ui/libraries_combo"
 require "alexandria/ui/multi_drag_treeview"
 require "alexandria/ui/main_app"
@@ -54,6 +55,18 @@ module Alexandria
       init_icons
       start_main_app
       start_gtk
+    end
+
+    def self.display_help(parent, section = nil)
+      section_index = ""
+      section_index = "##{section}" if section
+      exec("gnome-help ghelp:alexandria#{section_index}") if fork.nil?
+    rescue StandardError
+      log.error(self) { "Unable to load help browser" }
+      ErrorDialog.new(parent, _("Unable to launch the help browser"),
+                      _("Could not display help for Alexandria. " \
+                        "There was an error launching the system " \
+                        "help browser.")).display
     end
   end
 end

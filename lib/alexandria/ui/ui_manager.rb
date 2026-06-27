@@ -8,6 +8,9 @@ require "alexandria/ui/callbacks"
 require "alexandria/ui/columns"
 require "alexandria/ui/conflict_while_copying_dialog"
 require "alexandria/library_sort_order"
+require_relative "freeze_thaw"
+require_relative "library_overrides"
+require_relative "provider_overrides"
 
 module Alexandria
   module UI

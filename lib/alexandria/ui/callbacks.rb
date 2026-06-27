@@ -5,6 +5,8 @@
 # See the file README.md for authorship and licensing information.
 
 require "alexandria/ui/really_delete_dialog"
+require_relative "gtk_action_group_overrides"
+require_relative "provider_overrides"
 
 module Alexandria
   module UI
