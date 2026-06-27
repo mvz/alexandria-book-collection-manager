@@ -137,7 +137,7 @@ module Alexandria
     }.freeze
 
     def self.upc_convert(upc)
-      test_upc = upc.map(&:to_s).join
+      test_upc = upc.join
       extract_numbers(AMERICAN_UPC_LOOKUP[test_upc])
     end
 
@@ -176,7 +176,7 @@ module Alexandria
 
       return unless canonical
 
-      canonical.map(&:to_s).join
+      canonical.join
     end
 
     def simple_save(book)

@@ -81,7 +81,7 @@ module Alexandria
       private
 
       def sensitize
-        entries = @table.children.select { |x| x.is_a?(Gtk::Entry) }
+        entries = @table.children.grep(Gtk::Entry)
         entries.each do |entry|
           entry.signal_connect("changed") do
             sensitive = true

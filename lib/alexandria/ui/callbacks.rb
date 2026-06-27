@@ -5,6 +5,8 @@
 # See the file README.md for authorship and licensing information.
 
 require "alexandria/ui/really_delete_dialog"
+require_relative "gtk_action_group_overrides"
+require_relative "provider_overrides"
 
 module Alexandria
   module UI
@@ -314,11 +316,11 @@ module Alexandria
       def connect_toggle_actions
         toggle_actions
           .each do |name, stock_id, label, accelerator, tooltip, callback, is_active|
-            action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip,
-                                           stock_id: stock_id)
-            action.set_active is_active
-            @actiongroup.add_action_with_accel(action, accelerator)
-            action.signal_connect("toggled", &callback) if callback
+          action = Gtk::ToggleAction.new(name, label: label, tooltip: tooltip,
+                                         stock_id: stock_id)
+          action.set_active is_active
+          @actiongroup.add_action_with_accel(action, accelerator)
+          action.signal_connect("toggled", &callback) if callback
         end
       end
 

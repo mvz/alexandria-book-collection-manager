@@ -6,16 +6,6 @@
 
 require "gettext"
 
-# XXX: Gettext hotfix
-module Gem
-  class << self
-    undef :all_load_paths if method_defined? :all_load_paths
-    def all_load_paths
-      []
-    end
-  end
-end
-
 require "logger"
 require "alexandria/logging"
 require "alexandria/about"

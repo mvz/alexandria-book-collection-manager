@@ -23,29 +23,7 @@
 # Boston, MA 02110-1301 USA.
 #++
 
-require "gobject-introspection"
-
-module GooCanvas
-  class << self
-    def const_missing(name)
-      init
-      if const_defined?(name)
-        const_get(name)
-      else
-        super
-      end
-    end
-
-    def init
-      class << self
-        remove_method(:init)
-        remove_method(:const_missing)
-      end
-      loader = GObjectIntrospection::Loader.new(self)
-      loader.load("GooCanvas")
-    end
-  end
-end
+require_relative "goo_canvas"
 
 module Alexandria
   module UI
