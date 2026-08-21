@@ -12,7 +12,7 @@ group :development, :test do
   gem "rubocop-performance", "~> 1.27"
   gem "rubocop-rake", "~> 0.7.1"
   gem "rubocop-rspec", "~> 3.10"
-  gem "simplecov", "~> 1.0.2"
+  gem "simplecov", "~> 1.1.1"
   gem "webmock", "~> 3.9"
 end
 
