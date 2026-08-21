@@ -144,7 +144,7 @@ module Alexandria
       def fade_animation
         @fade_opacity = 255 if @fade_opacity == -1
         if @fade_opacity >= 0
-          grey = @fade_opacity + 0x00000000
+          grey = @fade_opacity
           @barcode_bars.each { |rect| rect.set_property(:fill_color_rgba, grey) }
           @fade_opacity -= 5
         else
