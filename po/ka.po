@@ -1,0 +1,1362 @@
+# Georgian translation for Alexandria.
+# Copyright (C) 2023 Alexandria's authors
+# This file is distributed under the same license as the Alexandria package.
+# Temuri Doghonadze <temuri.doghonadze@gmail.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: alexandria\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-21 10:01+0100\n"
+"PO-Revision-Date: 2023-02-23 10:45+0100\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: ../lib/alexandria/about.rb:27
+msgid "A program to help you manage your book collection."
+msgstr "პროგრამა, რომელიც წიგნების კოლექციის მართვაში დაგეხმარებათ."
+
+#: ../lib/alexandria/book_providers.rb:95
+msgid "Couldn't reach the provider '%s': timeout expired."
+msgstr "'%s'-სთან დაკავშირების შეცდომა: მოლოდინის დრო ამოიწურა."
+
+#: ../lib/alexandria/book_providers.rb:99
+msgid "Couldn't reach the provider '%s': socket error (%s)."
+msgstr "'%s'-სთან დაკავშირების შეცდომა: სოკეტის შეცდომა (%s)."
+
+#: ../lib/alexandria/book_providers.rb:103
+msgid ""
+"No results were found.  Make sure your search criterion is spelled "
+"correctly, and try again."
+msgstr ""
+"შედეგები აღმოჩენილი არაა.  დარწმუნდით, რომ ძებნის პირობა სწორად გიწერიათ და "
+"თავიდან სცადეთ."
+
+#: ../lib/alexandria/book_providers.rb:108
+msgid "Too many results for that search."
+msgstr "ამ ძებნის მეტისმეტად ბევრი შედეგი."
+
+#: ../lib/alexandria/book_providers.rb:111
+msgid "Invalid search type."
+msgstr "ძებნის არასწორი ტიპი."
+
+#: ../lib/alexandria/book_providers.rb:205
+msgid "Enabled"
+msgstr "ჩართული"
+
+#: ../lib/alexandria/book_providers/bl_provider.rb:28
+msgid "British Library"
+msgstr "ბრიტანული ბიბლიოთეკა"
+
+#: ../lib/alexandria/book_providers/loc_provider.rb:19
+msgid "Library of Congress (Usa)"
+msgstr "კონგრესის ბიბლიოთეკა (USA)"
+
+#: ../lib/alexandria/book_providers/sbn_provider.rb:65
+msgid "Invalid ISBN"
+msgstr "არასწორი ISBN"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:20
+msgid "Hostname"
+msgstr "ჰოსტის სახელი"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:21
+msgid "Port"
+msgstr "პორტი"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:22
+msgid "Database"
+msgstr "მონაცემთა ბაზა"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:23
+msgid "Record syntax"
+msgstr "ჩანაწერის სინტაქსის"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:25
+msgid "Username"
+msgstr "მომხმარებლის სახელი"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:26
+msgid "Password"
+msgstr "პაროლი"
+
+#: ../lib/alexandria/book_providers/z3950_provider.rb:27
+msgid "Charset encoding"
+msgstr "სიმბოლოების კოდირება"
+
+#: ../lib/alexandria/export_format.rb:18
+msgid "Archived ONIX XML"
+msgstr "დაარქივებული ONIX XML"
+
+#: ../lib/alexandria/export_format.rb:19
+msgid "Archived Tellico XML"
+msgstr "დაარქივებული Tellico XML"
+
+#: ../lib/alexandria/export_format.rb:20
+msgid "BibTeX"
+msgstr "BibTeX"
+
+#: ../lib/alexandria/export_format.rb:21
+msgid "CSV list"
+msgstr "CSV სია"
+
+#: ../lib/alexandria/export_format.rb:22
+msgid "ISBN List"
+msgstr "ISBN სია"
+
+#: ../lib/alexandria/export_format.rb:23
+msgid "iPod Notes"
+msgstr "iPod შენიშვნები"
+
+#: ../lib/alexandria/export_format.rb:24
+msgid "HTML Web Page"
+msgstr "HTML ვებგვერდი"
+
+#: ../lib/alexandria/import_library.rb:21
+msgid "Autodetect"
+msgstr "ავტოამოცნობა"
+
+#: ../lib/alexandria/import_library.rb:22
+msgid "Archived Tellico XML (*.bc, *.tc)"
+msgstr "დაარქივებული Tellico XML (*.bc, *.tc)"
+
+#: ../lib/alexandria/import_library.rb:24
+msgid "ISBN List (*.txt)"
+msgstr "ISBN სია (*.txt)"
+
+#: ../lib/alexandria/import_library.rb:25
+msgid "GoodReads CSV"
+msgstr "GoodReads CSV"
+
+#: ../lib/alexandria/import_library.rb:65
+msgid "Unsupported type"
+msgstr "მხარდაუჭერელი ტიპი"
+
+#: ../lib/alexandria/import_library_csv.rb:199
+msgid "Not Recognized"
+msgstr "ამოუცნობი"
+
+#: ../lib/alexandria/library_store.rb:37
+msgid "My Library"
+msgstr "ჩემი ბიბლიოთეკა"
+
+#: ../lib/alexandria/library_store.rb:59
+msgid "Not a book: %<book>s"
+msgstr "წიგნს არ წარმოადგენს: %<book>s"
+
+#: ../lib/alexandria/library_store.rb:70
+msgid "%<file>s isbn is not okay"
+msgstr "%<file>s ISBN არასწორია"
+
+#: ../lib/alexandria/library_store.rb:75
+msgid "%<file>s version is not okay"
+msgstr "%<file>s ვერსია არასწორია"
+
+#: ../lib/alexandria/library_store.rb:80
+msgid "%<file>s pub year is not okay"
+msgstr "%<file>s გამოცემის წელი არასწორია"
+
+#: ../lib/alexandria/models/library.rb:42
+msgid "Untitled"
+msgstr "უსახელო"
+
+#: ../lib/alexandria/models/library.rb:284
+msgid "Book %<isbn>s was already deleted"
+msgstr "წიგნი %<isbn>s უკვე წაშალეთ"
+
+#: ../lib/alexandria/scanners/cue_cat.rb:71
+msgid "Don't know how to handle type %<type>s (barcode: %<code>s)"
+msgstr "არ ვიცი, როგორ დავამუშაო ტიპი %<type>s (ბარკოდი: %<code>s)"
+
+#: ../lib/alexandria/scanners/cue_cat.rb:105
+msgid "Error parsing CueCat input"
+msgstr "CueCat-ის შეყვანის დამუშავების შეცდომა"
+
+#: ../lib/alexandria/scanners/keyboard.rb:51
+msgid "Unknown scan data %s<data>"
+msgstr "უცნობი სკანირების მონაცემები %s<data>"
+
+#: ../lib/alexandria/smart_library.rb:49
+msgid "Favorite"
+msgstr "რჩეული"
+
+#: ../lib/alexandria/smart_library.rb:55
+msgid "Loaned"
+msgstr "ნასესხები"
+
+#: ../lib/alexandria/smart_library.rb:61 ../lib/alexandria/smart_library.rb:307
+#: ../lib/alexandria/ui/listview.rb:59
+msgid "Read"
+msgstr "წაკითხვა"
+
+#: ../lib/alexandria/smart_library.rb:67
+msgid "Owned"
+msgstr "მფლობელი"
+
+#: ../lib/alexandria/smart_library.rb:76
+msgid "Wishlist"
+msgstr "სურვილები"
+
+#: ../lib/alexandria/smart_library.rb:295 ../lib/alexandria/ui/listview.rb:32
+msgid "Title"
+msgstr "სათაური"
+
+#: ../lib/alexandria/smart_library.rb:296 ../lib/alexandria/ui/listview.rb:52
+msgid "ISBN"
+msgstr "ISBN"
+
+#: ../lib/alexandria/smart_library.rb:297 ../lib/alexandria/ui/listview.rb:51
+msgid "Authors"
+msgstr "ავტორები"
+
+#: ../lib/alexandria/smart_library.rb:298 ../lib/alexandria/ui/listview.rb:53
+msgid "Publisher"
+msgstr "გამომცემელი"
+
+#: ../lib/alexandria/smart_library.rb:299 ../lib/alexandria/ui/listview.rb:54
+msgid "Publish Year"
+msgstr "გამოცემის თარიღი"
+
+#: ../lib/alexandria/smart_library.rb:300 ../lib/alexandria/ui/listview.rb:55
+msgid "Binding"
+msgstr "აკინძვა"
+
+#: ../lib/alexandria/smart_library.rb:301 ../lib/alexandria/ui/listview.rb:106
+msgid "Rating"
+msgstr "ხმის მიცემა"
+
+#: ../lib/alexandria/smart_library.rb:302
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:762
+msgid "Notes"
+msgstr "შენიშვნები"
+
+#: ../lib/alexandria/smart_library.rb:303 ../lib/alexandria/ui/listview.rb:86
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:230
+msgid "Tags"
+msgstr "ჭდეები"
+
+#: ../lib/alexandria/smart_library.rb:304
+msgid "Loaning State"
+msgstr "თხოვების მდგომარეობა"
+
+#: ../lib/alexandria/smart_library.rb:305
+msgid "Loaning Date"
+msgstr "თხოვების თარიღი"
+
+#: ../lib/alexandria/smart_library.rb:306
+msgid "Loaning Person"
+msgstr "მთხოვნელი პიროვნება"
+
+#: ../lib/alexandria/smart_library.rb:308
+msgid "Date Read"
+msgstr "წაკითხვის თარიღი"
+
+#: ../lib/alexandria/smart_library.rb:309 ../lib/alexandria/ui/listview.rb:60
+msgid "Own"
+msgstr "საკუთარი"
+
+#: ../lib/alexandria/smart_library.rb:310 ../lib/alexandria/ui/listview.rb:61
+msgid "Want"
+msgstr "მინდა"
+
+#: ../lib/alexandria/smart_library.rb:317
+msgid "days"
+msgstr "დღე"
+
+#: ../lib/alexandria/smart_library.rb:327
+msgid "is set"
+msgstr "დაყენებულია"
+
+#: ../lib/alexandria/smart_library.rb:330
+msgid "is not set"
+msgstr "დაყენებული არაა"
+
+#: ../lib/alexandria/smart_library.rb:333
+msgid "is"
+msgstr "არის"
+
+#: ../lib/alexandria/smart_library.rb:336
+msgid "is not"
+msgstr "არ არის"
+
+#: ../lib/alexandria/smart_library.rb:339
+msgid "contains"
+msgstr "შეიცავს"
+
+#: ../lib/alexandria/smart_library.rb:342
+msgid "does not contain"
+msgstr "არ შეიცავს"
+
+#: ../lib/alexandria/smart_library.rb:345
+msgid "starts with"
+msgstr "იწყება"
+
+#: ../lib/alexandria/smart_library.rb:348
+msgid "ends with"
+msgstr "მთავრდება"
+
+#: ../lib/alexandria/smart_library.rb:351
+msgid "is greater than"
+msgstr "მეტი, ვიდრე"
+
+#: ../lib/alexandria/smart_library.rb:354
+msgid "is less than"
+msgstr "ნაკლები, ვიდრე"
+
+#: ../lib/alexandria/smart_library.rb:357
+msgid "is after"
+msgstr "არის შემდეგ"
+
+#: ../lib/alexandria/smart_library.rb:360
+msgid "is before"
+msgstr "არის მანამდე"
+
+#: ../lib/alexandria/smart_library.rb:364
+msgid "is in last"
+msgstr "ბოლო"
+
+#: ../lib/alexandria/smart_library.rb:384
+msgid "is not in last"
+msgstr "არა ბოლო"
+
+#: ../lib/alexandria/smart_library.rb:465
+msgid "invalid operand klass %<klass>s"
+msgstr "არასწორი ოპერანდის კლასი %<klass>s"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:206
+msgid "There was %d duplicate"
+msgid_plural "There were %d duplicates"
+msgstr[0] "აღმოჩენილია %d დუბლიკატი"
+msgstr[1] "აღმოჩენილია %d დუბლიკატი"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:209
+msgid "Couldn't add this book"
+msgid_plural "Couldn't add these books"
+msgstr[0] "ამ წიგნის დამატების შეცდომა"
+msgstr[1] "ამ წიგნის დამატების შეცდომა"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:288
+#: ../lib/alexandria/ui/new_book_dialog.rb:498
+msgid "Searching Provider '%s'..."
+msgstr "მომწოდებლის '%s' ძებნა..."
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:289
+#: ../lib/alexandria/ui/new_book_dialog.rb:499
+msgid "Error while Searching Provider '%s'"
+msgstr "შეცდომა მომწოდებლით ძებნისას '%s'"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:290
+#: ../lib/alexandria/ui/new_book_dialog.rb:500
+msgid "Not Found at Provider '%s'"
+msgstr "ვერ ვიპოვე მომწოდებელთან '%s'"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:291
+#: ../lib/alexandria/ui/new_book_dialog.rb:501
+msgid "Found at Provider '%s'"
+msgstr "აღმოჩენილია მომწოდებელთან '%s'"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:403
+msgid "Ready to use %s barcode scanner"
+msgstr "%s ბარკოდის სკანერი გამოსაყენებლად მზადაა"
+
+#: ../lib/alexandria/ui/acquire_dialog.rb:427
+msgid "Click below to scan _barcodes"
+msgstr "ბარკოდების _სკანირებისთვის ქვემოთ დააწკაპუნეთ"
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:111
+#: ../lib/alexandria/ui/book_properties_dialog.rb:121
+msgid "Couldn't modify the book"
+msgstr "წიგნის ჩასწორების შეცდომა"
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:112
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:74
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correcty, and try again."
+msgstr ""
+"მითითებული EAN/ISBN-ის დადასტურება შეუძლებელია.  დარწმუნდით, რომ ის სწორად "
+"წერია და თავიდან სცადეთ."
+
+#: ../lib/alexandria/ui/book_properties_dialog.rb:122
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:79
+msgid "The EAN/ISBN you provided is already used in this library."
+msgstr "მითითებული EAN/ISBN ამ ბიბლიოთეკაში უკვე გამოიყენება."
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:104
+msgid "Properties"
+msgstr "თვისებები"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:106
+#: ../lib/alexandria/ui/smart_library_properties_dialog.rb:21
+msgid "Properties for '%s'"
+msgstr "%s-ის თვისებები"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:112
+msgid "Author"
+msgstr "ავტორი"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:156
+msgid "Select a cover image"
+msgstr "აირჩიეთ ყდის გამოსახულების ფაილი"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:159
+msgid "No Cover"
+msgstr "ყდის გარეშე"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:238
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d დღე"
+msgstr[1] "%d დღე"
+
+#: ../lib/alexandria/ui/book_properties_dialog_base.rb:264
+msgid "out of range"
+msgstr "დიაპაზონს გარეთ"
+
+#: ../lib/alexandria/ui/callbacks.rb:57
+msgid "The following lines are not valid ISBNs and were not imported:"
+msgstr "შემდეგი ხაზები არასწორი ISBN-ებია და შემოტანილი არ იქნა:"
+
+#: ../lib/alexandria/ui/callbacks.rb:62
+msgid "Books could not be found for the following ISBNs:"
+msgstr "შემდეგი ISBN-ის მქონე წიგნები ვერ ვიპოვე:"
+
+#: ../lib/alexandria/ui/callbacks.rb:362
+msgid "_Library"
+msgstr "_ბიბლიოთეკა"
+
+#: ../lib/alexandria/ui/callbacks.rb:363
+msgid "_New Library"
+msgstr "_ახალი ბიბლიოთეკა"
+
+#: ../lib/alexandria/ui/callbacks.rb:363
+msgid "Create a new library"
+msgstr "ახალი ბიბლიოთეკის შექმნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:364
+msgid "New _Smart Library..."
+msgstr "ახალი _ჭკვიანი ბიბლიოთეკა..."
+
+#: ../lib/alexandria/ui/callbacks.rb:364
+msgid "Create a new smart library"
+msgstr "ახალი ჭკვიანი ბიბლიოთეკის შექმნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:365
+msgid "_Add Book..."
+msgstr "_წიგნის დამატება..."
+
+#: ../lib/alexandria/ui/callbacks.rb:365
+msgid "Add a new book from the Internet"
+msgstr "წიგნის ინტერნეტიდან დამატება"
+
+#: ../lib/alexandria/ui/callbacks.rb:366
+msgid "Add Book _Manually..."
+msgstr "_ახალი წიგნის ხელით ჩამატება..."
+
+#: ../lib/alexandria/ui/callbacks.rb:366
+msgid "Add a new book manually"
+msgstr "ახალი წიგნის ხელით ჩამატება"
+
+#: ../lib/alexandria/ui/callbacks.rb:367
+msgid "_Import..."
+msgstr "_შემოტანა..."
+
+#: ../lib/alexandria/ui/callbacks.rb:367
+msgid "Import a library"
+msgstr "ბიბლიოთეკის შემოტანა"
+
+#: ../lib/alexandria/ui/callbacks.rb:368
+msgid "_Export..."
+msgstr "_გატანა..."
+
+#: ../lib/alexandria/ui/callbacks.rb:368
+msgid "Export the selected library"
+msgstr "მონიშნული ბიბლიოთეკის გატანა"
+
+#: ../lib/alexandria/ui/callbacks.rb:369
+msgid "A_cquire from Scanner..."
+msgstr "სკანერიდან _მიღება..."
+
+#: ../lib/alexandria/ui/callbacks.rb:369
+msgid "Acquire books from a scanner"
+msgstr "წიგნების სკანერიდან მიღება"
+
+#: ../lib/alexandria/ui/callbacks.rb:370
+msgid "_Properties"
+msgstr "_პარამეტრები"
+
+#: ../lib/alexandria/ui/callbacks.rb:370
+msgid "Edit the properties of the selected book"
+msgstr "მონიშნული წიგნის თვისებების ჩასწორება"
+
+#: ../lib/alexandria/ui/callbacks.rb:371
+msgid "_Quit"
+msgstr "_გასვლა"
+
+#: ../lib/alexandria/ui/callbacks.rb:371
+msgid "Quit the program"
+msgstr "პროგრამიდან გასვლა"
+
+#: ../lib/alexandria/ui/callbacks.rb:372
+msgid "_Edit"
+msgstr "_ჩასწორება"
+
+#: ../lib/alexandria/ui/callbacks.rb:373
+msgid "_Undo"
+msgstr "_დაბრუნება"
+
+#: ../lib/alexandria/ui/callbacks.rb:373
+msgid "Undo the last action"
+msgstr "ბოლო მოქმედების გაუქმება"
+
+#: ../lib/alexandria/ui/callbacks.rb:374
+msgid "_Redo"
+msgstr "გამეო_რება"
+
+#: ../lib/alexandria/ui/callbacks.rb:374
+msgid "Redo the undone action"
+msgstr "ბოლო დაბრუნებული ცვლილების გამეორება"
+
+#: ../lib/alexandria/ui/callbacks.rb:375
+msgid "_Select All"
+msgstr "ყველაფრის _მონიშვნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:375
+msgid "Select all visible books"
+msgstr "ყველა ხილული წიგნის მონიშვნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:376
+msgid "Dese_lect All"
+msgstr "მონიშვნის მოხსნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:376
+msgid "Deselect everything"
+msgstr "მონიშვნის მოხსნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:377
+msgid "My _Rating"
+msgstr "ჩემი _რეიტინგი"
+
+#: ../lib/alexandria/ui/callbacks.rb:378
+msgid "None"
+msgstr "არაფერი"
+
+#: ../lib/alexandria/ui/callbacks.rb:379
+msgid "One Star"
+msgstr "ერთი ვარსკვლავი"
+
+#: ../lib/alexandria/ui/callbacks.rb:380
+msgid "Two Stars"
+msgstr "ორი ვარსკვლავი"
+
+#: ../lib/alexandria/ui/callbacks.rb:381
+msgid "Three Stars"
+msgstr "სამი ვარსკვლავი"
+
+#: ../lib/alexandria/ui/callbacks.rb:382
+msgid "Four Stars"
+msgstr "ოთხი ვარსკვლავი"
+
+#: ../lib/alexandria/ui/callbacks.rb:383
+msgid "Five Stars"
+msgstr "ხუთი ვარსკვლავი"
+
+#: ../lib/alexandria/ui/callbacks.rb:384
+msgid "_Move"
+msgstr "გადაადგილება"
+
+#: ../lib/alexandria/ui/callbacks.rb:385
+msgid "_Rename"
+msgstr "_სახელის გადარქმევა"
+
+#: ../lib/alexandria/ui/callbacks.rb:386
+msgid "_Delete"
+msgstr "_წაშლა"
+
+#: ../lib/alexandria/ui/callbacks.rb:386
+msgid "Delete the selected books or library"
+msgstr "მონიშნული წიგნების ან ბიბლიოთეკის წაშლა"
+
+#: ../lib/alexandria/ui/callbacks.rb:387
+msgid "_Search"
+msgstr "ძებნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:387
+msgid "Filter books"
+msgstr "წიგნების გაფიტვრა"
+
+#: ../lib/alexandria/ui/callbacks.rb:388
+msgid "_Clear Results"
+msgstr "შედეგების _გასუფთავება"
+
+#: ../lib/alexandria/ui/callbacks.rb:388
+msgid "Clear the search results"
+msgstr "შედეგების გასუფავება"
+
+#: ../lib/alexandria/ui/callbacks.rb:389
+msgid "_Preferences"
+msgstr "_გამართვა"
+
+#: ../lib/alexandria/ui/callbacks.rb:389
+msgid "Change Alexandria's settings"
+msgstr "Alexandria-ის პარამეტრების შეცვლა"
+
+#: ../lib/alexandria/ui/callbacks.rb:390
+msgid "_View"
+msgstr "_ხედი"
+
+#: ../lib/alexandria/ui/callbacks.rb:391
+msgid "Arran_ge Icons"
+msgstr "ხატულების _დალაგება"
+
+#: ../lib/alexandria/ui/callbacks.rb:392
+msgid "Display Online _Information"
+msgstr "ონლაინ ინფორმაციის ჩვენება"
+
+#: ../lib/alexandria/ui/callbacks.rb:394
+msgid "_Help"
+msgstr "_დახმარება"
+
+#: ../lib/alexandria/ui/callbacks.rb:395
+msgid "Submit _Bug Report"
+msgstr "შეცდომის პატაკის _გაგზავნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:395
+msgid "Submit a bug report to the developers"
+msgstr "პროგრამისტებისთვის შეცდომის პატაკის გაგზავნა"
+
+#: ../lib/alexandria/ui/callbacks.rb:396
+msgid "Contents"
+msgstr "შიგთავსი"
+
+#: ../lib/alexandria/ui/callbacks.rb:396
+msgid "View Alexandria's manual"
+msgstr "Alexandria-ის სახელმძღვანელოს ნახვა"
+
+#: ../lib/alexandria/ui/callbacks.rb:397
+msgid "_About"
+msgstr "_შესახებ"
+
+#: ../lib/alexandria/ui/callbacks.rb:397
+msgid "Show information about Alexandria"
+msgstr "Alexandria-ის შესახებ ინფორმაციის ჩვენება"
+
+#: ../lib/alexandria/ui/callbacks.rb:404
+msgid "At _%s"
+msgstr "_%s-დან"
+
+#: ../lib/alexandria/ui/callbacks.rb:410
+msgid "Side_pane"
+msgstr "გვერდითი _პანელი"
+
+#: ../lib/alexandria/ui/callbacks.rb:411
+msgid "_Toolbar"
+msgstr "ხელსაწყოთა ველი"
+
+#: ../lib/alexandria/ui/callbacks.rb:412
+msgid "_Statusbar"
+msgstr "_სტატუსის ზოლი"
+
+#: ../lib/alexandria/ui/callbacks.rb:413
+msgid "Re_versed Order"
+msgstr "შებრ_უნებული განლაგება"
+
+#: ../lib/alexandria/ui/callbacks.rb:418
+msgid "View as _Icons"
+msgstr "_ხატულების სახით ნახვა"
+
+#: ../lib/alexandria/ui/callbacks.rb:419
+msgid "View as _List"
+msgstr "როგორც სიი_ს ჩვენება"
+
+#: ../lib/alexandria/ui/callbacks.rb:423
+msgid "By _Title"
+msgstr "_სათაურით"
+
+#: ../lib/alexandria/ui/callbacks.rb:424
+msgid "By _Authors"
+msgstr "_ავტორებით"
+
+#: ../lib/alexandria/ui/callbacks.rb:425
+msgid "By _ISBN"
+msgstr "_ISBN-ით"
+
+#: ../lib/alexandria/ui/callbacks.rb:426
+msgid "By _Publisher"
+msgstr "_გამომცემლით"
+
+#: ../lib/alexandria/ui/callbacks.rb:427
+msgid "By _Binding"
+msgstr "_ამკინძველით"
+
+#: ../lib/alexandria/ui/callbacks.rb:428
+msgid "By _Rating"
+msgstr "_რეიტინგით"
+
+#: ../lib/alexandria/ui/confirm_erase_dialog.rb:16
+msgid "File already exists"
+msgstr "ფაილი უკვე არსებობს"
+
+#: ../lib/alexandria/ui/confirm_erase_dialog.rb:19
+#: ../lib/alexandria/ui/conflict_while_copying_dialog.rb:21
+msgid "_Replace"
+msgstr "შეცვლა"
+
+#: ../lib/alexandria/ui/confirm_erase_dialog.rb:20
+msgid ""
+"A file named '%s' already exists.  Do you want to replace it with the one "
+"you are generating?"
+msgstr ""
+"ფაილი სახელით '%s' უკვე არსებობს. გნებავთ, ჩაანაცვლოთ ის ახლად "
+"დაგენერირებული ფაილით?"
+
+#: ../lib/alexandria/ui/conflict_while_copying_dialog.rb:17
+msgid "The book '%s' already exists in '%s'. Would you like to replace it?"
+msgstr "წიგნი '%s' '%s'-ში უკვე არსებობს. გნებავთ ჩაანაცვლოთ?"
+
+#: ../lib/alexandria/ui/conflict_while_copying_dialog.rb:20
+msgid "_Skip"
+msgstr "_გამოტოვება"
+
+#: ../lib/alexandria/ui/conflict_while_copying_dialog.rb:22
+msgid "If you replace the existing book, its contents will be overwritten."
+msgstr "თუ ჩაანაცვლებთ არსებულ წიგნს, მის შემცველობას თავზე გადაეწერება."
+
+#: ../lib/alexandria/ui/export_dialog.rb:24
+msgid "Export '%s'"
+msgstr "'%s'-ის გატანა"
+
+#: ../lib/alexandria/ui/export_dialog.rb:29
+msgid "_Export"
+msgstr "_გატანა"
+
+#: ../lib/alexandria/ui/export_dialog.rb:50
+msgid "_Theme:"
+msgstr "_თემა:"
+
+#: ../lib/alexandria/ui/export_dialog.rb:62
+msgid "directory"
+msgstr "საქაღალდე"
+
+#: ../lib/alexandria/ui/export_dialog.rb:74
+msgid "Export for_mat:"
+msgstr "გატანის_ფორმატი:"
+
+#: ../lib/alexandria/ui/export_dialog.rb:101
+msgid "Export failed"
+msgstr "გატანის შეცდომა"
+
+#: ../lib/alexandria/ui/export_dialog.rb:125
+msgid ""
+"The target, named '%s', is a regular file.  A directory is needed for this "
+"operation.  Please select a directory and try again."
+msgstr ""
+"სამიზნე, სახელით '%s', ჩვეულებრივი ფაილია.  ამ ოპერაციისთვის საქაღალდეა "
+"საჭირო.  აირჩიეთ საქაღალდე და თავიდან სცადეთ."
+
+#: ../lib/alexandria/ui/export_dialog.rb:129
+msgid "Not a directory"
+msgstr "არ წარმოადგეს საქაღალდეს"
+
+#: ../lib/alexandria/ui/import_dialog.rb:23
+msgid "Import a Library"
+msgstr "ბიბლიოთეკის შემოტანა"
+
+#: ../lib/alexandria/ui/import_dialog.rb:30
+msgid "_Import"
+msgstr "_შემოტანა"
+
+#: ../lib/alexandria/ui/import_dialog.rb:134
+msgid "Couldn't import the library"
+msgstr "ბიბლიოთეკის შემოტანის შეცდომა"
+
+#: ../lib/alexandria/ui/import_dialog.rb:135
+msgid ""
+"The format of the file you provided is unknown.  Please retry with another "
+"file."
+msgstr "მითითებული ფაილის ფორმატი უცნობია.  სხვა ფაილი სცადეთ."
+
+#: ../lib/alexandria/ui/init.rb:76
+msgid "Unable to launch the help browser"
+msgstr "დახმარების ბრაუზერის გაშვების შეცდომა"
+
+#: ../lib/alexandria/ui/init.rb:77
+msgid ""
+"Could not display help for Alexandria. There was an error launching the "
+"system help browser."
+msgstr ""
+"Alexandria-ის დახმარების გამოტანა შეუძლებელია. შეცდომა სისტემური დახმარების "
+"ბრაუზერის გაშვებისას."
+
+#: ../lib/alexandria/ui/keep_bad_isbn_dialog.rb:16
+msgid "Invalid ISBN '%s'"
+msgstr "არასწორი ISBN '%s'"
+
+#: ../lib/alexandria/ui/keep_bad_isbn_dialog.rb:18
+msgid ""
+"The book titled '%s' has an invalid ISBN, but still exists in the providers "
+"libraries. Do you want to keep the book but change the ISBN or cancel the "
+"addition?"
+msgstr ""
+"წიგნს სახელით '%s' არასწორი ISBN აქვს მითითებული, მაგრამ ჯერ კიდევ არსებობს "
+"მომწოდებლის ბიბლიოთეკებში. გნებავთ, დაიტოვოთ წიგნი, მაგრამ ჩაასწოროთ მისი "
+"ISBN თუ გააუქმებთ დამატებას?"
+
+#: ../lib/alexandria/ui/keep_bad_isbn_dialog.rb:24
+msgid "_Keep"
+msgstr "_დატოვება"
+
+#: ../lib/alexandria/ui/libraries_combo.rb:41
+msgid "New Library"
+msgstr "ახალი ბიბლიოთეკა"
+
+#: ../lib/alexandria/ui/listview.rb:56
+msgid "Loaned To"
+msgstr "ვათხოვე"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:155
+msgid "A problem occurred while downloading images"
+msgstr "გამოსახულებების გადმოწერის შეცდომა"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:194
+msgid "Iter is invalid! %s"
+msgstr "Iter არასწორია! %s"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:266
+msgid "Unable to find matches for your search"
+msgstr "თქვენი ძებნა უშედეგოა"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:302
+msgid "%s, by %s"
+msgstr "%s, ავტორი %s"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:308
+msgid "Copying %s into tree view."
+msgstr "%s-ის ხის ხედში კოპირება."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:336
+msgid ""
+"Couldn't validate the EAN/ISBN you provided.  Make sure it is written "
+"correctly, and try again."
+msgstr ""
+"მითითებული EAN/ISBN-ის გადამოწმება შეუძლებელია.  დარწმუნდით, რომ ის სწორად "
+"წერია და თავიდან სცადეთ."
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:464
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:119
+msgid "Couldn't add the book"
+msgstr "წიგნის დამატების შეცდომა"
+
+#: ../lib/alexandria/ui/new_book_dialog.rb:570
+msgid "'%s' already exists in '%s' (titled '%s')."
+msgstr "'%s'-ი უკვე არსებობს'%s'-ში (სათაურით '%s')."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:50
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:32
+msgid "Adding a Book"
+msgstr "წიგნის დამატება"
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:52
+msgid "Adding '%s'"
+msgstr "'%s'-ის დამატება"
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:67
+msgid "A title must be provided."
+msgstr "სათაურის მითითება აუცილებელია."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:83
+msgid "A publisher must be provided."
+msgstr "გამომცემლის მითითება აუცილებელია."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:89
+msgid "A binding must be provided."
+msgstr "ამკინძავის მითითება აუცილებელია."
+
+#: ../lib/alexandria/ui/new_book_dialog_manual.rb:95
+msgid "At least one author must be provided."
+msgstr "აუცილებელია, ერთი ავტორი მაინც მიუთითოთ."
+
+#: ../lib/alexandria/ui/new_provider_dialog.rb:16
+msgid "New Provider"
+msgstr "ახალი მომწოდებელი"
+
+#: ../lib/alexandria/ui/new_provider_dialog.rb:31
+msgid "_Name:"
+msgstr "სახელი:"
+
+#: ../lib/alexandria/ui/new_provider_dialog.rb:43
+msgid "_Type:"
+msgstr "ტიპი:"
+
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:19
+msgid "New Smart Library"
+msgstr "ახალი ჭკვიანი ბიბლიოთეკა"
+
+#: ../lib/alexandria/ui/new_smart_library_dialog.rb:55
+msgid "Smart Library"
+msgstr "ჭკვიანი ბიბლიოთეკა"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:207
+msgid "Are you sure you want to permanently delete the provider '%s'?"
+msgstr "დარწმუნებული ხართ, რომ გსურთ, სამუდამოდ წაშალოთ მომწოდებელი \"%s\"?"
+
+#: ../lib/alexandria/ui/preferences_dialog.rb:215
+msgid ""
+"If you continue, the provider and all of its preferences will be permanently "
+"deleted."
+msgstr "თუ გააგრძელებთ, მომწოდებელი და მისი პარამეტრები სამუდამოდ წაიშლება."
+
+#: ../lib/alexandria/ui/provider_preferences_dialog.rb:16
+msgid "Preferences for %s"
+msgstr "%s-ის მორგება"
+
+#: ../lib/alexandria/ui/really_delete_dialog.rb:18
+msgid "Are you sure you want to delete '%s'?"
+msgstr "დარწმუნებული ბრძანდებით, რომ გნებავთ '%s'-ის წაშლა?"
+
+#: ../lib/alexandria/ui/really_delete_dialog.rb:22
+msgid "If you continue, %d book will be deleted."
+msgid_plural "If you continue, %d books will be deleted."
+msgstr[0] "თუ გააგრძელებთ, სამუდამოდ წაიშლება %d წიგნი."
+msgstr[1] "თუ გააგრძელებთ, სამუდამოდ წაიშლება %d წიგნი."
+
+#: ../lib/alexandria/ui/really_delete_dialog.rb:29
+msgid "Are you sure you want to delete '%s' from '%s'?"
+msgstr "დარწმუნებული ხართ, რომ გსურთ %s-ის წაშლა '%s'-დან?"
+
+#: ../lib/alexandria/ui/really_delete_dialog.rb:32
+msgid "Are you sure you want to delete the selected books from '%s'?"
+msgstr "დარწმუნებული ხართ, რომ გსურთ მონიშნული წიგნების წაშლა '%s'-დან?"
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:54
+msgid "Invalid library name '%s'"
+msgstr "ბიბლიოთეკის არასწორი სახელი '%s'"
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:55
+msgid "The name provided contains the disallowed character <b>%s</b>"
+msgstr "შეყვანილი სახელი აკრძალულ სიმბოლოს <b>%s</b> შეიცავს"
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:58
+msgid "Invalid library name"
+msgstr "ბიბლიოთეკის არასწორი სახელი"
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:59
+msgid "The name provided contains invalid characters."
+msgstr "მითითებული სახელი არასწორ სიმბოლოებს შეიცავს."
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:65
+msgid "The library name can not be empty"
+msgstr "ბიბლიოთეკის სახელი ცარიელი არ შეიძლება იყოს"
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:70
+msgid "The library can not be renamed"
+msgstr "ბიბლიოთეკის სახელის გადარქმევა შეუძლებელია"
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:71
+msgid "There is already a library named '%s'.  Please choose a different name."
+msgstr "ბიბლიოთეკა სახელით '%s' უკვე არსებობს.  შეიყვანეთ სხვა სახელი."
+
+#: ../lib/alexandria/ui/sidepane_manager.rb:96
+msgid "Library"
+msgstr "ბიბლიოთეკა"
+
+#: ../lib/alexandria/ui/skip_entry_dialog.rb:17
+msgid "Error while importing"
+msgstr "შეცდომა შემოტანისას"
+
+#: ../lib/alexandria/ui/skip_entry_dialog.rb:20
+msgid "_Continue"
+msgstr "_გაგრძელება"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:97
+msgid "Empty or conflictive condition"
+msgstr "ცარიელი ან კონფლიქტური პირობა"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:100
+msgid "_Save However"
+msgstr "_მაინც შენახვა"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:101
+msgid ""
+"This smart library contains one or more conditions which are empty or "
+"conflict with each other. This is likely to result in never matching a book. "
+"Are you sure you want to save this library?"
+msgstr ""
+"ეს ჭკვიანი ბიბლიოთეკა შეიცავს ერთ ან მეტ პირობას, რომელიც ცარიელია ან "
+"კონფლიქტშია ერთმანეთთან. დიდი შანსია, რომ ეს გამოიწვევს იმას, რომ წიგნებს "
+"ვერ იპოვით. დარწმუნებული ბრძანდებით, რომ გნებავთ, შეინახოთ ეს ბიბლიოთეკა?"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:118
+msgid "Match"
+msgstr "დამთხვევა"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:121
+msgid "all"
+msgstr "ყველა"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:121
+msgid "any"
+msgstr "ნებისმიერი"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:131
+msgid "of the following rules:"
+msgstr "შემდეგი წესებიდან:"
+
+#: ../lib/alexandria/ui/smart_library_properties_dialog_base.rb:139
+msgid "Match the following rule:"
+msgstr "შემდეგ წესთან დამთხვევა:"
+
+#: ../lib/alexandria/ui/ui_manager.rb:132
+msgid "Type here the search criterion"
+msgstr "შეიყვანეთ საძებნი კრიტერიუმი"
+
+#: ../lib/alexandria/ui/ui_manager.rb:143
+msgid "Match everything"
+msgstr "ყველაფერზე დამთხვევა"
+
+#: ../lib/alexandria/ui/ui_manager.rb:145
+msgid "Title contains"
+msgstr "სათაური შეიცავს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:146
+msgid "Authors contain"
+msgstr "ავტორი შეიცავს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:147
+msgid "ISBN contains"
+msgstr "ISBN შეიცავს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:148
+msgid "Publisher contains"
+msgstr "გამომცემელი შეიცავს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:149
+msgid "Notes contain"
+msgstr "შენიშვნები შეიცავს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:150
+msgid "Tags contain"
+msgstr "ჭდეები შეიცავს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:164
+msgid "Change the search type"
+msgstr "ძებნის ტიპის სეცვლა"
+
+#: ../lib/alexandria/ui/ui_manager.rb:169
+msgid "View as Icons"
+msgstr "ხატულების სახით ნახვა"
+
+#: ../lib/alexandria/ui/ui_manager.rb:170
+msgid "View as List"
+msgstr "სიის სახით ნახვა"
+
+#: ../lib/alexandria/ui/ui_manager.rb:184
+msgid "Choose how to show books"
+msgstr "აირჩიეთ, როგორ ვაჩვენებთ წიგნებს"
+
+#: ../lib/alexandria/ui/ui_manager.rb:407
+msgid "Library '%s' selected"
+msgstr "არჩეულია ბიბლიოთეკა '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:412
+msgid "Library '%s' selected, %d unrated book"
+msgid_plural "Library '%s' selected, %d unrated books"
+msgstr[0] "არჩეულია ბიბლიოთეკა '%s'. %d წიგნი შეფასების გარეშე"
+msgstr[1] "არჩეულია ბიბლიოთეკა '%s'. %d წიგნი შეფასების გარეშე"
+
+#: ../lib/alexandria/ui/ui_manager.rb:416
+msgid "Library '%s' selected, %d book"
+msgid_plural "Library '%s' selected, %d books"
+msgstr[0] "არჩეულია ბიბლიოთეკა '%s'. %d წიგნი"
+msgstr[1] "არჩეულია ბიბლიოთეკა '%s'. %d წიგნი"
+
+#: ../lib/alexandria/ui/ui_manager.rb:420
+msgid "Library '%s' selected, %d book, %d unrated"
+msgid_plural "Library '%s' selected, %d books, %d unrated"
+msgstr[0] "არჩეულია ბიბლიოთეკა '%s'. %d წიგნი, %d შეფასების გარეშე"
+msgstr[1] "არჩეულია ბიბლიოთეკა '%s'. %d წიგნი, %d შეფასების გარეშე"
+
+#: ../lib/alexandria/ui/ui_manager.rb:434
+msgid "'%s' selected"
+msgstr "'%s' არჩეულია"
+
+#: ../lib/alexandria/ui/ui_manager.rb:436
+msgid "%d book selected"
+msgid_plural "%d books selected"
+msgstr[0] "%d წიგნი მონიშნულია"
+msgstr[1] "%d წიგნი მონიშნულია"
+
+#: ../lib/alexandria/ui/ui_manager.rb:549
+msgid "unrecognized update event"
+msgstr "განახლების უცნობი მოვლენა"
+
+#: ../lib/alexandria/ui/ui_manager.rb:594
+msgid "Loading libraries..."
+msgstr "ბიბლიოთეკების ჩატვირთვა..."
+
+#: ../lib/alexandria/ui/ui_manager.rb:611
+msgid ""
+"The data files for the following books are malformed or empty. Do you wish "
+"to attempt to download new information for them from the online book "
+"providers?\n"
+msgstr ""
+"შემდეგი წიგნების მონაცემები არასწორი ან ცარიელია. გნებავთ ვცადო ახალი "
+"ინფორმაცია ონლაინ წიგნების მომწოდებლიდან გადმოვიწერო?\n"
+
+#: ../lib/alexandria/ui/ui_manager.rb:663
+msgid "Added '%s' to library '%s'"
+msgstr "'%s' ჩამატებულია ბიბლიოთეკაში '%s'"
+
+#: ../lib/alexandria/ui/ui_manager.rb:812
+msgid "Loading '%s'..."
+msgstr "'%s'-ის ჩატვირთვა…"
+
+#: ../lib/alexandria/ui/ui_manager.rb:1040
+msgid "In '_%s'"
+msgstr "'_%s'-ში"
+
+#: ../lib/alexandria/web_themes.rb:64
+msgid "File %<file>s not found"
+msgstr "ფაილი %<file>s ვერ ვიპოვე"
+
+#: ../share/alexandria/glade/acquire_dialog__builder.glade:9
+msgid "Acquire from Scanner"
+msgstr "სკანერიდან მიღება"
+
+#: ../share/alexandria/glade/acquire_dialog__builder.glade:91
+msgid "_Barcode Scanner Ready"
+msgstr "ბარკოდის სკანერი _მზადაა"
+
+#: ../share/alexandria/glade/acquire_dialog__builder.glade:159
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:171
+msgid "Save _in:"
+msgstr "შესანახი _ადგილი:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:60
+msgid "_Title:"
+msgstr "_სათაური:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:85
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:301
+msgid "_ISBN:"
+msgstr "_ISBN:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:199
+msgid "_Authors:"
+msgstr "_ავტორები:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:213
+msgid "Tags:"
+msgstr "ჭდე:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:245
+msgid "_Binding:"
+msgstr "_აკინძვა:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:258
+msgid "Publish _year:"
+msgstr "გამოცემის _წელი:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:292
+msgid "_Publisher:"
+msgstr "_გამომცემელი:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:333
+msgid "_Cover:"
+msgstr "_ყდა:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:526
+msgid "Rating:"
+msgstr "შეფასება:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:539
+msgid "Want it?"
+msgstr "გნებავთ?"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:555
+msgid "Read it?"
+msgstr "წაიკითხეთ?"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:576
+msgid "Select Date"
+msgstr "აირჩიეთ თარიღი"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:577
+msgid "Clear Date"
+msgstr "თარიღის გასუფთავება"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:587
+msgid "Own it?"
+msgstr "გაქვთ?"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:615
+msgid "General"
+msgstr "ზოგადი"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:630
+msgid "This book is _loaned"
+msgstr "ეს წიგნი _ნათხოვარია"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:679
+msgid "_To:"
+msgstr "_ვის:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:693
+msgid "_Since:"
+msgstr "_თარიღი:"
+
+#: ../share/alexandria/glade/book_properties_dialog__builder.glade:735
+msgid "Loaning"
+msgstr "თხოვება"
+
+#: ../share/alexandria/glade/main_app__builder.glade:48
+msgid "_Libraries:"
+msgstr "_ბიბლიოთეკები:"
+
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:18
+msgid "by title"
+msgstr "სათაურით"
+
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:21
+msgid "by authors"
+msgstr "ავტორებით"
+
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:24
+msgid "by keyword"
+msgstr "საკვანძო სიტყვით"
+
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:115
+msgid "_Keep Dialog Open after Adding Book"
+msgstr "წიგნის დამატების შემდეგ ფანჯრის _ღიად დატოვება"
+
+#: ../share/alexandria/glade/new_book_dialog__builder.glade:285
+msgid "_Search:"
+msgstr "ძებნა:"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:8
+msgid "Preferences"
+msgstr "მორგება"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:76
+msgid "<b>Visible Columns</b>"
+msgstr "<b>ხილული სვეტები</b>"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:95
+msgid "_Authors"
+msgstr "_ავტორები"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:110
+msgid "_ISBN"
+msgstr "_ISBN"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:125
+msgid "_Publisher"
+msgstr "_გამომცემელი"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:140
+msgid "_Rating"
+msgstr "_შეფასება"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:155
+msgid "_Binding"
+msgstr "__აკინძვა"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:170
+msgid "Publish _year"
+msgstr "გამოცემის _წელი"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:185
+msgid "Read?"
+msgstr "წაიკითხეთ?"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:200
+msgid "Own?"
+msgstr "გაქვთ?"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:215
+msgid "Want?"
+msgstr "გნებავთ?"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:245
+msgid "Loaned to"
+msgstr "ვათხოვე"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:271
+msgid "_List View"
+msgstr "_სიის ხედი"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:290
+msgid "<b>Book Data Providers</b>"
+msgstr "<b>წიგნის მონაცემების მომწოდებლები</b>"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:372
+msgid "_Setup"
+msgstr "_მორგება"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:474
+msgid ""
+"Providers are libraries that supply information about books.  Some of them "
+"can be configured to get better results.  You can also customize the order "
+"in which they are queried."
+msgstr ""
+"მომწოდებლები ბიბლიოთეკებია, რომლებიც წიგნების შესახებ ინფორმაციას შეიცავენ.  "
+"ზოგიერთი მათგანი შეგიძლიათ მოირგოთ, უკეთესი შედეგებისთვის.  ასევე შეგიძლიათ "
+"მათი მიმდევრობის ჩასწორებაც."
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:486
+msgid "Custom _Z39.50 Providers"
+msgstr "_Z39.50 მომწოდებლის ხელით დამატება"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:490
+msgid ""
+"Add and remove your own Z39.50 providers.\n"
+"Requires the Ruby/ZOOM software library."
+msgstr ""
+"თქვენი საკუთარი Z39.50 მომწოდებლის დამატება/წაშლა.\n"
+"ესაჭიროება Ruby/ZOOM პროგრამის ბიბლიოთეკა."
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:511
+msgid "_Providers"
+msgstr "_მომწოდებლები"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:537
+msgid "<b>Barcode Scanner Device</b>"
+msgstr "<b>ბარკოდის სკანერის მოწყობილობა</b>"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:556
+msgid "_Device type:"
+msgstr "_მოწყობილობის ტიპი:"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:602
+msgid "<b>Sound Effects</b>"
+msgstr "<b>ხმოვანი ეფექტები</b>"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:618
+msgid "Scanning"
+msgstr "სკანირება"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:632
+msgid "Good Scan / Bad Scan"
+msgstr "კარგი სკანირება/ცუდი სკანირება"
+
+#: ../share/alexandria/glade/preferences_dialog__builder.glade:667
+msgid "_Barcode Scanner"
+msgstr "_ბარკოდის სკანერი"
+
+#: ../alexandria.desktop.in.h:1
+msgid "Alexandria Book Collection Manager"
+msgstr "Alexandria წიგნების კოლექციების მმართველი"
+
+#: ../alexandria.desktop.in.h:2
+msgid "Book Collection Manager"
+msgstr "წიგნების კოლექციების მმართველი"
+
+#: ../alexandria.desktop.in.h:3
+msgid "Manage your book collection"
+msgstr "მართეთ თქვენი წიგნების კოლექცია"
