@@ -361,7 +361,7 @@ module Alexandria
       end
 
       def standard_actions
-        # rubocop:disable Layout/LineLength
+        # rubocop:disable-next Layout/LineLength
         [["LibraryMenu", nil, _("_Library")],
          ["New", Gtk::Stock::NEW, _("_New Library"), "<control>L", _("Create a new library"), method(:on_new)],
          ["NewSmart", nil, _("New _Smart Library..."), "<control><shift>L", _("Create a new smart library"), method(:on_new_smart)],
@@ -398,7 +398,6 @@ module Alexandria
          ["SubmitBugReport", Gtk::Stock::EDIT, _("Submit _Bug Report"), nil, _("Submit a bug report to the developers"), method(:on_submit_bug_report)],
          ["Help", Gtk::Stock::HELP, _("Contents"), "F1", _("View Alexandria's manual"), method(:on_help)],
          ["About", Gtk::Stock::ABOUT, _("_About"), nil, _("Show information about Alexandria"), method(:on_about)]]
-        # rubocop:enable Layout/LineLength
       end
 
       def providers_actions

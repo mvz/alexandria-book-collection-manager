@@ -7,7 +7,7 @@ group :development, :test do
   gem "irb", "~> 1.16"
   gem "rake", "~> 13.0"
   gem "rspec", "~> 3.0"
-  gem "rubocop", "~> 1.89"
+  gem "rubocop", "~> 1.91"
   gem "rubocop-i18n", "~> 3.3"
   gem "rubocop-performance", "~> 1.27"
   gem "rubocop-rake", "~> 0.7.1"
