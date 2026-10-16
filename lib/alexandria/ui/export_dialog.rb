@@ -22,12 +22,12 @@ module Alexandria
       attr_reader :dialog
 
       def initialize(parent, library, sort_order)
-        @dialog = Gtk::FileChooserDialog.new(title: _("Export '%s'") % library.name,
-                                             parent: parent,
-                                             action: :save,
-                                             buttons: [[Gtk::Stock::HELP, :help],
-                                                       [Gtk::Stock::CANCEL, :cancel],
-                                                       [_("_Export"), :accept]])
+        @dialog = Gtk::FileChooserDialog.new(_("Export '%s'") % library.name,
+                                             parent,
+                                             :save,
+                                             [[Gtk::STOCK_HELP, :help],
+                                              [Gtk::STOCK_CANCEL, :cancel],
+                                              [_("_Export"), :accept]])
         @dialog.current_name = library.name
         @dialog.signal_connect("destroy") { @dialog.hide }
 
@@ -45,10 +45,10 @@ module Alexandria
         end
         @theme_combo.signal_connect("changed") do
           file = THEMES[@theme_combo.active].preview_file
-          preview_image.pixbuf = GdkPixbuf::Pixbuf.new(file: file)
+          preview_image.set_from_file file
         end
         @theme_combo.active = 0
-        theme_label = Gtk::Label.new(_("_Theme:"), use_underline: true)
+        theme_label = Gtk::Label.new_with_mnemonic _("_Theme:")
         theme_label.xalign = 0
         theme_label.mnemonic_widget = @theme_combo
 
@@ -72,7 +72,7 @@ module Alexandria
         end
         @types_combo.show
 
-        types_label = Gtk::Label.new(_("Export for_mat:"), use_underline: true)
+        types_label = Gtk::Label.new_with_mnemonic _("Export for_mat:")
         types_label.xalign = 0
         types_label.mnemonic_widget = @types_combo
         types_label.show

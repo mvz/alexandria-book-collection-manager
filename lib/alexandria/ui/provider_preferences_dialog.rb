@@ -17,11 +17,11 @@ module Alexandria
         super(title: _("Preferences for %s") % provider.fullname,
               parent: parent,
               flags: :modal,
-              buttons: [[Gtk::Stock::CLOSE, :close]])
+              buttons: [[Gtk::STOCK_CLOSE, :close]])
 
-        table = Gtk::Table.new(0, 0)
+        table = Gtk::Table.new(0, 0, false)
         fill_table(table, provider)
-        dialog.child.pack_start(table)
+        dialog.get_content_area.pack_start(table, false, false, 0)
 
         dialog.signal_connect("destroy") { sync_variables }
       end

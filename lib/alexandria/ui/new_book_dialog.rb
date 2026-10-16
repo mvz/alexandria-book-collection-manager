@@ -4,7 +4,6 @@
 #
 # See the file README.md for authorship and licensing information.
 
-require "gdk_pixbuf2"
 require "alexandria/ui/builder_base"
 require "alexandria/ui/error_dialog"
 require "alexandria/ui/keep_bad_isbn_dialog"
@@ -54,15 +53,16 @@ module Alexandria
         @combo_libraries.populate_with_libraries(libraries,
                                                  @selected_library)
 
-        @treeview_results.model = Gtk::ListStore.new(String, String,
-                                                     GdkPixbuf::Pixbuf)
+        @treeview_results.model = Gtk::ListStore.new([GObject::TYPE_STRING,
+                                                      GObject::TYPE_STRING,
+                                                      GdkPixbuf::Pixbuf.gtype])
         @treeview_results.selection.mode = :multiple
         @treeview_results.selection.signal_connect("changed") do
           @button_add.sensitive = true
         end
 
         renderer = Gtk::CellRendererPixbuf.new
-        col = Gtk::TreeViewColumn.new("", renderer)
+        col = Gtk::TreeViewColumn.new_with_attributes("", renderer)
         col.set_cell_data_func(renderer) do |_column, cell, _model, iter|
           pixbuf = iter[2]
           max_height = 25
@@ -76,8 +76,8 @@ module Alexandria
         end
         @treeview_results.append_column(col)
 
-        col = Gtk::TreeViewColumn.new("", Gtk::CellRendererText.new,
-                                      text: 0)
+        col = Gtk::TreeViewColumn.new_with_attributes("", Gtk::CellRendererText.new,
+                                                      text: 0)
         @treeview_results.append_column(col)
 
         @combo_search.active = 0
@@ -109,18 +109,18 @@ module Alexandria
         # When item is first toggled to "Search" the entry_search
         # field was unselectable. One used to have to click the dialog
         # title bar to be able to focus it again. Putting the GUI
-        # modifications in an GLib::Idle.add block fixed the problem.
+        # modifications in an GLib.idle_add block fixed the problem.
 
         is_isbn = item == @isbn_radiobutton
         if is_isbn
-          GLib::Idle.add do
+          GLib.idle_add do
             @latest_size = @new_book_dialog.size
             @new_book_dialog.resizable = false
             @entry_isbn.grab_focus
             false
           end
         else
-          GLib::Idle.add do
+          GLib.idle_add do
             @new_book_dialog.resizable = true
             @new_book_dialog.resize(*@latest_size) unless @latest_size.nil?
             @entry_search.grab_focus
@@ -176,7 +176,7 @@ module Alexandria
           end
         end
 
-        GLib::Timeout.add(100) do
+        GLib.timeout_add(GLib::PRIORITY_DEFAULT, 100) do
           if @image_error
             image_error_dialog(@image_error).display
             @image_error = nil
@@ -240,7 +240,7 @@ module Alexandria
         @image_thread&.kill
 
         notify_start_add_by_isbn
-        GLib::Idle.add do
+        GLib.idle_add do
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -258,7 +258,7 @@ module Alexandria
           false
         end
 
-        GLib::Timeout.add(100) do
+        GLib.timeout_add(GLib::PRIORITY_DEFAULT, 100) do
           # This block copies results into the tree view, or shows an
           # error if the search failed.
 
@@ -309,9 +309,9 @@ module Alexandria
           s += " (#{book.edition}, #{book.publisher})" if similar_books.length > 1
           log.info { format(_("Copying %s into tree view."), book.title) }
           iter = model.append
-          iter[0] = s
-          iter[1] = book.ident
-          iter[2] = Icons::BOOK
+          model.set_value(iter, 0, s)
+          model.set_value(iter, 1, book.ident)
+          model.set_value(iter, 2, Icons::BOOK)
         end
       end
 
@@ -342,7 +342,7 @@ module Alexandria
         assert_not_exist(library, @entry_isbn.text)
         @button_add.sensitive = false
         notify_start_add_by_isbn
-        GLib::Idle.add do
+        GLib.idle_add do
           @find_thread = Thread.new do
             log.info { "New @find_thread #{Thread.current}" }
             begin
@@ -502,7 +502,7 @@ module Alexandria
 
         if Library.valid_isbn?(text) || Library.valid_ean?(text) ||
             Library.valid_upc?(text)
-          GLib::Idle.add do
+          GLib.idle_add do
             @entry_isbn.text = text
             @entry_isbn.grab_focus
             @entry_isbn.select_region(0, -1) # select all...

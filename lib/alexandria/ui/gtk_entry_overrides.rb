@@ -4,6 +4,8 @@
 #
 # See the file README.md for authorship and licensing information.
 
+Gtk.load_class :Entry
+
 module Alexandria
   module UI
     module GtkEntryOverrides

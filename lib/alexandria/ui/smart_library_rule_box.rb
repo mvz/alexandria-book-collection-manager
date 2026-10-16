@@ -15,16 +15,13 @@ module Alexandria
       def initialize(parent)
         @parent = parent
 
-        self.rule_box = Gtk::Box.new :horizontal
-        rule_box.spacing = 8
-
+        self.rule_box = Gtk::Box.new :horizontal, 0
         self.left_operand_combo = Gtk::ComboBoxText.new
         self.operator_combo = Gtk::ComboBoxText.new
-
         self.value_entry = Gtk::Entry.new
 
         self.date_entry = Gtk::Entry.new.tap do |entry|
-          entry.primary_icon_name = Gtk::Stock::EDIT
+          entry.primary_icon_name = Gtk::STOCK_EDIT
 
           entry.primary_icon_activatable = true
           entry.signal_connect("icon-press") do |widget, primary, icon|
@@ -34,18 +31,15 @@ module Alexandria
 
         self.entry_label = Gtk::Label.new("")
 
-        self.add_button = Gtk::Button.new(label: "").tap do |widget|
-          widget.remove(widget.children.first)
-          widget << Gtk::Image.new(stock: Gtk::Stock::ADD,
-                                   size: Gtk::IconSize::BUTTON)
+        self.add_button = Gtk::Button.new.tap do |widget|
+          widget.add Gtk::Image.new_from_stock(Gtk::STOCK_ADD, Gtk::IconSize::BUTTON)
 
           widget.signal_connect("clicked") { @parent.handle_add_rule_clicked }
         end
 
-        self.remove_button = Gtk::Button.new(label: "")
-        remove_button.remove(remove_button.children.first)
-        remove_button << Gtk::Image.new(stock: Gtk::Stock::REMOVE,
-                                        size: Gtk::IconSize::BUTTON)
+        self.remove_button = Gtk::Button.new
+        remove_button.add Gtk::Image.new_from_stock(Gtk::STOCK_REMOVE,
+                                                    Gtk::IconSize::BUTTON)
 
         remove_button.signal_connect("clicked") do |_button|
           @parent.handle_remove_rule_clicked(self)
@@ -63,13 +57,13 @@ module Alexandria
           handle_left_operand_changed
         end
 
-        rule_box.pack_start(left_operand_combo, expand: false, fill: false)
-        rule_box.pack_start(operator_combo, expand: false, fill: false)
-        rule_box.pack_start(value_entry)
-        rule_box.pack_start(date_entry)
-        rule_box.pack_start(entry_label, expand: false, fill: false)
-        rule_box.pack_end(remove_button, expand: false, fill: false)
-        rule_box.pack_end(add_button, expand: false, fill: false)
+        rule_box.pack_start(left_operand_combo, false, false, 0)
+        rule_box.pack_start(operator_combo, false, false, 0)
+        rule_box.pack_start(value_entry, false, false, 0)
+        rule_box.pack_start(date_entry, false, false, 0)
+        rule_box.pack_start(entry_label, false, false, 0)
+        rule_box.pack_end(remove_button, false, false, 0)
+        rule_box.pack_end(add_button, false, false, 0)
 
         value_entry.visible = date_entry.visible = entry_label.visible = false
       end

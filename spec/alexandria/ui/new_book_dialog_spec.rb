@@ -8,7 +8,11 @@ require "spec_helper"
 
 describe Alexandria::UI::NewBookDialog do
   let(:parent) { Gtk::Window.new :toplevel }
-  let(:model) { Gtk::ListStore.new(String, String, GdkPixbuf::Pixbuf) }
+  let(:model) do
+    Gtk::ListStore.new([GObject::TYPE_STRING,
+                        GObject::TYPE_STRING,
+                        GdkPixbuf::Pixbuf.gtype])
+  end
   let(:library) { Alexandria::Library.new("Hi") }
   let(:ui_manager) { instance_double(Alexandria::UI::UIManager) }
 

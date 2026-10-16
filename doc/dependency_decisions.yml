@@ -78,9 +78,15 @@
     :why:
     :versions: []
     :when: 2020-07-30 06:46:32.729325577 Z
-- - :permit
-  - LGPL-2.1-or-later
-  - :who:
-    :why:
+- - :whitelist
+  - New BSD
+  - :who: 
+    :why: 
     :versions: []
-    :when: 2025-04-19 19:30:36.770204331 Z
+    :when: 2018-11-19 07:40:42.768065079 Z
+- - :whitelist
+  - LGPL-2.1
+  - :who: 
+    :why: 
+    :versions: []
+    :when: 2018-11-19 07:41:39.943189432 Z
